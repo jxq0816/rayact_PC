@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveTutorOrderDao">
+    
+	<sql id="reserveTutorOrderColumns">
+		a.id AS "id",
+		a.tutor_id AS "tutor.id",
+		t.name AS "tutor.name",
+		a.order_price AS "orderPrice",
+		a.order_count AS "orderCount",
+		a.total_price AS "totalPrice",
+		a.model_id AS "modelId",
+		a.model_key AS "modelKey",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.reserve_type AS "reserveType"
+	</sql>
+	
+	<sql id="reserveTutorOrderJoins">
+		left JOIN reserve_tutor as t on t.id=a.tutor_id
+	</sql>
+    
+	<select id="get" resultType="ReserveTutorOrder">
+		SELECT 
+			<include refid="reserveTutorOrderColumns"/>
+		FROM reserve_tutor_order a
+		<include refid="reserveTutorOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findNotCancel" resultType="ReserveTutorOrder">
+		SELECT
+		<include refid="reserveTutorOrderColumns"/>
+		FROM reserve_tutor_order a
+		<include refid="reserveTutorOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			and a.reserve_type in('1','2')
+			<if test="tutor != null and tutor.id != null and tutor.id !=''">
+				AND a.tutor_id = #{tutor.id}
+			</if>
+			<if test="modelId != null and modelId != ''">
+				AND a.model_id = #{modelId}
+			</if>
+			<if test="modelKey != null and modelKey != ''">
+				AND a.model_key = #{modelKey}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findByReserveType" resultType="ReserveTutorOrder">
+		SELECT
+		<include refid="reserveTutorOrderColumns"/>
+		FROM reserve_tutor_order a
+		<include refid="reserveTutorOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="reserveType != null and reserveType != ''">
+				AND a.reserve_type = #{reserveType}
+			</if>
+			<if test="tutor != null and tutor.id != null and tutor.id !=''">
+				AND a.tutor_id = #{tutor.id}
+			</if>
+			<if test="modelId != null and modelId != ''">
+				AND a.model_id = #{modelId}
+			</if>
+			<if test="modelKey != null and modelKey != ''">
+				AND a.model_key = #{modelKey}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findList" resultType="ReserveTutorOrder">
+		SELECT 
+			<include refid="reserveTutorOrderColumns"/>
+		FROM reserve_tutor_order a
+		<include refid="reserveTutorOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="tutor != null and tutor.id != null and tutor.id !=''">
+				AND a.tutor_id = #{tutor.id}
+			</if>
+			<if test="modelId != null and modelId != ''">
+				AND a.model_id = #{modelId}
+			</if>
+			<if test="modelKey != null and modelKey != ''">
+				AND a.model_key = #{modelKey}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveTutorOrder">
+		SELECT 
+			<include refid="reserveTutorOrderColumns"/>
+		FROM reserve_tutor_order a
+		<include refid="reserveTutorOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_tutor_order(
+			id,
+			tutor_id,
+			order_price,
+			order_count,
+			total_price,
+			model_id,
+			model_key,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id,
+			reserve_type
+		) VALUES (
+			#{id},
+			#{tutor.id},
+			#{orderPrice},
+			#{orderCount},
+			#{totalPrice},
+			#{modelId},
+			#{modelKey},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId},
+			#{reserveType}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_tutor_order SET 	
+			tutor_id = #{tutor.id},
+			order_price = #{orderPrice},
+			order_count = #{orderCount},
+			total_price = #{totalPrice},
+			model_id = #{modelId},
+			model_key = #{modelKey},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId},
+			reserve_type = #{reserveType}
+		WHERE id = #{id}
+	</update>
+	<update id="updateReserveType">
+		UPDATE reserve_tutor_order SET
+			reserve_type = #{reserveType}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_tutor_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

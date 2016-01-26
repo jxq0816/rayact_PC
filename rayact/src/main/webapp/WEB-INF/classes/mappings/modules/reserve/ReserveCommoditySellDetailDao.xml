@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao">
+
+    <sql id="reserveCommoditySellDetailColumns">
+		a.id AS "id",
+		a.fk_reserve_member_id AS "reserveMember.id",
+		a.fk_reserve_commodity_id AS "reserveCommodity.id",
+		commodity.name AS "reserveCommodity.name",
+		a.fk_reserve_commodity_sell_id  AS "reserveCommoditySell.id",
+		a.num AS "num",
+		a.price AS "price",
+		a.detail_sum AS "detailSum",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+
+    <sql id="reserveCommoditySellDetailJoins">
+		LEFT JOIN reserve_commodity as commodity ON commodity.id = a.fk_reserve_commodity_id
+		LEFT JOIN reserve_member as m ON m.id = a.fk_reserve_member_id
+	</sql>
+
+    <select id="get" resultType="ReserveCommoditySellDetail">
+        SELECT
+        <include refid="reserveCommoditySellDetailColumns"/>
+        FROM reserve_commodity_sell_detail a
+        <include refid="reserveCommoditySellDetailJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findSellDetailList" resultType="ReserveCommoditySellDetail">
+        SELECT
+        a.id AS "id",
+        a.fk_reserve_member_id AS "reserveMember.id",
+        a.fk_reserve_commodity_id AS "reserveCommodity.id",
+        commodity.name AS "reserveCommodity.name",
+        t.name AS "reserveCommodity.commodityType.name",
+        a.fk_reserve_commodity_sell_id AS "reserveCommoditySell.id",
+        a.num AS "num",
+        a.price AS "price",
+        a.detail_sum AS "detailSum",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+        FROM reserve_commodity_sell_detail as a
+        left join reserve_member as m on a.fk_reserve_member_id=m.id
+        ,reserve_commodity as commodity,reserve_commodity_type as t
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND
+            a.fk_reserve_commodity_id=commodity.id and commodity.commodity_type_id =t.id
+            <if test="reserveCommodity != null">
+                <if test="reserveCommodity.name !=null and reserveCommodity.name !=''">
+                    and commodity.name LIKE concat('%',#{reserveCommodity.name},'%')
+                </if>
+            </if>
+            <if test="startDate!=null and endDate !=null">
+                and (a.create_date between #{startDate} and #{endDate})
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findList" resultType="ReserveCommoditySellDetail">
+        SELECT
+        <include refid="reserveCommoditySellDetailColumns"/>
+        FROM reserve_commodity_sell_detail a
+        <include refid="reserveCommoditySellDetailJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            <if test="reserveCommodity != null">
+                <if test="reserveCommodity.name !=null and reserveCommodity.name !=''">
+                    and commodity.name LIKE concat('%',#{reserveCommodity.name},'%')
+                </if>
+            </if>
+
+            <if test="startDate!=null and endDate !=null">
+                and (a.create_date between #{startDate} and #{endDate})
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="ReserveCommoditySellDetail">
+        SELECT
+        <include refid="reserveCommoditySellDetailColumns"/>
+        FROM reserve_commodity_sell_detail a
+        <include refid="reserveCommoditySellDetailJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+		INSERT INTO reserve_commodity_sell_detail(
+			id,
+			fk_reserve_member_id,
+			fk_reserve_commodity_id,
+			fk_reserve_commodity_sell_id,
+			num,
+			price,
+			detail_sum,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{reserveMember.id},
+			#{reserveCommodity.id},
+			#{reserveCommoditySell.id},
+			#{num},
+			#{price},
+			#{detailSum},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+
+    <update id="update">
+		UPDATE reserve_commodity_sell_detail SET
+		 	fk_reserve_member_id = #{reserveMember.id}
+			fk_reserve_commodity_id = #{reserveCommodity.id},
+			fk_reserve_commodity_sell_id = #{reserveCommoditySell.id},
+			num = #{num},
+			price = #{price},
+			detail_sum = #{detailSum},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+
+    <update id="delete">
+		UPDATE reserve_commodity_sell_detail SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+</mapper>
