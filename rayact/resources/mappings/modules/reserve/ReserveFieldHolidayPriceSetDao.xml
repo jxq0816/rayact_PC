@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveFieldHolidayPriceSetDao">
+
+    <sql id="reserveFieldHolidayPriceSetColumns">
+		a.id AS "id",
+		a.venue_id AS "reserveVenue.id",
+		a.field_id AS "reserveField.id",
+	  	v.name AS "reserveVenue.name",
+	  	f.name AS "reserveField.name",
+		a.start_date AS "startDate",
+		a.end_date AS "endDate",
+		a.field_start_time AS "fieldStartTime",
+		a.field_end_time AS "fieldEndTime",
+		a.cons_type AS "consType",
+		a.cons_price AS "consPrice",
+		a.cons_json AS "consJson",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+
+    <sql id="reserveFieldHolidayPriceSetJoins">
+		LEFT JOIN reserve_venue v ON v.id = a.venue_id
+		LEFT JOIN reserve_field f ON f.id = a.field_id
+	</sql>
+
+    <select id="get" resultType="ReserveFieldHolidayPriceSet">
+        SELECT
+        <include refid="reserveFieldHolidayPriceSetColumns"/>
+        FROM reserve_field_holiday_price_set a
+        <include refid="reserveFieldHolidayPriceSetJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="ReserveFieldHolidayPriceSet">
+        SELECT
+        <include refid="reserveFieldHolidayPriceSetColumns"/>
+        FROM reserve_field_holiday_price_set a
+        <include refid="reserveFieldHolidayPriceSetJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            <if test="date != null">
+                and (#{date} between a.start_date and a.end_date)
+            </if>
+            <if test="consType != null and consType != ''">
+                and a.cons_type = #{consType}
+            </if>
+            <if test="reserveField != null and reserveField.id != null and reserveField.id!='' ">
+                and a.field_id = #{reserveField.id}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="ReserveFieldHolidayPriceSet">
+        SELECT
+        <include refid="reserveFieldHolidayPriceSetColumns"/>
+        FROM reserve_field_holiday_price_set a
+        <include refid="reserveFieldHolidayPriceSetJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+		INSERT INTO reserve_field_holiday_price_set(
+			id,
+			venue_id,
+			field_id,
+			start_date,
+			end_date,
+			field_start_time,
+			field_end_time,
+			cons_type,
+			cons_price,
+			cons_json,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{reserveVenue.id},
+			#{reserveField.id},
+			#{startDate},
+			#{endDate},
+			#{fieldStartTime},
+			#{fieldEndTime},
+			#{consType},
+			#{consPrice},
+			#{consJson},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+
+    <update id="update">
+		UPDATE reserve_field_holiday_price_set SET 	
+			venue_id = #{venueId},
+			field_id = #{fieldId},
+			start_date = #{startDate},
+			end_date = #{endDate},
+			field_start_time = #{fieldStartTime},
+			field_end_time = #{fieldEndTime},
+			cons_type = #{consType},
+			cons_price = #{consPrice},
+			cons_json = #{consJson},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+
+    <update id="delete">
+		UPDATE reserve_field_holiday_price_set SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+</mapper>
