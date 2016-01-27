@@ -1,7 +1,9 @@
 package com.bra.modules.reserve.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,23 +24,33 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 	public ReserveCommoditySell get(String id) {
 		return super.get(id);
 	}
-	
+
 	public List<ReserveCommoditySell> findList(ReserveCommoditySell reserveCommoditySell) {
 		return super.findList(reserveCommoditySell);
 	}
-	
+
+	public BigDecimal sellOfMonth(ReserveCardStatements reserveCardStatements){
+		return dao.findSellOfMonth(reserveCardStatements);
+	}
+
+	public BigDecimal sellOfToday(ReserveCardStatements reserveCardStatements){
+		return dao.sellOfToday(reserveCardStatements);
+	}
+
 	public Page<ReserveCommoditySell> findPage(Page<ReserveCommoditySell> page, ReserveCommoditySell reserveCommoditySell) {
 		return super.findPage(page, reserveCommoditySell);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(ReserveCommoditySell reserveCommoditySell) {
 		super.save(reserveCommoditySell);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(ReserveCommoditySell reserveCommoditySell) {
 		super.delete(reserveCommoditySell);
 	}
-	
+
+
+
 }

@@ -60,12 +60,12 @@
                         <div class="fact-data text-center">
                             <h3>当天</h3>
 
-                            <h2></h2>
+                            <h2>${sellOfToday}</h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
 
-                            <h2></h2>
+                            <h2>${sellOfMonth}</h2>
                         </div>
                     </div>
                 </div>
