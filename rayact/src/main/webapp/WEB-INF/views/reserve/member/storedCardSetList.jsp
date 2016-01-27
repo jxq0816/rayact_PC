@@ -78,7 +78,7 @@
                                                         type="date"/></td>
 
 
-                                    <td>${reserveStoredcardMemberSet.discountRate}</td>
+                                    <td>${reserveStoredcardMemberSet.discountRate}%</td>
 
                                     <td>
                                             ${reserveStoredcardMemberSet.remarks}
