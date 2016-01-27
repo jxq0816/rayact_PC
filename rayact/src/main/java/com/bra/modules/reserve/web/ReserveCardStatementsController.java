@@ -39,7 +39,7 @@ public class ReserveCardStatementsController extends BaseController {
 
 	@Autowired
 	private ReserveMemberService reserveMemberService;
-	
+
 	@ModelAttribute
 	public ReserveCardStatements get(@RequestParam(required=false) String id) {
 		ReserveCardStatements entity = null;
@@ -54,7 +54,7 @@ public class ReserveCardStatementsController extends BaseController {
 	/*记录*/
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response), reserveCardStatements); 
+		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response), reserveCardStatements);
 		model.addAttribute("page", page);
 		//求和
 		List<ReserveCardStatements> list = page.getList();
@@ -79,15 +79,15 @@ public class ReserveCardStatementsController extends BaseController {
 	public String listByStoredCardType(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<Map<String,Object>> page=reserveCardStatementsService.findListByStoredCardType(reserveCardStatements);
 		model.addAttribute("page", page);
-		return "reserve/report/reserveCardStatementsListByCardType";
+		return "reserve/report/memberIncomeRecord";
 	}
 
 	/*商品收入统计*/
 	@RequestMapping(value = {"listByCommodityType", ""})
 	public String listByCommodityType(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveCardStatements> page=reserveCardStatementsService.findListByCommodityType(new Page<ReserveCardStatements>(request, response), reserveCardStatements);
+		List<Map<String,Object>> page=reserveCardStatementsService.findListByCommodityType(reserveCardStatements);
 		model.addAttribute("page", page);
-		return "reserve/report/reserveCardStatementsListByCommodityType";
+		return "reserve/report/commodityIncomeRecord";
 	}
 
 
@@ -146,7 +146,7 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}
-	
+
 	@RequestMapping(value = "delete")
 	public String delete(ReserveCardStatements reserveCardStatements, RedirectAttributes redirectAttributes) {
 		reserveCardStatementsService.delete(reserveCardStatements);

@@ -23,11 +23,11 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	public ReserveCardStatements get(String id) {
 		return super.get(id);
 	}
-	
+
 	public List<ReserveCardStatements> findList(ReserveCardStatements reserveCardStatements) {
 		return super.findList(reserveCardStatements);
 	}
-	
+
 	public Page<ReserveCardStatements> findPage(Page<ReserveCardStatements> page, ReserveCardStatements reserveCardStatements) {
 		return super.findPage(page, reserveCardStatements);
 	}
@@ -36,16 +36,27 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return dao.findListByStoredCardType(reserveCardStatements);
 	}
 
-	public Page<ReserveCardStatements> findListByCommodityType(Page<ReserveCardStatements> page, ReserveCardStatements reserveCardStatements) {
-		return dao.findListByCommodityType(page, reserveCardStatements);
+	public List<Map<String,Object>> findListByCommodityType(ReserveCardStatements reserveCardStatements) {
+		List<Map<String, Object>> list = dao.findListByCommodityType(reserveCardStatements);
+		double total=0;
+		for(Map<String,Object> map : list){
+			double saleAmount=(double)map.get("saleAmount");
+			total=total+saleAmount;
+		}
+		for(Map<String,Object> map : list){
+			double saleAmount=(double)map.get("saleAmount");
+			double rate=(saleAmount/total)*100;
+			map.put("saleRate",rate);
+		}
+		return list;
 	}
 
-	
+
 	@Transactional(readOnly = false)
 	public void save(ReserveCardStatements reserveCardStatements) {
 		super.save(reserveCardStatements);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(ReserveCardStatements reserveCardStatements) {
 		super.delete(reserveCardStatements);
