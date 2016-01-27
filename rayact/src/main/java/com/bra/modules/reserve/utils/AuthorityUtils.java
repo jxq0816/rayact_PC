@@ -64,7 +64,7 @@ public class AuthorityUtils {
 
     public static List<Authority> getAuthByUser(User user) {
         if ("1".equals(user.getUserType())) {
-            getAll();
+            return getAll();
         }
         ReserveUserService reserveUserService = SpringContextHolder.getBean("reserveUserService");
         ReserveRole reserveRole = reserveUserService.getRole(user);
