@@ -77,8 +77,8 @@
   <function>
     <description>获取授权用户信息</description>
     <name>getPrincipal</name>
-    <function-class>com.bra.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.bra.modules.sys.security.SystemAuthorizingRealm.Principal getPrincipal()</function-signature>
+    <function-class>com.bra.common.security.SecurityUtil</function-class>
+    <function-signature>com.bra.common.security.Principal getPrincipal()</function-signature>
     <example>${fns:getPrincipal()}</example>  
   </function>
   
