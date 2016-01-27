@@ -118,13 +118,13 @@
     "name": "报表管理",
     "authorityList": [
       {
-        "code": "memberIncome",
+        "code": "memberIncomeRecord",
         "name": "会员收入统计",
         "href":"/reserve/reserveCardStatements/listByStoredCardType",
         "authorityList": []
       },
       {
-        "code": "commodityIncome",
+        "code": "commodityIncomeRecord",
         "name": "商品收入统计",
         "href":"/reserve/reserveCardStatements/listByCommodityType",
         "authorityList": []

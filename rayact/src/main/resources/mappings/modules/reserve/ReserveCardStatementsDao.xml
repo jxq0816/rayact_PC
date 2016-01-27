@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.reserve.dao.ReserveCardStatementsDao">
 
-    <sql id="reserveCardStatementsColumns">
+	<sql id="reserveCardStatementsColumns">
 		a.id AS "id",
 		a.transaction_type AS "transactionType",
 		a.fk_reserve_member_id AS "reserveMember.id",
@@ -19,24 +19,24 @@
 	  	m.mobile AS "reserveMember.mobile"
 	</sql>
 
-    <sql id="reserveCardStatementsJoins">
+	<sql id="reserveCardStatementsJoins">
 		left JOIN reserve_member as m on m.id=a.fk_reserve_member_id
 		LEFT JOIN  reserve_user as u on u.id=a.create_by
 	</sql>
 
-    <select id="rechargeOfToday" resultType="BigDecimal">
+	<select id="rechargeOfToday" resultType="BigDecimal">
 		select SUM(transaction_volume)
 		from reserve_card_statements as a
-		WHERE a.transaction_type='1' and datediff(a.create_date,curdate())=0 and a.tenant_id = #{tenantId}
+		WHERE a.transaction_type='1' and datediff(a.update_date,curdate())=0 and a.tenant_id = #{tenantId}
 	</select>
 
-    <select id="rechargeOfMonth" resultType="BigDecimal">
+	<select id="rechargeOfMonth" resultType="BigDecimal">
 		select SUM(transaction_volume)
 		from reserve_card_statements as a
-        WHERE a.transaction_type='1' and Month(a.create_date)=MONTH(CURDATE()) and a.tenant_id = #{tenantId}
+		WHERE a.transaction_type='1' and Month(a.update_date)=MONTH(CURDATE()) and a.tenant_id = #{tenantId}
 	</select>
 
-    <select id="rechargeOfChart" resultType="java.util.Map">
+	<select id="rechargeOfChart" resultType="java.util.Map">
 		SELECT SUM(a.transaction_volume) AS "volume",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
 		from reserve_card_statements a
 		<![CDATA[
@@ -45,81 +45,86 @@
 		group by date_format(a.update_date,'%Y-%m-%d');
 	</select>
 
-    <select id="get" resultType="ReserveCardStatements">
-        SELECT
-        <include refid="reserveCardStatementsColumns"/>
-        FROM reserve_card_statements a
-        <include refid="reserveCardStatementsJoins"/>
-        WHERE a.id = #{id}
-    </select>
-
-	<select id="findListByStoredCardType" resultType="java.util.Map">
-        select s.name as cardTypeName,COUNT(distinct  m.id) as memberCnt , sum(a.transaction_volume) as transactionVolume,p.name as projectName
-        from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p
-        WHERE a.transaction_type='1' and a.fk_reserve_member_id=m.id and m.fk_reserve_storedcard_member_set_id=s.id  and p.id=s.fk_reserve_project_id and  a.tenant_id = #{tenantId}
-        <if test="startDate!=null and endDate !=null">
-            and (a.update_date between #{startDate} and #{endDate})
-        </if>
-        GROUP BY s.name
+	<select id="get" resultType="ReserveCardStatements">
+		SELECT
+		<include refid="reserveCardStatementsColumns"/>
+		FROM reserve_card_statements a
+		<include refid="reserveCardStatementsJoins"/>
+		WHERE a.id = #{id}
 	</select>
 
-    <select id="findListByCommodityType" resultType="ReserveCardStatements">
+	<select id="findListByStoredCardType" resultType="java.util.Map">
+		select s.name as cardTypeName,COUNT(distinct m.id) as memberCnt , sum(a.transaction_volume) as
+		transactionVolume,p.name as projectName
+		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p
+		WHERE a.transaction_type='1' and a.fk_reserve_member_id=m.id and m.fk_reserve_storedcard_member_set_id=s.id and
+		p.id=s.fk_reserve_project_id and a.tenant_id = #{tenantId}
+		<if test="startDate!=null and endDate !=null">
+			and (a.update_date between #{startDate} and #{endDate})
+		</if>
+		GROUP BY s.name
+	</select>
 
+	<select id="findListByCommodityType" resultType="java.util.Map">
+        SELECT t.name as commodityTypeName, sum(d.detail_sum) as saleAmount
+        from reserve_commodity_sell_detail as d ,reserve_commodity_type as t, reserve_commodity as c
+        where d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
+        GROUP BY commodityTypeName
     </select>
 
 
-    <select id="findList" resultType="ReserveCardStatements">
-        SELECT
-        <include refid="reserveCardStatementsColumns"/>
-        FROM reserve_card_statements a
-        <include refid="reserveCardStatementsJoins"/>
-        <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-            <if test="reserveMember!=null">
-                <if test="reserveMember.name !=null and reserveMember.name !=''">
-                    and ( (m.name like concat('%',#{reserveMember.name},'%')) or (m.cartno like
-                    concat('%',#{reserveMember.name},'%')) or (m.mobile like concat('%',#{reserveMember.name},'%')) )
-                </if>
-            </if>
-            <if test="transactionType!=null and transactionType!=''">
-                and a.transaction_type = #{transactionType}
-            </if>
+	<select id="findList" resultType="ReserveCardStatements">
+		SELECT
+		<include refid="reserveCardStatementsColumns"/>
+		FROM reserve_card_statements a
+		<include refid="reserveCardStatementsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="reserveMember!=null">
+				<if test="reserveMember.name !=null and reserveMember.name !=''">
+					and ( (m.name like concat('%',#{reserveMember.name},'%')) or (m.cartno like
+					concat('%',#{reserveMember.name},'%')) or (m.mobile like concat('%',#{reserveMember.name},'%')) )
+				</if>
+			</if>
+			<if test="transactionType!=null and transactionType!=''">
+				and a.transaction_type = #{transactionType}
+			</if>
 
-            <if test="startDate!=null and endDate !=null">
-                and (a.create_date between #{startDate} and #{endDate})
-            </if>
+			<if test="startDate!=null and endDate !=null">
+				and (a.create_date between #{startDate} and #{endDate})
+			</if>
 
-        </where>
-        <choose>
-            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
-                ORDER BY ${page.orderBy}
-            </when>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
 
-            <otherwise>
-                ORDER BY a.update_date DESC
-            </otherwise>
-        </choose>
-    </select>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
 
-    <select id="findAllList" resultType="ReserveCardStatements">
-        SELECT
-        <include refid="reserveCardStatementsColumns"/>
-        FROM reserve_card_statements a
-        <include refid="reserveCardStatementsJoins"/>
-        <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-        </where>
-        <choose>
-            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
-                ORDER BY ${page.orderBy}
-            </when>
-            <otherwise>
-                ORDER BY a.update_date DESC
-            </otherwise>
-        </choose>
-    </select>
+	<select id="findAllList" resultType="ReserveCardStatements">
+		SELECT
+		<include refid="reserveCardStatementsColumns"/>
+		FROM reserve_card_statements a
+		<include refid="reserveCardStatementsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
 
-    <insert id="insert">
+	<insert id="insert">
 		INSERT INTO reserve_card_statements(
 			id,
 			fk_reserve_member_id,
@@ -147,7 +152,7 @@
 		)
 	</insert>
 
-    <update id="update">
+	<update id="update">
 		UPDATE reserve_card_statements SET 	
 			fk_reserve_member_id = #{reserveMember.id},
 			transaction_type = #{transactionType},
@@ -159,7 +164,7 @@
 		WHERE id = #{id}
 	</update>
 
-    <update id="delete">
+	<update id="delete">
 		UPDATE reserve_card_statements SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
