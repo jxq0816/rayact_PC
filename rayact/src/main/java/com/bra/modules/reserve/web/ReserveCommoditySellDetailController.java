@@ -55,6 +55,14 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		}
 		return entity;
 	}
+
+	@RequestMapping(value = "settlement")
+	@Token(save = true)
+	public  String settlement(ReserveCommoditySellDetailList sellDetailList, Model model) {
+		model.addAttribute("sellDetailList",sellDetailList.getReserveCommoditySellDetailList());
+		return "reserve/commodity/reserveCommodityPayForm";
+	}
+
 	@RequestMapping(value = "sellSubmit")
 	@ResponseBody
 	@Token(remove = true)

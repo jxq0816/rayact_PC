@@ -66,3 +66,21 @@ function sellSubmit() {
         }
     });
 }
+function settlement() {
+    var sellDetailList = $("#paySell").serializeArray();
+    jQuery.postItems({
+        url: ctx+'/reserve/reserveCommoditySellDetail/settlement',
+        data: sellDetailList,
+        success: function (result) {
+            $("#settlementForm").html(result);
+            $("#settlementDialogBtn").click();
+            $("#settlementForm .select2").select2({
+                width: '100%'
+            });
+            $('#settlementForm .icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue checkbox',
+                radioClass: 'iradio_square-blue'
+            });
+        }
+    });
+}

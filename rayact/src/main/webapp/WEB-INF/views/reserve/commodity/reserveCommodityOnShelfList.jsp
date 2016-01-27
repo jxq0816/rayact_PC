@@ -99,6 +99,7 @@
                     <form id="paySell">
                         <input type="hidden" name="token" value="${token}"/>
                         商品销售表
+
                         <table id="sellList" class="table table-striped table-bordered table-condensed">
                             <thead>
                             <tr>
@@ -107,8 +108,9 @@
                             </tr>
                             </thead>
                         </table>
+
                         合计：<span id="sum">0</span>元
-                        <a class="btn btn-success" onclick="sellSubmit()">付款</a>
+                        <a class="btn btn-success" onclick="settlement()">结算</a>
                     </form>
                 </div>
                 <%--end of right--%>
@@ -116,6 +118,32 @@
         </div>
     </div>
     <%-- end of row-fluid--%>
+</div>
+<button class="btn btn-primary btn-flat md-trigger" id="settlementDialogBtn" style="display: none"
+        data-modal="settlementDialog">
+    结算
+</button>
+
+<div class="md-modal colored-header custom-width md-effect-12 warning" id="settlementDialog">
+    <div class="md-content">
+        <div class="modal-header">
+            <h5>结算</h5>
+            <button type="button" class="close md-close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body form-horizontal " id="settlementForm">
+            <!--结算-->
+
+
+            <!--end 结算-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                取消
+            </button>
+            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat">保存</button>
+        </div>
+    </div>
 </div>
 <%--end of container-fluid--%>
 <script src="${ctxStatic}/modules/reserve/js/reserve_commodity_sell.js?id=66"
