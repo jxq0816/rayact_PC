@@ -15,7 +15,6 @@ import com.bra.common.web.Servlets;
 import com.bra.modules.sys.dao.UserDao;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.UserUtils;
-import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +30,7 @@ import com.bra.common.security.shiro.session.SessionDAO;
 @Transactional(readOnly = true)
 public class SystemService extends BaseService {
 	
-	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
-	public static final int SALT_SIZE = 8;
 	
 	@Autowired
 	private UserDao userDao;
@@ -43,9 +40,6 @@ public class SystemService extends BaseService {
 	public SessionDAO getSessionDao() {
 		return sessionDao;
 	}
-
-	@Autowired
-	private IdentityService identityService;
 
 	//-- User Service --//
 	
