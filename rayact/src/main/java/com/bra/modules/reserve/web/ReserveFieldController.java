@@ -60,7 +60,6 @@ public class ReserveFieldController extends BaseController {
 		return entity;
 	}
 
-	@RequiresPermissions("reserve:reserveField:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveField reserveField, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveField> page = reserveFieldService.findPage(new Page<>(request, response), reserveField);
@@ -68,7 +67,6 @@ public class ReserveFieldController extends BaseController {
 		return "reserve/field/list";
 	}
 
-	@RequiresPermissions("reserve:reserveField:view")
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveField reserveField, Model model) throws ParseException {
@@ -101,7 +99,6 @@ public class ReserveFieldController extends BaseController {
 		return "reserve/field/form";
 	}
 
-	@RequiresPermissions("reserve:reserveField:edit")
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveField reserveField, AttMainForm attMainForm, RoutinePrice routinePrice,HolidayPrice holidayPrice,
@@ -114,7 +111,6 @@ public class ReserveFieldController extends BaseController {
 		return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
 	}
 
-	@RequiresPermissions("reserve:reserveField:edit")
 	@RequestMapping(value = "delete")
 	@Token(remove = true)
 	public String delete(ReserveField reserveField, RedirectAttributes redirectAttributes) {
