@@ -29,7 +29,6 @@ public class User extends DataEntity<User> {
 
     private static final long serialVersionUID = 1L;
     private Office company;    // 归属公司
-    private Office office;    // 归属部门
     private String loginName;// 登录名
     private String password;// 密码
     private String no;        // 工号
@@ -37,7 +36,7 @@ public class User extends DataEntity<User> {
     private String email;    // 邮箱
     private String phone;    // 电话
     private String mobile;    // 手机
-    private String userType;// 用户类型
+    private String userType;// 用户类型(1:场馆管理员;2:场馆其它角色)
     private String loginIp;    // 最后登陆IP
     private Date loginDate;    // 最后登陆日期
     private String loginFlag;    // 是否允许登陆
@@ -48,10 +47,6 @@ public class User extends DataEntity<User> {
 
     private String oldLoginIp;    // 上次登陆IP
     private Date oldLoginDate;    // 上次登陆日期
-
-    private Role role;    // 根据角色查询用户条件
-
-    private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 
     public User() {
         super();
@@ -65,11 +60,6 @@ public class User extends DataEntity<User> {
     public User(String id, String loginName) {
         super(id);
         this.loginName = loginName;
-    }
-
-    public User(Role role) {
-        super();
-        this.role = role;
     }
 
     public String getPhoto() {
@@ -101,16 +91,6 @@ public class User extends DataEntity<User> {
 
     public void setCompany(Office company) {
         this.company = company;
-    }
-
-    @JsonIgnore
-    @NotNull(message = "归属部门不能为空")
-    public Office getOffice() {
-        return office;
-    }
-
-    public void setOffice(Office office) {
-        this.office = office;
     }
 
     @Length(min = 1, max = 100, message = "登录名长度必须介于 1 和 100 之间")
@@ -249,48 +229,6 @@ public class User extends DataEntity<User> {
 
     public void setOldLoginDate(Date oldLoginDate) {
         this.oldLoginDate = oldLoginDate;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @JsonIgnore
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-
-    @JsonIgnore
-    public List<String> getRoleIdList() {
-        List<String> roleIdList = Lists.newArrayList();
-        for (Role role : roleList) {
-            roleIdList.add(role.getId());
-        }
-        return roleIdList;
-    }
-
-    public void setRoleIdList(List<String> roleIdList) {
-        roleList = Lists.newArrayList();
-        for (String roleId : roleIdList) {
-            Role role = new Role();
-            role.setId(roleId);
-            roleList.add(role);
-        }
-    }
-
-    /**
-     * 用户拥有的角色名称字符串, 多个角色名称用','分隔.
-     */
-    public String getRoleNames() {
-        return Collections3.extractToString(roleList, "name", ",");
     }
 
     public boolean isAdmin() {

@@ -11,14 +11,11 @@ import com.bra.common.security.Principal;
 import com.bra.common.servlet.ValidateCodeServlet;
 import com.bra.common.utils.SpringContextHolder;
 import com.bra.common.web.Servlets;
-import com.bra.modules.sys.entity.Menu;
-import com.bra.modules.sys.entity.Role;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.LogUtils;
 import com.bra.modules.sys.utils.UserUtils;
 import com.bra.modules.sys.web.LoginController;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -74,7 +71,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             }
             //byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
             return new SimpleAuthenticationInfo(new Principal(user.getId(), user.getLoginName(),
-                    user.getName(), user.getOffice().getId(), token.isMobileLogin()),
+                    user.getName(), user.getCompany().getId(), token.isMobileLogin()),
                     user.getPassword(), getName());
         } else {
             return null;
@@ -107,21 +104,8 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         User user = getSystemService().getUserByLoginName(principal.getLoginName());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            List<Menu> list = UserUtils.getMenuList();
-            for (Menu menu : list) {
-                if (StringUtils.isNotBlank(menu.getPermission())) {
-                    // 添加基于Permission的权限信息
-                    for (String permission : StringUtils.split(menu.getPermission(), ",")) {
-                        info.addStringPermission(permission);
-                    }
-                }
-            }
             // 添加用户权限
             info.addStringPermission("user");
-            // 添加用户角色信息
-            for (Role role : user.getRoleList()) {
-                info.addRole(role.getEnname());
-            }
             // 更新登录IP和时间
             getSystemService().updateUserLoginInfo(user);
             // 记录登录日志

@@ -3,7 +3,6 @@
  */
 package com.bra.modules.sys.web;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
-import com.bra.modules.sys.entity.Role;
-import com.bra.modules.sys.entity.User;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.WebUtils;
@@ -166,16 +163,7 @@ public class LoginController extends BaseController {
             }
             return "redirect:" + adminPath + "/login";
         }
-        List<Role> roleList = UserUtils.getRoleList();
-        User user = UserUtils.getUser();
-        if (!user.isAdmin()) {
-            for (Role role : roleList) {
-                if (Role.COOPERATIVE.equals(role.getEnname()) || Role.COOPERATIVE_USER.equals(role.getEnname())) {
-                    return "redirect:" + adminPath + "/reserve/main";
-                }
-            }
-        }
-        return "modules/sys/sysIndex";
+        return "redirect:" + adminPath + "/reserve/main";
     }
 
     /**

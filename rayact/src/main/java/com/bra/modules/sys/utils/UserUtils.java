@@ -9,10 +9,8 @@ import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
 import com.bra.common.service.BaseService;
 import com.bra.common.utils.StringUtils;
-import com.bra.modules.sys.dao.MenuDao;
 import com.bra.modules.sys.entity.Area;
 import com.bra.modules.sys.entity.Office;
-import com.bra.modules.sys.entity.Role;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
@@ -23,9 +21,7 @@ import com.bra.common.utils.CacheUtils;
 import com.bra.common.utils.SpringContextHolder;
 import com.bra.modules.sys.dao.AreaDao;
 import com.bra.modules.sys.dao.OfficeDao;
-import com.bra.modules.sys.dao.RoleDao;
 import com.bra.modules.sys.dao.UserDao;
-import com.bra.modules.sys.entity.Menu;
 import com.bra.modules.sys.entity.User;
 
 /**
@@ -36,8 +32,6 @@ import com.bra.modules.sys.entity.User;
 public class UserUtils {
 
     private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
-    private static RoleDao roleDao = SpringContextHolder.getBean(RoleDao.class);
-    private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
     private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
     private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
 
@@ -65,7 +59,6 @@ public class UserUtils {
             if (user == null) {
                 return null;
             }
-            user.setRoleList(roleDao.findList(new Role(user)));
             CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
             CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
         }
@@ -85,7 +78,6 @@ public class UserUtils {
             if (user == null) {
                 return null;
             }
-            user.setRoleList(roleDao.findList(new Role(user)));
             CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
             CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
         }
@@ -113,9 +105,6 @@ public class UserUtils {
         CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getId());
         CacheUtils.remove(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName());
         CacheUtils.remove(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getOldLoginName());
-        if (user.getOffice() != null && user.getOffice().getId() != null) {
-            CacheUtils.remove(USER_CACHE, USER_CACHE_LIST_BY_OFFICE_ID_ + user.getOffice().getId());
-        }
     }
 
     /**
@@ -134,50 +123,6 @@ public class UserUtils {
         }
         // 如果没有登录，则返回实例化空的User对象。
         return new User();
-    }
-
-    /**
-     * 获取当前用户角色列表
-     *
-     * @return
-     */
-    public static List<Role> getRoleList() {
-        @SuppressWarnings("unchecked")
-        List<Role> roleList = (List<Role>) getCache(CACHE_ROLE_LIST);
-        if (roleList == null) {
-            User user = getUser();
-            if (user.isAdmin()) {
-                roleList = roleDao.findAllList(new Role());
-            } else {
-                Role role = new Role();
-                role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user.getCurrentUser(), "o", "u"));
-                roleList = roleDao.findList(role);
-            }
-            putCache(CACHE_ROLE_LIST, roleList);
-        }
-        return roleList;
-    }
-
-    /**
-     * 获取当前用户授权菜单
-     *
-     * @return
-     */
-    public static List<Menu> getMenuList() {
-        @SuppressWarnings("unchecked")
-        List<Menu> menuList = (List<Menu>) getCache(CACHE_MENU_LIST);
-        if (menuList == null) {
-            User user = getUser();
-            if (user.isAdmin()) {
-                menuList = menuDao.findAllList(new Menu());
-            } else {
-                Menu m = new Menu();
-                m.setUserId(user.getId());
-                menuList = menuDao.findByUserId(m);
-            }
-            putCache(CACHE_MENU_LIST, menuList);
-        }
-        return menuList;
     }
 
     /**
@@ -209,7 +154,6 @@ public class UserUtils {
                 officeList = officeDao.findAllList(new Office());
             } else {
                 Office office = new Office();
-                office.getSqlMap().put("dsf", BaseService.dataScopeFilter(user, "a", ""));
                 officeList = officeDao.findList(office);
             }
             putCache(CACHE_OFFICE_LIST, officeList);

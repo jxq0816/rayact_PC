@@ -44,7 +44,6 @@ public class ReserveUserService extends CrudService<UserDao, User> {
 
     public Page<User> findUser(Page<User> page, User user) {
         // 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
-        user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
         // 设置分页参数
         user.setPage(page);
         // 执行分页查询
@@ -65,16 +64,10 @@ public class ReserveUserService extends CrudService<UserDao, User> {
     @Transactional(readOnly = false)
     public void saveUser(User user) {
         user.setCompany(UserUtils.getUser().getCompany());
-        user.setOffice(UserUtils.getUser().getOffice());
         if (StringUtils.isBlank(user.getId())) {
             user.preInsert();
             dao.insert(user);
         } else {
-            // 清除原用户机构用户缓存
-            User oldUser = dao.get(user.getId());
-            if (oldUser.getOffice() != null && oldUser.getOffice().getId() != null) {
-                CacheUtils.remove(UserUtils.USER_CACHE, UserUtils.USER_CACHE_LIST_BY_OFFICE_ID_ + oldUser.getOffice().getId());
-            }
             // 更新用户数据
             user.preUpdate();
             dao.update(user);
@@ -93,21 +86,6 @@ public class ReserveUserService extends CrudService<UserDao, User> {
             reserveRole.setUserType(user.getReserveRole().getUserType());
             reserveRole.preInsert();
             reserveRoleDao.insert(reserveRole);
-        }
-
-        if (StringUtils.isNotBlank(user.getId())) {
-            // 更新用户与角色关联
-            dao.deleteUserRole(user);
-            //user.setRoleList(UserUtils.getRoleList());
-            if (user.getRoleList() != null && user.getRoleList().size() > 0) {
-                dao.insertUserRole(user);
-            } else {
-                throw new ServiceException(user.getLoginName() + "没有设置角色！");
-            }
-            // 清除用户缓存
-            UserUtils.clearCache(user);
-//			// 清除权限缓存
-//			systemRealm.clearAllCachedAuthorizationInfo();
         }
     }
 
@@ -157,23 +135,6 @@ public class ReserveUserService extends CrudService<UserDao, User> {
         // 清除用户缓存
         user.setLoginName(loginName);
         UserUtils.clearCache(user);
-    }
-
-    /**
-     * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
-     *
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public List<User> findUserByOfficeId(String officeId) {
-        List<User> list = (List<User>) CacheUtils.get(UserUtils.USER_CACHE, UserUtils.USER_CACHE_LIST_BY_OFFICE_ID_ + officeId);
-        if (list == null) {
-            User user = new User();
-            user.setOffice(new Office(officeId));
-            list = dao.findUserByOfficeId(user);
-            CacheUtils.put(UserUtils.USER_CACHE, UserUtils.USER_CACHE_LIST_BY_OFFICE_ID_ + officeId, list);
-        }
-        return list;
     }
 
 

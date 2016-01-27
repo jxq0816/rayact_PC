@@ -8,8 +8,6 @@ DROP TABLE IF EXISTS reserve_venue_visitors;
 /**教练费用*/
 DROP TABLE IF EXISTS reserve_tutor_order;
 
-DROP TABLE IF EXISTS reserve_role;
-
 /*人次票设置*/
 CREATE TABLE reserve_venue_visitors_set (
   id          VARCHAR(19)         NOT NULL,
@@ -126,16 +124,5 @@ CREATE TABLE reserve_tutor_order (
   remarks     VARCHAR(255),
   del_flag    CHAR(1) DEFAULT '0' NOT NULL,
   tenant_id   VARCHAR(19) COMMENT '路由标识',
-  PRIMARY KEY (id)
-);
-
-/*用户角色*/
-CREATE TABLE reserve_role (
-  id         VARCHAR(19) NOT NULL,
-  user_id    VARCHAR(19) NOT NULL
-  COMMENT '对应用户ID',
-  authority  VARCHAR(3600) COMMENT '对应用户权限(json字符串)',
-  user_type  VARCHAR(2) COMMENT '用户类型(1:管理员;2:场馆管理员;3:财务;4:收银)',
-  venue_json VARCHAR(500) COMMENT '对应场馆的id(json字符串)',
   PRIMARY KEY (id)
 );

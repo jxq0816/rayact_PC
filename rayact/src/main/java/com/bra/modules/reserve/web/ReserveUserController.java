@@ -10,12 +10,9 @@ import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveUserService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.AuthorityUtils;
-import com.bra.modules.sys.entity.Role;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xiaobin on 16/1/19.
@@ -34,8 +29,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/user")
 public class ReserveUserController extends BaseController {
-    @Autowired
-    private SystemService systemService;
     @Autowired
     private ReserveVenueService reserveVenueService;
     @Autowired
@@ -73,8 +66,8 @@ public class ReserveUserController extends BaseController {
         if (user.getCompany() == null || user.getCompany().getId() == null) {
             user.setCompany(UserUtils.getUser().getCompany());
         }
-        if (user.getOffice() == null || user.getOffice().getId() == null) {
-            user.setOffice(UserUtils.getUser().getOffice());
+        if (user.getCompany() == null || user.getCompany().getId() == null) {
+            user.setCompany(UserUtils.getUser().getCompany());
         }
         model.addAttribute("user", user);
         if (StringUtils.isNotBlank(user.getId())) {
@@ -94,7 +87,7 @@ public class ReserveUserController extends BaseController {
             return "redirect:" + adminPath + "/sys/user/list?repage";
         }
         // 修正引用赋值问题，不知道为何，Company和Office引用的一个实例地址，修改了一个，另外一个跟着修改。
-        user.setOffice(UserUtils.getUser().getOffice());
+        user.setCompany(UserUtils.getUser().getCompany());
         // 如果新密码为空，则不更换密码
         if (StringUtils.isNotBlank(user.getNewPassword())) {
             user.setPassword(MD5Util.getMD5String(user.getNewPassword()));
@@ -105,15 +98,6 @@ public class ReserveUserController extends BaseController {
         if (!"true".equals(checkLoginName(user.getOldLoginName(), user.getLoginName()))) {
             addMessage(model, "保存用户'" + user.getLoginName() + "'失败，登录名已存在");
             return form(user, model);
-        }
-
-        // 过滤用户角色
-        if(AuthorityUtils.isAdmin(user.getId())){
-            user.setRoleList(Lists.newArrayList(systemService.getRoleByEnname(Role.COOPERATIVE)));
-        }else{
-            List<Role> roleList = Lists.newArrayList();
-            roleList.add(systemService.getRoleByEnname(Role.COOPERATIVE_USER));
-            user.setRoleList(roleList);
         }
         // 保存用户信息
         reserveUserService.saveUser(user);
@@ -232,20 +216,4 @@ public class ReserveUserController extends BaseController {
         return "modules/sys/userModifyPwd";
     }
 
-    @RequiresPermissions("user")
-    @ResponseBody
-    @RequestMapping(value = "treeData")
-    public List<Map<String, Object>> treeData(@RequestParam(required = false) String officeId, HttpServletResponse response) {
-        List<Map<String, Object>> mapList = Lists.newArrayList();
-        List<User> list = reserveUserService.findUserByOfficeId(officeId);
-        for (int i = 0; i < list.size(); i++) {
-            User e = list.get(i);
-            Map<String, Object> map = Maps.newHashMap();
-            map.put("id", "u_" + e.getId());
-            map.put("pId", officeId);
-            map.put("name", StringUtils.replace(e.getName(), " ", ""));
-            mapList.add(map);
-        }
-        return mapList;
-    }
 }

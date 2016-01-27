@@ -5,7 +5,6 @@ import java.util.List;
 import com.bra.common.utils.Collections3;
 import com.bra.modules.reserve.dao.ReserveVenueDao;
 import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.sys.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,15 +36,10 @@ public class ReserveRoleService extends CrudService<ReserveRoleDao, ReserveRole>
     }
 
     public List<String> findVenueIdsByRole(ReserveRole reserveRole) {
-        List<Role> roleList = reserveRole.getUser().getRoleList();
-        if (Collections3.isEmpty(roleList)) {
-            return null;
-        }
         List<ReserveVenue> venueList = reserveVenueDao.findList(new ReserveVenue());
-        for (Role role : roleList) {
-            if (Role.COOPERATIVE.equals(role.getEnname())) {//管理员
-                return Collections3.extractToList(venueList, "id");
-            }
+
+        if("1".equals(reserveRole.getUser().getUserType())){
+            return Collections3.extractToList(venueList, "id");
         }
         List<ReserveRole> reserveRoles = findList(reserveRole);
         if (!Collections3.isEmpty(reserveRoles)) {

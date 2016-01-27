@@ -5,7 +5,6 @@ import com.bra.modules.reserve.entity.ReserveRole;
 import com.bra.modules.reserve.entity.json.Authority;
 import com.bra.modules.reserve.service.ReserveRoleService;
 import com.bra.modules.reserve.service.ReserveUserService;
-import com.bra.modules.sys.entity.Role;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
@@ -38,13 +37,7 @@ public class AuthorityUtils {
             return false;
         SystemService systemService = SpringContextHolder.getBean("systemService");
         User user = systemService.getUser(userId);
-        List<Role> roles = user.getRoleList();
-        for (Role role : roles) {
-            if (Role.COOPERATIVE.equals(role.getEnname())) {
-                return true;
-            }
-        }
-        return false;
+        return "1".equals(user.getUserType());
     }
 
     public static String getVenueIds(List<String> venueIds) {
@@ -70,14 +63,8 @@ public class AuthorityUtils {
     }
 
     public static List<Authority> getAuthByUser(User user) {
-        List<Role> roleList = user.getRoleList();
-        if (Collections3.isEmpty(roleList)) {
-            return null;
-        }
-        for (Role role : roleList) {
-            if (Role.COOPERATIVE.equals(role.getEnname())) {
-                return getAll();
-            }
+        if ("1".equals(user.getUserType())) {
+            getAll();
         }
         ReserveUserService reserveUserService = SpringContextHolder.getBean("reserveUserService");
         ReserveRole reserveRole = reserveUserService.getRole(user);
