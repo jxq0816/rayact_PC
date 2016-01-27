@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveCommoditySell;
 import com.bra.modules.reserve.entity.ReserveCommoditySellDetailList;
+import com.bra.modules.reserve.service.ReserveCommoditySellService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,8 +39,11 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	private ReserveCommoditySellDetailService reserveCommoditySellDetailService;
 
 	@Autowired
+	private ReserveCommoditySellService reserveCommoditySellService;
+
+	@Autowired
 	private ReserveCommoditySellDetailList reserveCommoditySellDetailList;
-	
+
 	@ModelAttribute
 	public ReserveCommoditySellDetail get(@RequestParam(required=false) String id) {
 		ReserveCommoditySellDetail entity = null;
@@ -50,16 +55,30 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		}
 		return entity;
 	}
-	@RequestMapping(value = "pay")
+	@RequestMapping(value = "sellSubmit")
 	@ResponseBody
 	@Token(remove = true)
-	public  String pay(ReserveCommoditySellDetailList sellDetailList) {
+	public  String sellSubmit(ReserveCommoditySellDetailList sellDetailList) {
+		//销售主表
 		List<ReserveCommoditySellDetail> list=sellDetailList.getReserveCommoditySellDetailList();
+		Double total=0.0;
+		for(ReserveCommoditySellDetail sellDetail:list ){
+			Double price=sellDetail.getPrice();
+			Integer num=sellDetail.getNum();
+			Double detailSum=price*num;
+			total+=detailSum;
+		}
+		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
+		reserveCommoditySell.setTotalSum(total);
+		reserveCommoditySellService.save(reserveCommoditySell);
+
+		//销售次表
 		for(ReserveCommoditySellDetail sellDetail:list ){
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
 			Double detailSum=price*num;
 			sellDetail.setDetailSum(detailSum);
+			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			reserveCommoditySellDetailService.save(sellDetail);
 		}
 		return "付款成功";
@@ -67,7 +86,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveCommoditySellDetail reserveCommoditySellDetail, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveCommoditySellDetail> page = reserveCommoditySellDetailService.findPage(new Page<ReserveCommoditySellDetail>(request, response), reserveCommoditySellDetail); 
+		Page<ReserveCommoditySellDetail> page = reserveCommoditySellDetailService.findPage(new Page<ReserveCommoditySellDetail>(request, response), reserveCommoditySellDetail);
 		model.addAttribute("page", page);
 		return "reserve/record/reserveCommoditySellDetailList";
 	}
@@ -79,7 +98,6 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		return "reserve/record/reserveCommoditySellDetailList";
 	}
 
-	@RequiresPermissions("reserve:reserveCommoditySellDetail:view")
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveCommoditySellDetail reserveCommoditySellDetail, Model model) {
@@ -87,7 +105,6 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		return "reserve/commodity/reserveCommoditySellDetailForm";
 	}
 
-	@RequiresPermissions("reserve:reserveCommoditySellDetail:edit")
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveCommoditySellDetail reserveCommoditySellDetail, Model model, RedirectAttributes redirectAttributes) {
@@ -98,8 +115,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		addMessage(redirectAttributes, "保存商品销售明细成功");
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCommoditySellDetail/?repage";
 	}
-	
-	@RequiresPermissions("reserve:reserveCommoditySellDetail:edit")
+
 	@RequestMapping(value = "delete")
 	public String delete(ReserveCommoditySellDetail reserveCommoditySellDetail, RedirectAttributes redirectAttributes) {
 		reserveCommoditySellDetailService.delete(reserveCommoditySellDetail);

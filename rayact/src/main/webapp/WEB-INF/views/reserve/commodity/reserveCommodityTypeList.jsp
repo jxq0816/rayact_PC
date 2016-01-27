@@ -59,7 +59,6 @@
                                             ${commodityType.name}
                                     </a></td>
 
-                                    <shiro:hasPermission name="reserve:commodityType:edit">
                                         <td>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/commodityType/form?id=${commodityType.id}"><i
@@ -68,7 +67,6 @@
                                                href="${ctx}/reserve/commodityType/delete?id=${commodityType.id}"
                                                onclick="return confirmb('确认要删除该商品类别吗？', this.href)">删除</a>
                                         </td>
-                                    </shiro:hasPermission>
                                 </tr>
                             </c:forEach>
                             </tbody>

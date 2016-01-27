@@ -69,9 +69,7 @@
                                 <th>开始时间</th>
                                 <th>到期时间</th>
                                 <th>备注</th>
-                                <shiro:hasPermission name="reserve:reserveMember:edit">
                                     <th>操作</th>
-                                </shiro:hasPermission>
                             </tr>
                             </thead>
                             <tbody>

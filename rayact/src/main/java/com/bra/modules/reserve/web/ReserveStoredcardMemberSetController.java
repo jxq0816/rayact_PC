@@ -51,7 +51,6 @@ public class ReserveStoredcardMemberSetController extends BaseController {
         return entity;
     }
 
-    @RequiresPermissions("reserve:reservestoredCardMemberSet:view")
     @RequestMapping(value = {"list", ""})
     public String list(ReserveStoredcardMemberSet reservestoredCardMemberSet, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<ReserveStoredcardMemberSet> page = reserveStoredcardMemberSetService.findPage(new Page<ReserveStoredcardMemberSet>(request, response), reservestoredCardMemberSet);
@@ -59,7 +58,6 @@ public class ReserveStoredcardMemberSetController extends BaseController {
         return "reserve/member/storedCardSetList";
     }
 
-    @RequiresPermissions("reserve:reservestoredCardMemberSet:view")
     @RequestMapping(value = "form")
     @Token(save = true)
     public String form(ReserveStoredcardMemberSet reservestoredCardMemberSet, Model model) {
@@ -70,7 +68,6 @@ public class ReserveStoredcardMemberSetController extends BaseController {
         return "reserve/member/storedCardSetForm";
     }
 
-    @RequiresPermissions("reserve:reservestoredCardMemberSet:edit")
     @RequestMapping(value = "save")
     @Token(remove = true)
     public String save(ReserveStoredcardMemberSet reservestoredCardMemberSet, Model model, RedirectAttributes redirectAttributes) {
@@ -85,7 +82,6 @@ public class ReserveStoredcardMemberSetController extends BaseController {
         return "redirect:"+Global.getAdminPath()+"/reserve/storedCardMemberSet/list";
     }
 
-    @RequiresPermissions("reserve:reservestoredCardMemberSet:edit")
     @RequestMapping(value = "delete")
     public String delete(ReserveStoredcardMemberSet reservestoredCardMemberSet, RedirectAttributes redirectAttributes) {
         reserveStoredcardMemberSetService.delete(reservestoredCardMemberSet);

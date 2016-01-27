@@ -44,7 +44,6 @@ public class ReserveCommodityTypeController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("reserve:commodityType:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveCommodityType commodityType, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveCommodityType> page = reserveCommodityTypeService.findPage(new Page<ReserveCommodityType>(request, response), commodityType);
@@ -52,7 +51,6 @@ public class ReserveCommodityTypeController extends BaseController {
 		return "reserve/commodity/reserveCommodityTypeList";
 	}
 
-	@RequiresPermissions("reserve:commodityType:view")
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveCommodityType commodityType, Model model) {
@@ -60,7 +58,6 @@ public class ReserveCommodityTypeController extends BaseController {
 		return "reserve/commodity/reserveCommodityTypeForm";
 	}
 
-	@RequiresPermissions("reserve:commodityType:edit")
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveCommodityType commodityType, Model model, RedirectAttributes redirectAttributes) {
@@ -72,7 +69,6 @@ public class ReserveCommodityTypeController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/reserve/commodityType/list";
 	}
 	
-	@RequiresPermissions("reserve:commodityType:edit")
 	@RequestMapping(value = "delete")
 	public String delete(ReserveCommodityType commodityType, RedirectAttributes redirectAttributes) {
 		reserveCommodityTypeService.delete(commodityType);

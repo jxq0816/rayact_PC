@@ -51,7 +51,6 @@ public class ReserveTimecardMemberSetController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("reserve:reserveTimecardMemberSet:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveTimecardMemberSet reserveTimecardMemberSet, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveTimecardMemberSet> page = reserveTimecardMemberSetService.findPage(new Page<ReserveTimecardMemberSet>(request, response), reserveTimecardMemberSet); 
@@ -59,7 +58,6 @@ public class ReserveTimecardMemberSetController extends BaseController {
 		return "reserve/member/timeCardSetList";
 	}
 
-	@RequiresPermissions("reserve:reserveTimecardMemberSet:view")
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveTimecardMemberSet reserveTimecardMemberSet, Model model) {
@@ -69,7 +67,6 @@ public class ReserveTimecardMemberSetController extends BaseController {
 		return "reserve/member/timeCardSetForm";
 	}
 
-	@RequiresPermissions("reserve:reserveTimecardMemberSet:edit")
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveTimecardMemberSet reserveTimecardMemberSet, Model model, RedirectAttributes redirectAttributes) {
@@ -81,7 +78,6 @@ public class ReserveTimecardMemberSetController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveTimecardMemberSet/?repage";
 	}
 	
-	@RequiresPermissions("reserve:reserveTimecardMemberSet:edit")
 	@RequestMapping(value = "delete")
 	public String delete(ReserveTimecardMemberSet reserveTimecardMemberSet, RedirectAttributes redirectAttributes) {
 		reserveTimecardMemberSetService.delete(reserveTimecardMemberSet);

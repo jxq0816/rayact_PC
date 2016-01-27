@@ -43,7 +43,7 @@
                                         <td>身份证:</td>
                                         <td>
                                             <form:input id="sfz" path="sfz" htmlEscape="false" maxlength="18"
-                                                        class="form-control " />
+                                                        class="form-control "/>
                                         </td>
 
                                         <td>地址:</td>
@@ -93,10 +93,10 @@
                                     </tr>
                                 </table>
                                 <div>
-                                    <shiro:hasPermission name="reserve:reserveMember:edit"><input id="btnSubmit"
-                                                                                                  class="btn btn-primary"
-                                                                                                  type="submit"
-                                                                                                  value="保 存"/>&nbsp;</shiro:hasPermission>
+                                    <input id="btnSubmit"
+                                           class="btn btn-primary"
+                                           type="submit"
+                                           value="保 存"/>&nbsp;
                                     <input id="btnCancel" class="btn" type="button" value="返 回"
                                            onclick="history.go(-1)"/>
                                 </div>

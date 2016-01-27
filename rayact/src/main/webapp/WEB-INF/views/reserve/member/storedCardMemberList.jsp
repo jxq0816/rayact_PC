@@ -67,9 +67,7 @@
                                 <th>地址</th>
                                 <th>余额</th>
                                 <th>备注</th>
-                                <shiro:hasPermission name="reserve:reserveMember:edit">
                                     <th>操作</th>
-                                </shiro:hasPermission>
                             </tr>
                             </thead>
                             <tbody>
@@ -103,7 +101,6 @@
                                     <td>
                                             ${reserveMember.remarks}
                                     </td>
-                                    <shiro:hasPermission name="reserve:reserveMember:edit">
                                         <td>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/storedCardMember/form?id=${reserveMember.id}"><i
@@ -117,7 +114,6 @@
                                             <a class="btn btn-primary btn-xs refundBtn" data-id="${reserveMember.id}"><i
                                                     class="fa fa-pencil"></i>退费</a>
                                         </td>
-                                    </shiro:hasPermission>
                                 </tr>
                             </c:forEach>
                             </tbody>

@@ -51,30 +51,11 @@ function sum() {
     $("#sum").text(sum);
     return sum;
 }
-
 function sellSubmit() {
-    var totalSum = sum();
-    var reserveCommoditySellId;
-    jQuery.postItems({
-        url: ctx+'/reserve/reserveCommoditySell/save',
-        data: {
-            totalSum: totalSum,
-        },
-        success: function (result) {
-            reserveCommoditySellId=result;
-        }
-    });
-    $("#sellList tbody tr").each(function () {
-        $(this).find("td input:first").val(reserveCommoditySellId);
-    });
-    sellDetailSubmit();
-}
-
-function sellDetailSubmit() {
     var sellDetailList = $("#paySell").serializeArray();
     var token=$("#token").val();
     jQuery.postItems({
-        url: ctx+'/reserve/reserveCommoditySellDetail/pay',
+        url: ctx+'/reserve/reserveCommoditySellDetail/sellSubmit',
         data: sellDetailList,
         success: function (result) {
             successLoding(result);
@@ -85,4 +66,3 @@ function sellDetailSubmit() {
         }
     });
 }
-

@@ -26,7 +26,8 @@
                                 <tbody class="no-border-y">
                                 <tr>
                                     <td>
-                                        <form:input placeholder="请输入商品名称或者简写" path="quickSearch"  htmlEscape="false" cssstyle="width:70px;" maxlength="30"
+                                        <form:input placeholder="请输入商品名称或者简写" path="quickSearch" htmlEscape="false"
+                                                    cssstyle="width:70px;" maxlength="30"
                                                     class="form-control"/>
                                     </td>
                                     <td>
@@ -56,9 +57,7 @@
                                 <th>单位</th>
                                 <th>类别</th>
                                 <th>状态</th>
-                                <shiro:hasPermission name="reserve:commodity:edit">
-                                    <th>操作</th>
-                                </shiro:hasPermission>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -196,13 +195,13 @@
                 return;
             }
             var id = $("#id").val();
-            var token=$("#token").val();
+            var token = $("#token").val();
             jQuery.postItems({
                 url: '${ctx}/reserve/commodity/inStorage',
                 data: {
-                    id:id ,
-                    inRepertoryNum:inRepertoryNum ,
-                    token:token
+                    id: id,
+                    inRepertoryNum: inRepertoryNum,
+                    token: token
                 },
                 success: function (result) {
                     if (result == "success") {

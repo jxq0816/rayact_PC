@@ -57,9 +57,7 @@
                                 <th>截止日期</th>
                                 <th>分钟/次</th>
                                 <th>备注</th>
-                                <shiro:hasPermission name="reserve:reserveMember:edit">
-                                    <th>操作</th>
-                                </shiro:hasPermission>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -85,7 +83,6 @@
                                     <td>
                                             ${reserveTimecardMemberSet.remarks}
                                     </td>
-                                    <shiro:hasPermission name="reserve:reserveTimecardMemberSet:edit">
                                         <td>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveTimecardMemberSet/form?id=${reserveTimecardMemberSet.id}"><i
@@ -95,7 +92,6 @@
                                                onclick="return confirmb('确认要删除该次卡设置吗？', this.href)"><i
                                                     class="fa fa-times"></i>删除</a>
                                         </td>
-                                    </shiro:hasPermission>
                                 </tr>
                             </c:forEach>
                             </tbody>

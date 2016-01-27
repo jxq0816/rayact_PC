@@ -46,7 +46,9 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		for(Map<String,Object> map : list){
 			double saleAmount=(double)map.get("saleAmount");
 			double rate=(saleAmount/total)*100;
-			map.put("saleRate",rate);
+			BigDecimal   rateBig   =   new   BigDecimal(rate);
+			double  r= rateBig.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();//保留两位小数
+			map.put("saleRate",r);
 		}
 		return list;
 	}

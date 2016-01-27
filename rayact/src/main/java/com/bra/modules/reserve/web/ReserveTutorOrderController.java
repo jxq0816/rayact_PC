@@ -44,7 +44,6 @@ public class ReserveTutorOrderController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("reserve:reserveTutorOrder:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveTutorOrder reserveTutorOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveTutorOrder> page = reserveTutorOrderService.findPage(new Page<ReserveTutorOrder>(request, response), reserveTutorOrder); 
@@ -52,7 +51,6 @@ public class ReserveTutorOrderController extends BaseController {
 		return "modules/reserve/reserveTutorOrderList";
 	}
 
-	@RequiresPermissions("reserve:reserveTutorOrder:view")
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveTutorOrder reserveTutorOrder, Model model) {
@@ -60,7 +58,6 @@ public class ReserveTutorOrderController extends BaseController {
 		return "modules/reserve/reserveTutorOrderForm";
 	}
 
-	@RequiresPermissions("reserve:reserveTutorOrder:edit")
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveTutorOrder reserveTutorOrder, Model model, RedirectAttributes redirectAttributes) {
@@ -72,7 +69,6 @@ public class ReserveTutorOrderController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveTutorOrder/?repage";
 	}
 	
-	@RequiresPermissions("reserve:reserveTutorOrder:edit")
 	@RequestMapping(value = "delete")
 	public String delete(ReserveTutorOrder reserveTutorOrder, RedirectAttributes redirectAttributes) {
 		reserveTutorOrderService.delete(reserveTutorOrder);

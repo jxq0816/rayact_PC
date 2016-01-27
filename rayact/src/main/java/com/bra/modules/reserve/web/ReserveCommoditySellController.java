@@ -31,7 +31,7 @@ public class ReserveCommoditySellController extends BaseController {
 
 	@Autowired
 	private ReserveCommoditySellService reserveCommoditySellService;
-	
+
 	@ModelAttribute
 	public ReserveCommoditySell get(@RequestParam(required=false) String id) {
 		ReserveCommoditySell entity = null;
@@ -43,7 +43,7 @@ public class ReserveCommoditySellController extends BaseController {
 		}
 		return entity;
 	}
-	
+
 	@RequestMapping(value = {"list", ""})
 	@Token(save = true)
 	public String list(ReserveCommoditySell reserveCommoditySell, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -67,7 +67,7 @@ public class ReserveCommoditySellController extends BaseController {
 		String id=reserveCommoditySell.getId();
 		return id;
 	}
-	
+
 	@RequestMapping(value = "delete")
 	public String delete(ReserveCommoditySell reserveCommoditySell, RedirectAttributes redirectAttributes) {
 		reserveCommoditySellService.delete(reserveCommoditySell);

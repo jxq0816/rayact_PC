@@ -45,7 +45,6 @@ public class ReserveMemberController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("reserve:reserveMember:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember); 
@@ -53,7 +52,6 @@ public class ReserveMemberController extends BaseController {
 		return "reserve/member/list";
 	}
 
-	@RequiresPermissions("reserve:reserveMember:view")
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveMember reserveMember, Model model) {
@@ -61,7 +59,6 @@ public class ReserveMemberController extends BaseController {
 		return "reserve/member/form";
 	}
 
-	@RequiresPermissions("reserve:reserveMember:edit")
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveMember reserveMember, Model model, RedirectAttributes redirectAttributes) {
@@ -74,7 +71,6 @@ public class ReserveMemberController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveMember/?repage";
 	}
 	
-	@RequiresPermissions("reserve:reserveMember:edit")
 	@RequestMapping(value = "delete")
 	public String delete(ReserveMember reserveMember, RedirectAttributes redirectAttributes) {
 		reserveMemberService.delete(reserveMember);

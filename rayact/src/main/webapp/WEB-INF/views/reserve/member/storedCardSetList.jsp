@@ -55,9 +55,7 @@
                                 <th>截止日期</th>
                                 <th>折扣比率</th>
                                 <th>备注</th>
-                                <shiro:hasPermission name="reserve:reserveMember:edit">
-                                    <th>操作</th>
-                                </shiro:hasPermission>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -85,17 +83,15 @@
                                     <td>
                                             ${reserveStoredcardMemberSet.remarks}
                                     </td>
-                                    <shiro:hasPermission name="reserve:reserveStoredcardMemberSet:edit">
-                                        <td>
-                                            <a class="btn btn-primary btn-xs"
-                                               href="${ctx}/reserve/storedCardMemberSet/form?id=${reserveStoredcardMemberSet.id}">
-                                                <i class="fa fa-pencil"></i>修改</a>
-                                            <a class="btn btn-danger btn-xs"
-                                               href="${ctx}/reserve/storedCardMemberSet/delete?id=${reserveStoredcardMemberSet.id}"
-                                               onclick="return confirmb('确认要删除该储值卡吗？', this.href)">
-                                                <i class="fa fa-times"></i>删除</a>
-                                        </td>
-                                    </shiro:hasPermission>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs"
+                                           href="${ctx}/reserve/storedCardMemberSet/form?id=${reserveStoredcardMemberSet.id}">
+                                            <i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs"
+                                           href="${ctx}/reserve/storedCardMemberSet/delete?id=${reserveStoredcardMemberSet.id}"
+                                           onclick="return confirmb('确认要删除该储值卡吗？', this.href)">
+                                            <i class="fa fa-times"></i>删除</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
