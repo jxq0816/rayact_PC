@@ -59,6 +59,7 @@ $(document).ready(function () {
 
         var id = $("#id").val();
         var token = $("#token").val();
+
         jQuery.postItems({
             url: ctx+'/reserve/reserveCardStatements/refund',
             data: {
@@ -87,12 +88,20 @@ $(document).ready(function () {
 
         var id = $("#id").val();
         var token = $("#token").val();
+        var payType = $('#payType input:radio:checked').val();
+
+        if (payType == ''|| payType== undefined ||payType==null) {
+            formLoding("请选择支付方式");
+            return;
+        }
+
         jQuery.postItems({
             url: ctx+'/reserve/reserveCardStatements/recharge',
             data: {
                 id: id,
                 token: token,
-                rechargeVolume: rechargeVolume
+                rechargeVolume: rechargeVolume,
+                payType:payType
             },
             success: function (result) {
                 if (result == "success") {

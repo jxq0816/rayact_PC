@@ -64,6 +64,7 @@
                                 <th>卡号</th>
                                 <th>金额</th>
                                 <th>电话</th>
+                                <th>支付方式</th>
                                 <th>操作人</th>
                                 <th>时间</th>
                             </tr>
@@ -82,6 +83,27 @@
                                     </td>
                                     <td>
                                             ${reserveCardStatements.reserveMember.mobile}
+                                    </td>
+
+                                    <td>
+                                        <c:if test="${reserveCardStatements.payType eq 1}">
+                                            会员卡
+                                        </c:if>
+                                        <c:if test="${reserveCardStatements.payType eq 2}">
+                                            现金
+                                        </c:if>
+                                        <c:if test="${reserveCardStatements.payType eq 3}">
+                                            银行卡
+                                        </c:if>
+                                        <c:if test="${reserveCardStatements.payType eq 4}">
+                                            微信
+                                        </c:if>
+                                        <c:if test="${reserveCardStatements.payType eq 5}">
+                                            支付宝
+                                        </c:if>
+                                        <c:if test="${reserveCardStatements.payType eq 6}">
+                                            其他
+                                        </c:if>
                                     </td>
 
                                     <td>

@@ -15,7 +15,15 @@ public class ReserveCardStatements extends SaasEntity<ReserveCardStatements> {
 	private ReserveMember reserveMember;	// 会员编号外键
 	private String transactionType;  //交易类型
 	private Double transactionVolume;		// 交易额
+	private String payType; //支付类型(1:会员卡,2:现金,3:银行卡,4:微信,5:支付宝,6:其它)'
 
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
 
 	public String getTransactionType() {
 		return transactionType;

@@ -104,7 +104,7 @@ public class ReserveCardStatementsController extends BaseController {
 	@RequestMapping(value = "recharge")
 	@ResponseBody
 	@Token(remove = true)
-	public String recharge(Double rechargeVolume,String id,RedirectAttributes redirectAttributes) {
+	public String recharge(Double rechargeVolume,String id,String payType,RedirectAttributes redirectAttributes) {
 
 		ReserveMember reserveMember=reserveMemberService.get(id);
 		Double remainder=rechargeVolume+reserveMember.getRemainder();
@@ -117,6 +117,7 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveCardStatements.setTransactionType("1");//充值
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setTransactionVolume(rechargeVolume);
+		reserveCardStatements.setPayType(payType);
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}

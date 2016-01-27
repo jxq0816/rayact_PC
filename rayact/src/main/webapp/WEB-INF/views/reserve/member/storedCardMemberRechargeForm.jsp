@@ -1,8 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="sys" uri="http://www.springframework.org/tags" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<div class="content">
+<td class="content">
     <form:form id="formBean" modelAttribute="reserveMember"
                action="${ctx}/reserve/storedCardMember/save" method="post"
                class="form-horizontal">
@@ -46,14 +44,44 @@
             </tr>
 
             <tr>
+                <td>
+                    支付方式:
+                </td>
+
+                <td colspan="3">
+                    <div class="btn-group" id="payType">
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="1" name="payType"/>会员卡
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="2" name="payType"/>现金
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="3" name="payType"/>银行卡
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="4" name="payType"/>微信
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="5" name="payType"/>支付宝
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="6" name="payType"/>其它
+                        </label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
                 <td>充值:</td>
                 <td colspan="3">
-                    <input id="rechargeVolume" name="rechargeVolume" htmlEscape="false" maxlength="30" class="form-control required number"/>
+                    <input id="rechargeVolume" name="rechargeVolume" htmlEscape="false" maxlength="30"
+                           class="form-control required number"/>
                 </td>
             </tr>
         </table>
     </form:form>
-</div>
+</td>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#formBean").validate({
