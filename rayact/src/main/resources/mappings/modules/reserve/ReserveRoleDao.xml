@@ -12,7 +12,7 @@
 	</sql>
 	
 	<sql id="reserveRoleJoins">
-		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+		LEFT JOIN reserve_user u2 ON u2.id = a.user_id
 	</sql>
     
 	<select id="get" resultType="ReserveRole">

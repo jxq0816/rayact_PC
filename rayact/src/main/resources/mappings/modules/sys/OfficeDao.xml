@@ -4,8 +4,6 @@
 
 	<sql id="officeColumns">
 		a.id,
-		a.parent_id AS "parent.id",
-		a.parent_ids,
 		a.area_id AS "area.id",
 		a.code,
 		a.name,
@@ -35,10 +33,7 @@
 	</sql>
 	
 	<sql id="officeJoins">
-		LEFT JOIN sys_office p ON p.id = a.parent_id
 		LEFT JOIN sys_area ar ON ar.id = a.area_id
-		LEFT JOIN SYS_USER pp ON pp.id = a.primary_person
-		LEFT JOIN SYS_USER dp ON dp.id = a.deputy_person
     </sql>
 	
 	<select id="get" resultType="Office">
@@ -57,7 +52,7 @@
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<!-- 数据范围过滤 -->
 		${sqlMap.dsf}
-		OR a.id = #{currentUser.office.id}
+		OR a.id = #{currentUser.company.id}
 		ORDER BY a.code
 	</select>
 			
@@ -81,9 +76,7 @@
 	
 	<insert id="insert">
 		INSERT INTO sys_office(
-			id, 
-			parent_id, 
-			parent_ids, 
+			id,
 			area_id, 
 			code, 
 			name, 
@@ -106,9 +99,7 @@
 			primary_person,
 			deputy_person
 		) VALUES (
-			#{id}, 
-			#{parent.id}, 
-			#{parentIds}, 
+			#{id},
 			#{area.id}, 
 			#{code}, 
 			#{name}, 
@@ -134,9 +125,7 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE sys_office SET 
-			parent_id = #{parent.id}, 
-			parent_ids = #{parentIds}, 
+		UPDATE sys_office SET
 			area_id = #{area.id}, 
 			code = #{code}, 
 			name = #{name}, 
@@ -154,13 +143,6 @@
 			useable=#{useable},
 			primary_person=#{primaryPerson.id},
 			deputy_person=#{deputyPerson.id}
-		WHERE id = #{id}
-	</update>
-	
-	<update id="updateParentIds">
-		UPDATE sys_office SET 
-			parent_id = #{parent.id}, 
-			parent_ids = #{parentIds}
 		WHERE id = #{id}
 	</update>
 	

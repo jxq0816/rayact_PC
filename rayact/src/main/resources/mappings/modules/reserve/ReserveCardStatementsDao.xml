@@ -21,7 +21,7 @@
 
     <sql id="reserveCardStatementsJoins">
 		left JOIN reserve_member as m on m.id=a.fk_reserve_member_id
-		LEFT JOIN  SYS_USER as u on u.id=a.create_by
+		LEFT JOIN  reserve_user as u on u.id=a.create_by
 	</sql>
 
     <select id="rechargeOfToday" resultType="BigDecimal">

@@ -30,11 +30,9 @@ CREATE TABLE reserve_user
 CREATE TABLE reserve_office
 (
 	id varchar(64) NOT NULL COMMENT '编号',
-	parent_id varchar(64) NOT NULL COMMENT '父级编号',
-	parent_ids varchar(2000) NOT NULL COMMENT '所有父级编号',
 	name varchar(100) NOT NULL COMMENT '名称',
 	sort decimal(10,0) NOT NULL COMMENT '排序',
-	area_id varchar(64) NOT NULL COMMENT '归属区域',
+	area_id varchar(64) COMMENT '归属区域',
 	address varchar(255) COMMENT '联系地址',
 	phone varchar(200) COMMENT '电话',
 	USEABLE varchar(64) COMMENT '是否启用',
