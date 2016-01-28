@@ -51,9 +51,6 @@
                 <td colspan="3">
                     <div class="btn-group" id="payType">
                         <label class="radio-inline">
-                            <input type="radio" class="icheck" value="1" name="payType"/>会员卡
-                        </label>
-                        <label class="radio-inline">
                             <input type="radio" class="icheck" value="2" name="payType"/>现金
                         </label>
                         <label class="radio-inline">

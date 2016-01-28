@@ -86,9 +86,6 @@
                                     </td>
 
                                     <td>
-                                        <c:if test="${reserveCardStatements.payType eq 1}">
-                                            会员卡
-                                        </c:if>
                                         <c:if test="${reserveCardStatements.payType eq 2}">
                                             现金
                                         </c:if>
