@@ -32,6 +32,10 @@ public class AuthorityUtils {
 
     private static ResourceLoader resourceLoader = new DefaultResourceLoader();
 
+    public static boolean isAdmin() {
+        return isAdmin(UserUtils.getUser().getId());
+    }
+
     public static boolean isAdmin(String userId) {
         if (StringUtils.isBlank(userId))
             return false;
