@@ -94,7 +94,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY c.code, o.code, a.name
+				ORDER BY  a.name
 			</otherwise>
 		</choose>
 	</select>
@@ -107,7 +107,7 @@
 		FROM reserve_user a
 		<include refid="userJoins"/>
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
-		ORDER BY c.code, o.code, a.name
+		ORDER BY  a.name
 	</select>
 	
 	<!-- 查询全部用户数目 -->

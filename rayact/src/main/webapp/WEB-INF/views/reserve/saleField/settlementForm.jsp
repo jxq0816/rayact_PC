@@ -21,7 +21,9 @@
                         <label>
                             <select class="select2" id="tutorId" name="tutorOrder.tutor.id">
                                 <c:forEach items="${tutors}" var="tutor">
-                                    <option <j:if test="${tutor.id eq tutorOrder.tutor.id}">selected="selected"</j:if> value="${tutor.id}">${tutor.name}</option>
+                                    <option
+                                            <j:if test="${tutor.id eq tutorOrder.tutor.id}">selected="selected"</j:if>
+                                            value="${tutor.id}">${tutor.name}</option>
                                 </c:forEach>
                             </select>
                         </label>
@@ -47,7 +49,6 @@
             <th>场地</th>
             <th>开始时间</th>
             <th>结束时间</th>
-            <th>频率</th>
             <th>是否半场</th>
             <th>价格</th>
             </thead>
@@ -84,15 +85,6 @@
                                         value="${t}">${t}</option>
                             </c:forEach>
                         </select>
-                    </td>
-                    <td>
-                        <j:if test="${'1' eq item.frequency}">单次</j:if>
-                        <j:if test="${'2' eq item.frequency}">每天</j:if>
-                        <j:if test="${'3' eq item.frequency}">每周(${item.consWeek})</j:if>
-                        <input type="hidden" name="venueConsList[${status.index}].frequency"
-                               value="${item.frequency}"/>
-                        <input type="hidden" name="venueConsList[${status.index}].consWeek"
-                               value="${item.consWeek}"/>
                     </td>
                     <td>
                         <j:ifelse test="${'1' eq item.halfCourt}"><j:then>是</j:then><j:else>否</j:else></j:ifelse>
@@ -144,12 +136,20 @@
     </div>
     <hr/>
     <div class="content">
-        <label id="totalPrice">总计(元):<input type="text" id="orderPrice" class="form-control" name="orderPrice"/></label>
+        <div class="row">
+            <div class="col-sm-6">
+                <label id="totalPrice">应收(元):<input type="text" id="shouldPrice" class="form-control"
+                                                    name="shouldPrice"/></label>
+                </div>
+            <div class="col-sm-6">
+                <label>实收(元):<input type="text" id="orderPrice" class="form-control" name="orderPrice"/></label>
+                </div>
+            </div>
     </div>
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
-        function initData(){
+        function initData() {
             var tutorOrderPrice = 0;
             var tutorPrice = $("#tutorPrice").val();
             var tutorCount = $("#tutorCount").val();
@@ -162,17 +162,19 @@
                 orderPrice += (value * 1);
             });
             $("#orderPrice").val(tutorOrderPrice + orderPrice);
+            $("#shouldPrice").val(tutorOrderPrice + orderPrice);
         }
+
         initData();
         //选择教练
-        $("#tutorId").on('change',function(){
+        $("#tutorId").on('change', function () {
             var tutorId = $(this).find("option:selected").val();
             jQuery.postItems({
                 url: ctx + '/reserve/reserveTutor/getTutorById',
-                data: {tutorId:tutorId},
+                data: {tutorId: tutorId},
                 success: function (data) {
                     $("#tutorPrice").val(data.price);
-                    $("#labelTutorPrice").text("每小时:"+data.price+"元");
+                    $("#labelTutorPrice").text("每小时:" + data.price + "元");
                     initData();
                 }
             });

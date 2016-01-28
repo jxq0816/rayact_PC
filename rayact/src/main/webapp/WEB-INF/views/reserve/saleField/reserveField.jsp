@@ -61,19 +61,22 @@
                             <c:set var="status" value="0"/>
                             <c:set var="itemId" value="0"/>
                             <c:set var="halfCourt" value="0"/>
+                            <c:set var="username" value=""/>
                             <c:forEach items="${file.timePriceList}" var="tp">
                                 <j:if test="${tp.time eq t}">
                                     <c:set var="status" value="${tp.status}"/>
+                                    <c:set var="username" value="${tp.userName}"/>
                                     <c:set var="itemId" value="${tp.consItem.id}"/>
                                     <j:if test="${'1' eq tp.consItem.halfCourt}">
                                         <c:set var="halfCourt" value="1"/>
                                     </j:if>
                                 </j:if>
                             </c:forEach>
-                            <td status="${status}" data-item="${itemId}"
+                            <td style="color: #000;" status="${status}" data-item="${itemId}"
                                 class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
                                 data-field="${file.fieldId}"
                                 data-time="${t}">
+                                ${username}
                             </td>
                         </c:forEach>
                     </tr>

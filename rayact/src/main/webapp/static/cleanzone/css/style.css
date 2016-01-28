@@ -4748,13 +4748,13 @@ button::-moz-focus-inner {
   color: #fff;
 }
 .colored-header.warning .modal-header {
-  padding: 20px;
+  /*padding: 20px;*/
   border-bottom: 1px solid #eb8500 !important;
   background-color: #ff9900;
   color: #fff;
 }
 .colored-header.danger .modal-header {
-  padding: 20px;
+  /*padding: 20px;*/
   border-bottom: 1px solid #cb371f !important;
   background-color: #df4b33;
   color: #fff;

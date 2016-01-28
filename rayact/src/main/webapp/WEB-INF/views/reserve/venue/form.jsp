@@ -52,18 +52,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">负责人</label>
-                                        <div class="col-sm-6">
-                                            <sys:treeselect id="primaryPerson" name="chargeUser.id"
-                                                            value="${reserveVenue.chargeUser.id}"
-                                                            labelName="chargeUser.name"
-                                                            labelValue="${reserveVenue.chargeUser.id}"
-                                                            title="用户" url="/sys/office/treeData?type=3"
-                                                            allowClear="true"
-                                                            notAllowSelectParent="true"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">联系电话</label>
                                         <div class="col-sm-6">
                                             <form:input path="tel" htmlEscape="false" maxlength="20"
@@ -510,10 +498,10 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <shiro:hasPermission name="reserve:reserveVenue:edit"><input id="btnSubmit"
+                    <input id="btnSubmit"
                                                                                  class="btn btn-primary"
                                                                                  type="submit"
-                                                                                 value="保 存"/>&nbsp;</shiro:hasPermission>
+                                                                                 value="保 存"/>&nbsp;
                     <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
                 </div>
                 </form:form>

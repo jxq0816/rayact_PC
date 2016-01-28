@@ -30,13 +30,15 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private String consMobile;        // 预定人手机号
     private String userName;        // 预定人姓名
     private String consType;        // 预订的类型1：散客 2：会员
-    private String reserveType;    //操作类型(0:可预定,1:已预定,2:锁场,3:已取消,4:已结算)
+    private String reserveType;    //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
     private Date consDate;        // 预定日期(yyyy-MM-dd)
 
     private Double cosOrderPrice;//预定时单据金额
     private Double consPrice;//预定金额
 
-    private Double orderPrice;//场地实际缴费金额
+    private Double orderPrice;//场地实缴费金额
+    private Double shouldPrice;//场地实缴费金额场地应缴费金额
+
 
     private String payType;//预定金额支付类型(1:)
 
@@ -174,6 +176,14 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
         this.orderPrice = orderPrice;
     }
 
+    public Double getShouldPrice() {
+        return shouldPrice;
+    }
+
+    public void setShouldPrice(Double shouldPrice) {
+        this.shouldPrice = shouldPrice;
+    }
+
     //-------------以下和数据库无关字段-----------------
 
     private ReserveTutor tutor;
@@ -194,5 +204,25 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     public void setTutorOrder(ReserveTutorOrder tutorOrder) {
         this.tutorOrder = tutorOrder;
+    }
+
+    private Date endDate;//预定结束日期(按照频率)
+
+    private String frequency;//频率(1:单次;2:每天;3:每周)
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 }

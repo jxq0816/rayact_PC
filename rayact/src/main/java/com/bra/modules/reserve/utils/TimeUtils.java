@@ -17,6 +17,7 @@ public class TimeUtils {
 
     public static final int BENCHMARK = 30;
 
+
     /**
      * 获取两个时间的间隔时间数量(按照半小时计算)
      *
@@ -108,7 +109,7 @@ public class TimeUtils {
                 if (timeList.size() > i + 1) {
                     times.add(timeList.get(i) + "-" + timeList.get(i + 1));
                 } else if (i % 2 == 0) {
-                   // times.add(timeList.get(i));
+                    // times.add(timeList.get(i));
                 }
             }
             return times;
@@ -173,10 +174,36 @@ public class TimeUtils {
         }
     }
 
-    public static void main(String[] args) throws ParseException {
-        List<String> times = TimeUtils.getTimeSpacListValue("09:00:00", "23:00:00", 30);
-        for (String time : times) {
-            System.out.println(time);
+    public static List<Date> getDayBettwnDays(Date end){
+        Date start = new Date();
+        List<Date> list = Lists.newArrayList();
+        for (int i = 0; i < 365; i++) {
+            Date date = DateUtils.addDays(start,i);
+            list.add(date);
+            if(DateUtils.formatDate(date).equals(DateUtils.formatDate(end))){
+                break;
+            }
         }
+        return list;
+    }
+
+    public static List<Date> getWeekBettwnDays(Date end){
+        Date start = new Date();
+        String week = getWeekOfDate(start);
+        List<Date> list = Lists.newArrayList();
+        for (int i = 0; i < 365; i++) {
+            Date date = DateUtils.addDays(start,i);
+            if(getWeekOfDate(date).equals(week)){
+                list.add(date);
+            }
+            if(DateUtils.formatDate(date).equals(DateUtils.formatDate(end))){
+                break;
+            }
+        }
+        return list;
+    }
+
+    public static void main(String[] args) throws ParseException {
+
     }
 }

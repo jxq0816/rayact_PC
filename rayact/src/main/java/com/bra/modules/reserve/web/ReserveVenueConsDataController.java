@@ -66,7 +66,6 @@ public class ReserveVenueConsDataController extends BaseController {
         reserveRole.setUser(UserUtils.getUser());
         List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
 
-        reserveVenueCons.setReserveType("4");
         reserveVenueCons.getSqlMap().put("dsf", AuthorityUtils.getVenueIds(venueIds));
         List<ReserveVenueCons> datas = reserveVenueConsService.findListOrder(reserveVenueCons);
 
@@ -84,7 +83,6 @@ public class ReserveVenueConsDataController extends BaseController {
         if (reserveVenueCons == null) {
             reserveVenueCons = new ReserveVenueCons();
         }
-        reserveVenueCons.setReserveType("1");
         Page<ReserveVenueCons> page = reserveVenueConsService.findPage(new Page<>(request, response), reserveVenueCons);
         model.addAttribute("page", page);
         return "modules/reserve/reserveVenueConsDataReservation";

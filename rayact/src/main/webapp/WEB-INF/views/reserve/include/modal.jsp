@@ -101,3 +101,29 @@
     </div>
 </div>
 <!--end 查看详情-->
+
+<!--赠品-->
+<button class="btn btn-primary btn-flat md-trigger" id="giftBtn" style="display: none" data-modal="gift-primary">Basic Form
+</button>
+<div class="md-modal colored-header warning custom-width md-effect-12" id="gift-primary">
+    <div class="md-content">
+        <div class="modal-header">
+            <h5>预定详情</h5>
+            <button type="button" class="close md-close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body form-horizontal" id="giftForm">
+            <!--预定表单-->
+
+
+            <!--end 预定表单-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeGiftBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                取消
+            </button>
+            <button type="button" id="saveGiftBtn" class="btn btn-primary btn-flat">保存</button>
+        </div>
+    </div>
+</div>
+<!--end 赠品-->

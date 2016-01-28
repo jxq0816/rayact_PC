@@ -307,7 +307,7 @@
         $(t).parents("tr").remove();
     }
 
-    //alert(checkEndTime('09:00', '10:00', '09:00'));
+    alert(checkEndTime('09:00', '10:00', '09:00'));
 
     $(document).ready(function () {
         jQuery.addWorkPrice = function (type, retail, member, group) {

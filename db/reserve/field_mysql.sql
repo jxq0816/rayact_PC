@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS reserve_venue_visitors;
 /**教练费用*/
 DROP TABLE IF EXISTS reserve_tutor_order;
 
+DROP TABLE IF EXISTS reserve_venue_gift;
+
 /*人次票设置*/
 CREATE TABLE reserve_venue_visitors_set (
   id          VARCHAR(19)         NOT NULL,
@@ -40,7 +42,8 @@ CREATE TABLE reserve_venue_cons (
   cons_type    VARCHAR(1) COMMENT '预订的类型1：散客 2：会员 3：团体',
   cons_date    DATE COMMENT '预定日期(yyyy-MM-dd)',
 
-  order_price  DOUBLE COMMENT '预定单据总金额',
+  order_price  DOUBLE COMMENT '实际收费金额',
+  should_price   DOUBLE COMMENT '应收费金额',
   cons_price   DOUBLE COMMENT '预定金额',
   pay_type     VARCHAR(1) COMMENT '支付类型(1:会员卡,2:现金,3:银行卡,4:微信,5:支付宝,6:其它)',
 
@@ -70,6 +73,8 @@ CREATE TABLE reserve_venue_cons_item
   cons_time    VARCHAR(12) COMMENT '预定时间',
   cons_info    VARCHAR(50) COMMENT '预定信息',
   frequency    VARCHAR(2) COMMENT '频率(1:单次;2:每天;3:每周)',
+  start_date   DATE COMMENT '预定开始时间',
+  end_date   DATE COMMENT '预定结束时间',
   cons_week    VARCHAR(5) COMMENT '周几',
   half_court   VARCHAR(2) COMMENT '是否半场(1:是)',
 
@@ -126,3 +131,20 @@ CREATE TABLE reserve_tutor_order (
   tenant_id   VARCHAR(19) COMMENT '路由标识',
   PRIMARY KEY (id)
 );
+
+/**场地赠品*/
+CREATE TABLE reserve_venue_gift(
+  id          VARCHAR(19)         NOT NULL,
+  gift_id     VARCHAR(19)         NOT NULL COMMENT '商品ID',
+  model_id    VARCHAR(19)         NOT NULL,
+  model_key   VARCHAR(30)         NOT NULL,
+  num         INT  COLLATE '数量',
+  create_by   VARCHAR(64),
+  create_date DATETIME,
+  update_by   VARCHAR(64),
+  update_date DATETIME,
+  remarks     VARCHAR(255),
+  del_flag    CHAR(1) DEFAULT '0' NOT NULL,
+  tenant_id   VARCHAR(19) COMMENT '路由标识',
+  PRIMARY KEY (id)
+)

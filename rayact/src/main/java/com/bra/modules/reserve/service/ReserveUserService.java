@@ -76,6 +76,10 @@ public class ReserveUserService extends CrudService<UserDao, User> {
         ReserveRole reserveRole = getRoleByUser(user);
         if (reserveRole != null)
             reserveRoleDao.delete(reserveRole);
+        else{
+            reserveRole = new ReserveRole();
+            reserveRole.setUser(user);
+        }
         if (user.getReserveRole() != null) {
             List<Authority> authorities = AuthorityUtils.findByAuths(user.getReserveRole().getAuthorityList());
             String authJson = JsonUtils.writeObjectToJson(authorities);

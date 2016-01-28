@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.entity;
 
 import com.bra.common.persistence.SaasEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * @version 2016-01-06
  */
 public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
-	
+
 	private static final long serialVersionUID = 1L;
 	private ReserveVenue reserveVenue;//所属场馆
 	private ReserveField reserveField;//所属场地
@@ -22,8 +23,11 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 	private String consWeek;//周几?
 	private String halfCourt;//是否半场(1:是)
 
+	private Date startDate;
+	private Date endDate;
+
 	private ReserveVenueCons consData;
-	
+
 	public ReserveVenueConsItem() {
 		super();
 	}
@@ -139,5 +143,23 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 
 	public void setHalfCourt(String halfCourt) {
 		this.halfCourt = halfCourt;
+	}
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 }

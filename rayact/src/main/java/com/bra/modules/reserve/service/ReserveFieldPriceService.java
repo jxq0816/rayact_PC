@@ -134,11 +134,11 @@ public class ReserveFieldPriceService {
         ReserveVenueConsItem reserveVenueCons = new ReserveVenueConsItem();
         reserveVenueCons.setReserveVenue(new ReserveVenue(venueId));
         reserveVenueCons.setConsDate(date);
-        reserveVenueCons.setFrequency("all");
+        reserveVenueCons.setFrequency("all");//所有频率的数据
         reserveVenueCons.setConsWeek(TimeUtils.getWeekOfDate(date));
 
         ReserveVenueCons venueCons = new ReserveVenueCons();
-        venueCons.setReserveType("3");
+        venueCons.setReserveType("3");//排除已经取消的
         reserveVenueCons.setConsData(venueCons);
         //查询所有预定的信息(作为本场地的预定标记)
         List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueCons);
@@ -195,8 +195,10 @@ public class ReserveFieldPriceService {
                 timePrice = new TimePrice();
                 timePrice.setTime(time);
                 ReserveVenueConsItem item = hasReserve(venueConsList, fieldPriceSet, time);
-                if (item != null) {
+                if (item != null) {//已经预定
                     timePrice.setConsItem(item);
+                    timePrice.setConsType(item.getConsData().getConsType());
+                    timePrice.setUserName(item.getConsData().getUserName());
                     timePrice.setStatus(item.getConsData().getReserveType());
                 } else {
                     timePrice.setStatus("0");

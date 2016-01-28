@@ -34,7 +34,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
 
-    public List<Map<String,Object>> findPriceGroupProject(ReserveVenueCons venueCons){
+    public List<Map<String, Object>> findPriceGroupProject(ReserveVenueCons venueCons) {
         return dao.findPriceGroupProject(venueCons);
     }
 
@@ -47,7 +47,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     public ReserveVenueCons saveConsOrder(ReserveVenueCons cons) {
         ReserveVenueCons reserveVenueCons = get(cons.getId());
         Double total = cons.getOrderPrice();
-        reserveVenueCons.setReserveType("4");
         reserveVenueCons.setPayType(cons.getPayType());
         reserveVenueCons.setOrderPrice(total);
 
@@ -82,7 +81,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         return super.findPage(page, reserveVenueCons);
     }
 
-    public List<ReserveVenueCons> findListOrder(ReserveVenueCons venueCons){
+    public List<ReserveVenueCons> findListOrder(ReserveVenueCons venueCons) {
         return dao.findListOrder(venueCons);
     }
 
@@ -93,27 +92,39 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
      */
     @Transactional(readOnly = false)
     public void save(ReserveVenueCons reserveVenueCons) {
-        super.save(reserveVenueCons);
-        List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();
-        Double orderPrice = 0D;
-        Date consDate = reserveVenueCons.getConsDate();
-        String consWeek = TimeUtils.getWeekOfDate(consDate);
-        for (ReserveVenueConsItem item : itemList) {
-            item.setConsData(reserveVenueCons);
-            item.setConsWeek(consWeek);
-            Double price = reserveFieldPriceService.getPrice(item.getReserveField(), reserveVenueCons.getConsType(),
-                    reserveVenueCons.getConsDate(), item.getStartTime(), item.getEndTime());
-            item.setConsPrice(price);
-            orderPrice += price;
-            item.preInsert();
-            reserveVenueConsItemDao.insert(item);
+        List<Date> reserveDateList = Lists.newArrayList(new Date());
+        if ("2".equals(reserveVenueCons.getFrequency())) {//每天
+            reserveDateList = TimeUtils.getDayBettwnDays(reserveVenueCons.getEndDate());
+        } else if ("3".equals(reserveVenueCons.getFrequency())) {
+            reserveDateList = TimeUtils.getWeekBettwnDays(reserveVenueCons.getEndDate());
         }
-        reserveVenueCons.setCosOrderPrice(orderPrice);
-        dao.update(reserveVenueCons);
 
-        //预定教练
-        List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());
-        applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));
+        for (Date date : reserveDateList) {
+            reserveVenueCons.setConsDate(date);
+            reserveVenueCons.preInsert();
+            dao.insert(reserveVenueCons);
+            List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();
+            Double orderPrice = 0D;
+            Date consDate = reserveVenueCons.getConsDate();
+            String consWeek = TimeUtils.getWeekOfDate(consDate);
+
+            for (ReserveVenueConsItem item : itemList) {
+                item.setConsData(reserveVenueCons);
+                item.setConsWeek(consWeek);
+                Double price = reserveFieldPriceService.getPrice(item.getReserveField(), reserveVenueCons.getConsType(),
+                        reserveVenueCons.getConsDate(), item.getStartTime(), item.getEndTime());
+                item.setConsPrice(price);
+                orderPrice += price;
+                item.preInsert();
+                reserveVenueConsItemDao.insert(item);
+                reserveVenueCons.setCosOrderPrice(orderPrice);
+                dao.update(reserveVenueCons);
+
+                //预定教练
+                List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());
+                applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));
+            }
+        }
     }
 
     /**
@@ -126,7 +137,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
      * @return
      */
     @Transactional(readOnly = false)
-    public List<ReserveVenueConsItem> cancelReserve(String itemId, String startTime, String endTime, String tutorOrderId) {
+    public List<ReserveVenueConsItem> cancelReserve(String itemId, String startTime, String endTime, String
+            tutorOrderId) {
         if (startTime.equals(endTime))
             return null;
         List<ReserveVenueConsItem> consItemList = Lists.newArrayList();

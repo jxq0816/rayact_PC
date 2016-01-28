@@ -54,9 +54,7 @@
                                 <th>负责人</th>
                                 <th>营业开始时间</th>
                                 <th>营业结束时间</th>
-                                <shiro:hasPermission name="reserve:reserveVenue:edit">
                                     <th>操作</th>
-                                </shiro:hasPermission>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,7 +78,6 @@
                                     <td>
                                             ${reserveVenue.endTime}
                                     </td>
-                                    <shiro:hasPermission name="reserve:reserveVenue:edit">
                                         <td>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveVenue/form?id=${reserveVenue.id}"><i
@@ -90,7 +87,6 @@
                                                onclick="return confirmx('确认要删除该场馆吗？', this.href)"><i
                                                     class="fa fa-times"></i>删除</a>
                                         </td>
-                                    </shiro:hasPermission>
                                 </tr>
                             </c:forEach>
 

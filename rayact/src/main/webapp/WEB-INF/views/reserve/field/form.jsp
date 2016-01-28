@@ -268,10 +268,10 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <shiro:hasPermission name="reserve:reserveVenue:edit"><input id="btnSubmit"
+                    <input id="btnSubmit"
                                                                                  class="btn btn-primary"
                                                                                  type="submit"
-                                                                                 value="保 存"/>&nbsp;</shiro:hasPermission>
+                                                                                 value="保 存"/>&nbsp;
                     <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
                 </div>
                 </form:form>
@@ -303,12 +303,14 @@
             radioClass: 'iradio_square-blue'
         });
         jQuery.addWorkPrice = function (type, retail, member, group) {
-            var startTime = $("#startTime").attr("value");
-            var endTime = $("#endTime").attr("value");
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
             $.each($("input[data='" + type + "-1']"), function () {
                 var t = $(this);
                 var localTime = t.attr("data-time");
+                console.log("------startTime-"+startTime+"---endTime==="+endTime);
                 if (checkEndTime(startTime, endTime, localTime)) {
+                    console.log("-------"+retail);
                     t.val(retail);
                 }
             });
@@ -393,6 +395,7 @@
             var retail = $("#retail").val();
             var member = $("#member").val();
             var group = $('#group').val();
+            alert(type);
             if (weekTd == '周一至周五') {
                 $.addWorkPrice(type, retail, member, group);
             } else if (weekTd == '周六') {

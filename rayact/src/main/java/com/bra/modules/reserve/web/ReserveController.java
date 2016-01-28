@@ -6,6 +6,7 @@ import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.form.VenueGiftForm;
 import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
@@ -50,6 +51,10 @@ public class ReserveController extends BaseController {
     private ReserveTutorService reserveTutorService;
     @Autowired
     private ReserveTutorOrderService reserveTutorOrderService;
+    @Autowired
+    private ReserveCommodityService reserveCommodityService;
+    @Autowired
+    private ReserveVenueGiftService reserveVenueGiftService;
 
 
     //场地预定
@@ -66,8 +71,6 @@ public class ReserveController extends BaseController {
         }
         model.addAttribute("consDate", defaultDate);
         //获得所有场馆信息
-
-
         ReserveVenue venue = new ReserveVenue();
         venue.getSqlMap().put("dsf", AuthorityUtils.getVenueIdSql("a.id"));
         List<ReserveVenue> reserveVenueList = reserveVenueService.findList(venue);
@@ -279,5 +282,27 @@ public class ReserveController extends BaseController {
         model.addAttribute("tutorOrderList", reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY));
         model.addAttribute("times", times);*/
         return "reserve/saleField/details";
+    }
+
+    //赠品
+    @RequestMapping(value = "gift")
+    public String gift(String itemId, Model model) {
+        ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
+        ReserveVenueConsItem search = new ReserveVenueConsItem();
+        consItem.getConsData().setReserveType("3");
+
+        search.setConsData(consItem.getConsData());
+        ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
+        model.addAttribute("cos", cons);
+        //商品
+        model.addAttribute("giftList", reserveCommodityService.findList(new ReserveCommodity()));
+        return "reserve/saleField/giftForm";
+    }
+
+    @RequestMapping(value = "saveGift")
+    @ResponseBody
+    public String saveGift(VenueGiftForm giftForm) {
+        reserveVenueGiftService.saveVenueList(giftForm,ReserveVenueCons.MODEL_KEY);
+        return "success";
     }
 }

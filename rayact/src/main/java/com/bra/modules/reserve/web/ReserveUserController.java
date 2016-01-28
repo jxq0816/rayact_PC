@@ -43,7 +43,6 @@ public class ReserveUserController extends BaseController {
         }
     }
 
-    @RequiresPermissions("sys:user:view")
     @RequestMapping(value = {"list", ""})
     public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<User> page = reserveUserService.findUser(new Page<>(request, response), user);
@@ -52,14 +51,12 @@ public class ReserveUserController extends BaseController {
     }
 
     @ResponseBody
-    @RequiresPermissions("sys:user:view")
     @RequestMapping(value = {"listData"})
     public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<User> page = reserveUserService.findUser(new Page<>(request, response), user);
         return page;
     }
 
-    @RequiresPermissions("sys:user:view")
     @RequestMapping(value = "form")
     @Token(save =true)
     public String form(User user, Model model) {
@@ -78,7 +75,6 @@ public class ReserveUserController extends BaseController {
         return "reserve/user/form";
     }
 
-    @RequiresPermissions("sys:user:edit")
     @RequestMapping(value = "save")
     @Token(remove = true)
     public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
@@ -109,7 +105,6 @@ public class ReserveUserController extends BaseController {
         return "redirect:" + adminPath + "/reserve/user/list?repage";
     }
 
-    @RequiresPermissions("sys:user:edit")
     @RequestMapping(value = "delete")
     public String delete(User user, RedirectAttributes redirectAttributes) {
         if (Global.isDemoMode()) {
@@ -135,7 +130,6 @@ public class ReserveUserController extends BaseController {
      * @return
      */
     @ResponseBody
-    @RequiresPermissions("sys:user:edit")
     @RequestMapping(value = "checkLoginName")
     public String checkLoginName(String oldLoginName, String loginName) {
         if (loginName != null && loginName.equals(oldLoginName)) {

@@ -48,7 +48,7 @@
                 </td>
                 <td>频率:</td>
                 <td>
-                    <select style="width: 80px;" name="venueConsList[0].frequency" class="select2">
+                    <select style="width: 80px;" id="frequency" name="frequency" class="select2">
                         <option value="1">单次</option>
                         <option value="2">每天</option>
                         <option value="3">每周</option>
@@ -68,8 +68,19 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td colspan="2">
-                    <span id="tutor_price"></span>
+                <td>
+                    <span id="tutor_price">
+
+                    </span>
+                </td>
+                <td>
+                    <div id="date_div" style="display: none;">
+                        至
+                        <input name="endDate" type="text" id="endDate" readonly="readonly" maxlength="20"
+                               class="input-medium form-control Wdate "
+                               value="${reserveVenue.endDate}"
+                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -172,12 +183,22 @@
             var endTime = $("#endTime").attr("value");
         });
 
+        //频率
+        $("#frequency").on('change',function(){
+            var frequency = $(this).val();
+            if('1'!=frequency){
+                $("#date_div").show();
+            }else{
+                $("#date_div").hide();
+            }
+        });
+
         //教练
         $("#tutorId").on('change', function () {
             var price = $(this).find("option:selected").attr("data-price");
             if (price == undefined || price == '') {
                 $("#tutor_price").html("")
-            }else{
+            } else {
                 $("#tutor_price").html("每小时:" + price + "<li class='fa fa-cny'></li>")
             }
         });

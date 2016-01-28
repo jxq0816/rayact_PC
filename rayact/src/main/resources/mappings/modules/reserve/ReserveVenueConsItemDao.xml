@@ -2,19 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.reserve.dao.ReserveVenueConsItemDao">
 
-    <sql id="reserveVenueConsColumns">
+    <sql id="reserveVenueConsColumns">a.start_date AS "startDate",
 		a.id AS "id",
 		a.venue_id AS "reserveVenue.id",
 		a.field_id AS "reserveField.id",
 		a.cons_info AS "consInfo",
 		a.start_time AS "startTime",
 		a.end_time AS "endTime",
+		a.start_date AS "startDate",
+		a.end_date AS "endDate",
 		a.cons_data_id AS "consData.id",
 		a.frequency AS "frequency",
 		a.cons_week AS "consWeek",
 		a.half_court AS "halfCourt",
 	  	v.name AS "reserveVenue.name",
 	  	d.reserve_type AS "consData.reserveType",
+	  	d.user_name AS "consData.userName",
 	  	d.cons_type AS "consData.consType",
 	  	f.name AS "reserveField.name",
 		a.cons_price AS "consPrice",
@@ -51,9 +54,11 @@
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
             <if test="consDate != null and consDate != ''">
                 and (cons_date = #{consDate}
-                <if test="frequency!=null and frequency!=''">
-                    or (a.frequency='3' and cons_week=#{consWeek}) or (a.frequency='2')
-                </if>
+               <!-- <if test="frequency!=null and frequency!=''">
+                    <![CDATA[
+                    or (a.frequency='3' and a.cons_week=#{consWeek} and a.start_date<=date(now()) and a.end_date>=date(now())) or (a.frequency='2' and a.start_date<=date(now()) and a.end_date>=date(now()))
+                    ]]>
+                </if>-->
                 )
             </if>
             <if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
@@ -120,6 +125,8 @@
     <insert id="insert">
 		INSERT INTO reserve_venue_cons_item(
 			id,
+			start_date,
+			end_date,
 			cons_data_id,
 			venue_id,
 			field_id,
@@ -140,6 +147,8 @@
 			tenant_id
 		) VALUES (
 			#{id},
+			#{startDate},
+			#{endDate},
 			#{consData.id},
 			#{reserveVenue.id},
 			#{reserveField.id},
@@ -163,6 +172,8 @@
 
     <update id="update">
 		UPDATE reserve_venue_cons_item SET
+		    start_date = #{startDate},
+		    end_date = #{endDate},
 			cons_data_id = #{consData.id},
 			venue_id = #{reserveVenue.id},
 			field_id = #{reserveField.id},

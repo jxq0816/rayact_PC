@@ -99,4 +99,25 @@ public class TimePrice {
     public void setHalfCourt(String halfCourt) {
         this.halfCourt = halfCourt;
     }
+
+    private String consType;
+    private String userName;
+
+    @JsonIgnore
+    public String getConsType() {
+        return consType;
+    }
+
+    public void setConsType(String consType) {
+        this.consType = consType;
+    }
+
+    @JsonIgnore
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

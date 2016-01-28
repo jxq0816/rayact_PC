@@ -55,9 +55,7 @@
                                 <th>所属项目</th>
                                 <th>所属场馆</th>
                                 <th>是否启用</th>
-                                <shiro:hasPermission name="reserve:reserveField:edit">
                                     <th>操作</th>
-                                </shiro:hasPermission>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,7 +69,6 @@
                                     <td>
                                             ${fns:getDictLabel(reserveField.available, 'yes_no', '')}
                                     </td>
-                                    <shiro:hasPermission name="reserve:reserveField:edit">
                                         <td>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveField/form?id=${reserveField.id}"><i
@@ -81,7 +78,6 @@
                                                onclick="return confirmb('确认要删除该场地吗？', this.href)"><i
                                                     class="fa fa-times"></i>删除</a>
                                         </td>
-                                    </shiro:hasPermission>
                                 </tr>
                             </c:forEach>
                             </tbody>

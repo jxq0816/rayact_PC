@@ -8,7 +8,7 @@ $(document).ready(function () {
         var time = t.attr("data-time");
         jQuery.postItems({
             url: ctx + '/reserve/field/cancelForm',
-            data: {fieldId: field, time: time, itemId: itemId,venueId:venueId},
+            data: {fieldId: field, time: time, itemId: itemId, venueId: venueId},
             success: function (result) {
                 $("#cancelForm").html(result);
                 $("#cancelBtn").click();
@@ -42,6 +42,46 @@ $(document).ready(function () {
             }
         });
     }
+
+    //赠品
+    function gift(t) {
+        var itemId = t.attr("data-item");
+        jQuery.postItems({
+            url: ctx + '/reserve/field/gift',
+            data: {itemId: itemId},
+            success: function (result) {
+                $("#giftForm").html(result);
+                $("#giftBtn").click();
+                $("#giftForm .select2").select2({
+                    width: '100%'
+                });
+                $('#giftForm .icheck').iCheck({
+                    checkboxClass: 'icheckbox_square-blue checkbox',
+                    radioClass: 'iradio_square-blue'
+                });
+            }
+        });
+    }
+
+    //保存赠品
+    $("#saveGiftBtn").on('click', function () {
+        var data = $("#giftFormBean").serializeArray();
+        var length = $("#giftTable tr").length;
+        if (length < 1) {
+            formLoding('请选择赠品!');
+            return;
+        }
+        $.postItems({
+            url: ctx + '/reserve/field/saveGift',
+            data: data,
+            success: function (values) {
+                if (values) {
+                    successLoding('保存赠品成功!');
+                    location.reload();
+                }
+            }
+        });
+    });
 
     //查看详情
     function details(t) {
@@ -125,7 +165,7 @@ $(document).ready(function () {
         var date = consDate;//日期
         jQuery.postItems({
             url: ctx + '/reserve/field/reserveForm',
-            data: {fieldId: field, time: time, date: date,venueId:venueId},
+            data: {fieldId: field, time: time, date: date, venueId: venueId},
             success: function (result) {
                 $("#reserveForm").html(result);
                 $("#reserveBtn").click();
@@ -145,11 +185,11 @@ $(document).ready(function () {
             $(this).dblclick();
         }
     }]/*, [{
-        text: "结账",
-        func: function () {
-            settlement($(this));
-        }
-    }]*/
+     text: "结账",
+     func: function () {
+     settlement($(this));
+     }
+     }]*/
     ];
     var reserveMenuData = [[{
         text: "取消订单",
@@ -162,9 +202,9 @@ $(document).ready(function () {
             details($(this));
         }
     }], [{
-        text: "修改备注",
+        text: "赠品",
         func: function () {
-            $(this).dblclick();
+            gift($(this));
         }
     }], [{
         text: "结账",
@@ -179,11 +219,11 @@ $(document).ready(function () {
             details($(this));
         }
     }]/*, [{
-        text: "退款",
-        func: function () {
-            refund($(this));
-        }
-    }]*/
+     text: "退款",
+     func: function () {
+     refund($(this));
+     }
+     }]*/
     ];
     //mouserover
     $(".reserveTd").unbind("mouserover");
@@ -203,6 +243,9 @@ $(document).ready(function () {
         var consType = $('input:radio[name=consType]:checked').val();
         var userName = $('#userName').val();
         var consMobile = $("#consMobile").val();
+        var frequency = $("#frequency").val();
+        var endDate = $("#endDate").val();
+
         if (userName == '') {
             formLoding('请输入预定人姓名');
             return false;
@@ -210,6 +253,12 @@ $(document).ready(function () {
         if (consMobile == '') {
             formLoding('请输入预定人手机');
             return false;
+        }
+        if (frequency == '2' || frequency == '3') {
+            if (endDate == '') {
+                formLoding('结束时间不能为空');
+                return false;
+            }
         }
         var data = $("#reserveFormBean").serializeArray();
         $.postItems({
