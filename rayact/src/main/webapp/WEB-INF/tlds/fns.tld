@@ -248,6 +248,14 @@
         <example>${fns:hidePhone('phone')}</example>
     </function>
 
+    <function>
+        <description>判断是否是管理员。</description>
+        <name>isAdmin</name>
+        <function-class>com.bra.modules.reserve.utils.AuthorityUtils</function-class>
+        <function-signature>boolean isAdmin()</function-signature>
+        <example>${fns:isAdmin()}</example>
+    </function>
+
     <!-- DateUtils -->
     <function>
         <description>获取当前日期</description>
