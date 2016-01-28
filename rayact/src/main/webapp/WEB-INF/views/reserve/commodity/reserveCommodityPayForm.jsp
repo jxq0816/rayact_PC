@@ -41,7 +41,7 @@
                         </td>
                         <td colspan="3">
                             <div class="btn-group" id="payType">
-                                <label class="radio-inline">
+                                <label class="radio-inline member">
                                     <input type="radio" class="icheck" value="1" name="payType"/>会员卡
                                 </label>
                                 <label class="radio-inline">
@@ -62,10 +62,28 @@
                             </div>
                         </td>
                     </tr>
+                    <div id="memberList" style="display:none">
+                        <tr>
+                            <td>姓名:</td>
+                            <td>
+                               <select style="width: 80px;" id="memberId" class="select2" name="reserveStoredCardMember.id">
+                                    <c:forEach items="${reserveMemberList}" var="m">
+                                        <option value="${m.id}">${m.mobile}-${m.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                    </div>
                     </tbody>
                 </table>
             </form>
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".member").on('click', function () {
+            alert(1);
+        })
+    })
+</script>

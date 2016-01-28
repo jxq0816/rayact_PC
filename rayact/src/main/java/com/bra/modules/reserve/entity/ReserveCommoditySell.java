@@ -14,6 +14,15 @@ public class ReserveCommoditySell extends SaasEntity<ReserveCommoditySell> {
 	private static final long serialVersionUID = 1L;
 	private Double totalSum;		// 总计
 	private String giftFlag;       //赠品标识 0代表非赠品，1代表赠品
+	private ReserveMember reserveMember;  //会员
+
+	public com.bra.modules.reserve.entity.ReserveMember getReserveMember() {
+		return reserveMember;
+	}
+
+	public void setReserveMember(com.bra.modules.reserve.entity.ReserveMember reserveMember) {
+		reserveMember = reserveMember;
+	}
 
 	public ReserveCommoditySell() {
 		super();

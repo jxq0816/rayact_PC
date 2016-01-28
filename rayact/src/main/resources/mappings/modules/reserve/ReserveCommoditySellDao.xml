@@ -5,6 +5,7 @@
 	<sql id="reserveCommoditySellColumns">
 		a.id AS "id",
 		a.gift_flag AS "giftFlag",
+		a.fk_reserve_member_id AS "reserveMember.id",
 		a.total_sum AS "totalSum",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -15,6 +16,7 @@
 	</sql>
 
 	<sql id="reserveCommoditySellJoins">
+		left join reserve_member as m on m.id=a.fk_reserve_member_id
 	</sql>
 
 	<select id="sellOfToday" resultType="java.math.BigDecimal">
@@ -35,7 +37,7 @@
 		<include refid="reserveCommoditySellColumns"/>
 		FROM reserve_commodity_sell a
 		<include refid="reserveCommoditySellJoins"/>
-		WHERE a.id = #{id} and tenant_id = #{tenantId}
+		WHERE a.id = #{id}
 	</select>
 
 	<select id="findList" resultType="ReserveCommoditySell">
@@ -77,6 +79,7 @@
 	<insert id="insert">
 		INSERT INTO reserve_commodity_sell(
 			id,
+			fk_reserve_member_id ,
 			total_sum,
 		    gift_flag,
 			create_by,
@@ -88,6 +91,7 @@
 			tenant_id
 		) VALUES (
 			#{id},
+			#{reserveMember.id},
 			#{totalSum},
 			#{giftFlag},
 			#{createBy.id},
@@ -101,7 +105,8 @@
 	</insert>
 
 	<update id="update">
-		UPDATE reserve_commodity_sell SET 	
+		UPDATE reserve_commodity_sell SET
+		    fk_reserve_member_id = #{reserveMember.id},
 			total_sum = #{totalSum},
 			gift_flag = #{giftFlag},
 			update_by = #{updateBy.id},

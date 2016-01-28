@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveCommoditySell;
 import com.bra.modules.reserve.entity.ReserveCommoditySellDetailList;
+import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.service.ReserveCommoditySellService;
+import com.bra.modules.reserve.service.ReserveMemberService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,9 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	@Autowired
 	private ReserveCommoditySellService reserveCommoditySellService;
 
+	@Autowired
+	private ReserveMemberService reserveMemberService;
+
 	@ModelAttribute
 	public ReserveCommoditySellDetail get(@RequestParam(required=false) String id) {
 		ReserveCommoditySellDetail entity = null;
@@ -56,6 +61,10 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	@RequestMapping(value = "settlement")
 	@Token(save = true)
 	public  String settlement(ReserveCommoditySellDetailList sellDetailList, Model model) {
+		ReserveMember rm=new ReserveMember();
+		rm.setCartType("1");
+		List<ReserveMember> reserveMemberList=reserveMemberService.findList(rm);
+		model.addAttribute("reserveMemberList",reserveMemberList);
 		model.addAttribute("sellDetailList",sellDetailList.getReserveCommoditySellDetailList());
 		return "reserve/commodity/reserveCommodityPayForm";
 	}
@@ -75,7 +84,16 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
 		reserveCommoditySell.setTotalSum(total);
 		reserveCommoditySell.setGiftFlag("0");
+		ReserveMember reserveMember=sellDetailList.getReserveStoredCardMember();
+		reserveCommoditySell.setReserveMember(reserveMember);
 		reserveCommoditySellService.save(reserveCommoditySell);
+
+		reserveMember=reserveMemberService.get(reserveMember);
+
+		double remainder=reserveMember.getRemainder();
+		remainder-=total;
+		reserveMember.setRemainder(remainder);
+		reserveMemberService.save(reserveMember);
 
 		//销售次表
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
