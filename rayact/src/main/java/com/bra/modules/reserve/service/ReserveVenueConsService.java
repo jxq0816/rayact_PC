@@ -11,6 +11,7 @@ import com.bra.modules.reserve.event.venue.VenueCheckoutEvent;
 import com.bra.modules.reserve.event.venue.VenueReserveEvent;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
+import com.bra.modules.reserve.web.form.SaleVenueLog;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,10 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
 
+    public List<Map<String,Object>> findOrderLog(SaleVenueLog venueLog){
+        return dao.findOrderLog(venueLog);
+    }
+
     public List<Map<String, Object>> findPriceGroupProject(ReserveVenueCons venueCons) {
         return dao.findPriceGroupProject(venueCons);
     }
@@ -55,6 +60,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         Double total = cons.getOrderPrice();
         reserveVenueCons.setPayType(cons.getPayType());
         reserveVenueCons.setOrderPrice(total);
+        reserveVenueCons.setShouldPrice(cons.getShouldPrice());
+        reserveVenueCons.setCheckOutUser(cons.getCheckOutUser());
         reserveVenueCons.setReserveType("4");
         for (ReserveVenueConsItem item : cons.getVenueConsList()) {
             ReserveVenueConsItem consItem = reserveVenueConsItemDao.get(item.getId());

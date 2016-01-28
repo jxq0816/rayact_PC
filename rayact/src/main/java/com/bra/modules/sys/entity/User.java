@@ -41,6 +41,7 @@ public class User extends DataEntity<User> {
     private Date loginDate;    // 最后登陆日期
     private String loginFlag;    // 是否允许登陆
     private String photo;    // 头像
+    private String checkoutPwd;//结账密码
 
     private String oldLoginName;// 原登录名
     private String newPassword;    // 新密码
@@ -242,6 +243,14 @@ public class User extends DataEntity<User> {
     @Override
     public String toString() {
         return id;
+    }
+
+    public String getCheckoutPwd() {
+        return checkoutPwd;
+    }
+
+    public void setCheckoutPwd(String checkoutPwd) {
+        this.checkoutPwd = checkoutPwd;
     }
 
     //----------------------和数据库无关字段-----------------

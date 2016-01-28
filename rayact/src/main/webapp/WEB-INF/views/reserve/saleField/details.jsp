@@ -83,6 +83,20 @@
             </tbody>
         </table>
     </div>
+    <j:if test="${!empty giftList}">
+        <hr/>
+        <div class="content">
+            赠品
+            <table>
+                <c:forEach items="${giftList}" var="gift">
+                    <tr>
+                        <td>${gift.gift.name}</td>
+                        <td>${gift.num}${gift.gift.unit}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </j:if>
     <hr/>
     <div class="content">
         备注:

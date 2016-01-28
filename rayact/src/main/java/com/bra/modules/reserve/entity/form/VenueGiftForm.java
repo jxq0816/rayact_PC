@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.entity.form;
 
 import com.bra.modules.reserve.entity.ReserveVenueGift;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class VenueGiftForm {
 
-    private List<ReserveVenueGift> giftList;
+    private List<ReserveVenueGift> giftList = Lists.newArrayList();
 
     public List<ReserveVenueGift> getGiftList() {
         return giftList;

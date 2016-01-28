@@ -6,6 +6,7 @@
         a.id AS "id",
         a.gift_id  AS "gift.id",
         p.name AS "gift.name",
+        p.unit AS "gift.unit",
         a.model_id AS "modelId",
         a.model_key AS "modelKey",
         a.num AS "num",
@@ -36,11 +37,11 @@
         <include refid="reserveVenueGiftJoins"/>
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-            <if test="name != null and name != ''">
-                AND a.name LIKE
-                <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-                <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-                <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+            <if test="modelId != null and modelId != ''">
+                and a.model_id = #{modelId}
+            </if>
+            <if test="modelKey != null and modelKey != ''">
+                and a.model_key = #{modelKey}
             </if>
         </where>
         <choose>

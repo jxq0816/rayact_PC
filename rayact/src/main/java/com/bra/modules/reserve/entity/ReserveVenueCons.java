@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.entity;
 
 import com.bra.common.persistence.SaasEntity;
+import com.bra.modules.sys.entity.User;
 import com.google.common.collect.Lists;
 import org.hibernate.validator.constraints.Length;
 
@@ -38,6 +39,8 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     private Double orderPrice;//场地实缴费金额
     private Double shouldPrice;//场地实缴费金额场地应缴费金额
+
+    private User checkOutUser;
 
 
     private String payType;//预定金额支付类型(1:会员卡;2:现金;3:银行卡;4:微信;5:支付宝;6:其它)
@@ -182,6 +185,14 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     public void setShouldPrice(Double shouldPrice) {
         this.shouldPrice = shouldPrice;
+    }
+
+    public User getCheckOutUser() {
+        return checkOutUser;
+    }
+
+    public void setCheckOutUser(User checkOutUser) {
+        this.checkOutUser = checkOutUser;
     }
 
     //-------------以下和数据库无关字段-----------------

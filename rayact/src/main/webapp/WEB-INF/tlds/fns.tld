@@ -249,6 +249,14 @@
     </function>
 
     <function>
+        <description>获取交易类型。</description>
+        <name>getPayType</name>
+        <function-class>com.bra.modules.reserve.utils.VenueOrderUtils</function-class>
+        <function-signature>java.lang.String getPayType(java.lang.String)</function-signature>
+        <example>${fns:getPayType('payType')}</example>
+    </function>
+
+    <function>
         <description>判断是否是管理员。</description>
         <name>isAdmin</name>
         <function-class>com.bra.modules.reserve.utils.AuthorityUtils</function-class>

@@ -8,7 +8,23 @@ import com.bra.common.persistence.SaasEntity;
  */
 public class ReserveVenueGift extends SaasEntity<ReserveVenueGift> {
 
+    public ReserveVenueGift(){
+        super();
+    }
+
+    public ReserveVenueGift(String id){
+        super(id);
+    }
+
+    public ReserveVenueGift(String modelId,String modelKey){
+        super();
+        this.modelId = modelId;
+        this.modelKey = modelKey;
+    }
+
     private ReserveCommodity gift;
+
+    private ReserveCommoditySell commoditySell;
 
     private String modelId;
 
@@ -22,6 +38,14 @@ public class ReserveVenueGift extends SaasEntity<ReserveVenueGift> {
 
     public void setGift(ReserveCommodity gift) {
         this.gift = gift;
+    }
+
+    public ReserveCommoditySell getCommoditySell() {
+        return commoditySell;
+    }
+
+    public void setCommoditySell(ReserveCommoditySell commoditySell) {
+        this.commoditySell = commoditySell;
     }
 
     public String getModelId() {

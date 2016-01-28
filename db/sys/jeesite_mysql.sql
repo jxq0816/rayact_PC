@@ -187,6 +187,7 @@ CREATE TABLE sys_user
 	office_id varchar(64) NOT NULL COMMENT '归属部门',
 	login_name varchar(100) NOT NULL COMMENT '登录名',
 	password varchar(100) NOT NULL COMMENT '密码',
+	checkout_pwd VARCHAR(50) COMMIT '结账密码',
 	no varchar(100) COMMENT '工号',
 	name varchar(100) NOT NULL COMMENT '姓名',
 	email varchar(200) COMMENT '邮箱',

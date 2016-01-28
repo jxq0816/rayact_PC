@@ -25,6 +25,7 @@ $(document).ready(function () {
 
     //结账
     function settlement(t) {
+        $("#settlementDetailForm").html("");
         var itemId = t.attr("data-item");
         jQuery.postItems({
             url: ctx + '/reserve/field/settlementForm',
@@ -125,6 +126,26 @@ $(document).ready(function () {
 
     //结账
     $("#saveSettlementBtn").on('click', function () {
+        var cosId = $("#cosId").val();
+        var shouldPrice = $("#shouldPrice").val();
+        var orderPrice = $("#orderPrice").val();
+        jQuery.postItems({
+            url: ctx + '/reserve/field/settlementDetailForm',
+            data: {cosId: cosId, shouldPrice: shouldPrice, orderPrice: orderPrice},
+            success: function (result) {
+                $("#closeSettlementBtn").click();
+                $("#settlementDetailForm").html(result);
+                $("#settlementDetailBtn").click();
+                var token = $("#settlementDetailToken").val();
+                $("#settlementToken").val(token);
+            }
+        });
+    });
+
+    //确认结账
+    $("#saveSettlementDetailBtn").on('click', function () {
+        var value = $("#detailOrderPrice").val();
+        $("#orderPrice").val(value);
         var data = $("#settlementFormBean").serializeArray();
         $.postItems({
             url: ctx + '/reserve/field/saveSettlement',

@@ -47,6 +47,8 @@ CREATE TABLE reserve_venue_cons (
   cons_price   DOUBLE COMMENT '预定金额',
   pay_type     VARCHAR(1) COMMENT '支付类型(1:会员卡,2:现金,3:银行卡,4:微信,5:支付宝,6:其它)',
 
+  checkout_id VARCHAR(19) COMMENT '核对人',
+
   create_by    VARCHAR(64),
   create_date  DATETIME,
   update_by    VARCHAR(64),
@@ -138,7 +140,7 @@ CREATE TABLE reserve_venue_gift(
   gift_id     VARCHAR(19)         NOT NULL COMMENT '商品ID',
   model_id    VARCHAR(19)         NOT NULL,
   model_key   VARCHAR(30)         NOT NULL,
-  num         INT  COLLATE '数量',
+  num         INT  COMMENT '数量',
   create_by   VARCHAR(64),
   create_date DATETIME,
   update_by   VARCHAR(64),

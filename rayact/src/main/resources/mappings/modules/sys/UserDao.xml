@@ -7,6 +7,7 @@
     	a.company_id AS "company.id",
     	a.login_name,
     	a.password,
+    	a.checkout_pwd,
     	a.no,
 		a.name,
 		a.email,
@@ -54,6 +55,17 @@
 		<include refid="userJoins"/><!-- 
 		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
 		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<!-- 根据登录名查询用户 -->
+	<select id="getByUserPwd" resultType="User" parameterType="User">
+		SELECT
+		<include refid="userColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+		FROM reserve_user a
+		<include refid="userJoins"/><!--
+		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
+		WHERE a.checkout_pwd = #{checkoutPwd} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
 	
 	<!-- 分页查询用户信息 -->
@@ -124,7 +136,8 @@
 			id, 
 			company_id, 
 			login_name,
-			password, 
+			password,
+			checkout_pwd,
 			no, 
 			name, 
 			email, 
@@ -143,7 +156,8 @@
 			#{id}, 
 			#{company.id}, 
 			#{loginName},
-			#{password}, 
+			#{password},
+			#{checkoutPwd},
 			#{no}, 
 			#{name}, 
 			#{email}, 
@@ -166,7 +180,8 @@
 		UPDATE reserve_user SET
 			company_id = #{company.id}, 
 			login_name = #{loginName},
-			password = #{password}, 
+			password = #{password},
+			checkout_pwd = #{checkoutPwd},
 			no = #{no}, 
 			name = #{name}, 
 			email = #{email}, 

@@ -14,6 +14,23 @@ import java.util.Map;
  */
 public class VenueOrderUtils {
 
+    public static String getPayType(String payType){
+        if ("1".equals(payType)) {
+            return "会员卡";
+        } else if ("2".equals(payType)) {//现金
+            return "现金";
+        } else if ("3".equals(payType)) {
+            return "银行卡";
+        } else if ("4".equals(payType)) {
+            return "微信";
+        } else if ("5".equals(payType)) {
+            return "支付宝";
+        } else if ("6".equals(payType)) {
+            return "其它";
+        }
+        return "";
+    }
+
     private static void setPayType(ReserveVenueConsOrder order, String payType) {
         if ("1".equals(payType)) {
             order.setMemberCount(order.getMemberCount() + 1);

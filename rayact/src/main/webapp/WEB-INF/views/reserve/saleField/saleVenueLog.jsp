@@ -1,0 +1,116 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+<html>
+<head>
+    <title>场地售卖报表</title>
+    <meta name="decorator" content="main"/>
+    <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
+</head>
+<body>
+<jsp:include page="/WEB-INF/views/include/sidebar.jsp">
+    <jsp:param name="action" value="saleVenueLog"></jsp:param>
+</jsp:include>
+<div class="container-fluid" id="pcont">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="header">
+                    <h3>场地售卖列表</h3>
+                </div>
+                <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
+                      method="post" class="content">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
+                                <tr>
+                                    <td>
+                                        场馆:
+                                    </td>
+                                    <td>
+                                        <select name="venue.id" class="select2">
+                                            <option value="">---请选择---</option>
+                                            <c:forEach items="${venueList}" var="venue">
+                                                <option <j:if test="${venue.id eq venueLog.venue.id}">selected="selected"</j:if> value="${venue.id}">${venue.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                    <td>操作人</td>
+                                    <td>
+                                        <select name="user.id" class="select2">
+                                            <option value="">---请选择---</option>
+                                            <c:forEach items="${userList}" var="user">
+                                                <option <j:if test="${user.id eq venueLog.user.id}">selected="selected"</j:if> value="${user.id}">${user.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                    <td>时间:</td>
+                                    <td><input name="startDate" value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>" type="text" id="startDate" readonly="readonly"
+                                               maxlength="20"
+                                               class="input-medium form-control Wdate "
+                                               /></td>
+                                    <td>
+                                        <input name="endDate" value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"  type="text" id="endDate" readonly="readonly"
+                                               maxlength="20"
+                                               class="input-medium form-control Wdate "
+                                               />
+                                    </td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                <div class="content">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>所属场馆</th>
+                                <th>订单金额</th>
+                                <th>应收金额</th>
+                                <th>支付类型</th>
+                                <th>操作人</th>
+                                <th>订单时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${venueLogList}" var="order">
+                                <tr style="height: 30px;">
+                                    <td>${order.name}</td>
+                                    <td>${order.order_price}</td>
+                                    <td>${order.should_price}</td>
+                                    <td>
+                                            ${fns:getPayType(order.pay_type)}
+                                    </td>
+                                    <td>${order.create_user}</td>
+                                    <td>${order.cons_date}</td>
+                                </tr>
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#userDesign").on('click',function(){
+            $(".tab-tit-first ul li").removeClass("on");
+            $(this).addClass("on");
+            $("#startDate").unbind('click').bind('click',function(){
+                WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
+            });
+            $("#endDate").unbind('click').bind('click',function(){
+                WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -127,3 +127,28 @@
     </div>
 </div>
 <!--end 赠品-->
+
+<!--结算详情-->
+<button class="btn btn-primary btn-flat md-trigger" id="settlementDetailBtn" style="display: none" data-modal="settlementDetail-primary">Basic Form
+</button>
+<div class="md-modal colored-header warning custom-width md-effect-12" id="settlementDetail-primary">
+    <div class="md-content">
+        <div class="modal-header">
+            <h5>结算确认单</h5>
+            <button type="button" class="close md-close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body form-horizontal" id="settlementDetailForm">
+            <!--预定表单-->
+
+
+            <!--end 预定表单-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeSettlementDetailBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                取消
+            </button>
+            <button type="button" id="saveSettlementDetailBtn" class="btn btn-primary btn-flat">确定</button>
+        </div>
+    </div>
+</div>

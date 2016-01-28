@@ -10,6 +10,8 @@ import com.bra.modules.reserve.entity.form.VenueGiftForm;
 import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
+import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.service.SystemService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,8 @@ public class ReserveController extends BaseController {
     private ReserveCommodityService reserveCommodityService;
     @Autowired
     private ReserveVenueGiftService reserveVenueGiftService;
+    @Autowired
+    private SystemService systemService;
 
 
     //场地预定
@@ -211,7 +215,6 @@ public class ReserveController extends BaseController {
      * @return
      */
     @RequestMapping(value = "settlementForm")
-    @Token(save = true)
     public String settlementForm(String itemId, Model model) {
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
         ReserveVenueConsItem search = new ReserveVenueConsItem();
@@ -233,6 +236,31 @@ public class ReserveController extends BaseController {
         model.addAttribute("itemList", itemList);
         return "reserve/saleField/settlementForm";
     }
+
+    @RequestMapping(value = "settlementDetailForm")
+    @Token(save = true)
+    public String settlementDetailForm(String cosId, Double shouldPrice, Double orderPrice, Model model) {
+        ReserveVenueCons cons = reserveVenueConsService.get(cosId);
+        model.addAttribute("cos", cons);
+        //教练
+        model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
+        //教练订单
+        List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
+        if (!Collections3.isEmpty(tutorOrderList)) {
+            model.addAttribute("tutorOrder", tutorOrderList.get(0));
+        }
+        ReserveVenueCons venueCons = new ReserveVenueCons(cons.getId());
+        ReserveVenueConsItem search = new ReserveVenueConsItem();
+        search.setConsData(venueCons);
+        List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
+        model.addAttribute("itemList", itemList);
+        model.addAttribute("shouldPrice", shouldPrice);
+        model.addAttribute("orderPrice", orderPrice);
+        //赠品
+        model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
+        return "reserve/saleField/settlementDetailForm";
+    }
+
 
     /**
      * 结算订单
@@ -263,6 +291,8 @@ public class ReserveController extends BaseController {
         List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
         model.addAttribute("tutorOrderList", reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY));
         model.addAttribute("times", times);
+        //赠品
+        model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
         return "reserve/saleField/details";
     }
 
@@ -300,11 +330,19 @@ public class ReserveController extends BaseController {
         return "reserve/saleField/giftForm";
     }
 
+    //保存赠品
     @RequestMapping(value = "saveGift")
     @ResponseBody
     @Token(remove = true)
     public String saveGift(VenueGiftForm giftForm) {
-        reserveVenueGiftService.saveVenueList(giftForm,ReserveVenueCons.MODEL_KEY);
+        reserveVenueGiftService.saveVenueList(giftForm, ReserveVenueCons.MODEL_KEY);
         return "success";
+    }
+
+    @RequestMapping(value = "checkUserPwd")
+    @ResponseBody
+    public User checkUserPwd(String userPwd){
+        User user = systemService.getUserByPwd(userPwd);
+        return user;
     }
 }

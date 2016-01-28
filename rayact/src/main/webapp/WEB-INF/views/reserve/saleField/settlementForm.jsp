@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="settlementFormBean">
-    <input type="hidden" name="id" value="${cos.id}"/>
-    <input type="hidden" name="token" value="${token}"/>
-
+    <input type="hidden" name="id" id="cosId" value="${cos.id}"/>
+    <input type="hidden" name="token" id="settlementToken" value="${token}"/>
+    <input type="hidden" id="checkoutId" name="checkOutUser.id"/>
     <div class="content">
         <table class="no-border">
             <tbody class="no-border-y">
@@ -138,11 +138,11 @@
     <div class="content">
         <div class="row">
             <div class="col-sm-6">
-                <label id="totalPrice">应收(元):<input type="text" id="shouldPrice" class="form-control"
+                <label id="totalPrice">应收(元):<input  readonly="readonly" type="text" id="shouldPrice" class="form-control"
                                                     name="shouldPrice"/></label>
                 </div>
             <div class="col-sm-6">
-                <label>实收(元):<input type="text" id="orderPrice" class="form-control" name="orderPrice"/></label>
+                <label>实收(元):<input type="text" readonly="readonly" id="orderPrice" class="form-control" name="orderPrice"/></label>
                 </div>
             </div>
     </div>

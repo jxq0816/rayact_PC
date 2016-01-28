@@ -4,8 +4,12 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveCommodityDao;
+import com.bra.modules.reserve.dao.ReserveCommoditySellDao;
+import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
 import com.bra.modules.reserve.dao.ReserveVenueGiftDao;
 import com.bra.modules.reserve.entity.ReserveCommodity;
+import com.bra.modules.reserve.entity.ReserveCommoditySell;
+import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
 import com.bra.modules.reserve.entity.ReserveVenueGift;
 import com.bra.modules.reserve.entity.form.VenueGiftForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
+ * 赠品
  * Created by xiaobin on 16/1/27.
  */
 @Service
@@ -23,6 +28,10 @@ public class ReserveVenueGiftService extends CrudService<ReserveVenueGiftDao, Re
 
     @Autowired
     private ReserveCommodityDao reserveCommodityDao;
+    @Autowired
+    private ReserveCommoditySellDao reserveCommoditySellDao;
+    @Autowired
+    private ReserveCommoditySellDetailDao reserveCommoditySellDetailDao;
 
     public ReserveVenueGift get(String id) {
         return super.get(id);
@@ -49,6 +58,13 @@ public class ReserveVenueGiftService extends CrudService<ReserveVenueGiftDao, Re
     @Transactional(readOnly = false)
     public void saveVenueList(VenueGiftForm giftForm, String modelKey) {
         List<ReserveVenueGift> venueGiftList = giftForm.getGiftList();
+        ReserveCommoditySellDetail detail ;
+
+        ReserveCommoditySell commoditySell  = new ReserveCommoditySell();
+        commoditySell.setGiftFlag("1");
+        commoditySell.preInsert();
+        reserveCommoditySellDao.insert(commoditySell);
+
         for (ReserveVenueGift gift : venueGiftList) {
             if (StringUtils.isBlank(gift.getModelId())) {
                 continue;
@@ -62,6 +78,15 @@ public class ReserveVenueGiftService extends CrudService<ReserveVenueGiftDao, Re
             gift.setModelKey(modelKey);
             gift.preInsert();
             dao.insert(gift);
+
+            //商品记录表
+            detail = new ReserveCommoditySellDetail();
+            detail.setReserveCommodity(commodity);
+            detail.setNum(gift.getNum());
+            detail.setPrice(0D);
+            detail.setDetailSum(0D);
+            detail.preInsert();
+            reserveCommoditySellDetailDao.insert(detail);
         }
     }
 
