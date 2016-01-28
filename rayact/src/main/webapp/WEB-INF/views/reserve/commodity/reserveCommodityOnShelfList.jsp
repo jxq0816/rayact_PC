@@ -140,12 +140,12 @@
             <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">
                 取消
             </button>
-            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat" onclick="sellSubmit()">保存</button>
+            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat" onclick="paySubmit()">保存</button>
         </div>
     </div>
 </div>
 <%--end of container-fluid--%>
-<script src="${ctxStatic}/modules/reserve/js/reserve_commodity_sell.js?id=66"
+<script src="${ctxStatic}/modules/reserve/js/reserve_commodity_sell.js"
         type="text/javascript"></script>
 </body>
 </html>

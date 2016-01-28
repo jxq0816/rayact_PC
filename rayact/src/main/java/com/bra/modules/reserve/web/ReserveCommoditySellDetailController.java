@@ -60,10 +60,10 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		return "reserve/commodity/reserveCommodityPayForm";
 	}
 
-	@RequestMapping(value = "sellSubmit")
+	@RequestMapping(value = "paySubmit")
 	@ResponseBody
-	/*@Token(remove = true)*/
-	public  String sellSubmit(ReserveCommoditySellDetailList sellDetailList) {
+	@Token(remove = true)
+	public  String paySubmit(ReserveCommoditySellDetailList sellDetailList) {
 		//销售主表
 		Double total=0.0;
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){

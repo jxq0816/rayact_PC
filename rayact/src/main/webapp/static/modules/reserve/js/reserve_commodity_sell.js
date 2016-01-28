@@ -70,12 +70,10 @@ function settlement() {
         }
     });
 }
-function sellSubmit() {
-    var data = $("#paySell").serializeArray();
-    var payType = $('#payType input:radio:checked').val();
-    var token = $("#token").val();
+function paySubmit() {
+    var data = $("#paySubmitForm").serializeArray();
     jQuery.postItems({
-        url: ctx+'/reserve/reserveCommoditySellDetail/sellSubmit',
+        url: ctx+'/reserve/reserveCommoditySellDetail/paySubmit',
         data: data,
         success: function (result) {
             successLoding(result);
