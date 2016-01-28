@@ -6,10 +6,10 @@ function outStorage(id, name, price) {
 
     var s = '<tr data-price="'+price+'" data-num="1" id="'+id+'tr"><td>'+name+'</td><td>\
         <a onclick="add(\''+id+'\')" class="glyphicon glyphicon-plus"></a>\
-        <input name="reserveCommoditySellDetailList['+index+'].reserveCommoditySell.id"  type="hidden">\
         <input name="reserveCommoditySellDetailList['+index+'].reserveCommodity.id" value=\''+id+'\' type="hidden">\
+        <input name="reserveCommoditySellDetailList['+index+'].reserveCommodity.name" value=\''+name+'\' type="hidden" >\
         <input name="reserveCommoditySellDetailList['+index+'].num" id="'+id+'num" style="width:20px" value="1" onblur="changeNumber(\''+id+'\')">\
-        <input name="reserveCommoditySellDetailList['+index+'].price" value="8" type="hidden">\
+        <input name="reserveCommoditySellDetailList['+index+'].price" value=\''+price+'\' type="hidden">\
         <a onclick="dele(\''+id+'\')" class="glyphicon glyphicon-minus"></a></td></tr>';
 
     $("#" + id).attr("disabled", "true");
@@ -51,21 +51,7 @@ function sum() {
     $("#sum").text(sum);
     return sum;
 }
-function sellSubmit() {
-    var sellDetailList = $("#paySell").serializeArray();
-    var token=$("#token").val();
-    jQuery.postItems({
-        url: ctx+'/reserve/reserveCommoditySellDetail/sellSubmit',
-        data: sellDetailList,
-        success: function (result) {
-            successLoding(result);
-            location.reload(true);
-        },
-        error: function () {
-            errorLoding("付款失败");
-        }
-    });
-}
+
 function settlement() {
     var sellDetailList = $("#paySell").serializeArray();
     jQuery.postItems({
@@ -81,6 +67,22 @@ function settlement() {
                 checkboxClass: 'icheckbox_square-blue checkbox',
                 radioClass: 'iradio_square-blue'
             });
+        }
+    });
+}
+function sellSubmit() {
+    var data = $("#paySell").serializeArray();
+    var payType = $('#payType input:radio:checked').val();
+    var token = $("#token").val();
+    jQuery.postItems({
+        url: ctx+'/reserve/reserveCommoditySellDetail/sellSubmit',
+        data: data,
+        success: function (result) {
+            successLoding(result);
+            location.reload(true);
+        },
+        error: function () {
+            errorLoding("付款失败");
         }
     });
 }

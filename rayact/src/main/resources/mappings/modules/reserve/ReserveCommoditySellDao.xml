@@ -4,6 +4,7 @@
 
 	<sql id="reserveCommoditySellColumns">
 		a.id AS "id",
+		a.gift_flag AS "giftFlag",
 		a.total_sum AS "totalSum",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -77,6 +78,7 @@
 		INSERT INTO reserve_commodity_sell(
 			id,
 			total_sum,
+		    gift_flag,
 			create_by,
 			create_date,
 			update_by,
@@ -87,6 +89,7 @@
 		) VALUES (
 			#{id},
 			#{totalSum},
+			#{giftFlag},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -100,6 +103,7 @@
 	<update id="update">
 		UPDATE reserve_commodity_sell SET 	
 			total_sum = #{totalSum},
+			gift_flag = #{giftFlag},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},

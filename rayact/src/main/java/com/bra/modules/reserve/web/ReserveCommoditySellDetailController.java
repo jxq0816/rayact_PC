@@ -41,9 +41,6 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	@Autowired
 	private ReserveCommoditySellService reserveCommoditySellService;
 
-	@Autowired
-	private ReserveCommoditySellDetailList reserveCommoditySellDetailList;
-
 	@ModelAttribute
 	public ReserveCommoditySellDetail get(@RequestParam(required=false) String id) {
 		ReserveCommoditySellDetail entity = null;
@@ -65,12 +62,11 @@ public class ReserveCommoditySellDetailController extends BaseController {
 
 	@RequestMapping(value = "sellSubmit")
 	@ResponseBody
-	@Token(remove = true)
+	/*@Token(remove = true)*/
 	public  String sellSubmit(ReserveCommoditySellDetailList sellDetailList) {
 		//销售主表
-		List<ReserveCommoditySellDetail> list=sellDetailList.getReserveCommoditySellDetailList();
 		Double total=0.0;
-		for(ReserveCommoditySellDetail sellDetail:list ){
+		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
 			Double detailSum=price*num;
@@ -78,10 +74,11 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		}
 		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
 		reserveCommoditySell.setTotalSum(total);
+		reserveCommoditySell.setGiftFlag("0");
 		reserveCommoditySellService.save(reserveCommoditySell);
 
 		//销售次表
-		for(ReserveCommoditySellDetail sellDetail:list ){
+		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
 			Double detailSum=price*num;

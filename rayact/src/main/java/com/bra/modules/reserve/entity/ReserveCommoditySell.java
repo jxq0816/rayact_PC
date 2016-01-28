@@ -13,7 +13,8 @@ public class ReserveCommoditySell extends SaasEntity<ReserveCommoditySell> {
 	
 	private static final long serialVersionUID = 1L;
 	private Double totalSum;		// 总计
-	
+	private String giftFlag;       //赠品标识 0代表非赠品，1代表赠品
+
 	public ReserveCommoditySell() {
 		super();
 	}
@@ -29,6 +30,14 @@ public class ReserveCommoditySell extends SaasEntity<ReserveCommoditySell> {
 
 	public void setTotalSum(Double totalSum) {
 		this.totalSum = totalSum;
+	}
+
+	public String getGiftFlag() {
+		return giftFlag;
+	}
+
+	public void setGiftFlag(String giftFlag) {
+		this.giftFlag = giftFlag;
 	}
 	
 }

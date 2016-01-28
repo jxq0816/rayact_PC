@@ -7,24 +7,22 @@
                 <thead>
                 <tr>
                     <th>商品名称</th>
-                    <th>单价</th>
                     <th>数量</th>
+                    <th>单价</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${sellDetailList}" var="reserveCommoditySellDetail">
-                    <tr>
-                        <td>${reserveCommoditySellDetail.reserveCommodity.name}</td>
-
-                        <td>
-                            ${reserveCommoditySellDetail.price}
-                        </td>
-
-                        <td>
-                            ${reserveCommoditySellDetail.num}
-                        </td>
-                    </tr>
-                </c:forEach>
+                <form id="paySubmit">
+                    <input type="hidden" id="token" value="${token}"/>
+                    <c:forEach items="${sellDetailList}" var="reserveCommoditySellDetail" varStatus="status">
+                        <tr>
+                            <input name="reserveCommodity.id" value="${reserveCommoditySellDetail.reserveCommodity.id}" type="hidden">
+                            <td><input name="reserveCommodity.name" readonly="${reserveCommoditySellDetail.reserveCommodity.name}"> </td>
+                            <td><input name="num" value="${reserveCommoditySellDetail.num}" > </td>
+                            <td><input name="price" value="${reserveCommoditySellDetail.price}"> </td>
+                        </tr>
+                    </c:forEach>
+                </form>
                 <tr>
                     <td>
                         支付方式:

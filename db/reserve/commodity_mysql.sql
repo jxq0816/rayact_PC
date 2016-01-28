@@ -62,6 +62,7 @@ DROP TABLE if EXISTS  reserve_commodity_sell;
 CREATE TABLE reserve_commodity_sell(
   id varchar(19),
   fk_reserve_member_id varchar(19),
+  gift_flag char(1) comment '赠品标识',
   total_sum Double ,
   create_by varchar(64),
 	create_date datetime,

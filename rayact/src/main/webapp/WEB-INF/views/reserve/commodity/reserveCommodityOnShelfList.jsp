@@ -97,7 +97,6 @@
                 <%-- right start--%>
                 <div class="col-sm-6 col-md-6 col-lg-6">
                     <form id="paySell">
-                        <input type="hidden" name="token" value="${token}"/>
                         商品销售表
 
                         <table id="sellList" class="table table-striped table-bordered table-condensed">
@@ -141,7 +140,7 @@
             <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">
                 取消
             </button>
-            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat">保存</button>
+            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat" onclick="sellSubmit()">保存</button>
         </div>
     </div>
 </div>
