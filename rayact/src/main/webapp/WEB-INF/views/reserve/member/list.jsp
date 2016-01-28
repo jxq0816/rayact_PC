@@ -80,7 +80,8 @@
                                             ${reserveMember.name}
                                     </a></td>
                                     <td>
-                                            ${reserveMember.mobile}
+                                            ${fns:hidePhone(reserveMember.mobile)}
+
                                     </td>
                                     <td>
                                             ${fns:getDictLabel(reserveMember.sex, 'sex', '')}

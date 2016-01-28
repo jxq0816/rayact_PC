@@ -82,7 +82,8 @@
                                             ${reserveCardStatements.transactionVolume}
                                     </td>
                                     <td>
-                                            ${reserveCardStatements.reserveMember.mobile}
+                                            ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
+
                                     </td>
 
                                     <td>
