@@ -71,8 +71,7 @@
                                     <tr>
                                         <td>余额:</td>
                                         <td>
-                                            <form:input path="remainder" htmlEscape="false" maxlength="20"
-                                                        class="form-control "/>
+                                            <input type="text" value="${reserveMember.remainder}" name="remainder" class="form-control " maxlength="20" <j:if test="${!fns:isAdmin()}">readonly="readonly"</j:if>/>
                                         </td>
 
                                         <td>储值卡名称:</td>
