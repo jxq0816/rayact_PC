@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
+    <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
     <title>会员收入统计</title>
 </head>
 <body>
@@ -24,6 +25,15 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
+                                    <td colspan="3">
+                                        <div class="tab-tit-first">
+                                            <ul>
+                                                <a href="javascript:queryToday()"><li>当天</li></a>
+                                                <a href="javascript:queryMonth()"><li>当月</li></a>
+                                                <a href="javascript:queryYear()"><li>当年</li></a>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td>时间:</td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
@@ -81,5 +91,6 @@
         </div>
     </div>
 </div>
+<script src="${ctxStatic}/modules/reserve/js/commodity_income_record.js" type="text/javascript"></script>
 </body>
 </html>
