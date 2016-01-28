@@ -41,13 +41,11 @@
                     <div class="content no-padding">
                         <div class="fact-data text-center">
                             <h3>当天</h3>
-
-                            <h2>${fieldTodayPrice}</h2>
+                            <h2><a href="${ctx}/reserve/saleVenueReport/list?search=1">${fieldTodayPrice}</a></h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
-
-                            <h2>${fieldMonthPrice}</h2>
+                            <h2><a href="${ctx}/reserve/saleVenueReport/list?search=2">${fieldMonthPrice}</a></h2>
                         </div>
                     </div>
                 </div>
