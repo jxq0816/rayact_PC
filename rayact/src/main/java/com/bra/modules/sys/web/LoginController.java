@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.WebUtils;
@@ -162,6 +163,9 @@ public class LoginController extends BaseController {
                 return "modules/sys/sysIndex";
             }
             return "redirect:" + adminPath + "/login";
+        }
+        if("4".equals(AuthorityUtils.getUserType())){//营业员
+            return "redirect:" + adminPath + "/reserve/salesMain";
         }
         return "redirect:" + adminPath + "/reserve/main";
     }

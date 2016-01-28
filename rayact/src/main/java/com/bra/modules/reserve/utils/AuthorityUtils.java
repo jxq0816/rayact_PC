@@ -62,6 +62,18 @@ public class AuthorityUtils {
         return getVenueIds(venueIds, defaultField);
     }
 
+    //获取用户类型
+    public static String getUserType() {
+        ReserveRole reserveRole = new ReserveRole();
+        reserveRole.setUser(UserUtils.getUser());
+        ReserveRoleService reserveRoleService = SpringContextHolder.getBean("reserveRoleService");
+        List<ReserveRole> roleList = reserveRoleService.findList(reserveRole);
+        if (Collections3.isEmpty(roleList)) {
+            return null;
+        }
+        return roleList.get(0).getUserType();
+    }
+
     public static List<Authority> getAuthByUser(User user) {
         if ("1".equals(user.getUserType())) {
             return getAll();

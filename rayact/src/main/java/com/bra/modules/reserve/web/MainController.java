@@ -24,4 +24,9 @@ public class MainController {
         model.addAllAttributes(data);
         return "reserve/main";
     }
+
+    @RequestMapping(value = "salesMain")
+    public String salesMain(Model model){
+        return "reserve/salesMain";
+    }
 }
