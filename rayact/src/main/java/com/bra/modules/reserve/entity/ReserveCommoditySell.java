@@ -16,14 +16,13 @@ public class ReserveCommoditySell extends SaasEntity<ReserveCommoditySell> {
 	private String giftFlag;       //赠品标识 0代表非赠品，1代表赠品
 	private ReserveMember reserveMember;  //会员
 
-	public com.bra.modules.reserve.entity.ReserveMember getReserveMember() {
+	public ReserveMember getReserveMember() {
 		return reserveMember;
 	}
 
-	public void setReserveMember(com.bra.modules.reserve.entity.ReserveMember reserveMember) {
-		reserveMember = reserveMember;
+	public void setReserveMember(ReserveMember reserveMember) {
+		this.reserveMember = reserveMember;
 	}
-
 	public ReserveCommoditySell() {
 		super();
 	}

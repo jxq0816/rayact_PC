@@ -41,23 +41,25 @@
                         </td>
                         <td colspan="3">
                             <div class="btn-group" id="payType">
-                                <label class="radio-inline member">
-                                    <input type="radio" class="icheck" value="1" name="payType"/>会员卡
+                                <label class="radio-inline">
+                                    <input type="radio" class="icheck" id="cash" value="2" checked="checked" name="payType"/>现金
+                                </label>
+
+                                <label class="radio-inline">
+                                    <input type="radio" class="icheck" id="isMember"  value="1" name="payType"/>会员卡
+                                </label>
+
+                                <label class="radio-inline">
+                                    <input type="radio" class="icheck" id="card" value="3" name="payType"/>银行卡
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="icheck" value="2" name="payType"/>现金
+                                    <input type="radio" class="icheck" id="weixin" value="4" name="payType"/>微信
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="icheck" value="3" name="payType"/>银行卡
+                                    <input type="radio" class="icheck" id="alipay" value="5" name="payType"/>支付宝
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="icheck" value="4" name="payType"/>微信
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" class="icheck" value="5" name="payType"/>支付宝
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" class="icheck" value="6" name="payType"/>其它
+                                    <input type="radio" class="icheck" id="other" value="6" name="payType"/>其它
                                 </label>
                             </div>
                         </td>
@@ -66,8 +68,9 @@
                         <tr>
                             <td>姓名:</td>
                             <td>
-                               <select style="width: 80px;" id="memberId" class="select2" name="reserveStoredCardMember.id">
-                                    <c:forEach items="${reserveMemberList}" var="m">
+                               <select style="width: 80px;"  id="reserveMemberSelect" class="select2" name="reserveStoredCardMember.id" disabled>
+                                   <option>--请输入选择--</option>
+                                   <c:forEach  items="${reserveMemberList}" var="m">
                                         <option value="${m.id}">${m.mobile}-${m.name}</option>
                                     </c:forEach>
                                 </select>
@@ -82,8 +85,23 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".member").on('click', function () {
-            alert(1);
-        })
+        $("#isMember").on('ifChecked', function () {
+            $("#reserveMemberSelect").removeAttr("disabled");
+        });
+        $("#cash").on('ifChecked', function () {
+            $("#reserveMemberSelect").attr("disabled","disabled");
+        });
+        $("#card").on('ifChecked', function () {
+            $("#reserveMemberSelect").attr("disabled","disabled");
+        });
+        $("#weixin").on('ifChecked', function () {
+            $("#reserveMemberSelect").attr("disabled","disabled");
+        });
+        $("#alipay").on('ifChecked', function () {
+            $("#reserveMemberSelect").attr("disabled","disabled");
+        });
+        $("#other").on('ifChecked', function () {
+            $("#reserveMemberSelect").attr("disabled","disabled");
+        });
     })
 </script>

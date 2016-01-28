@@ -140,7 +140,7 @@
             <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">
                 取消
             </button>
-            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat" onclick="paySubmit()">保存</button>
+            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat" onclick="paySubmit()">结算</button>
         </div>
     </div>
 </div>
