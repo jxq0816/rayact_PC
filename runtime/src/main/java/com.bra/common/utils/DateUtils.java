@@ -40,6 +40,9 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * 得到日期字符串 默认格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
      */
     public static String formatDate(Date date, Object... pattern) {
+        if (date == null) {
+            return null;
+        }
         String formatDate = null;
         if (pattern != null && pattern.length > 0) {
             formatDate = DateFormatUtils.format(date, pattern[0].toString());
@@ -181,7 +184,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         //获取当前月第一天：
         Calendar c = Calendar.getInstance();
         c.add(Calendar.MONTH, 0);
-        c.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天
+        c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
         String first = format.format(c.getTime());
         return first;
     }

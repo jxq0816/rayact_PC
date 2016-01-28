@@ -37,7 +37,22 @@ public class AuthorityUtils {
             return false;
         SystemService systemService = SpringContextHolder.getBean("systemService");
         User user = systemService.getUser(userId);
-        return "1".equals(user.getUserType());
+        if ("1".equals(user.getUserType())) {
+            return true;
+        }
+
+        ReserveUserService reserveUserService = SpringContextHolder.getBean("reserveUserService");
+        ReserveRole reserveRole = reserveUserService.getRole(user);
+        if (reserveRole == null)
+            return false;
+        return "1".equals(reserveRole.getUserType());
+    }
+
+    public static String hidePhone(String phone) {
+        if (isAdmin(UserUtils.getUser().getId())) {
+            return phone;
+        }
+        return StringUtils.hidePhone(phone);
     }
 
     public static String getVenueIds(List<String> venueIds) {
@@ -51,6 +66,15 @@ public class AuthorityUtils {
         dsf.append(StringUtils.join(venueIdInList, ','));
         dsf.append(")");
         return dsf.toString();
+    }
+
+    //获取当前用户的场地权限
+    public static String getDsf(String filedId) {
+        ReserveRoleService reserveRoleService = SpringContextHolder.getBean("reserveRoleService");
+        ReserveRole reserveRole = new ReserveRole();
+        reserveRole.setUser(UserUtils.getUser());
+        List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+        return getVenueIds(venueIds, filedId);
     }
 
     //获取当前用户的场馆

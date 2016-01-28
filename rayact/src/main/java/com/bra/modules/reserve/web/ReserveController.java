@@ -286,6 +286,7 @@ public class ReserveController extends BaseController {
 
     //赠品
     @RequestMapping(value = "gift")
+    @Token(save = true)
     public String gift(String itemId, Model model) {
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
         ReserveVenueConsItem search = new ReserveVenueConsItem();
@@ -301,6 +302,7 @@ public class ReserveController extends BaseController {
 
     @RequestMapping(value = "saveGift")
     @ResponseBody
+    @Token(remove = true)
     public String saveGift(VenueGiftForm giftForm) {
         reserveVenueGiftService.saveVenueList(giftForm,ReserveVenueCons.MODEL_KEY);
         return "success";

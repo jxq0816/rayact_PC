@@ -23,4 +23,6 @@ public interface ReserveVenueOrderDao extends CrudDao<ReserveVenueOrder> {
      * @return
      */
     List<Map<String,Object>> findPriceGroupProject(ReserveVenueOrder venueOrder);
+
+    List<Map<String,Object>> findPriceGroupProjectReport(ReserveVenueOrder venueOrder);
 }

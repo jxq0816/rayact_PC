@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="giftFormBean">
     <input type="hidden" name="id" value="${cos.id}"/>
-
+    <input type="hidden" name="token" value="${token}"/>
     <div class="content">
         <table class="no-border">
             <tbody class="no-border-y">

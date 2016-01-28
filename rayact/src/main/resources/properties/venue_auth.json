@@ -118,6 +118,12 @@
     "name": "报表管理",
     "authorityList": [
       {
+        "code": "saleVenueReport",
+        "name": "场地售卖报表",
+        "href":"/reserve/saleVenueReport/list",
+        "authorityList": []
+      },
+      {
         "code": "memberIncomeRecord",
         "name": "会员收入统计",
         "href":"/reserve/reserveCardStatements/listByStoredCardType",

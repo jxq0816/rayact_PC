@@ -24,4 +24,11 @@ public interface ReserveVenueConsDao extends CrudDao<ReserveVenueCons> {
      * @return
      */
     List<Map<String,Object>> findPriceGroupProject(ReserveVenueCons venueCons);
+
+    /**
+     * 场地售卖报表查询
+     * @param venueCons
+     * @return
+     */
+    List<Map<String,Object>> findPriceGroupProjectReport(ReserveVenueCons venueCons);
 }

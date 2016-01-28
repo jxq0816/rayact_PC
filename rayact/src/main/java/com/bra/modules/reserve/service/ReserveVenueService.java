@@ -3,6 +3,7 @@ package com.bra.modules.reserve.service;
 import java.util.List;
 
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,10 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     public List<ReserveVenue> findList(ReserveVenue reserveVenue) {
+        if (reserveVenue != null) {
+            if (reserveVenue.getSqlMap().get("dsf") == null)
+                reserveVenue.getSqlMap().put("dsf", AuthorityUtils.getDsf("a.id"));
+        }
         return super.findList(reserveVenue);
     }
 

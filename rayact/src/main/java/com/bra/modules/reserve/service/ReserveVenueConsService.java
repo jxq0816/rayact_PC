@@ -9,6 +9,7 @@ import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.event.venue.VenueCancelEvent;
 import com.bra.modules.reserve.event.venue.VenueCheckoutEvent;
 import com.bra.modules.reserve.event.venue.VenueReserveEvent;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         return dao.findPriceGroupProject(venueCons);
     }
 
+    public List<Map<String, Object>> findPriceGroupProjectReport(ReserveVenueCons venueCons) {
+        venueCons.getSqlMap().put("dsf", AuthorityUtils.getDsf("a.venue_id"));
+        return dao.findPriceGroupProjectReport(venueCons);
+    }
+
     /**
      * 结账
      *
@@ -49,7 +55,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         Double total = cons.getOrderPrice();
         reserveVenueCons.setPayType(cons.getPayType());
         reserveVenueCons.setOrderPrice(total);
-
+        reserveVenueCons.setReserveType("4");
         for (ReserveVenueConsItem item : cons.getVenueConsList()) {
             ReserveVenueConsItem consItem = reserveVenueConsItemDao.get(item.getId());
             consItem.setOrderPrice(item.getOrderPrice());

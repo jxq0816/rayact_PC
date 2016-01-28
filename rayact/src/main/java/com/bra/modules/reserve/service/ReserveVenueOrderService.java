@@ -30,6 +30,10 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
         return super.findList(reserveVenueOrder);
     }
 
+    public List<Map<String,Object>> findPriceGroupProjectReport(ReserveVenueOrder venueOrder){
+        return dao.findPriceGroupProjectReport(venueOrder);
+    }
+
     public List<ReserveVenueOrder> findListOrder(ReserveVenueOrder venueOrder){
         return dao.findListOrder(venueOrder);
     }
