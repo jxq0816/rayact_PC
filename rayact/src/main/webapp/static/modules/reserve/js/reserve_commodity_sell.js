@@ -72,11 +72,21 @@ function settlement() {
 }
 function paySubmit() {
     var data = $("#paySubmitForm").serializeArray();
+    var payType = $('#payType input:radio:checked').val();
+    if(payType=='1'){
+        var memberId=jQuery("#reserveMemberSelect").val();
+        if(memberId=="" || memberId==null || memberId== undefined){
+            errorLoding("请选择会员");
+            return;
+        }
+    }
+
     jQuery.postItems({
         url: ctx+'/reserve/reserveCommoditySellDetail/paySubmit',
         data: data,
         success: function (result) {
             successLoding(result);
+
             location.reload(true);
         },
         error: function () {
