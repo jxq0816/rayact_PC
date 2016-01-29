@@ -37,6 +37,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private Double cosOrderPrice;//预定时单据金额
     private Double consPrice;//预定金额
 
+    private Double discountPrice;//会员打折费
     private Double orderPrice;//场地实缴费金额
     private Double shouldPrice;//场地实缴费金额场地应缴费金额
 
@@ -130,6 +131,14 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     public void setCosOrderPrice(Double cosOrderPrice) {
         this.cosOrderPrice = cosOrderPrice;
+    }
+
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     /**

@@ -114,19 +114,23 @@
     <hr/>
     <div class="content">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <label id="totalPrice">应收(元):<input readonly="readonly" value="${shouldPrice}" type="text"
                                                     id="detailShouldPrice" class="form-control"
                                                     name="shouldPrice"/></label>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
+                <label>会员优惠(元):<input type="text" readonly="readonly" id="discountPrice" value="${discountPrice}"
+                                      class="form-control" name="discountPrice"/></label>
+            </div>
+            <div class="col-sm-3">
                 <label>实收(元):<input type="text" readonly="readonly" id="detailOrderPrice" value="${orderPrice}"
                                     class="form-control" name="orderPrice"/></label>
                 <a style="cursor: hand" id="editOrderPrice">
                     <li class="fa fa-edit"></li>
                 </a>
             </div>
-            <div class="col-sm-4" id="button_userPwd" style="display: none">
+            <div class="col-sm-3" id="button_userPwd" style="display: none">
                 <label>授权码:
                     <input type="password" id="userPwd" class="form-control"/>
                     <button type="button" id="userPwdBtn" class="btn btn-info">确认</button>

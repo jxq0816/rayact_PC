@@ -112,8 +112,6 @@
     $(document).ready(function () {
         //initialize the javascript
         App.dashBoard();
-        //App.charts();
-        //introJs().setOption('showBullets', false).start();
         //场地售卖
         var fieldChart = echarts.init(document.getElementById('field_statistics'));
         fieldoption = {
