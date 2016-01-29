@@ -57,12 +57,12 @@
                         <div class="fact-data text-center">
                             <h3>当天</h3>
 
-                            <h2>${sellOfToday}</h2>
+                            <h2><a href="javascript:queryByDayForCommoditySell()">${sellOfToday}</a></h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
 
-                            <h2>${sellOfMonth}</h2>
+                            <h2><a href="javascript:queryByMonthForCommoditySell()">${sellOfMonth}</a></h2>
                         </div>
                     </div>
                 </div>

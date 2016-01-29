@@ -39,6 +39,8 @@ public class MemberRechargeListener {
         if (rechargeOfDay == null) {
             rechargeOfDay = BigDecimal.ZERO;
         }
+        rechargeOfMonth=rechargeOfMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
+        rechargeOfDay=rechargeOfDay.setScale(1,BigDecimal.ROUND_HALF_UP);
         data.put("rechargeOfMonth", rechargeOfMonth);
         data.put("rechargeOfDay", rechargeOfDay);
 

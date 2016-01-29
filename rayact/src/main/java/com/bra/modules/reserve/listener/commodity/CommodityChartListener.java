@@ -33,6 +33,8 @@ public class CommodityChartListener {
         if (sellOfToday == null) {
             sellOfToday = BigDecimal.ZERO;
         }
+        sellOfToday= sellOfToday.setScale(1, BigDecimal.ROUND_HALF_UP);
+        sellOfMonth=sellOfMonth.setScale(1, BigDecimal.ROUND_HALF_UP);
         data.put("sellOfToday", sellOfToday);
         data.put("sellOfMonth", sellOfMonth);
 
