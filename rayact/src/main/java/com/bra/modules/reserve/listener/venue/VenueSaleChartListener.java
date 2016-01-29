@@ -11,10 +11,12 @@ import com.bra.modules.reserve.service.ReserveVenueOrderService;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,52 +38,25 @@ public class VenueSaleChartListener {
 
     private void chartData(Map<String, Object> data, List<String> venueIds) {
         ReserveVenueCons venueCons = new ReserveVenueCons();
-        venueCons.getSqlMap().put("dsf", AuthorityUtils.getVenueIds(venueIds));
-
-        //时间
         Map<String,String> search = Maps.newConcurrentMap();
-        String startDate = DateUtils.formatDate(DateUtils.addWeeks(new Date(), -10), "yyyy-MM-dd");
-        String endDate = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
-        search.put("startDate", startDate + " 00:00:00");
-        search.put("endDate", endDate + " 23:59:59");
+        search.put("dsf", AuthorityUtils.getVenueIds(venueIds));
+        search.put("day","1");
         venueCons.setSqlMap(search);
-        venueCons.setReserveType("4");//查询已经结算得信息
-        List<ReserveVenueCons> venueConsList = reserveVenueConsService.findList(venueCons);
-
-        Map<String, Double> memberChartMap = Maps.newConcurrentMap();
-
-        for (ReserveVenueCons cons : venueConsList) {
-            String date = DateUtils.formatDate(cons.getUpdateDate(), "yyyy-MM-dd");
-            if (memberChartMap.get(date) != null) {
-                Double price = memberChartMap.get(date);
-                memberChartMap.put(date, price + cons.getOrderPrice());
-            } else {
-                memberChartMap.put(date, cons.getOrderPrice());
-            }
-        }
-
-        ReserveVenueOrder venueOrder = new ReserveVenueOrder();
-        venueOrder.setSqlMap(search);
-        List<ReserveVenueOrder> venueOrderList = reserveVenueOrderService.findList(venueOrder);
-        for (ReserveVenueOrder cons : venueOrderList) {
-            String date = DateUtils.formatDate(cons.getUpdateDate(), "yyyy-MM-dd");
-            if (memberChartMap.get(date) != null) {
-                Double price = memberChartMap.get(date);
-                memberChartMap.put(date, price + cons.getOrderPrice());
-            } else {
-                memberChartMap.put(date, cons.getOrderPrice());
-            }
-        }
+        List<Map<String,Object>> venueConsList = reserveVenueConsService.sellOfChart(venueCons);
 
         List<String> dateList = Lists.newArrayList();
+        List<String> volumeList = Lists.newArrayList();
         List<String> venueListJson = Lists.newArrayList();
-        for (String date : memberChartMap.keySet()) {
-            dateList.add("'" + date + "'");
-            venueListJson.add(date);
+
+        for (Map<String,Object> map : venueConsList) {
+            dateList.add("'" + map.get("updateDate") + "'");
+            venueListJson.add(map.get("updateDate").toString());
+            volumeList.add(map.get("orderPrice").toString());
         }
+
         data.put("venueListJson",venueListJson);
         data.put("fieldChartMapX", StringUtils.join(dateList, ","));
-        data.put("fieldChartMapY", StringUtils.join(memberChartMap.values(), ","));
+        data.put("fieldChartMapY", StringUtils.join(volumeList, ","));
     }
 
     @EventListener
@@ -100,40 +75,17 @@ public class VenueSaleChartListener {
         ReserveVenueCons venueCons = new ReserveVenueCons();
         Map<String,String> search = Maps.newConcurrentMap();
         search.put("dsf", AuthorityUtils.getVenueIds(venueIds));
-        String endDate = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
-        search.put("startDate", endDate + " 00:00:00");
-        search.put("endDate", endDate + " 23:59:59");
+        search.put("day","1");
         venueCons.setSqlMap(search);
-        venueCons.setReserveType("4");//查询已经结算得信息
-        List<ReserveVenueCons> venueConsList = reserveVenueConsService.findList(venueCons);
+        List<Map<String,Object>> venueConsList = reserveVenueConsService.sellOfChart(venueCons);
         Double todayPrice = 0D;
-        for (ReserveVenueCons cons : venueConsList) {
-            todayPrice += cons.getOrderPrice();
-        }
-        //人次费用
-        ReserveVenueOrder venueOrder = new ReserveVenueOrder();
-        venueOrder.setSqlMap(search);
-        List<ReserveVenueOrder> venueOrderList = reserveVenueOrderService.findList(venueOrder);
-        for (ReserveVenueOrder cons : venueOrderList) {
-            todayPrice += cons.getOrderPrice();
+        for (Map<String,Object> cons : venueConsList) {
+            todayPrice += NumberUtils.toDouble(cons.get("orderPrice").toString());
         }
         data.put("fieldTodayPrice", todayPrice);
 
         //当月的
-        String startDate = DateUtils.getFirstDayOfMonth();
-        venueCons.getSqlMap().put("startDate", startDate + " 00:00:00");
-        venueConsList = reserveVenueConsService.findList(venueCons);
-        Double MonthPrice = 0D;
-        for (ReserveVenueCons cons : venueConsList) {
-            MonthPrice += cons.getOrderPrice();
-        }
-
-        //人次费用
-        venueOrder.getSqlMap().put("startDate", startDate + " 00:00:00");
-        venueOrderList = reserveVenueOrderService.findList(venueOrder);
-        for (ReserveVenueOrder cons : venueOrderList) {
-            MonthPrice += cons.getOrderPrice();
-        }
+        BigDecimal MonthPrice = reserveVenueConsService.sellMonthOfChart(venueCons);
         data.put("fieldMonthPrice", MonthPrice);
 
     }

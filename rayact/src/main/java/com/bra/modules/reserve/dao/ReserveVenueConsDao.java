@@ -5,6 +5,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveVenueCons;
 import com.bra.modules.reserve.web.form.SaleVenueLog;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -41,4 +42,8 @@ public interface ReserveVenueConsDao extends CrudDao<ReserveVenueCons> {
      * @return
      */
     List<Map<String,Object>> findOpenRateReport(ReserveVenueCons venueCons);
+
+    List<Map<String,Object>> sellOfChart(ReserveVenueCons venueCons);
+
+    BigDecimal sellMonthOfChart(ReserveVenueCons venueCons);
 }

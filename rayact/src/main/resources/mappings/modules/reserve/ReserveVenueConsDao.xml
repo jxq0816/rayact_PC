@@ -71,7 +71,8 @@
     </select>
 
     <select id="findPriceGroupProjectReport" resultType="java.util.Map">
-        select d.name as projectName,sum(should_price) as shouldPrice,sum(b.order_price )as orderPrice,sum(b.discount_price) as discountPrice,count(pay_Type) as total,
+        select d.name as projectName,sum(should_price) as shouldPrice,sum(b.order_price )as
+        orderPrice,sum(b.discount_price) as discountPrice,count(pay_Type) as total,
         sum(case pay_Type when '1' then b.order_price else 0 end) memberPrice,
         sum(case pay_Type when '2' then b.order_price else 0 end) moneyPrice,
         sum(case pay_Type when '3' then b.order_price else 0 end) cardPrice,
@@ -100,7 +101,8 @@
     <!--空场率报表-->
     <select id="findOpenRateReport" resultType="java.util.Map">
         select c.name as venue_name,f.name as field_name,p.name as project_name,
-        FORMAT(sum(TIMESTAMPDIFF(MINUTE,CONCAT('2016-01-29 ',b.start_time,':00'),CONCAT('2016-01-29 ',b.end_time,':00')))/60,1)
+        FORMAT(sum(TIMESTAMPDIFF(MINUTE,CONCAT('2016-01-29 ',b.start_time,':00'),CONCAT('2016-01-29
+        ',b.end_time,':00')))/60,1)
         as utilization_time,
         sum(23-8) as business_time
         from reserve_venue_cons a,reserve_venue_cons_item b,reserve_venue c,reserve_project p,reserve_field f
@@ -142,7 +144,8 @@
         ${dsf}
         union
         select a.venue_id,v.name,a.user_name,a.cons_mobile,a.update_date,a.collect_price as order_price,
-        a.collect_price as should_price,a.pay_type,a.create_by,u.name as create_user,'2' as reserve_type,p.name as projectName
+        a.collect_price as should_price,a.pay_type,a.create_by,u.name as create_user,'2' as reserve_type,p.name as
+        projectName
         from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
         where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
         and a.del_flag = '0'
@@ -155,21 +158,57 @@
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
         </if>
-        ${dsf}
+        ${sqlMap.dsf}
+    </select>
+
+    <select id="sellMonthOfChart" resultType="java.math.BigDecimal">
+        SELECT sum(c.orderPrice) AS orderPrice from(
+        SELECT
+        SUM(a.order_price) AS "orderPrice"
+        from reserve_venue_cons as a
+        WHERE a.del_flag = '0' and a.reserve_type = '4'
+        and month(a.update_date)=month(CURDATE())
+        ${sqlMap.dsf}
+        GROUP BY
+        date_format(a.update_date, '%Y-%m-%d')
+        UNION
+        select sum(a.collect_price) as "orderPrice"
+        from reserve_venue_order a
+        WHERE a.del_flag = '0'
+        and month(a.update_date)=month(CURDATE())
+        ${sqlMap.dsf}) c
     </select>
 
 
     <select id="sellOfChart" resultType="java.util.Map">
+        SELECT sum(c.orderPrice) AS orderPrice,c.updateDate from(
         SELECT
         SUM(a.order_price) AS "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as venueId
         from reserve_venue_cons as a
-        WHERE
+        WHERE a.del_flag = '0' and a.reserve_type = '4'
         <![CDATA[
-		DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date)
+		and DATE_SUB(CURDATE(), INTERVAL #{sqlMap.day} DAY) <= date(a.update_date)
 		]]>
+        <if test="reserveVenue!=null and reserveVenue.id!=null and reserveVenue.id!=''">
+            and a.venue_id = #{reserveVenue.id}
+        </if>
+        ${sqlMap.dsf}
         GROUP BY
-        date_format(a.update_date, '%Y-%m-%d')
-        order by a.update_date
+        date_format(a.update_date, '%Y-%m-%d'),a.venue_id
+        UNION
+        select sum(a.collect_price) as "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as
+        venueId
+        from reserve_venue_order a
+        WHERE a.del_flag = '0'
+        <![CDATA[
+		and DATE_SUB(CURDATE(), INTERVAL #{sqlMap.day} DAY) <= date(a.update_date)
+		]]>
+        <if test="reserveVenue!=null and reserveVenue.id!=null and reserveVenue.id!=''">
+            and a.venue_id = #{reserveVenue.id}
+        </if>
+        ${sqlMap.dsf}
+        GROUP BY
+        date_format(a.update_date, '%Y-%m-%d'),a.venue_id) c group by c.updateDate order by c.updateDate
     </select>
 
     <select id="findList" resultType="ReserveVenueCons">
