@@ -3,9 +3,35 @@ var nowMonth;
 var nowYear;
 $(document).ready(function () {
     now = new Date();
+
     nowMonth = now.getMonth();
     nowYear = now.getFullYear();
+
+    var startDateFromBack=$("#startDate").val();
+    var endDateFromBack=$("#endDate").val();
+    now=formatDate(now);
+    var startDateOfMonth = getMonthStartDate();
+    var endDateOfMonth = getMonthEndDate();
+    var startDateOfYear = nowYear + "-01-01";
+    var endDateOfYear = nowYear + "-12-31";
+
+    if(startDateFromBack==now && endDateFromBack==now){
+        $("#today").attr("class", "on");
+    }else if(startDateFromBack==startDateOfMonth && endDateFromBack==endDateOfMonth){
+        $("#month").attr("class", "on");
+    }else if(startDateFromBack==startDateOfYear && endDateFromBack==endDateOfYear){
+        $("#year").attr("class", "on");
+    }else if(startDateFromBack!=''||endDateOfYear!='' ){
+        $("#self").attr("class", "on");
+    }
+
 })
+function  querySelf(){
+    $("#self").attr("class", "on");
+    $("#today").removeClass("on");
+    $("#month").removeClass("on");
+    $("#year").removeClass("on");
+}
 //格式化日期：yyyy-MM-dd
 function formatDate(date) {
     var year = date.getFullYear();
@@ -38,19 +64,23 @@ function getMonthEndDate() {
     return formatDate(monthEndDate);
 }
 function queryToday() {
-     now=formatDate(now)
      $("#startDate").val(now);
      $("#endDate").val(now);
+
+     $("#searchForm").submit();
 }
 function queryMonth() {
     var startDate = getMonthStartDate();
     var endDate = getMonthEndDate();
     $("#startDate").val(startDate);
     $("#endDate").val(endDate);
+    $("#searchForm").submit();
 }
 function queryYear(){
+
     var startDate = nowYear + "-01-01";
     var endDate = nowYear + "-12-31";
     $("#startDate").val(startDate);
     $("#endDate").val(endDate);
+    $("#searchForm").submit();
 }

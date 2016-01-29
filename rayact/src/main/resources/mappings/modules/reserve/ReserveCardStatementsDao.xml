@@ -70,6 +70,9 @@
         SELECT t.name as commodityTypeName, sum(d.detail_sum) as saleAmount
         from reserve_commodity_sell_detail as d ,reserve_commodity_type as t, reserve_commodity as c
         where d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
+		<if test="startDate!=null and endDate !=null">
+			and (d.update_date between #{startDate} and #{endDate})
+		</if>
         GROUP BY commodityTypeName
     </select>
 
@@ -92,7 +95,7 @@
 			</if>
 
 			<if test="startDate!=null and endDate !=null">
-				and (a.create_date between #{startDate} and #{endDate})
+				and (a.update_date between #{startDate} and #{endDate})
 			</if>
 
 		</where>

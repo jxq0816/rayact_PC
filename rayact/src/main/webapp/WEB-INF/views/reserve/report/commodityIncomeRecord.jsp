@@ -28,9 +28,10 @@
                                     <td colspan="3">
                                         <div class="tab-tit-first">
                                             <ul>
-                                                <a href="javascript:queryToday()"><li>当天</li></a>
-                                                <a href="javascript:queryMonth()"><li>当月</li></a>
-                                                <a href="javascript:queryYear()"><li>当年</li></a>
+                                                <li id="today"><a href="javascript:queryToday()">当天</a></li>
+                                                <li id="month"><a href="javascript:queryMonth()">当月</a></li>
+                                                <li id="year"><a href="javascript:queryYear()">当年</a></li>
+                                                <li id="self"><a href="javascript:querySelf()">自定义</a></li>
                                             </ul>
                                         </div>
                                     </td>
