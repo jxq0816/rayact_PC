@@ -17,6 +17,7 @@
 		a.pay_type AS "payType",
 		a.cons_date AS "consDate",
 		a.checkout_id AS "checkOutUser.id",
+		a.project_id AS "project.id",
 
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -98,8 +99,9 @@
     <select id="findOrderLog" resultType="java.util.Map">
         select a.venue_id,v.name,a.user_name,a.cons_mobile,a.cons_date,a.order_price,
         a.should_price,a.pay_type,a.create_by,u.name as create_user,
-        '1' as reserve_type
-        from reserve_venue_cons a,reserve_venue v,reserve_user u where a.venue_id = v.id and a.create_by = u.id
+        '1' as reserve_type,p.name as projectName
+        from reserve_venue_cons a,reserve_venue v,reserve_user u,reserve_project p
+        where a.venue_id = v.id and a.create_by = u.id and a.project_id = p.id
         and a.del_flag = '0' and a.reserve_type = '4'
         <if test="startDate != null and endDate != null">
             and (a.update_date BETWEEN #{startDate} AND #{endDate})
@@ -113,8 +115,9 @@
         ${dsf}
         union
         select a.venue_id,v.name,a.user_name,a.cons_mobile,a.update_date,a.collect_price as order_price,
-        a.collect_price as should_price,a.pay_type,a.create_by,u.name as create_user,'2' as reserve_type
-        from reserve_venue_order a,reserve_venue v,reserve_user u where a.venue_id = v.id and a.create_by = u.id
+        a.collect_price as should_price,a.pay_type,a.create_by,u.name as create_user,'2' as reserve_type,p.name as projectName
+        from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
+        where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
         and a.del_flag = '0'
         <if test="startDate != null and endDate != null">
             and (a.update_date BETWEEN #{startDate} AND #{endDate})
@@ -180,6 +183,7 @@
 		INSERT INTO reserve_venue_cons(
 			id,
 			member_id,
+			project_id,
 			checkout_id,
 			venue_id,
 			cons_mobile,
@@ -201,6 +205,7 @@
 		) VALUES (
 			#{id},
 			#{member.id},
+			#{project.id},
 			#{checkOutUser.id},
 			#{reserveVenue.id},
 			#{consMobile},
@@ -225,6 +230,7 @@
     <update id="update">
 		UPDATE reserve_venue_cons SET
 			member_id = #{member.id},
+			project_id = #{project.id},
 			checkout_id = #{checkOutUser.id},
 			venue_id = #{reserveVenue.id},
 			cons_mobile = #{consMobile},

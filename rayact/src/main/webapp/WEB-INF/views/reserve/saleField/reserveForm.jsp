@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="reserveFormBean">
     <input type="hidden" name="token" value="${token}"/>
-
+    <input type="hidden" name="project.id" value="${reserveField.reserveProject.id}"/>
     <div class="content">
         场地信息:
         <table class="no-border">

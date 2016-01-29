@@ -41,6 +41,7 @@ CREATE TABLE reserve_venue_cons (
   user_name    VARCHAR(30) COMMENT '预定人姓名',
   cons_type    VARCHAR(1) COMMENT '预订的类型1：散客 2：会员 3：团体',
   cons_date    DATE COMMENT '预定日期(yyyy-MM-dd)',
+  project_id   VARCHAR(19) COMMENT '所属项目',
 
   order_price  DOUBLE COMMENT '实际收费金额',
   should_price   DOUBLE COMMENT '应收费金额',

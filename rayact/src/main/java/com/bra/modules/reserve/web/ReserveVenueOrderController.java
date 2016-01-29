@@ -61,6 +61,13 @@ public class ReserveVenueOrderController extends BaseController {
         return "reserve/visitorsSetOrder/form";
     }
 
+    @RequestMapping(value = "detail")
+    @Token(save = true)
+    public String detail(ReserveVenueOrder reserveVenueOrder, Model model) {
+        model.addAttribute("venueOrder",reserveVenueOrder);
+        return "reserve/visitorsSetOrder/detail";
+    }
+
     @RequestMapping(value = "save")
     @ResponseBody
     @Token(remove = true)
