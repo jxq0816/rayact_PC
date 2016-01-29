@@ -12,6 +12,7 @@
 		a.price AS "price",
 		a.detail_sum AS "detailSum",
 		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -22,6 +23,7 @@
     <sql id="reserveCommoditySellDetailJoins">
 		LEFT JOIN reserve_commodity as commodity ON commodity.id = a.fk_reserve_commodity_id
 		LEFT JOIN reserve_member as m ON m.id = a.fk_reserve_member_id
+		LEFT JOIN  reserve_user as u on u.id=a.create_by
 	</sql>
 
     <select id="get" resultType="ReserveCommoditySellDetail">
@@ -42,6 +44,8 @@
         a.fk_reserve_commodity_sell_id AS "reserveCommoditySell.id",
         a.num AS "num",
         a.price AS "price",
+        u.name AS "createBy.name",
+
         a.detail_sum AS "detailSum",
         a.create_by AS "createBy.id",
         a.create_date AS "createDate",
@@ -51,6 +55,7 @@
         a.del_flag AS "delFlag"
         FROM reserve_commodity_sell_detail as a
         left join reserve_member as m on a.fk_reserve_member_id=m.id
+        LEFT JOIN  reserve_user as u on u.id=a.create_by
         ,reserve_commodity as commodity,reserve_commodity_type as t
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND

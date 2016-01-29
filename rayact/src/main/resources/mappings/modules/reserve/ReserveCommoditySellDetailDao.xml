@@ -48,9 +48,11 @@
         a.update_by AS "updateBy.id",
         a.update_date AS "updateDate",
         a.remarks AS "remarks",
-        a.del_flag AS "delFlag"
+        a.del_flag AS "delFlag",
+        u.name AS "createBy.name"
         FROM reserve_commodity_sell_detail as a
         left join reserve_member as m on a.fk_reserve_member_id=m.id
+        LEFT JOIN  reserve_user as u on u.id=a.create_by
         ,reserve_commodity as commodity,reserve_commodity_type as t
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND
