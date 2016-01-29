@@ -36,7 +36,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
 
-    public List<Map<String,Object>> findOrderLog(SaleVenueLog venueLog){
+    public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
         return dao.findOrderLog(venueLog);
     }
 
@@ -62,7 +62,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         reserveVenueCons.setOrderPrice(total);
         reserveVenueCons.setShouldPrice(cons.getShouldPrice());
         reserveVenueCons.setCheckOutUser(cons.getCheckOutUser());
-        reserveVenueCons.setReserveType("4");
         for (ReserveVenueConsItem item : cons.getVenueConsList()) {
             ReserveVenueConsItem consItem = reserveVenueConsItemDao.get(item.getId());
             consItem.setOrderPrice(item.getOrderPrice());
@@ -70,7 +69,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         }
 
         //ConsType:2:已预定;payType:1:会员卡;
-        if ("2".equals(reserveVenueCons.getConsType())) {
+        if ("1".equals(reserveVenueCons.getReserveType())) {
+            reserveVenueCons.setReserveType("4");
             reserveVenueCons.preUpdate();
             dao.update(reserveVenueCons);
             reserveVenueCons.setVenueConsList(cons.getVenueConsList());
@@ -99,6 +99,16 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     }
 
     /**
+     * 查询空场率
+     *
+     * @param venueCons
+     * @return
+     */
+    public List<Map<String, Object>> findOpenRateReport(ReserveVenueCons venueCons) {
+        return dao.findOpenRateReport(venueCons);
+    }
+
+    /**
      * 存储预定单据
      *
      * @param reserveVenueCons
@@ -111,6 +121,9 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         } else if ("3".equals(reserveVenueCons.getFrequency())) {
             reserveDateList = TimeUtils.getWeekBettwnDays(reserveVenueCons.getEndDate());
         }
+
+        //1:散客;2:会员
+        //String consType = reserveVenueCons.getConsType();
 
         for (Date date : reserveDateList) {
             reserveVenueCons.setConsDate(date);
@@ -130,13 +143,21 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 orderPrice += price;
                 item.preInsert();
                 reserveVenueConsItemDao.insert(item);
-                reserveVenueCons.setCosOrderPrice(orderPrice);
-                dao.update(reserveVenueCons);
-
-                //预定教练
-                List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());
-                applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));
             }
+
+            //查询会员打折信息
+            if ("2".equals(reserveVenueCons.getConsType())) {//会员预定
+                Double rate = reserveFieldPriceService.getMemberDiscountRate(reserveVenueCons.getMember());
+                if (rate != null && rate != 0) {
+                    orderPrice = orderPrice - (orderPrice * rate / 100);
+                    reserveVenueCons.setCosOrderPrice((double) Math.round(orderPrice));
+                    reserveVenueCons.setDiscountPrice((double) Math.round(orderPrice * rate / 100));
+                }
+            }
+            dao.update(reserveVenueCons);
+            //预定教练
+            List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());
+            applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));
         }
     }
 

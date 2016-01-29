@@ -124,6 +124,12 @@
         "authorityList": []
       },
       {
+        "code": "listOpenRate",
+        "name": "场地利用率",
+        "href":"/reserve/saleVenueReport/listOpenRate",
+        "authorityList": []
+      },
+      {
         "code": "memberIncomeRecord",
         "name": "会员收入统计",
         "href":"/reserve/reserveCardStatements/listByStoredCardType",

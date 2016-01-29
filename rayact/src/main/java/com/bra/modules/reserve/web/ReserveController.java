@@ -239,7 +239,7 @@ public class ReserveController extends BaseController {
 
     @RequestMapping(value = "settlementDetailForm")
     @Token(save = true)
-    public String settlementDetailForm(String cosId, Double shouldPrice, Double orderPrice, Model model) {
+    public String settlementDetailForm(String cosId, Double shouldPrice, Double orderPrice, Double discountPrice, Model model) {
         ReserveVenueCons cons = reserveVenueConsService.get(cosId);
         model.addAttribute("cos", cons);
         //教练
@@ -256,6 +256,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("itemList", itemList);
         model.addAttribute("shouldPrice", shouldPrice);
         model.addAttribute("orderPrice", orderPrice);
+        model.addAttribute("discountPrice", discountPrice);
         //赠品
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
         return "reserve/saleField/settlementDetailForm";
@@ -341,7 +342,7 @@ public class ReserveController extends BaseController {
 
     @RequestMapping(value = "checkUserPwd")
     @ResponseBody
-    public User checkUserPwd(String userPwd){
+    public User checkUserPwd(String userPwd) {
         User user = systemService.getUserByPwd(userPwd);
         return user;
     }

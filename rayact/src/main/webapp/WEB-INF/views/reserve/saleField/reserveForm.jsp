@@ -106,7 +106,7 @@
                 <td>手机号或姓名:</td>
                 <td>
                     <select style="width: 80px;" id="memberId" class="select2" name="member.id">
-                        <option>--请输入选择--</option>
+                        <option value="">--请输入选择--</option>
                         <c:forEach items="${memberList}" var="m">
                             <option value="${m.id}">${m.mobile}-${m.name}</option>
                         </c:forEach>

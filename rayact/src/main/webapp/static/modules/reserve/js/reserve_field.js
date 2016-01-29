@@ -129,9 +129,10 @@ $(document).ready(function () {
         var cosId = $("#cosId").val();
         var shouldPrice = $("#shouldPrice").val();
         var orderPrice = $("#orderPrice").val();
+        var discountPrice = $("#discountPrice").val();
         jQuery.postItems({
             url: ctx + '/reserve/field/settlementDetailForm',
-            data: {cosId: cosId, shouldPrice: shouldPrice, orderPrice: orderPrice},
+            data: {cosId: cosId, shouldPrice: shouldPrice, orderPrice: orderPrice, discountPrice: discountPrice},
             success: function (result) {
                 $("#closeSettlementBtn").click();
                 $("#settlementDetailForm").html(result);

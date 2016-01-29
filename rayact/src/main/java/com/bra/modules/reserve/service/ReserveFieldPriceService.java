@@ -29,6 +29,16 @@ public class ReserveFieldPriceService {
     //预定信息
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
+    @Autowired
+    private ReserveMemberDao reserveMemberDao;
+    @Autowired
+    private ReserveStoredcardMemberSetDao reserveStoredcardMemberSetDao;
+
+    public Double getMemberDiscountRate(ReserveMember member){
+        ReserveMember reserveMember = reserveMemberDao.get(member);
+        ReserveStoredcardMemberSet storedcardMemberSet = reserveStoredcardMemberSetDao.get(reserveMember.getStoredcardSet());
+        return storedcardMemberSet.getDiscountRate();
+    }
 
     private void setWeek(ReserveFieldPriceSet reserveFieldPriceSet, Date date) {
         String week = TimeUtils.getWeekOfDate(date);

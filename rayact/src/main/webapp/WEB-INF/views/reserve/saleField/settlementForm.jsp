@@ -4,6 +4,7 @@
     <input type="hidden" name="id" id="cosId" value="${cos.id}"/>
     <input type="hidden" name="token" id="settlementToken" value="${token}"/>
     <input type="hidden" id="checkoutId" name="checkOutUser.id"/>
+
     <div class="content">
         <table class="no-border">
             <tbody class="no-border-y">
@@ -137,14 +138,21 @@
     <hr/>
     <div class="content">
         <div class="row">
-            <div class="col-sm-6">
-                <label id="totalPrice">应收(元):<input  readonly="readonly" type="text" id="shouldPrice" class="form-control"
+            <div class="col-sm-4">
+                <label id="totalPrice">应收(元):<input readonly="readonly" type="text" id="shouldPrice"
+                                                    class="form-control"
                                                     name="shouldPrice"/></label>
-                </div>
-            <div class="col-sm-6">
-                <label>实收(元):<input type="text" readonly="readonly" id="orderPrice" class="form-control" name="orderPrice"/></label>
-                </div>
             </div>
+            <j:if test="${'2' eq cos.consType}">
+            <div class="col-sm-4">
+                <label>优惠(元):<input type="text" value="${cos.discountPrice}" readonly="readonly" id="discountPrice" class="form-control"
+                                    name="discountPrice"/></label>
+            </div>
+        </j:if>
+        <div class="col-sm-4">
+            <label>实收(元):<input type="text" readonly="readonly" id="orderPrice" class="form-control" name="orderPrice"/></label>
+        </div>
+    </div>
     </div>
 </form>
 <script type="text/javascript">
@@ -161,8 +169,12 @@
                 var value = $(this).val();
                 orderPrice += (value * 1);
             });
-            $("#orderPrice").val(tutorOrderPrice + orderPrice);
+            var discountPrice = $("#discountPrice").val();
             $("#shouldPrice").val(tutorOrderPrice + orderPrice);
+            if (discountPrice != undefined && discountPrice != '') {
+                orderPrice = orderPrice - (discountPrice * 1);
+            }
+            $("#orderPrice").val(tutorOrderPrice + orderPrice);
         }
 
         initData();

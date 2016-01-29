@@ -45,6 +45,7 @@ CREATE TABLE reserve_venue_cons (
 
   order_price  DOUBLE COMMENT '实际收费金额',
   should_price   DOUBLE COMMENT '应收费金额',
+  discount_price DOUBLE COMMENT '打折金额(针对会员)',
   cons_price   DOUBLE COMMENT '预定金额',
   pay_type     VARCHAR(1) COMMENT '支付类型(1:会员卡,2:现金,3:银行卡,4:微信,5:支付宝,6:其它)',
 

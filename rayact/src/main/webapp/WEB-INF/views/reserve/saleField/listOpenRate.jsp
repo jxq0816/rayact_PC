@@ -2,13 +2,13 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>场地售卖报表</title>
+    <title>场地利用率报表</title>
     <meta name="decorator" content="main"/>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="saleVenueReport"></jsp:param>
+    <jsp:param name="action" value="listOpenRate"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
@@ -17,7 +17,7 @@
                 <div class="header">
                     <h3>场地售卖报表</h3>
                 </div>
-                <form id="searchForm" action="${ctx}/reserve/saleVenueReport/list"
+                <form id="searchForm" action="${ctx}/reserve/saleVenueReport/listOpenRate"
                       method="post" class="content">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -31,11 +31,11 @@
                                         <div class="tab-tit-first">
                                             <ul>
                                                 <li <j:if test="${'1' eq search}">class="on"</j:if>><a
-                                                        href="${ctx}/reserve/saleVenueReport/list?search=1">当天</a></li>
+                                                        href="${ctx}/reserve/saleVenueReport/listOpenRate?search=1">当天</a></li>
                                                 <li <j:if test="${'2' eq search}">class="on"</j:if>><a
-                                                        href="${ctx}/reserve/saleVenueReport/list?search=2">当月</a></li>
+                                                        href="${ctx}/reserve/saleVenueReport/listOpenRate?search=2">当月</a></li>
                                                 <li <j:if test="${'3' eq search}">class="on"</j:if>><a
-                                                        href="${ctx}/reserve/saleVenueReport/list?search=3">当年</a></li>
+                                                        href="${ctx}/reserve/saleVenueReport/listOpenRate?search=3">当年</a></li>
                                                 <li id="userDesign" style="cursor: hand;"
                                                     <j:if test="${'4' eq search}">class="on"</j:if>><a>自定义</a></li>
                                             </ul>
@@ -66,30 +66,22 @@
                             <thead>
                             <tr>
                                 <th>项目类型</th>
-                                <th>订单金额</th>
-                                <th>会员优惠</th>
-                                <th>订单数量</th>
-                                <th>会员卡</th>
-                                <th>现金</th>
-                                <th>银行卡</th>
-                                <th>微信</th>
-                                <th>支付宝</th>
-                                <th>其它</th>
+                                <th>场地名称</th>
+                                <th>营业时间</th>
+                                <th>占用时间</th>
+                                <th>空闲时间</th>
+                                <th>场地利用率</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${orderList}" var="report">
+                            <c:forEach items="${openRateList}" var="report">
                                 <tr style="height: 30px;">
-                                    <td>${report.projectName}(${report.saleType})</td>
-                                    <td>${report.orderPrice}</td>
-                                    <td>${report.discountPrice}</td>
-                                    <td>${report.total}</td>
-                                    <td>${report.memberPrice}</td>
-                                    <td>${report.moneyPrice}</td>
-                                    <td>${report.cardPrice}</td>
-                                    <td>${report.weixinPrice}</td>
-                                    <td>${report.zfbPrice}</td>
-                                    <td>${report.otherPrice}</td>
+                                    <td>${report.project_name}</td>
+                                    <td>${report.venue_name}${report.field_name}</td>
+                                    <td>${report.business_time}小时</td>
+                                    <td>${report.utilization_time}小时</td>
+                                    <td>${report.free_time}小时</td>
+                                    <td>${report.percent}</td>
                                 </tr>
                             </c:forEach>
 
