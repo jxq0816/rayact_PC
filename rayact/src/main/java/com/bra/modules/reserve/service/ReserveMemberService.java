@@ -1,7 +1,9 @@
 package com.bra.modules.reserve.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +45,11 @@ public class ReserveMemberService extends CrudService<ReserveMemberDao, ReserveM
 	public void delete(ReserveMember reserveMember) {
 		super.delete(reserveMember);
 	}
-	
+
+	public Integer memberRegisterOfMonth(ReserveMember reserveMember) {
+		return dao.memberRegisterOfMonth(reserveMember);
+	}
+	public Integer memberRegisterOfAll(ReserveMember reserveMember){
+		return dao.memberRegisterOfAll(reserveMember);
+	}
 }

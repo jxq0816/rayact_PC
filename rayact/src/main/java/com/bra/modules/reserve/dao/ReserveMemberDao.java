@@ -8,6 +8,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveMember;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 会员管理DAO接口
@@ -17,4 +18,6 @@ import java.util.List;
 @MyBatisDao
 public interface ReserveMemberDao extends CrudDao<ReserveMember> {
 	List<ReserveMember> findExactList(ReserveMember reserveMember);
+	Integer memberRegisterOfMonth(ReserveMember reserveMember);
+	Integer memberRegisterOfAll(ReserveMember reserveMember);
 }

@@ -1,13 +1,16 @@
 package com.bra.modules.reserve.listener.commodity;
 
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.event.main.MainControlerEvent;
 import com.bra.modules.reserve.service.ReserveCommoditySellService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 
@@ -37,6 +40,18 @@ public class CommodityChartListener {
         sellOfMonth=sellOfMonth.setScale(1, BigDecimal.ROUND_HALF_UP);
         data.put("sellOfToday", sellOfToday);
         data.put("sellOfMonth", sellOfMonth);
+
+
+        List<Map<String, Object>> cardStatementsList = reserveCommoditySellService.sellOfChart(reserveCardStatements);
+        List<String> dateList = Lists.newArrayList();
+        List<String> volumeList = Lists.newArrayList();
+        for (Map<String, Object> map : cardStatementsList) {
+            dateList.add("'" + map.get("updateDate") + "'");
+            volumeList.add(map.get("volume").toString());
+        }
+
+        data.put("sellChartMapX", StringUtils.join(dateList, ","));
+        data.put("sellChartMapY", StringUtils.join(volumeList, ","));
 
     }
 }

@@ -31,6 +31,18 @@
 		WHERE  Month(s.update_date)=MONTH(CURDATE()) and s.tenant_id = #{tenantId}
 	</select>
 
+	<select id="sellOfChart" resultType="java.util.Map">
+		SELECT
+		SUM(total_sum) AS "volume",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
+		from reserve_commodity_sell as a
+		WHERE
+		<![CDATA[
+		DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date)
+		]]>
+		GROUP BY
+		date_format(a.update_date, '%Y-%m-%d');
+	</select>
+
 
 	<select id="get" resultType="ReserveCommoditySell">
 		SELECT

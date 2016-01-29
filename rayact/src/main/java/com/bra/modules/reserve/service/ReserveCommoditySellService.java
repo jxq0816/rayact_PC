@@ -2,6 +2,7 @@ package com.bra.modules.reserve.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,10 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 
 	public BigDecimal sellOfToday(ReserveCardStatements reserveCardStatements){
 		return dao.sellOfToday(reserveCardStatements);
+	}
+
+	public List<Map<String, Object>> sellOfChart(ReserveCardStatements reserveCardStatements){
+		return dao.sellOfChart(reserveCardStatements);
 	}
 
 	public Page<ReserveCommoditySell> findPage(Page<ReserveCommoditySell> page, ReserveCommoditySell reserveCommoditySell) {

@@ -44,6 +44,23 @@
 		WHERE a.id = #{id}
 	</select>
 
+	<select id="memberRegisterOfMonth" resultType="integer">
+		SELECT
+		count(a.id)
+		FROM
+		reserve_member a
+		where Month(a.update_date)=MONTH(CURDATE()) and a.tenant_id = #{tenantId}
+
+	</select>
+
+	<select id="memberRegisterOfAll" resultType="integer">
+		SELECT
+		count(a.id)
+		FROM
+		reserve_member a
+		where a.tenant_id = #{tenantId}
+	</select>
+
 	<select id="findExactList" resultType="ReserveMember">
 		SELECT
 		<include refid="reserveMemberColumns"/>

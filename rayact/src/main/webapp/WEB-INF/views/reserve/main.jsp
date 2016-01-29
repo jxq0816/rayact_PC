@@ -14,7 +14,7 @@
 
         <!--当天得会员充值;场地售卖;商品售卖-->
         <div class="row dash-cols">
-            <div class="col-sm-6 col-md-6 col-lg-4">
+            <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
                     <div class="header">
                         <h2><i class="fa fa-comment"></i>会员充值</h2>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-4">
+            <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
                     <div class="header">
                         <h2><i class="fa fa-bug"></i>场地售卖</h2>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-4">
+            <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
                     <div class="header">
                         <h2><i class="fa fa-comment"></i>商品售卖</h2>
@@ -67,6 +67,25 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="block">
+                    <div class="header">
+                        <h2><i class="fa fa-comment"></i>新增会员</h2>
+                    </div>
+                    <div class="content no-padding">
+                        <div class="fact-data text-center">
+                            <h3>当月</h3>
+                            <h2>${registerNum}</h2>
+                        </div>
+                        <div class="fact-data text-center">
+                            <h3>总数</h3>
+                            <h2>${memberNum}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!--报表-->
         <div class="row dash-cols">
@@ -100,6 +119,17 @@
                     </div>
                     <div class="content">
                         <div id="project_statistics" style="height:280px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+                <div class="block">
+                    <div class="header no-border">
+                        <h2>商品销售</h2>
+                    </div>
+                    <div class="content">
+                        <div id="sell_statistics" style="height:280px;"></div>
                     </div>
                 </div>
             </div>
@@ -210,6 +240,42 @@
             ]
         };
         projectChart.setOption(projectOption);
+
+        //商品销售
+        var sellChart = echarts.init(document.getElementById('sell_statistics'));
+        sellOption = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['商品销售']
+            },
+            toolbox: {
+                show: false
+            },
+            calculable: false,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [${sellChartMapX}]
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '商品销售',
+                    type: 'line',
+                    stack: '总量',
+                    data: [${sellChartMapY}]
+                }
+            ]
+        };
+        sellChart.setOption(sellOption);
     });
 </script>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/main.js"></script>
