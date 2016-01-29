@@ -22,13 +22,11 @@
                     <div class="content no-padding">
                         <div class="fact-data text-center">
                             <h3>当天</h3>
-
-                            <h2>${rechargeOfDay}</h2>
+                            <h2><a href="javascript:queryByDayForMemberIncome()">${rechargeOfDay}</a></h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
-
-                            <h2>${rechargeOfMonth}</h2>
+                            <h2><a href="javascript:queryByMonthForMemberIncome()">${rechargeOfMonth}</a></h2>
                         </div>
                     </div>
                 </div>
@@ -216,6 +214,8 @@
         projectChart.setOption(projectOption);
     });
 </script>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/main.js"></script>
+
 <script src="${ctxStatic}/echart/echarts-all.js"></script>
 
 <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.flot/jquery.flot.js"></script>
