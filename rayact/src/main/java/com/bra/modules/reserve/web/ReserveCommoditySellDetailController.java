@@ -85,16 +85,17 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		reserveCommoditySell.setTotalSum(total);
 		reserveCommoditySell.setGiftFlag("0");
 		ReserveMember reserveMember=sellDetailList.getReserveStoredCardMember();
+
 		reserveCommoditySell.setReserveMember(reserveMember);
 		reserveCommoditySellService.save(reserveCommoditySell);
 
-		reserveMember=reserveMemberService.get(reserveMember);
-
-		double remainder=reserveMember.getRemainder();
-		remainder-=total;
-		reserveMember.setRemainder(remainder);
-		reserveMemberService.save(reserveMember);
-
+		if(reserveMember!=null){ //储值卡会员扣款
+			reserveMember=reserveMemberService.get(reserveMember);
+			double remainder=reserveMember.getRemainder();
+			remainder-=total;
+			reserveMember.setRemainder(remainder);
+			reserveMemberService.save(reserveMember);
+		}
 		//销售次表
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Double price=sellDetail.getPrice();
