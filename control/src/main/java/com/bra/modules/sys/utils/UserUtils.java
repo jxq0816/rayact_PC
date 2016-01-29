@@ -260,20 +260,7 @@ public class UserUtils {
     }
 
     public static Session getSession() {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            Session session = subject.getSession(false);
-            if (session == null) {
-                session = subject.getSession();
-            }
-            if (session != null) {
-                return session;
-            }
-//			subject.logout();
-        } catch (InvalidSessionException e) {
-
-        }
-        return null;
+        return SecurityUtil.getSession();
     }
 
     // ============== User Cache ==============

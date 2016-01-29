@@ -66,6 +66,7 @@
                             <thead>
                             <tr>
                                 <th>项目类型</th>
+                                <th>应收金额</th>
                                 <th>订单金额</th>
                                 <th>会员优惠</th>
                                 <th>订单数量</th>
@@ -81,6 +82,7 @@
                             <c:forEach items="${orderList}" var="report">
                                 <tr style="height: 30px;">
                                     <td>${report.projectName}(${report.saleType})</td>
+                                    <td>${report.shouldPrice}</td>
                                     <td>${report.orderPrice}</td>
                                     <td>${report.discountPrice}</td>
                                     <td>${report.total}</td>

@@ -11,9 +11,15 @@
         <div style="padding: 10px 0 20px;">
         <ul class="list inset demo-list">
             <li data-icon="next" data-selected="selected">
-                <span class="icon user"></span>
-                <a href="#user_section?test=abc" data-target="section">
-                    <strong>用户管理</strong>
+                <span class="icon bars"></span>
+                <a href="#main_section" data-target="section">
+                    <strong>报表</strong>
+                </a>
+            </li>
+            <li data-icon="next" data-selected="selected">
+                <span class="icon newspaper"></span>
+                <a href="#" data-target="section">
+                    <strong>监控</strong>
                 </a>
             </li>
         </ul>

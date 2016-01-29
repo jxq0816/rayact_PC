@@ -71,7 +71,7 @@
     </select>
 
     <select id="findPriceGroupProjectReport" resultType="java.util.Map">
-        select d.name as projectName,sum(b.order_price )as orderPrice,sum(b.discount_price) as discountPrice,count(pay_Type) as total,
+        select d.name as projectName,sum(should_price) as shouldPrice,sum(b.order_price )as orderPrice,sum(b.discount_price) as discountPrice,count(pay_Type) as total,
         sum(case pay_Type when '1' then b.order_price else 0 end) memberPrice,
         sum(case pay_Type when '2' then b.order_price else 0 end) moneyPrice,
         sum(case pay_Type when '3' then b.order_price else 0 end) cardPrice,
@@ -156,6 +156,20 @@
             and a.venue_id = #{venue.id}
         </if>
         ${dsf}
+    </select>
+
+
+    <select id="sellOfChart" resultType="java.util.Map">
+        SELECT
+        SUM(a.order_price) AS "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as venueId
+        from reserve_venue_cons as a
+        WHERE
+        <![CDATA[
+		DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date)
+		]]>
+        GROUP BY
+        date_format(a.update_date, '%Y-%m-%d')
+        order by a.update_date
     </select>
 
     <select id="findList" resultType="ReserveVenueCons">

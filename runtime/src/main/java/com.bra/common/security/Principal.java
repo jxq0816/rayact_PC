@@ -19,6 +19,7 @@ public class Principal implements Serializable {
     private boolean mobileLogin; // 是否手机登录
     private String tenantId;//路由标识
 
+
 //		private Map<String, Object> cacheMap;
 
     public Principal(String id, String loginName, String name,String tenantId, boolean mobileLogin) {
@@ -58,6 +59,17 @@ public class Principal implements Serializable {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    /**
+     * 获取SESSIONID
+     */
+    public String getSessionid() {
+        try{
+            return (String) SecurityUtil.getSession().getId();
+        }catch (Exception e) {
+            return "";
+        }
     }
 
 

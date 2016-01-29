@@ -74,9 +74,12 @@ public class VenueSaleChartListener {
         }
 
         List<String> dateList = Lists.newArrayList();
+        List<String> venueListJson = Lists.newArrayList();
         for (String date : memberChartMap.keySet()) {
             dateList.add("'" + date + "'");
+            venueListJson.add(date);
         }
+        data.put("venueListJson",venueListJson);
         data.put("fieldChartMapX", StringUtils.join(dateList, ","));
         data.put("fieldChartMapY", StringUtils.join(memberChartMap.values(), ","));
     }

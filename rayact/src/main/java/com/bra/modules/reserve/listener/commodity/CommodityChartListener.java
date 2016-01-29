@@ -45,11 +45,14 @@ public class CommodityChartListener {
         List<Map<String, Object>> cardStatementsList = reserveCommoditySellService.sellOfChart(reserveCardStatements);
         List<String> dateList = Lists.newArrayList();
         List<String> volumeList = Lists.newArrayList();
+        List<String> commodityJson = Lists.newArrayList();
         for (Map<String, Object> map : cardStatementsList) {
             dateList.add("'" + map.get("updateDate") + "'");
+            commodityJson.add(map.get("updateDate").toString());
             volumeList.add(map.get("volume").toString());
         }
 
+        data.put("commodityJson",commodityJson);
         data.put("sellChartMapX", StringUtils.join(dateList, ","));
         data.put("sellChartMapY", StringUtils.join(volumeList, ","));
 

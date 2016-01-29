@@ -39,19 +39,20 @@ public class MemberRechargeListener {
         if (rechargeOfDay == null) {
             rechargeOfDay = BigDecimal.ZERO;
         }
-        rechargeOfMonth=rechargeOfMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
-        rechargeOfDay=rechargeOfDay.setScale(1,BigDecimal.ROUND_HALF_UP);
         data.put("rechargeOfMonth", rechargeOfMonth);
         data.put("rechargeOfDay", rechargeOfDay);
 
         List<Map<String, Object>> cardStatementsList = reserveCardStatementsService.rechargeOfChart(reserveCardStatements);
         List<String> dateList = Lists.newArrayList();
+        List<String> dateListJson = Lists.newArrayList();
         List<String> priceList = Lists.newArrayList();
         for (Map<String, Object> map : cardStatementsList) {
             dateList.add("'" + map.get("updateDate") + "'");
+            dateListJson.add(map.get("updateDate").toString());
             priceList.add(map.get("volume").toString());
         }
 
+        data.put("memberListJson",dateListJson);
         data.put("memberChartMapX", StringUtils.join(dateList, ","));
         data.put("memberChartMapY", StringUtils.join(priceList, ","));
     }
