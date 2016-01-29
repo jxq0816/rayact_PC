@@ -1,5 +1,6 @@
 package com.bra.modules.reserve.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,14 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
     public ReserveVenueCons get(String id) {
         return super.get(id);
+    }
+
+    public List<Map<String,Object>> sellOfChart(ReserveVenueCons venueCons){
+        return dao.sellOfChart(venueCons);
+    }
+
+    public BigDecimal sellMonthOfChart(ReserveVenueCons venueCons){
+        return dao.sellMonthOfChart(venueCons);
     }
 
     public List<ReserveVenueCons> findList(ReserveVenueCons reserveVenueCons) {
