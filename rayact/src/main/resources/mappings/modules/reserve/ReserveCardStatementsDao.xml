@@ -28,20 +28,22 @@
 	<select id="rechargeOfToday" resultType="BigDecimal">
 		select SUM(transaction_volume)
 		from reserve_card_statements as a
-		WHERE a.transaction_type='1' and datediff(a.update_date,curdate())=0 and a.tenant_id = #{tenantId}
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		and a.transaction_type='1' and datediff(a.update_date,curdate())=0
 	</select>
 
 	<select id="rechargeOfMonth" resultType="BigDecimal">
 		select SUM(transaction_volume)
 		from reserve_card_statements as a
-		WHERE a.transaction_type='1' and Month(a.update_date)=MONTH(CURDATE()) and a.tenant_id = #{tenantId}
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		and Month(a.update_date)=MONTH(CURDATE()) and a.transaction_type='1'
 	</select>
 
 	<select id="rechargeOfChart" resultType="java.util.Map">
 		SELECT SUM(a.transaction_volume) AS "volume",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
 		from reserve_card_statements a
 		<![CDATA[
-		where DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date) and a.tenant_id = #{tenantId} and a.transaction_type='1'
+		where a.del_flag = #{DEL_FLAG_NORMAL} and DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date) and a.tenant_id = #{tenantId} and a.transaction_type='1'
 		]]>
 		group by date_format(a.update_date,'%Y-%m-%d');
 	</select>
@@ -55,13 +57,15 @@
 	</select>
 
 	<select id="findListByStoredCardType" resultType="java.util.Map">
-		select s.name as cardTypeName,COUNT(distinct m.id) as memberCnt , sum(a.transaction_volume) as
-		transactionVolume,p.name as projectName
+		select s.name as cardTypeName,
+		COUNT(distinct m.id) as memberCnt ,
+		sum(a.transaction_volume) as transactionVolume,
+		p.name as projectName
 		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p
-		WHERE a.transaction_type='1' and a.fk_reserve_member_id=m.id and m.fk_reserve_storedcard_member_set_id=s.id and
-		p.id=s.fk_reserve_project_id and a.tenant_id = #{tenantId}
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		and a.transaction_type='1' and a.fk_reserve_member_id=m.id and m.fk_reserve_storedcard_member_set_id=s.id and p.id=s.fk_reserve_project_id
 		<if test="startDate!=null and endDate !=null">
-			and (a.update_date between #{startDate} and #{endDate})
+			and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
 		</if>
 		GROUP BY s.name
 	</select>
@@ -69,9 +73,10 @@
 	<select id="findListByCommodityType" resultType="java.util.Map">
         SELECT t.name as commodityTypeName, sum(d.detail_sum) as saleAmount
         from reserve_commodity_sell_detail as d ,reserve_commodity_type as t, reserve_commodity as c
-        where d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
+        where d.del_flag = #{DEL_FLAG_NORMAL} and d.tenant_id = #{tenantId}
+		and d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
 		<if test="startDate!=null and endDate !=null">
-			and (d.update_date between #{startDate} and #{endDate})
+			and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
 		</if>
         GROUP BY commodityTypeName
     </select>
@@ -95,7 +100,7 @@
 			</if>
 
 			<if test="startDate!=null and endDate !=null">
-				and (a.update_date between #{startDate} and #{endDate})
+				and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
 			</if>
 
 		</where>

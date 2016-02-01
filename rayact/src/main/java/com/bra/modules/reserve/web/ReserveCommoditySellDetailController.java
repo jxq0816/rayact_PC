@@ -4,9 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.web.annotation.Token;
-import com.bra.modules.reserve.entity.ReserveCommoditySell;
-import com.bra.modules.reserve.entity.ReserveCommoditySellDetailList;
-import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveCommoditySellService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,7 +22,6 @@ import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.web.BaseController;
 import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
 import com.bra.modules.reserve.service.ReserveCommoditySellDetailService;
 
 import java.util.List;
@@ -45,6 +43,9 @@ public class ReserveCommoditySellDetailController extends BaseController {
 
 	@Autowired
 	private ReserveMemberService reserveMemberService;
+
+	@Autowired
+	private ReserveCardStatementsService reserveCardStatementsService;
 
 	@ModelAttribute
 	public ReserveCommoditySellDetail get(@RequestParam(required=false) String id) {
@@ -89,14 +90,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		reserveCommoditySell.setReserveMember(reserveMember);
 		reserveCommoditySellService.save(reserveCommoditySell);
 
-		if(reserveMember!=null){ //储值卡会员扣款
-			reserveMember=reserveMemberService.get(reserveMember);
-			double remainder=reserveMember.getRemainder();
-			remainder-=total;
-			reserveMember.setRemainder(remainder);
-			reserveMemberService.save(reserveMember);
-		}
-		//销售次表
+		//销售明细表
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
@@ -105,6 +99,24 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			reserveCommoditySellDetailService.save(sellDetail);
 		}
+		//储值卡会员扣款
+		String payType=sellDetailList.getPayType();
+		if("1".equals(payType)){// 1代表会员
+			if(reserveMember!=null){
+				reserveMember=reserveMemberService.get(reserveMember);
+				double remainder=reserveMember.getRemainder();
+				remainder-=total;
+				reserveMember.setRemainder(remainder);
+				reserveMemberService.save(reserveMember);
+			}
+		}
+		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+		reserveCardStatements.setReserveMember(reserveMember);
+		reserveCardStatements.setTransactionType("3");//3代表消费
+		reserveCardStatements.setPayType(payType);
+		reserveCardStatements.setTransactionVolume(total);//消费额
+		reserveCardStatementsService.save(reserveCardStatements);
+
 		return "付款成功";
 	}
 

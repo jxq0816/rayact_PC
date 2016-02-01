@@ -67,9 +67,10 @@
                     <div id="memberList" style="display:none">
                         <tr>
                             <td>姓名:</td>
+
                             <td>
                                <select style="width: 80px;"  id="reserveMemberSelect" class="select2" name="reserveStoredCardMember.id" disabled>
-                                   <option value="">--请输入选择--</option>
+                                   <option value="">--请选择会员--</option>
                                    <c:forEach  items="${reserveMemberList}" var="m">
                                         <option value="${m.id}">${m.mobile}-${m.name}</option>
                                     </c:forEach>
