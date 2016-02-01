@@ -118,6 +118,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">${fns:getUser().name}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">个人中心</a></li>
+                        <li><a href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
                         <li class="divider"></li>
                         <li><a href="${ctx}/logout">退出</a></li>
                     </ul>

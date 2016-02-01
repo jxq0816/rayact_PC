@@ -75,6 +75,38 @@ public class ReserveUserController extends BaseController {
         return "reserve/user/form";
     }
 
+    @RequestMapping(value = "updatePasswordForm")
+    @Token(save =true)
+    public String updatePassword(Model model) {
+        User user=this.infoData();
+        model.addAttribute("user", user);
+        return "reserve/user/updatePasswordForm";
+    }
+    @RequestMapping(value = "updatePasswordFormSubmit")
+    @ResponseBody
+    public String checkPassword(String id,String oldPassword){
+        User user=reserveUserService.get(id);
+        String pswd=user.getPassword();
+        String rs=null;
+        if(pswd.equals(oldPassword)){
+            rs="1";//原始密码正确
+        }else{
+            rs="0";//原始密码不正确
+        }
+        return rs;
+    }
+
+    @RequestMapping(value = "updateSubmit")
+    @Token(remove = true)
+    public String updateSubmit(User user, RedirectAttributes redirectAttributes) {
+        // 保存用户信息
+        reserveUserService.saveUser(user);
+        // 清除当前用户缓存
+        UserUtils.clearCache();
+        addMessage(redirectAttributes, "密码修改成功");
+        return "redirect:"+adminPath +"/logout";
+    }
+
     @RequestMapping(value = "save")
     @Token(remove = true)
     public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {

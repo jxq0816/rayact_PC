@@ -10,7 +10,7 @@
     <jsp:param name="action" value=""></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
-    <div class="cl-mcont">
+        <div class="cl-mcont">
 
         <!--当天得会员充值;场地售卖;商品售卖-->
         <div class="row dash-cols">
