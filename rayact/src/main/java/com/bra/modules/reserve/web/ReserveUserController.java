@@ -75,14 +75,8 @@ public class ReserveUserController extends BaseController {
         return "reserve/user/form";
     }
 
-    @RequestMapping(value = "updatePasswordForm")
-    @Token(save =true)
-    public String updatePassword(Model model) {
-        User user=this.infoData();
-        model.addAttribute("user", user);
-        return "reserve/user/updatePasswordForm";
-    }
-    @RequestMapping(value = "updatePasswordFormSubmit")
+    //验证原始密码 是否正确
+    @RequestMapping(value = "checkPassword")
     @ResponseBody
     public String checkPassword(String id,String oldPassword){
         User user=reserveUserService.get(id);
@@ -96,7 +90,16 @@ public class ReserveUserController extends BaseController {
         return rs;
     }
 
-    @RequestMapping(value = "updateSubmit")
+    @RequestMapping(value = "updatePasswordForm")
+    @Token(save =true)
+    public String updatePassword(Model model) {
+        User user=this.infoData();
+        model.addAttribute("user", user);
+        return "reserve/user/updatePasswordForm";
+    }
+
+
+    @RequestMapping(value = "updatePasswordSubmit")
     @Token(remove = true)
     public String updateSubmit(User user, RedirectAttributes redirectAttributes) {
         // 保存用户信息

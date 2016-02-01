@@ -4,7 +4,6 @@
 <head>
     <title>修改密码</title>
     <meta name="decorator" content="main"/>
-    <%@include file="/WEB-INF/views/include/upload.jsp" %>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -16,9 +15,9 @@
     </div>
     <div class="cl-mcont">
         <div class="block-flat">
-            <form:form id="inputForm" modelAttribute="user" action="${ctx}/reserve/user/updatePasswordFormSubmit"
-                       class="form-horizontal" role="form">
-                <form:hidden path="id"/>
+            <form:form id="inputForm" modelAttribute="user" action="${ctx}/reserve/user/updatePasswordSubmit"
+                       class="form-horizontal" role="form" onsubmit="return checkForm()">
+                <form:hidden id="id" path="id"/>
                 <input type="hidden" name="token" value="${token}"/>
                 <sys:msg content="${message}"/>
                 <div class="form-group">
@@ -45,9 +44,10 @@
                     <label class="col-sm-2 control-label">原始密码:</label>
 
                     <div class="col-sm-4">
-                        <input id="oldPassword" name="oldPassword" type="password" value="" onblur="checkPassword()"
+                        <input id="oldPassword" name="oldPassword" type="password" value=""
                                maxlength="50" minlength="3"
                                class="required form-control"/>
+                        <span class="help-inline"> <font color="red">*</font></span>
                     </div>
                 </div>
 
@@ -58,6 +58,7 @@
                         <input id="password" name="password" type="password" value=""
                                maxlength="50" minlength="3"
                                class="required form-control"/>
+                        <span class="help-inline"> <font color="red">*</font></span>
                     </div>
                 </div>
 
@@ -68,7 +69,8 @@
                     <div class="col-sm-4">
                         <input id="password2" name="password2" type="password" value=""
                                maxlength="50" minlength="3"
-                               class="required form-control equalTo:#newPassword"/>
+                               class="required form-control"/>
+                        <span class="help-inline"> <font color="red">*</font></span>
                     </div>
                 </div>
 
