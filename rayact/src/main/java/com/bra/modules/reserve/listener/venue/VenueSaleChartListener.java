@@ -85,8 +85,12 @@ public class VenueSaleChartListener {
         data.put("fieldTodayPrice", todayPrice);
 
         //当月的
-        BigDecimal MonthPrice = reserveVenueConsService.sellMonthOfChart(venueCons);
-        data.put("fieldMonthPrice", MonthPrice);
+        BigDecimal monthPrice = reserveVenueConsService.sellMonthOfChart(venueCons);
+        if(monthPrice==null){
+            monthPrice=BigDecimal.ZERO;
+        }
+        monthPrice=monthPrice.setScale(1, BigDecimal.ROUND_HALF_UP);
+        data.put("fieldMonthPrice", monthPrice);
 
     }
 }
