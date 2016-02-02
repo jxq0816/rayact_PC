@@ -2,13 +2,14 @@ package com.bra.modules.reserve.web.form;
 
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.utils.UserUtils;
 
 import java.util.Date;
 
 /**
  * Created by xiaobin on 16/1/28.
  */
-public class SaleVenueLog {
+public class SaleVenueLog  {
 
     private User user;
 
@@ -19,6 +20,12 @@ public class SaleVenueLog {
     private ReserveVenue venue;
 
     private String dsf;
+
+    private String tenantId;
+
+    public SaleVenueLog(){
+        this.tenantId = UserUtils.getTenantId();
+    }
 
     public User getUser() {
         return user;
@@ -58,5 +65,13 @@ public class SaleVenueLog {
 
     public void setDsf(String dsf) {
         this.dsf = dsf;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }
