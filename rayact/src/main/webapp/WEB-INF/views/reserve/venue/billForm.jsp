@@ -48,13 +48,6 @@
                                                         class="form-control"/></td>
                                     </tr>
                                     <tr>
-                                        <td>油费</td>
-                                        <td><form:input path="oilBill" htmlEscape="false" class="form-control  number"/></td>
-                                        <td>油费说明</td>
-                                        <td><form:input path="oilBillRemark" htmlEscape="false" maxlength="255"
-                                                        class="form-control"/></td>
-                                    </tr>
-                                    <tr>
                                         <td>体育用品维修</td>
                                         <td><form:input path="sportDeviceRepairBill" htmlEscape="false" class="form-control  number"/></td>
                                         <td>体育用品维修说明</td>
@@ -94,7 +87,7 @@
                                                         </c:if>
                                                     </c:forEach>
                                                     <input type="checkbox" id="userRoleCheck" ${vchecked}
-                                                           name="reserveRole.venueList[${status.index}]" class="icheck"
+                                                           name="reserveVenue.id" class="icheck required"
                                                            value="${venue.id}"/>${venue.name}
                                                 </label>
                                             </c:forEach>
@@ -121,5 +114,6 @@
             </div>
         </div>
     </div>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"/>
 </body>
 </html>

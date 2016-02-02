@@ -1,5 +1,6 @@
 package com.bra.modules.reserve.entity;
 
+import com.bra.common.persistence.SaasEntity;
 import org.hibernate.validator.constraints.Length;
 
 import com.bra.common.persistence.DataEntity;
@@ -9,7 +10,7 @@ import com.bra.common.persistence.DataEntity;
  * @author jiangxingqi
  * @version 2016-02-02
  */
-public class ReserveVenueBill extends DataEntity<ReserveVenueBill> {
+public class ReserveVenueBill extends SaasEntity<ReserveVenueBill> {
 	
 	private static final long serialVersionUID = 1L;
 	private Double waterBill;		// water_bill
@@ -26,7 +27,7 @@ public class ReserveVenueBill extends DataEntity<ReserveVenueBill> {
 	private String venueDeviceRepairBillRemark;		// 场馆设备维修说明
 	private Double otherBill;		// other_bill
 	private String otherBillRemark;		// 其他说明
-	private String fkReserveVenueId;		// fk_reserve_venue_id
+	private ReserveVenue reserveVenue;		// 场馆
 	private String tenantId;		// 路由标识
 	
 	public ReserveVenueBill() {
@@ -155,16 +156,15 @@ public class ReserveVenueBill extends DataEntity<ReserveVenueBill> {
 	public void setOtherBillRemark(String otherBillRemark) {
 		this.otherBillRemark = otherBillRemark;
 	}
-	
-	@Length(min=0, max=19, message="fk_reserve_venue_id长度必须介于 0 和 19 之间")
-	public String getFkReserveVenueId() {
-		return fkReserveVenueId;
+
+	public ReserveVenue getReserveVenue() {
+		return reserveVenue;
 	}
 
-	public void setFkReserveVenueId(String fkReserveVenueId) {
-		this.fkReserveVenueId = fkReserveVenueId;
+	public void setReserveVenue(ReserveVenue reserveVenue) {
+		this.reserveVenue = reserveVenue;
 	}
-	
+
 	@Length(min=0, max=19, message="路由标识长度必须介于 0 和 19 之间")
 	public String getTenantId() {
 		return tenantId;

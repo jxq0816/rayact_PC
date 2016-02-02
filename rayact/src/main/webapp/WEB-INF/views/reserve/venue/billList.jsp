@@ -71,7 +71,6 @@
                                 <tbody>
                                 <c:forEach items="${page.list}" var="reserveVenueBill">
                                     <tr>
-                                        <td></td>
                                         <td>
                                                 ${reserveVenueBill.waterBill}
                                         </td>
@@ -115,12 +114,14 @@
                                                 ${reserveVenueBill.otherBillRemark}
                                         </td>
                                         <td>
-                                                ${reserveVenueBill.fkReserveVenueId}
+                                                ${reserveVenueBill.reserveVenue.name}
                                         </td>
                                         <td>
-                                            <a href="${ctx}/reserve/reserveVenueBill/form?id=${reserveVenueBill.id}">修改</a>
-                                            <a href="${ctx}/reserve/reserveVenueBill/delete?id=${reserveVenueBill.id}"
-                                               onclick="return confirmx('确认要删除该场馆损益吗？', this.href)">删除</a>
+                                            <a class="btn btn-primary btn-xs" href="${ctx}/reserve/reserveVenueBill/form?id=${reserveVenueBill.id}"><i
+                                                    class="fa fa-pencil"></i>修改</a>
+                                            <a class="btn btn-danger btn-xs" href="${ctx}/reserve/reserveVenueBill/delete?id=${reserveVenueBill.id}"
+                                               onclick="return confirmb('确认要删除该场馆损益吗？', this.href)"><i
+                                                    class="fa fa-times"></i>删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -18,7 +18,8 @@
 		a.venue_device_repair_bill_remark AS "venueDeviceRepairBillRemark",
 		a.other_bill AS "otherBill",
 		a.other_bill_remark AS "otherBillRemark",
-		a.fk_reserve_venue_id AS "fkReserveVenueId",
+		a.fk_reserve_venue_id AS "reserveVenue.id",
+		v.name AS "reserveVenue.name",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -29,6 +30,7 @@
 	</sql>
 	
 	<sql id="reserveVenueBillJoins">
+		LEFT JOIN reserve_venue as v on v.id=a.fk_reserve_venue_id
 	</sql>
     
 	<select id="get" resultType="ReserveVenueBill">
@@ -116,7 +118,7 @@
 			#{venueDeviceRepairBillRemark},
 			#{otherBill},
 			#{otherBillRemark},
-			#{fkReserveVenueId},
+			#{reserveVenue.id},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -143,7 +145,7 @@
 			venue_device_repair_bill_remark = #{venueDeviceRepairBillRemark},
 			other_bill = #{otherBill},
 			other_bill_remark = #{otherBillRemark},
-			fk_reserve_venue_id = #{fkReserveVenueId},
+			fk_reserve_venue_id = #{reserveVenue.id},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
