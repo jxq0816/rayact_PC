@@ -19,7 +19,7 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/reserve/reserveMember/">会员列表</a></li>
-		<shiro:hasPermission name="reserve:reserveMember:edit"><li><a href="${ctx}/reserve/reserveMember/form">会员添加</a></li></shiro:hasPermission>
+		<%--<shiro:hasPermission name="reserve:reserveMember:edit"><li><a href="${ctx}/reserve/reserveMember/form">会员添加</a></li></shiro:hasPermission>--%>
 	</ul>
 	<form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

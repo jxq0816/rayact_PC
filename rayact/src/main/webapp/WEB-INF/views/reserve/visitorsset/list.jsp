@@ -46,9 +46,7 @@
                                 <th>所属项目</th>
                                 <th>所属场馆</th>
                                 <th>是否启用</th>
-                                <shiro:hasPermission name="reserve:reserveField:edit">
-                                    <th>操作</th>
-                                </shiro:hasPermission>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
