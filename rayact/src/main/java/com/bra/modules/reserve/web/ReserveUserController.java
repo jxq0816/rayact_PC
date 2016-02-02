@@ -58,7 +58,7 @@ public class ReserveUserController extends BaseController {
     }
 
     @RequestMapping(value = "form")
-    @Token(save =true)
+    @Token(save = true)
     public String form(User user, Model model) {
         if (user.getCompany() == null || user.getCompany().getId() == null) {
             user.setCompany(UserUtils.getUser().getCompany());
@@ -78,22 +78,22 @@ public class ReserveUserController extends BaseController {
     //验证原始密码 是否正确
     @RequestMapping(value = "checkPassword")
     @ResponseBody
-    public String checkPassword(String id,String oldPassword){
-        User user=reserveUserService.get(id);
-        String pswd=user.getPassword();
-        String rs=null;
-        if(pswd.equals(oldPassword)){
-            rs="1";//原始密码正确
-        }else{
-            rs="0";//原始密码不正确
+    public String checkPassword(String id, String oldPassword) {
+        User user = reserveUserService.get(id);
+        String pswd = user.getPassword();
+        String rs = null;
+        if (pswd.equals(oldPassword)) {
+            rs = "1";//原始密码正确
+        } else {
+            rs = "0";//原始密码不正确
         }
         return rs;
     }
 
     @RequestMapping(value = "updatePasswordForm")
-    @Token(save =true)
+    @Token(save = true)
     public String updatePassword(Model model) {
-        User user=this.infoData();
+        User user = this.infoData();
         model.addAttribute("user", user);
         return "reserve/user/updatePasswordForm";
     }
@@ -103,11 +103,12 @@ public class ReserveUserController extends BaseController {
     @Token(remove = true)
     public String updateSubmit(User user, RedirectAttributes redirectAttributes) {
         // 保存用户信息
+        user.setPassword(MD5Util.getMD5String(user.getPassword()));
         reserveUserService.saveUser(user);
         // 清除当前用户缓存
         UserUtils.clearCache();
         addMessage(redirectAttributes, "密码修改成功");
-        return "redirect:"+adminPath +"/logout";
+        return "redirect:" + adminPath + "/logout";
     }
 
     @RequestMapping(value = "save")
