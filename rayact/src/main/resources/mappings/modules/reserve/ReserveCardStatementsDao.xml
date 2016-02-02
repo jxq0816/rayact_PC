@@ -43,7 +43,8 @@
 		SELECT SUM(a.transaction_volume) AS "volume",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
 		from reserve_card_statements a
 		<![CDATA[
-		where a.del_flag = #{DEL_FLAG_NORMAL} and DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date) and a.tenant_id = #{tenantId} and a.transaction_type='1'
+		where a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		and DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date)  and a.transaction_type='1'
 		]]>
 		group by date_format(a.update_date,'%Y-%m-%d');
 	</select>
