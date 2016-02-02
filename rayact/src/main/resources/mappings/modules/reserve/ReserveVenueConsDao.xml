@@ -61,7 +61,7 @@
         select sum(a.order_price )as orderPrice,d.name as projectName
         from reserve_venue_cons_item a,reserve_venue_cons b,reserve_field c,reserve_project d
         where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id and a.tenant_id = #{tenantId}
-        and a.del_flag = '0'
+        and a.del_flag = '0' and a.tenant_id = #{tenantId}
         and year(a.update_date)=year(CURDATE())
         <if test="reserveType != null and reserveType != ''">
             and b.reserve_type = #{reserveType}
@@ -81,7 +81,7 @@
         sum(case pay_Type when '6' then b.order_price else 0 end) otherPrice
         from reserve_venue_cons_item a,reserve_venue_cons b,reserve_field c,reserve_project d
         where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id
-        and a.del_flag = '0'
+        and a.del_flag = '0' and a.tenant_id = #{tenantId}
         <if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search == '1' ">
             and date(a.update_date)=date(CURDATE())
         </if>
@@ -107,7 +107,7 @@
         sum(23-8) as business_time
         from reserve_venue_cons a,reserve_venue_cons_item b,reserve_venue c,reserve_project p,reserve_field f
         where a.id = b.cons_data_id and a.venue_id = c.id and a.project_id = p.id and b.field_id = f.id
-        and a.del_flag = '0' and a.reserve_type = '4'
+        and a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
         <if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search == '1' ">
             and date(a.update_date)=date(CURDATE())
         </if>
@@ -131,7 +131,7 @@
         '1' as reserve_type,p.name as projectName
         from reserve_venue_cons a,reserve_venue v,reserve_user u,reserve_project p
         where a.venue_id = v.id and a.create_by = u.id and a.project_id = p.id
-        and a.del_flag = '0' and a.reserve_type = '4'
+        and a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
         <if test="startDate != null and endDate != null">
             and (a.update_date BETWEEN #{startDate} AND #{endDate})
         </if>
@@ -148,7 +148,7 @@
         projectName
         from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
         where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
-        and a.del_flag = '0'
+        and a.del_flag = '0' and a.tenant_id = #{tenantId}
         <if test="startDate != null and endDate != null">
             and (a.update_date BETWEEN #{startDate} AND #{endDate})
         </if>
@@ -158,7 +158,7 @@
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
         </if>
-        ${sqlMap.dsf}
+        ${dsf}
     </select>
 
     <select id="sellMonthOfChart" resultType="java.math.BigDecimal">
@@ -167,14 +167,14 @@
         SUM(a.order_price) AS "orderPrice"
         from reserve_venue_cons as a
         WHERE a.del_flag = '0' and a.reserve_type = '4'
-        and month(a.update_date)=month(CURDATE())
+        and month(a.update_date)=month(CURDATE()) and a.tenant_id = #{tenantId}
         ${sqlMap.dsf}
         GROUP BY
         date_format(a.update_date, '%Y-%m-%d')
         UNION
         select sum(a.collect_price) as "orderPrice"
         from reserve_venue_order a
-        WHERE a.del_flag = '0'
+        WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
         and month(a.update_date)=month(CURDATE())
         ${sqlMap.dsf}) c
     </select>
@@ -185,7 +185,7 @@
         SELECT
         SUM(a.order_price) AS "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as venueId
         from reserve_venue_cons as a
-        WHERE a.del_flag = '0' and a.reserve_type = '4'
+        WHERE a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
         <![CDATA[
 		and DATE_SUB(CURDATE(), INTERVAL #{sqlMap.day} DAY) <= date(a.update_date)
 		]]>
@@ -199,7 +199,7 @@
         select sum(a.collect_price) as "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as
         venueId
         from reserve_venue_order a
-        WHERE a.del_flag = '0'
+        WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
         <![CDATA[
 		and DATE_SUB(CURDATE(), INTERVAL #{sqlMap.day} DAY) <= date(a.update_date)
 		]]>

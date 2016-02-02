@@ -36,11 +36,11 @@ public class MemberRechargeListener {
         if (rechargeOfMonth == null) {
             rechargeOfMonth = BigDecimal.ZERO;
         }
-        rechargeOfMonth=rechargeOfMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
+        rechargeOfMonth = rechargeOfMonth.setScale(1, BigDecimal.ROUND_HALF_UP);
         if (rechargeOfDay == null) {
             rechargeOfDay = BigDecimal.ZERO;
         }
-        rechargeOfDay=rechargeOfDay.setScale(1,BigDecimal.ROUND_HALF_UP);
+        rechargeOfDay = rechargeOfDay.setScale(1, BigDecimal.ROUND_HALF_UP);
         data.put("rechargeOfMonth", rechargeOfMonth);
         data.put("rechargeOfDay", rechargeOfDay);
 
@@ -50,21 +50,11 @@ public class MemberRechargeListener {
         List<String> priceList = Lists.newArrayList();
         for (Map<String, Object> map : cardStatementsList) {
             dateList.add("'" + map.get("updateDate") + "'");
-            Object updateDate = map.get("updateDate");
-            if(updateDate==null){
-                dateListJson.add("");
-            }else{
-                dateListJson.add("updateDate");
-            }
-            Object volume = map.get("volume");
-            if(volume==null){
-                dateListJson.add("");
-            }else{
-                dateListJson.add(volume.toString());
-            }
+            dateListJson.add(map.get("updateDate").toString());
+            priceList.add(map.get("volume") == null ? "0" : map.get("volume").toString());
         }
 
-        data.put("memberListJson",dateListJson);
+        data.put("memberListJson", dateListJson);
         data.put("memberChartMapX", StringUtils.join(dateList, ","));
         data.put("memberChartMapY", StringUtils.join(priceList, ","));
     }
