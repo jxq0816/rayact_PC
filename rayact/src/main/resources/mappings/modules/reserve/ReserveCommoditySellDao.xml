@@ -28,14 +28,14 @@
 	<select id="findSellOfMonth" resultType="java.math.BigDecimal">
 		select SUM(total_sum)
 		from reserve_commodity_sell as s
-		WHERE  Month(s.update_date)=MONTH(CURDATE()) and s.tenant_id = #{tenantId}
+		WHERE s.tenant_id = #{tenantId}  and  Month(s.update_date)=MONTH(CURDATE())
 	</select>
 
 	<select id="sellOfChart" resultType="java.util.Map">
 		SELECT
 		SUM(total_sum) AS "volume",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
 		from reserve_commodity_sell as a
-		WHERE
+		WHERE a.tenant_id = #{tenantId} and
 		<![CDATA[
 		DATE_SUB(CURDATE(), INTERVAL 10 DAY) <= date(a.update_date)
 		]]>
