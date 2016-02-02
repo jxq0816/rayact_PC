@@ -153,6 +153,8 @@
                     if (result && result.id != null) {
                         $("#checkoutId").val(result.id);
                         $("#detailOrderPrice").removeAttr("readonly");
+                    }else{
+                        errorLoding("授权码不正确!");
                     }
                 }
             });

@@ -81,7 +81,8 @@ public class ReserveUserController extends BaseController {
     public String checkPassword(String id, String oldPassword) {
         User user = reserveUserService.get(id);
         String pswd = user.getPassword();
-        String rs = null;
+        String rs;
+        oldPassword = MD5Util.getMD5String(oldPassword);
         if (pswd.equals(oldPassword)) {
             rs = "1";//原始密码正确
         } else {
