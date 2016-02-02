@@ -70,7 +70,7 @@
 		FROM reserve_venue_bill a
 		<include refid="reserveVenueBillJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 		</where>		
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
