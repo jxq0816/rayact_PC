@@ -24,6 +24,8 @@ import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveVenueBill;
 import com.bra.modules.reserve.service.ReserveVenueBillService;
 
+import java.util.List;
+
 /**
  * 场馆损益Controller
  * @author jiangxingqi
@@ -56,7 +58,11 @@ public class ReserveVenueBillController extends BaseController {
 	
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveVenueBill reserveVenueBill, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveVenueBill> page = reserveVenueBillService.findPage(new Page<ReserveVenueBill>(request, response), reserveVenueBill); 
+		Page<ReserveVenueBill> page = reserveVenueBillService.findPage(new Page<ReserveVenueBill>(request, response), reserveVenueBill);
+
+		List<ReserveVenue> venueList = reserveVenueService.findList(new ReserveVenue());
+		model.addAttribute("venueList", venueList);
+
 		model.addAttribute("page", page);
 		return "reserve/venue/billList";
 	}

@@ -27,9 +27,10 @@
                                     <tr>
                                         <td>场馆名称:</td>
                                         <td>
-                                            <form:input path="" htmlEscape="false" cssstyle="width:50px;"
-                                                        maxlength="30"
-                                                        class="form-control"/>
+                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                        items="${venueList}"
+                                                        value="${venue}" itemLabel="name"
+                                                        itemValue="id"></sys:select>
                                         </td>
                                         <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
                                         </td>
