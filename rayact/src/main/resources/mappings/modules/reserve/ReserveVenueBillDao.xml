@@ -47,7 +47,12 @@
 		FROM reserve_venue_bill a
 		<include refid="reserveVenueBillJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="reserveVenue!=null">
+				<if test="reserveVenue.id !=null and reserveVenue.id != ''">
+					and a.fk_reserve_venue_id = #{reserveVenue.id}
+				</if>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

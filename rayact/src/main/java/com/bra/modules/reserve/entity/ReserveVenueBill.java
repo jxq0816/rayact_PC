@@ -28,7 +28,6 @@ public class ReserveVenueBill extends SaasEntity<ReserveVenueBill> {
 	private Double otherBill;		// other_bill
 	private String otherBillRemark;		// 其他说明
 	private ReserveVenue reserveVenue;		// 场馆
-	private String tenantId;		// 路由标识
 	
 	public ReserveVenueBill() {
 		super();
@@ -163,15 +162,6 @@ public class ReserveVenueBill extends SaasEntity<ReserveVenueBill> {
 
 	public void setReserveVenue(ReserveVenue reserveVenue) {
 		this.reserveVenue = reserveVenue;
-	}
-
-	@Length(min=0, max=19, message="路由标识长度必须介于 0 和 19 之间")
-	public String getTenantId() {
-		return tenantId;
-	}
-
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
 	}
 	
 }
