@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveVenueBillDao">
+    
+	<sql id="reserveVenueBillColumns">
+		a.id AS "id",
+		a.water_bill AS "waterBill",
+		a.water_bill_remark AS "waterBillRemark",
+		a.elec_bill AS "elecBill",
+		a.elec_bill_remark AS "elecBillRemark",
+		a.oil_bill AS "oilBill",
+		a.oil_bill_remark AS "oilBillRemark",
+		a.sport_device_repair_bill AS "sportDeviceRepairBill",
+		a.sport_device_repair_bill_remark AS "sportDeviceRepairBillRemark",
+		a.office_device_repair_bill AS "officeDeviceRepairBill",
+		a.office_device_repair_bill_remark AS "officeDeviceRepairBillRemark",
+		a.venue_device_repair_bill AS "venueDeviceRepairBill",
+		a.venue_device_repair_bill_remark AS "venueDeviceRepairBillRemark",
+		a.other_bill AS "otherBill",
+		a.other_bill_remark AS "otherBillRemark",
+		a.fk_reserve_venue_id AS "fkReserveVenueId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
+	</sql>
+	
+	<sql id="reserveVenueBillJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveVenueBill">
+		SELECT 
+			<include refid="reserveVenueBillColumns"/>
+		FROM reserve_venue_bill a
+		<include refid="reserveVenueBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveVenueBill">
+		SELECT 
+			<include refid="reserveVenueBillColumns"/>
+		FROM reserve_venue_bill a
+		<include refid="reserveVenueBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveVenueBill">
+		SELECT 
+			<include refid="reserveVenueBillColumns"/>
+		FROM reserve_venue_bill a
+		<include refid="reserveVenueBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_venue_bill(
+			id,
+			water_bill,
+			water_bill_remark,
+			elec_bill,
+			elec_bill_remark,
+			oil_bill,
+			oil_bill_remark,
+			sport_device_repair_bill,
+			sport_device_repair_bill_remark,
+			office_device_repair_bill,
+			office_device_repair_bill_remark,
+			venue_device_repair_bill,
+			venue_device_repair_bill_remark,
+			other_bill,
+			other_bill_remark,
+			fk_reserve_venue_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{waterBill},
+			#{waterBillRemark},
+			#{elecBill},
+			#{elecBillRemark},
+			#{oilBill},
+			#{oilBillRemark},
+			#{sportDeviceRepairBill},
+			#{sportDeviceRepairBillRemark},
+			#{officeDeviceRepairBill},
+			#{officeDeviceRepairBillRemark},
+			#{venueDeviceRepairBill},
+			#{venueDeviceRepairBillRemark},
+			#{otherBill},
+			#{otherBillRemark},
+			#{fkReserveVenueId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_venue_bill SET 	
+			water_bill = #{waterBill},
+			water_bill_remark = #{waterBillRemark},
+			elec_bill = #{elecBill},
+			elec_bill_remark = #{elecBillRemark},
+			oil_bill = #{oilBill},
+			oil_bill_remark = #{oilBillRemark},
+			sport_device_repair_bill = #{sportDeviceRepairBill},
+			sport_device_repair_bill_remark = #{sportDeviceRepairBillRemark},
+			office_device_repair_bill = #{officeDeviceRepairBill},
+			office_device_repair_bill_remark = #{officeDeviceRepairBillRemark},
+			venue_device_repair_bill = #{venueDeviceRepairBill},
+			venue_device_repair_bill_remark = #{venueDeviceRepairBillRemark},
+			other_bill = #{otherBill},
+			other_bill_remark = #{otherBillRemark},
+			fk_reserve_venue_id = #{fkReserveVenueId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_venue_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

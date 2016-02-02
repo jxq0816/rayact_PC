@@ -100,7 +100,7 @@
 			</if>
 
 			<if test="startDate!=null and endDate !=null">
-				and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
+				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
 			</if>
 
 		</where>

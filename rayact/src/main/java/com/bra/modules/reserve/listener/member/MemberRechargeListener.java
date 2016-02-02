@@ -50,8 +50,18 @@ public class MemberRechargeListener {
         List<String> priceList = Lists.newArrayList();
         for (Map<String, Object> map : cardStatementsList) {
             dateList.add("'" + map.get("updateDate") + "'");
-            dateListJson.add(map.get("updateDate").toString());
-            priceList.add(map.get("volume").toString());
+            Object updateDate = map.get("updateDate");
+            if(updateDate==null){
+                dateListJson.add("");
+            }else{
+                dateListJson.add("updateDate");
+            }
+            Object volume = map.get("volume");
+            if(volume==null){
+                dateListJson.add("");
+            }else{
+                dateListJson.add(volume.toString());
+            }
         }
 
         data.put("memberListJson",dateListJson);

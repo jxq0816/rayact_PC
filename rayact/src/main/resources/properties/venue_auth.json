@@ -80,6 +80,12 @@
         "name": "人次票设置",
         "href":"/reserve/reserveVenueVisitorsSet/list",
         "authorityList": []
+      },
+      {
+        "code": "reserveVenueBill",
+        "name": "场馆损益",
+        "href":"/reserve/reserveVenueBill/list",
+        "authorityList": []
       }
     ]
   },
