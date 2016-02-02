@@ -48,7 +48,7 @@
                                             <sys:select cssClass="input-medium" name="reserveVenue.id"
                                                         value="${reserveField.reserveVenue.id}"
                                                         items="${venues}" itemLabel="name" itemValue="id"
-                                                        defaultLabel="请选择"
+                                                        defaultLabel="----请选择-----"
                                                         defaultValue=""></sys:select>
                                         </div>
                                     </div>
