@@ -48,8 +48,18 @@ public class CommodityChartListener {
         List<String> commodityJson = Lists.newArrayList();
         for (Map<String, Object> map : cardStatementsList) {
             dateList.add("'" + map.get("updateDate") + "'");
-            commodityJson.add(map.get("updateDate").toString());
-            volumeList.add(map.get("volume").toString());
+            if(map.get("updateDate")==null){
+                commodityJson.add("");
+            }else{
+                commodityJson.add(map.get("updateDate").toString());
+            }
+            if(map.get("volume")==null){
+                volumeList.add("");
+            }else{
+                volumeList.add(map.get("volume").toString());
+            }
+
+
         }
 
         data.put("commodityJson",commodityJson);
