@@ -80,9 +80,10 @@ public class ReserveUserController extends BaseController {
     @ResponseBody
     public String checkPassword(String id, String oldPassword) {
         User user = reserveUserService.get(id);
-        String pswd = user.getPassword();
+        String pswdMD5FromBack = user.getPassword();
+        oldPassword=MD5Util.getMD5String(oldPassword);
         String rs = null;
-        if (pswd.equals(oldPassword)) {
+        if (pswdMD5FromBack.equals(oldPassword)) {
             rs = "1";//原始密码正确
         } else {
             rs = "0";//原始密码不正确
