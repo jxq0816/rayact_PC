@@ -8,6 +8,7 @@ import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +64,9 @@ public class ReserveVenueVisitorsSetController extends BaseController {
 	@Token(save = true)
 	public String form(ReserveVenueVisitorsSet reserveVenueVisitorsSet, Model model) {
 		model.addAttribute("reserveVenues",reserveVenueService.findList(new ReserveVenue())) ;
-		model.addAttribute("projects",reserveProjectService.findList(new ReserveProject()));
+		ReserveProject project = new ReserveProject();
+		project.setTicketType("2");
+		model.addAttribute("projects",reserveProjectService.findList(project));
 		model.addAttribute("reserveVenueVisitorsSet", reserveVenueVisitorsSet);
 		return "reserve/visitorsset/form";
 	}

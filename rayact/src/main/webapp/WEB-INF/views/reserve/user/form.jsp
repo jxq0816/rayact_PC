@@ -79,6 +79,7 @@
                     <div class="col-sm-10">
                         <c:forEach items="${venueList}" var="venue" varStatus="status">
                             <label>
+                                <c:set var="vchecked" value=""/>
                                 <c:forEach items="${userRole.venueList}" var="v">
                                     <c:if test="${venue.id eq v}">
                                         <c:set var="vchecked" value="checked=\"checked\""/>

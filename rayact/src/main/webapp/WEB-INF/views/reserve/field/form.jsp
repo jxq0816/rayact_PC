@@ -395,7 +395,6 @@
             var retail = $("#retail").val();
             var member = $("#member").val();
             var group = $('#group').val();
-            alert(type);
             if (weekTd == '周一至周五') {
                 $.addWorkPrice(type, retail, member, group);
             } else if (weekTd == '周六') {

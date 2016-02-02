@@ -5,6 +5,7 @@ import com.bra.common.web.ViewResult;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +43,9 @@ public class ReserveVenueOrderController extends BaseController {
         List<ReserveVenueVisitorsSet> visitorsSets = reserveVenueVisitorsSetService.findList(visitorsSet);
         model.addAttribute("visitorsSets", visitorsSets);
 
-        List<ReserveProject> projects = reserveProjectService.findList(new ReserveProject());
+        ReserveProject project = new ReserveProject();
+        project.setTicketType("2");
+        List<ReserveProject> projects = reserveProjectService.findList(project);
         if (visitorsSet.getProject() != null && StringUtils.isNotBlank(visitorsSet.getProject().getId())) {
             model.addAttribute("projectId", visitorsSet.getProject().getId());
         }
@@ -64,7 +67,7 @@ public class ReserveVenueOrderController extends BaseController {
     @RequestMapping(value = "detail")
     @Token(save = true)
     public String detail(ReserveVenueOrder reserveVenueOrder, Model model) {
-        model.addAttribute("venueOrder",reserveVenueOrder);
+        model.addAttribute("venueOrder", reserveVenueOrder);
         return "reserve/visitorsSetOrder/detail";
     }
 

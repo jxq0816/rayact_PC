@@ -16,6 +16,7 @@ public class ReserveProject extends SaasEntity<ReserveProject> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// 场地名称
 	private String available;		// 是否启用
+	private String ticketType;		//票种(1:场次票;2:人次票;3:全部)
 	
 	public ReserveProject() {
 		super();
@@ -42,5 +43,12 @@ public class ReserveProject extends SaasEntity<ReserveProject> {
 	public void setAvailable(String available) {
 		this.available = available;
 	}
-	
+
+	public String getTicketType() {
+		return ticketType;
+	}
+
+	public void setTicketType(String ticketType) {
+		this.ticketType = ticketType;
+	}
 }

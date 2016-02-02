@@ -2,6 +2,7 @@ package com.bra.modules.reserve.service;
 
 import java.util.List;
 
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,12 @@ public class ReserveVenueVisitorsSetService extends CrudService<ReserveVenueVisi
 	}
 	
 	public List<ReserveVenueVisitorsSet> findList(ReserveVenueVisitorsSet reserveVenueVisitorsSet) {
+		reserveVenueVisitorsSet.getSqlMap().put("dsf", AuthorityUtils.getDsf("a.venue_id"));
 		return super.findList(reserveVenueVisitorsSet);
 	}
 	
 	public Page<ReserveVenueVisitorsSet> findPage(Page<ReserveVenueVisitorsSet> page, ReserveVenueVisitorsSet reserveVenueVisitorsSet) {
+		reserveVenueVisitorsSet.getSqlMap().put("dsf", AuthorityUtils.getDsf("a.venue_id"));
 		return super.findPage(page, reserveVenueVisitorsSet);
 	}
 	
