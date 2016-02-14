@@ -114,7 +114,10 @@ public class ReserveStoredCardMemberController extends BaseController {
         if (!beanValidator(model, reserveMember)){
             return form(reserveMember, model);
         }
-        reserveMember.setCartType("1");
+        reserveMember.setCartType("1");//储值卡会员
+        if(reserveMember.getRemainder()==null){
+            reserveMember.setRemainder(0.0);//设置余额
+        }
         reserveMemberService.save(reserveMember);
 
         ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
