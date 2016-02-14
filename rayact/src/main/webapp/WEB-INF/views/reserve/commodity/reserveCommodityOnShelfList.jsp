@@ -74,7 +74,7 @@
 
                                 <td>
                                     <button id="${commodity.id}" class="btn btn-primary btn-xs"
-                                            onclick="outStorage('${commodity.id}','${commodity.name}',${commodity.price})">
+                                            onclick="outStorage('${commodity.id}','${commodity.name}',${commodity.price},${commodity.repertoryNum})">
                                         售卖
                                     </button>
                                 </td>

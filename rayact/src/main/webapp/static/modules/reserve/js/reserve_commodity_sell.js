@@ -1,14 +1,13 @@
 /**
  * Created by lenovo on 2016/1/11.
  */
-function outStorage(id, name, price) {
+function outStorage(id, name, price,repertoryNum) {
     var index = $("#sellList tbody tr").length;
-
-    var s = '<tr data-price="'+price+'" data-num="1" id="'+id+'tr"><td>'+name+'</td><td>\
+    var s = '<tr data-price="'+price+'" data-num="1" commodityName="'+name+'" repertoryNum="'+repertoryNum+'" id="'+id+'tr"><td>'+name+'</td><td>\
         <a onclick="add(\''+id+'\')" class="glyphicon glyphicon-plus"></a>\
         <input name="reserveCommoditySellDetailList['+index+'].reserveCommodity.id" value=\''+id+'\' type="hidden">\
         <input name="reserveCommoditySellDetailList['+index+'].reserveCommodity.name" value=\''+name+'\' type="hidden" >\
-        <input name="reserveCommoditySellDetailList['+index+'].num" id="'+id+'num" style="width:20px" value="1" onblur="changeNumber(\''+id+'\')">\
+        <input name="reserveCommoditySellDetailList['+index+'].num" id="'+id+'num" style="width:20px" value="1" onkeyup="changeNumber(\''+id+'\')">\
         <input name="reserveCommoditySellDetailList['+index+'].price" value=\''+price+'\' type="hidden">\
         <a onclick="dele(\''+id+'\')" class="glyphicon glyphicon-minus"></a></td></tr>';
 
@@ -24,6 +23,12 @@ function outStorage(id, name, price) {
 function add(id) {
     var num = Number($("#" + id + "num").val());
     num++;
+    var repertoryNum=$("#" + id+"tr").attr("repertoryNum");//库存
+    var commodityName = $("#" + id+"tr").attr("commodityName");
+    if(repertoryNum<num){
+        errorLoding("抱歉，"+commodityName+"库存量不足");
+        return;
+    }
     $("#" + id + "num").val(num);
     $("#" + id+"tr").attr("data-num",num);
     sum();
@@ -31,6 +36,10 @@ function add(id) {
 function dele(id) {
     var num = Number($("#" + id + "num").val());
     num--;
+    if(num<0){
+        errorLoding("抱歉，数量不能为负");
+        return;
+    }
     $("#" + id + "num").val(num);
     $("#" + id+"tr").attr("data-num",num);
     sum();
@@ -38,7 +47,13 @@ function dele(id) {
 function changeNumber(id){
     var num = Number($("#" + id + "num").val());
     $("#" + id+"tr").attr("data-num",num);
+    var repertoryNum=$("#" + id+"tr").attr("repertoryNum");//库存
     sum();
+    var commodityName = $("#" + id+"tr").attr("commodityName");
+    if(repertoryNum<num){
+        errorLoding("抱歉，"+commodityName+"库存量不足");
+        return;
+    }
 }
 function sum() {
     var sum = 0;
@@ -53,6 +68,20 @@ function sum() {
 }
 
 function settlement() {
+    var flag=1;
+    $("#sellList tbody tr").each(function () {
+        var num = $(this).attr("data-num");
+        var commodityName = $(this).attr("commodityName");
+        var repertoryNum=$(this).attr("repertoryNum");//库存
+        if(Number(num)>Number(repertoryNum)){
+            errorLoding("抱歉，"+commodityName+"库存不足");
+            flag=0;
+            return false;
+        }
+    });
+    if(flag==0){
+        return;
+    }
     var sellDetailList = $("#paySell").serializeArray();
     jQuery.postItems({
         url: ctx+'/reserve/reserveCommoditySellDetail/settlement',
