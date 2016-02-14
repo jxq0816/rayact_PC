@@ -27,7 +27,7 @@
                                     <tr>
                                         <td>场馆名称:</td>
                                         <td>
-                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                            <sys:select cssClass="input-xlarge" cssStyle="width:200px" name="reserveVenue.id"
                                                         items="${venueList}"
                                                         value="${venue}" itemLabel="name"
                                                         itemValue="id"></sys:select>
