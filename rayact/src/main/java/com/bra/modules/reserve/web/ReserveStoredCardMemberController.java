@@ -115,14 +115,23 @@ public class ReserveStoredCardMemberController extends BaseController {
             return form(reserveMember, model);
         }
         reserveMember.setCartType("1");//储值卡会员
-        if(reserveMember.getRemainder()==null){
-            reserveMember.setRemainder(0.0);//设置余额
-        }else{
-            ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-            reserveCardStatements.setReserveMember(reserveMember);
+        ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+        reserveCardStatements.setReserveMember(reserveMember);
+        Double remainder=reserveMember.getRemainder();
+        if(remainder==null){
+            reserveMember.setRemainder(0.0);//设置默认余额
+        }else if(StringUtils.isEmpty(reserveMember.getId())){//新建用户
             reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
             reserveCardStatements.setRemarks("储值卡会员注册");
             reserveCardStatements.setTransactionType("1");//交易类型
+            reserveCardStatementsService.save(reserveCardStatements);
+        }else{//修改用户
+            ReserveMember reserveMemberOld=reserveMemberService.get(reserveMember);
+            Double remainderOld=reserveMemberOld.getRemainder();
+            Double transactionVolume=remainder-remainderOld;
+            reserveCardStatements.setTransactionVolume(transactionVolume);
+            reserveCardStatements.setRemarks("超级管理员修改余额");
+            reserveCardStatements.setTransactionType("3");//交易类型
             reserveCardStatementsService.save(reserveCardStatements);
         }
         reserveMemberService.save(reserveMember);
