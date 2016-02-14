@@ -117,15 +117,15 @@ public class ReserveStoredCardMemberController extends BaseController {
         reserveMember.setCartType("1");//储值卡会员
         if(reserveMember.getRemainder()==null){
             reserveMember.setRemainder(0.0);//设置余额
+        }else{
+            ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+            reserveCardStatements.setReserveMember(reserveMember);
+            reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
+            reserveCardStatements.setRemarks("储值卡会员注册");
+            reserveCardStatements.setTransactionType("1");//交易类型
+            reserveCardStatementsService.save(reserveCardStatements);
         }
         reserveMemberService.save(reserveMember);
-
-        ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-        reserveCardStatements.setReserveMember(reserveMember);
-        reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
-        reserveCardStatements.setRemarks("储值卡会员注册");
-        reserveCardStatements.setTransactionType("1");
-        reserveCardStatementsService.save(reserveCardStatements);
         addMessage(redirectAttributes, "保存储值卡会员成功");
         return "redirect:"+ Global.getAdminPath()+"/reserve/storedCardMember/list";
     }
