@@ -6,17 +6,6 @@ $(document).ready(function () {
         $(this).removeAttr("disabled");//页面刷新将所有的button重置
     });
 })
-document.body.onbeforeunload = function (event)
-{
-    var c = event || window.event;
-    if (/webkit/.test(navigator.userAgent.toLowerCase())) {
-        return "离开页面将导致数据丢失！";
-    }
-    else
-    {
-        c.returnValue = "离开页面将导致数据丢失！";
-    }
-}
 function outStorage(id, name, price,repertoryNum) {
     var index = $("#sellList tbody tr").length;
     var s = '<tr data-price="'+price+'" data-num="1" commodityName="'+name+'" repertoryNum="'+repertoryNum+'" id="'+id+'tr"><td>'+name+'</td><td>\
