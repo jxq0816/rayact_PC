@@ -38,8 +38,11 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private Double consPrice;//预定金额
 
     private Double discountPrice;//会员打折费
+
     private Double orderPrice;//场地实缴费金额
     private Double shouldPrice;//场地实缴费金额场地应缴费金额
+
+    private String halfCourt;//是否半场(1:是) by jiang
 
     private User checkOutUser;
 
@@ -50,6 +53,14 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     public ReserveVenueCons() {
         super();
+    }
+
+    public String getHalfCourt() {
+        return halfCourt;
+    }
+
+    public void setHalfCourt(String halfCourt) {
+        this.halfCourt = halfCourt;
     }
 
     public ReserveVenueCons(String id) {

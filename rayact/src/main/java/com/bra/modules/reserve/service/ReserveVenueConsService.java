@@ -124,6 +124,9 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
      */
     @Transactional(readOnly = false)
     public void save(ReserveVenueCons reserveVenueCons) {
+
+        String halfCourt=reserveVenueCons.getHalfCourt();
+
         List<Date> reserveDateList = Lists.newArrayList(new Date());
         if ("2".equals(reserveVenueCons.getFrequency())) {//每天
             reserveDateList = TimeUtils.getDayBettwnDays(reserveVenueCons.getEndDate());
@@ -146,6 +149,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             for (ReserveVenueConsItem item : itemList) {
                 item.setConsData(reserveVenueCons);
                 item.setConsWeek(consWeek);
+                item.setHalfCourt(halfCourt);//设置半场
                 Double price = reserveFieldPriceService.getPrice(item.getReserveField(), reserveVenueCons.getConsType(),
                         reserveVenueCons.getConsDate(), item.getStartTime(), item.getEndTime());
                 item.setConsPrice(price);
