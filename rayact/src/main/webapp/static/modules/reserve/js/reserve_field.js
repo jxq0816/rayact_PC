@@ -130,9 +130,10 @@ $(document).ready(function () {
         var shouldPrice = $("#shouldPrice").val();
         var orderPrice = $("#orderPrice").val();
         var discountPrice = $("#discountPrice").val();
+        var payType = $('#payType input:radio:checked').val();
         jQuery.postItems({
             url: ctx + '/reserve/field/settlementDetailForm',
-            data: {cosId: cosId, shouldPrice: shouldPrice, orderPrice: orderPrice, discountPrice: discountPrice},
+            data: {cosId: cosId,payType:payType, shouldPrice: shouldPrice, orderPrice: orderPrice, discountPrice: discountPrice},
             success: function (result) {
                 $("#closeSettlementBtn").click();
                 $("#settlementDetailForm").html(result);

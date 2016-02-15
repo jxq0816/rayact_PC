@@ -78,22 +78,22 @@
     <hr/>
     <div class="content">
         支付方式:
-        <j:if test="${'1' eq cos.consType}">
+        <j:if test="${'1' eq payType}">
             会员卡
         </j:if>
-        <j:if test="${'2' eq cos.consType}">
+        <j:if test="${'2' eq payType}">
             现金
         </j:if>
-        <j:if test="${'3' eq cos.consType}">
+        <j:if test="${'3' eq payType}">
             银行卡
         </j:if>
-        <j:if test="${'4' eq cos.consType}">
+        <j:if test="${'4' eq payType}">
             微信
         </j:if>
-        <j:if test="${'5' eq cos.consType}">
+        <j:if test="${'5' eq payType}">
             支付宝
         </j:if>
-        <j:if test="${'6' eq cos.consType}">
+        <j:if test="${'6' eq payType}">
             其它
         </j:if>
     </div>

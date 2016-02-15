@@ -105,7 +105,7 @@
     <hr/>
     <div class="content">
         支付方式:
-        <table class="no-border">
+        <table class="no-border" id="payType">
             <tbody class="no-border-y">
             <tr>
                 <td>
