@@ -119,9 +119,9 @@ function paySubmit() {
         url: ctx+'/reserve/reserveCommoditySellDetail/paySubmit',
         data: data,
         success: function (result) {
-            successLoding(result);
-
-            location.reload(true);
+            var sellId=result;
+            var url=ctx+'/reserve/reserveCommoditySell/sellReport?id='+sellId;
+            window.location.replace(url);
         },
         error: function () {
             errorLoding("付款失败");

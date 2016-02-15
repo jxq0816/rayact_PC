@@ -4,7 +4,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
+import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
+import com.bra.modules.reserve.entity.form.ReserveCommoditySellReport;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +25,9 @@ import com.bra.modules.reserve.dao.ReserveCommoditySellDao;
 @Service
 @Transactional(readOnly = true)
 public class ReserveCommoditySellService extends CrudService<ReserveCommoditySellDao, ReserveCommoditySell> {
+
+	@Autowired
+	private ReserveCommoditySellDetailDao sellDetailDao;
 
 	public ReserveCommoditySell get(String id) {
 		return super.get(id);
@@ -56,6 +63,19 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 		super.delete(reserveCommoditySell);
 	}
 
+	public ReserveCommoditySellReport sellReport(ReserveCommoditySell reserveCommoditySell){
+		ReserveCommoditySellDetail reserveCommoditySellDetail=new ReserveCommoditySellDetail();
+		reserveCommoditySellDetail.setReserveCommoditySell(reserveCommoditySell);
+		List<ReserveCommoditySellDetail> sellDetailList=sellDetailDao.findSellDetailList(reserveCommoditySellDetail);
+		ReserveCommoditySellReport sellReport=new ReserveCommoditySellReport();
+		sellReport.setSellDetailList(sellDetailList);
 
-
+		Double sum=0.0;
+		for(ReserveCommoditySellDetail sellDetail:sellDetailList){
+			double detailSum=sellDetail.getDetailSum();
+			sum+=detailSum;
+		}
+		sellReport.setTotalSum(sum);
+		return sellReport;
+	}
 }

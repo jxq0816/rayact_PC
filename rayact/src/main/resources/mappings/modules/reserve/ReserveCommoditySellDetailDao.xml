@@ -36,6 +36,7 @@
         SELECT
         a.id AS "id",
         a.fk_reserve_member_id AS "reserveMember.id",
+        m.name AS "reserveMember.name",
         a.fk_reserve_commodity_id AS "reserveCommodity.id",
         commodity.name AS "reserveCommodity.name",
         t.name AS "reserveCommodity.commodityType.name",
@@ -49,7 +50,7 @@
         a.update_date AS "updateDate",
         a.remarks AS "remarks",
         a.del_flag AS "delFlag",
-        u.name AS "createBy.name"
+        u.name AS "updateBy.name"
         FROM reserve_commodity_sell_detail as a
         left join reserve_member as m on a.fk_reserve_member_id=m.id
         LEFT JOIN  reserve_user as u on u.id=a.create_by
@@ -60,6 +61,11 @@
             <if test="reserveCommodity != null">
                 <if test="reserveCommodity.name !=null and reserveCommodity.name !=''">
                     and commodity.name LIKE concat('%',#{reserveCommodity.name},'%')
+                </if>
+            </if>
+            <if test="reserveCommoditySell != null">
+                <if test="reserveCommoditySell.id !=null and reserveCommoditySell.id !=''">
+                    and a.fk_reserve_commodity_sell_id = #{reserveCommoditySell.id}
                 </if>
             </if>
             <if test="startDate!=null and endDate !=null">

@@ -90,12 +90,15 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		reserveCommoditySell.setReserveMember(reserveMember);
 		reserveCommoditySellService.save(reserveCommoditySell);
 
+		String sellId=reserveCommoditySell.getId();
+
 		//销售明细表
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
 			Double detailSum=price*num;
 			sellDetail.setDetailSum(detailSum);
+			sellDetail.setReserveMember(reserveMember);
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			reserveCommoditySellDetailService.save(sellDetail);
 		}
@@ -117,7 +120,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		reserveCardStatements.setTransactionVolume(total);//消费额
 		reserveCardStatementsService.save(reserveCardStatements);
 
-		return "付款成功";
+		return sellId;
 	}
 
 	@RequestMapping(value = {"list", ""})
