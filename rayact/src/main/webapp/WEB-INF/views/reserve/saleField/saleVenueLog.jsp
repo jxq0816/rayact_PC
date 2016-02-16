@@ -90,7 +90,7 @@
                                             ${fns:getPayType(order.pay_type)}
                                     </td>
                                     <td>${order.create_user}</td>
-                                    <td><fmt:formatDate value="${order.cons_date}" type="both"></fmt:formatDate></td>
+                                    <td><fmt:formatDate value="${order.cons_date}" type="date"></fmt:formatDate></td>
                                 </tr>
                             </c:forEach>
 
