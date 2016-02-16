@@ -159,6 +159,7 @@
             and a.venue_id = #{venue.id}
         </if>
         ${dsf}
+        ORDER BY cons_date DESC
     </select>
 
     <select id="sellMonthOfChart" resultType="java.math.BigDecimal">
