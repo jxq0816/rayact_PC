@@ -142,6 +142,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"/>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"></script>
 </body>
 </html>
