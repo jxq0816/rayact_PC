@@ -25,6 +25,8 @@ import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveVenueVisitorsSet;
 import com.bra.modules.reserve.service.ReserveVenueVisitorsSetService;
 
+import java.util.List;
+
 /**
  * 人次票设置Controller
  * @author 肖斌
@@ -55,7 +57,7 @@ public class ReserveVenueVisitorsSetController extends BaseController {
 	
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveVenueVisitorsSet reserveVenueVisitorsSet, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveVenueVisitorsSet> page = reserveVenueVisitorsSetService.findPage(new Page<>(request, response), reserveVenueVisitorsSet);
+		List<ReserveVenueVisitorsSet> page = reserveVenueVisitorsSetService.findList(reserveVenueVisitorsSet);
 		model.addAttribute("page", page);
 		return "reserve/visitorsset/list";
 	}

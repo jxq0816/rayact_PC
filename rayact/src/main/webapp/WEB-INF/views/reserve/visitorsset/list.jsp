@@ -21,8 +21,6 @@
                 <form:form id="searchForm" modelAttribute="reserveVenueVisitorsSet"
                            action="${ctx}/reserve/reserveVenueVisitorsSet/list"
                            method="post" class="block-flat">
-                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 
                     <div class="dataTables_filter" id="datatable2_filter">
                         <label>次票名称：</label>
@@ -50,7 +48,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${page.list}" var="bean">
+                            <c:forEach items="${page}" var="bean">
                                 <tr>
                                     <td>
                                         <a href="${ctx}/reserve/reserveVenueVisitorsSet/form?id=${bean.id}">${bean.name}</a>
@@ -72,17 +70,7 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                        <div class="row">
-                            <div class="col-sm-12">
 
-                                <div class="pull-right">
-                                    <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

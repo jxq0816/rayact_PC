@@ -56,22 +56,22 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	public String getMobileLoginParam() {
 		return mobileLoginParam;
 	}
-	
+
 	protected boolean isMobileLogin(ServletRequest request) {
         return WebUtils.isTrue(request, getMobileLoginParam());
     }
-	
+
 	public String getMessageParam() {
 		return messageParam;
 	}
-	
+
 	/**
 	 * 登录成功之后跳转URL
 	 */
 	public String getSuccessUrl() {
 		return super.getSuccessUrl();
 	}
-	
+
 	@Override
 	protected void issueSuccessRedirect(ServletRequest request,
 			ServletResponse response) throws Exception {
@@ -105,5 +105,5 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
         request.setAttribute(getMessageParam(), message);
         return true;
 	}
-	
+
 }

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.mechanism.dao.AttMainDao">
+    
+	<sql id="attMainColumns">
+		a.id AS "id",
+		a.create_date AS "createDate",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks",
+		a.update_date AS "updateDate",
+		a.fd_content_type AS "fdContentType",
+		a.fd_data AS "fdData",
+		a.fd_file_name AS "fdFileName",
+		a.fd_file_path AS "fdFilePath",
+		a.fd_file_type AS "fdFileType",
+		a.fd_key AS "fdKey",
+		a.fd_model_id AS "fdModelId",
+		a.fd_model_name AS "fdModelName",
+		a.fd_order AS "fdOrder",
+		a.fd_size AS "fdSize",
+		a.fd_store_type AS "fdStoreType",
+		a.flag AS "flag",
+		a.token AS "token",
+		a.create_by_id AS "createById.id",
+		a.update_by_id AS "updateById.id",
+		a.crc32 AS "crc32",
+		a.re_size_path AS "reSizePath",
+		a.video_view AS "videoView"
+	</sql>
+	
+	<sql id="attMainJoins">
+	</sql>
+    
+	<select id="get" resultType="AttMain">
+		SELECT 
+			<include refid="attMainColumns"/>
+		FROM mechanism_att_main a
+		<include refid="attMainJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="AttMain">
+		SELECT 
+			<include refid="attMainColumns"/>
+		FROM mechanism_att_main a
+		<include refid="attMainJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="fdModelId != null and fdModelId != ''">
+				AND a.fd_model_id = #{fdModelId}
+			</if>
+			<if test="fdModelName != null and fdModelName != ''">
+				AND a.fd_model_name = #{fdModelName}
+			</if>
+			<if test="fdKey != null and fdKey != ''">
+				AND a.fd_key = #{fdKey}
+			</if>
+			<if test="token != null and token != ''">
+				AND a.token = #{token}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="AttMain">
+		SELECT 
+			<include refid="attMainColumns"/>
+		FROM mechanism_att_main a
+		<include refid="attMainJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO mechanism_att_main(
+			id,
+			create_date,
+			del_flag,
+			remarks,
+			update_date,
+			fd_content_type,
+			fd_data,
+			fd_file_name,
+			fd_file_path,
+			fd_file_type,
+			fd_key,
+			fd_model_id,
+			fd_model_name,
+			fd_order,
+			fd_size,
+			fd_store_type,
+			flag,
+			token,
+			create_by_id,
+			update_by_id,
+			crc32,
+			re_size_path,
+			video_view
+		) VALUES (
+			#{id},
+			#{createDate},
+			#{delFlag},
+			#{remarks},
+			#{updateDate},
+			#{fdContentType},
+			#{fdData},
+			#{fdFileName},
+			#{fdFilePath},
+			#{fdFileType},
+			#{fdKey},
+			#{fdModelId},
+			#{fdModelName},
+			#{fdOrder},
+			#{fdSize},
+			#{fdStoreType},
+			#{flag},
+			#{token},
+			#{createById.id},
+			#{updateById.id},
+			#{crc32},
+			#{reSizePath},
+			#{videoView}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE mechanism_att_main SET 	
+			remarks = #{remarks},
+			update_date = #{updateDate},
+			fd_content_type = #{fdContentType},
+			fd_data = #{fdData},
+			fd_file_name = #{fdFileName},
+			fd_file_path = #{fdFilePath},
+			fd_file_type = #{fdFileType},
+			fd_key = #{fdKey},
+			fd_model_id = #{fdModelId},
+			fd_model_name = #{fdModelName},
+			fd_order = #{fdOrder},
+			fd_size = #{fdSize},
+			fd_store_type = #{fdStoreType},
+			flag = #{flag},
+			token = #{token},
+			create_by_id = #{createById.id},
+			update_by_id = #{updateById.id},
+			crc32 = #{crc32},
+			re_size_path = #{reSizePath},
+			video_view = #{videoView}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateAttMain">
+		UPDATE mechanism_att_main SET
+		fd_key = #{fdKey},
+		fd_model_id = #{fdModelId},
+		fd_model_name = #{fdModelName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE mechanism_att_main SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

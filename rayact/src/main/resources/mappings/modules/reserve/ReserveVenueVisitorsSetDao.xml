@@ -48,7 +48,7 @@
 			<if test="project != null and project.id != null and project.id != '' ">
 				AND a.project_id = #{project.id}
 			</if>
-			#{sqlMap.dsf}
+			${sqlMap.dsf}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
