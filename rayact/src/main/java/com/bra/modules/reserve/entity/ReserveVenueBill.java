@@ -4,6 +4,9 @@ import com.bra.common.persistence.SaasEntity;
 import org.hibernate.validator.constraints.Length;
 
 import com.bra.common.persistence.DataEntity;
+import org.joda.time.DateTime;
+
+import java.util.Date;
 
 /**
  * 场馆损益Entity
@@ -28,7 +31,25 @@ public class ReserveVenueBill extends SaasEntity<ReserveVenueBill> {
 	private Double otherBill;		// other_bill
 	private String otherBillRemark;		// 其他说明
 	private ReserveVenue reserveVenue;		// 场馆
-	
+	private Date startDate;//开始时间
+	private Date endDate; //结束时间
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
 	public ReserveVenueBill() {
 		super();
 	}

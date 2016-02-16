@@ -28,53 +28,81 @@
                                 <table id="contentTable" class="table table-bordered">
                                     <tr>
                                         <td>水费</td>
-                                        <td><form:input path="waterBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="waterBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>水费说明</td>
                                         <td><form:input path="waterBillRemark" htmlEscape="false" maxlength="255"
-                                                          class="form-control"/></td>
+                                                        class="form-control"/></td>
                                     </tr>
                                     <tr>
                                         <td>电费</td>
-                                        <td><form:input path="elecBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="elecBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>电费说明</td>
                                         <td><form:input path="elecBillRemark" htmlEscape="false" maxlength="255"
                                                         class="form-control"/></td>
                                     </tr>
                                     <tr>
                                         <td>油费</td>
-                                        <td><form:input path="oilBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="oilBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>油费说明</td>
                                         <td><form:input path="oilBillRemark" htmlEscape="false" maxlength="255"
                                                         class="form-control"/></td>
                                     </tr>
                                     <tr>
                                         <td>体育用品维修</td>
-                                        <td><form:input path="sportDeviceRepairBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="sportDeviceRepairBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>体育用品维修说明</td>
-                                        <td><form:input path="sportDeviceRepairBillRemark" htmlEscape="false" maxlength="255"
+                                        <td><form:input path="sportDeviceRepairBillRemark" htmlEscape="false"
+                                                        maxlength="255"
                                                         class="form-control"/></td>
                                     </tr>
                                     <tr>
                                         <td>办公设备维修</td>
-                                        <td><form:input path="officeDeviceRepairBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="officeDeviceRepairBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>办公设备维修说明</td>
-                                        <td><form:input path="officeDeviceRepairBillRemark" htmlEscape="false" maxlength="255"
+                                        <td><form:input path="officeDeviceRepairBillRemark" htmlEscape="false"
+                                                        maxlength="255"
                                                         class="form-control"/></td>
                                     </tr>
                                     <tr>
                                         <td>场馆设备维修</td>
-                                        <td><form:input path="venueDeviceRepairBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="venueDeviceRepairBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>场馆设备维修说明</td>
-                                        <td><form:input path="venueDeviceRepairBillRemark" htmlEscape="false" maxlength="255"
+                                        <td><form:input path="venueDeviceRepairBillRemark" htmlEscape="false"
+                                                        maxlength="255"
                                                         class="form-control"/></td>
                                     </tr>
 
                                     <tr>
                                         <td>其他</td>
-                                        <td><form:input path="otherBill" htmlEscape="false" class="form-control  number"/></td>
+                                        <td><form:input path="otherBill" htmlEscape="false"
+                                                        class="form-control  number"/></td>
                                         <td>其他说明</td>
                                         <td><form:input path="otherBillRemark" htmlEscape="false" maxlength="255"
                                                         class="form-control"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>开始时间:</td>
+                                        <td>
+                                            <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${startDate}"/>"
+                                                   name="startDate" id="startDate" type="text" readonly="readonly"
+                                                   maxlength="20"
+                                                   class="input-medium form-control Wdate "
+                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                        </td>
+                                        <td>结束时间:</td>
+                                        <td>
+                                            <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${endDate}"/>"
+                                                   name="endDate" id="endDate" type="text" readonly="readonly"
+                                                   maxlength="20"
+                                                   class="input-medium form-control Wdate "
+                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>场馆</td>
@@ -97,23 +125,23 @@
                                                            class="form-control"/></td>
                                     </tr>
                                 </table>
-                                    <div>
-                                        <input id="btnSubmit"
-                                               class="btn btn-primary"
-                                               type="submit"
-                                               value="保 存"/>&nbsp;
-                                        <input id="btnCancel" class="btn" type="button" value="返 回"
-                                               onclick="history.go(-1)"/>
-                                    </div>
+                                <div>
+                                    <input id="btnSubmit"
+                                           class="btn btn-primary"
+                                           type="submit"
+                                           value="保 存"/>&nbsp;
+                                    <input id="btnCancel" class="btn" type="button" value="返 回"
+                                           onclick="history.go(-1)"/>
+                                </div>
                             </form:form>
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"/>
 </body>
 </html>

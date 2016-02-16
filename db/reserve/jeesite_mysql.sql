@@ -474,6 +474,8 @@ CREATE TABLE reserve_venue_bill (
   venue_device_repair_bill_remark varchar(255) comment '场馆设备维修说明',
   other_bill decimal (16,2),
   other_bill_remark varchar(255) comment '其他说明',
+  start_date datetime comment '开始时间',
+  end_date datetime comment '结束时间',
   fk_reserve_venue_id varchar(19),
   create_by varchar(64),
 	create_date datetime,

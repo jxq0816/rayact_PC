@@ -27,7 +27,8 @@
                                     <tr>
                                         <td>场馆名称:</td>
                                         <td>
-                                            <sys:select cssClass="input-xlarge" cssStyle="width:200px" name="reserveVenue.id"
+                                            <sys:select cssClass="input-xlarge" cssStyle="width:200px"
+                                                        name="reserveVenue.id"
                                                         items="${venueList}"
                                                         value="${venue}" itemLabel="name"
                                                         itemValue="id"></sys:select>
@@ -51,21 +52,16 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    <th>水费</th>
-                                    <th>水费说明</th>
-                                    <th>电费</th>
-                                    <th>电费说明</th>
-                                    <th>油费</th>
-                                    <th>油费说明</th>
-                                    <th>体育用品维修</th>
-                                    <th>体育用品维修说明</th>
-                                    <th>办公设施维修</th>
-                                    <th>办公设施维修说明</th>
-                                    <th>场馆设备维修</th>
-                                    <th>场馆设备维修说明</th>
-                                    <th>其他</th>
-                                    <th>其他说明</th>
                                     <th>场馆</th>
+                                    <th>水费</th>
+                                    <th>电费</th>
+                                    <th>油费</th>
+                                    <th>体育用品维修</th>
+                                    <th>办公设施维修</th>
+                                    <th>场馆设备维修</th>
+                                    <th>其他</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -73,54 +69,41 @@
                                 <c:forEach items="${page.list}" var="reserveVenueBill">
                                     <tr>
                                         <td>
-                                                ${reserveVenueBill.waterBill}
+                                                ${reserveVenueBill.reserveVenue.name}
                                         </td>
                                         <td>
-                                                ${reserveVenueBill.waterBillRemark}
+                                                ${reserveVenueBill.waterBill}
                                         </td>
                                         <td>
                                                 ${reserveVenueBill.elecBill}
                                         </td>
                                         <td>
-                                                ${reserveVenueBill.elecBillRemark}
-                                        </td>
-                                        <td>
                                                 ${reserveVenueBill.oilBill}
-                                        </td>
-                                        <td>
-                                                ${reserveVenueBill.oilBillRemark}
                                         </td>
                                         <td>
                                                 ${reserveVenueBill.sportDeviceRepairBill}
                                         </td>
                                         <td>
-                                                ${reserveVenueBill.sportDeviceRepairBillRemark}
-                                        </td>
-                                        <td>
                                                 ${reserveVenueBill.officeDeviceRepairBill}
-                                        </td>
-                                        <td>
-                                                ${reserveVenueBill.officeDeviceRepairBillRemark}
                                         </td>
                                         <td>
                                                 ${reserveVenueBill.venueDeviceRepairBill}
                                         </td>
                                         <td>
-                                                ${reserveVenueBill.venueDeviceRepairBillRemark}
-                                        </td>
-                                        <td>
                                                 ${reserveVenueBill.otherBill}
                                         </td>
+                                        <td><fmt:formatDate value="${reserveVenueBill.startDate}"
+                                                            type="date"/></td>
                                         <td>
-                                                ${reserveVenueBill.otherBillRemark}
+                                            <fmt:formatDate value="${reserveVenueBill.endDate}"
+                                                            type="date"/>
                                         </td>
                                         <td>
-                                                ${reserveVenueBill.reserveVenue.name}
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-xs" href="${ctx}/reserve/reserveVenueBill/form?id=${reserveVenueBill.id}"><i
+                                            <a class="btn btn-primary btn-xs"
+                                               href="${ctx}/reserve/reserveVenueBill/form?id=${reserveVenueBill.id}"><i
                                                     class="fa fa-pencil"></i>修改</a>
-                                            <a class="btn btn-danger btn-xs" href="${ctx}/reserve/reserveVenueBill/delete?id=${reserveVenueBill.id}"
+                                            <a class="btn btn-danger btn-xs"
+                                               href="${ctx}/reserve/reserveVenueBill/delete?id=${reserveVenueBill.id}"
                                                onclick="return confirmb('确认要删除该场馆损益吗？', this.href)"><i
                                                     class="fa fa-times"></i>删除</a>
                                         </td>
