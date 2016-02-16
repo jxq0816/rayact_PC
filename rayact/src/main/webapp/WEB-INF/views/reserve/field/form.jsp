@@ -8,14 +8,14 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="filed"></jsp:param>
+    <jsp:param name="action" value="field"></jsp:param>
 </jsp:include>
 <div class="cl-mcont" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>场馆管理</h3>
+                    <h3>场地管理</h3>
                 </div>
                 <div class="content">
                     <form:form id="inputForm" modelAttribute="reserveField" action="${ctx}/reserve/reserveField/save"
