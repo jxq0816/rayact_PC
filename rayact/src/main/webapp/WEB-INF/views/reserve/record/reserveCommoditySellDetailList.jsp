@@ -81,7 +81,7 @@
                                     <td>${reserveCommoditySellDetail.num}</td>
                                     <td>${reserveCommoditySellDetail.price}</td>
                                     <td>${reserveCommoditySellDetail.detailSum}</td>
-                                    <td>${reserveCommoditySellDetail.createBy.name}</td>
+                                    <td>${reserveCommoditySellDetail.updateBy.name}</td>
                                     <td><fmt:formatDate value="${reserveCommoditySellDetail.createDate}"
                                                         type="both"/></td>
                                 </tr>
