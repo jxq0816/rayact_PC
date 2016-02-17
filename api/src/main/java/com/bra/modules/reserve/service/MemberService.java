@@ -1,8 +1,8 @@
 package com.bra.modules.reserve.service;
 
+import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.MemberDao;
 import com.bra.modules.reserve.entity.ReserveMember;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,13 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class MemberService {
+public class MemberService extends CrudService<MemberDao, ReserveMember> {
 
     @Transactional(readOnly = false)
     public void register(ReserveMember member){
 
     }
-
-    @Autowired
-    private MemberDao memberDao;
 }
