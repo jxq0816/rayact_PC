@@ -1,6 +1,6 @@
 package com.bra.modules.reserve.service;
 
-import com.bra.modules.reserve.dao.ReserveMemberDao;
+import com.bra.modules.reserve.dao.MemberDao;
 import com.bra.modules.reserve.entity.ReserveMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +19,5 @@ public class MemberService {
     }
 
     @Autowired
-    private ReserveMemberDao reserveMemberDao;
+    private MemberDao memberDao;
 }

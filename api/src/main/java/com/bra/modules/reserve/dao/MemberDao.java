@@ -9,4 +9,5 @@ import com.bra.modules.reserve.entity.ReserveMember;
  */
 @MyBatisDao
 public interface MemberDao extends CrudDao<ReserveMember>{
+
 }
