@@ -74,6 +74,7 @@
                             </c:forEach>
                             <td style="color: #000;" status="${status}" data-item="${itemId}"
                                 class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
+                                data-price="${price}"
                                 data-field="${file.fieldId}"
                                 data-time="${t}">
                                 ${username}
