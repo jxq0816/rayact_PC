@@ -68,4 +68,14 @@ public class Sms extends DataEntity<Sms> {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+    private int lastMinute;
+
+    public int getLastMinute() {
+        return lastMinute;
+    }
+
+    public void setLastMinute(int lastMinute) {
+        this.lastMinute = lastMinute;
+    }
 }
