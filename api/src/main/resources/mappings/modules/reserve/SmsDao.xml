@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.SmsDao">
+    <sql id="smsColumns">
+        a.id AS "id",
+        a.mobile AS "mobile",
+        a.mobile_code AS "mobileCode",
+        a.bak AS "bak",
+        a.service_id AS "serviceId",
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate"
+    </sql>
+    <select id="findMobile" resultType="Sms" parameterType="Sms">
+        SELECT
+        <include refid="smsColumns"/>
+        FROM reserve_sms a
+        WHERE a.mobile = #{mobile}
+        and a.create_date &gt; DATE_SUB(NOW(),INTERVAL #{lastMinute} MINUTE)
+        <if test="serviceId != null and serviceId != ''">
+            and a.service_id =#{serviceId}
+        </if>
+        <if test="mobileCode != null and mobileCode != ''">
+            and a.mobile_code !=#{mobileCode}
+        </if>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO reserve_sms(
+        id,
+        mobile,
+        mobile_code,
+        bak,
+        service_id,
+        create_date,
+        update_date
+        ) VALUES (
+        #{id},
+        #{mobile},
+        #{mobileCode},
+        #{bak},
+        #{serviceId},
+        #{createDate},
+        #{updateDate}
+        )
+    </insert>
+</mapper>

@@ -15,6 +15,7 @@ public class RegisterApi implements TransmitsService {
 
     public String executeTodo(MobileHead mobileHead, Map<String, Object> map) {
         Map<String,Object> json = Utils.headMap(mobileHead);
+
         return JsonUtils.writeObjectToJson(json);
     }
 
