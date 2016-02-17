@@ -47,6 +47,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /login=anon
+                /center=anon
                 /**=statelessAuthc
             </value>
         </property>
