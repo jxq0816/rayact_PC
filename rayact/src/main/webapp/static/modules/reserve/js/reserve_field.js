@@ -185,6 +185,11 @@ $(document).ready(function () {
         }
         var field = $(this).attr("data-field");
         var time = $(this).attr("data-time");
+        var price= $(this).attr("data-price");
+        if(price==null||price==""||price==undefined){
+            errorLoding("抱歉，该时间段价格尚未设定");
+            return;
+        }
         var date = consDate;//日期
         jQuery.postItems({
             url: ctx + '/reserve/field/reserveForm',
