@@ -16,4 +16,24 @@
         FROM reserve_sms a
         WHERE a.mobile = #{mobile}
     </select>
+
+    <insert id="insert">
+        INSERT INTO reserve_sms(
+        id,
+        mobile,
+        mobile_code,
+        bak,
+        service_id,
+        create_date,
+        update_date
+        ) VALUES (
+        #{id},
+        #{mobile},
+        #{mobileCode},
+        #{bak},
+        #{serviceId},
+        #{createDate},
+        #{updateDate}
+        )
+    </insert>
 </mapper>
