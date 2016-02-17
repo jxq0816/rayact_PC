@@ -11,6 +11,7 @@ import org.apache.commons.collections.MapUtils;
 import java.util.Map;
 
 /**
+ * 手机号验证码校验
  * Created by xiaobin on 16/2/17.
  */
 public class CheckMobileCodeApi implements TransmitsService {
