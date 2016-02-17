@@ -10,6 +10,7 @@ import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
 import com.bra.common.utils.Encodes;
 import com.bra.common.utils.StringUtils;
+import com.google.common.collect.Maps;
 import com.google.common.net.HttpHeaders;
 import org.apache.commons.lang3.Validate;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -89,6 +90,26 @@ public class Servlets {
 		}
 		return true;
 	}
+
+	/**
+	 * 获取表单请求参数，封装成Map
+	 *
+	 * @param request
+	 * @return
+	 */
+	public static Map<String, Object> getParams(HttpServletRequest request) {
+		// 获取参数
+		Enumeration<String> enumeration = request.getParameterNames();
+		Map<String, Object> data = Maps.newConcurrentMap();
+		while (enumeration.hasMoreElements()) {
+			String param = enumeration.nextElement();
+			Object value = request.getParameter(param);
+			data.put(param, value);
+		}
+
+		return data;
+	}
+
 
 	/**
 	 * 根据浏览器 If-None-Match Header, 计算Etag是否已无效.

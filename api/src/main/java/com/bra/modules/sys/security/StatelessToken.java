@@ -9,30 +9,30 @@ import java.util.Map;
  */
 public class StatelessToken implements AuthenticationToken {
 
-    private String username;
+    private String userId;
     private Map<String, ?> params;
     private String clientDigest;
 
     public Object getPrincipal() {
-        return username;
+        return userId;
     }
 
     public Object getCredentials() {
         return clientDigest;
     }
 
-    public StatelessToken(String username, Map<String, ?> params, String clientDigest) {
-        this.username = username;
+    public StatelessToken(String userId, Map<String, ?> params, String clientDigest) {
+        this.userId = userId;
         this.params = params;
         this.clientDigest = clientDigest;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Map<String, ?> getParams() {

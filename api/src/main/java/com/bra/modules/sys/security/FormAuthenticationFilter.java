@@ -20,6 +20,7 @@ import com.bra.common.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -45,8 +46,8 @@ public class FormAuthenticationFilter extends AccessControlFilter {
         //2、客户端传入的用户身份
         String username = request.getParameter(DEFAULT_USERNAME_PARAM);
         //3、客户端请求的参数列表
-        Map<String, String[]> params =
-                new HashMap<>(request.getParameterMap());
+        Map<String,String[]> values = request.getParameterMap();
+        Map<String, String[]> params = new LinkedHashMap<>(values);
         params.remove(DEFAULT_DIGEST_PARAM);
         //4、生成无状态Token
         StatelessToken token = new StatelessToken(username, params, clientDigest);

@@ -5,6 +5,7 @@ package com.bra.modules.sys.entity;
 
 import com.bra.common.config.Global;
 import com.bra.common.persistence.DataEntity;
+import com.bra.common.security.BaseUser;
 import com.bra.common.supcan.annotation.treelist.cols.SupCol;
 import com.bra.common.utils.Collections3;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @version 2013-12-05
  */
-public class User extends DataEntity<User> {
+public class User extends DataEntity<User> implements BaseUser{
 
     private static final long serialVersionUID = 1L;
     private Office company;    // 归属公司
