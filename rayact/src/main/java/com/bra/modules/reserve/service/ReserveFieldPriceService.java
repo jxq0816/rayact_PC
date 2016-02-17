@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -162,8 +163,16 @@ public class ReserveFieldPriceService {
         if (StringUtils.isNotBlank(consType)) {
             reserveFieldPriceSet.setConsType(consType);
         }
-        List<ReserveFieldPriceSet> reserveFieldPriceSetList = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
-        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);
+        String weekType = TimeUtils.getWeekType(date);
+        reserveFieldPriceSet.setWeek(weekType);
+
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);//获取场馆下所有的场地
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList2=new ArrayList<ReserveFieldPriceSet>();//查询所有场地的价格
+        for(ReserveFieldPriceSet ps:reserveFieldPriceSetList){
+            reserveFieldPriceSetList2.addAll(reserveFieldPriceSetDao.findList(ps));
+        }
+
+        buildTimePrice(fieldPriceList, reserveFieldPriceSetList2, venueConsList, times);
         return fieldPriceList;
     }
 
@@ -198,7 +207,7 @@ public class ReserveFieldPriceService {
             fieldPrice.setVenueId(fieldPriceSet.getReserveVenue().getId());
             fieldPrice.setFieldId(fieldPriceSet.getReserveField().getId());
             fieldPrice.setFieldName(fieldPriceSet.getReserveField().getName());
-            //fieldPrice.setTimePriceList(fieldPriceSet.getTimePriceList());
+            fieldPrice.setTimePriceList(fieldPriceSet.getTimePriceList());
 
             TimePrice timePrice;
             for (String time : times) {
