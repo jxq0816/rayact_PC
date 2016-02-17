@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveMemberDao">
+    
+	<sql id="reserveMemberColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.mobile AS "mobile",
+		a.password AS "password",
+		a.sfz AS "sfz",
+		a.province AS "province",
+		a.city AS "city",
+		a.area AS "area",
+		a.address AS "address",
+		a.email AS "email",
+		a.sex AS "sex",
+		a.cartno AS "cartno",
+		a.remainder AS "remainder",
+		a.residue AS "residue",
+		a.cart_type AS "cartType",
+		a.validitystart AS "validitystart",
+		a.validityend AS "validityend",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		p.id as "storedcardSet.id",
+		p.name as "storedcardSet.name",
+		q.name as "timecardSet.name"
+	</sql>
+	
+	<sql id="reserveMemberJoins">
+		left join reserve_storedcard_member_set as p on p.id=a.fk_reserve_storedcard_member_set_id
+		left join reserve_timecard_member_set as q on q.id=a.fk_reserve_timecard_member_set_id
+	</sql>
+    
+	<select id="get" resultType="ReserveMember">
+		SELECT 
+			<include refid="reserveMemberColumns"/>
+		FROM reserve_member a
+		<include refid="reserveMemberJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="memberRegisterOfMonth" resultType="integer">
+		SELECT
+		count(a.id)
+		FROM
+		reserve_member a
+		where Month(a.update_date)=MONTH(CURDATE()) and a.tenant_id = #{tenantId}
+
+	</select>
+
+	<select id="memberRegisterOfAll" resultType="integer">
+		SELECT
+		count(a.id)
+		FROM
+		reserve_member a
+		where a.tenant_id = #{tenantId}
+	</select>
+
+	<select id="findExactList" resultType="ReserveMember">
+		SELECT
+		<include refid="reserveMemberColumns"/>
+		FROM reserve_member a
+		<include refid="reserveMemberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="sfz != null and sfz != ''">
+				AND a.sfz =#{sfz}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND a.mobile =#{mobile}
+			</if>
+			<if test="cartno != null and cartno != ''">
+				AND a.cartno =#{cartno}
+			</if>
+			<if test="cartType != null and cartType != ''">
+				AND a.cart_type =#{cartType}
+			</if>
+			<if test="id != null and id != ''">
+				AND a.id !=#{id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findList" resultType="ReserveMember">
+		SELECT 
+			<include refid="reserveMemberColumns"/>
+		FROM reserve_member a
+		<include refid="reserveMemberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND a.mobile LIKE 
+					<if test="dbName == 'oracle'">'%'||#{mobile}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{mobile}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{mobile},'%')</if>
+			</if>
+			<if test="cartno != null and cartno != ''">
+				AND a.cartno LIKE 
+					<if test="dbName == 'oracle'">'%'||#{cartno}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{cartno}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{cartno},'%')</if>
+			</if>
+			<if test="cartType != null and cartType != ''">
+				AND a.cart_type =#{cartType}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	<select id="findAllList" resultType="ReserveMember">
+		SELECT
+		<include refid="reserveMemberColumns"/>
+		FROM reserve_member a
+		<include refid="reserveMemberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_member(
+			id,
+			name,
+			mobile,
+			password,
+			sfz,
+			province,
+			city,
+			area,
+			address,
+			email,
+			sex,
+			cartno,
+			remainder,
+			residue,
+			cart_type,
+			validitystart,
+			validityend,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			fk_reserve_storedcard_member_set_id,
+			fk_reserve_timecard_member_set_id,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{name},
+			#{mobile},
+			#{password},
+			#{sfz},
+			#{province},
+			#{city},
+			#{area},
+			#{address},
+			#{email},
+			#{sex},
+			#{cartno},
+			#{remainder},
+			#{residue},
+			#{cartType},
+			#{validitystart},
+			#{validityend},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{storedcardSet.id},
+			#{timecardSet.id},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_member SET 	
+			name = #{name},
+			mobile = #{mobile},
+			password = #{password},
+			sfz = #{sfz},
+			province = #{province},
+			city = #{city},
+			area = #{area},
+			address = #{address},
+			email = #{email},
+			sex = #{sex},
+			remainder = #{remainder},
+			residue = #{residue},
+			cartno = #{cartno},
+			cart_type = #{cartType},
+			validitystart = #{validitystart},
+			validityend = #{validityend},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			fk_reserve_storedcard_member_set_id=#{storedcardSet.id},
+			fk_reserve_timecard_member_set_id=#{timecardSet.id},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_member SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
