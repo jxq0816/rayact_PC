@@ -13,8 +13,8 @@
     <dependencies>
         <dependency>
             <groupId>com.beetsRayAct</groupId>
-            <artifactId>runtime</artifactId>
-            <version>1.2.6</version>
+            <artifactId>rayact_core</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
