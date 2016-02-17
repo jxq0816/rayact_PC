@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS reserve_sms;
 CREATE TABLE reserve_sms
 (
 	id varchar(19) NOT NULL,

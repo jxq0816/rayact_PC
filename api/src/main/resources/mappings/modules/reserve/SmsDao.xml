@@ -15,6 +15,13 @@
         <include refid="smsColumns"/>
         FROM reserve_sms a
         WHERE a.mobile = #{mobile}
+        and a.create_date &gt; #{createDate}
+        <if test="serviceId != null and serviceId != ''">
+            and a.service_id !=#{serviceId}
+        </if>
+        <if test="mobileCode != null and mobileCode != ''">
+            and a.mobile_code !=#{mobileCode}
+        </if>
     </select>
 
     <insert id="insert">
