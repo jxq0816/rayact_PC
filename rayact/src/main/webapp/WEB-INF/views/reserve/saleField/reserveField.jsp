@@ -65,6 +65,7 @@
                             <c:forEach items="${file.timePriceList}" var="tp">
                                 <j:if test="${tp.time eq t}">
                                     <c:set var="status" value="${tp.status}"/>
+                                    <c:set var="price" value="${tp.price}"/>
                                     <c:set var="username" value="${tp.userName}"/>
                                     <c:set var="itemId" value="${tp.consItem.id}"/>
                                     <j:if test="${'1' eq tp.consItem.halfCourt}">
