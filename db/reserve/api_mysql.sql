@@ -11,3 +11,11 @@ CREATE TABLE reserve_sms
 	remarks varchar(255),
 	PRIMARY KEY (id)
 );
+
+DROP TABLE IF EXISTS `province`;
+CREATE TABLE `province` (
+	`id` int(11) NOT NULL auto_increment,
+	`name` varchar(255) collate utf8_bin NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
