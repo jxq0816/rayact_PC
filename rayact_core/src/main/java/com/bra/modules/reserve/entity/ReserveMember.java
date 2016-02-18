@@ -204,4 +204,14 @@ public class ReserveMember extends SaasEntity<ReserveMember> {
 	public void setResidue(Integer residue) {
 		this.residue = residue;
 	}
+
+	private MemberExtend memberExtend;
+
+	public MemberExtend getMemberExtend() {
+		return memberExtend;
+	}
+
+	public void setMemberExtend(MemberExtend memberExtend) {
+		this.memberExtend = memberExtend;
+	}
 }
