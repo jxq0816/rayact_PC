@@ -42,6 +42,18 @@
 		<include refid="reserveVenueBillJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="billOfToday" resultType="java.math.BigDecimal">
+		select SUM(total_sum)
+		from reserve_commodity_sell as s
+		WHERE  datediff(s.update_date,curdate())=0 and s.tenant_id = #{tenantId}
+	</select>
+
+	<select id="billOfMonth" resultType="java.math.BigDecimal">
+		select SUM(total_sum)
+		from reserve_commodity_sell as s
+		WHERE s.tenant_id = #{tenantId}  and  Month(s.update_date)=MONTH(CURDATE())
+	</select>
 	
 	<select id="findList" resultType="ReserveVenueBill">
 		SELECT 
@@ -158,7 +170,7 @@
 			other_bill_remark = #{otherBillRemark},
 			fk_reserve_venue_id = #{reserveVenue.id},
 			start_date = #{startDate},
-			#{endDate} = #{end_date},
+			end_date = #{endDate},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
