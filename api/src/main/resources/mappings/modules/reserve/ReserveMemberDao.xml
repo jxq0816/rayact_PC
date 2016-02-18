@@ -23,7 +23,6 @@
         <include refid="memberJoins"/>
         WHERE a.mobile = #{mobile}
     </select>
-
     <insert id="register">
         INSERT INTO reserve_member(
         id,
