@@ -9,5 +9,8 @@ import com.bra.modules.reserve.entity.ReserveMember;
  */
 @MyBatisDao
 public interface MemberDao extends CrudDao<ReserveMember>{
-
+    //注册会员
+    void  register(ReserveMember reserveMember);
+    //查询是否存在手机号
+    void findRegisterMobile(ReserveMember  reserveMember);
 }
