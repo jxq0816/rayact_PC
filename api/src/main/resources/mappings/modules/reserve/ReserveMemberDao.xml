@@ -16,6 +16,15 @@
         left join reserve_member_extend as c on c.id=a.id
     </sql>
 
+    <select id="get" resultType="ReserveMember" parameterType="ReserveMember">
+        SELECT
+        <include refid="memberColumns"/>
+        FROM reserve_member a
+        <include refid="memberJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+
     <select id="findRegisterMobile" resultType="ReserveMember" parameterType="ReserveMember">
         SELECT
         <include refid="memberColumns"/>

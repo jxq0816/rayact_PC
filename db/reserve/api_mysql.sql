@@ -19,6 +19,7 @@ CREATE TABLE reserve_member_extend
   token    VARCHAR(32),
   nickname VARCHAR(50),
   qq       VARCHAR(20),
+  birthday VARCHAR(20),
   PRIMARY KEY (id)
 );
 
