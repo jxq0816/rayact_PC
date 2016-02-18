@@ -71,7 +71,7 @@ CREATE TABLE reserve_member
 	area varchar(32),
 	address varchar(100),
 	email varchar(30),
-	sex varchar(1),
+	sex varchar(1) COMMENT '1:男 2：女',
 	remainder DOUBLE COMMENT '储值卡余额',
 	residue INT COMMENT '次卡剩余次数',
 	cartNo varchar(20) NOT NULL ,

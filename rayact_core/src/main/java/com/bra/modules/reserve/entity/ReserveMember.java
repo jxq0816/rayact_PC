@@ -26,7 +26,7 @@ public class ReserveMember extends SaasEntity<ReserveMember> {
 	private String area;		// area
 	private String address;		// 地址
 	private String email;		// 邮箱
-	private String sex;		// 性别
+	private String sex;		// 性别 1:男 2：女
 	private Double remainder ; //储值卡余额
 	private Integer residue;//次卡剩余次数
 
