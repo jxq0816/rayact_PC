@@ -188,7 +188,7 @@ $(document).ready(function () {
         var price= $(this).attr("data-price");
         if(price==null||price==""||price==undefined){
             errorLoding("抱歉，该时间段价格尚未设定");
-            //return;
+            return;
         }
         var date = consDate;//日期
         jQuery.postItems({

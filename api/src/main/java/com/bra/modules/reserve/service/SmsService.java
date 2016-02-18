@@ -42,7 +42,8 @@ public class SmsService extends CrudService<SmsDao, Sms> {
             sms.setMobile(mobile);
             sms.setMobileCode(mobileCode);
             sms.setServiceId(serviceId);
-            sms.setCreateDate(DateUtils.addMinutes(new Date(), -2));
+            //sms.setCreateDate(DateUtils.addMinutes(new Date(), -2));
+            sms.setLastMinute(10);
             Sms sd = findByMobile(sms);
             if (sd != null && sd.getMobileCode().equals(mobileCode)) {
                 rtn = 1;
@@ -62,8 +63,7 @@ public class SmsService extends CrudService<SmsDao, Sms> {
     @Transactional(readOnly = false)
     public boolean sendSms(Sms sms) {
         synchronized (apiKey) {
-            Date date = DateUtils.addMinutes(new Date(), -1);
-            sms.setCreateDate(date);
+            sms.setLastMinute(1);
             //查询数据库记录
             Sms _sms = findByMobile(sms);
             if (_sms == null) {
