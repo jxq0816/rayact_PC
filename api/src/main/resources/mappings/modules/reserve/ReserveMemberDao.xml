@@ -6,13 +6,21 @@
         a.mobile AS "mobile",
         a.password  AS "password",
         a.create_date AS "createDate",
-        a.update_date AS "updateDate"
+        a.update_date AS "updateDate",
+        c.token AS "memberExtend.token",
+        c.nickname AS "memberExtend.nickname",
+        c.qq AS "memberExtend.qq"
+    </sql>
+
+    <sql id="memberJoins">
+        left join reserve_member_extend as c on c.id=a.id
     </sql>
 
     <select id="findRegisterMobile" resultType="ReserveMember" parameterType="ReserveMember">
         SELECT
         <include refid="memberColumns"/>
         FROM reserve_member a
+        <include refid="memberJoins"/>
         WHERE a.mobile = #{mobile}
     </select>
 
@@ -31,6 +39,11 @@
         #{updateDate}
         )
     </insert>
+
+    <update id="prefectUserInfo">
+        UPDATE reserve_member set sex = #{sex},
+        province = #{province},city = #{city} where id = #{id}
+    </update>
 
 
 </mapper>

@@ -18,4 +18,9 @@
     <update id="logout">
         update reserve_member_extend set token = null where id = #{id}
     </update>
+    <update id="update">
+        UPDATE reserve_member_extend SET
+        token = #{token},nickname = #{nickname},qq = #{qq}
+        where id = #{id}
+    </update>
 </mapper>
