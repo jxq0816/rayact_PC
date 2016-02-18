@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.MemberDao">
+    <sql id="memberExtendColumns">
+        a.id AS "id",
+        a.token AS "token",
+        a.nickname AS "nickname",
+        a.qq AS "qq"
+    </sql>
+
+    <select id="get" resultType="MemberExtend">
+        SELECT
+        <include refid="memberExtendColumns"/>
+        FROM reserve_member_extend a
+        WHERE a.id = #{id}
+    </select>
+
+    <update id="logout">
+        update reserve_member_extend set token = null where id = #{id}
+    </update>
+</mapper>

@@ -1,10 +1,12 @@
 package com.bra.modules.reserve.entity;
 
+import com.bra.common.persistence.DataEntity;
+
 /**
  * 用户扩展信息
  * Created by xiaobin on 16/2/18.
  */
-public class MemberExtend {
+public class MemberExtend extends DataEntity<MemberExtend> {
 
     private String id;
     private String token;//token
