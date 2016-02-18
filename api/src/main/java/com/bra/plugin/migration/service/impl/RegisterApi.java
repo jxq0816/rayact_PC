@@ -26,6 +26,7 @@ public class RegisterApi implements TransmitsService {
         Map<String,Object> json = Utils.headMap(mobileHead);
         String mobile = MapUtils.getString(map, "mobile");
         String password=MapUtils.getString(map, "password");
+        String mobileCode=MapUtils.getString(map, "mobileCode");
         if(StringUtils.isBlank(mobile)){
             json.put("status_code","201");
             json.put("message","手机号不能为空");
@@ -34,6 +35,18 @@ public class RegisterApi implements TransmitsService {
         if(StringUtils.isBlank(password)){
             json.put("status_code","201");
             json.put("message","密码不能为空");
+            return JsonUtils.writeObjectToJson(json);
+        }
+        if(StringUtils.isBlank(mobileCode)){
+            json.put("status_code","201");
+            json.put("message","验证码不能为空");
+            return JsonUtils.writeObjectToJson(json);
+        }
+        SmsService smsService = SpringContextHolder.getBean("smsService");
+        int code = smsService.checkSmsCode(mobile, mobileCode, "MOBILE_APP");
+        if (code != 1) {
+            json.put("status_code","202");
+            json.put("message","验证码有误");
             return JsonUtils.writeObjectToJson(json);
         }
 
