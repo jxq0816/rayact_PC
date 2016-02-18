@@ -14,6 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService extends CrudService<MemberDao, ReserveMember> {
 
     @Transactional(readOnly = false)
+    public ReserveMember findRegisterMobile(ReserveMember member) {
+        //数据库中注册的会员的手机号
+       return dao.findRegisterMobile(member);
+    }
+    @Transactional(readOnly = false)
     public void register(ReserveMember member) {
         //注册会员保存到数据库
         member.preInsert();//ID值

@@ -9,6 +9,13 @@
         a.update_date AS "updateDate"
     </sql>
 
+    <select id="findRegisterMobile" resultType="ReserveMember" parameterType="ReserveMember">
+        SELECT
+        <include refid="memberColumns"/>
+        FROM reserve_member a
+        WHERE a.mobile = #{mobile}
+    </select>
+
     <insert id="register">
         INSERT INTO reserve_member(
         id,

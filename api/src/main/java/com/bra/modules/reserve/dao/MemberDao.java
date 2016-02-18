@@ -12,5 +12,5 @@ public interface MemberDao extends CrudDao<ReserveMember>{
     //注册会员
     void  register(ReserveMember reserveMember);
     //查询是否存在手机号
-    void findRegisterMobile(ReserveMember  reserveMember);
+    ReserveMember findRegisterMobile(ReserveMember  reserveMember);
 }

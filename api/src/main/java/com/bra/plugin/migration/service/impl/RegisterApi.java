@@ -41,6 +41,13 @@ public class RegisterApi implements TransmitsService {
         ReserveMember reserveMember=new ReserveMember();
         reserveMember.setMobile(mobile);
         reserveMember.setPassword(password);
+        //查询是手机号是否已经注册
+        ReserveMember member = memberService.findRegisterMobile(reserveMember);
+        if(member!=null){
+            json.put("status_code","203");
+            json.put("message","手机号已经注册了");
+            return JsonUtils.writeObjectToJson(json);
+        }
         //保存新注册的会员的手机号和密码
         memberService.register(reserveMember);
         json.put("status_code", "200");
