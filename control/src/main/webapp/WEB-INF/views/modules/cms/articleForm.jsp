@@ -4,6 +4,7 @@
 <head>
 	<title>文章管理</title>
 	<meta name="decorator" content="default"/>
+	<%@include file="/WEB-INF/views/include/upload.jsp" %>
 	<script type="text/javascript">
 		$(document).ready(function() {
             if($("#link").val()){
@@ -102,8 +103,7 @@
 		<div class="control-group">
 			<label class="control-label">缩略图:</label>
 			<div class="controls">
-                <input type="hidden" id="image" name="image" value="${article.imageSrc}" />
-				<sys:ckfinder input="image" type="thumb" uploadPath="/cms/article" selectMultiple="false"/>
+				<mechanism:upload id="image" name="attMains1" exts="" modelId="${article.id}" fdKey="pic" modelName="com.bra.modules.cms.entity.Article" multi="false"></mechanism:upload>
 			</div>
 		</div>
 		<div class="control-group">
