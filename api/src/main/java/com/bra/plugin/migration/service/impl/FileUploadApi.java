@@ -42,7 +42,7 @@ public class FileUploadApi implements TransmitsService {
         Map<String, String> map = new HashMap<String, String>();
         logger.debug("...........................FileUploadApi begin.........................................");
         Object object = request.get("file");
-        String modelId = MapUtils.getString(request, "uuid");
+        String modelId = mobileHead.getUserId();
         String userToken = MapUtils.getString(request, "token");
         String modelName = "com.world.think.modules.sys.entity.User";//实体类路径
         String fdKey = MapUtils.getString(request, "tradeType");//业务类型（头像上传_userPhoto、身份证正面_IDFace、身份证反面_IDBack、营业执照_BL businessLicenceUrl、股东证明文件 _SHL stockholderLicenceUrl 、公司证明文件_CL companyLicenceUrl、个人名片/执业证书/执业许可证 _IDL identificationLicenceUrl）

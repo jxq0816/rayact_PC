@@ -18,11 +18,9 @@ public class MemberExtendService extends CrudService<MemberExtendDao, MemberExte
     public void updateToken(MemberExtend memberExtend) {
         MemberExtend _me = dao.get(memberExtend);
         if (_me == null) {
-            memberExtend.preInsert();
             dao.insert(memberExtend);
         }else{
             _me.setToken(memberExtend.getToken());
-            _me.preUpdate();
             dao.update(_me);
         }
     }

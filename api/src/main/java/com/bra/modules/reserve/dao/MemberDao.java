@@ -15,4 +15,6 @@ public interface MemberDao extends CrudDao<ReserveMember>{
     ReserveMember findRegisterMobile(ReserveMember  reserveMember);
     //完善个人资料
     void prefectUserInfo(ReserveMember member);
+
+    ReserveMember getMember(ReserveMember member);
 }

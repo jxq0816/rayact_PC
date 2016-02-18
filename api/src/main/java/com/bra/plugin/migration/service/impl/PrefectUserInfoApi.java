@@ -34,10 +34,11 @@ public class PrefectUserInfoApi implements TransmitsService {
         String userToken = MapUtils.getString(request, "token");
         String uuid = MapUtils.getString(request, "uuid");
         String userNickName = MapUtils.getString(request, "nickName");
-        String userName = MapUtils.getString(request, "name");
+        String qq = MapUtils.getString(request, "qq");
         String province = MapUtils.getString(request, "province");
         String city = MapUtils.getString(request, "city");
         String userSex = MapUtils.getString(request, "sex");
+        String birthday = MapUtils.getString(request, "birthday");
 
         if (StringUtils.isNotBlank(userToken)) {
             ReserveMember dbUser = getMemberService().get(uuid);
@@ -45,7 +46,8 @@ public class PrefectUserInfoApi implements TransmitsService {
                 logger.info("dbToken=" + dbUser.getMemberExtend().getToken()+ "-，userToken=" + userToken);
                 if (dbUser.getMemberExtend().getToken().equals(userToken)) {
                     dbUser.getMemberExtend().setNickname(userNickName);
-                    dbUser.setName(userName);
+                    dbUser.getMemberExtend().setQq(qq);
+                    dbUser.getMemberExtend().setBirthday(birthday);
                     //dbUser.setPhoto(userPhoto);
                     dbUser.setProvince(province);
                     dbUser.setCity(city);

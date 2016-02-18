@@ -50,13 +50,13 @@ public class RegisterApi implements TransmitsService {
             json.put("message","验证码不能为空");
             return JsonUtils.writeObjectToJson(json);
         }
-        SmsService smsService = SpringContextHolder.getBean("smsService");
+       /* SmsService smsService = SpringContextHolder.getBean("smsService");
         int code = smsService.checkSmsCode(mobile, mobileCode, "MOBILE_APP");
         if (code != 1) {
             json.put("status_code","202");
             json.put("message","验证码有误");
             return JsonUtils.writeObjectToJson(json);
-        }
+        }*/
 
         MemberService memberService = SpringContextHolder.getBean("memberService");
         ReserveMember reserveMember=new ReserveMember();
