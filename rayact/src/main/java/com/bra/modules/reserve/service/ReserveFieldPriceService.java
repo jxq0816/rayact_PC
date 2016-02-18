@@ -167,12 +167,13 @@ public class ReserveFieldPriceService {
         reserveFieldPriceSet.setWeek(weekType);
 
         List<ReserveFieldPriceSet> reserveFieldPriceSetList = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);//获取场馆下所有的场地
-        List<ReserveFieldPriceSet> reserveFieldPriceSetList2=new ArrayList<ReserveFieldPriceSet>();//查询所有场地的价格
-        for(ReserveFieldPriceSet ps:reserveFieldPriceSetList){
-            reserveFieldPriceSetList2.addAll(reserveFieldPriceSetDao.findList(ps));
+        for(ReserveFieldPriceSet ps:reserveFieldPriceSetList) {//遍历 每个场地
+            List<TimePrice> timePriceList = ps.getTimePriceList();
+            ps.setTimePriceList(timePriceList);
         }
 
-        buildTimePrice(fieldPriceList, reserveFieldPriceSetList2, venueConsList, times);
+        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);
+
         return fieldPriceList;
     }
 
@@ -207,12 +208,23 @@ public class ReserveFieldPriceService {
             fieldPrice.setVenueId(fieldPriceSet.getReserveVenue().getId());
             fieldPrice.setFieldId(fieldPriceSet.getReserveField().getId());
             fieldPrice.setFieldName(fieldPriceSet.getReserveField().getName());
-            fieldPrice.setTimePriceList(fieldPriceSet.getTimePriceList());
+            List<TimePrice> timePriceList = fieldPriceSet.getTimePriceList();
+
 
             TimePrice timePrice;
             for (String time : times) {
                 timePrice = new TimePrice();
                 timePrice.setTime(time);
+                for(TimePrice tp:timePriceList){
+                    String t=tp.getTime();
+                    Double price=tp.getPrice();
+                    String hour=time.substring(0,2);
+                    t=t.substring(0,2);
+                    if(hour.equals(t)){
+                        timePrice.setPrice(price);
+                        break;
+                    }
+                }
                 ReserveVenueConsItem item = hasReserve(venueConsList, fieldPriceSet, time);
                 if (item != null) {//已经预定
                     timePrice.setConsItem(item);
