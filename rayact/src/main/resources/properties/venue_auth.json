@@ -146,6 +146,12 @@
         "name": "商品收入统计",
         "href":"/reserve/reserveCardStatements/listByCommodityType",
         "authorityList": []
+      },
+      {
+        "code": "venueIncomeReport",
+        "name": "场馆收入统计",
+        "href":"/reserve/reserveVenue/report",
+        "authorityList": []
       }
     ]
   },
