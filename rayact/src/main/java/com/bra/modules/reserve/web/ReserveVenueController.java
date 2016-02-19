@@ -1,12 +1,15 @@
 package com.bra.modules.reserve.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
-import com.bra.modules.reserve.entity.form.ReserveVenueReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectMonthReport;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,12 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
-import com.bra.common.web.BaseController;
-import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.entity.ReserveVenue;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -86,18 +85,23 @@ public class ReserveVenueController extends BaseController {
     @RequestMapping(value = "report")
     public String report(ReserveVenueConsItem venueConsItem, Model model) {
         Date month=venueConsItem.getConsDate();//月份
-        ReserveVenue rv=venueConsItem.getReserveVenue();//场馆
-        if(rv==null){
-            rv=new ReserveVenue();
+        ReserveVenue venue=venueConsItem.getReserveVenue();//场馆
+        if(venue==null){
+            venue=new ReserveVenue();
+        }else if(StringUtils.isNoneEmpty(venue.getId())){
+            venue=reserveVenueService.get(venue);
         }
         if(month==null){
             month=new Date();//默认当天，传递到service 再处理为month
         }
-        List<ReserveVenue> reserveVenueList=reserveVenueService.findList(rv);//场馆列表
 
-        List<ReserveVenueReport> reserveVenueReportList=reserveVenueService.report(rv,month);//日保表
+        List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
 
-        ReserveVenueReport monthReport=new ReserveVenueReport();//月报表
+        List<ReserveVenueProjectDayReport> dayReportList=reserveVenueService.dayReport(venue,null,month);//项目日报表
+
+        List<ReserveVenueProjectMonthReport> monthReportList=reserveVenueService.monthReport(venue,month);//项目月报表
+
+        ReserveVenueProjectDayReport monthReport=new ReserveVenueProjectDayReport();//月总报表
         monthReport.setDay(month);
         Double storedCardSum=0.0;
         Double cashSum=0.0;
@@ -106,7 +110,7 @@ public class ReserveVenueController extends BaseController {
         Double aliPaySum=0.0;
         Double dueSum=0.0;
         Double otherSum=0.0;
-        for(ReserveVenueReport report:reserveVenueReportList){
+        for(ReserveVenueProjectDayReport report:dayReportList){
             storedCardSum+=report.getFieldBillStoredCard();
             cashSum+=report.getFieldBillCash();
             bankCardSum+=report.getFieldBillBankCard();
@@ -126,9 +130,10 @@ public class ReserveVenueController extends BaseController {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM");
         String m=simpleDateFormat.format(month);
 
+        model.addAttribute("venue",venue);//场馆
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
-        model.addAttribute("reserveVenueReportList",reserveVenueReportList);//日报表
-        model.addAttribute("monthReport",monthReport);//月报表
+        model.addAttribute("monthReportList",monthReportList);//项目月报表
+        model.addAttribute("monthReport",monthReport);//月总报表
         model.addAttribute("m",m);//月份
         return "reserve/venue/report";
     }
