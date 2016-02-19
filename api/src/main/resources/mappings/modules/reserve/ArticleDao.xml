@@ -7,6 +7,7 @@
         a.weight AS "weight",
         a.description  AS "description",
         a.title AS  "title",
+        a.create_date AS "createDate",
         d.copyfrom AS "articleData.copyfrom"
         FROM cms_article a,cms_article_data d
         WHERE a.id = d.id and a.del_flag = 0
@@ -25,6 +26,7 @@
         a.weight AS "weight",
         a.description  AS "description",
         a.title AS  "title",
+        a.create_date AS "createDate",
         d.copyfrom AS "articleData.copyfrom"
         FROM cms_article a
         <where>
