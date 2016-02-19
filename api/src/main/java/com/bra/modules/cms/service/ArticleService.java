@@ -1,12 +1,15 @@
 package com.bra.modules.cms.service;
 
+import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.common.utils.MyBeanUtils;
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.cms.dao.ArticleDao;
 import com.bra.modules.cms.eneity.Article;
 import com.bra.modules.cms.eneity.Category;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,18 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 public class ArticleService extends CrudService<ArticleDao, Article> {
+
+    public Page<Article> listArticle(String pNo) {
+        Integer pageNo = StringUtils.isBlank(pNo) ? 1 : NumberUtils.toInt(pNo, 1);
+        Page<Article> page = new Page<>();
+        page.setPageNo(pageNo);
+        page.setPageSize(10);
+
+        Category category = new Category(Category.MODEL_PICTURE);
+        Article article = new Article();
+        article.setCategory(category);
+        return super.findPage(page, article);
+    }
 
     //首页资讯
     @Transactional(readOnly = false)

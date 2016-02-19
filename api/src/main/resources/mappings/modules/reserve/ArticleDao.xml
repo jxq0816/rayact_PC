@@ -19,6 +19,33 @@
         order by a.weight DESC limit #{sqlMap.pageSize}
     </select>
 
+    <select id="findList" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.weight AS "weight",
+        a.description  AS "description",
+        a.title AS  "title",
+        d.copyfrom AS "articleData.copyfrom"
+        FROM cms_article a
+        <where>
+            a.id = d.id and a.del_flag = 0
+            <if test="title != null and title != ''">
+                AND a.title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="category.id != null and category.id != ''">
+                AND (a.category_id = #{category.id})
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.weight DESC, a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
     <select id="viewArticle" resultType="Article">
         SELECT
         a.id AS "id",
