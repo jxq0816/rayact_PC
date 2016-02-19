@@ -14,6 +14,7 @@ import com.bra.modules.cms.dao.CategoryDao;
 import com.bra.modules.cms.entity.Article;
 import com.bra.modules.cms.entity.ArticleData;
 import com.bra.modules.cms.entity.Category;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -73,7 +74,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
     }
 
     @Transactional(readOnly = false)
-    public void save(Article article) {
+    public void save(Article article, AttMainForm attMainForm) {
         if (article.getArticleData().getContent() != null) {
             article.getArticleData().setContent(StringEscapeUtils.unescapeHtml4(
                     article.getArticleData().getContent()));
@@ -95,8 +96,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
             article.setViewConfig(StringEscapeUtils.unescapeHtml4(article.getViewConfig()));
         }
 
-        ArticleData articleData = new ArticleData();
-        ;
+        ArticleData articleData ;
         if (StringUtils.isBlank(article.getId())) {
             article.preInsert();
             articleData = article.getArticleData();
@@ -110,6 +110,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
             dao.update(article);
             articleDataDao.update(article.getArticleData());
         }
+        updateAttMain(article,attMainForm);
     }
 
     @Transactional(readOnly = false)

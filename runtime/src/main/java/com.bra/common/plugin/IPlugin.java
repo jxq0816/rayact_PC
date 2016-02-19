@@ -9,12 +9,12 @@ public interface IPlugin {
     /**
      * 插件初始化
      */
-    public void init();
+    void init();
 
     /**
      * 插件注销
      */
-    public void destroyed();
+    void destroyed();
 
-    public String getKey();
+    String getKey();
 }
