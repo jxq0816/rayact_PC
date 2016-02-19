@@ -7,12 +7,21 @@
         a.weight AS "weight",
         a.description  AS "description",
         a.title AS  "title",
-        a.copyfrom AS "copyfrom",
         d.copyfrom AS "articleData.copyfrom"
         FROM cms_article a,cms_article_data d
         WHERE a.id = d.id and a.del_flag = 0
         order by a.weight DESC limit 10
     </select>
 
-
+    <select id="viewArticle" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.weight AS "weight",
+        a.description  AS "description",
+        a.title AS  "title",
+        d.copyfrom AS "articleData.copyfrom",
+        d.content AS "articleData.content"
+        FROM cms_article a,cms_article_data d
+        WHERE a.id = d.id and a.del_flag = 0 and a.id = #{id}
+    </select>
 </mapper>
