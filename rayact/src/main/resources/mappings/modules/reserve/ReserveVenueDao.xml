@@ -76,24 +76,73 @@
 		</choose>
 	</select>
 
-	<select id="report" resultType="com.bra.modules.reserve.entity.form.ReserveVenueReport">
+	<select id="dayReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport">
 		SELECT
-		a.venue_id AS "reserveVenue.id",
-		a.field_id AS "reserveField.id",
+		<if test="reserveVenue !=null ">
+			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
+				a.venue_id AS "reserveVenue.id",
+			</if>
+		</if>
 		b.cons_date AS "day",
+		d.id AS "reserveProject.id",
+		d.name AS "reserveProject.name",
 		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
 		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
 		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
 		sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
 		sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
 		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther"
-		from reserve_venue_cons_item as a,reserve_venue_cons as b
+		from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d
 		<where>
-			a.cons_data_id=b.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="reserveVenue !=null ">
+				<if test="reserveVenue.id !=null and reserveVenue.id !=''">
+					and a.venue_id=#{reserveVenue.id}
+				</if>
+			</if>
 		</where>
 		${sqlMap.dateSQL}
-		group by a.venue_id,a.field_id,b.cons_date
+		group by d.id,b.cons_date
+		<if test="reserveVenue !=null ">
+			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
+				,a.venue_id
+			</if>
+		</if>
 		ORDER BY day ASC
+	</select>
+
+	<select id="monthReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectMonthReport">
+		SELECT
+		<if test="reserveVenue !=null ">
+			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
+				a.venue_id AS "reserveVenue.id",
+			</if>
+		</if>
+		DATE_FORMAT(b.cons_date,'%Y-%m') AS "m",
+		d.id AS "reserveProject.id",
+		d.name AS "reserveProject.name",
+		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
+		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
+		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
+		sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
+		sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
+		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther"
+		from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d
+		<where>
+			a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="reserveVenue !=null ">
+				<if test="reserveVenue.id !=null and reserveVenue.id !=''">
+					and a.venue_id=#{reserveVenue.id}
+				</if>
+			</if>
+		</where>
+		${sqlMap.monthSQL}
+		GROUP BY m,d.id
+		<if test="reserveVenue !=null ">
+			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
+				,a.venue_id
+			</if>
+		</if>
 	</select>
 
 

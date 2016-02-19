@@ -1,7 +1,11 @@
 package com.bra.modules.reserve.entity.form;
 
 
+import com.bra.common.persistence.BaseEntity;
+import com.bra.common.persistence.DataEntity;
+import com.bra.common.persistence.SaasEntity;
 import com.bra.modules.reserve.entity.ReserveField;
+import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.io.Serializable;
@@ -13,7 +17,7 @@ import java.util.Date;
  * @author jiangxingqi
  * @version 2015-12-29
  */
-public class ReserveVenueReport implements Serializable {
+public class ReserveVenueProjectDayReport extends SaasEntity<ReserveVenueProjectDayReport> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +38,8 @@ public class ReserveVenueReport implements Serializable {
     private ReserveField reserveField;//场地
 
     private ReserveVenue reserveVenue;//场馆
+
+    private ReserveProject reserveProject;//场馆
 
     private Date day;
 
@@ -60,8 +66,6 @@ public class ReserveVenueReport implements Serializable {
     public void setFieldBillBankCard(Double fieldBillBankCard) {
         this.fieldBillBankCard = fieldBillBankCard;
     }
-
-
 
     public Double getFieldBillDue() {
         return fieldBillDue;
@@ -117,6 +121,14 @@ public class ReserveVenueReport implements Serializable {
 
     public void setReserveVenue(ReserveVenue reserveVenue) {
         this.reserveVenue = reserveVenue;
+    }
+
+    public ReserveProject getReserveProject() {
+        return reserveProject;
+    }
+
+    public void setReserveProject(ReserveProject reserveProject) {
+        this.reserveProject = reserveProject;
     }
 
 

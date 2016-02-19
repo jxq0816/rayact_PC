@@ -23,32 +23,34 @@
 
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">
-                        <table class="no-border">
-                            <tbody class="no-border-y">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
                                 <tr>
                                     <td>场馆:</td>
                                     <td>
 
-                                                <sys:select cssClass="input-medium" name="reserveVenue.id"
-                                                            value="reserveVenue"
-                                                            items="${reserveVenueList}" itemLabel="name" itemValue="id"
-                                                            defaultLabel="----请选择-----"
-                                                            defaultValue=""></sys:select>
+                                        <sys:select cssClass="input-medium" name="reserveVenue.id"
+                                                    value="reserveVenue"
+                                                    items="${reserveVenueList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select>
                                     </td>
                                     <td>
                                         <input name="consDate" id="month" type="text" readonly="readonly"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
+                                               value="${m}"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form:form>
                 <div class="content">
+                    场馆：${venue.name}
                     <div class="table-responsive">
                         <table>
                             <thead>
@@ -66,28 +68,65 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <%-- 月总统计 开始 --%>
+                            <tr>
+                                <td>
+                                    ${m}
+                                </td>
+                                <td>
+                                    ${monthReport.fieldBillCash}
+                                </td>
+                                <td>
+                                    ${monthReport.fieldBillBankCard}
+                                </td>
+                                <td>
+                                    ${monthReport.fieldBillStoredCard}
+                                </td>
+                                <td>
+                                    ${monthReport.fieldBillWeiXin}
+                                </td>
+                                <td>
+                                    ${monthReport.fieldBillAliPay}
+                                </td>
+                                <td>
+                                    ${monthReport.fieldBillOther}
+                                </td>
+                                <td>
+                                    尚未开发
+                                </td>
+                                <td>
+                                    尚未开发
+                                </td>
+                                <td>
+                                    尚未开发
+                                </td>
+                            </tr>
+                            <%-- 月总统计 结束 --%>
 
+
+                            <c:forEach items="${monthReportList}" var="monthProjectReport">
+                                <%-- 项目月统计 开始 --%>
                                 <tr>
                                     <td>
-                                        ${m}
+                                            ${monthProjectReport.reserveProject.name}
                                     </td>
                                     <td>
-                                        ${monthReport.fieldBillCash}
+                                            ${monthProjectReport.fieldBillCash}
                                     </td>
                                     <td>
-                                        ${monthReport.fieldBillBankCard}
+                                            ${monthProjectReport.fieldBillBankCard}
                                     </td>
                                     <td>
-                                        ${monthReport.fieldBillStoredCard}
+                                            ${monthProjectReport.fieldBillStoredCard}
                                     </td>
                                     <td>
-                                        ${monthReport.fieldBillWeiXin}
+                                            ${monthProjectReport.fieldBillWeiXin}
                                     </td>
                                     <td>
-                                        ${monthReport.fieldBillAliPay}
+                                            ${monthProjectReport.fieldBillAliPay}
                                     </td>
                                     <td>
-                                        ${monthReport.fieldBillOther}
+                                            ${monthProjectReport.fieldBillOther}
                                     </td>
                                     <td>
                                         尚未开发
@@ -99,21 +138,48 @@
                                         尚未开发
                                     </td>
                                 </tr>
+                                <%-- 项目月统计 结束 --%>
+                                <%-- 项目日统计 开始 --%>
+                                <c:forEach items="${monthProjectReport.dayReportList}" var="dayReport">
+                                    <tr>
+                                        <td>
+                                            <fmt:formatDate value="${dayReport.day}" type="date"></fmt:formatDate>
+                                        </td>
+                                        <td>
+                                                ${dayReport.fieldBillCash}
+                                        </td>
+                                        <td>
+                                                ${dayReport.fieldBillBankCard}
+                                        </td>
+                                        <td>
+                                                ${dayReport.fieldBillStoredCard}
+                                        </td>
+                                        <td>
+                                                ${dayReport.fieldBillWeiXin}
+                                        </td>
+                                        <td>
+                                                ${dayReport.fieldBillAliPay}
+                                        </td>
+                                        <td>
+                                                ${dayReport.fieldBillOther}
+                                        </td>
+                                        <td>
+                                            尚未开发
+                                        </td>
+                                        <td>
+                                            尚未开发
+                                        </td>
+                                        <td>
+                                            尚未开发
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <%-- 项目日统计 结束 --%>
+                            </c:forEach>
+                            <%-- 项目月统计 结束 --%>
+
                             </tbody>
                         </table>
-
-                       <%-- <div class="row">
-                            <div class="col-sm-12">
-
-                                <div class="pull-right">
-                                    <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>--%>
-
                     </div>
                 </div>
             </div>
