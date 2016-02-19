@@ -72,10 +72,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     public List<ReserveVenueReport> report(ReserveVenue reserveVenue, Date month) {
 
         Calendar cal = Calendar.getInstance();
-        if(month==null){
-            month=new Date();
-        }
-        cal.setTime(month);
+        cal.setTime(month);//controller 默认传递本月
         int year=cal.get(Calendar.YEAR);
         int m=cal.get(Calendar.MONTH);
         int dayNumOfMonth=TimeUtils.getDaysByYearMonth(year,m);

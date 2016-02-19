@@ -22,6 +22,7 @@ import com.bra.common.web.BaseController;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -89,15 +90,19 @@ public class ReserveVenueController extends BaseController {
         if(rv==null){
             rv=new ReserveVenue();
         }
+        if(month==null){
+            month=new Date();//默认当天，传递到service 再处理为month
+        }
         List<ReserveVenue> reserveVenueList=reserveVenueService.findList(rv);//场馆列表
 
         List<ReserveVenueReport> reserveVenueReportList=reserveVenueService.report(rv,month);//日保表
 
         ReserveVenueReport monthReport=new ReserveVenueReport();//月报表
+        monthReport.setDay(month);
         Double storedCardSum=0.0;
         Double cashSum=0.0;
         Double bankCardSum=0.0;
-        Double weixinSum=0.0;
+        Double weiXinSum=0.0;
         Double aliPaySum=0.0;
         Double dueSum=0.0;
         Double otherSum=0.0;
@@ -105,7 +110,7 @@ public class ReserveVenueController extends BaseController {
             storedCardSum+=report.getFieldBillStoredCard();
             cashSum+=report.getFieldBillCash();
             bankCardSum+=report.getFieldBillBankCard();
-            weixinSum+=report.getFieldBillWeiXin();
+            weiXinSum+=report.getFieldBillWeiXin();
             aliPaySum+=report.getFieldBillAliPay();
             //dueSum+=report.getFieldBillDue();//欠账
             otherSum+=report.getFieldBillOther();
@@ -113,14 +118,18 @@ public class ReserveVenueController extends BaseController {
         monthReport.setFieldBillStoredCard(storedCardSum);
         monthReport.setFieldBillCash(cashSum);
         monthReport.setFieldBillBankCard(bankCardSum);
-        monthReport.setFieldBillWeiXin(weixinSum);
+        monthReport.setFieldBillWeiXin(weiXinSum);
         monthReport.setFieldBillAliPay(aliPaySum);
         monthReport.setFieldBillDue(dueSum);
         monthReport.setFieldBillOther(otherSum);
 
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM");
+        String m=simpleDateFormat.format(month);
+
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
         model.addAttribute("reserveVenueReportList",reserveVenueReportList);//日报表
         model.addAttribute("monthReport",monthReport);//月报表
+        model.addAttribute("m",m);//月份
         return "reserve/venue/report";
     }
 

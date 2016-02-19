@@ -53,9 +53,13 @@
                         <table>
                             <thead>
                             <tr>
+                                <th>时间</th>
                                 <th>场地费（现金）</th>
                                 <th>场地费（银行卡）</th>
                                 <th>场地费（储值卡）</th>
+                                <th>场地费（微信）</th>
+                                <th>场地费（支付宝）</th>
+                                <th>场地费（其它）</th>
                                 <th>场地费（欠账）</th>
                                 <th>预付（现金）</th>
                                 <th>预付（银行卡）</th>
@@ -65,6 +69,9 @@
 
                                 <tr>
                                     <td>
+                                        ${m}
+                                    </td>
+                                    <td>
                                         ${monthReport.fieldBillCash}
                                     </td>
                                     <td>
@@ -72,6 +79,15 @@
                                     </td>
                                     <td>
                                         ${monthReport.fieldBillStoredCard}
+                                    </td>
+                                    <td>
+                                        ${monthReport.fieldBillWeiXin}
+                                    </td>
+                                    <td>
+                                        ${monthReport.fieldBillAliPay}
+                                    </td>
+                                    <td>
+                                        ${monthReport.fieldBillOther}
                                     </td>
                                     <td>
                                         尚未开发
