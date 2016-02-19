@@ -10,7 +10,13 @@
         d.copyfrom AS "articleData.copyfrom"
         FROM cms_article a,cms_article_data d
         WHERE a.id = d.id and a.del_flag = 0
-        order by a.weight DESC limit 10
+        <if test="posid != null and posid != ''">
+            AND a.posid LIKE CONCAT('%', #{posid}, '%')
+        </if>
+        <if test="category.id != null and category.id != ''">
+            AND (a.category_id = #{category.id})
+        </if>
+        order by a.weight DESC limit #{sqlMap.pageSize}
     </select>
 
     <select id="viewArticle" resultType="Article">

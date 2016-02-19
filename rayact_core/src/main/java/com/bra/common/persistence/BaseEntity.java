@@ -45,7 +45,7 @@ public abstract class BaseEntity<T> implements Serializable {
     /**
      * 自定义SQL（SQL标识，SQL内容）
      */
-    protected Map<String, String> sqlMap;
+    protected Map<String, Object> sqlMap;
 
     /**
      * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
@@ -100,14 +100,14 @@ public abstract class BaseEntity<T> implements Serializable {
 
     @JsonIgnore
     @XmlTransient
-    public Map<String, String> getSqlMap() {
+    public Map<String, Object> getSqlMap() {
         if (sqlMap == null) {
             sqlMap = Maps.newHashMap();
         }
         return sqlMap;
     }
 
-    public void setSqlMap(Map<String, String> sqlMap) {
+    public void setSqlMap(Map<String, Object> sqlMap) {
         this.sqlMap = sqlMap;
     }
 
