@@ -76,14 +76,14 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         picArticle.setId(Category.MODEL_PICTURE);
         picArticle.setTitle("图片广告");
 
-        List<Map<String, Object>> picArticleList = homeArticle();
+        List<Map<String, Object>> picArticleList = homePicArticle();
         picArticle.setValue(picArticleList);
         data.put("tupian", picArticle);
 
         //资讯
         HomeArticle article = new HomeArticle();
         article.setId(Category.MODEL_ARTICLE);
-        article.setTitle("咨询");
+        article.setTitle("资讯");
         List<Map<String, Object>> articleList = homeArticle();
         article.setValue(articleList);
         data.put("zixun", article);

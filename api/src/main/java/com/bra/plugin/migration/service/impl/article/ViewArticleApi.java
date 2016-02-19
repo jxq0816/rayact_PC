@@ -1,5 +1,6 @@
 package com.bra.plugin.migration.service.impl.article;
 
+import com.bra.common.config.Global;
 import com.bra.common.utils.JsonUtils;
 import com.bra.common.utils.MyBeanUtils;
 import com.bra.common.utils.SpringContextHolder;
@@ -30,6 +31,7 @@ public class ViewArticleApi implements TransmitsService {
         Map<String,Object> map = MyBeanUtils.describe(article,"id","description","title","updateDate");
         map.put("copyfrom",article.getArticleData().getCopyfrom());
         map.put("content",article.getArticleData().getContent());
+        map.put("share", Global.getConfig("system.url")+"article/view"+map.get("id"));
         json.put("data",map);
         return JsonUtils.writeObjectToJson(json);
     }
