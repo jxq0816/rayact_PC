@@ -103,7 +103,7 @@
 		<div class="control-group">
 			<label class="control-label">缩略图:</label>
 			<div class="controls">
-				<mechanism:upload id="image" name="attMains1" exts="" modelId="${article.id}" fdKey="pic" modelName="com.bra.modules.cms.entity.Article" multi="false"></mechanism:upload>
+				<mechanism:upload id="image" name="attMains1" imgWidth="50" imgHeight="50" exts="" showImg="true" modelId="${article.id}" fdKey="pic" modelName="com.bra.modules.cms.entity.Article" multi="false"></mechanism:upload>
 			</div>
 		</div>
 		<div class="control-group">
