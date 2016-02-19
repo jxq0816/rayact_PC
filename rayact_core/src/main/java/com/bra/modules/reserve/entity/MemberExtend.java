@@ -12,6 +12,7 @@ public class MemberExtend extends DataEntity<MemberExtend> {
     private String token;//token
     private String nickname;//昵称
     private String qq;//qq号码
+    private String birthday;
 
     public String getId() {
         return id;
@@ -43,5 +44,13 @@ public class MemberExtend extends DataEntity<MemberExtend> {
 
     public void setQq(String qq) {
         this.qq = qq;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }
