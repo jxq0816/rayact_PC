@@ -100,8 +100,10 @@
 					and a.venue_id=#{reserveVenue.id}
 				</if>
 			</if>
+			<if test="startDate !=null and endDate !=null">
+				and Date(b.cons_date)==Date(#{day})
+			</if>
 		</where>
-		${sqlMap.dateSQL}
 		group by d.id,b.cons_date
 		<if test="reserveVenue !=null ">
 			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
@@ -111,14 +113,13 @@
 		ORDER BY day ASC
 	</select>
 
-	<select id="monthReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectMonthReport">
+	<select id="intervalReports" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport">
 		SELECT
 		<if test="reserveVenue !=null ">
 			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
 				a.venue_id AS "reserveVenue.id",
 			</if>
 		</if>
-		DATE_FORMAT(b.cons_date,'%Y-%m') AS "m",
 		d.id AS "reserveProject.id",
 		d.name AS "reserveProject.name",
 		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
@@ -135,9 +136,12 @@
 					and a.venue_id=#{reserveVenue.id}
 				</if>
 			</if>
+			<if test="startDate !=null and endDate !=null">
+				and datediff(Date(b.cons_date), Date(#{startDate}))>=0
+				and datediff(Date(#{endDate}),Date(b.cons_date))>=0
+			</if>
 		</where>
-		${sqlMap.monthSQL}
-		GROUP BY m,d.id
+		GROUP BY d.id
 		<if test="reserveVenue !=null ">
 			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
 				,a.venue_id

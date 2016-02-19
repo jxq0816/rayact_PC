@@ -17,7 +17,7 @@ import java.util.List;
  * @author jiangxingqi
  * @version 2015-12-29
  */
-public class ReserveVenueProjectMonthReport extends SaasEntity<ReserveVenueProjectDayReport> {
+public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenueProjectDayReport> {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,24 +43,24 @@ public class ReserveVenueProjectMonthReport extends SaasEntity<ReserveVenueProje
 
     private List<ReserveVenueProjectDayReport> dayReportList;//日报表
 
-    private Date month;//月
+    private Date startDate;//开始日期
 
-    private String m;//月
+    private Date endDate;//结束日期
 
-    public String getM() {
-        return m;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setM(String m) {
-        this.m = m;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getMonth() {
-        return month;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setMonth(Date month) {
-        this.month = month;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public List<ReserveVenueProjectDayReport> getDayReportList() {

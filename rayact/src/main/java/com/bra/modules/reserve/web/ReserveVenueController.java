@@ -9,7 +9,7 @@ import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
-import com.bra.modules.reserve.entity.form.ReserveVenueProjectMonthReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,26 +83,33 @@ public class ReserveVenueController extends BaseController {
     }
 
     @RequestMapping(value = "report")
-    public String report(ReserveVenueConsItem venueConsItem, Model model) {
-        Date month=venueConsItem.getConsDate();//月份
-        ReserveVenue venue=venueConsItem.getReserveVenue();//场馆
+    public String report(ReserveVenueProjectIntervalReport intervalReport, Model model) {
+        Date startDate=intervalReport.getStartDate();//月份
+        Date endDate=intervalReport.getEndDate();//月份
+        if(startDate==null){
+            startDate=new Date();//默认当天
+            intervalReport.setStartDate(startDate);
+        }
+        if(endDate==null){
+            endDate=new Date();//默认当天
+            intervalReport.setEndDate(endDate);
+        }
+        ReserveVenue venue=intervalReport.getReserveVenue();//场馆
         if(venue==null){
             venue=new ReserveVenue();
         }else if(StringUtils.isNoneEmpty(venue.getId())){
             venue=reserveVenueService.get(venue);
         }
-        if(month==null){
-            month=new Date();//默认当天，传递到service 再处理为month
-        }
+        intervalReport.setReserveVenue(venue);
+
 
         List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
 
-        List<ReserveVenueProjectDayReport> dayReportList=reserveVenueService.dayReport(venue,null,month);//项目日报表
+        List<ReserveVenueProjectDayReport> dayReportList=reserveVenueService.dayReport(intervalReport);//日报表date
 
-        List<ReserveVenueProjectMonthReport> monthReportList=reserveVenueService.monthReport(venue,month);//项目月报表
+        List<ReserveVenueProjectIntervalReport> intervalReports=reserveVenueService.intervalReports(intervalReport);//区间报表
 
-        ReserveVenueProjectDayReport monthReport=new ReserveVenueProjectDayReport();//月总报表
-        monthReport.setDay(month);
+        ReserveVenueProjectDayReport totalReport=new ReserveVenueProjectDayReport();//总报表
         Double storedCardSum=0.0;
         Double cashSum=0.0;
         Double bankCardSum=0.0;
@@ -119,22 +126,20 @@ public class ReserveVenueController extends BaseController {
             //dueSum+=report.getFieldBillDue();//欠账
             otherSum+=report.getFieldBillOther();
         }
-        monthReport.setFieldBillStoredCard(storedCardSum);
-        monthReport.setFieldBillCash(cashSum);
-        monthReport.setFieldBillBankCard(bankCardSum);
-        monthReport.setFieldBillWeiXin(weiXinSum);
-        monthReport.setFieldBillAliPay(aliPaySum);
-        monthReport.setFieldBillDue(dueSum);
-        monthReport.setFieldBillOther(otherSum);
+        totalReport.setFieldBillStoredCard(storedCardSum);
+        totalReport.setFieldBillCash(cashSum);
+        totalReport.setFieldBillBankCard(bankCardSum);
+        totalReport.setFieldBillWeiXin(weiXinSum);
+        totalReport.setFieldBillAliPay(aliPaySum);
+        totalReport.setFieldBillDue(dueSum);
+        totalReport.setFieldBillOther(otherSum);
 
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM");
-        String m=simpleDateFormat.format(month);
 
         model.addAttribute("venue",venue);//场馆
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
-        model.addAttribute("monthReportList",monthReportList);//项目月报表
-        model.addAttribute("monthReport",monthReport);//月总报表
-        model.addAttribute("m",m);//月份
+        model.addAttribute("intervalReports",intervalReports);//区间报表
+        model.addAttribute("totalReport",totalReport);//月总报表
+        model.addAttribute("intervalReport",intervalReport);//请求参数
         return "reserve/venue/report";
     }
 

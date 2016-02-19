@@ -7,7 +7,7 @@ import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
-import com.bra.modules.reserve.entity.form.ReserveVenueProjectMonthReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @MyBatisDao
 public interface ReserveVenueDao extends CrudDao<ReserveVenue> {
-    List<ReserveVenueProjectDayReport> dayReport(ReserveVenueProjectDayReport ReserveVenueProjectDayReportReserveVenueProjectDayReport);
+    List<ReserveVenueProjectDayReport> dayReport(ReserveVenueProjectDayReport dayReport);
 
-    List<ReserveVenueProjectMonthReport> monthReport(ReserveVenueProjectMonthReport reserveVenueProjectMonthReport);
+    List<ReserveVenueProjectIntervalReport> intervalReports(ReserveVenueProjectIntervalReport reserveVenueProjectMonthReport);
 }

@@ -7,9 +7,8 @@ import com.bra.modules.reserve.dao.ReserveVenueDao;
 import com.bra.modules.reserve.entity.ReserveField;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
-import com.bra.modules.reserve.entity.form.ReserveVenueProjectMonthReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,16 +67,20 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         super.delete(reserveVenue);
     }
 
-    //获得month月的日保表
-    public List<ReserveVenueProjectDayReport> dayReport(ReserveVenue reserveVenue, ReserveProject project, Date month) {
+    //获得month月的日报表
+    public List<ReserveVenueProjectDayReport> dayReport(ReserveVenueProjectIntervalReport intervalReport){
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(month);//controller 默认传递本月
-        int year = cal.get(Calendar.YEAR);
-        int m = cal.get(Calendar.MONTH);
-        int dayNumOfMonth = TimeUtils.getDaysByYearMonth(year, m);
-        cal.set(Calendar.DAY_OF_MONTH, 1);//设置第一天
+        ReserveVenue reserveVenue=intervalReport.getReserveVenue();
+        ReserveProject project=intervalReport.getReserveProject();
 
+        Date startDate=intervalReport.getStartDate();
+        Date endDate=intervalReport.getEndDate();
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(startDate);
+
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(endDate);
 
         ReserveField reserveField = new ReserveField();
         reserveField.setReserveVenue(reserveVenue);
@@ -85,8 +88,9 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
         List<ReserveVenueProjectDayReport> list = new ArrayList<>();
 
-        for (int i = 0; i < dayNumOfMonth; i++, cal.add(Calendar.DATE, 1)) {
-            Date d = cal.getTime();
+        while(endCal.after(startCal.getTime())){
+            startCal.add(Calendar.DATE, 1);
+            Date d =startCal.getTime();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String df = simpleDateFormat.format(d);
 
@@ -120,28 +124,11 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         return list;
     }
 
-    public List<ReserveVenueProjectMonthReport> monthReport(ReserveVenue reserveVenue, Date month) {
+    public List<ReserveVenueProjectIntervalReport> intervalReports(ReserveVenueProjectIntervalReport intervalReport) {
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(month);//controller 默认传递本月
-        cal.set(Calendar.DAY_OF_MONTH, 1);//设置第一天
-
-        ReserveField reserveField = new ReserveField();
-        reserveField.setReserveVenue(reserveVenue);
-
-        Date d = cal.getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
-        String df = simpleDateFormat.format(d);
-
-        ReserveVenueProjectMonthReport monthReport = new ReserveVenueProjectMonthReport();
-        HashMap map = new HashMap();
-        map.put("monthSQL", "and DATE_FORMAT(b.cons_date,'%Y-%m')='" + df + "'");
-        monthReport.setSqlMap(map);
-        monthReport.setReserveVenue(reserveVenue);
-        List<ReserveVenueProjectMonthReport> list = dao.monthReport(monthReport);
-        for (ReserveVenueProjectMonthReport mr : list) {
-            ReserveProject project = mr.getReserveProject();
-            List<ReserveVenueProjectDayReport> dayReports = this.dayReport(reserveVenue, project, month);
+        List<ReserveVenueProjectIntervalReport> list = dao.intervalReports(intervalReport);
+        for (ReserveVenueProjectIntervalReport mr : list) {
+            List<ReserveVenueProjectDayReport> dayReports = this.dayReport(intervalReport);
             mr.setDayReportList(dayReports);
         }
         return list;

@@ -63,84 +63,74 @@
                                 <th>场地费（支付宝）</th>
                                 <th>场地费（其它）</th>
                                 <th>场地费（欠账）</th>
-                                <th>预付（现金）</th>
-                                <th>预付（银行卡）</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <%-- 月总统计 开始 --%>
+                            <%-- 总统计 开始 --%>
                             <tr>
                                 <td>
-                                    ${m}
+                                    <fmt:formatDate value="${intervalReport.startDate}" type="date"></fmt:formatDate>
+                                    至
+                                    <fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>
                                 </td>
                                 <td>
-                                    ${monthReport.fieldBillCash}
+                                    ${intervalReport.fieldBillCash}
                                 </td>
                                 <td>
-                                    ${monthReport.fieldBillBankCard}
+                                    ${intervalReport.fieldBillBankCard}
                                 </td>
                                 <td>
-                                    ${monthReport.fieldBillStoredCard}
+                                    ${intervalReport.fieldBillStoredCard}
                                 </td>
                                 <td>
-                                    ${monthReport.fieldBillWeiXin}
+                                    ${intervalReport.fieldBillWeiXin}
                                 </td>
                                 <td>
-                                    ${monthReport.fieldBillAliPay}
+                                    ${intervalReport.fieldBillAliPay}
                                 </td>
                                 <td>
-                                    ${monthReport.fieldBillOther}
-                                </td>
-                                <td>
-                                    尚未开发
-                                </td>
-                                <td>
-                                    尚未开发
+                                    ${intervalReport.fieldBillOther}
                                 </td>
                                 <td>
                                     尚未开发
                                 </td>
+
                             </tr>
-                            <%-- 月总统计 结束 --%>
+                            <%-- 总统计 结束 --%>
 
 
-                            <c:forEach items="${monthReportList}" var="monthProjectReport">
-                                <%-- 项目月统计 开始 --%>
+                            <c:forEach items="${intervalReports}" var="intervalReport">
+                                <%-- 项目区间统计 开始 --%>
                                 <tr>
                                     <td>
-                                            ${monthProjectReport.reserveProject.name}
+                                            ${intervalReport.reserveProject.name}
                                     </td>
                                     <td>
-                                            ${monthProjectReport.fieldBillCash}
+                                            ${intervalReport.fieldBillCash}
                                     </td>
                                     <td>
-                                            ${monthProjectReport.fieldBillBankCard}
+                                            ${intervalReport.fieldBillBankCard}
                                     </td>
                                     <td>
-                                            ${monthProjectReport.fieldBillStoredCard}
+                                            ${intervalReport.fieldBillStoredCard}
                                     </td>
                                     <td>
-                                            ${monthProjectReport.fieldBillWeiXin}
+                                            ${intervalReport.fieldBillWeiXin}
                                     </td>
                                     <td>
-                                            ${monthProjectReport.fieldBillAliPay}
+                                            ${intervalReport.fieldBillAliPay}
                                     </td>
                                     <td>
-                                            ${monthProjectReport.fieldBillOther}
-                                    </td>
-                                    <td>
-                                        尚未开发
+                                            ${intervalReport.fieldBillOther}
                                     </td>
                                     <td>
                                         尚未开发
                                     </td>
-                                    <td>
-                                        尚未开发
-                                    </td>
+
                                 </tr>
                                 <%-- 项目月统计 结束 --%>
                                 <%-- 项目日统计 开始 --%>
-                                <c:forEach items="${monthProjectReport.dayReportList}" var="dayReport">
+                                <c:forEach items="${intervalReport.dayReportList}" var="dayReport">
                                     <tr>
                                         <td>
                                             <fmt:formatDate value="${dayReport.day}" type="date"></fmt:formatDate>
@@ -162,12 +152,6 @@
                                         </td>
                                         <td>
                                                 ${dayReport.fieldBillOther}
-                                        </td>
-                                        <td>
-                                            尚未开发
-                                        </td>
-                                        <td>
-                                            尚未开发
                                         </td>
                                         <td>
                                             尚未开发
