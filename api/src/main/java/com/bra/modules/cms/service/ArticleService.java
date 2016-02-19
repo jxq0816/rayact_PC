@@ -77,7 +77,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         picArticle.setTitle("图片广告");
 
         List<Map<String, Object>> picArticleList = homeArticle();
-        picArticle.setArticles(picArticleList);
+        picArticle.setValue(picArticleList);
         data.put("图片广告", picArticle);
 
         //资讯
@@ -85,7 +85,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         article.setId(Category.MODEL_ARTICLE);
         article.setTitle("咨询");
         List<Map<String, Object>> articleList = homeArticle();
-        article.setArticles(articleList);
+        article.setValue(articleList);
         data.put("资讯", article);
 
         return data;
