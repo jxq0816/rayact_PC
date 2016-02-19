@@ -48,7 +48,9 @@
             <value>
                 /login=anon
                 /center=anon
-                /**=statelessAuthc
+                /article/**=anon
+                /**=anon
+                <!--/**=statelessAuthc-->
             </value>
         </property>
     </bean>
