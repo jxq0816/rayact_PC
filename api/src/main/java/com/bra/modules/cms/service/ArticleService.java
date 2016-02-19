@@ -90,6 +90,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
 
     public Article viewArticle(Article article) {
-        return dao.viewArticle(article);
+        Article a = dao.viewArticle(article);
+        return a;
     }
 }

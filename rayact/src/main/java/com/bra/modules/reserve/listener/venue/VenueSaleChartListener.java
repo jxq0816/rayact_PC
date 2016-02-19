@@ -38,7 +38,7 @@ public class VenueSaleChartListener {
 
     private void chartData(Map<String, Object> data, List<String> venueIds) {
         ReserveVenueCons venueCons = new ReserveVenueCons();
-        Map<String,String> search = Maps.newConcurrentMap();
+        Map<String,Object> search = Maps.newConcurrentMap();
         search.put("dsf", AuthorityUtils.getVenueIds(venueIds));
         search.put("day","1");
         venueCons.setSqlMap(search);
@@ -73,7 +73,7 @@ public class VenueSaleChartListener {
     private void loadData(Map<String, Object> data, List<String> venueIds) {
         //当天得交易额
         ReserveVenueCons venueCons = new ReserveVenueCons();
-        Map<String,String> search = Maps.newConcurrentMap();
+        Map<String,Object> search = Maps.newConcurrentMap();
         search.put("dsf", AuthorityUtils.getVenueIds(venueIds));
         search.put("day","1");
         venueCons.setSqlMap(search);
