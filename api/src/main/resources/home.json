@@ -1,0 +1,24 @@
+{
+  "status_code": "200",
+  "requestType": "Home_Api",
+  "data": {
+    "{title=图片广告, id=4}": [
+      {
+        "id": "1",
+        "title": "文章标题标题标题标题",
+        "description": "",
+        "imageSrc": "http://192.168.1.157/mechanism/file/imageMobile/1/com.bra.modules.cms.entity.Article/pic?width=188&height=188&random=72"
+      }
+    ],
+    "{title=咨询, id=3}": [
+      {
+        "id": "1",
+        "title": "文章标题标题标题标题",
+        "description": "",
+        "imageSrc": "http://192.168.1.157/mechanism/file/imageMobile/1/com.bra.modules.cms.entity.Article/pic?width=188&height=188&random=65"
+      }
+    ]
+  },
+  "equipment": "android",
+  "userId": ""
+}
