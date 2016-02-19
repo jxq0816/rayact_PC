@@ -13,6 +13,8 @@ import com.bra.plugin.migration.Utils;
 import com.bra.plugin.migration.entity.MobileHead;
 import com.bra.plugin.migration.service.TransmitsService;
 import org.apache.commons.collections.MapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.Map;
@@ -25,7 +27,7 @@ import java.util.Map;
  * 验证码   mobileCode
  */
 public class RegisterApi implements TransmitsService {
-
+    private static final Logger logger = LoggerFactory.getLogger(RegisterApi.class);
     private MemberExtendService getMemberExtendService(){
         return SpringContextHolder.getBean("memberExtendService");
     }
@@ -35,6 +37,7 @@ public class RegisterApi implements TransmitsService {
         String mobile = MapUtils.getString(map, "mobile");
         String password=MapUtils.getString(map, "password");
         String mobileCode=MapUtils.getString(map, "mobileCode");
+        logger.info(mobile+"-----"+password+"--------------"+mobileCode);
         if(StringUtils.isBlank(mobile)){
             json.put("status_code","201");
             json.put("message","手机号不能为空");
@@ -52,6 +55,7 @@ public class RegisterApi implements TransmitsService {
         }
        /* SmsService smsService = SpringContextHolder.getBean("smsService");
         int code = smsService.checkSmsCode(mobile, mobileCode, "MOBILE_APP");
+
         if (code != 1) {
             json.put("status_code","202");
             json.put("message","验证码有误");
