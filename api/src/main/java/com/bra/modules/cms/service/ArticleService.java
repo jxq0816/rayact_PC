@@ -32,7 +32,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
         List<Article> articleList = dao.homeArticle(article);
 
-        list.addAll(articleList.stream().map(data -> MyBeanUtils.describe(data, "id", "title", "description", "imgSrc"))
+        list.addAll(articleList.stream().map(data -> MyBeanUtils.describe(data, "id", "title", "description", "imageSrc"))
                 .collect(Collectors.toList()));
         return list;
     }
@@ -47,7 +47,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         List<Article> articleList = dao.homeArticle(article);
 
         List<Map<String, Object>> list = Lists.newArrayList();
-        list.addAll(articleList.stream().map(data -> MyBeanUtils.describe(data, "id", "title", "description", "imgSrc"))
+        list.addAll(articleList.stream().map(data -> MyBeanUtils.describe(data, "id", "title", "description", "imageSrc"))
                 .collect(Collectors.toList()));
         return list;
     }
