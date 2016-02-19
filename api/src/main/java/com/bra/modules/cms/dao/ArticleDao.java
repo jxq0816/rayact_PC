@@ -13,4 +13,6 @@ import java.util.List;
 public interface ArticleDao extends CrudDao<Article> {
 
     List<Article> homeArticle(Article article);
+
+    Article viewArticle(Article article);
 }
