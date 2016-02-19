@@ -76,6 +76,27 @@
 		</choose>
 	</select>
 
+	<select id="report" resultType="com.bra.modules.reserve.entity.form.ReserveVenueReport">
+		SELECT
+		a.venue_id AS "reserveVenue.id",
+		a.field_id AS "reserveField.id",
+		b.cons_date AS "day",
+		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
+		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
+		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
+		sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
+		sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
+		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther"
+		from reserve_venue_cons_item as a,reserve_venue_cons as b
+		<where>
+			a.cons_data_id=b.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>
+		${sqlMap.dateSQL}
+		group by a.venue_id,a.field_id,b.cons_date
+		ORDER BY day ASC
+	</select>
+
+
 	<insert id="insert">
 		INSERT INTO reserve_venue(
 		id,

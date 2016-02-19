@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
+import com.bra.modules.reserve.entity.form.ReserveVenueReport;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,9 @@ import com.bra.common.persistence.Page;
 import com.bra.common.web.BaseController;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.service.ReserveVenueService;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 场馆管理Controller
@@ -72,10 +76,52 @@ public class ReserveVenueController extends BaseController {
     }
 
     @RequestMapping(value = "delete")
-    public String delete(ReserveVenue reserveVenue, RedirectAttributes redirectAttributes) {
+    public String delete(ReserveVenue reserveVenue,RedirectAttributes redirectAttributes) {
         reserveVenueService.delete(reserveVenue);
         addMessage(redirectAttributes, "删除场馆成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveVenue/?repage";
+    }
+
+    @RequestMapping(value = "report")
+    public String report(ReserveVenueConsItem venueConsItem, Model model) {
+        Date month=venueConsItem.getConsDate();//月份
+        ReserveVenue rv=venueConsItem.getReserveVenue();//场馆
+        if(rv==null){
+            rv=new ReserveVenue();
+        }
+        List<ReserveVenue> reserveVenueList=reserveVenueService.findList(rv);//场馆列表
+
+        List<ReserveVenueReport> reserveVenueReportList=reserveVenueService.report(rv,month);//日保表
+
+        ReserveVenueReport monthReport=new ReserveVenueReport();//月报表
+        Double storedCardSum=0.0;
+        Double cashSum=0.0;
+        Double bankCardSum=0.0;
+        Double weixinSum=0.0;
+        Double aliPaySum=0.0;
+        Double dueSum=0.0;
+        Double otherSum=0.0;
+        for(ReserveVenueReport report:reserveVenueReportList){
+            storedCardSum+=report.getFieldBillStoredCard();
+            cashSum+=report.getFieldBillCash();
+            bankCardSum+=report.getFieldBillBankCard();
+            weixinSum+=report.getFieldBillWeiXin();
+            aliPaySum+=report.getFieldBillAliPay();
+            //dueSum+=report.getFieldBillDue();//欠账
+            otherSum+=report.getFieldBillOther();
+        }
+        monthReport.setFieldBillStoredCard(storedCardSum);
+        monthReport.setFieldBillCash(cashSum);
+        monthReport.setFieldBillBankCard(bankCardSum);
+        monthReport.setFieldBillWeiXin(weixinSum);
+        monthReport.setFieldBillAliPay(aliPaySum);
+        monthReport.setFieldBillDue(dueSum);
+        monthReport.setFieldBillOther(otherSum);
+
+        model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
+        model.addAttribute("reserveVenueReportList",reserveVenueReportList);//日报表
+        model.addAttribute("monthReport",monthReport);//月报表
+        return "reserve/venue/report";
     }
 
 }

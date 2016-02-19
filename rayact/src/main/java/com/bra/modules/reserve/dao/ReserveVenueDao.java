@@ -6,6 +6,10 @@ package com.bra.modules.reserve.dao;
 import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
+import com.bra.modules.reserve.entity.form.ReserveVenueReport;
+
+import java.util.List;
 
 /**
  * 场馆管理DAO接口
@@ -14,5 +18,5 @@ import com.bra.modules.reserve.entity.ReserveVenue;
  */
 @MyBatisDao
 public interface ReserveVenueDao extends CrudDao<ReserveVenue> {
-	
+    List<ReserveVenueReport> report(ReserveVenueConsItem reserveVenueConsItem);
 }

@@ -1,9 +1,15 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.reserve.entity.ReserveField;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
+import com.bra.modules.reserve.entity.form.ReserveVenueReport;
 import com.bra.modules.reserve.utils.AuthorityUtils;
+import com.bra.modules.reserve.utils.TimeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +28,11 @@ import com.bra.modules.reserve.dao.ReserveVenueDao;
 @Transactional(readOnly = true)
 public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVenue> {
 
+    @Autowired
+    private ReserveVenueDao dao;
+
+    @Autowired
+    private ReserveFieldService reserveFieldService;
 
     public ReserveVenue get(String id) {
         ReserveVenue reserveVenue = super.get(id);
@@ -56,4 +67,45 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         super.delete(reserveVenue);
     }
 
+
+
+    public List<ReserveVenueReport> report(ReserveVenue reserveVenue, Date month) {
+
+        Calendar cal = Calendar.getInstance();
+        if(month==null){
+            month=new Date();
+        }
+        cal.setTime(month);
+        int year=cal.get(Calendar.YEAR);
+        int m=cal.get(Calendar.MONTH);
+        int dayNumOfMonth=TimeUtils.getDaysByYearMonth(year,m);
+        cal.set(Calendar.DAY_OF_MONTH,1);//设置第一天
+
+
+        ReserveField reserveField=new ReserveField();
+        reserveField.setReserveVenue(reserveVenue);
+        List<ReserveField> reserveFieldList=reserveFieldService.findList(reserveField);
+
+        List<ReserveVenueReport> list=new ArrayList<>();
+        for(ReserveField field:reserveFieldList){
+            for(int i = 0 ;  i < dayNumOfMonth; i++,cal.add(Calendar.DATE,1)){
+                Date d=cal.getTime();
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                String df=simpleDateFormat.format(d);
+
+                ReserveVenueConsItem reserveVenueConsItem=new ReserveVenueConsItem();
+                HashMap map=new HashMap();
+                map.put("dateSQL","and b.cons_date='"+df+"'");
+                reserveVenueConsItem.setSqlMap(map);
+                reserveVenueConsItem.setReserveField(field);
+                reserveVenueConsItem.setReserveVenue(reserveVenue);
+                List<ReserveVenueReport> reserveVenueReportList= dao.report(reserveVenueConsItem);
+                if(reserveVenueReportList==null){
+                    continue;
+                }
+                list.addAll(reserveVenueReportList);
+            }
+        }
+        return list;
+    }
 }
