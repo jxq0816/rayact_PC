@@ -7,6 +7,7 @@ import com.bra.common.utils.StringUtils;
 import com.bra.modules.cms.dao.ArticleDao;
 import com.bra.modules.cms.eneity.Article;
 import com.bra.modules.cms.eneity.Category;
+import com.bra.modules.cms.json.HomeArticle;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -67,22 +68,25 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         return list;
     }
 
-    public Map<Map<String, Object>, List<Map<String, Object>>> loadHomeArticle() {
+    public Map<String,HomeArticle> loadHomeArticle() {
 
-        Map<Map<String, Object>, List<Map<String, Object>>> data = Maps.newLinkedHashMap();
+        Map<String, HomeArticle> data = Maps.newLinkedHashMap();
         //资讯
-        Map<String, Object> picArticle = Maps.newConcurrentMap();
-        picArticle.put("id", Category.MODEL_PICTURE);
-        picArticle.put("title", "图片广告");
-        List<Map<String, Object>> picArticleList = homeArticle();
-        data.put(picArticle, picArticleList);
+        HomeArticle picArticle = new HomeArticle();
+        picArticle.setId(Category.MODEL_PICTURE);
+        picArticle.setTitle("图片广告");
+
+        List<Map<String, Object>> picArticleList = homePicArticle();
+        picArticle.setValue(picArticleList);
+        data.put("tupian", picArticle);
 
         //资讯
-        Map<String, Object> article = Maps.newConcurrentMap();
-        article.put("id", Category.MODEL_ARTICLE);
-        article.put("title", "咨询");
+        HomeArticle article = new HomeArticle();
+        article.setId(Category.MODEL_ARTICLE);
+        article.setTitle("资讯");
         List<Map<String, Object>> articleList = homeArticle();
-        data.put(article, articleList);
+        article.setValue(articleList);
+        data.put("zixun", article);
 
         return data;
 
