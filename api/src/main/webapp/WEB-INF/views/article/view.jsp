@@ -94,9 +94,9 @@
                 </a>
             </div>
             <div class="wz_content">${article.articleData.content}</div>
-            <div class="seemore">
+            <%--<div class="seemore">
                 <a class="no_border"  href="${ctx}/index-${site.id}${fns:getUrlSuffix()}" >查看更多</a>
-            </div>
+            </div>--%>
 
             <div style="height: 30px;"></div>				<div style="height: 50px;"></div>
         </div>
