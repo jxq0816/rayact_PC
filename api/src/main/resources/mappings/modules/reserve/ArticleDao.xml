@@ -19,6 +19,7 @@
         a.weight AS "weight",
         a.description  AS "description",
         a.title AS  "title",
+        a.update_date AS "updateDate",
         d.copyfrom AS "articleData.copyfrom",
         d.content AS "articleData.content"
         FROM cms_article a,cms_article_data d
