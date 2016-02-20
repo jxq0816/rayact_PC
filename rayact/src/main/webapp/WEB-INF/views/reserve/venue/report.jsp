@@ -36,11 +36,18 @@
                                                     defaultValue=""></sys:select>
                                     </td>
                                     <td>
-                                        <input name="consDate" id="month" type="text" readonly="readonly"
+                                        <input name="startDate" id="startDate" type="text" readonly="readonly"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
-                                               value="${m}"
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>
+                                               value="<fmt:formatDate value="${intervalReport.startDate}" type="date"></fmt:formatDate>"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                        </td>
+                                    <td>
+                                        <input name="endDate" id="endDate" type="text" readonly="readonly"
+                                               maxlength="20"
+                                               class="input-medium form-control Wdate "
+                                               value="<fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
                                 </tr>
@@ -99,29 +106,29 @@
                             <%-- 总统计 结束 --%>
 
 
-                            <c:forEach items="${intervalReports}" var="intervalReport">
+                            <c:forEach items="${intervalReports}" var="report">
                                 <%-- 项目区间统计 开始 --%>
                                 <tr>
                                     <td>
-                                            ${intervalReport.reserveProject.name}
+                                            ${report.reserveProject.name}
                                     </td>
                                     <td>
-                                            ${intervalReport.fieldBillCash}
+                                            ${report.fieldBillCash}
                                     </td>
                                     <td>
-                                            ${intervalReport.fieldBillBankCard}
+                                            ${report.fieldBillBankCard}
                                     </td>
                                     <td>
-                                            ${intervalReport.fieldBillStoredCard}
+                                            ${report.fieldBillStoredCard}
                                     </td>
                                     <td>
-                                            ${intervalReport.fieldBillWeiXin}
+                                            ${report.fieldBillWeiXin}
                                     </td>
                                     <td>
-                                            ${intervalReport.fieldBillAliPay}
+                                            ${report.fieldBillAliPay}
                                     </td>
                                     <td>
-                                            ${intervalReport.fieldBillOther}
+                                            ${report.fieldBillOther}
                                     </td>
                                     <td>
                                         尚未开发
@@ -130,7 +137,7 @@
                                 </tr>
                                 <%-- 项目月统计 结束 --%>
                                 <%-- 项目日统计 开始 --%>
-                                <c:forEach items="${intervalReport.dayReportList}" var="dayReport">
+                                <c:forEach items="${report.dayReportList}" var="dayReport">
                                     <tr>
                                         <td>
                                             <fmt:formatDate value="${dayReport.day}" type="date"></fmt:formatDate>

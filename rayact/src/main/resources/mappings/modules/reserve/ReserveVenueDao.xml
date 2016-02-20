@@ -100,8 +100,8 @@
 					and a.venue_id=#{reserveVenue.id}
 				</if>
 			</if>
-			<if test="startDate !=null and endDate !=null">
-				and Date(b.cons_date)==Date(#{day})
+			<if test="day !=null">
+				and Date(b.cons_date)=Date(#{day})
 			</if>
 		</where>
 		group by d.id,b.cons_date

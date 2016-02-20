@@ -67,7 +67,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         super.delete(reserveVenue);
     }
 
-    //获得month月的日报表
+    //获得区间的日报表
     public List<ReserveVenueProjectDayReport> dayReport(ReserveVenueProjectIntervalReport intervalReport){
 
         ReserveVenue reserveVenue=intervalReport.getReserveVenue();
@@ -88,17 +88,13 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
         List<ReserveVenueProjectDayReport> list = new ArrayList<>();
 
-        while(endCal.after(startCal.getTime())){
-            startCal.add(Calendar.DATE, 1);
-            Date d =startCal.getTime();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String df = simpleDateFormat.format(d);
+        while(endCal.after(startCal)|| endCal.equals(startCal)){
 
+            Date day =startCal.getTime();
             ReserveVenueProjectDayReport dayReport = new ReserveVenueProjectDayReport();
-            HashMap map = new HashMap();
-            map.put("dateSQL", "and b.cons_date='" + df + "'");
-            dayReport.setSqlMap(map);
+
             dayReport.setReserveProject(project);
+            dayReport.setDay(day);
             dayReport.setReserveVenue(reserveVenue);
             List<ReserveVenueProjectDayReport> dayReportList = dao.dayReport(dayReport);
             if (dayReportList == null) {
@@ -120,6 +116,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                     list.add(report);
                 }
             }
+            startCal.add(Calendar.DATE, 1);
         }
         return list;
     }
@@ -128,6 +125,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
         List<ReserveVenueProjectIntervalReport> list = dao.intervalReports(intervalReport);
         for (ReserveVenueProjectIntervalReport mr : list) {
+            intervalReport.setReserveProject(mr.getReserveProject());
             List<ReserveVenueProjectDayReport> dayReports = this.dayReport(intervalReport);
             mr.setDayReportList(dayReports);
         }

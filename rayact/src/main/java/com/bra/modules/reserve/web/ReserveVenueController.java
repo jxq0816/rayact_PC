@@ -102,10 +102,7 @@ public class ReserveVenueController extends BaseController {
         }
         intervalReport.setReserveVenue(venue);
 
-
         List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
-
-        List<ReserveVenueProjectDayReport> dayReportList=reserveVenueService.dayReport(intervalReport);//日报表date
 
         List<ReserveVenueProjectIntervalReport> intervalReports=reserveVenueService.intervalReports(intervalReport);//区间报表
 
@@ -117,7 +114,7 @@ public class ReserveVenueController extends BaseController {
         Double aliPaySum=0.0;
         Double dueSum=0.0;
         Double otherSum=0.0;
-        for(ReserveVenueProjectDayReport report:dayReportList){
+        for(ReserveVenueProjectIntervalReport report:intervalReports){
             storedCardSum+=report.getFieldBillStoredCard();
             cashSum+=report.getFieldBillCash();
             bankCardSum+=report.getFieldBillBankCard();
