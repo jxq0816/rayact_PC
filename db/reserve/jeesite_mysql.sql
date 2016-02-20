@@ -149,6 +149,7 @@ DROP TABLE if EXISTS  reserve_commodity_sell;
 CREATE TABLE reserve_commodity_sell(
   id varchar(19),
   fk_reserve_member_id varchar(19),
+  pay_type     VARCHAR(1) COMMENT '支付类型(1:储值卡 2:现金,3:银行卡,4:微信,5:支付宝,6:其它)',
   gift_flag char(1) comment '赠品标识',
   total_sum Double ,
   create_by varchar(64),

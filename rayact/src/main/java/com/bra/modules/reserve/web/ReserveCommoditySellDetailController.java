@@ -76,6 +76,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	public  String paySubmit(ReserveCommoditySellDetailList sellDetailList) {
 		//销售主表
 		Double total=0.0;
+		String payType=sellDetailList.getPayType();
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
@@ -85,6 +86,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
 		reserveCommoditySell.setTotalSum(total);
 		reserveCommoditySell.setGiftFlag("0");
+		reserveCommoditySell.setPayType(payType);
 		ReserveMember reserveMember=sellDetailList.getReserveStoredCardMember();
 
 		reserveCommoditySell.setReserveMember(reserveMember);
@@ -102,8 +104,6 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			reserveCommoditySellDetailService.save(sellDetail);
 		}
-		//储值卡会员扣款
-		String payType=sellDetailList.getPayType();
 		if("1".equals(payType)){// 1代表会员
 			if(reserveMember!=null){
 				reserveMember=reserveMemberService.get(reserveMember);

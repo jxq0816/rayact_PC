@@ -2,6 +2,7 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
+import com.bra.modules.reserve.entity.ReserveCommodityType;
 import com.bra.modules.reserve.entity.ReserveField;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;

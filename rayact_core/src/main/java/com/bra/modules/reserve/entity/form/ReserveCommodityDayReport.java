@@ -2,9 +2,7 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.modules.reserve.entity.ReserveField;
-import com.bra.modules.reserve.entity.ReserveProject;
-import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.*;
 
 import java.util.Date;
 import java.util.List;
@@ -35,7 +33,17 @@ public class ReserveCommodityDayReport extends SaasEntity<ReserveCommodityDayRep
 
     private ReserveVenue reserveVenue;//场馆
 
+    private ReserveCommodityType reserveCommodityType;//商品类型
+
     private Date day;//日期
+
+    public ReserveCommodityType getReserveCommodityType() {
+        return reserveCommodityType;
+    }
+
+    public void setReserveCommodityType(ReserveCommodityType reserveCommodityType) {
+        this.reserveCommodityType = reserveCommodityType;
+    }
 
     public Double getStoredCardBill() {
         return storedCardBill;

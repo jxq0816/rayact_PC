@@ -6,6 +6,7 @@
 		a.id AS "id",
 		a.gift_flag AS "giftFlag",
 		a.fk_reserve_member_id AS "reserveMember.id",
+		a.pay_type AS "payType",
 		a.total_sum AS "totalSum",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -43,6 +44,23 @@
 		date_format(a.update_date, '%Y-%m-%d');
 	</select>
 
+	<select id="incomeReport" resultType="java.util.Map">
+		SELECT
+		d.id AS "reserveVenue.id",
+		d.name AS "reserveVenue.name",
+		c.id AS "reserveCommodityType.id",
+		c.name AS "reserveCommodityType.name",
+		sum(if(pay_type=1,e.total_sum,0)) AS "fieldBillStoredCard",
+		sum(if(pay_type=2,e.total_sum,0)) AS "fieldBillCash",
+		sum(if(pay_type=3,e.total_sum,0)) AS "fieldBillBankCard",
+		sum(if(pay_type=4,e.total_sum,0)) AS "fieldBillWeiXin",
+		sum(if(pay_type=5,e.total_sum,0)) AS "fieldBillAliPay",
+		sum(if(pay_type=6,e.total_sum,0)) AS "fieldBillOther"
+		from reserve_commodity_sell_detail as a, reserve_commodity as b,reserve_commodity_type as c,reserve_venue as d,reserve_commodity_sell as e
+		where
+		a.fk_reserve_commodity_id=b.id and b.fk_reserve_venue_id=d.id and c.id=b.commodity_type_id and e.id=a.fk_reserve_commodity_sell_id
+		GROUP BY d.id,c.id
+	</select>
 
 	<select id="get" resultType="ReserveCommoditySell">
 		SELECT
@@ -94,6 +112,7 @@
 			fk_reserve_member_id ,
 			total_sum,
 		    gift_flag,
+		    pay_type,
 			create_by,
 			create_date,
 			update_by,
@@ -106,6 +125,7 @@
 			#{reserveMember.id},
 			#{totalSum},
 			#{giftFlag},
+			#{payType},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -120,6 +140,7 @@
 		UPDATE reserve_commodity_sell SET
 		    fk_reserve_member_id = #{reserveMember.id},
 			total_sum = #{totalSum},
+			pay_type = #{payType},
 			gift_flag = #{giftFlag},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
