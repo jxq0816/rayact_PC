@@ -82,12 +82,12 @@ public class ReserveCardStatementsController extends BaseController {
 		return "reserve/report/memberIncomeRecord";
 	}
 
-	/*商品收入统计*/
-	@RequestMapping(value = {"listByCommodityType", ""})
+	/*商品收入比例统计*/
+	@RequestMapping(value = {"commodityIncomeReport", ""})
 	public String listByCommodityType(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<Map<String,Object>> page=reserveCardStatementsService.findListByCommodityType(reserveCardStatements);
 		model.addAttribute("page", page);
-		return "reserve/report/commodityIncomeRecord";
+		return "reserve/report/commodityIncomeReport";
 	}
 
 
