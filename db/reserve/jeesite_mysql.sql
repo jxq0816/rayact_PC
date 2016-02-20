@@ -112,6 +112,7 @@ CREATE TABLE reserve_commodity
 	price double,
 	repertory_num int DEFAULT 0 ,
   commodity_type_id varchar(19),
+  fk_reserve_venue_id VARCHAR (19) comment '场馆外键',
   shelves_status char(1) DEFAULT '0' NOT NULL,
   unit VARCHAR(10) comment '单位',
   quick_search varchar(10) comment '快速搜索',

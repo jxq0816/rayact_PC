@@ -56,6 +56,7 @@
                                 <th>库存量</th>
                                 <th>单位</th>
                                 <th>类别</th>
+                                <th>场馆</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -80,6 +81,9 @@
                                     </td>
                                     <td>
                                             ${commodity.commodityType.name}
+                                    </td>
+                                    <td>
+                                            ${commodity.reserveVenue.name}
                                     </td>
                                     <td>
                                         <c:choose>

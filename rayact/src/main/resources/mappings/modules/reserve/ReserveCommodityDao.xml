@@ -8,7 +8,8 @@
         a.name AS "name",
         a.price AS "price",
         a.repertory_num AS "repertoryNum",
-        a.commodity_type_id AS "commodityTypeId",
+        a.fk_reserve_venue_id AS "reserveVenue.id",
+        v.name AS "reserveVenue.name",
         a.shelves_status AS "shelvesStatus",
         a.unit AS "unit",
         a.quick_search AS "quickSearch",
@@ -24,6 +25,7 @@
 
     <sql id="commodityJoins">
         LEFT JOIN reserve_commodity_type p ON p.id = a.commodity_type_id
+        LEFT JOIN reserve_venue v ON v.id =fk_reserve_venue_id
     </sql>
 
     <select id="get" resultType="ReserveCommodity">
@@ -105,6 +107,7 @@
         price,
         repertory_num,
         commodity_type_id,
+        fk_reserve_venue_id,
         shelves_status,
         unit,
         quick_search,
@@ -122,6 +125,7 @@
         #{price},
         #{repertoryNum},
         #{commodityType.id},
+        #{reserveVenue.id},
         #{shelvesStatus},
         #{unit},
         #{quickSearch},
@@ -142,6 +146,7 @@
         price = #{price},
         repertory_num = #{repertoryNum},
         commodity_type_id = #{commodityType.id},
+        fk_reserve_venue_id = #{reserveVenue.id},
         shelves_status = #{shelvesStatus},
         unit = #{unit},
         quick_search = #{quickSearch},

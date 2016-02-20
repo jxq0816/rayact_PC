@@ -22,96 +22,107 @@
                             <form:form id="inputForm" modelAttribute="commodity" action="${ctx}/reserve/commodity/save"
                                        method="post"
                                        class="form-horizontal" onsubmit="return checkCommodityId()">
-                            <form:hidden path="id" id="id"/>
+                                <input type="hidden" name="id" id="id"/>
                                 <input type="hidden" name="token" value="${token}"/>
-                            <sys:message content="${message}"/>
+                                <sys:message content="${message}"/>
 
-                            <table id="contentTable" class="table table-bordered">
-                                <tr>
-                                    <td>商品编号：</td>
-                                    <td>
-                                        <form:input id="commodityId" path="commodityId" htmlEscape="false" maxlength="19"
-                                                    class="form-control required" onblur="checkCommodityId()"/>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </td>
-                                    <td>商品名称：</td>
-                                    <td>
-                                        <form:input path="name" htmlEscape="false" maxlength="30"
-                                                    class="form-control required"/>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </td>
-                                </tr>
+                                <table id="contentTable" class="table table-bordered">
+                                    <tr>
+                                        <td>商品编号：</td>
+                                        <td>
+                                            <form:input id="commodityId" path="commodityId" htmlEscape="false"
+                                                        maxlength="19"
+                                                        class="form-control required" onblur="checkCommodityId()"/>
+                                            <span class="help-inline"><font color="red">*</font> </span>
+                                        </td>
+                                        <td>商品名称：</td>
+                                        <td>
+                                            <form:input path="name" htmlEscape="false" maxlength="30"
+                                                        class="form-control required"/>
+                                            <span class="help-inline"><font color="red">*</font> </span>
+                                        </td>
+                                    </tr>
 
 
+                                    <tr>
+                                        <td>商品类型：</td>
+                                        <td>
+                                            <sys:select cssClass="input-xlarge" name="commodityType.id"
+                                                        cssStyle="width:150px"
+                                                        items="${commodityTypeList}"
+                                                        value="${commodityType}"
+                                                        itemLabel="name"
+                                                        itemValue="id"
+                                                        defaultLabel="请选择商品类型"
+                                            ></sys:select>
+                                        </td>
+                                        <td>状态：</td>
+                                        <td>
+                                            <form:select path="shelvesStatus" class="input-xlarge">
+                                                <form:option value="0" label="下架"/>
+                                                <form:option value="1" label="上架"/>
+                                            </form:select>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td>商品类型：</td>
-                                    <td>
-                                        <sys:select cssClass="input-xlarge" name="commodityType.id"
-                                                    cssStyle="width:150px"
-                                                    items="${commodityTypeList}"
-                                                    value="${commodityType}"
-                                                    itemLabel="name"
-                                                    itemValue="id"
-                                                    defaultLabel="请选择商品类型"
-                                        ></sys:select>
-                                    </td>
-                                    <td>状态：</td>
-                                    <td>
-                                        <form:select path="shelvesStatus" class="input-xlarge">
-                                            <form:option value="0" label="下架"/>
-                                            <form:option value="1" label="上架"/>
-                                        </form:select>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>价格：</td>
+                                        <td>
+                                            <form:input path="price" htmlEscape="false"
+                                                        class="form-control required"/>&nbsp;元
+                                            <span class="help-inline"><font color="red">*</font> </span>
+                                        </td>
 
-                                <tr>
-                                    <td>价格：</td>
-                                    <td>
-                                        <form:input path="price" htmlEscape="false"
-                                                    class="form-control required"/>&nbsp;元
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </td>
+                                        <td>库存数量：</td>
+                                        <td>
+                                            <form:input path="repertoryNum" htmlEscape="false"
+                                                        class="form-control required"/>
+                                            <span class="help-inline"><font color="red">*</font> </span>
+                                        </td>
+                                    </tr>
 
-                                    <td>库存数量：</td>
-                                    <td>
-                                        <form:input path="repertoryNum" htmlEscape="false"
-                                                    class="form-control required"/>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>单位：</td>
+                                        <td>
+                                            <form:input path="unit" htmlEscape="false"
+                                                        class="form-control"/>
+                                        </td>
+                                        <td>快速搜索：</td>
+                                        <td>
+                                            <form:input path="quickSearch" htmlEscape="false"
+                                                        class="form-control "/>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td>单位：</td>
-                                    <td>
-                                        <form:input path="unit" htmlEscape="false"
-                                                    class="form-control"/>
-                                    </td>
-                                    <td>快速搜索：</td>
-                                    <td>
-                                        <form:input path="quickSearch" htmlEscape="false"
-                                                    class="form-control "/>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>备注：</td>
+                                        <td>
+                                            <form:textarea path="remarks" htmlEscape="false" rows="4"
+                                                           maxlength="255"
+                                                           class="input-xxlarge "/>
+                                        </td>
+                                        <td>所属场馆：</td>
+                                        <td>
+                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                        cssStyle="width:150px"
+                                                        items="${venueList}"
+                                                        value="${venue}"
+                                                        itemLabel="name"
+                                                        itemValue="id"
+                                                        defaultLabel="请选择场馆"
+                                            ></sys:select>
+                                        </td>
+                                    </tr>
+                                </table>
 
-                                <tr>
-                                    <td>备注：</td>
-                                    <td colspan="3">
-                                        <form:textarea path="remarks" htmlEscape="false" rows="4"
-                                                       maxlength="255"
-                                                       class="input-xxlarge "/>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <div>
-                                <input id="btnSubmit"
-                                       class="btn btn-primary"
-                                       type="submit"
-                                       value="保 存"/>&nbsp;
-                                <input id="btnCancel" class="btn" type="button" value="返 回"
-                                       onclick="history.go(-1)"/>
-                            </div>
+                                <div>
+                                    <input id="btnSubmit"
+                                           class="btn btn-primary"
+                                           type="submit"
+                                           value="保 存"/>&nbsp;
+                                    <input id="btnCancel" class="btn" type="button" value="返 回"
+                                           onclick="history.go(-1)"/>
+                                </div>
                             </form:form>
                         </div>
                     </div>

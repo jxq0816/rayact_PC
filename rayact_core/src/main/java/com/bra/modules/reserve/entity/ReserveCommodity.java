@@ -16,7 +16,10 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 	private String name;		// 名称
 	private double price;		// 价格
 	private Integer repertoryNum;		// 库存数量
-	private ReserveCommodityType commodityType;		// 商品类别外键
+
+	private ReserveCommodityType commodityType;		// 商品类别
+	private ReserveVenue reserveVenue;//场馆
+
 	private String shelvesStatus;		// 上架状态
 	private String unit; //单位
 	private String quickSearch;//快速搜索
@@ -89,6 +92,14 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 
 	public void setShelvesStatus(String shelvesStatus) {
 		this.shelvesStatus = shelvesStatus;
+	}
+
+	public ReserveVenue getReserveVenue() {
+		return reserveVenue;
+	}
+
+	public void setReserveVenue(ReserveVenue reserveVenue) {
+		this.reserveVenue = reserveVenue;
 	}
 	
 }

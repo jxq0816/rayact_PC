@@ -7,8 +7,10 @@ import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveCommodity;
 import com.bra.modules.reserve.entity.ReserveCommodityType;
+import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCommodityService;
 import com.bra.modules.reserve.service.ReserveCommodityTypeService;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +36,9 @@ public class ReserveCommodityController extends BaseController {
 
     @Autowired
     private ReserveCommodityService commodityService;
+
+    @Autowired
+    private ReserveVenueService venueService;
 
     @Autowired
     private ReserveCommodityTypeService reserveCommodityTypeService;
@@ -86,9 +91,11 @@ public class ReserveCommodityController extends BaseController {
        if (StringUtils.isNoneEmpty(commodity.getId()) ) {
            commodity = commodityService.get(commodity);
         }
+        List<ReserveVenue> venueList=venueService.findList(new ReserveVenue());
         List<ReserveCommodityType> commodityTypeList = reserveCommodityTypeService.findList(new ReserveCommodityType());
         model.addAttribute("commodityTypeList", commodityTypeList);
         model.addAttribute("commodity", commodity);
+        model.addAttribute("venueList", venueList);
         return "reserve/commodity/reserveCommodityForm";
     }
 
