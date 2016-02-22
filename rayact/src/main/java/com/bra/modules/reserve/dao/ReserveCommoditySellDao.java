@@ -4,6 +4,8 @@ import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveCommoditySell;
+import com.bra.modules.reserve.entity.form.ReserveCommodityDayReport;
+import com.bra.modules.reserve.entity.form.ReserveCommodityIntervalReport;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,7 +21,11 @@ public interface ReserveCommoditySellDao extends CrudDao<ReserveCommoditySell> {
 
     BigDecimal findSellOfMonth(ReserveCardStatements reserveCardStatements);
 
-    List<Map<String,Object>> commodityIncomeRatioReport(ReserveCardStatements reserveCardStatements);
+    List<Map<String,Object>> commodityIncomeRatioReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport);
+
+    List<ReserveCommodityIntervalReport> reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport);
+
+    List<ReserveCommodityDayReport> reserveCommodityIncomeDayReport(ReserveCommodityDayReport reserveCommodityIncomeDayReport);
 
     BigDecimal sellOfToday(ReserveCardStatements reserveCardStatements);
 

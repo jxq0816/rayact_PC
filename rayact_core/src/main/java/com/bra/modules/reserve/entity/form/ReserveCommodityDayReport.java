@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 场馆收入统计Entity
+ * 商品收入统计Entity
  *
  * @author jiangxingqi
  * @version 2015-12-29
@@ -16,6 +16,8 @@ import java.util.List;
 public class ReserveCommodityDayReport extends SaasEntity<ReserveCommodityDayReport> {
 
     private static final long serialVersionUID = 1L;
+
+    private Double bill;//消费金额
 
     private Double  storedCardBill;// 储值卡
 
@@ -33,9 +35,31 @@ public class ReserveCommodityDayReport extends SaasEntity<ReserveCommodityDayRep
 
     private ReserveVenue reserveVenue;//场馆
 
+    private ReserveCommodity reserveCommodity;//商品
+
+    private Double commodityIncomeRate;
+
+    private Double commodityTypeIncomeRate;
+
     private ReserveCommodityType reserveCommodityType;//商品类型
 
     private Date day;//日期
+
+    public Double getCommodityIncomeRate() {
+        return commodityIncomeRate;
+    }
+
+    public void setCommodityIncomeRate(Double commodityIncomeRate) {
+        this.commodityIncomeRate = commodityIncomeRate;
+    }
+
+    public Double getCommodityTypeIncomeRate() {
+        return commodityTypeIncomeRate;
+    }
+
+    public void setCommodityTypeIncomeRate(Double commodityTypeIncomeRate) {
+        this.commodityTypeIncomeRate = commodityTypeIncomeRate;
+    }
 
     public ReserveCommodityType getReserveCommodityType() {
         return reserveCommodityType;
@@ -115,6 +139,22 @@ public class ReserveCommodityDayReport extends SaasEntity<ReserveCommodityDayRep
 
     public void setDay(Date day) {
         this.day = day;
+    }
+
+    public ReserveCommodity getReserveCommodity() {
+        return reserveCommodity;
+    }
+
+    public void setReserveCommodity(ReserveCommodity reserveCommodity) {
+        this.reserveCommodity = reserveCommodity;
+    }
+
+    public Double getBill() {
+        return bill;
+    }
+
+    public void setBill(Double bill) {
+        this.bill = bill;
     }
 
 

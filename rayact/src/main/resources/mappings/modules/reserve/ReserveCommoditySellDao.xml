@@ -55,22 +55,88 @@
 		GROUP BY commodityTypeName
 	</select>
 
-	<select id="incomeReport" resultType="java.util.Map">
+	<select id="reserveCommodityIncomeDayReport" resultType="ReserveCommodityDayReport">
 		SELECT
 		d.id AS "reserveVenue.id",
 		d.name AS "reserveVenue.name",
+		b.id AS "reserveCommodity.id",
+		b.name AS "reserveCommodity.name",
 		c.id AS "reserveCommodityType.id",
 		c.name AS "reserveCommodityType.name",
-		sum(if(pay_type=1,e.total_sum,0)) AS "fieldBillStoredCard",
-		sum(if(pay_type=2,e.total_sum,0)) AS "fieldBillCash",
-		sum(if(pay_type=3,e.total_sum,0)) AS "fieldBillBankCard",
-		sum(if(pay_type=4,e.total_sum,0)) AS "fieldBillWeiXin",
-		sum(if(pay_type=5,e.total_sum,0)) AS "fieldBillAliPay",
-		sum(if(pay_type=6,e.total_sum,0)) AS "fieldBillOther"
+		SUM(a.detail_sum) AS "bill",
+		sum(if(pay_type=1,a.detail_sum,0)) AS "storedCardBill",
+		sum(if(pay_type=2,a.detail_sum,0)) AS "cashBill",
+		sum(if(pay_type=3,a.detail_sum,0)) AS "bankCardBill",
+		sum(if(pay_type=4,a.detail_sum,0)) AS "weiXinBill",
+		sum(if(pay_type=5,a.detail_sum,0)) AS "aliPayBill",
+		sum(if(pay_type=6,a.detail_sum,0)) AS "otherBill",
+		sum(if(pay_type=7,a.detail_sum,0)) AS "dueBill",
+		#{day} AS "day"
+		from reserve_commodity_sell_detail as a, reserve_commodity as b,reserve_commodity_type as c,reserve_venue as d,reserve_commodity_sell as e
+		where
+		a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} and
+		a.fk_reserve_commodity_id=b.id and b.fk_reserve_venue_id=d.id and c.id=b.commodity_type_id and e.id=a.fk_reserve_commodity_sell_id
+		<if test="reserveVenue!=null">
+			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+				and d.id=#{reserveVenue.id}
+			</if>
+		</if>
+		<if test="reserveCommodityType!=null">
+			<if test="reserveCommodityType.id!=null and reserveCommodityType.id!=''">
+				and c.id=#{reserveCommodityType.id}
+			</if>
+		</if>
+		<if test="reserveCommodity!=null">
+			<if test="reserveCommodity.id!=null and reserveCommodity.id!=''">
+				and b.id=#{reserveCommodity.id}
+			</if>
+		</if>
+		<if test="day!=null and day!=''">
+			  and Date(a.update_date )=Date(#{day})
+		</if>
+		GROUP BY b.id,c.id,d.id
+	</select>
+
+	<select id="reserveCommodityIncomeIntervalReport" resultType="ReserveCommodityIntervalReport">
+		SELECT
+		d.id AS "reserveVenue.id",
+		d.name AS "reserveVenue.name",
+		b.id AS "reserveCommodity.id",
+		b.name AS "reserveCommodity.name",
+		c.id AS "reserveCommodityType.id",
+		c.name AS "reserveCommodityType.name",
+		SUM(a.detail_sum) AS "bill",
+		sum(if(pay_type=1,a.detail_sum,0)) AS "storedCardBill",
+		sum(if(pay_type=2,a.detail_sum,0)) AS "cashBill",
+		sum(if(pay_type=3,a.detail_sum,0)) AS "bankCardBill",
+		sum(if(pay_type=4,a.detail_sum,0)) AS "weiXinBill",
+		sum(if(pay_type=5,a.detail_sum,0)) AS "aliPayBill",
+		sum(if(pay_type=6,a.detail_sum,0)) AS "otherBill",
+		sum(if(pay_type=7,a.detail_sum,0)) AS "dueBill",
+		#{startDate} AS "startDate",
+		#{endDate} AS "endDate"
 		from reserve_commodity_sell_detail as a, reserve_commodity as b,reserve_commodity_type as c,reserve_venue as d,reserve_commodity_sell as e
 		where
 		a.fk_reserve_commodity_id=b.id and b.fk_reserve_venue_id=d.id and c.id=b.commodity_type_id and e.id=a.fk_reserve_commodity_sell_id
-		GROUP BY d.id,c.id
+		<if test="startDate!=null and endDate !=null">
+			and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
+		</if>
+		<if test="reserveVenue!=null">
+			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+				and d.id=#{reserveVenue.id}
+			</if>
+		</if>
+		<if test="reserveCommodityType!=null">
+			<if test="reserveCommodityType.id!=null and reserveCommodityType.id!=''">
+				and c.id=#{reserveCommodityType.id}
+			</if>
+		</if>
+		<if test="reserveCommodity!=null">
+			<if test="reserveCommodity.id!=null and reserveCommodity.id!=''">
+				and b.id=#{reserveCommodity.id}
+			</if>
+		</if>
+		GROUP BY b.id,c.id,d.id
 	</select>
 
 	<select id="get" resultType="ReserveCommoditySell">

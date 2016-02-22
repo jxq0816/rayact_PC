@@ -1,20 +1,20 @@
 package com.bra.modules.reserve.service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
-import com.bra.modules.reserve.entity.ReserveCardStatements;
-import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
+import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.form.ReserveCommodityDayReport;
+import com.bra.modules.reserve.entity.form.ReserveCommodityIntervalReport;
 import com.bra.modules.reserve.entity.form.ReserveCommoditySellReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveCommoditySell;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDao;
 
 /**
@@ -79,8 +79,8 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 		return sellReport;
 	}
 
-	public List<Map<String,Object>> commodityIncomeRatioReport(ReserveCardStatements reserveCardStatements) {
-		List<Map<String, Object>> list = dao.commodityIncomeRatioReport(reserveCardStatements);
+	public List<Map<String,Object>> commodityIncomeRatioReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport) {
+		List<Map<String, Object>> list = dao.commodityIncomeRatioReport(reserveCommodityIntervalReport);
 		double total=0;
 		for(Map<String,Object> map : list){
 			double saleAmount=(double)map.get("saleAmount");
@@ -92,6 +92,62 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 			BigDecimal   rateBig   =   new   BigDecimal(rate);
 			double  r= rateBig.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();//保留两位小数
 			map.put("saleRate",r);
+		}
+		return list;
+	}
+	public List<ReserveCommodityIntervalReport> reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport){
+		List<ReserveCommodityIntervalReport> intervalReports=dao.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
+		Double sum=0.0;
+		for(ReserveCommodityIntervalReport intervalReport:intervalReports){
+			sum+=intervalReport.getBill();
+		}
+
+		for(ReserveCommodityIntervalReport intervalReport:intervalReports){
+			List<ReserveCommodityDayReport> list=this.reserveCommodityIncomeDayReport(intervalReport);
+			double bill=intervalReport.getBill();
+			double rate=(bill/sum)*100;
+			BigDecimal   rateBig   =   new   BigDecimal(rate);
+			rate= rateBig.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();//保留两位小数
+			intervalReport.setCommodityTypeIncomeRate(rate);
+			intervalReport.setDayReportList(list);
+		}
+		return intervalReports;
+	}
+
+	public List<ReserveCommodityDayReport> reserveCommodityIncomeDayReport(ReserveCommodityIntervalReport intervalReport){
+		List<ReserveCommodityDayReport> list=new ArrayList<>();
+
+		ReserveCommodityDayReport reserveCommodityDayReport=new ReserveCommodityDayReport();
+		ReserveVenue venue=intervalReport.getReserveVenue();
+		ReserveCommodityType commodityType= intervalReport.getReserveCommodityType();
+		ReserveCommodity reserveCommodity=intervalReport.getReserveCommodity();
+
+		reserveCommodityDayReport.setReserveVenue(venue);
+		reserveCommodityDayReport.setReserveCommodity(reserveCommodity);
+		reserveCommodityDayReport.setReserveCommodityType(commodityType);
+
+		Date startDate=intervalReport.getStartDate();
+		Date endDate=intervalReport.getEndDate();
+
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(startDate);
+
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(endDate);
+		while(endCal.after(startCal)|| endCal.equals(startCal)){
+			Date day =startCal.getTime();
+			reserveCommodityDayReport.setDay(day);
+			List<ReserveCommodityDayReport> dayReports=dao.reserveCommodityIncomeDayReport(reserveCommodityDayReport);
+			if(dayReports==null){
+				continue;
+			}
+			for (ReserveCommodityDayReport report : dayReports) {
+				Double bill=report.getBill();
+				if (bill != 0.0) {
+					list.add(report);
+				}
+			}
+			startCal.add(Calendar.DATE,1);
 		}
 		return list;
 	}
