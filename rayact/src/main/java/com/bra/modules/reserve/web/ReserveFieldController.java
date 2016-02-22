@@ -63,7 +63,9 @@ public class ReserveFieldController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveField reserveField, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveField> page = reserveFieldService.findPage(new Page<>(request, response), reserveField);
+		List<ReserveVenue> venues=reserveVenueService.findList(new ReserveVenue());
 		model.addAttribute("page", page);
+		model.addAttribute("venues", venues);
 		return "reserve/field/list";
 	}
 

@@ -28,7 +28,13 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
-                                    <td>场地名称：</td>
+                                    <td>场馆：</td>
+                                    <td><sys:select cssClass="input-medium" name="reserveVenue.id"
+                                                     value="${reserveField.reserveVenue.id}"
+                                                     items="${venues}" itemLabel="name" itemValue="id"
+                                                     defaultLabel="----请选择-----"
+                                                     defaultValue=""></sys:select></td>
+                                    <td>场地：</td>
                                     <td><form:input path="name" htmlEscape="false" cssstyle="width:70px;" maxlength="30"
                                                     class="form-control"/></td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
