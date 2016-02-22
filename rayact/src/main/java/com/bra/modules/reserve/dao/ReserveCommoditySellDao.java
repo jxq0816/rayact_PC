@@ -19,6 +19,8 @@ public interface ReserveCommoditySellDao extends CrudDao<ReserveCommoditySell> {
 
     BigDecimal findSellOfMonth(ReserveCardStatements reserveCardStatements);
 
+    List<Map<String,Object>> commodityIncomeRatioReport(ReserveCardStatements reserveCardStatements);
+
     BigDecimal sellOfToday(ReserveCardStatements reserveCardStatements);
 
     List<Map<String, Object>> sellOfChart(ReserveCardStatements reserveCardStatements);

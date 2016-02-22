@@ -2,6 +2,7 @@ package com.bra.modules.reserve.web;
 
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveCommoditySell;
 import com.bra.modules.reserve.entity.form.ReserveCommoditySellReport;
 import com.bra.modules.reserve.service.ReserveCommoditySellService;
@@ -11,6 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 商品销售主表Controller
@@ -42,6 +48,15 @@ public class ReserveCommoditySellController extends BaseController {
 		model.addAttribute("sellReport",sellReport);
 		return "reserve/commodity/reserveCommoditySellReport";
 	}
+
+	/*商品收入比例统计*/
+	@RequestMapping(value = {"commodityIncomeReport", ""})
+	public String commodityIncomeReport(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Map<String,Object>> page=reserveCommoditySellService.commodityIncomeRatioReport(reserveCardStatements);
+		model.addAttribute("page", page);
+		return "reserve/report/commodityIncomeReport";
+	}
+
 
 
 }

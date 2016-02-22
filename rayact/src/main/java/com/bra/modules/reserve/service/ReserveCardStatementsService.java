@@ -36,22 +36,7 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return dao.findListByStoredCardType(reserveCardStatements);
 	}
 
-	public List<Map<String,Object>> findListByCommodityType(ReserveCardStatements reserveCardStatements) {
-		List<Map<String, Object>> list = dao.findListByCommodityType(reserveCardStatements);
-		double total=0;
-		for(Map<String,Object> map : list){
-			double saleAmount=(double)map.get("saleAmount");
-			total=total+saleAmount;
-		}
-		for(Map<String,Object> map : list){
-			double saleAmount=(double)map.get("saleAmount");
-			double rate=(saleAmount/total)*100;
-			BigDecimal   rateBig   =   new   BigDecimal(rate);
-			double  r= rateBig.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();//保留两位小数
-			map.put("saleRate",r);
-		}
-		return list;
-	}
+
 
 
 	@Transactional(readOnly = false)

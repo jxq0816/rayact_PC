@@ -144,7 +144,7 @@
       {
         "code": "commodityIncomeRecord",
         "name": "商品收入统计",
-        "href":"/reserve/reserveCardStatements/commodityIncomeReport",
+        "href":"/reserve/reserveCommoditySell/commodityIncomeReport",
         "authorityList": []
       },
       {

@@ -23,7 +23,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      List<Map<String,Object>> findListByStoredCardType(ReserveCardStatements reserveCardStatements);
 
-     List<Map<String,Object>> findListByCommodityType(ReserveCardStatements reserveCardStatements);
+
 
      List<Map<String,Object>> rechargeOfChart(ReserveCardStatements reserveCardStatements);
 }
