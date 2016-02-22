@@ -22,7 +22,7 @@
                             <form:form id="inputForm" modelAttribute="commodity" action="${ctx}/reserve/commodity/save"
                                        method="post"
                                        class="form-horizontal" onsubmit="return checkCommodityId()">
-                                <input type="hidden" name="id" id="id"/>
+                                <form:hidden path="id"/>
                                 <input type="hidden" name="token" value="${token}"/>
                                 <sys:message content="${message}"/>
 
