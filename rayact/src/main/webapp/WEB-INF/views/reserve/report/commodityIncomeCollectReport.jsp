@@ -34,14 +34,6 @@
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
-                                    <td>商品类型:</td>
-                                    <td>
-                                        <sys:select cssClass="input-medium" name="reserveCommodityType.id"
-                                                    value="reserveCommodityType"
-                                                    items="${reserveCommodityTypeList}" itemLabel="name" itemValue="id"
-                                                    defaultLabel="----请选择-----"
-                                                    defaultValue=""></sys:select>
-                                    </td>
 
                                     <td>类型：</td>
                                     <td>
@@ -94,7 +86,6 @@
 
                 <div class="content">
                     所属场馆：${reserveCommodityIntervalReport.reserveVenue.name}
-                    商品类型：${reserveCommodityIntervalReport.reserveCommodityType.name}
                     <div class="table-responsive">
                         <table>
                             <thead>

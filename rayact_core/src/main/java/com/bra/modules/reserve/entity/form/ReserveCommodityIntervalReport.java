@@ -39,9 +39,7 @@ public class ReserveCommodityIntervalReport extends SaasEntity<ReserveCommodityI
 
     private ReserveCommodityType reserveCommodityType;//商品类型
 
-    private Double commodityIncomeRate;
 
-    private Double commodityTypeIncomeRate;
 
     private Date startDate;//开始日期
 
@@ -49,21 +47,6 @@ public class ReserveCommodityIntervalReport extends SaasEntity<ReserveCommodityI
 
     private List<ReserveCommodityDayReport> dayReportList;//日报表
 
-    public Double getCommodityTypeIncomeRate() {
-        return commodityTypeIncomeRate;
-    }
-
-    public void setCommodityTypeIncomeRate(Double commodityTypeIncomeRate) {
-        this.commodityTypeIncomeRate = commodityTypeIncomeRate;
-    }
-
-    public Double getCommodityIncomeRate() {
-        return commodityIncomeRate;
-    }
-
-    public void setCommodityIncomeRate(Double commodityIncomeRate) {
-        this.commodityIncomeRate = commodityIncomeRate;
-    }
 
     public ReserveCommodity getReserveCommodity() {
         return reserveCommodity;
