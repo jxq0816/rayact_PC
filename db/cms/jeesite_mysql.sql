@@ -92,6 +92,7 @@ CREATE TABLE cms_comment
 	audit_user_id varchar(64) COMMENT '审核人',
 	audit_date datetime COMMENT '审核时间',
 	del_flag char(1) DEFAULT '0' NOT NULL COMMENT '删除标记',
+	member_id VARCHAR(19) NOT NULL COMMENT '评论人',
 	PRIMARY KEY (id)
 ) COMMENT = '评论表';
 

@@ -28,7 +28,6 @@ public class Comment extends DataEntity<Comment> {
 	private User auditUser; // 审核人
 	private Date auditDate;	// 审核时间
 	private String delFlag;	// 删除标记删除标记（0：正常；1：删除；2：审核）
-
 	public Comment() {
 		super();
 		this.delFlag = DEL_FLAG_AUDIT;

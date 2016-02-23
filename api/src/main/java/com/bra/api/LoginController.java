@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+    //登录接口
     @ResponseBody
     @RequestMapping("/login")
     public BackMsg login(String username, String password) {

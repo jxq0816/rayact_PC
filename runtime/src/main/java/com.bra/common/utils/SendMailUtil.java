@@ -99,8 +99,8 @@ public class SendMailUtil {
 	 */
 	public static void sendFtlMail(String toMailAddr, String subject,
 			String templatePath, Map<String, Object> map) {
-		Template template = null;
-		Configuration freeMarkerConfig = null;
+		Template template ;
+		Configuration freeMarkerConfig ;
 		HtmlEmail hemail = new HtmlEmail();
 		try {
 			hemail.setHostName(getHost(from));

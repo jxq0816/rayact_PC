@@ -54,7 +54,8 @@ public class CenterController {
         String equipment = MapUtils.getString(params, "equipment");
         String requestType = MapUtils.getString(params, "requestType");
         String token = MapUtils.getString(params, "token");
-
+        String ip = request.getRemoteAddr();
+        params.put("ip",ip);
         MobileHead head = new MobileHead(userId, equipment, requestType, token);
         Map<String, Object> json = Maps.newConcurrentMap();
         String outLog = "";
