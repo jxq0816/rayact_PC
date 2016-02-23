@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import com.bra.modules.reserve.service.ReserveMemberService;
+import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +49,9 @@ public class ReserveCardStatementsController extends BaseController {
 	@Autowired
 	private ReserveVenueService reserveVenueService;
 
+	@Autowired
+	private ReserveProjectService reserveProjectService;
+
 	@ModelAttribute
 	public ReserveCardStatements get(@RequestParam(required=false) String id) {
 		ReserveCardStatements entity = null;
@@ -83,12 +88,12 @@ public class ReserveCardStatementsController extends BaseController {
 	}
 	/*会员收入统计*/
 	@RequestMapping(value = {"memberIncomeReport", ""})
-	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport, String payType, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport, String queryType, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());
 
-		if(StringUtils.isEmpty(payType)){
-			payType="1";
+		if(StringUtils.isEmpty(queryType)){
+			queryType="1";
 		}
 		if(reserveMemberIntervalReport.getStartDate()==null){
 			reserveMemberIntervalReport.setStartDate(new Date());
@@ -98,15 +103,17 @@ public class ReserveCardStatementsController extends BaseController {
 		}
 		model.addAttribute("reserveVenueList", reserveVenueList);
 		model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);
-		if("1".equals(payType)){
+		if("1".equals(queryType)){
 			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectRecord(reserveMemberIntervalReport);
 			model.addAttribute("page", page);
-			return "reserve/report/memberIncomeCollectRecord";
+			return "reserve/report/memberIncomeCollectReport";
 		}else{
-
-
+			List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
+			//List<ReserveMemberIntervalReport> intervalReport=reserveCardStatementsService.memberIncomeIntervalRecord(reserveMemberIntervalReport);
+			//model.addAttribute("intervalReport", intervalReport);
+			model.addAttribute("projectList", projectList);
+			return "reserve/report/memberIncomeDetailReport";
 		}
-		return null;
 	}
 
 

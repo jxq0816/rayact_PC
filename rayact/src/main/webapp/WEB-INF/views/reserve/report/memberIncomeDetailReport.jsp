@@ -21,7 +21,7 @@
                            action="${ctx}/reserve/reserveCardStatements/listByStoredCardType"
                            method="post" class="breadcrumb form-search">
                     <div class="row">
-                        <div class="col-sm-10 col-md-10 col-lg-10">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                     <%--<td colspan="3">
@@ -34,16 +34,34 @@
                                             </ul>
                                         </div>
                                     </td>--%>
+                                    <td>场馆:</td>
+                                    <td>
+
+                                        <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                    value="reserveVenue"
+                                                    items="${reserveVenueList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select>
+                                    </td>
+                                    <td>项目:</td>
+                                    <td>
+
+                                        <sys:select cssClass="input-large" name="project.id"
+                                                    value="project"
+                                                    items="${projectList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select>
+                                    </td>
                                     <td>类型：</td>
                                     <td>
                                         <div class="btn-group" id="payType">
                                             <label class="radio-inline">
-                                                <input type="radio" class="icheck" value="1" checked="checked"
+                                                <input type="radio" class="icheck" value="1"
                                                        name="queryType"/>汇总
                                             </label>
 
                                             <label class="radio-inline">
-                                                <input type="radio" class="icheck" value="2" name="queryType"/>明细
+                                                <input type="radio" class="icheck" checked="checked" value="2" name="queryType"/>明细
                                             </label>
                                         </div>
                                     </td>
@@ -71,32 +89,10 @@
                 </form:form>
                 <sys:msg content="${message}"/>
                 <div class="content">
+                    所属场馆：${reserveMemberIntervalReport.reserveVenue.name}
+                    项目：${reserveMemberIntervalReport.reserveProject.name}
                     <div class="table-responsive">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>会员类型</th>
-                                <th>会员总数</th>
-                                <th>充值金额</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${page}" var="reserveCardRecordByCardType">
-                                <tr>
-                                    <td>
-                                            ${reserveCardRecordByCardType.projectName}&nbsp;${reserveCardRecordByCardType.cardTypeName}
-                                    </td>
 
-                                    <td>
-                                            ${reserveCardRecordByCardType.memberCnt}
-                                    </td>
-                                    <td>
-                                            ${reserveCardRecordByCardType.transactionVolume}
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

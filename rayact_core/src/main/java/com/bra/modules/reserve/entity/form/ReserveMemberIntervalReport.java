@@ -2,6 +2,7 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
+import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
@@ -35,6 +36,16 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
     private Double  otherBill;// 其它
 
     private ReserveVenue reserveVenue;//场馆
+
+    public ReserveProject getReserveProject() {
+        return reserveProject;
+    }
+
+    public void setReserveProject(ReserveProject reserveProject) {
+        this.reserveProject = reserveProject;
+    }
+
+    private ReserveProject reserveProject;//项目
 
     private ReserveStoredcardMemberSet storedcardMemberSet;//会员类型
 

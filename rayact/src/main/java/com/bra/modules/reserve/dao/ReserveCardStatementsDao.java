@@ -23,5 +23,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      List<Map<String,Object>> memberIncomeCollectRecord(ReserveMemberIntervalReport reserveMemberIntervalReport);
 
+     List<ReserveMemberIntervalReport> memberIncomeIntervalRecord(ReserveMemberIntervalReport reserveMemberIntervalReport);
+
      List<Map<String,Object>> rechargeOfChart(ReserveCardStatements reserveCardStatements);
 }

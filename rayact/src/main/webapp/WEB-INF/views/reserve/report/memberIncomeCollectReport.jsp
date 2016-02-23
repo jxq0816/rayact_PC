@@ -33,35 +33,36 @@
                                                 defaultLabel="----请选择-----"
                                                 defaultValue=""></sys:select>
                                 </td>
-                                    <td>类型：</td>
-                                    <td>
-                                        <div class="btn-group" id="payType">
-                                            <label class="radio-inline">
-                                                <input type="radio" class="icheck" value="1" checked="checked"
-                                                       name="queryType"/>汇总
-                                            </label>
 
-                                            <label class="radio-inline">
-                                                <input type="radio" class="icheck" value="2" name="queryType"/>明细
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
-                                               name="startDate" id="startDate" type="text"
-                                               maxlength="20"
-                                               class="input-medium form-control Wdate "
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </td>
-                                    <td>
-                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
-                                               name="endDate" id="endDate" type="text"
-                                               maxlength="20"
-                                               class="input-medium form-control Wdate "
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                               value="查询"/></td>
+                                <td>类型：</td>
+                                <td>
+                                    <div class="btn-group" id="payType">
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="1" checked="checked"
+                                                   name="queryType"/>汇总
+                                        </label>
+
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="2" name="queryType"/>明细
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
+                                           name="startDate" id="startDate" type="text"
+                                           maxlength="20"
+                                           class="input-medium form-control Wdate "
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                </td>
+                                <td>
+                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
+                                           name="endDate" id="endDate" type="text"
+                                           maxlength="20"
+                                           class="input-medium form-control Wdate "
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                </td>
+                                <td><input id="btnSubmit" class="btn btn-primary" type="submit"
+                                           value="查询"/></td>
                                 </tr>
                                 </tbody>
                             </table>

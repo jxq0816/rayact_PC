@@ -37,6 +37,10 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return dao.memberIncomeCollectRecord(reserveMemberIntervalReport);
 	}
 
+	public List<ReserveMemberIntervalReport> memberIncomeIntervalRecord( ReserveMemberIntervalReport reserveMemberIntervalReport) {
+		return dao.memberIncomeIntervalRecord(reserveMemberIntervalReport);
+	}
+
 	@Transactional(readOnly = false)
 	public void save(ReserveCardStatements reserveCardStatements) {
 		super.save(reserveCardStatements);
