@@ -161,7 +161,7 @@
                                                 ${dayReport.fieldBillOther}
                                         </td>
                                         <td>
-                                            尚未开发
+                                                ${dayReport.fieldBillDue}
                                         </td>
                                     </tr>
                                 </c:forEach>

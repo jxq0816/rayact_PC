@@ -107,10 +107,10 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                 Double bankCardSum = report.getFieldBillBankCard();
                 Double weiXinSum = report.getFieldBillWeiXin();
                 Double aliPaySum = report.getFieldBillAliPay();
-                //Double dueSum = report.getFieldBillDue();//欠账
+                Double dueSum = report.getFieldBillDue();//欠账
                 Double otherSum = report.getFieldBillOther();
 
-                if (storedCardSum == 0.0 && cashSum == 0.0 && bankCardSum == 0.0 && weiXinSum == 0.0 && aliPaySum == 0.0 && otherSum == 0.0) {
+                if (storedCardSum == 0.0 && cashSum == 0.0 && bankCardSum == 0.0 && weiXinSum == 0.0 && aliPaySum == 0.0 && otherSum == 0.0 && dueSum==0.0) {
                     //销售额为0
                 } else {
                     list.add(report);
