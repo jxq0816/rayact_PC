@@ -18,11 +18,14 @@ function checkForm() {
         },
         success: function (result) {
             if(result=="1") {
-                alert("卡号重复");
+                errorLoding("卡号重复");
+                return false;
             }else if(result=="2"){
-                alert("手机号重复");
+                errorLoding("手机号重复");
+                return false;
             }else if(result=="3"){
-                alert("身份证号重复");
+                errorLoding("身份证号重复");
+                return false;
             }else{
                 rs= true;
             }

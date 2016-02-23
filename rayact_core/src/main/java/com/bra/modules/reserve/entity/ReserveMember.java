@@ -29,12 +29,15 @@ public class ReserveMember extends SaasEntity<ReserveMember> {
 	private String sex;		// 性别 1:男 2：女
 	private Double remainder ; //储值卡余额
 	private Integer residue;//次卡剩余次数
+	private ReserveVenue reserveVenue;//所属场馆
+
 
 	//-------------------------储值卡-次卡------------------------------
 	private String cartno;		// 卡号
 	private String cartType;		// 卡号类型(会员类型1:储值卡,2:次卡)
 	private ReserveStoredcardMemberSet storedcardSet;
 	private ReserveTimecardMemberSet timecardSet;
+
 
 	public ReserveStoredcardMemberSet getStoredcardSet() {
 		return storedcardSet;
@@ -213,5 +216,13 @@ public class ReserveMember extends SaasEntity<ReserveMember> {
 
 	public void setMemberExtend(MemberExtend memberExtend) {
 		this.memberExtend = memberExtend;
+	}
+
+	public ReserveVenue getReserveVenue() {
+		return reserveVenue;
+	}
+
+	public void setReserveVenue(ReserveVenue reserveVenue) {
+		this.reserveVenue = reserveVenue;
 	}
 }

@@ -8,9 +8,11 @@ import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
+import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveStoredcardMemberSetService;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +43,9 @@ public class ReserveStoredCardMemberController extends BaseController {
     @Autowired
     private ReserveStoredcardMemberSetService storedcardSetService;
 
+    @Autowired
+    private ReserveVenueService reserveVenueService;
+
 
     @ModelAttribute
     public ReserveMember get(@RequestParam(required=false) String id) {
@@ -58,35 +63,37 @@ public class ReserveStoredCardMemberController extends BaseController {
     @ResponseBody
     public String check(String id,String cardno,String mobile,String sfz,HttpServletRequest request, HttpServletResponse response){
         String rs=null;
-
-        ReserveMember rm1=new ReserveMember();
-        rm1.setId(id);
-        rm1.setCartno(cardno);
-
-        ReserveMember rm2=new ReserveMember();
-        rm2.setId(id);
-        rm2.setMobile(mobile);
-
-        ReserveMember rm3=new ReserveMember();
-        rm3.setId(id);
-        rm3.setSfz(sfz);
-
-        List<ReserveMember> list1=reserveMemberService.findExactList(rm1);
-        if(list1.size()!=0){
-            rs="1";//卡号重复
-            return rs;
+        if(StringUtils.isNoneEmpty(cardno)) {
+            ReserveMember rm1 = new ReserveMember();
+            rm1.setId(id);
+            rm1.setCartno(cardno);
+            List<ReserveMember> list1 = reserveMemberService.findExactList(rm1);
+            if (list1.size() != 0) {
+                rs = "1";//卡号重复
+                return rs;
+            }
+        }
+        if(StringUtils.isNoneEmpty(mobile)){
+            ReserveMember rm2=new ReserveMember();
+            rm2.setId(id);
+            rm2.setMobile(mobile);
+            List<ReserveMember> list2=reserveMemberService.findExactList(rm2);
+            if(list2.size()!=0){
+                rs="2";//手机号重复
+                return rs;
+            }
         }
 
-        List<ReserveMember> list2=reserveMemberService.findExactList(rm2);
-        if(list2.size()!=0){
-            rs="2";
-            return rs;
-        }
+        if(StringUtils.isNoneEmpty(sfz)){
+            ReserveMember rm3=new ReserveMember();
+            rm3.setId(id);
+            rm3.setSfz(sfz);
+            List<ReserveMember> list3=reserveMemberService.findExactList(rm3);
+            if(list3.size()!=0){
+                rs="3";//身份证号重复
+                return rs;
+            }
 
-        List<ReserveMember> list3=reserveMemberService.findExactList(rm3);
-        if(list3.size()!=0){
-            rs="3";
-            return rs;
         }
         return rs;
     }
@@ -103,8 +110,10 @@ public class ReserveStoredCardMemberController extends BaseController {
     @Token(save =true)
     public String form(ReserveMember reserveMember, Model model) {
         List<ReserveStoredcardMemberSet> storedcardSetList=storedcardSetService.findList(new ReserveStoredcardMemberSet());
-        model.addAttribute("storedcardSetList", storedcardSetList);
+        List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+        model.addAttribute("venueList", venueList);
         model.addAttribute("reserveMember", reserveMember);
+        model.addAttribute("storedcardSetList", storedcardSetList);
         return "reserve/member/storedCardMemberForm";
     }
 

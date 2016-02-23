@@ -18,6 +18,8 @@
 		a.remainder AS "remainder",
 		a.residue AS "residue",
 		a.cart_type AS "cartType",
+		v.id AS "reserveVenue.id",
+		v.name AS "reserveVenue.name",
 		a.validitystart AS "validitystart",
 		a.validityend AS "validityend",
 		a.create_by AS "createBy.id",
@@ -34,6 +36,7 @@
 	<sql id="reserveMemberJoins">
 		left join reserve_storedcard_member_set as p on p.id=a.fk_reserve_storedcard_member_set_id
 		left join reserve_timecard_member_set as q on q.id=a.fk_reserve_timecard_member_set_id
+		left join reserve_venue as v on v.id=a.fk_reserve_venue_id
 	</sql>
     
 	<select id="get" resultType="ReserveMember">
@@ -167,6 +170,7 @@
 			remainder,
 			residue,
 			cart_type,
+			fk_reserve_venue_id,
 			validitystart,
 			validityend,
 			create_by,
@@ -194,6 +198,7 @@
 			#{remainder},
 			#{residue},
 			#{cartType},
+			#{reserveVenue.id},
 			#{validitystart},
 			#{validityend},
 			#{createBy.id},
@@ -231,6 +236,7 @@
 			remarks = #{remarks},
 			fk_reserve_storedcard_member_set_id=#{storedcardSet.id},
 			fk_reserve_timecard_member_set_id=#{timecardSet.id},
+			fk_reserve_venue_id=#{reserveVenue.id},
 			tenant_id = #{tenantId}
 		WHERE id = #{id}
 	</update>

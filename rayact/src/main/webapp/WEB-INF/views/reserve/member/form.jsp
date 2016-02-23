@@ -77,6 +77,20 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">场馆：</label>
+                                        <div class="col-sm-6">
+                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                        items="${venueList}"
+                                                        value="${venue}"
+                                                        itemLabel="name"
+                                                        itemValue="id"
+                                                        defaultValue=""
+                                                        defaultLabel="请选择场馆"
+                                            ></sys:select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">备注：</label>
                                         <div class="col-sm-6">
                                             <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
@@ -84,7 +98,7 @@
                                         </div>
                                     </div>
                                     <div class="form-actions">
-                                        <shiro:hasPermission name="reserve:reserveMember:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+                                        <input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
                                         <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
                                     </div>
                                 </form:form>

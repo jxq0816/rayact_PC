@@ -18,96 +18,113 @@
                     <h3>储值卡会员添加</h3>
                 </div>
                 <div class="content">
-                    <div class="tab-container">
-                        <div class="form-horizontal group-border-dashed">
+                    <td class="tab-container">
+                        <tr class="form-horizontal group-border-dashed">
                             <form:form id="inputForm" modelAttribute="reserveMember"
                                        action="${ctx}/reserve/storedCardMember/save" method="post"
                                        class="form-horizontal" onsubmit="return checkForm()">
                                 <form:hidden id="id" path="id"/>
-                                <input type="hidden" name="token" value="${token}"/>
+                            <input type="hidden" name="token" value="${token}"/>
                                 <sys:message content="${message}"/>
-                                <table id="contentTable" class="table table-bordered">
-                                    <tr>
-                                        <td>姓名:</td>
-                                        <td><form:input path="name" htmlEscape="false" maxlength="30"
-                                                        class="required form-control"/>
-                                            <span class="help-inline"><font color="red">*</font> </span></td>
-                                        <td>手机号:</td>
-                                        <td>
-                                            <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
-                                                        class="form-control phone required"/>
-                                            <span class="help-inline"><font color="red">*</font> </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>身份证:</td>
-                                        <td>
-                                            <form:input id="sfz" path="sfz" htmlEscape="false" maxlength="18"
-                                                        class="form-control "/>
-                                        </td>
+                            <table id="contentTable" class="table table-bordered">
+                                <tr>
+                                    <td>姓名:</td>
+                                    <td><form:input path="name" htmlEscape="false" maxlength="30"
+                                                    class="required form-control"/>
+                                        <span class="help-inline"><font color="red">*</font> </span></td>
+                                    <td>手机号:</td>
+                                    <td>
+                                        <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
+                                                    class="form-control phone required"/>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>身份证:</td>
+                                    <td>
+                                        <form:input id="sfz" path="sfz" htmlEscape="false" maxlength="18"
+                                                    class="form-control "/>
+                                    </td>
 
-                                        <td>地址:</td>
-                                        <td>
-                                            <form:input path="address" htmlEscape="false" maxlength="100"
-                                                        class="form-control "/>
-                                        </td>
-                                    </tr>
+                                    <td>地址:</td>
+                                    <td>
+                                        <form:input path="address" htmlEscape="false" maxlength="100"
+                                                    class="form-control "/>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>性别:</td>
-                                        <td>
-                                            <form:radiobuttons path="sex" items="${fns:getDictList('sex')}"
-                                                               itemLabel="label" itemValue="value"
-                                                               htmlEscape="false"/>
-                                        </td>
+                                <tr>
+                                    <td>性别:</td>
+                                    <td>
+                                        <form:radiobuttons path="sex" items="${fns:getDictList('sex')}"
+                                                           itemLabel="label" itemValue="value"
+                                                           htmlEscape="false"/>
+                                    </td>
 
-                                        <td>卡号:</td>
-                                        <td>
-                                            <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20"
-                                                        class="form-control required"/>
-                                            <span class="help-inline"><font color="red">*</font> </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>余额:</td>
-                                        <td>
-                                            <input type="text" value="${reserveMember.remainder}" name="remainder" class="form-control " maxlength="20" <j:if test="${!fns:isAdmin()}">readonly="readonly"</j:if>/>
-                                        </td>
+                                    <td>卡号:</td>
+                                    <td>
+                                        <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20"
+                                                    class="form-control required"/>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>余额:</td>
+                                    <td>
+                                        <input type="text" value="${reserveMember.remainder}" name="remainder"
+                                               class="form-control " maxlength="20"
+                                               <j:if test="${!fns:isAdmin()}">readonly="readonly"</j:if>/>
+                                    </td>
 
-                                        <td>储值卡名称:</td>
-                                        <td>
-                                            <sys:select cssClass="input-xlarge" name="storedcardSet.id"
-                                                        items="${storedcardSetList}"
-                                                        value="${storedcardSet}" itemLabel="name"
-                                                        itemValue="id"></sys:select>
-                                        </td>
-                                    </tr>
+                                    <td>储值卡名称:</td>
+                                    <td>
+                                        <sys:select cssClass="input-xlarge" name="storedcardSet.id"
+                                                    items="${storedcardSetList}"
+                                                    value="${storedcardSet}" itemLabel="name"
+                                                    itemValue="id"></sys:select>
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td>备注:</td>
-                                        <td colspan="3">
-                                            <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
-                                                           class="form-control"/>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div>
-                                    <input id="btnSubmit"
-                                           class="btn btn-primary"
-                                           type="submit"
-                                           value="保 存"/>&nbsp;
-                                    <input id="btnCancel" class="btn" type="button" value="返 回"
-                                           onclick="history.go(-1)"/>
-                                </div>
+                                <tr>
+                                    <td>备注:</td>
+                                    <td colspan="3">
+                                        <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
+                                                       class="form-control"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>场馆：</td>
+                                    <td colspan="3">
+                                        <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                    items="${venueList}"
+                                                    value="${venue}"
+                                                    itemLabel="name"
+                                                    itemValue="id"
+                                                    defaultValue=""
+                                                    defaultLabel="请选择场馆"
+                                        ></sys:select>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div>
+                                <input id="btnSubmit"
+                                       class="btn btn-primary"
+                                       type="submit"
+                                       value="保 存"/>&nbsp;
+                                <input id="btnCancel" class="btn" type="button" value="返 回"
+                                       onclick="history.go(-1)"/>
+                            </div>
                             </form:form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"/>
+</div>
+</div>
+<script type="text/javascript">
+
+</script>
 <script src="${ctxStatic}/modules/reserve/js/reserve_storedcard_member_form.js" type="text/javascript"></script>
 </body>
 </html>

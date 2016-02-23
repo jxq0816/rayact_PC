@@ -1,4 +1,5 @@
 20160216:reserve_venue_bill表 添加开始时间：start_date和结束时间:end_date
 20120220:reserve_commodity商品表 添加场馆外键：fk_reserve_venue_id
 20120220:reserve_commodity_sell商品销售主表 添加销售类型：payType
+20120223:reserve_member 会员表 添加场馆外键：fk_reserve_venue_id
 

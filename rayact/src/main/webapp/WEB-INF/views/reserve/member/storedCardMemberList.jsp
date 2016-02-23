@@ -62,6 +62,7 @@
                                 <th>手机号</th>
                                 <th>性别</th>
                                 <th>卡号</th>
+                                <th>场馆</th>
                                 <th>储值卡名称</th>
                                 <th>身份证</th>
                                 <th>地址</th>
@@ -84,6 +85,9 @@
                                     </td>
                                     <td>
                                             ${reserveMember.cartno}
+                                    </td>
+                                    <td>
+                                            ${reserveMember.reserveVenue.name}
                                     </td>
                                     <td>
                                             ${reserveMember.storedcardSet.name}

@@ -7,8 +7,10 @@ import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveTimecardMemberSet;
+import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveTimecardMemberSetService;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,9 @@ public class ReserveTimeCardMemberController extends BaseController {
     @Autowired
     private ReserveTimecardMemberSetService timecardSetService;
 
+    @Autowired
+    private ReserveVenueService reserveVenueService;
+
     @ModelAttribute
     public ReserveMember get(@RequestParam(required=false) String id) {
         ReserveMember entity = null;
@@ -60,6 +65,8 @@ public class ReserveTimeCardMemberController extends BaseController {
     @Token(save=true)
     public String form(ReserveMember reserveMember, Model model) {
         List<ReserveTimecardMemberSet> timecardSetList=timecardSetService.findList(new ReserveTimecardMemberSet());
+        List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+        model.addAttribute("venueList", venueList);
         model.addAttribute("timecardSetList", timecardSetList);
         model.addAttribute("reserveMember", reserveMember);
         return "reserve/member/timeCardMemberForm";

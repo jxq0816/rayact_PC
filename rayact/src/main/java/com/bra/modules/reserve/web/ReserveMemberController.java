@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.service.ReserveMemberService;
 
+import java.util.List;
+
 /**
  * 会员管理Controller
  * @author 肖斌
@@ -32,6 +36,9 @@ public class ReserveMemberController extends BaseController {
 
 	@Autowired
 	private ReserveMemberService reserveMemberService;
+
+	@Autowired
+	private ReserveVenueService reserveVenueService;
 	
 	@ModelAttribute
 	public ReserveMember get(@RequestParam(required=false) String id) {
@@ -55,7 +62,9 @@ public class ReserveMemberController extends BaseController {
 	@RequestMapping(value = "form")
 	@Token(save = true)
 	public String form(ReserveMember reserveMember, Model model) {
+		List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
 		model.addAttribute("reserveMember", reserveMember);
+		model.addAttribute("venueList", venueList);
 		return "reserve/member/form";
 	}
 

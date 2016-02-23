@@ -63,7 +63,9 @@
                                         <td>次卡名称:</td>
                                         <td colspan="3">
                                             <sys:select cssClass="input-xlarge" name="timecardSet.id" items="${timecardSetList}"
-                                                        value="${timecardSet}" itemLabel="name" itemValue="id"></sys:select>
+                                                        value="${timecardSet}" itemLabel="name" itemValue="id" defaultLabel="请选择次卡"
+                                                        defaultValue="">
+                                            </sys:select>
                                         </td>
                                     </tr>
 
@@ -71,7 +73,7 @@
                                     <tr>
                                         <td>卡号截止日期:</td>
                                         <td>
-                                            <input name="validityend" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+                                            <input name="validityend" type="text" readonly="readonly" maxlength="20" class="input-large Wdate "
                                                    value="<fmt:formatDate value="${reserveMember.validityend}" pattern="yyyy-MM-dd"/>"
                                                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                         </td>
@@ -89,6 +91,20 @@
                                             <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="form-control "/>
                                         </td>
                                     </tr>
+
+                                    <tr>
+                                        <td>场馆：</td>
+                                        <td colspan="3">
+                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                        items="${venueList}"
+                                                        value="${venue}"
+                                                        itemLabel="name"
+                                                        itemValue="id"
+                                                        defaultValue=""
+                                                        defaultLabel="请选择场馆"
+                                            ></sys:select>
+                                        </td>
+                                    </tr>
                                 </table>
 
                                 <div class="form-actions">
@@ -104,7 +120,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"></script>
 <script src="${ctxStatic}/modules/reserve/js/reserve_storedcard_member_form.js" type="text/javascript"></script>
 </body>
 </html>

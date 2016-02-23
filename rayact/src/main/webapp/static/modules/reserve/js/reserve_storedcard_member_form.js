@@ -2,12 +2,20 @@
  * Created by lenovo on 2016/1/11.
  */
 function checkForm() {
+
     var id = $("#id").val();
     var cardno = $("#cardno").val();
+    if(cardno==null || cardno==''||cardno==undefined ){
+        errorLoding("卡号为空");
+        return false;
+    }
     var mobile = $("#mobile").val();
+    if(mobile==null || mobile==''||mobile==undefined ){
+        errorLoding("手机号为空");
+        return false;
+    }
     var sfz = $("#sfz").val();
-
-    var rs=false;
+    var flg=false;
     jQuery.postItems({
         url: ctx + '/reserve/storedCardMember/check',
         data: {
@@ -18,15 +26,15 @@ function checkForm() {
         },
         success: function (result) {
             if(result=="1") {
-                alert("卡号重复");
+                errorLoding("卡号重复");
             }else if(result=="2"){
-                alert("手机号重复");
+                errorLoding("手机号重复");
             }else if(result=="3"){
-                alert("身份证号重复");
+                errorLoding("身份证号重复");
             }else{
-                rs= true;
+                flg=true;
             }
         }
     });
-    return rs;
+    return flg;
 }
