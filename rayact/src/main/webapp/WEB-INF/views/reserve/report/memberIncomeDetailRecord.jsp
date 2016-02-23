@@ -8,7 +8,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="memberIncomeRecord"></jsp:param>
+    <jsp:param name="action" value="memberIncomeReport"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
@@ -24,8 +24,7 @@
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             <table class="no-border">
                                 <tbody class="no-border-y">
-                                <>
-                                    <td colspan="3">
+                                    <%--<td colspan="3">
                                         <div class="tab-tit-first">
                                             <ul>
                                                 <li id="today"><a href="javascript:queryToday()">当天</a></li>
@@ -33,6 +32,19 @@
                                                 <li id="year"><a href="javascript:queryYear()">当年</a></li>
                                                 <li id="self"><a href="javascript:querySelf()">自定义</a></li>
                                             </ul>
+                                        </div>
+                                    </td>--%>
+                                    <td>类型：</td>
+                                    <td>
+                                        <div class="btn-group" id="payType">
+                                            <label class="radio-inline">
+                                                <input type="radio" class="icheck" value="1" checked="checked"
+                                                       name="queryType"/>汇总
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" class="icheck" value="2" name="queryType"/>明细
+                                            </label>
                                         </div>
                                     </td>
                                     <td>

@@ -57,7 +57,7 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="findListByStoredCardType" resultType="java.util.Map">
+	<select id="memberIncomeCollectRecord" resultType="java.util.Map">
 		select s.name as cardTypeName,
 		COUNT(distinct m.id) as memberCnt ,
 		sum(a.transaction_volume) as transactionVolume,

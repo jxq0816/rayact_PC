@@ -21,7 +21,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
      BigDecimal rechargeOfMonth(ReserveCardStatements reserveCardStatements);
 
 
-     List<Map<String,Object>> findListByStoredCardType(ReserveCardStatements reserveCardStatements);
+     List<Map<String,Object>> memberIncomeCollectRecord(ReserveCardStatements reserveCardStatements);
 
 
 

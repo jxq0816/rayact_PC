@@ -136,9 +136,9 @@
         "authorityList": []
       },
       {
-        "code": "memberIncomeRecord",
+        "code": "memberIncomeReport",
         "name": "会员收入统计",
-        "href":"/reserve/reserveCardStatements/listByStoredCardType",
+        "href":"/reserve/reserveCardStatements/memberIncomeReport",
         "authorityList": []
       },
       {

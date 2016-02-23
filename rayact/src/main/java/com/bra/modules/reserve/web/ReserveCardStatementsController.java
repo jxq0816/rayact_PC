@@ -75,11 +75,19 @@ public class ReserveCardStatementsController extends BaseController {
 		return rs;
 	}
 	/*会员收入统计*/
-	@RequestMapping(value = {"listByStoredCardType", ""})
-	public String listByStoredCardType(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
-		List<Map<String,Object>> page=reserveCardStatementsService.findListByStoredCardType(reserveCardStatements);
-		model.addAttribute("page", page);
-		return "reserve/report/memberIncomeRecord";
+	@RequestMapping(value = {"memberIncomeReport", ""})
+	public String listByStoredCardType(ReserveCardStatements reserveCardStatements, String payType,HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(StringUtils.isEmpty(payType)){
+			payType="1";
+		}
+		if("1".equals(payType)){
+			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectRecord(reserveCardStatements);
+			model.addAttribute("page", page);
+			return "reserve/report/memberIncomeCollectRecord";
+		}else{
+
+		}
+		return null;
 	}
 
 

@@ -32,8 +32,8 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return super.findPage(page, reserveCardStatements);
 	}
 
-	public List<Map<String,Object>> findListByStoredCardType( ReserveCardStatements reserveCardStatements) {
-		return dao.findListByStoredCardType(reserveCardStatements);
+	public List<Map<String,Object>> memberIncomeCollectRecord( ReserveCardStatements reserveCardStatements) {
+		return dao.memberIncomeCollectRecord(reserveCardStatements);
 	}
 
 
