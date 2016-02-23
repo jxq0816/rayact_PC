@@ -8,7 +8,9 @@
         a.description  AS "description",
         a.title AS  "title",
         a.create_date AS "createDate",
-        d.copyfrom AS "articleData.copyfrom"
+        d.copyfrom AS "articleData.copyfrom",
+        a.category_id AS "category.id",
+        a.category_id AS "category.id"
         FROM cms_article a,cms_article_data d
         WHERE a.id = d.id and a.del_flag = 0
         <if test="posid != null and posid != ''">
@@ -27,8 +29,9 @@
         a.description  AS "description",
         a.title AS  "title",
         a.create_date AS "createDate",
-        d.copyfrom AS "articleData.copyfrom"
-        FROM cms_article a
+        d.copyfrom AS "articleData.copyfrom",
+        a.category_id AS "category.id"
+        FROM cms_article a,cms_article_data d
         <where>
             a.id = d.id and a.del_flag = 0
             <if test="title != null and title != ''">
@@ -56,7 +59,8 @@
         a.title AS  "title",
         a.update_date AS "updateDate",
         d.copyfrom AS "articleData.copyfrom",
-        d.content AS "articleData.content"
+        d.content AS "articleData.content",
+        a.category_id AS "category.id"
         FROM cms_article a,cms_article_data d
         WHERE a.id = d.id and a.del_flag = 0 and a.id = #{id}
     </select>

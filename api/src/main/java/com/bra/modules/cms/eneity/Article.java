@@ -3,6 +3,7 @@
  */
 package com.bra.modules.cms.eneity;
 
+import com.bra.common.config.Global;
 import com.bra.common.persistence.DataEntity;
 import com.bra.modules.cms.utils.CmsUtils;
 import com.bra.modules.sys.entity.User;
@@ -226,7 +227,7 @@ public class Article extends DataEntity<Article> {
 
     public String getUrl() {
         // return CmsUtils.getUrlDynamic(this);
-        return null;
+        return Global.getConfig("system.url")+"article/view/"+id;
     }
 
     public String getImageSrc() {
