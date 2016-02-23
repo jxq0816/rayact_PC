@@ -339,17 +339,17 @@ public class IdcardUtils extends StringUtils {
 	 */
 	public static boolean validateHKCard(String idCard) {
 		String card = idCard.replaceAll("[\\(|\\)]", "");
-		Integer sum = 0;
+		Integer sum ;
 		if (card.length() == 9) {
-			sum = (Integer.valueOf(card.substring(0, 1).toUpperCase()
-					.toCharArray()[0]) - 55)
+			sum = ((int) card.substring(0, 1).toUpperCase()
+					.toCharArray()[0] - 55)
 					* 9
-					+ (Integer.valueOf(card.substring(1, 2).toUpperCase()
-							.toCharArray()[0]) - 55) * 8;
+					+ ((int) card.substring(1, 2).toUpperCase()
+					.toCharArray()[0] - 55) * 8;
 			card = card.substring(1, 9);
 		} else {
-			sum = 522 + (Integer.valueOf(card.substring(0, 1).toUpperCase()
-					.toCharArray()[0]) - 55) * 8;
+			sum = 522 + ((int) card.substring(0, 1).toUpperCase()
+					.toCharArray()[0] - 55) * 8;
 		}
 		String mid = card.substring(1, 7);
 		String end = card.substring(7, 8);
@@ -364,7 +364,7 @@ public class IdcardUtils extends StringUtils {
 		} else {
 			sum = sum + Integer.valueOf(end);
 		}
-		return (sum % 11 == 0) ? true : false;
+		return (sum % 11 == 0);
 	}
 
 	/**
@@ -465,6 +465,7 @@ public class IdcardUtils extends StringUtils {
 		if (idCard.length() == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		assert idCard != null;
 		String year = idCard.substring(6, 10);
 		Calendar cal = Calendar.getInstance();
 		int iCurrYear = cal.get(Calendar.YEAR);
@@ -486,6 +487,7 @@ public class IdcardUtils extends StringUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		assert idCard != null;
 		return idCard.substring(6, 14);
 	}
 
@@ -503,6 +505,7 @@ public class IdcardUtils extends StringUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		assert idCard != null;
 		return Short.valueOf(idCard.substring(6, 10));
 	}
 
@@ -520,6 +523,7 @@ public class IdcardUtils extends StringUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		assert idCard != null;
 		return Short.valueOf(idCard.substring(10, 12));
 	}
 
@@ -537,6 +541,7 @@ public class IdcardUtils extends StringUtils {
 		} else if (len == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		assert idCard != null;
 		return Short.valueOf(idCard.substring(12, 14));
 	}
 
@@ -552,6 +557,7 @@ public class IdcardUtils extends StringUtils {
 		if (idCard.length() == CHINA_ID_MIN_LENGTH) {
 			idCard = conver15CardTo18(idCard);
 		}
+		assert idCard != null;
 		String sCardNum = idCard.substring(16, 17);
 		if (Integer.parseInt(sCardNum) % 2 != 0) {
 			sGender = "M";
@@ -586,7 +592,7 @@ public class IdcardUtils extends StringUtils {
 	 * @return 提取的数字。
 	 */
 	public static boolean isNum(String val) {
-		return val == null || "".equals(val) ? false : val.matches("^[0-9]*$");
+		return !(val == null || "".equals(val)) && val.matches("^[0-9]*$");
 	}
 
 	/**

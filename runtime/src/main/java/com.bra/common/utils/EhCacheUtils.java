@@ -14,7 +14,7 @@ import net.sf.ehcache.Element;
  */
 public class EhCacheUtils {
 
-	private static CacheManager cacheManager = ((CacheManager)SpringContextHolder.getBean("cacheManager"));
+	private static CacheManager cacheManager = SpringContextHolder.getBean("cacheManager");
 	
 	private static final String SYS_CACHE = "sysCache";
 

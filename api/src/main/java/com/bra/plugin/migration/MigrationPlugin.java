@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 业务模型插件
  * Created by xiaobin on 16/2/16.
  */
 public class MigrationPlugin implements IPlugin {
@@ -30,6 +31,7 @@ public class MigrationPlugin implements IPlugin {
         fileScanner.find(Global.getConfig("migration.service.package"));
         for (Class clazz : entityClassList) {
             try {
+                //初始化插件
                 TransmitsService plugin = (TransmitsService) clazz.newInstance();
                 CACHE_TRANSMITS.put(plugin.getName(),plugin);
             } catch (InstantiationException e) {

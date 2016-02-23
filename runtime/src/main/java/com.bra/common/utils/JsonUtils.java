@@ -21,6 +21,7 @@ public class JsonUtils {
 
     private static ObjectMapper objectMapper = null;
 
+
     /**
      * 把对象转化为json
      *

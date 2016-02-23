@@ -15,7 +15,7 @@ import java.util.List;
 public class TransmitsFilter implements IScannerFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransmitsFilter.class);
 
-    private List<Class> classList = new FastList<Class>();
+    private List<Class> classList = new FastList<>();
 
     @Override
     public boolean filter(String urlStr, URL url, ClassLoader classLoader) {
