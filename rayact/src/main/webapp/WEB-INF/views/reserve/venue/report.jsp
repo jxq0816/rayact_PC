@@ -17,12 +17,12 @@
                     <h3>场馆报表</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/report"
-                           method="post" class="content">
+                           method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 
                     <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-sm-7 col-md-7 col-lg-7">
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
