@@ -37,29 +37,10 @@ public class ReserveCommodityDayReport extends SaasEntity<ReserveCommodityDayRep
 
     private ReserveCommodity reserveCommodity;//商品
 
-    private Double commodityIncomeRate;
-
-    private Double commodityTypeIncomeRate;
 
     private ReserveCommodityType reserveCommodityType;//商品类型
 
     private Date day;//日期
-
-    public Double getCommodityIncomeRate() {
-        return commodityIncomeRate;
-    }
-
-    public void setCommodityIncomeRate(Double commodityIncomeRate) {
-        this.commodityIncomeRate = commodityIncomeRate;
-    }
-
-    public Double getCommodityTypeIncomeRate() {
-        return commodityTypeIncomeRate;
-    }
-
-    public void setCommodityTypeIncomeRate(Double commodityTypeIncomeRate) {
-        this.commodityTypeIncomeRate = commodityTypeIncomeRate;
-    }
 
     public ReserveCommodityType getReserveCommodityType() {
         return reserveCommodityType;

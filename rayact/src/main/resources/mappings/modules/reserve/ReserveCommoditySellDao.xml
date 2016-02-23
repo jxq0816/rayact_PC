@@ -45,14 +45,21 @@
 	</select>
 
 	<select id="commodityIncomeRatioReport" resultType="java.util.Map">
-		SELECT t.name as commodityTypeName, sum(d.detail_sum) as saleAmount
-		from reserve_commodity_sell_detail as d ,reserve_commodity_type as t, reserve_commodity as c
-		where d.del_flag = #{DEL_FLAG_NORMAL} and d.tenant_id = #{tenantId}
-		and d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
-		<if test="startDate!=null and endDate !=null">
-			and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
-		</if>
-		GROUP BY commodityTypeName
+		SELECT v.name,t.id as commodityId,t.name as commodityTypeName, sum(d.detail_sum) as saleAmount
+		from reserve_commodity_sell_detail as d ,reserve_commodity_type as t, reserve_commodity as c,reserve_venue as v
+		<where>
+			d.del_flag = #{DEL_FLAG_NORMAL} and d.tenant_id = #{tenantId}
+			and d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
+			<if test="startDate!=null and endDate !=null">
+				and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
+			</if>
+			<if test="reserveVenue!=null">
+				<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+					and v.id=#{reserveVenue.id}
+				</if>
+			</if>
+		</where>
+		GROUP BY commodityId,commodityTypeName
 	</select>
 
 	<select id="reserveCommodityIncomeDayReport" resultType="ReserveCommodityDayReport">

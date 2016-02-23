@@ -63,9 +63,14 @@ public class ReserveCommoditySellController extends BaseController {
 
 	/*商品收入统计*/
 	@RequestMapping(value = {"commodityIncomeIntervalReport", ""})
-	public String reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport,Model model){
-		Date startDate=reserveCommodityIntervalReport.getStartDate();//月份
-		Date endDate=reserveCommodityIntervalReport.getEndDate();//月份
+	public String reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport,String queryType,Model model){
+		if(StringUtils.isEmpty(queryType)){
+			queryType="1";
+		}
+		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
+		List<ReserveCommodityType> reserveCommodityTypeList=reserveCommodityTypeService.findList(new ReserveCommodityType());//商品类型列表
+		Date startDate=reserveCommodityIntervalReport.getStartDate();//开始时间
+		Date endDate=reserveCommodityIntervalReport.getEndDate();//结束时间
 		reserveCommodityIntervalReport.setReserveCommodityType( reserveCommodityTypeService.get(reserveCommodityIntervalReport.getReserveCommodityType()));
 		if(startDate==null){
 			startDate=new Date();//默认当天
@@ -75,24 +80,27 @@ public class ReserveCommoditySellController extends BaseController {
 			endDate=new Date();//默认当天
 			reserveCommodityIntervalReport.setEndDate(endDate);
 		}
-		ReserveVenue venue=reserveCommodityIntervalReport.getReserveVenue();//场馆
+		//场馆参数初始化
+		ReserveVenue venue=reserveCommodityIntervalReport.getReserveVenue();
 		if(venue==null){
 			venue=new ReserveVenue();
 		}else if(StringUtils.isNoneEmpty(venue.getId())){
 			venue=reserveVenueService.get(venue);
 		}
 		reserveCommodityIntervalReport.setReserveVenue(venue);
-
-		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
-		List<ReserveCommodityType> reserveCommodityTypeList=reserveCommodityTypeService.findList(new ReserveCommodityType());
-		List<ReserveCommodityIntervalReport> intervalReports=reserveCommoditySellService.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
-		List<Map<String,Object>> incomeRatioReports=reserveCommoditySellService.commodityIncomeRatioReport(reserveCommodityIntervalReport);//收入比例
-		model.addAttribute("intervalReports", intervalReports);
-		model.addAttribute("incomeRatioReports", incomeRatioReports);
+		model.addAttribute("reserveCommodityIntervalReport", reserveCommodityIntervalReport);//查询参数返回
 		model.addAttribute("reserveVenueList", reserveVenueList);
 		model.addAttribute("reserveCommodityTypeList", reserveCommodityTypeList);
-		model.addAttribute("reserveCommodityIntervalReport", reserveCommodityIntervalReport);
-		return "reserve/report/commodityIncomeReport";
-	}
 
+		if("1".equals(queryType)){
+			List<Map<String,Object>> incomeRatioReports=reserveCommoditySellService.commodityIncomeRatioReport(reserveCommodityIntervalReport);//收入比例
+			model.addAttribute("incomeRatioReports", incomeRatioReports);
+			return "reserve/report/commodityIncomeCollectReport";
+		}else if("2".equals(queryType)){
+			List<ReserveCommodityIntervalReport> intervalReports=reserveCommoditySellService.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
+			model.addAttribute("intervalReports", intervalReports);
+			return "reserve/report/commodityIncomeDetailReport";
+		}
+		return null;
+	}
 }

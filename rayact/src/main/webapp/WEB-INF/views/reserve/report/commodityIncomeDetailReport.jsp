@@ -15,13 +15,13 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>商品收入统计</h3>
+                    <h3>商品收入明细统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCommodityIntervalReport"
                            action="${ctx}/reserve/reserveCommoditySell/commodityIncomeIntervalReport"
                            method="post" class="breadcrumb form-search">
                     <div class="row">
-                        <div class="col-sm-10 col-md-10 col-lg-10">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
 
                             <table class="no-border">
                                 <tbody class="no-border-y">
@@ -29,7 +29,7 @@
                                     <td>场馆:</td>
                                     <td>
 
-                                        <sys:select cssClass="input-medium" name="reserveVenue.id"
+                                        <sys:select cssClass="input-large" name="reserveVenue.id"
                                                     value="reserveVenue"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
@@ -37,11 +37,24 @@
                                     </td>
                                     <td>商品类型:</td>
                                     <td>
-                                        <sys:select cssClass="input-medium" name="reserveCommodityType.id"
+                                        <sys:select cssClass="input-large" name="reserveCommodityType.id"
                                                     value="reserveCommodityType"
                                                     items="${reserveCommodityTypeList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
+                                    </td>
+
+                                    <td>类型：</td>
+                                    <td colspan="3">
+                                        <div class="btn-group" id="payType">
+                                            <label class="radio-inline">
+                                                <input type="radio" class="icheck" value="1"  name="queryType"/>汇总
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" class="icheck" checked="checked" value="2" name="queryType"/>明细
+                                            </label>
+                                        </div>
                                     </td>
 
                                         <%--<td>
@@ -86,31 +99,6 @@
                         <table>
                             <thead>
                             <tr>
-                                <th>商品类型</th>
-                                <th>销售金额</th>
-                                <th>销售比例</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${incomeRatioReports}" var="commodityTypeIncomeRecord">
-                                <tr>
-                                    <td>
-                                            ${commodityTypeIncomeRecord.commodityTypeName}
-                                    </td>
-
-                                    <td>
-                                            ${commodityTypeIncomeRecord.saleAmount}
-                                    </td>
-                                    <td>
-                                            ${commodityTypeIncomeRecord.saleRate}%
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                        <table>
-                            <thead>
-                            <tr>
                                 <th>日期</th>
                                 <th>商品</th>
                                 <th>储值卡收入</th>
@@ -121,7 +109,6 @@
                                 <th>欠账</th>
                                 <th>其它</th>
                                 <th>总收入</th>
-                                <th>百分比</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -171,9 +158,6 @@
                                     <td>
                                             ${intervalReport.bill}
                                     </td>
-                                    <td>
-                                            ${intervalReport.commodityIncomeRate}%
-                                    </td>
                                 </tr>
                                 <c:forEach items="${intervalReport.dayReportList}" var="dayReport">
                                     <tr>
@@ -216,9 +200,6 @@
 
                                         <td>
                                                 ${dayReport.bill}
-                                        </td>
-                                        <td>
-                                                ${dayReport.commodityIncomeRate}%
                                         </td>
                                     </tr>
                                 </c:forEach>

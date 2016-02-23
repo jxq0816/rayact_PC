@@ -97,18 +97,9 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 	}
 	public List<ReserveCommodityIntervalReport> reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport){
 		List<ReserveCommodityIntervalReport> intervalReports=dao.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
-		Double sum=0.0;
-		for(ReserveCommodityIntervalReport intervalReport:intervalReports){
-			sum+=intervalReport.getBill();
-		}
 
 		for(ReserveCommodityIntervalReport intervalReport:intervalReports){
 			List<ReserveCommodityDayReport> list=this.reserveCommodityIncomeDayReport(intervalReport);
-			double bill=intervalReport.getBill();
-			double rate=(bill/sum)*100;
-			BigDecimal   rateBig   =   new   BigDecimal(rate);
-			rate= rateBig.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();//保留两位小数
-			intervalReport.setCommodityTypeIncomeRate(rate);
 			intervalReport.setDayReportList(list);
 		}
 		return intervalReports;
