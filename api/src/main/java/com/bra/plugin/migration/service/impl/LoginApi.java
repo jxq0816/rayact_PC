@@ -62,7 +62,7 @@ public class LoginApi implements TransmitsService {
                     getMemberExtendService().updateToken(memberExtend);
 
                     map.put(StatusField.STATUS_CODE, "200");
-                    map.put(StatusField.UUID, user.getId());
+                    map.put("userId", user.getId());
                     map.put(StatusField.TOKEN, token);
                     map.put(StatusField.STATUS_DEC, "登录成功，船票已发送!");
                 } else {
