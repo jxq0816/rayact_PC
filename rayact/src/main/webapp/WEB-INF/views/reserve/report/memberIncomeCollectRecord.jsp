@@ -24,16 +24,15 @@
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             <table class="no-border">
                                 <tbody class="no-border-y">
-                                    <%--<td colspan="3">
-                                        <div class="tab-tit-first">
-                                            <ul>
-                                                <li id="today"><a href="javascript:queryToday()">当天</a></li>
-                                                <li id="month"><a href="javascript:queryMonth()">当月</a></li>
-                                                <li id="year"><a href="javascript:queryYear()">当年</a></li>
-                                                <li id="self"><a href="javascript:querySelf()">自定义</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>--%>
+                                <td>场馆:</td>
+                                <td>
+
+                                    <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                value="reserveVenue"
+                                                items="${reserveVenueList}" itemLabel="name" itemValue="id"
+                                                defaultLabel="----请选择-----"
+                                                defaultValue=""></sys:select>
+                                </td>
                                     <td>类型：</td>
                                     <td>
                                         <div class="btn-group" id="payType">
@@ -76,7 +75,7 @@
                             <thead>
                             <tr>
                                 <th>场馆</th>
-                                <th>会员类型</th>
+                                <th>项目</th>
                                 <th>充值金额</th>
                             </tr>
                             </thead>

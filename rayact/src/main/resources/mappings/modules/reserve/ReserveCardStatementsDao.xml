@@ -75,6 +75,11 @@
 			<if test="startDate!=null and endDate !=null">
 				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
 			</if>
+			<if test="reserveVenue!=null and reserveVenue !=null">
+				<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+					and v.id=#{reserveVenue.id}
+				</if>
+			</if>
 		</where>
 		GROUP BY v.id,p.id
 	</select>

@@ -85,7 +85,7 @@ public class ReserveCardStatementsController extends BaseController {
 	@RequestMapping(value = {"memberIncomeReport", ""})
 	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport, String payType, HttpServletRequest request, HttpServletResponse response, Model model) {
 
-		List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());
 
 		if(StringUtils.isEmpty(payType)){
 			payType="1";
@@ -96,6 +96,7 @@ public class ReserveCardStatementsController extends BaseController {
 		if(reserveMemberIntervalReport.getEndDate()==null){
 			reserveMemberIntervalReport.setEndDate(new Date());
 		}
+		model.addAttribute("reserveVenueList", reserveVenueList);
 		model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);
 		if("1".equals(payType)){
 			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectRecord(reserveMemberIntervalReport);
