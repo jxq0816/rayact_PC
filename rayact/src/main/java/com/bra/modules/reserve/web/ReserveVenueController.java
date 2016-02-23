@@ -120,7 +120,7 @@ public class ReserveVenueController extends BaseController {
             bankCardSum+=report.getFieldBillBankCard();
             weiXinSum+=report.getFieldBillWeiXin();
             aliPaySum+=report.getFieldBillAliPay();
-            //dueSum+=report.getFieldBillDue();//欠账
+            dueSum+=report.getFieldBillDue();//欠账
             otherSum+=report.getFieldBillOther();
         }
         totalReport.setFieldBillStoredCard(storedCardSum);

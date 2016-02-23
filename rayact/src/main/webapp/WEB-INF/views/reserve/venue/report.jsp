@@ -81,25 +81,25 @@
                                     <fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>
                                 </td>
                                 <td>
-                                    ${intervalReport.fieldBillCash}
+                                    ${totalReport.fieldBillCash}
                                 </td>
                                 <td>
-                                    ${intervalReport.fieldBillBankCard}
+                                    ${totalReport.fieldBillBankCard}
                                 </td>
                                 <td>
-                                    ${intervalReport.fieldBillStoredCard}
+                                    ${totalReport.fieldBillStoredCard}
                                 </td>
                                 <td>
-                                    ${intervalReport.fieldBillWeiXin}
+                                    ${totalReport.fieldBillWeiXin}
                                 </td>
                                 <td>
-                                    ${intervalReport.fieldBillAliPay}
+                                    ${totalReport.fieldBillAliPay}
                                 </td>
                                 <td>
-                                    ${intervalReport.fieldBillOther}
+                                    ${totalReport.fieldBillOther}
                                 </td>
                                 <td>
-                                    尚未开发
+                                    ${totalReport.fieldBillDue}
                                 </td>
 
                             </tr>
@@ -131,7 +131,7 @@
                                             ${report.fieldBillOther}
                                     </td>
                                     <td>
-                                        尚未开发
+                                            ${report.fieldBillDue}
                                     </td>
 
                                 </tr>

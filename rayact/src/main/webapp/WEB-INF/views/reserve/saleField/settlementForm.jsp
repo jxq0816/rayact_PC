@@ -130,6 +130,9 @@
                     <label class="radio-inline">
                         <input type="radio" class="icheck" value="6" name="payType"/>其它
                     </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="7" name="payType"/>欠账
+                    </label>
                 </td>
             </tr>
             </tbody>

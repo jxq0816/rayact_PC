@@ -127,7 +127,8 @@
 		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
 		sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
 		sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
-		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther"
+		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
+		sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
 		from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d
 		<where>
 			a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
