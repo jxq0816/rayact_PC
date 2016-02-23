@@ -14,7 +14,7 @@ import java.util.Date;
  * @author jiangxingqi
  * @version 2015-12-29
  */
-public class ReserveMemeberIntervalReport extends SaasEntity<ReserveMemeberIntervalReport> {
+public class ReserveMemberDayReport extends SaasEntity<ReserveMemberDayReport> {
 
     private static final long serialVersionUID = 1L;
 

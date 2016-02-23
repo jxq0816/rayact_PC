@@ -75,23 +75,22 @@
                         <table>
                             <thead>
                             <tr>
+                                <th>场馆</th>
                                 <th>会员类型</th>
-                                <th>会员总数</th>
                                 <th>充值金额</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${page}" var="reserveCardRecordByCardType">
+                            <c:forEach items="${page}" var="report">
                                 <tr>
                                     <td>
-                                            ${reserveCardRecordByCardType.projectName}&nbsp;${reserveCardRecordByCardType.cardTypeName}
-                                    </td>
-
-                                    <td>
-                                            ${reserveCardRecordByCardType.memberCnt}
+                                            ${report.venueName}
                                     </td>
                                     <td>
-                                            ${reserveCardRecordByCardType.transactionVolume}
+                                            ${report.projectName}
+                                    </td>
+                                    <td>
+                                            ${report.transactionVolume}
                                     </td>
                                 </tr>
                             </c:forEach>

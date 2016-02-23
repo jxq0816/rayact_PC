@@ -58,17 +58,25 @@
 	</select>
 
 	<select id="memberIncomeCollectRecord" resultType="java.util.Map">
-		select s.name as cardTypeName,
-		COUNT(distinct m.id) as memberCnt ,
-		sum(a.transaction_volume) as transactionVolume,
-		p.name as projectName
-		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-		and a.transaction_type='1' and a.fk_reserve_member_id=m.id and m.fk_reserve_storedcard_member_set_id=s.id and p.id=s.fk_reserve_project_id
-		<if test="startDate!=null and endDate !=null">
-			and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
-		</if>
-		GROUP BY s.name
+		select
+		v.id,
+		v.name as venueName,
+		p.id,
+		p.name as projectName,
+		s.id ,
+		s.name as cardTypeName,
+		sum(a.transaction_volume) as transactionVolume
+		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p,reserve_venue as v
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			and a.transaction_type='1' and a.fk_reserve_member_id=m.id
+			and m.fk_reserve_storedcard_member_set_id=s.id and p.id=s.fk_reserve_project_id
+			and v.id= m.fk_reserve_venue_id
+			<if test="startDate!=null and endDate !=null">
+				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
+			</if>
+		</where>
+		GROUP BY v.id,p.id
 	</select>
 
 

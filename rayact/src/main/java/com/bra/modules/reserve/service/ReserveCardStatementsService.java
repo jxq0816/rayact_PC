@@ -4,6 +4,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveCardStatementsDao;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
+import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +33,8 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return super.findPage(page, reserveCardStatements);
 	}
 
-	public List<Map<String,Object>> memberIncomeCollectRecord( ReserveCardStatements reserveCardStatements) {
-		return dao.memberIncomeCollectRecord(reserveCardStatements);
+	public List<Map<String,Object>> memberIncomeCollectRecord( ReserveMemberIntervalReport reserveMemberIntervalReport) {
+		return dao.memberIncomeCollectRecord(reserveMemberIntervalReport);
 	}
 
 

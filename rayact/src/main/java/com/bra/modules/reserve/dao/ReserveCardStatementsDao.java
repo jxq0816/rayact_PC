@@ -3,6 +3,7 @@ package com.bra.modules.reserve.dao;
 import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
+import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,10 +21,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      BigDecimal rechargeOfMonth(ReserveCardStatements reserveCardStatements);
 
-
-     List<Map<String,Object>> memberIncomeCollectRecord(ReserveCardStatements reserveCardStatements);
-
-
+     List<Map<String,Object>> memberIncomeCollectRecord(ReserveMemberIntervalReport reserveMemberIntervalReport);
 
      List<Map<String,Object>> rechargeOfChart(ReserveCardStatements reserveCardStatements);
 }

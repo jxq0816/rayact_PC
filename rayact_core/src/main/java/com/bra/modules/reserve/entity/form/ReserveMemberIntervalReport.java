@@ -2,19 +2,19 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.modules.reserve.entity.ReserveCommodity;
-import com.bra.modules.reserve.entity.ReserveCommodityType;
+import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
 
 /**
+
  * 商品收入统计Entity
  *
  * @author jiangxingqi
  * @version 2015-12-29
  */
-public class ReserveMemeberDayReport extends SaasEntity<ReserveMemeberDayReport> {
+public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberIntervalReport> {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,20 +36,11 @@ public class ReserveMemeberDayReport extends SaasEntity<ReserveMemeberDayReport>
 
     private ReserveVenue reserveVenue;//场馆
 
-    private ReserveCommodity reserveCommodity;//商品
+    private ReserveStoredcardMemberSet storedcardMemberSet;//会员类型
 
+    private Date startDate;//开始日期
 
-    private ReserveCommodityType reserveCommodityType;//商品类型
-
-    private Date day;//日期
-
-    public ReserveCommodityType getReserveCommodityType() {
-        return reserveCommodityType;
-    }
-
-    public void setReserveCommodityType(ReserveCommodityType reserveCommodityType) {
-        this.reserveCommodityType = reserveCommodityType;
-    }
+    private Date endDate;//结束日期
 
     public Double getStoredCardBill() {
         return storedCardBill;
@@ -115,20 +106,13 @@ public class ReserveMemeberDayReport extends SaasEntity<ReserveMemeberDayReport>
         this.reserveVenue = reserveVenue;
     }
 
-    public Date getDay() {
-        return day;
+
+    public ReserveStoredcardMemberSet getStoredcardMemberSet() {
+        return storedcardMemberSet;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
-    }
-
-    public ReserveCommodity getReserveCommodity() {
-        return reserveCommodity;
-    }
-
-    public void setReserveCommodity(ReserveCommodity reserveCommodity) {
-        this.reserveCommodity = reserveCommodity;
+    public void setStoredcardMemberSet(ReserveStoredcardMemberSet storedcardMemberSet) {
+        this.storedcardMemberSet = storedcardMemberSet;
     }
 
     public Double getBill() {
@@ -140,5 +124,19 @@ public class ReserveMemeberDayReport extends SaasEntity<ReserveMemeberDayReport>
     }
 
 
+    public Date getStartDate() {
+        return startDate;
+    }
 
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 }

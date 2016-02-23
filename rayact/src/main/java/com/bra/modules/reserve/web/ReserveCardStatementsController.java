@@ -5,7 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import com.bra.modules.reserve.service.ReserveMemberService;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.service.ReserveCardStatementsService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +43,9 @@ public class ReserveCardStatementsController extends BaseController {
 
 	@Autowired
 	private ReserveMemberService reserveMemberService;
+
+	@Autowired
+	private ReserveVenueService reserveVenueService;
 
 	@ModelAttribute
 	public ReserveCardStatements get(@RequestParam(required=false) String id) {
@@ -76,15 +83,26 @@ public class ReserveCardStatementsController extends BaseController {
 	}
 	/*会员收入统计*/
 	@RequestMapping(value = {"memberIncomeReport", ""})
-	public String listByStoredCardType(ReserveCardStatements reserveCardStatements, String payType,HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport, String payType, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+
 		if(StringUtils.isEmpty(payType)){
 			payType="1";
 		}
+		if(reserveMemberIntervalReport.getStartDate()==null){
+			reserveMemberIntervalReport.setStartDate(new Date());
+		}
+		if(reserveMemberIntervalReport.getEndDate()==null){
+			reserveMemberIntervalReport.setEndDate(new Date());
+		}
+		model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);
 		if("1".equals(payType)){
-			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectRecord(reserveCardStatements);
+			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectRecord(reserveMemberIntervalReport);
 			model.addAttribute("page", page);
 			return "reserve/report/memberIncomeCollectRecord";
 		}else{
+
 
 		}
 		return null;
