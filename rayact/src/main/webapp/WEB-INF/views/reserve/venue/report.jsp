@@ -29,7 +29,7 @@
                                     <td>场馆:</td>
                                     <td>
 
-                                        <sys:select cssClass="input-medium" name="reserveVenue.id"
+                                        <sys:select cssClass="input-large" name="reserveVenue.id"
                                                     value="reserveVenue"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"

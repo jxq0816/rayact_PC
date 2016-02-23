@@ -29,7 +29,7 @@
                                     <td>场馆:</td>
                                     <td>
 
-                                        <sys:select cssClass="input-medium" name="reserveVenue.id"
+                                        <sys:select cssClass="input-large" name="reserveVenue.id"
                                                     value="reserveVenue"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
@@ -37,7 +37,7 @@
                                     </td>
                                     <td>商品类型:</td>
                                     <td>
-                                        <sys:select cssClass="input-medium" name="reserveCommodityType.id"
+                                        <sys:select cssClass="input-large" name="reserveCommodityType.id"
                                                     value="reserveCommodityType"
                                                     items="${reserveCommodityTypeList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
@@ -157,9 +157,6 @@
 
                                     <td>
                                             ${intervalReport.bill}
-                                    </td>
-                                    <td>
-                                            ${intervalReport.commodityIncomeRate}%
                                     </td>
                                 </tr>
                                 <c:forEach items="${intervalReport.dayReportList}" var="dayReport">
