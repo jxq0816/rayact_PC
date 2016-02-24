@@ -36,14 +36,14 @@
                                                     defaultValue=""></sys:select>
                                     </td>
                                     <td>
-                                        <input name="startDate" id="startDate" type="text" readonly="readonly"
+                                        <input name="startDate" id="startDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                value="<fmt:formatDate value="${intervalReport.startDate}" type="date"></fmt:formatDate>"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                         </td>
                                     <td>
-                                        <input name="endDate" id="endDate" type="text" readonly="readonly"
+                                        <input name="endDate" id="endDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                value="<fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>"
@@ -63,13 +63,13 @@
                             <thead>
                             <tr>
                                 <th>时间</th>
-                                <th>场地费（现金）</th>
-                                <th>场地费（银行卡）</th>
-                                <th>场地费（储值卡）</th>
-                                <th>场地费（微信）</th>
-                                <th>场地费（支付宝）</th>
-                                <th>场地费（其它）</th>
-                                <th>场地费（欠账）</th>
+                                <th>储值卡</th>
+                                <th>现金</th>
+                                <th>银行卡</th>
+                                <th>微信</th>
+                                <th>支付宝</th>
+                                <th>其它</th>
+                                <th>欠账</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -81,14 +81,16 @@
                                     <fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>
                                 </td>
                                 <td>
+                                    ${totalReport.fieldBillStoredCard}
+                                </td>
+
+                                <td>
                                     ${totalReport.fieldBillCash}
                                 </td>
                                 <td>
                                     ${totalReport.fieldBillBankCard}
                                 </td>
-                                <td>
-                                    ${totalReport.fieldBillStoredCard}
-                                </td>
+
                                 <td>
                                     ${totalReport.fieldBillWeiXin}
                                 </td>
@@ -113,14 +115,15 @@
                                             ${report.reserveProject.name}
                                     </td>
                                     <td>
+                                            ${report.fieldBillStoredCard}
+                                    </td>
+                                    <td>
                                             ${report.fieldBillCash}
                                     </td>
                                     <td>
                                             ${report.fieldBillBankCard}
                                     </td>
-                                    <td>
-                                            ${report.fieldBillStoredCard}
-                                    </td>
+
                                     <td>
                                             ${report.fieldBillWeiXin}
                                     </td>
@@ -143,14 +146,15 @@
                                             <fmt:formatDate value="${dayReport.day}" type="date"></fmt:formatDate>
                                         </td>
                                         <td>
+                                                ${dayReport.fieldBillStoredCard}
+                                        </td>
+                                        <td>
                                                 ${dayReport.fieldBillCash}
                                         </td>
                                         <td>
                                                 ${dayReport.fieldBillBankCard}
                                         </td>
-                                        <td>
-                                                ${dayReport.fieldBillStoredCard}
-                                        </td>
+
                                         <td>
                                                 ${dayReport.fieldBillWeiXin}
                                         </td>

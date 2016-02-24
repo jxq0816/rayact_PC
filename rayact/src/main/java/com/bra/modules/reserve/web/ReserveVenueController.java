@@ -131,13 +131,12 @@ public class ReserveVenueController extends BaseController {
         totalReport.setFieldBillDue(dueSum);
         totalReport.setFieldBillOther(otherSum);
 
-
         model.addAttribute("venue",venue);//场馆
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
         model.addAttribute("intervalReports",intervalReports);//区间报表
         model.addAttribute("totalReport",totalReport);//月总报表
         model.addAttribute("intervalReport",intervalReport);//请求参数
-        return "reserve/venue/report";
+        return "reserve/report/venueIncomeReport";
     }
 
 }

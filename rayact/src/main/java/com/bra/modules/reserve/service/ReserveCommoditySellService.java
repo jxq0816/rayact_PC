@@ -79,20 +79,8 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 		return sellReport;
 	}
 
-	public List<Map<String,Object>> commodityIncomeRatioReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport) {
-		List<Map<String, Object>> list = dao.commodityIncomeRatioReport(reserveCommodityIntervalReport);
-		double total=0;
-		for(Map<String,Object> map : list){
-			double saleAmount=(double)map.get("saleAmount");
-			total=total+saleAmount;
-		}
-		for(Map<String,Object> map : list){
-			double saleAmount=(double)map.get("saleAmount");
-			double rate=(saleAmount/total)*100;
-			BigDecimal   rateBig   =   new   BigDecimal(rate);
-			double  r= rateBig.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();//保留两位小数
-			map.put("saleRate",r);
-		}
+	public List<ReserveCommodityIntervalReport> commodityIncomeCollectReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport) {
+		List<ReserveCommodityIntervalReport> list = dao.commodityIncomeCollectReport(reserveCommodityIntervalReport);
 		return list;
 	}
 	public List<ReserveCommodityIntervalReport> reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport){

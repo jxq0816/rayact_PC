@@ -93,8 +93,8 @@ public class ReserveCommoditySellController extends BaseController {
 		model.addAttribute("reserveCommodityTypeList", reserveCommodityTypeList);
 
 		if("1".equals(queryType)){
-			List<Map<String,Object>> incomeRatioReports=reserveCommoditySellService.commodityIncomeRatioReport(reserveCommodityIntervalReport);//收入比例
-			model.addAttribute("incomeRatioReports", incomeRatioReports);
+			List<ReserveCommodityIntervalReport> incomeCollectReports=reserveCommoditySellService.commodityIncomeCollectReport(reserveCommodityIntervalReport);//收入汇总
+			model.addAttribute("incomeCollectReports", incomeCollectReports);
 			return "reserve/report/commodityIncomeCollectReport";
 		}else if("2".equals(queryType)){
 			List<ReserveCommodityIntervalReport> intervalReports=reserveCommoditySellService.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);

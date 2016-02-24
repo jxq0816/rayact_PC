@@ -98,9 +98,9 @@
                             <tr>
                                 <th>日期</th>
                                 <th>储值卡类型</th>
+                                <th>现金收入</th>
                                 <th>储值卡收入</th>
                                 <th>银行卡收入</th>
-                                <th>现金收入</th>
                                 <th>微信收入</th>
                                 <th>支付宝收入</th>
                                 <th>欠账</th>
@@ -166,7 +166,6 @@
                                         <td>
                                                ${dayReport.storedcardMemberSet.name}
                                         </td>
-
 
                                         <td>
                                                 ${dayReport.storedCardBill}

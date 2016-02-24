@@ -91,22 +91,51 @@
                             <thead>
                             <tr>
                                 <th>商品类型</th>
-                                <th>销售金额</th>
-                                <th>销售比例</th>
+                                <th>储值卡</th>
+                                <th>现金</th>
+                                <th>银行卡</th>
+                                <th>微信</th>
+                                <th>支付宝</th>
+                                <th>欠账</th>
+                                <th>其它</th>
+                                <th>销售总金额</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${incomeRatioReports}" var="commodityTypeIncomeRecord">
+                            <c:forEach items="${incomeCollectReports}" var="incomeCollectReport">
                                 <tr>
                                     <td>
-                                            ${commodityTypeIncomeRecord.commodityTypeName}
+                                            ${incomeCollectReport.reserveCommodityType.name}
+                                    </td>
+                                    <td>
+                                            ${incomeCollectReport.storedCardBill}
                                     </td>
 
                                     <td>
-                                            ${commodityTypeIncomeRecord.saleAmount}
+                                            ${incomeCollectReport.cashBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.bankCardBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.weiXinBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.aliPayBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.dueBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.otherBill}
                                     </td>
                                     <td>
-                                            ${commodityTypeIncomeRecord.saleRate}%
+                                            ${incomeCollectReport.bill}
                                     </td>
                                 </tr>
                             </c:forEach>
