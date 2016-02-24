@@ -5,6 +5,7 @@ import com.bra.common.utils.JsonUtils;
 import com.bra.common.utils.MyBeanUtils;
 import com.bra.common.utils.SpringContextHolder;
 import com.bra.modules.cms.eneity.Article;
+import com.bra.modules.cms.eneity.Comment;
 import com.bra.modules.cms.service.ArticleService;
 import com.bra.plugin.migration.Utils;
 import com.bra.plugin.migration.entity.MobileHead;
@@ -37,7 +38,7 @@ public class ViewArticleApi implements TransmitsService {
         map.put("share", Global.getConfig("system.url")+"article/view"+map.get("id"));
 
         CommentList commentList = new CommentList();
-        commentList.list(json,request);
+        commentList.list(json,request, Comment.MODEL_ARTICLE);
 
         json.put("data",map);
         return JsonUtils.writeObjectToJson(json);

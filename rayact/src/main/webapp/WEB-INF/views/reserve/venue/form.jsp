@@ -484,7 +484,7 @@
                                 <tr>
                                     <td colspan="4">
                                         <mechanism:upload id="financeSchoolPic" fdKey="venuePic"
-                                                          name="attMains1" exts=".jpg"
+                                                          name="attMains1" exts=""
                                                           btnText="添加"
                                                           modelId="${reserveVenue.id}"
                                                           showImg="true" resizeImg="true" resizeWidth="454"

@@ -31,7 +31,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 		dao.update(comment);
 	}
 
-    public Page<Comment> listComment(String conentId,String pNo) {
+    public Page<Comment> listComment(String modelKey,String conentId,String pNo) {
         Integer pageNo = StringUtils.isBlank(pNo) ? 1 : NumberUtils.toInt(pNo, 1);
         Page<Comment> page = new Page<>();
         page.setPageNo(pageNo);

@@ -4,7 +4,7 @@
     
 	<sql id="cmsCommentDaoColumns">
 		a.id AS "id",
-		a.category_id AS "category.id",
+		a.category_id AS "modelKey",
 		a.content_id AS "contentId",
 		a.title AS "title",
 		a.content AS "content",
@@ -40,6 +40,9 @@
 			<if test="contentId!=null and contentId!=''">
 				and a.content_id = #{contentId}
 			</if>
+			<if test="modelKey!=null and modelKey!=''">
+				and a.modelKey = #{modelKey}
+			</if>
 			<if test="title != null and title != ''">
 				AND a.title LIKE 
 					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
@@ -72,7 +75,7 @@
 			member_id
 		) VALUES (
 			#{id},
-			#{category.id},
+			#{modelKey},
 			#{contentId},
 			#{title},
 			#{content},
@@ -87,9 +90,8 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE cms_comment SET 	
-			
-			category_id = #{category.id},
+		UPDATE cms_comment SET
+			category_id = #{modelKey},
 			content_id = #{contentId},
 			title = #{title},
 			content = #{content},

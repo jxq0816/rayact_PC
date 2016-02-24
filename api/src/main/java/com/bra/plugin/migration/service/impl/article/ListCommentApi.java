@@ -16,7 +16,7 @@ public class ListCommentApi implements TransmitsService{
     public String executeTodo(MobileHead mobileHead, Map<String, Object> request) {
         Map<String,Object> json = Utils.headMap(mobileHead);
         CommentList commentList = new CommentList();
-        commentList.list(json,request);
+        commentList.list(json,request,null);
         return JsonUtils.writeObjectToJson(json);
     }
 

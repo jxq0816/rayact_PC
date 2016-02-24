@@ -15,8 +15,11 @@ import java.util.Date;
  */
 public class Comment extends DataEntity<Comment> {
 
+	public static final String MODEL_ARTICLE = "article";
+	public static final String MODEL_VENUE = "venue";
+
 	private static final long serialVersionUID = 1L;
-	private Category category;// 分类编号
+	private String modelKey;// 分类编号 article:资讯；venue:场馆
 	private String contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
 	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
 	private String content; // 评论内容
@@ -37,21 +40,13 @@ public class Comment extends DataEntity<Comment> {
 		this();
 		this.id = id;
 	}
-	
-	public Comment(Category category){
-		this();
-		this.category = category;
-	}
-	
 
-
-	@NotNull
-	public Category getCategory() {
-		return category;
+	public String getModelKey() {
+		return modelKey;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setModelKey(String modelKey) {
+		this.modelKey = modelKey;
 	}
 
 	@NotNull
