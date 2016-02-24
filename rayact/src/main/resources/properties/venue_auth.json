@@ -136,6 +136,12 @@
         "authorityList": []
       },
       {
+        "code": "totalIncomeReport",
+        "name": "总收入统计",
+        "href":"/reserve/reserveVenue/totalIncomeReport",
+        "authorityList": []
+      },
+      {
         "code": "memberIncomeReport",
         "name": "会员收入统计",
         "href":"/reserve/reserveCardStatements/memberIncomeReport",

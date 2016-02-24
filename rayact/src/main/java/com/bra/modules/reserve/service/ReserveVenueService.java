@@ -9,6 +9,7 @@ import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,5 +131,11 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             mr.setDayReportList(dayReports);
         }
         return list;
+    }
+
+    public ReserveVenueTotalIntervalReport totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport) {
+
+
+        return intervalTotalReport;
     }
 }

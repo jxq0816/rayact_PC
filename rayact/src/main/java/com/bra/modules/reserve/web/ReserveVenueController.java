@@ -10,6 +10,7 @@ import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,6 +81,28 @@ public class ReserveVenueController extends BaseController {
         reserveVenueService.delete(reserveVenue);
         addMessage(redirectAttributes, "删除场馆成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveVenue/?repage";
+    }
+
+    @RequestMapping(value = "totalIncomeReport")
+    public String totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport, Model model) {
+        Date startDate=intervalTotalReport.getStartDate();
+        Date endDate=intervalTotalReport.getEndDate();
+        if(startDate==null){
+            startDate=new Date();//默认当天
+            intervalTotalReport.setStartDate(startDate);
+        }
+        if(endDate==null){
+            endDate=new Date();//默认当天
+            intervalTotalReport.setEndDate(endDate);
+        }
+        intervalTotalReport.setReserveVenue(reserveVenueService.get(intervalTotalReport.getReserveVenue()));
+        List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
+
+        intervalTotalReport=reserveVenueService.totalIncomeReport(intervalTotalReport);
+        model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
+
+        model.addAttribute("intervalTotalReport",intervalTotalReport);//请求参数
+        return "reserve/report/venueIncomeTotalReport";
     }
 
     @RequestMapping(value = "report")
