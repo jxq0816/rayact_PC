@@ -5,6 +5,7 @@ CREATE TABLE reserve_project
 	id varchar(19) NOT NULL,
 	name varchar(30),
 	ticket_type VARCHAR(2) COMMENT '1:场次售卖；2:人次售卖；3:全部',
+	interface_id varchar(1) COMMENT '1：篮球 2：足球 3：网球 4：羽毛球 5：乒乓球',
 	available char(1),
 	create_by varchar(64),
 	create_date datetime,
