@@ -57,19 +57,26 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="memberIncomeCollectReport" resultType="java.util.Map">
+	<select id="memberIncomeCollectReport" resultType="ReserveMemberIntervalReport">
 		select
 		<if test="reserveVenue!=null">
 			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
-				v.id,
-				v.name as "venueName",
+				v.id as "reserveVenue.id",
+				v.name as "reserveVenue.name",
 			</if>
 		</if>
-		p.id,
-		p.name as "projectName",
-		s.id ,
-		s.name as "cardTypeName",
-		sum(a.transaction_volume) as "transactionVolume"
+		p.id as "reserveProject.id",
+		p.name as "reserveProject.name",
+		s.id as "storedcardMemberSet.id",
+		s.name as "storedcardMemberSet.name",
+		SUM(a.transaction_volume) AS "bill",
+		sum(if(pay_type=1,a.transaction_volume,0)) AS "storedCardBill",
+		sum(if(pay_type=2,a.transaction_volume,0)) AS "cashBill",
+		sum(if(pay_type=3,a.transaction_volume,0)) AS "bankCardBill",
+		sum(if(pay_type=4,a.transaction_volume,0)) AS "weiXinBill",
+		sum(if(pay_type=5,a.transaction_volume,0)) AS "aliPayBill",
+		sum(if(pay_type=6,a.transaction_volume,0)) AS "otherBill",
+		sum(if(pay_type=7,a.transaction_volume,0)) AS "dueBill"
 		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p,reserve_venue as v
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}

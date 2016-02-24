@@ -77,17 +77,51 @@
                             <thead>
                             <tr>
                                 <th>项目</th>
-                                <th>充值金额</th>
+                                <th>储值卡收入</th>
+                                <th>银行卡收入</th>
+                                <th>现金收入</th>
+                                <th>微信收入</th>
+                                <th>支付宝收入</th>
+                                <th>欠账</th>
+                                <th>其它</th>
+                                <th>充值总金额</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${page}" var="report">
+                            <c:forEach items="${collectReport}" var="report">
                                 <tr>
                                     <td>
-                                            ${report.projectName}
+                                            ${report.reserveProject.name}
                                     </td>
                                     <td>
-                                            ${report.transactionVolume}
+                                            ${report.storedCardBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.cashBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.bankCardBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.weiXinBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.aliPayBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.dueBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.otherBill}
+                                    </td>
+                                    <td>
+                                            ${report.bill}
                                     </td>
                                 </tr>
                             </c:forEach>

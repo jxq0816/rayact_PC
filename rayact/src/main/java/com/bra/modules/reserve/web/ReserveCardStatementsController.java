@@ -105,8 +105,8 @@ public class ReserveCardStatementsController extends BaseController {
 		model.addAttribute("reserveVenueList", reserveVenueList);
 
 		if("1".equals(queryType)){
-			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectReport(reserveMemberIntervalReport);
-			model.addAttribute("page", page);
+			List<ReserveMemberIntervalReport> collectReport=reserveCardStatementsService.memberIncomeCollectReport(reserveMemberIntervalReport);
+			model.addAttribute("collectReport", collectReport);
 			model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);//请求参数返回
 			return "reserve/report/memberIncomeCollectReport";
 		}else{

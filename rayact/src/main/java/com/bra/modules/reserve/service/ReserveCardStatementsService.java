@@ -36,7 +36,7 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return super.findPage(page, reserveCardStatements);
 	}
 
-	public List<Map<String,Object>> memberIncomeCollectReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
+	public List<ReserveMemberIntervalReport> memberIncomeCollectReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
 		return dao.memberIncomeCollectReport(reserveMemberIntervalReport);
 	}
 

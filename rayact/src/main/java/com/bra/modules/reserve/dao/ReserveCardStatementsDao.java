@@ -23,7 +23,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      BigDecimal rechargeOfMonth(ReserveCardStatements reserveCardStatements);
 
-     List<Map<String,Object>> memberIncomeCollectReport(ReserveMemberIntervalReport reserveMemberIntervalReport);
+     List<ReserveMemberIntervalReport> memberIncomeCollectReport(ReserveMemberIntervalReport reserveMemberIntervalReport);
 
      List<ReserveMemberIntervalReport> memberIncomeIntervalReport(ReserveMemberIntervalReport reserveMemberIntervalReport);
 
