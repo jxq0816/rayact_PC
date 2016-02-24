@@ -7,9 +7,7 @@ import com.bra.modules.reserve.dao.ReserveVenueDao;
 import com.bra.modules.reserve.entity.ReserveField;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport;
-import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
-import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
+import com.bra.modules.reserve.entity.form.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,13 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
     @Autowired
     private ReserveFieldService reserveFieldService;
+
+    @Autowired
+    private ReserveCardStatementsService reserveCardStatementsService;
+
+    @Autowired
+    private ReserveCommoditySellService reserveCommoditySellService;
+
 
     public ReserveVenue get(String id) {
         ReserveVenue reserveVenue = super.get(id);
@@ -135,7 +140,74 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
     public ReserveVenueTotalIntervalReport totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport) {
 
+        ReserveVenue reserveVenue=intervalTotalReport.getReserveVenue();
+        Date startDate=intervalTotalReport.getStartDate();
+        Date endDate=intervalTotalReport.getEndDate();
+        Double billSum=0.0;
+        Double storedCardSum=0.0;
+        Double cashSum=0.0;
+        Double bankCardSum=0.0;
+        Double weiXinSum=0.0;
+        Double aliPaySum=0.0;
+        Double otherSum=0.0;
+        Double dueSum=0.0;
+        //场馆收入
+        ReserveVenueProjectIntervalReport intervalReport=new ReserveVenueProjectIntervalReport();
+        intervalReport.setReserveVenue(reserveVenue);
+        intervalReport.setStartDate(startDate);
+        intervalReport.setEndDate(endDate);
+        List<ReserveVenueProjectIntervalReport> list1 = dao.intervalReports(intervalReport);
+        for (ReserveVenueProjectIntervalReport report : list1) {
+            billSum+=report.getBill();
+            storedCardSum+=report.getFieldBillStoredCard();
+            cashSum+=report.getFieldBillCash();
+            bankCardSum+=report.getFieldBillBankCard();
+            weiXinSum+=report.getFieldBillWeiXin();
+            aliPaySum+=report.getFieldBillAliPay();
+            otherSum+=report.getFieldBillOther();
+            dueSum+=report.getFieldBillDue();
+        }
+        //会员收入
+        ReserveMemberIntervalReport intervalMemberReport=new ReserveMemberIntervalReport();
+        intervalMemberReport.setReserveVenue(reserveVenue);
+        intervalMemberReport.setStartDate(startDate);
+        intervalMemberReport.setEndDate(endDate);
+        List<ReserveMemberIntervalReport> memberCollectReports=reserveCardStatementsService.memberIncomeCollectReport(intervalMemberReport);
+        for(ReserveMemberIntervalReport report:memberCollectReports){
+            billSum+=report.getBill();
+            storedCardSum+=report.getStoredCardBill();
+            cashSum+=report.getCashBill();
+            bankCardSum+=report.getBankCardBill();
+            weiXinSum+=report.getWeiXinBill();
+            aliPaySum+=report.getAliPayBill();
+            otherSum+=report.getOtherBill();
+            dueSum+=report.getDueBill();
+        }
+        //商品收入
+        ReserveCommodityIntervalReport reserveCommodityIntervalReport=new  ReserveCommodityIntervalReport();
+        reserveCommodityIntervalReport.setReserveVenue(reserveVenue);
+        reserveCommodityIntervalReport.setEndDate(endDate);
+        reserveCommodityIntervalReport.setStartDate(startDate);
+        List<ReserveCommodityIntervalReport> commodityIntervalReports=reserveCommoditySellService.commodityIncomeCollectReport(reserveCommodityIntervalReport);
+        for(ReserveCommodityIntervalReport report:commodityIntervalReports){
+            billSum+=report.getBill();
+            storedCardSum+=report.getStoredCardBill();
+            cashSum+=report.getCashBill();
+            bankCardSum+=report.getBankCardBill();
+            weiXinSum+=report.getWeiXinBill();
+            aliPaySum+=report.getAliPayBill();
+            otherSum+=report.getOtherBill();
+            dueSum+=report.getDueBill();
+        }
 
+        intervalTotalReport.setBill(billSum);
+        intervalTotalReport.setStoredCardBill(storedCardSum);
+        intervalTotalReport.setCashBill(cashSum);
+        intervalTotalReport.setBankCardBill(bankCardSum);
+        intervalTotalReport.setWeiXinBill(weiXinSum);
+        intervalTotalReport.setAliPayBill(aliPaySum);
+        intervalTotalReport.setOtherBill(otherSum);
+        intervalTotalReport.setDueBill(dueSum);
         return intervalTotalReport;
     }
 }

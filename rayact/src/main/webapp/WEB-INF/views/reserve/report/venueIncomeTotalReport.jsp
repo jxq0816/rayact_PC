@@ -16,7 +16,7 @@
                 <div class="header">
                     <h3>场馆收入总报表</h3>
                 </div>
-                <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/report"
+                <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/totalIncomeReport"
                            method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -39,14 +39,14 @@
                                         <input name="startDate" id="startDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
-                                               value="<fmt:formatDate value="${intervalReport.startDate}" type="date"></fmt:formatDate>"
+                                               value="<fmt:formatDate value="${intervalTotalReport.startDate}" type="date"></fmt:formatDate>"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                         </td>
                                     <td>
                                         <input name="endDate" id="endDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
-                                               value="<fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>"
+                                               value="<fmt:formatDate value="${intervalTotalReport.endDate}" type="date"></fmt:formatDate>"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
@@ -57,7 +57,7 @@
                     </div>
                 </form:form>
                 <div class="content">
-                    场馆：${venue.name}
+                    场馆：${intervalTotalReport.reserveVenue.name}
                     <div class="table-responsive">
                         <table>
                             <thead>
@@ -76,32 +76,32 @@
                             <%-- 总统计 开始 --%>
                             <tr>
                                 <td>
-                                    <fmt:formatDate value="${intervalReport.startDate}" type="date"></fmt:formatDate>
+                                    <fmt:formatDate value="${intervalTotalReport.startDate}" type="date"></fmt:formatDate>
                                     至
-                                    <fmt:formatDate value="${intervalReport.endDate}" type="date"></fmt:formatDate>
+                                    <fmt:formatDate value="${intervalTotalReport.endDate}" type="date"></fmt:formatDate>
                                 </td>
                                 <td>
-                                    ${intervalReport.storedCardBill}
-                                </td>
-
-                                <td>
-                                    ${intervalReport.cashBill}
-                                </td>
-                                <td>
-                                    ${intervalReport.bankCardBill}
+                                    ${intervalTotalReport.storedCardBill}
                                 </td>
 
                                 <td>
-                                    ${intervalReport.weiXinBill}
+                                    ${intervalTotalReport.cashBill}
                                 </td>
                                 <td>
-                                    ${intervalReport.aliPayBill}
+                                    ${intervalTotalReport.bankCardBill}
+                                </td>
+
+                                <td>
+                                    ${intervalTotalReport.weiXinBill}
                                 </td>
                                 <td>
-                                    ${intervalReport.otherBill}
+                                    ${intervalTotalReport.aliPayBill}
                                 </td>
                                 <td>
-                                    ${intervalReport.dueBill}
+                                    ${intervalTotalReport.otherBill}
+                                </td>
+                                <td>
+                                    ${intervalTotalReport.dueBill}
                                 </td>
                             </tr>
                             <%-- 总统计 结束 --%>

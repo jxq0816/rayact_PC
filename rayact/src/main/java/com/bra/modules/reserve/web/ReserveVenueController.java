@@ -101,7 +101,7 @@ public class ReserveVenueController extends BaseController {
         intervalTotalReport=reserveVenueService.totalIncomeReport(intervalTotalReport);
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
 
-        model.addAttribute("intervalTotalReport",intervalTotalReport);//请求参数
+        model.addAttribute("intervalTotalReport",intervalTotalReport);//请求参数&返回结果
         return "reserve/report/venueIncomeTotalReport";
     }
 

@@ -21,6 +21,8 @@ public class ReserveVenueProjectDayReport extends SaasEntity<ReserveVenueProject
 
     private static final long serialVersionUID = 1L;
 
+    private Double bill;
+
     private Double  fieldBillStoredCard;// 储值卡
 
     private Double  fieldBillCash;//现金
@@ -132,4 +134,11 @@ public class ReserveVenueProjectDayReport extends SaasEntity<ReserveVenueProject
     }
 
 
+    public Double getBill() {
+        return bill;
+    }
+
+    public void setBill(Double bill) {
+        this.bill = bill;
+    }
 }

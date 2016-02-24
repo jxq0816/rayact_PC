@@ -86,6 +86,7 @@
 		b.cons_date AS "day",
 		d.id AS "reserveProject.id",
 		d.name AS "reserveProject.name",
+		sum(b.order_price) AS "bill",
 		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
 		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
 		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
@@ -128,6 +129,7 @@
 		</if>
 		d.id AS "reserveProject.id",
 		d.name AS "reserveProject.name",
+		sum(b.order_price) AS "bill",
 		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
 		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
 		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
