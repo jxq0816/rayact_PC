@@ -48,14 +48,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
+                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveMemberIntervalReport.startDate}"/>"
                                            name="startDate" id="startDate" type="text"
                                            maxlength="20"
                                            class="input-medium form-control Wdate "
                                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </td>
                                 <td>
-                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
+                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveMemberIntervalReport.endDate}"/>"
                                            name="endDate" id="endDate" type="text"
                                            maxlength="20"
                                            class="input-medium form-control Wdate "
@@ -72,10 +72,10 @@
                 <sys:msg content="${message}"/>
                 <div class="content">
                     <div class="table-responsive">
+                        场馆：${reserveMemberIntervalReport.reserveVenue.name}
                         <table>
                             <thead>
                             <tr>
-                                <th>场馆</th>
                                 <th>项目</th>
                                 <th>充值金额</th>
                             </tr>
@@ -83,9 +83,6 @@
                             <tbody>
                             <c:forEach items="${page}" var="report">
                                 <tr>
-                                    <td>
-                                            ${report.venueName}
-                                    </td>
                                     <td>
                                             ${report.projectName}
                                     </td>

@@ -91,6 +91,7 @@ public class ReserveCardStatementsController extends BaseController {
 	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport, String queryType, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());
+		reserveMemberIntervalReport.setReserveVenue(reserveVenueService.get(reserveMemberIntervalReport.getReserveVenue()));//场馆信息完善
 
 		if(StringUtils.isEmpty(queryType)){
 			queryType="1";
@@ -102,16 +103,19 @@ public class ReserveCardStatementsController extends BaseController {
 			reserveMemberIntervalReport.setEndDate(new Date());
 		}
 		model.addAttribute("reserveVenueList", reserveVenueList);
-		model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);
+
 		if("1".equals(queryType)){
-			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectRecord(reserveMemberIntervalReport);
+			List<Map<String,Object>> page=reserveCardStatementsService.memberIncomeCollectReport(reserveMemberIntervalReport);
 			model.addAttribute("page", page);
+			model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);//请求参数返回
 			return "reserve/report/memberIncomeCollectReport";
 		}else{
+			reserveMemberIntervalReport.setReserveProject(reserveProjectService.get(reserveMemberIntervalReport.getReserveProject()));//项目信息完善
 			List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
-			//List<ReserveMemberIntervalReport> intervalReport=reserveCardStatementsService.memberIncomeIntervalRecord(reserveMemberIntervalReport);
-			//model.addAttribute("intervalReport", intervalReport);
+			List<ReserveMemberIntervalReport> intervalReports=reserveCardStatementsService.memberIncomeIntervalReport(reserveMemberIntervalReport);
+			model.addAttribute("intervalReports", intervalReports);
 			model.addAttribute("projectList", projectList);
+			model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);//请求参数返回
 			return "reserve/report/memberIncomeDetailReport";
 		}
 	}

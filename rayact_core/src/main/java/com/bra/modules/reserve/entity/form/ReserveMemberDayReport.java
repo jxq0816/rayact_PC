@@ -2,9 +2,7 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.modules.reserve.entity.ReserveCommodity;
-import com.bra.modules.reserve.entity.ReserveCommodityType;
-import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.*;
 
 import java.util.Date;
 
@@ -36,20 +34,11 @@ public class ReserveMemberDayReport extends SaasEntity<ReserveMemberDayReport> {
 
     private ReserveVenue reserveVenue;//场馆
 
-    private ReserveCommodity reserveCommodity;//商品
+    private ReserveProject reserveProject;//项目
 
-
-    private ReserveCommodityType reserveCommodityType;//商品类型
+    private ReserveStoredcardMemberSet storedcardMemberSet;//会员类型
 
     private Date day;//日期
-
-    public ReserveCommodityType getReserveCommodityType() {
-        return reserveCommodityType;
-    }
-
-    public void setReserveCommodityType(ReserveCommodityType reserveCommodityType) {
-        this.reserveCommodityType = reserveCommodityType;
-    }
 
     public Double getStoredCardBill() {
         return storedCardBill;
@@ -123,12 +112,20 @@ public class ReserveMemberDayReport extends SaasEntity<ReserveMemberDayReport> {
         this.day = day;
     }
 
-    public ReserveCommodity getReserveCommodity() {
-        return reserveCommodity;
+    public ReserveProject getReserveProject() {
+        return reserveProject;
     }
 
-    public void setReserveCommodity(ReserveCommodity reserveCommodity) {
-        this.reserveCommodity = reserveCommodity;
+    public void setReserveProject(ReserveProject reserveProject) {
+        this.reserveProject = reserveProject;
+    }
+
+    public ReserveStoredcardMemberSet getStoredcardMemberSet() {
+        return storedcardMemberSet;
+    }
+
+    public void setStoredcardMemberSet(ReserveStoredcardMemberSet storedcardMemberSet) {
+        this.storedcardMemberSet = storedcardMemberSet;
     }
 
     public Double getBill() {

@@ -57,15 +57,19 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="memberIncomeCollectRecord" resultType="java.util.Map">
+	<select id="memberIncomeCollectReport" resultType="java.util.Map">
 		select
-		v.id,
-		v.name as venueName,
+		<if test="reserveVenue!=null">
+			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+				v.id,
+				v.name as "venueName",
+			</if>
+		</if>
 		p.id,
-		p.name as projectName,
+		p.name as "projectName",
 		s.id ,
-		s.name as cardTypeName,
-		sum(a.transaction_volume) as transactionVolume
+		s.name as "cardTypeName",
+		sum(a.transaction_volume) as "transactionVolume"
 		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p,reserve_venue as v
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
@@ -81,11 +85,114 @@
 				</if>
 			</if>
 		</where>
-		GROUP BY v.id,p.id
+		GROUP BY
+		<if test="reserveVenue!=null">
+			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+				v.id,
+			</if>
+		</if>
+		p.id
 	</select>
 
+	<select id="memberIncomeIntervalReport" resultType="ReserveMemberIntervalReport">
+		select
+		<if test="reserveVenue!=null">
+			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+				v.id as 'reserveVenue.id',
+				v.name as 'reserveVenue.name',
+			</if>
+		</if>
+		p.id as 'reserveProject.id',
+		p.name as 'reserveProject.name',
+		s.id as 'storedcardMemberSet.id',
+		s.name as 'storedcardMemberSet.name',
+		#{startDate} as 'startDate',
+		#{endDate} as 'endDate',
+		SUM(a.transaction_volume) AS "bill",
+		sum(if(pay_type=1,a.transaction_volume,0)) AS "storedCardBill",
+		sum(if(pay_type=2,a.transaction_volume,0)) AS "cashBill",
+		sum(if(pay_type=3,a.transaction_volume,0)) AS "bankCardBill",
+		sum(if(pay_type=4,a.transaction_volume,0)) AS "weiXinBill",
+		sum(if(pay_type=5,a.transaction_volume,0)) AS "aliPayBill",
+		sum(if(pay_type=6,a.transaction_volume,0)) AS "otherBill",
+		sum(if(pay_type=7,a.transaction_volume,0)) AS "dueBill"
+		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p,reserve_venue as v
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			AND a.transaction_type='1' and a.fk_reserve_member_id=m.id
+			and m.fk_reserve_storedcard_member_set_id=s.id
+			and p.id=s.fk_reserve_project_id
+			and v.id= m.fk_reserve_venue_id
+			and s.fk_reserve_project_id=p.id
+			<if test="reserveVenue!=null">
+				<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+					AND v.id=#{reserveVenue.id}
+				</if>
+			</if>
+			<if test="reserveProject!=null">
+				<if test="reserveProject.id!=null and reserveProject.id!=''">
+					AND p.id=#{reserveProject.id}
+				</if>
+			</if>
+			<if test="startDate!=null and endDate !=null">
+				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
+			</if>
+		</where>
+		GROUP BY
+		<if test="reserveVenue!=null">
+			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+				v.id,
+			</if>
+		</if>
+		p.id,s.id
+	</select>
 
-
+	<select id="memberIncomeDayReport" resultType="ReserveMemberDayReport">
+		select
+		v.id as 'reserveVenue.id',
+		v.name as 'reserveVenue.name',
+		p.id as 'reserveProject.id',
+		p.name as 'reserveProject.name',
+		s.id as 'storedcardMemberSet.id',
+		s.name as 'storedcardMemberSet.name',
+		#{day} as 'day',
+		SUM(a.transaction_volume) AS "bill",
+		sum(if(pay_type=1,a.transaction_volume,0)) AS "storedCardBill",
+		sum(if(pay_type=2,a.transaction_volume,0)) AS "cashBill",
+		sum(if(pay_type=3,a.transaction_volume,0)) AS "bankCardBill",
+		sum(if(pay_type=4,a.transaction_volume,0)) AS "weiXinBill",
+		sum(if(pay_type=5,a.transaction_volume,0)) AS "aliPayBill",
+		sum(if(pay_type=6,a.transaction_volume,0)) AS "otherBill",
+		sum(if(pay_type=7,a.transaction_volume,0)) AS "dueBill"
+		from reserve_card_statements as a ,reserve_member as m ,reserve_storedcard_member_set as s,reserve_project as p,reserve_venue as v
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			AND a.transaction_type='1' and a.fk_reserve_member_id=m.id
+			and m.fk_reserve_storedcard_member_set_id=s.id
+			and p.id=s.fk_reserve_project_id
+			and v.id= m.fk_reserve_venue_id
+			and s.fk_reserve_project_id=p.id
+			<if test="reserveVenue!=null">
+				<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+					AND v.id=#{reserveVenue.id}
+				</if>
+			</if>
+			<if test="reserveProject!=null">
+				<if test="reserveProject.id!=null and reserveProject.id!=''">
+					AND p.id=#{reserveProject.id}
+				</if>
+			</if>
+			<if test="storedcardMemberSet!=null">
+				<if test="storedcardMemberSet.id!=null and storedcardMemberSet.id!=''">
+					AND s.id=#{storedcardMemberSet.id}
+				</if>
+			</if>
+			<if test="day!=null">
+				and datediff(a.update_date,#{day})=0
+			</if>
+		</where>
+		GROUP BY v.id,p.id,s.id
+	</select>
 
 	<select id="findList" resultType="ReserveCardStatements">
 		SELECT

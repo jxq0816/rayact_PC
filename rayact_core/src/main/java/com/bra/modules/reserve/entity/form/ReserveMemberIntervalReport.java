@@ -7,6 +7,7 @@ import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
+import java.util.List;
 
 /**
 
@@ -37,6 +38,26 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
 
     private ReserveVenue reserveVenue;//场馆
 
+    private ReserveProject reserveProject;//项目
+
+    private ReserveStoredcardMemberSet storedcardMemberSet;//会员类型
+
+    private List<ReserveMemberDayReport> dayReports;//日报表
+
+    private Date startDate;//开始日期
+
+    private Date endDate;//结束日期
+
+
+    public List<ReserveMemberDayReport> getDayReports() {
+        return dayReports;
+    }
+
+    public void setDayReports(List<ReserveMemberDayReport> dayReports) {
+        this.dayReports = dayReports;
+    }
+
+
     public ReserveProject getReserveProject() {
         return reserveProject;
     }
@@ -45,13 +66,6 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
         this.reserveProject = reserveProject;
     }
 
-    private ReserveProject reserveProject;//项目
-
-    private ReserveStoredcardMemberSet storedcardMemberSet;//会员类型
-
-    private Date startDate;//开始日期
-
-    private Date endDate;//结束日期
 
     public Double getStoredCardBill() {
         return storedCardBill;
