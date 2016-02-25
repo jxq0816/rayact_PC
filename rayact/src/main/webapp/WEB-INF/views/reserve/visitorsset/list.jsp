@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>场地管理</title>
+    <title>人次票设置</title>
     <meta name="decorator" content="main"/>
 </head>
 <body>
@@ -20,13 +20,23 @@
 
                 <form:form id="searchForm" modelAttribute="reserveVenueVisitorsSet"
                            action="${ctx}/reserve/reserveVenueVisitorsSet/list"
-                           method="post" class="block-flat">
+                           method="post" class="breadcrumb form-search">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
+                                <tr>
+                                    <td>次票名称：</td>
+                                    <td>
+                                        <form:input path="name" htmlEscape="false" cssstyle="width:70px;" maxlength="30"
+                                                    class="form-control"/>
+                                    </td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <div class="dataTables_filter" id="datatable2_filter">
-                        <label>次票名称：</label>
-                        <label><form:input path="name" htmlEscape="false" cssstyle="width:70px;" maxlength="30"
-                                           class="form-control"/></label>
-                        <label> <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></label>
 
                         <div class="pull-right">
                             <a id="addBtn" class="btn btn-success">

@@ -18,7 +18,7 @@
                     <h3>场地售卖列表</h3>
                 </div>
                 <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
-                      method="post" class="content">
+                      method="post" class="breadcrumb form-search">
                     <div class="row">
                         <div class="col-sm-10">
                             <table class="no-border">

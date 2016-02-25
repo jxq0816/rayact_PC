@@ -17,7 +17,7 @@
                     <h3>用户管理</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="user" action="${ctx}/reserve/user/list"
-                           method="post" class="content">
+                           method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 

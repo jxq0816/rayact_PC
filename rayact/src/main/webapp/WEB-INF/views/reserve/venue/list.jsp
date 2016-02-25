@@ -17,7 +17,7 @@
                     <h3>场馆管理</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/"
-                           method="post" class="content">
+                           method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 
