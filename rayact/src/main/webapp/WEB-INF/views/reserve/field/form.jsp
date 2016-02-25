@@ -85,7 +85,7 @@
                                         <label class="col-sm-4 control-label">场地图片</label>
                                         <div class="col-sm-3">
                                             <mechanism:upload id="financeSchoolPic" fdKey="fieldPic"
-                                                              name="attMains1" exts=".jpg"
+                                                              name="attMains1" exts=""
                                                               btnText="添加"
                                                               modelId="${reserveField.id}"
                                                               showImg="true" resizeImg="true" resizeWidth="454"

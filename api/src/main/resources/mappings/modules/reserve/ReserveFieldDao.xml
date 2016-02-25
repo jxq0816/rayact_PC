@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.reserve.dao.FieldDao">
-    
-	<sql id="reserveFieldColumns">
+
+    <sql id="reserveFieldColumns">
 		a.id AS "id",
 		a.name AS "name",
 		a.available AS "available",
@@ -19,68 +19,80 @@
 		p.name AS "reserveProject.name",
 		v.name AS "reserveVenue.name"
 	</sql>
-	
-	<sql id="reserveFieldJoins">
+
+    <sql id="reserveFieldJoins">
 		LEFT JOIN reserve_project p ON p.id = a.project_id
 		LEFT JOIN reserve_venue v ON v.id = a.venue_id
 	</sql>
-    
-	<select id="get" resultType="ReserveField">
-		SELECT 
-			<include refid="reserveFieldColumns"/>
-		FROM reserve_field a
-		<include refid="reserveFieldJoins"/>
-		WHERE a.id = #{id}
+
+    <select id="get" resultType="ReserveField">
+        SELECT
+        <include refid="reserveFieldColumns"/>
+        FROM reserve_field a
+        <include refid="reserveFieldJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findProjectByField" resultType="java.util.Map">
+		SELECT distinct(b.id) AS "id",b.name AS "projectName"
+		FROM reserve_field a,reserve_project b
+		where a.project_id = b.id and a.venue_id =#{reserveVenue.id}
 	</select>
-	
-	<select id="findList" resultType="ReserveField">
-		SELECT 
-			<include refid="reserveFieldColumns"/>
-		FROM reserve_field a
-		<include refid="reserveFieldJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="name != null and name != ''">
-				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
-			</if>
-			<if test="reserveVenue != null">
-				<if test="reserveVenue.id !=null and reserveVenue.id != ''">
-					AND venue_id = #{reserveVenue.id}
-				</if>
-			</if>
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.name asc
-			</otherwise>
-		</choose>
-	</select>
-	
-	<select id="findAllList" resultType="ReserveField">
-		SELECT 
-			<include refid="reserveFieldColumns"/>
-		FROM reserve_field a
-		<include refid="reserveFieldJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-		</where>		
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<insert id="insert">
+
+    <select id="findFieldByProjectId" resultType="java.util.Map">
+        SELECT a.id
+        FROM reserve_field a,reserve_project b
+        where a.project_id = b.id and a.project_id =#{projectId} and a.venue_id =#{reserveVenue.id}
+    </select>
+
+    <select id="findList" resultType="ReserveField">
+        SELECT
+        <include refid="reserveFieldColumns"/>
+        FROM reserve_field a
+        <include refid="reserveFieldJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="name != null and name != ''">
+                AND a.name LIKE
+                <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+            </if>
+            <if test="reserveVenue != null">
+                <if test="reserveVenue.id !=null and reserveVenue.id != ''">
+                    AND venue_id = #{reserveVenue.id}
+                </if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.name asc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="ReserveField">
+        SELECT
+        <include refid="reserveFieldColumns"/>
+        FROM reserve_field a
+        <include refid="reserveFieldJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
 		INSERT INTO reserve_field(
 			id,
 			name,
@@ -113,8 +125,8 @@
 			#{tenantId}
 		)
 	</insert>
-	
-	<update id="update">
+
+    <update id="update">
 		UPDATE reserve_field SET 	
 			name = #{name},
 			available = #{available},
@@ -128,11 +140,11 @@
 			tenant_id = #{tenantId}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="delete">
+
+    <update id="delete">
 		UPDATE reserve_field SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
 </mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.mechanism.dao.CollectionDao">
+
+    <sql id="collectionColumns">
+        a.id AS "id",
+        a.create_date AS "createDate",
+        a.model_id AS "modelId",
+        a.model_key AS "modelKey",
+        a.member_id AS "member.id"
+    </sql>
+
+    <sql id="collectionJoins">
+    </sql>
+
+    <select id="findByModelIdKeyUser" resultType="com.bra.modules.mechanism.entity.MCollection">
+        SELECT
+        <include refid="collectionColumns"/>
+        FROM mechanism_collection a
+        <include refid="collectionJoins"/>
+        <where>
+            a.member_id = #{memberId}  AND a.model_id = #{modelId} AND a.model_key = #{modelKey}
+        </where>
+    </select>
+
+    <select id="findList" resultType="com.bra.modules.mechanism.entity.MCollection">
+        SELECT
+        <include refid="collectionColumns"/>
+        FROM mechanism_collection a
+        <include refid="collectionJoins"/>
+        <where>
+            a.member_id = #{member.id}
+            <if test="modelKey != null and modelKey != ''">
+                AND a.model_key = #{modelKey}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO mechanism_collection(
+        id,
+        create_date,
+        model_id,
+        model_key,
+        member_id
+        ) VALUES (
+        #{id},
+        #{createDate},
+        #{modelId},
+        #{modelKey},
+        #{member.id}
+        )
+    </insert>
+
+    <update id="cancel">
+        DELETE FROM mechanism_collection
+        WHERE model_id = #{modelId} and member_id = #{member.id} and model_key = #{modelKey}
+    </update>
+
+</mapper>

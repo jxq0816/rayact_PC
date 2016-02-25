@@ -87,4 +87,14 @@ public class ReserveField extends SaasEntity<ReserveField> {
 	public void setActualPrice(Double actualPrice) {
 		this.actualPrice = actualPrice;
 	}
+
+	private String projectId;
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
 }

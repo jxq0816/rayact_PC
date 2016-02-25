@@ -55,7 +55,7 @@
                                         <label class="col-sm-3 control-label">联系电话</label>
                                         <div class="col-sm-6">
                                             <form:input path="tel" htmlEscape="false" maxlength="20"
-                                                        cssClass="form-control mobile"/>
+                                                        cssClass="form-control"/>
                                         </div>
                                     </div>
 
