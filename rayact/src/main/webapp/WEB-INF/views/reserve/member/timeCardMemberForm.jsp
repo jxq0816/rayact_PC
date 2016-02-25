@@ -31,7 +31,7 @@
                                             <span class="help-inline"><font color="red">*</font> </span></td>
                                         <td>手机号:</td>
                                         <td>
-                                            <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20" class="form-control required"/>
+                                            <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20" class="form-control phone required"/>
                                             <span class="help-inline"><font color="red">*</font> </span>
                                         </td>
                                     </tr>
