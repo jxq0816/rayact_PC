@@ -4,7 +4,7 @@
 <head>
     <meta name="decorator" content="main"/>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
-    <title>会员收入统计</title>
+    <title>商品收入统计</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>商品收入明细统计</h3>
+                    <h3>商品收入统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCommodityIntervalReport"
                            action="${ctx}/reserve/reserveCommoditySell/commodityIncomeIntervalReport"
@@ -93,7 +93,7 @@
 
 
                 <div class="content">
-                    所属场馆：${reserveCommodityIntervalReport.reserveVenue.name}
+                    场馆：${reserveCommodityIntervalReport.reserveVenue.name}
                     商品类型：${reserveCommodityIntervalReport.reserveCommodityType.name}
                     <div class="table-responsive">
                         <table>
@@ -108,7 +108,7 @@
                                 <th>支付宝收入</th>
                                 <th>欠账</th>
                                 <th>其它</th>
-                                <th>总收入</th>
+                                <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>

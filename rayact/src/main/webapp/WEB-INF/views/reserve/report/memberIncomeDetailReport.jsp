@@ -90,7 +90,7 @@
                 </form:form>
                 <sys:msg content="${message}"/>
                 <div class="content">
-                    所属场馆：${reserveMemberIntervalReport.reserveVenue.name}
+                    场馆：${reserveMemberIntervalReport.reserveVenue.name}
                     项目：${reserveMemberIntervalReport.reserveProject.name}
                     <div class="table-responsive">
                         <table>
@@ -105,7 +105,7 @@
                                 <th>支付宝收入</th>
                                 <th>欠账</th>
                                 <th>其它</th>
-                                <th>总收入</th>
+                                <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>

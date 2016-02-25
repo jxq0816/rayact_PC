@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>场馆报表</title>
+    <title>总收入统计</title>
     <meta name="decorator" content="main"/>
 </head>
 <body>
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>场馆收入总报表</h3>
+                    <h3>总收入统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/totalIncomeReport"
                            method="post" class="breadcrumb form-search">
@@ -70,6 +70,7 @@
                                 <th>支付宝</th>
                                 <th>其它</th>
                                 <th>欠账</th>
+                                <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -102,6 +103,9 @@
                                 </td>
                                 <td>
                                     ${intervalTotalReport.dueBill}
+                                </td>
+                                <td>
+                                    ${intervalTotalReport.bill}
                                 </td>
                             </tr>
                             <%-- 总统计 结束 --%>

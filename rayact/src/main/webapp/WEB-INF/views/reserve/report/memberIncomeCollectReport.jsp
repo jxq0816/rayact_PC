@@ -84,7 +84,7 @@
                                 <th>支付宝收入</th>
                                 <th>欠账</th>
                                 <th>其它</th>
-                                <th>充值总金额</th>
+                                <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>
