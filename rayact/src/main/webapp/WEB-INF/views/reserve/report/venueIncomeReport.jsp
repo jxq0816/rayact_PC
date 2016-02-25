@@ -70,6 +70,7 @@
                                 <th>支付宝</th>
                                 <th>其它</th>
                                 <th>欠账</th>
+                                <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -103,7 +104,9 @@
                                 <td>
                                     ${totalReport.fieldBillDue}
                                 </td>
-
+                                <td>
+                                    ${totalReport.bill}
+                                </td>
                             </tr>
                             <%-- 总统计 结束 --%>
 
@@ -136,6 +139,9 @@
                                     <td>
                                             ${report.fieldBillDue}
                                     </td>
+                                    <td>
+                                            ${report.bill}
+                                    </td>
 
                                 </tr>
                                 <%-- 项目月统计 结束 --%>
@@ -166,6 +172,9 @@
                                         </td>
                                         <td>
                                                 ${dayReport.fieldBillDue}
+                                        </td>
+                                        <td>
+                                                ${dayReport.bill}
                                         </td>
                                     </tr>
                                 </c:forEach>

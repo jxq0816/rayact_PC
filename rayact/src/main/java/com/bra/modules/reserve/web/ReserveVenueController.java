@@ -137,6 +137,7 @@ public class ReserveVenueController extends BaseController {
         Double aliPaySum=0.0;
         Double dueSum=0.0;
         Double otherSum=0.0;
+        Double billSum=0.0;
         for(ReserveVenueProjectIntervalReport report:intervalReports){
             storedCardSum+=report.getFieldBillStoredCard();
             cashSum+=report.getFieldBillCash();
@@ -145,6 +146,7 @@ public class ReserveVenueController extends BaseController {
             aliPaySum+=report.getFieldBillAliPay();
             dueSum+=report.getFieldBillDue();//欠账
             otherSum+=report.getFieldBillOther();
+            billSum+=report.getBill();
         }
         totalReport.setFieldBillStoredCard(storedCardSum);
         totalReport.setFieldBillCash(cashSum);
@@ -153,6 +155,7 @@ public class ReserveVenueController extends BaseController {
         totalReport.setFieldBillAliPay(aliPaySum);
         totalReport.setFieldBillDue(dueSum);
         totalReport.setFieldBillOther(otherSum);
+        totalReport.setBill(billSum);
 
         model.addAttribute("venue",venue);//场馆
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
