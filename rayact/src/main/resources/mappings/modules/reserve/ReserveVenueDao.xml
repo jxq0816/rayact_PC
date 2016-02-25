@@ -110,6 +110,7 @@
         <where>
             a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
             a.tenant_id = #{tenantId} and b.reserve_type='4'
+            and a.venue_id=e.id
             <if test="reserveVenue !=null ">
                 <if test="reserveVenue.id !=null and reserveVenue.id !=''">
                     and a.venue_id=#{reserveVenue.id}
@@ -163,8 +164,10 @@
         from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue
         as e
         <where>
-            a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
-            a.tenant_id = #{tenantId} and b.reserve_type='4'
+            a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id
+            and a.del_flag = #{DEL_FLAG_NORMAL}
+            and a.tenant_id = #{tenantId} and b.reserve_type='4'
+            and a.venue_id=e.id
             <if test="reserveVenue !=null ">
                 <if test="reserveVenue.id !=null and reserveVenue.id !=''">
                     and a.venue_id=#{reserveVenue.id}
@@ -211,6 +214,7 @@
         <where>
             a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
             a.tenant_id = #{tenantId} and b.reserve_type='4'
+            and a.venue_id=e.id
             <if test="reserveVenue !=null ">
                 <if test="reserveVenue.id !=null and reserveVenue.id !=''">
                     and e.id=#{reserveVenue.id}
