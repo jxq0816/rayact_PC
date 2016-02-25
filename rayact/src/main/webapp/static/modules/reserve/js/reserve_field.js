@@ -266,7 +266,7 @@ $(document).ready(function () {
         }
     });
 
-    //保存数据
+    //保存预订数据
     $("#saveBtn").on('click', function () {
         var consType = $('input:radio[name=consType]:checked').val();
         var userName = $('#userName').val();
@@ -294,6 +294,7 @@ $(document).ready(function () {
             data: data,
             success: function (values) {
                 if (values) {
+                    location.reload(true);
                     formLoding('订单预定成功!');
                     $(".table-chang tbody td").each(function (index) {
                         var $this = $(this);
