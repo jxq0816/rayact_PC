@@ -17,7 +17,7 @@ import java.util.Date;
  * @author jiangxingqi
  * @version 2015-12-29
  */
-public class ReserveVenueProjectDayReport extends SaasEntity<ReserveVenueProjectDayReport> {
+public class ReserveVenueProjectFieldDayReport extends SaasEntity<ReserveVenueProjectFieldDayReport> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class ReserveVenueProjectDayReport extends SaasEntity<ReserveVenueProject
 
     private ReserveVenue reserveVenue;//场馆
 
-    private ReserveProject reserveProject;//场馆
+    private ReserveProject reserveProject;//项目
 
     private Date day;
 

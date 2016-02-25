@@ -48,12 +48,12 @@
                                     <td>
                                         <div class="btn-group" id="payType">
                                             <label class="radio-inline">
-                                                <input type="radio" class="icheck" value="1" checked="checked"
+                                                <input type="radio" class="icheck" value="1"
                                                        name="queryType"/>汇总
                                             </label>
 
                                             <label class="radio-inline">
-                                                <input type="radio" class="icheck" value="2" name="queryType"/>明细
+                                                <input type="radio" class="icheck" value="2" checked="checked" name="queryType"/>明细
                                             </label>
                                         </div>
                                     </td>
@@ -86,6 +86,7 @@
                             <tr>
                                 <th>场馆</th>
                                 <th>项目</th>
+                                <th>场地</th>
                                 <th>储值卡</th>
                                 <th>现金</th>
                                 <th>银行卡</th>
@@ -97,8 +98,13 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <%-- 总统计 开始 --%>
 
-                            <c:forEach items="${incomeReport.projectIntervalReports}" var="report">
+
+
+                            <c:forEach items="${incomeReport.projectIntervalReports}" var="projectReport">
+
+                                <c:forEach items="${projectReport.fieldIntervalReports}" var="report">
                                 <%-- 项目区间统计 开始 --%>
                                 <tr>
                                     <td>
@@ -106,6 +112,9 @@
                                     </td>
                                     <td>
                                             ${report.reserveProject.name}
+                                    </td>
+                                    <td>
+                                            ${report.reserveField.name}
                                     </td>
                                     <td>
                                             ${report.fieldBillStoredCard}
@@ -132,41 +141,10 @@
                                     <td>
                                             ${report.bill}
                                     </td>
+
                                 </tr>
+                                </c:forEach>
                             </c:forEach>
-                            <%-- 项目月统计 结束 --%>
-                            <tr>
-                                <td colspan="2">
-                                   合计
-                                </td>
-                                <td>
-                                    ${incomeReport.storedCardBill}
-                                </td>
-
-                                <td>
-                                    ${incomeReport.cashBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.bankCardBill}
-                                </td>
-
-                                <td>
-                                    ${incomeReport.weiXinBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.aliPayBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.otherBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.dueBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.bill}
-                                </td>
-                            </tr>
-
                             </tbody>
                         </table>
                     </div>

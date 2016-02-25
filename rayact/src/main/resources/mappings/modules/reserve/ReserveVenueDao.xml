@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.reserve.dao.ReserveVenueDao">
 
-	<sql id="reserveVenueColumns">
+    <sql id="reserveVenueColumns">
 		a.id AS "id",
 		a.name AS "name",
 		a.available AS "available",
@@ -22,144 +22,225 @@
 		a.del_flag AS "delFlag"
 	</sql>
 
-	<sql id="reserveVenueJoins">
-	</sql>
+    <sql id="reserveVenueJoins">
+    </sql>
 
-	<select id="get" resultType="ReserveVenue">
-		SELECT
-		<include refid="reserveVenueColumns"/>
-		FROM reserve_venue a
-		<include refid="reserveVenueJoins"/>
-		WHERE a.id = #{id}
-	</select>
+    <select id="get" resultType="ReserveVenue">
+        SELECT
+        <include refid="reserveVenueColumns"/>
+        FROM reserve_venue a
+        <include refid="reserveVenueJoins"/>
+        WHERE a.id = #{id}
+    </select>
 
-	<select id="findList" resultType="ReserveVenue">
-		SELECT
-		<include refid="reserveVenueColumns"/>
-		FROM reserve_venue a
-		<include refid="reserveVenueJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-			<if test="name != null and name != ''">
-				AND a.name LIKE
-				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
-			</if>
-			${sqlMap.dsf}
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
+    <select id="findList" resultType="ReserveVenue">
+        SELECT
+        <include refid="reserveVenueColumns"/>
+        FROM reserve_venue a
+        <include refid="reserveVenueJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            <if test="name != null and name != ''">
+                AND a.name LIKE
+                <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+            </if>
+            ${sqlMap.dsf}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
 
-	<select id="findAllList" resultType="ReserveVenue">
-		SELECT
-		<include refid="reserveVenueColumns"/>
-		FROM reserve_venue a
-		<include refid="reserveVenueJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
+    <select id="findAllList" resultType="ReserveVenue">
+        SELECT
+        <include refid="reserveVenueColumns"/>
+        FROM reserve_venue a
+        <include refid="reserveVenueJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
 
-	<select id="dayReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectDayReport">
-		SELECT
-		<if test="reserveVenue !=null ">
-			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
-				a.venue_id AS "reserveVenue.id",
-			</if>
-		</if>
-		b.cons_date AS "day",
-		d.id AS "reserveProject.id",
-		d.name AS "reserveProject.name",
-		sum(b.order_price) AS "bill",
-		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
-		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
-		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
-		sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
-		sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
-		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
-		sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
-		from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d
-		<where>
-			a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} and b.reserve_type='4'
-			<if test="reserveVenue !=null ">
-				<if test="reserveVenue.id !=null and reserveVenue.id !=''">
-					and a.venue_id=#{reserveVenue.id}
-				</if>
-			</if>
-			<if test="reserveProject !=null ">
-				<if test="reserveProject.id !=null and reserveProject.id !=''">
-					and c.project_id=#{reserveProject.id}
-				</if>
-			</if>
-			<if test="day !=null">
-				and Date(b.cons_date)=Date(#{day})
-			</if>
-		</where>
-		group by d.id,b.cons_date
-		<if test="reserveVenue !=null ">
-			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
-				,a.venue_id
-			</if>
-		</if>
-		ORDER BY day ASC
-	</select>
+    <select id="dayReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldDayReport">
+        SELECT
+        <if test="reserveVenue !=null ">
+            <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                e.id AS "reserveVenue.id",
+                e.name AS "reserveVenue.name",
+            </if>
+        </if>
+        <if test="reserveProject !=null ">
+            <if test="reserveProject.id !=null and reserveProject.id !=''">
+                d.id AS "reserveProject.id",
+                d.name AS "reserveProject.name",
+            </if>
+        </if>
+        <if test="reserveField !=null ">
+            <if test="reserveField.id !=null and reserveField.id !=''">
+                c.id AS "reserveField.id",
+                c.name AS "reserveField.name",
+            </if>
+        </if>
+        b.cons_date AS "day",
+        sum(b.order_price) AS "bill",
+        sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
+        sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
+        sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
+        sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
+        sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
+        sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
+        sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
+        from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue
+        as e
+        <where>
+            a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
+            a.tenant_id = #{tenantId} and b.reserve_type='4'
+            <if test="reserveVenue !=null ">
+                <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                    and a.venue_id=#{reserveVenue.id}
+                </if>
+            </if>
+            <if test="reserveProject !=null ">
+                <if test="reserveProject.id !=null and reserveProject.id !=''">
+                    and d.id=#{reserveProject.id}
+                </if>
+            </if>
+            <if test="reserveField !=null ">
+                <if test="reserveField.id !=null and reserveField.id !=''">
+                    and c.id = #{reserveField.id}
+                </if>
+            </if>
+            <if test="day !=null">
+                and Date(b.cons_date)=Date(#{day})
+            </if>
+        </where>
+        group by c.id,b.cons_date
+        <if test="reserveProject !=null ">
+            <if test="reserveProject.id !=null and reserveProject.id !=''">
+                ,d.id
+            </if>
+        </if>
+        <if test="reserveVenue !=null ">
+            <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                ,e.id
+            </if>
+        </if>
+        ORDER BY day ASC
+    </select>
 
-	<select id="intervalReports" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport">
-		SELECT
-		<if test="reserveVenue !=null ">
-			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
-				a.venue_id AS "reserveVenue.id",
-			</if>
-		</if>
-		d.id AS "reserveProject.id",
-		d.name AS "reserveProject.name",
-		sum(b.order_price) AS "bill",
-		sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
-		sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
-		sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
-		sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
-		sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
-		sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
-		sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
-		from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d
-		<where>
-			a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} and b.reserve_type='4'
-			<if test="reserveVenue !=null ">
-				<if test="reserveVenue.id !=null and reserveVenue.id !=''">
-					and a.venue_id=#{reserveVenue.id}
-				</if>
-			</if>
-			<if test="startDate !=null and endDate !=null">
-				and datediff(Date(b.cons_date), Date(#{startDate}))>=0
-				and datediff(Date(#{endDate}),Date(b.cons_date))>=0
-			</if>
-		</where>
-		GROUP BY d.id
-		<if test="reserveVenue !=null ">
-			<if test="reserveVenue.id !=null and reserveVenue.id !=''">
-				,a.venue_id
-			</if>
-		</if>
-	</select>
+    <select id="reserveVenueProjectIntervalReport"
+            resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport">
+        SELECT
+        e.id AS "reserveVenue.id",
+        e.name AS "reserveVenue.name",
+        d.id AS "reserveProject.id",
+        d.name AS "reserveProject.name",
+        #{startDate} AS "startDate",
+        #{endDate} AS "endDate",
+        sum(b.order_price) AS "bill",
+        sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
+        sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
+        sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
+        sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
+        sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
+        sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
+        sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
+        from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue
+        as e
+        <where>
+            a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
+            a.tenant_id = #{tenantId} and b.reserve_type='4'
+            <if test="reserveVenue !=null ">
+                <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                    and a.venue_id=#{reserveVenue.id}
+                </if>
+            </if>
+            <if test="reserveProject !=null ">
+                <if test="reserveProject.id !=null and reserveProject.id !=''">
+                    AND d.id=#{reserveProject.id}
+                </if>
+            </if>
+            <if test="startDate !=null and endDate !=null">
+                and datediff(Date(b.cons_date), Date(#{startDate}))>=0
+                and datediff(Date(#{endDate}),Date(b.cons_date))>=0
+            </if>
+        </where>
+        GROUP BY d.id
+        <if test="reserveVenue !=null ">
+            <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                ,e.id
+            </if>
+        </if>
+    </select>
+
+    <select id="reserveVenueProjectFieldIntervalReport"
+            resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalReport">
+        SELECT
+        e.id AS "reserveVenue.id",
+        e.name AS "reserveVenue.name",
+        d.id AS "reserveProject.id",
+        d.name AS "reserveProject.name",
+        c.id AS "reserveField.id",
+        c.name AS "reserveField.name",
+        #{startDate} AS "startDate",
+        #{endDate} AS "endDate",
+        sum(b.order_price) AS "bill",
+        sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
+        sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
+        sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
+        sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
+        sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
+        sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
+        sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
+        from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue as e
+        <where>
+            a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
+            a.tenant_id = #{tenantId} and b.reserve_type='4'
+            <if test="reserveVenue !=null ">
+                <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                    and e.id=#{reserveVenue.id}
+                </if>
+            </if>
+            <if test="reserveProject !=null ">
+                <if test="reserveProject.id !=null and reserveProject.id !=''">
+                    AND d.id=#{reserveProject.id}
+                </if>
+            </if>
+            <if test="startDate !=null and endDate !=null">
+                and datediff(Date(b.cons_date), Date(#{startDate}))>=0
+                and datediff(Date(#{endDate}),Date(b.cons_date))>=0
+            </if>
+        </where>
+            GROUP BY c.id
+        <if test="reserveProject !=null ">
+            <if test="reserveProject.id !=null and reserveProject.id !=''">
+                ,d.id
+            </if>
+        </if>
+        <if test="reserveVenue !=null ">
+            <if test="reserveVenue.id !=null and reserveVenue.id !=''">
+                ,e.id
+            </if>
+        </if>
+    </select>
 
 
-	<insert id="insert">
+    <insert id="insert">
 		INSERT INTO reserve_venue(
 		id,
 		name,
@@ -201,7 +282,7 @@
 		)
 	</insert>
 
-	<update id="update">
+    <update id="update">
 		UPDATE reserve_venue SET
 		name = #{name},
 		available = #{available},
@@ -220,7 +301,7 @@
 		WHERE id = #{id}
 	</update>
 
-	<update id="delete">
+    <update id="delete">
 		UPDATE reserve_venue SET
 		del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}

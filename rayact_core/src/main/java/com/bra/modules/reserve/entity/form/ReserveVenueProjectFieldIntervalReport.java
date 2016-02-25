@@ -15,7 +15,7 @@ import java.util.List;
  * @author jiangxingqi
  * @version 2015-12-29
  */
-public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenueProjectIntervalReport> {
+public class ReserveVenueProjectFieldIntervalReport extends SaasEntity<ReserveVenueProjectFieldIntervalReport> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,35 +41,12 @@ public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenuePr
 
     private ReserveProject reserveProject;//项目
 
-    private List<ReserveVenueProjectFieldIntervalReport> fieldIntervalReports;//场地报表
+    private List<ReserveVenueProjectFieldDayReport> dayReports;//日报表
 
     private Date startDate;//开始日期
 
     private Date endDate;//结束日期
 
-    public List<ReserveVenueProjectFieldIntervalReport> getFieldIntervalReports() {
-        return fieldIntervalReports;
-    }
-
-    public void setFieldIntervalReports(List<ReserveVenueProjectFieldIntervalReport> fieldIntervalReports) {
-        this.fieldIntervalReports = fieldIntervalReports;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
 
     public Double getFieldBillStoredCard() {
@@ -128,7 +105,29 @@ public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenuePr
         this.fieldBillOther = fieldBillOther;
     }
 
+    public List<ReserveVenueProjectFieldDayReport> getDayReports() {
+        return dayReports;
+    }
 
+    public void setDayReports(List<ReserveVenueProjectFieldDayReport> dayReports) {
+        this.dayReports = dayReports;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     public ReserveField getReserveField() {
         return reserveField;
@@ -162,6 +161,4 @@ public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenuePr
     public void setBill(Double bill) {
         this.bill = bill;
     }
-
-
 }

@@ -73,14 +73,20 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         super.delete(reserveVenue);
     }
 
-    //获得区间的日报表
-    public List<ReserveVenueProjectDayReport> dayReport(ReserveVenueProjectIntervalReport intervalReport){
+    //日报表
+    public List<ReserveVenueProjectFieldDayReport> dayReport(ReserveVenueProjectFieldIntervalReport fieldReport){
 
-        ReserveVenue reserveVenue=intervalReport.getReserveVenue();
-        ReserveProject project=intervalReport.getReserveProject();
+        ReserveVenue venue=fieldReport.getReserveVenue();
+        ReserveField field=fieldReport.getReserveField();
+        ReserveProject project=fieldReport.getReserveProject();
 
-        Date startDate=intervalReport.getStartDate();
-        Date endDate=intervalReport.getEndDate();
+        ReserveVenueProjectFieldDayReport dayReport=new ReserveVenueProjectFieldDayReport();
+        dayReport.setReserveVenue(venue);
+        dayReport.setReserveProject(project);
+        dayReport.setReserveField(field);
+
+        Date startDate=fieldReport.getStartDate();
+        Date endDate=fieldReport.getEndDate();
 
         Calendar startCal = Calendar.getInstance();
         startCal.setTime(startDate);
@@ -88,37 +94,21 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         Calendar endCal = Calendar.getInstance();
         endCal.setTime(endDate);
 
-        ReserveField reserveField = new ReserveField();
-        reserveField.setReserveVenue(reserveVenue);
 
-
-        List<ReserveVenueProjectDayReport> list = new ArrayList<>();
+        List<ReserveVenueProjectFieldDayReport> list = new ArrayList<>();
 
         while(endCal.after(startCal)|| endCal.equals(startCal)){
 
             Date day =startCal.getTime();
-            ReserveVenueProjectDayReport dayReport = new ReserveVenueProjectDayReport();
-
-            dayReport.setReserveProject(project);
             dayReport.setDay(day);
-            dayReport.setReserveVenue(reserveVenue);
-            List<ReserveVenueProjectDayReport> dayReportList = dao.dayReport(dayReport);
+            List<ReserveVenueProjectFieldDayReport> dayReportList = dao.dayReport(dayReport);
             if (dayReportList == null) {
                 continue;
             }
-            for (ReserveVenueProjectDayReport report : dayReportList) {
+            for (ReserveVenueProjectFieldDayReport report : dayReportList) {
 
-                Double storedCardSum = report.getFieldBillStoredCard();
-                Double cashSum = report.getFieldBillCash();
-                Double bankCardSum = report.getFieldBillBankCard();
-                Double weiXinSum = report.getFieldBillWeiXin();
-                Double aliPaySum = report.getFieldBillAliPay();
-                Double dueSum = report.getFieldBillDue();//欠账
-                Double otherSum = report.getFieldBillOther();
-
-                if (storedCardSum == 0.0 && cashSum == 0.0 && bankCardSum == 0.0 && weiXinSum == 0.0 && aliPaySum == 0.0 && otherSum == 0.0 && dueSum==0.0) {
-                    //销售额为0
-                } else {
+                Double bill = report.getBill();
+                if (bill != 0.0) {
                     list.add(report);
                 }
             }
@@ -126,16 +116,55 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         }
         return list;
     }
-
-    public List<ReserveVenueProjectIntervalReport> intervalReports(ReserveVenueProjectIntervalReport intervalReport) {
-
-        List<ReserveVenueProjectIntervalReport> list = dao.intervalReports(intervalReport);
-        for (ReserveVenueProjectIntervalReport mr : list) {
-            intervalReport.setReserveProject(mr.getReserveProject());
-            List<ReserveVenueProjectDayReport> dayReports = this.dayReport(intervalReport);
-            mr.setDayReportList(dayReports);
+    //场馆收入统计
+    public ReserveVenueIncomeIntervalReport reserveVenueIncomeIntervalReport(ReserveVenueProjectIntervalReport venueProjectReport) {
+        Double billSum=0.0;
+        Double storedCardSum=0.0;
+        Double cashSum=0.0;
+        Double bankCardSum=0.0;
+        Double weiXinSum=0.0;
+        Double aliPaySum=0.0;
+        Double otherSum=0.0;
+        Double dueSum=0.0;
+        List<ReserveVenueProjectIntervalReport> venueProjectReports = dao.reserveVenueProjectIntervalReport(venueProjectReport);//场馆 项目 收入统计
+        for (ReserveVenueProjectIntervalReport projectIntervalReport : venueProjectReports) {//项目遍历
+            List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(projectIntervalReport);//场馆 项目 场地 收入统计
+            projectIntervalReport.setFieldIntervalReports(fieldReports);
+            billSum+=projectIntervalReport.getBill();
+            storedCardSum+=projectIntervalReport.getFieldBillStoredCard();
+            cashSum+=projectIntervalReport.getFieldBillCash();
+            bankCardSum+=projectIntervalReport.getFieldBillBankCard();
+            weiXinSum+=projectIntervalReport.getFieldBillWeiXin();
+            aliPaySum+=projectIntervalReport.getFieldBillAliPay();
+            otherSum+=projectIntervalReport.getFieldBillOther();
+            dueSum+=projectIntervalReport.getFieldBillDue();
         }
-        return list;
+        ReserveVenueIncomeIntervalReport venueReport=new ReserveVenueIncomeIntervalReport();
+        venueReport.setBill(billSum);
+        venueReport.setStoredCardBill(storedCardSum);
+        venueReport.setCashBill(cashSum);
+        venueReport.setBankCardBill(bankCardSum);
+        venueReport.setWeiXinBill(weiXinSum);
+        venueReport.setAliPayBill(aliPaySum);
+        venueReport.setOtherBill(otherSum);
+        venueReport.setDueBill(dueSum);
+        venueReport.setProjectIntervalReports(venueProjectReports);
+        return venueReport;
+    }
+
+    /**
+     * 场馆 项目 场地 收入统计
+     *
+     */
+    public List<ReserveVenueProjectFieldIntervalReport> reserveVenueProjectFieldIntervalReport(ReserveVenueProjectIntervalReport projectIntervalReport) {
+
+        List<ReserveVenueProjectFieldIntervalReport> filedReports = dao.reserveVenueProjectFieldIntervalReport(projectIntervalReport);
+        for(ReserveVenueProjectFieldIntervalReport report:filedReports){
+
+            List<ReserveVenueProjectFieldDayReport> dayReports=this.dayReport(report);
+            report.setDayReports(dayReports);
+        }
+        return filedReports;
     }
 
     public ReserveVenueTotalIntervalReport totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport) {
@@ -156,7 +185,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         intervalReport.setReserveVenue(reserveVenue);
         intervalReport.setStartDate(startDate);
         intervalReport.setEndDate(endDate);
-        List<ReserveVenueProjectIntervalReport> list1 = dao.intervalReports(intervalReport);
+        List<ReserveVenueProjectIntervalReport> list1 = dao.reserveVenueProjectIntervalReport(intervalReport);
         for (ReserveVenueProjectIntervalReport report : list1) {
             billSum+=report.getBill();
             storedCardSum+=report.getFieldBillStoredCard();
