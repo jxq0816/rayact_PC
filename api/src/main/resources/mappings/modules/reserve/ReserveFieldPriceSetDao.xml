@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.FieldPriceSetDao">
+
+    <sql id="reserveFieldPriceSetColumns">
+		a.id AS "id",
+		a.venue_id AS "reserveVenue.id",
+		a.field_id AS "reserveField.id",
+	  	v.name AS "reserveVenue.name",
+	  	f.name AS "reserveField.name",
+		a.week AS "week",
+		a.cons_type AS "consType",
+		a.cons_price AS "consPrice",
+		a.cons_json AS "consJson",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+
+    <sql id="reserveFieldPriceSetJoins">
+		LEFT JOIN reserve_venue v ON v.id = a.venue_id
+		LEFT JOIN reserve_field f ON f.id = a.field_id
+	</sql>
+
+    <select id="get" resultType="ReserveFieldPriceSet">
+        SELECT
+        <include refid="reserveFieldPriceSetColumns"/>
+        FROM reserve_field_price_set a
+        <include refid="reserveFieldPriceSetJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="ReserveFieldPriceSet">
+        SELECT
+        <include refid="reserveFieldPriceSetColumns"/>
+        FROM reserve_field_price_set a
+        <include refid="reserveFieldPriceSetJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            <if test="week != null and week != ''">
+                and a.week = #{week}
+            </if>
+            <if test="consType != null and consType != ''">
+                and a.cons_type = #{consType}
+            </if>
+			<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id != ''">
+				and a.venue_id = #{reserveVenue.id}
+			</if>
+			<if test="reserveField != null and reserveField.id != null and reserveField.id != ''">
+				and a.field_id = #{reserveField.id}
+			</if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.week asc,a.cons_type asc,f.name asc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="ReserveFieldPriceSet">
+        SELECT
+        <include refid="reserveFieldPriceSetColumns"/>
+        FROM reserve_field_price_set a
+        <include refid="reserveFieldPriceSetJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.week asc,a.cons_type asc
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+		INSERT INTO reserve_field_price_set(
+			id,
+			venue_id,
+			field_id,
+			week,
+			cons_type,
+			cons_price,
+			cons_json,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{reserveVenue.id},
+			#{reserveField.id},
+			#{week},
+			#{consType},
+			#{consPrice},
+			#{consJson},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+
+    <update id="update">
+		UPDATE reserve_field_price_set SET 	
+			venue_id = #{reserveVenue.id},
+			field_id = #{reserveField.id},
+			week = #{week},
+			cons_type = #{consType},
+			cons_price = #{consPrice},
+			cons_json = #{consJson},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+
+    <update id="delete">
+		UPDATE reserve_field_price_set SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+</mapper>
