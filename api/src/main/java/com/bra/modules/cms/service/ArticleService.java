@@ -42,37 +42,6 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         return super.findPage(page, article);
     }
 
-    //首页资讯
-    @Transactional(readOnly = false)
-    public List<Map<String, Object>> homeArticle() {
-        Article article = new Article();
-        Category category = new Category(Category.MODEL_ARTICLE);
-        article.getSqlMap().put("pageSize", 10);
-        article.setCategory(category);
-        List<Map<String, Object>> list = Lists.newArrayList();
-
-        List<Article> articleList = dao.homeArticle(article);
-
-        list.addAll(articleList.stream().map(data -> MyBeanUtils.describe(data, "id", "title", "description", "imageSrc"))
-                .collect(Collectors.toList()));
-        return list;
-    }
-
-    //首页图片新闻
-    @Transactional(readOnly = false)
-    public List<Map<String, Object>> homePicArticle() {
-        Article article = new Article();
-        Category category = new Category(Category.MODEL_PICTURE);
-        article.getSqlMap().put("pageSize", 3);
-        article.setCategory(category);
-        List<Article> articleList = dao.homeArticle(article);
-
-        List<Map<String, Object>> list = Lists.newArrayList();
-        list.addAll(articleList.stream().map(data -> MyBeanUtils.describe(data, "id", "title", "description", "imageSrc", "url"))
-                .collect(Collectors.toList()));
-        return list;
-    }
-
     //首页图片新闻
     @Transactional(readOnly = false)
     public List<Map<String, Object>> homeArticle(String categoryId, int pageSize) {
@@ -88,10 +57,9 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         return list;
     }
 
-    public Map<String, HomeArticle> loadHomeArticle() {
-
-        Map<String, HomeArticle> data = Maps.newLinkedHashMap();
-
+    public List<HomeArticle> loadHomeArticle() {
+        //Map<String, HomeArticle> data = Maps.newLinkedHashMap();
+        List<HomeArticle> data = Lists.newArrayList();
         Category category = new Category();
         category.setParent(new Category("2"));
         List<Category> categoryList = categoryDao.findList(category);
@@ -102,9 +70,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
             article.setTitle(cate.getName());
             List<Map<String, Object>> picArticleList = homeArticle(cate.getId(), "tupian".equals(cate.getKeywords()) ? 3 : 10);
             article.setValue(picArticleList);
-            data.put(cate.getKeywords(), article);
+            data.add(article);
         }
-
         return data;
 
     }

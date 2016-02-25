@@ -7,8 +7,7 @@ import com.bra.modules.cms.service.ArticleService;
 import com.bra.plugin.migration.Utils;
 import com.bra.plugin.migration.entity.MobileHead;
 import com.bra.plugin.migration.service.TransmitsService;
-import com.google.common.collect.Maps;
-
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,9 +24,9 @@ public class HomeApi implements TransmitsService {
     public String executeTodo(MobileHead mobileHead, Map<String, Object> request) {
         Map<String,Object> json = Utils.headMap(mobileHead);
 
-        Map<String,HomeArticle> home = Maps.newConcurrentMap();
+        List<HomeArticle> home = getArticleService().loadHomeArticle();
         //资讯相关
-        home.putAll(getArticleService().loadHomeArticle());
+        //home.putAll(getArticleService().loadHomeArticle());
 
         json.put("data",home);
 

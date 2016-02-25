@@ -48,7 +48,6 @@
 			a.id AS "id",
 			a.parent_id AS "parent.id",
 			a.parent_ids AS "parentIds",
-			a.site_id AS "site.id",
 			a.office_id AS "office.id",
 			a.module AS "module",
 			a.name AS "name",
@@ -104,15 +103,12 @@
 		<include refid="cmsCategoryDaoJoins"/>
 		<where>
 			a.del_flag = #{delFlag}
-			<if test=" site.id != null and site.id != ''">
-				AND a.site_id  = #{site.id}
-			</if>
 			<if test="parent.id != null and parent.id != ''">
 				AND a.parent_id  = #{parent.id}
 			</if>
 			${sqlMap.dsf}
 		</where>		
-			ORDER BY a.site_id,a.sort ASC
+			ORDER BY a.sort ASC
 	</select>
 	
 	<select id="findModule" resultType="Category">
@@ -122,9 +118,6 @@
 		<include refid="cmsCategoryDaoJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test=" site.id != null and site.id != ''">
-				AND a.site_id  = #{site.id}
-			</if>
 			<if test="parent.id != null and parent.id != ''">
 				AND a.parent_id  = #{parent.id}
 			</if>
@@ -133,98 +126,8 @@
 			</if>
 			${sqlMap.dsf}
 		</where>		
-			ORDER BY a.site_id,a.sort ASC
+			ORDER BY a.sort ASC
 	</select>
-	
-	<insert id="insert">
-		INSERT INTO cms_category(
-			id,
-			parent_id,
-			parent_ids,
-			site_id,
-			office_id,
-			module,
-			name,
-			image,
-			href,
-			target,
-			description,
-			keywords,
-			sort,
-			in_menu,
-			in_list,
-			show_modes,
-			allow_comment,
-			is_audit,
-			custom_list_view,
-			custom_content_view,
-			view_config,
-			create_by,
-			create_date,
-			update_by,
-			update_date,
-			remarks,
-			del_flag
-		) VALUES (
-			#{id},
-			#{parent.id},
-			#{parentIds},
-			#{site.id},
-			#{office.id},
-			#{module},
-			#{name},
-			#{image},
-			#{href},
-			#{target},
-			#{description},
-			#{keywords},
-			#{sort},
-			#{inMenu},
-			#{inList},
-			#{showModes},
-			#{allowComment},
-			#{isAudit},
-			#{customListView},
-			#{customContentView},
-			#{viewConfig},
-			#{createBy.id},
-			#{createDate},
-			#{updateBy.id},
-			#{updateDate},
-			#{remarks},
-			#{delFlag}
-		)
-	</insert>
-	
-	<update id="update">
-		UPDATE cms_category SET 	
-			
-			parent_id = #{parent.id},
-			parent_ids = #{parentIds},
-			site_id = #{site.id},
-			office_id = #{office.id},
-			module = #{module},
-			name = #{name},
-			image = #{image},
-			href = #{href},
-			target = #{target},
-			description = #{description},
-			keywords = #{keywords},
-			sort = #{sort},
-			in_menu = #{inMenu},
-			in_list = #{inList},
-			show_modes = #{showModes},
-			allow_comment = #{allowComment},
-			is_audit = #{isAudit},
-			custom_list_view = #{customListView},
-			custom_content_view = #{customContentView},
-			view_config = #{viewConfig},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate},
-			remarks = #{remarks},
-			del_flag = #{delFlag}
-		WHERE id = #{id}
-	</update>
 	
 	<update id="updateParentIds">
 		UPDATE cms_category SET 
@@ -241,23 +144,7 @@
 					<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
 	</update>
-	
-	<select id="findByParentIdAndSiteId" resultType="Category">
-		SELECT 
-			<include refid="cmsCategoryDaoColumns"/>
-		FROM cms_category a
-		<include refid="cmsCategoryDaoJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} 
-			<if test=" site.id != null and site.id != ''">
-				AND a.site_id  = #{site.id}
-			</if>
-			<if test="parent.id != null and parent.id != ''">
-				AND a.parent_id  = #{parent.id}
-			</if>
-		</where>		
-		order by a.site_id, a.sort
-	</select>
+
 	<select id="findByParentIdsLike" resultType="Category">
 		SELECT 
 			<include refid="cmsCategoryDaoColumns"/>
@@ -270,9 +157,9 @@
 					<if test="dbName == 'mssql'">'%'+#{id}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{id}, '%')</if>
 		</where>		
-		order by a.site_id, a.sort
+		order by a.sort
 	</select>
-	
+
 	<select id="findStats" resultType="java.util.Map" parameterType="java.util.Map">
 		select max(c.id) as categoryId,
 		       max(c.name) as categoryName,
@@ -288,15 +175,15 @@
 		  JOIN cms_category cp ON c.parent_id = cp.id
 		  JOIN sys_office o ON o.id = c.office_id
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} 
+			a.del_flag = #{DEL_FLAG_NORMAL}
 			AND a.category_id
 			AND c.site_id =
-			AND c.id = :id or c.parent_ids LIKE 
+			AND c.id = :id or c.parent_ids LIKE
 					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{parentIds}, '%')</if>
 			group by cp.sort, cp.id, c.sort, c.id
 			order by cp.sort, cp.id, c.sort, c.id
-		</where>		
+		</where>
 	</select>
 </mapper>

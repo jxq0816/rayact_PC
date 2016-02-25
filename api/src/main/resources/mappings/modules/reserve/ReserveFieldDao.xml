@@ -53,14 +53,16 @@
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL}
             <if test="name != null and name != ''">
-                AND a.name LIKE
-                <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-                <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-                <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+                AND a.name LIKE concat('%',#{name},'%')
             </if>
+			<if test="reserveProject != null">
+				<if test="reserveProject.id !=null and reserveProject.id != ''">
+					AND a.project_id = #{reserveProject.id}
+				</if>
+			</if>
             <if test="reserveVenue != null">
                 <if test="reserveVenue.id !=null and reserveVenue.id != ''">
-                    AND venue_id = #{reserveVenue.id}
+                    AND a.venue_id = #{reserveVenue.id}
                 </if>
             </if>
         </where>
