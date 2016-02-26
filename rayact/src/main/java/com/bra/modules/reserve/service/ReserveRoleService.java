@@ -1,5 +1,6 @@
 package com.bra.modules.reserve.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bra.common.utils.Collections3;
@@ -49,7 +50,9 @@ public class ReserveRoleService extends CrudService<ReserveRoleDao, ReserveRole>
             }
             return role.getVenueList();
         }
-        return null;
+        List<String> rs=new ArrayList<>();
+        rs.add("");
+        return rs;
     }
 
     public Page<ReserveRole> findPage(Page<ReserveRole> page, ReserveRole reserveRole) {
