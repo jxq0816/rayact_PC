@@ -52,7 +52,7 @@
                     </div>
                 </form:form>
                 <sys:message content="${message}"/>
-                <div class="content">
+                <div class="content" ">
                     <div class="table-responsive">
                         <table>
                             <thead>

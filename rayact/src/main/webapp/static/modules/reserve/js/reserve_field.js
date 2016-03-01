@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $('.md-trigger').modalEffects();
-
     //-------取消预定---------
     function cancelReserve(t) {
         var itemId = t.attr("data-item");
@@ -133,7 +132,13 @@ $(document).ready(function () {
         var payType = $('#payType input:radio:checked').val();
         jQuery.postItems({
             url: ctx + '/reserve/field/settlementDetailForm',
-            data: {cosId: cosId,payType:payType, shouldPrice: shouldPrice, orderPrice: orderPrice, discountPrice: discountPrice},
+            data: {
+                cosId: cosId,
+                payType: payType,
+                shouldPrice: shouldPrice,
+                orderPrice: orderPrice,
+                discountPrice: discountPrice
+            },
             success: function (result) {
                 $("#closeSettlementBtn").click();
                 $("#settlementDetailForm").html(result);
@@ -185,8 +190,8 @@ $(document).ready(function () {
         }
         var field = $(this).attr("data-field");
         var time = $(this).attr("data-time");
-        var price= $(this).attr("data-price");
-        if(price==null||price==""||price==undefined){
+        var price = $(this).attr("data-price");
+        if (price == null || price == "" || price == undefined) {
             errorLoding("抱歉，该时间段价格尚未设定");
             return;
         }
@@ -314,3 +319,29 @@ $(document).ready(function () {
         $("#closeBtn").click();
     });
 });
+
+function availableTime(fieldId, date) {
+
+
+    jQuery.postItems({
+        url: ctx + '/reserve/field/availableTime',
+        data: {
+            fieldId: fieldId,
+            date: date
+        },
+        success: function (result) {
+            $("#reserveTimeForm").html(result);
+            $("#reserveTimeBtn").click();
+            $("#reserveTimeForm .select2").select2({
+                width: '100%'
+            });
+            $('#reserveTimeForm .icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue checkbox',
+                radioClass: 'iradio_square-blue'
+            });
+        }
+    });
+
+
+
+}

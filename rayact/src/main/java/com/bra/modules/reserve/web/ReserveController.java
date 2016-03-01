@@ -20,7 +20,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,14 +69,18 @@ public class ReserveController extends BaseController {
     public String main(Long t, String venueId, Model model) throws ParseException {
         //当前日期
         Date defaultDate = DateUtils.parseDate(DateUtils.getDate(), "yyyy-MM-dd");
-        //获取可预定时间段
+        //获取可预定时间段:一周
         Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
         model.addAttribute("timeSlot", timeSlot);
         //默认时间
         if (t != null) {
             defaultDate = new Date(t);
         }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String consDateFormat=format.format(defaultDate);
+        model.addAttribute("consDateFormat", consDateFormat);
         model.addAttribute("consDate", defaultDate);
+
         //获得所有场馆信息
         ReserveVenue venue = new ReserveVenue();
         venue.getSqlMap().put("dsf", AuthorityUtils.getVenueIdSql("a.id"));
@@ -101,6 +108,33 @@ public class ReserveController extends BaseController {
             model.addAttribute("venueFieldPriceList", reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, times));
         }
         return "reserve/saleField/reserveField";
+    }
+
+    //可预定时间表单
+    @RequestMapping(value = "availableTime")
+    public String availableTime(Model model, String fieldId, Date date) throws ParseException {
+
+
+        ReserveVenueConsItem reserveVenueConsItem=new  ReserveVenueConsItem();
+        ReserveField field=new ReserveField();
+        field.setId(fieldId);
+        reserveVenueConsItem.setReserveField(field);
+        ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
+        reserveVenueCons.setConsDate(date);
+        reserveVenueConsItem.setConsData(reserveVenueCons);
+        List<ReserveVenueConsItem> list = reserveVenueConsItemService.findList(reserveVenueConsItem);//查询该场地在某天的预订状态
+
+        //获取营业时间
+        List<String> availableTimes = TimeUtils.getTimeSpacListValue("09:00:00", "23:00:00", 30);
+
+        for(ReserveVenueConsItem item:list){
+            String startTime= item.getStartTime()+":00";
+            String endTime= item.getEndTime()+":00";
+            List<String> unavailableTimes = TimeUtils.getTimeSpacListValue(startTime, endTime, 30);
+            availableTimes.removeAll(unavailableTimes);//移除已预订
+        }
+        model.addAttribute("availableTimes", availableTimes);
+        return "reserve/saleField/reserveFieldTimeForm";
     }
 
     //预定表单

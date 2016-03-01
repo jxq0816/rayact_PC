@@ -158,6 +158,12 @@
         "name": "场馆收入统计",
         "href":"/reserve/reserveVenue/report",
         "authorityList": []
+      },
+      {
+        "code": "dataListener",
+        "name": "监控",
+        "href":"/reserve/reserveListener/report",
+        "authorityList": []
       }
     ]
   },

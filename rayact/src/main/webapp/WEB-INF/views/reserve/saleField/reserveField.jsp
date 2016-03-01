@@ -8,7 +8,7 @@
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery/smartMenu.css"/>
     <script type="text/javascript"
             src="${ctxStatic}/jquery/jquery-smartMenu-min.js"></script>
-    <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}',venueId = '${reserveVenue.id}';</script>
+    <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';</script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -22,12 +22,6 @@
                         href="${ctx}/reserve/field/main?venueId=${venue.id}&t=${consDate.time}">${venue.name}</a></li>
             </c:forEach>
         </ul>
-        <ul class="table-ul">
-            <li style="margin-left: 0px;"><span class="green-bg-color"></span>可预订</li>
-            <li><span class="blue-bg-color"></span>已选场次</li>
-            <li><span class="grey-bg-color"></span>已占用</li>
-            <li><span class="red-bg-color"></span>已付款</li>
-        </ul>
     </div>
 
     <div class="tab-tit">
@@ -35,68 +29,51 @@
         <ul>
             <c:forEach items="${timeSlot}" var="slot" varStatus="status">
                 <li
-                        <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a
-                        href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a></li>
+                        <j:if test="${consDate.time eq slot.value}">class="on"</j:if> >
+                    <a href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a></li>
             </c:forEach>
         </ul>
     </div>
-    <div class="sy-tab-cont">
-
-        <div class="table-left">
-
-            <table class="table-chang" style="width:auto;">
+    <div class="content" style="margin:40px">
+        <div class="table-responsive">
+            <table>
                 <thead>
                 <tr>
-                    <th></th>
-                    <c:forEach items="${venueFieldPriceList}" var="file" varStatus="status">
-                        <th><span>${file.fieldName}</span></th>
-                    </c:forEach>
+                    <th>场地名称</th>
+                    <th>可预订</th>
+                    <th>已选场</th>
+                    <th>已占用</th>
+                    <th>已付款</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${times}" var="t">
+                <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                     <tr>
-                        <th style="background-color: #fff;">${t}</th>
-                        <c:forEach items="${venueFieldPriceList}" var="file">
-                            <c:set var="status" value="0"/>
-                            <c:set var="itemId" value="0"/>
-                            <c:set var="halfCourt" value="0"/>
-                            <c:set var="username" value=""/>
-                            <c:forEach items="${file.timePriceList}" var="tp">
-                                <j:if test="${tp.time eq t}">
-                                    <c:set var="status" value="${tp.status}"/>
-                                    <c:set var="price" value="${tp.price}"/>
-                                    <c:set var="username" value="${tp.userName}"/>
-                                    <c:set var="itemId" value="${tp.consItem.id}"/>
-                                    <j:if test="${'1' eq tp.consItem.halfCourt}">
-                                        <c:set var="halfCourt" value="1"/>
-                                    </j:if>
-                                </j:if>
-                            </c:forEach>
-                            <td style="color: #000;" status="${status}" data-item="${itemId}"
-                                class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
-                                data-price="${price}"
-                                data-field="${file.fieldId}"
-                                data-time="${t}">
-                                ${username}
-                            </td>
-                        </c:forEach>
+                        <td>${field.fieldName}</td>
+                        <td><a class="btn btn-primary btn-xs"
+                               href="javascript:availableTime('${field.fieldId}','${consDateFormat}')">
+                            详情</a></td>
+                        <td><a class="btn btn-primary btn-xs"
+                               href="${ctx}/reserve/reserveField/form?id=${reserveField.id}">
+                            详情</a></td>
+                        <td><a class="btn btn-primary btn-xs"
+                               href="${ctx}/reserve/reserveField/form?id=${reserveField.id}">
+                            详情</a></td>
+                        <td><a class="btn btn-primary btn-xs"
+                               href="${ctx}/reserve/reserveField/form?id=${reserveField.id}">
+                            详情</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
-
-        <script type="text/javascript">
-            $(".table-left-l ul").css("padding-top", parseInt($(".table-chang thead").eq(0).height()) + 3 + "px");
-        </script>
-
     </div>
 </div>
 <%@include file="../include/modal.jsp" %>
 <!--end dialog-->
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field.js?t=" + Math.random() + "'><\/script>");
+
 </script>
 </body>
 </html>
