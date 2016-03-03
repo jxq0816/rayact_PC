@@ -60,7 +60,7 @@
                 <td>
                     <input type="checkbox" name="halfCourt" value="1" class="icheck"/>
                 </td>
-                <td colspan="2">
+                <td>
                     <select id="tutorId" name="tutor.id" class="select2">
                         <option value="">预定教练</option>
                         <c:forEach items="${tutors}" var="t">
@@ -127,25 +127,9 @@
         </table>
     </div>
     <hr/>
-    <!--
-    <div class="content">
-        计价:
-        <table class="no-border">
-            <tbody class="no-border-y">
-            <tr>
-                <td>订单价格:</td>
-                <td>
-                    <input style="width: 60px;" readonly="readonly" name="orderPrice" type="text" class="form-control"/>
-                </td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <hr/>-->
     <div class="content">
         备注:
-        <textarea name="remarks" rows="4" class="form-control"></textarea>
+        <textarea name="remarks" rows="1" class="form-control"></textarea>
     </div>
 </form>
 
@@ -184,11 +168,11 @@
         });
 
         //频率
-        $("#frequency").on('change',function(){
+        $("#frequency").on('change', function () {
             var frequency = $(this).val();
-            if('1'!=frequency){
+            if ('1' != frequency) {
                 $("#date_div").show();
-            }else{
+            } else {
                 $("#date_div").hide();
             }
         });

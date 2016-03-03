@@ -25,32 +25,6 @@
 </div>
 <!--end 预定-->
 
-<!--可预定时间-->
-<button class="btn btn-primary btn-flat md-trigger" id="reserveTimeBtn" style="display: none" data-modal="available-modal">Basic Form
-</button>
-<div class="md-modal colored-header warning custom-width md-effect-12" id="available-modal">
-    <div class="md-content">
-        <div class="modal-header">
-            <h5>可预定时间</h5>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body form-horizontal" id="reserveTimeForm">
-            <!--可预定时间表单-->
-
-
-            <!--end 可预定时间表单-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="closeReserveTimeBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                取消
-            </button>
-            <button type="button" id="saveReserveTimeBtn" class="btn btn-primary btn-flat">确定</button>
-        </div>
-    </div>
-</div>
-<!--end 预定-->
-
 <!--取消订单-->
 <button class="btn btn-primary btn-flat md-trigger" id="cancelBtn" style="display: none" data-modal="cancel-primary">Basic Form
 </button>
@@ -178,3 +152,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field.js?t=" + Math.random() + "'><\/script>");
+    $(document).ready(function () {
+        $("#form-primary").draggable({
+            handle: ".modal-header",
+            cursor: 'move',
+            refreshPositions: true
+        });
+    });
+</script>
