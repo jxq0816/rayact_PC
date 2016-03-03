@@ -229,7 +229,7 @@ CREATE TABLE reserve_venue_cons_item
   order_price  DOUBLE COMMENT '实际缴费金额',
   start_time   VARCHAR(12) COMMENT '预定开始时刻',
   end_time     VARCHAR(12) COMMENT '预定结束时刻',
-  cons_time    VARCHAR(12) COMMENT '预定时间',
+  cons_date    Date COMMENT '预定时间',
   cons_info    VARCHAR(50) COMMENT '预定信息',
   frequency    VARCHAR(2) COMMENT '频率(1:单次;2:每天;3:每周)',
   start_date   DATE COMMENT '预定开始日期',
