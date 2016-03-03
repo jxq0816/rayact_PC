@@ -24,7 +24,7 @@
                 <td>
                     <div class="row">
                         <div class="col-lg-5">
-                            <select class="select2" id="startTime" name="venueConsList[0].startTime">
+                            <select id="startTime" name="venueConsList[0].startTime">
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq startTime}">selected="selected"</j:if>

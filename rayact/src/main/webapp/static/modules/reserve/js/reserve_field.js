@@ -201,7 +201,7 @@ $(document).ready(function () {
             data: {fieldId: field, time: time, date: date, venueId: venueId},
             success: function (result) {
                 $("#reserveForm").html(result);
-                $("#reserveBtn").click();
+                $("#reserveDialog").click();
                 $("#reserveForm .select2").select2({
                     width: '100%'
                 });

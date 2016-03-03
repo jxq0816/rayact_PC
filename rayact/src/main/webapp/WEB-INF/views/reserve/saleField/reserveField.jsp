@@ -19,25 +19,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="tab-tit-first">
-                    <a class="btn btn-primary btn-large" href="#myModal" data-toggle="modal">点击这里</a>
 
-                    <!-- Modal -->
-                    <div class="modal" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="myModalLabel">标题</h4>
-                                </div>
-                                <div class="modal-body">
-                                    主体内容
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <ul>
                         <div id="venues">
                             <%-- 场馆--%>
