@@ -129,7 +129,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         String frequency=reserveVenueCons.getFrequency();
 
 
-        List<Date> reserveDateList = Lists.newArrayList(new Date());
+        List<Date> reserveDateList = Lists.newArrayList(reserveVenueCons.getConsDate());
         if ("2".equals(reserveVenueCons.getFrequency())) {//每天
             reserveDateList = TimeUtils.getDayBettwnDays(reserveVenueCons.getEndDate());
         } else if ("3".equals(reserveVenueCons.getFrequency())) {
@@ -138,6 +138,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
         //1:散客;2:会员
         //String consType = reserveVenueCons.getConsType();
+
 
         for (Date date : reserveDateList) {
             reserveVenueCons.setConsDate(date);

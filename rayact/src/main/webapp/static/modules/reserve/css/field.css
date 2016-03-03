@@ -1,6 +1,6 @@
 /*选项卡*/
 .tab-tit-first{height: 35px;overflow: hidden;border-bottom: 0px solid;
-    padding-left: 10px;margin-top: 15px;font-size: 14px;}
+    padding-left: 0px;margin-top: 5px;font-size: 14px;}
 .tab-tit-first .f22{font-size: 16px;}
 .tab-tit-first li {
     float: left;
@@ -27,7 +27,7 @@
 }
 .filed{background-color: #fff;}
 .tab-tit{height: 35px;overflow: hidden;border-bottom: 2px solid #5b9aef;
-    padding-left: 10px;margin-top: 15px;font-size: 14px;}
+    padding-left: 0px;margin-top: 15px;font-size: 14px;}
 .tab-tit .f22{font-size: 16px;}
 .tab-tit li {
     float: left;
@@ -55,7 +55,7 @@
 .table-left-l{position: absolute;width: 70px ;top: 0;left: 0;}
 .table-left-l ul{padding-top: 20px;text-align: left;}
 .table-left-l li{width: 60px ;padding-right: 10px;height: 29px;font-size: 12px;}
-.sy-tab-cont{padding-top: 10px;overflow: hidden;padding-left: 35px;width: 1024px;position: relative;}
+.sy-tab-cont{padding-top: 10px;overflow: hidden;padding-left: 0px;position: relative;}
 .table-left{float: left;/*width: 800px;*/overflow-x: scroll;position: relative;}
 .table-left{overflow: scroll\9;}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
@@ -68,7 +68,7 @@
 .table-chang td.red{background: #f00;}
 .table-chang td.unpayed{background: #5fbfe9;line-width:50%}
 .table-chang td div.unpayed{background: #5fbfe9;width:50%;}
-.table-chang thead th{font-size: 10px;-webkit-text-size-adjust:none;min-width: 60px;}
+.table-chang thead th{font-size: 10px;-webkit-text-size-adjust:none;min-width: 50px;}
 .table-chang thead span{/*transform:scale(0.9);*/}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
 .my-order-right .date span{color: #fb924d;}

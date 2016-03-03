@@ -6,6 +6,7 @@ import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.VenueGiftForm;
 import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
@@ -87,8 +88,14 @@ public class ReserveController extends BaseController {
         List<ReserveVenue> reserveVenueList = reserveVenueService.findList(venue);
         model.addAttribute("reserveVenueList", reserveVenueList);
         //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacListValue("09:00:00", "23:00:00", 30);
-        model.addAttribute("times", times);
+        List<String> timesAM = TimeUtils.getTimeSpacListValue("09:00:00", "12:00:00", 30);
+        model.addAttribute("timesAM", timesAM);
+
+        List<String> timesPM = TimeUtils.getTimeSpacListValue("12:00:00", "17:00:00", 30);
+        model.addAttribute("timesPM", timesPM);
+
+        List<String> timesEvening = TimeUtils.getTimeSpacListValue("17:00:00", "23:00:00", 30);
+        model.addAttribute("timesEvening", timesEvening);
 
         //默认场馆的场地
         if (!Collections3.isEmpty(reserveVenueList)) {
@@ -104,8 +111,16 @@ public class ReserveController extends BaseController {
             reserveField.setReserveVenue(reserveVenue);
             List<ReserveField> reserveFieldList = reserveFieldService.findList(reserveField);
             model.addAttribute("reserveFieldList", reserveFieldList);
-            //场地价格
-            model.addAttribute("venueFieldPriceList", reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, times));
+            //上午场地价格
+            List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);
+            model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
+            //下午场地价格
+            List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesPM);
+            model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
+            //晚上场地价格
+            List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesEvening);
+            model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
+
         }
         return "reserve/saleField/reserveField";
     }

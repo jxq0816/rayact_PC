@@ -321,8 +321,6 @@ $(document).ready(function () {
 });
 
 function availableTime(fieldId, date) {
-
-
     jQuery.postItems({
         url: ctx + '/reserve/field/availableTime',
         data: {
@@ -341,7 +339,20 @@ function availableTime(fieldId, date) {
             });
         }
     });
+}
+function filedStatus(venueId, t) {
+    jQuery.postItems({
+        url: ctx + '/reserve/field/main',
+        data: {
+            fieldId: venueId,
+            date: t
+        },
+        success: function (data) {
+           /* var timeSlot=data.timeSlot;
+            var timeSlotHtml="";
+            timeSlotHtml+='<c:forEach items="'+timeSlot'" var="slot" varStatus="status"> <li <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a> </li> </c:forEach>';
+            $('#timeSlotDiv').append(timeSlotHtml);*/
 
-
-
+        }
+    });
 }
