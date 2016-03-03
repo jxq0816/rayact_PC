@@ -138,7 +138,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
         //1:散客;2:会员
         //String consType = reserveVenueCons.getConsType();
-
+        Date consDate = reserveVenueCons.getConsDate();
 
         for (Date date : reserveDateList) {
             reserveVenueCons.setConsDate(date);
@@ -146,10 +146,11 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             dao.insert(reserveVenueCons);
             List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();
             Double orderPrice = 0D;
-            Date consDate = reserveVenueCons.getConsDate();
+
             String consWeek = TimeUtils.getWeekOfDate(consDate);
 
             for (ReserveVenueConsItem item : itemList) {
+                item.setConsDate(consDate);//预订时间
                 item.setConsData(reserveVenueCons);
                 item.setConsWeek(consWeek);
                 item.setHalfCourt(halfCourt);//设置半场

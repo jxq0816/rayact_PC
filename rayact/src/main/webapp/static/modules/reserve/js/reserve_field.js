@@ -299,19 +299,27 @@ $(document).ready(function () {
             data: data,
             success: function (values) {
                 if (values) {
-                    location.reload(true);
-                    formLoding('订单预定成功!');
-                    $(".table-chang tbody td").each(function (index) {
-                        var $this = $(this);
-                        var fieldId = $this.attr("data-field");
-                        var time = $this.attr("data-time");
-                        $.each(values, function (index, item) {
-                            if (item.fieldId == fieldId && time == item.time) {
-                                $this.removeClass("access");
-                                $this.attr("status", "1");
-                                $this.attr("data-item", item.itemId);
-                            }
-                        });
+                    $.each(values, function (index, item) {
+                        if (item.bool == "0") {
+                            formLoding('该时间段不可使用!');
+                        }
+                        else
+                        {
+                            formLoding('订单预定成功!');
+                            $(".table-chang tbody td").each(function (index) {
+                                var $this = $(this);
+                                var fieldId = $this.attr("data-field");
+                                var time = $this.attr("data-time");
+                                $.each(values, function (index, item) {
+                                    if (item.fieldId == fieldId && time == item.time) {
+                                        $this.removeClass("access");
+                                        $this.attr("status", "1");
+                                        $this.attr("data-item", item.itemId);
+                                        $this.text(userName);
+                                    }
+                                });
+                            });
+                        }
                     });
                 }
             }
@@ -319,27 +327,6 @@ $(document).ready(function () {
         $("#closeBtn").click();
     });
 });
-
-function availableTime(fieldId, date) {
-    jQuery.postItems({
-        url: ctx + '/reserve/field/availableTime',
-        data: {
-            fieldId: fieldId,
-            date: date
-        },
-        success: function (result) {
-            $("#reserveTimeForm").html(result);
-            $("#reserveTimeBtn").click();
-            $("#reserveTimeForm .select2").select2({
-                width: '100%'
-            });
-            $('#reserveTimeForm .icheck').iCheck({
-                checkboxClass: 'icheckbox_square-blue checkbox',
-                radioClass: 'iradio_square-blue'
-            });
-        }
-    });
-}
 function filedStatus(venueId, t) {
     jQuery.postItems({
         url: ctx + '/reserve/field/main',
@@ -348,10 +335,10 @@ function filedStatus(venueId, t) {
             date: t
         },
         success: function (data) {
-           /* var timeSlot=data.timeSlot;
-            var timeSlotHtml="";
-            timeSlotHtml+='<c:forEach items="'+timeSlot'" var="slot" varStatus="status"> <li <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a> </li> </c:forEach>';
-            $('#timeSlotDiv').append(timeSlotHtml);*/
+            /* var timeSlot=data.timeSlot;
+             var timeSlotHtml="";
+             timeSlotHtml+='<c:forEach items="'+timeSlot'" var="slot" varStatus="status"> <li <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a> </li> </c:forEach>';
+             $('#timeSlotDiv').append(timeSlotHtml);*/
 
         }
     });

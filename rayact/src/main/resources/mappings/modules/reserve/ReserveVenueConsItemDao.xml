@@ -54,7 +54,7 @@
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
             <if test="consDate != null and consDate != ''">
-                and (cons_date = #{consDate}
+                and (d.cons_date = #{consDate}
                <!-- <if test="frequency!=null and frequency!=''">
                     <![CDATA[
                     or (a.frequency='3' and a.cons_week=#{consWeek} and a.start_date<=date(now()) and a.end_date>=date(now())) or (a.frequency='2' and a.start_date<=date(now()) and a.end_date>=date(now()))
@@ -85,7 +85,7 @@
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
             <if test="consDate != null and consDate != ''">
-                and cons_date = #{consData.consDate}
+                and Date(a.cons_date) =Date(#{consDate})
             </if>
             <if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
                 and a.venue_id = #{reserveVenue.id}
@@ -142,6 +142,7 @@
 			frequency,
 			cons_week,
 			half_court,
+			cons_date,
 			start_time,
 			end_time,
 			create_by,
@@ -164,6 +165,7 @@
 			#{frequency},
 			#{consWeek},
 			#{halfCourt},
+			#{consDate},
 			#{startTime},
 			#{endTime},
 			#{createBy.id},
@@ -187,6 +189,7 @@
 			frequency = #{frequency},
 			cons_week = #{consWeek},
 			half_court = #{halfCourt},
+			cons_date = #{conDate},
 			start_time = #{startTime},
 			end_time = #{endTime},
 			cons_price = #{consPrice},

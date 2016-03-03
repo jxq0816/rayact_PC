@@ -48,7 +48,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     private String payType;//预定金额支付类型(1:会员卡;2:现金;3:银行卡;4:微信;5:支付宝;6:其它)
 
-    private List<ReserveVenueConsItem> venueConsList = Lists.newArrayList();
+    private List<ReserveVenueConsItem> venueConsList = Lists.newArrayList();//预订详情
 
     public ReserveVenueCons() {
         super();

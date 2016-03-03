@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 场地预定管理
@@ -65,7 +62,7 @@ public class ReserveController extends BaseController {
     private SystemService systemService;
 
 
-    //场地预定
+    //场地状态界面
     @RequestMapping(value = "main")
     public String main(Long t, String venueId, Model model) throws ParseException {
         //当前日期
@@ -125,46 +122,18 @@ public class ReserveController extends BaseController {
         return "reserve/saleField/reserveField";
     }
 
-    //可预定时间表单
-    @RequestMapping(value = "availableTime")
-    public String availableTime(Model model, String fieldId, Date date) throws ParseException {
-
-
-        ReserveVenueConsItem reserveVenueConsItem=new  ReserveVenueConsItem();
-        ReserveField field=new ReserveField();
-        field.setId(fieldId);
-        reserveVenueConsItem.setReserveField(field);
-        ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
-        reserveVenueCons.setConsDate(date);
-        reserveVenueConsItem.setConsData(reserveVenueCons);
-        List<ReserveVenueConsItem> list = reserveVenueConsItemService.findList(reserveVenueConsItem);//查询该场地在某天的预订状态
-
-        //获取营业时间
-        List<String> availableTimes = TimeUtils.getTimeSpacListValue("09:00:00", "23:00:00", 30);
-
-        for(ReserveVenueConsItem item:list){
-            String startTime= item.getStartTime()+":00";
-            String endTime= item.getEndTime()+":00";
-            List<String> unavailableTimes = TimeUtils.getTimeSpacListValue(startTime, endTime, 30);
-            availableTimes.removeAll(unavailableTimes);//移除已预订
-        }
-        model.addAttribute("availableTimes", availableTimes);
-        return "reserve/saleField/reserveFieldTimeForm";
-    }
-
     //预定表单
     @RequestMapping(value = "reserveForm")
     @Token(save = true)
     public String reserveForm(Model model, String fieldId, Long date, String time, String venueId) throws ParseException {
         ReserveField reserveField = reserveFieldService.get(fieldId);
         model.addAttribute("reserveField", reserveField);
-
         //获取营业时间
         List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
-        model.addAttribute("times", times);
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("date", consDate);
 
+        model.addAttribute("times", times);
         //会员
         ReserveMember reserveMember = new ReserveMember();
         model.addAttribute("memberList", reserveMemberService.findList(reserveMember));
@@ -181,7 +150,7 @@ public class ReserveController extends BaseController {
         return "reserve/saleField/reserveForm";
     }
 
-    //取消预定
+    //取消预定表单
     @RequestMapping(value = "cancelForm")
     @Token(save = true)
     public String cancelForm(Model model, String fieldId, String itemId, String time) {
@@ -251,10 +220,60 @@ public class ReserveController extends BaseController {
     @ResponseBody
     @Token(remove = true)
     public List<Map<String, String>> reservation(ReserveVenueCons reserveVenueCons) {
-        reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//预定
-        reserveVenueConsService.save(reserveVenueCons);
+        boolean bool=true;//时间段是否可用
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();
-        return getReserveMap(itemList);
+        for(ReserveVenueConsItem i:itemList){//订单详情
+            String startTime=i.getStartTime();
+            String endTime=i.getEndTime();
+            ReserveField field=i.getReserveField();//场地
+            Date consDate=reserveVenueCons.getConsDate();//日期
+            //查询该场地，当天的已预订时间
+            ReserveVenueConsItem reserveVenueConsItem=new  ReserveVenueConsItem();
+            reserveVenueConsItem.setReserveField(field);
+            reserveVenueConsItem.setConsDate(consDate);
+            List<ReserveVenueConsItem> list = reserveVenueConsItemService.findList(reserveVenueConsItem);//查询该场地在预订date的预订状态
+            for(ReserveVenueConsItem item:list){
+                String start=item.getStartTime();//已预订开始时间
+                String end=item.getEndTime();//已预订结束时间
+                if(startTime.compareTo(start)>0 && startTime.compareTo(end)<0){//预订开始时间 介于 已预订区间
+                    bool=false;
+                    break;
+                }
+                if(endTime.compareTo(start)>0 && endTime.compareTo(end)<0){//预订结束时间 介于 已预订区间
+                    bool=false;
+                    break;
+                }
+                if(startTime.compareTo(start)<0 && endTime.compareTo(end)>0){// 预订区间 包含 已预订区间
+                    bool=false;
+                    break;
+                }
+            }
+        }
+        List<Map<String, String>> list=new ArrayList<>();
+        Map<String, String> map = Maps.newConcurrentMap();
+        if(bool){
+            reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//预定
+            reserveVenueConsService.save(reserveVenueCons);//保存预订信息
+
+            Map<String, String> data;
+            for (ReserveVenueConsItem item : itemList) {
+                String startTime = item.getStartTime();
+                String endTime = item.getEndTime();
+                List<String> times = TimeUtils.getTimeSpacListValue(startTime + ":00", endTime + ":00", 30);
+                for (String time : times) {
+                    data = Maps.newConcurrentMap();
+                    data.put("fieldId", item.getReserveField().getId());
+                    data.put("time", time);
+                    data.put("itemId", item.getId());
+                    data.put("bool","1");
+                    list.add(data);
+                }
+            }
+        }else{
+            map.put("bool","0");
+            list.add(map);
+        }
+        return list;
     }
 
     /**

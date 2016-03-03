@@ -18,15 +18,16 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 	private Double consPrice;		// cons_price(系统价格)
 	private Double orderPrice;   	//实际收费价格
 	private String consInfo;//预定信息
-	private String consTime;//预定时间
+	private Date consDate;//预订时间
 	private String frequency;//频率(1:单次;2:每天;3:每周)
 	private String consWeek;//周几?
 	private String halfCourt;//是否半场(1:是)
-
+	private ReserveVenueCons consData;
 	private Date startDate;
 	private Date endDate;
 
-	private ReserveVenueCons consData;
+	private String startTime;
+	private String endTime;
 
 	public ReserveVenueConsItem() {
 		super();
@@ -68,14 +69,6 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 		this.consInfo = consInfo;
 	}
 
-	public String getConsTime() {
-		return consTime;
-	}
-
-	public void setConsTime(String consTime) {
-		this.consTime = consTime;
-	}
-
 	public ReserveVenueCons getConsData() {
 		return consData;
 	}
@@ -84,7 +77,7 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 		this.consData = consData;
 	}
 
-	private Date consDate;
+
 
 	public Date getConsDate() {
 		return consDate;
@@ -102,8 +95,7 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 		this.orderPrice = orderPrice;
 	}
 
-	private String startTime;
-	private String endTime;
+
 
 	public String getStartTime() {
 		return startTime;

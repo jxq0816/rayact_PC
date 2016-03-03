@@ -44,7 +44,7 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 		super.delete(reserveVenueCons);
 	}
 
-	List<ReserveVenueConsItem> findListByDate(ReserveVenueConsItem reserveVenueCons){
-		return dao.findListByDate(reserveVenueCons);
+	public List<ReserveVenueConsItem> findListByDate(ReserveVenueConsItem reserveVenueConsItem){
+		return dao.findListByDate(reserveVenueConsItem);
 	}
 }
