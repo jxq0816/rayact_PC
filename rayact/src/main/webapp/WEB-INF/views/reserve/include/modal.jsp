@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<button id="reserveDialog" class="btn btn-primary btn-large" href="#myModal"  data-toggle="modal">预订</button>
-<!-- Modal -->
-<div class="modal fade"  style="width:auto;" id="myModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- 场馆预订Modal -->
+<button id="reserveDialog"  style="display: none" class="btn btn-primary btn-large" href="#reserveDialogModal"  data-toggle="modal">预订</button>
+<div class="modal fade"  style="width:auto;" id="reserveDialogModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,8 +14,6 @@
                 </div>
                 <div class="modal-body form-horizontal" id="reserveForm">
                     <!--预定表单-->
-
-
                     <!--end 预定表单-->
                 </div>
             </div>
