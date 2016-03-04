@@ -1,30 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
-<form id="reserveFormBean">
+
+<form id="reserveFormBean" class="form-horizontal">
     <input type="hidden" name="token" value="${token}"/>
     <input type="hidden" name="project.id" value="${reserveField.reserveProject.id}"/>
-    <div class="content">
-        场地信息:
-        <table class="no-border">
-            <tbody class="no-border-y">
-            <tr>
-                <td>场地:</td>
-                <td>${reserveField.name}
-                    <input type="hidden" id="consDate" name="consDate"
-                           value="${date}"/>
-                    <input type="hidden" name="projectId" value="${reserveField.reserveProject.id}"/>
-                    <input type="hidden" name="reserveVenue.id" value="${venueId}"/>
-                    <input type="hidden" id="fieldId" name="venueConsList[0].reserveField.id"
-                           value="${reserveField.id}"/>
-                    <input type="hidden" name="venueConsList[0].reserveVenue.id"
-                           value="${reserveField.reserveVenue.id}"/>
-                    <input type="hidden" name="venueConsList[0].consPrice" value="${reserveField.actualPrice}"/>
-                </td>
-                <td>时间:</td>
-                <td>
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <select id="startTime" name="venueConsList[0].startTime">
+
+    <div class="content text-justify" style="text-align: center;vertical-align: middle;">
+        <div class="row">
+            <div class="col-lg-6  reserve_mid_line">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="reserveFieldName" class="col-sm-2 control-label"> 场地:</label>
+                        <div class="col-lg-4">
+                            <input readonly="readonly" id="reserveFieldName" class="form-control"
+                                   value="${reserveField.name}"/>
+                            <input type="hidden" id="consDate" name="consDate"
+                                   value="${date}"/>
+                            <input type="hidden" name="projectId" value="${reserveField.reserveProject.id}"/>
+                            <input type="hidden" name="reserveVenue.id" value="${venueId}"/>
+                            <input type="hidden" id="fieldId" name="venueConsList[0].reserveField.id"
+                                   value="${reserveField.id}"/>
+                            <input type="hidden" name="venueConsList[0].reserveVenue.id"
+                                   value="${reserveField.reserveVenue.id}"/>
+                            <input type="hidden" name="venueConsList[0].consPrice" value="${reserveField.actualPrice}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="startTime" class="col-sm-2 control-label">时间:</label>
+                        <div class="col-sm-4">
+                            <select id="startTime" class="form-control input-sm" name="venueConsList[0].startTime">
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq startTime}">selected="selected"</j:if>
@@ -32,11 +38,9 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-lg-1">
-                            至
-                        </div>
-                        <div class="col-lg-5">
-                            <select class="select2" id="endTime" name="venueConsList[0].endTime">
+                        <label for="endTime" class="col-lg-2 control-label" style="text-align: center">至</label>
+                        <div class="col-sm-4">
+                            <select class="form-control input-sm" id="endTime" name="venueConsList[0].endTime">
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq endTime}">selected="selected"</j:if>
@@ -45,91 +49,114 @@
                             </select>
                         </div>
                     </div>
-                </td>
-                <td>频率:</td>
-                <td>
-                    <select style="width: 80px;" id="frequency" name="frequency" class="select2">
-                        <option value="1">单次</option>
-                        <option value="2">每天</option>
-                        <option value="3">每周</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>半场:</td>
-                <td>
-                    <input type="checkbox" name="halfCourt" value="1" class="icheck"/>
-                </td>
-                <td>
-                    <select id="tutorId" name="tutor.id" class="select2">
-                        <option value="">预定教练</option>
-                        <c:forEach items="${tutors}" var="t">
-                            <option data-price="${t.price}" value="${t.id}">${t.name}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-                <td>
-                    <span id="tutor_price">
-
-                    </span>
-                </td>
-                <td>
-                    <div id="date_div" style="display: none;">
-                        至
-                        <input name="endDate" type="text" id="endDate" readonly="readonly" maxlength="20"
-                               class="input-medium form-control Wdate "
-                               value="${reserveVenue.endDate}"
-                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="frequency" class="col-sm-2 control-label">频率:</label>
+                        <div class="col-sm-4">
+                            <select class=" form-control input-sm" id="frequency" name="frequency" class="select2">
+                                <option value="1">单次</option>
+                                <option value="2">每天</option>
+                                <option value="3">每周</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="halfCourt" class="control-label">类型:</label>
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="radio" id="halfCourt" name="halfCourt" value="1" class="icheck"/>半场
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="radio" id="allCourt" name="halfCourt" value="0" class="icheck" checked="checked"/>全场
+                        </div>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <hr/>
-    <div class="content">
-        会员信息:
-        <table class="no-border">
-            <tbody class="no-border-y">
-            <tr>
-                <td colspan="4">
-                    <label class="radio-inline">
-                        <input type="radio" id="isMember" class="icheck" value="2" checked="checked" name="consType"/>会员
-                    </label>
-                </td>
-                <td colspan="4"><label class="radio-inline">
-                    <input type="radio" id="nMember" class="icheck" value="1" name="consType"/>非会员
-                </label>
-                </td>
-            </tr>
-            <tr>
-                <td>手机号或姓名:</td>
-                <td>
-                    <select style="width: 80px;" id="memberId" class="select2" name="member.id">
-                        <option value="">--请输入选择--</option>
-                        <c:forEach items="${memberList}" var="m">
-                            <option value="${m.id}">${m.mobile}-${m.name}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-                <td>押金:</td>
-                <td><input type="text" readonly="readonly" id="consPrice" name="consPrice" class="form-control"/></td>
+                </div>
 
-                <td>姓名:</td>
-                <td class="text-right"><input readonly="readonly" id="userName" name="userName" type="text"
-                                              class="form-control"/></td>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="tutorId" class="col-sm-2 control-label">教练:</label>
+                        <div class="col-sm-4">
+                            <select id="tutorId" name="tutor.id" class="form-control input-sm">
+                                <option value="">请选择</option>
 
-                <td>手机:</td>
-                <td class="text-right"><input readonly="readonly" id="consMobile" name="consMobile" type="text"
-                                              class="form-control"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <hr/>
-    <div class="content">
-        备注:
-        <textarea name="remarks" rows="1" class="form-control"></textarea>
+                                <c:forEach items="${tutors}" var="t">
+                                    <option data-price="${t.price}" value="${t.id}" onclick="">${t.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="tutor_price" class="control-label">价格:</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input readonly="readonly" id="tutor_price" class="form-control"
+                                   value=" 0 元/小时"/>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="tutorId" class="control-label col-sm-2">备注:</label>
+                        <div class="col-sm-9">
+                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="isMember" class="control-label col-lg-3">顾客类型:</label>
+                        <div class="col-lg-2">
+                            <input type="radio" id="isMember" for="memberId" class="icheck" value="2" checked="checked"
+                                   name="consType"/>会员
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="radio" id="nMember" class="icheck" value="1" name="consType"/>非会员
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="memberId" class="control-label col-lg-3">会员姓名:</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="memberId" name="member.id">
+                                <option value="">--请选择--</option>
+                                <c:forEach items="${memberList}" var="m">
+                                    <option value="${m.id}">${m.mobile}-${m.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="userName" class="control-label col-lg-3">姓名:</label>
+                        <div class="col-lg-6"><input id="userName" name="userName"
+                                                     type="text"
+                                                     class="form-control input-sm"/></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="consPrice" class="control-label col-lg-3">押金:</label>
+                        <div class="col-lg-6">
+                            <input type="text" id="consPrice" name="consPrice"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="consMobile" class="control-label col-lg-3">手机:</label>
+                        <div class="col-lg-6"><input id="consMobile" name="consMobile"
+                                                     type="text"
+                                                     class="form-control"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 
