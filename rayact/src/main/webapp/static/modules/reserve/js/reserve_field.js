@@ -327,19 +327,3 @@ $(document).ready(function () {
         $("#closeBtn").click();
     });
 });
-function filedStatus(venueId, t) {
-    jQuery.postItems({
-        url: ctx + '/reserve/field/main',
-        data: {
-            fieldId: venueId,
-            date: t
-        },
-        success: function (data) {
-            /* var timeSlot=data.timeSlot;
-             var timeSlotHtml="";
-             timeSlotHtml+='<c:forEach items="'+timeSlot'" var="slot" varStatus="status"> <li <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a> </li> </c:forEach>';
-             $('#timeSlotDiv').append(timeSlotHtml);*/
-
-        }
-    });
-}

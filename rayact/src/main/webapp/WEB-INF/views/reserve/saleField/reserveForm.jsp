@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-lg-4">
                             <input readonly="readonly" id="tutor_price" class="form-control"
-                                   value=" 0 元/小时"/>
+                                   value="0元/小时"/>
                         </span>
                         </div>
                     </div>
@@ -108,16 +108,16 @@
                 <div class="row">
                     <div class="form-group">
                         <label for="isMember" class="control-label col-lg-3">顾客类型:</label>
-                        <div class="col-lg-2">
-                            <input type="radio" id="isMember" for="memberId" class="icheck" value="2" checked="checked"
-                                   name="consType"/>会员
+                        <div class="col-lg-3">
+                            <input type="radio" id="isMember" class="icheck" value="1" checked="checked"
+                                   name="memberType"/>会员
                         </div>
-                        <div class="col-sm-3">
-                            <input type="radio" id="nMember" class="icheck" value="1" name="consType"/>非会员
+                        <div class="col-lg-3">
+                            <input type="radio" class="icheck" value="0" name="memberType"/>非会员
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="memberSelect">
                     <div class="form-group">
                         <label for="memberId" class="control-label col-lg-3">会员姓名:</label>
                         <div class="col-sm-6">
@@ -134,11 +134,11 @@
                     <div class="form-group">
                         <label for="userName" class="control-label col-lg-3">姓名:</label>
                         <div class="col-lg-6"><input id="userName" name="userName"
-                                                     type="text"
+                                                     type="text" readonly="readonly"
                                                      class="form-control input-sm"/></div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="deposit" style="display: none">
                     <div class="form-group">
                         <label for="consPrice" class="control-label col-lg-3">押金:</label>
                         <div class="col-lg-6">
@@ -151,7 +151,7 @@
                     <div class="form-group">
                         <label for="consMobile" class="control-label col-lg-3">手机:</label>
                         <div class="col-lg-6"><input id="consMobile" name="consMobile"
-                                                     type="text"
+                                                     type="text" readonly="readonly"
                                                      class="form-control"/></div>
                     </div>
                 </div>
@@ -162,19 +162,21 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-        $("#isMember").on('ifChecked', function () {
-            $("#consPrice").attr("readonly", "readonly");
-            $("#userName").attr("readonly", "readonly");
-            $("#consMobile").attr("readonly", "readonly");
-        });
-
-        $("#nMember").on('ifChecked', function () {
-            $("#consPrice").removeAttr("readonly");
-            $("#userName").removeAttr("readonly");
-            $("#consMobile").removeAttr("readonly");
-        });
-
+        $("input[name='memberType']").click(function(){
+            var memberType=$(this).val();
+            if(memberType=="1"){
+                $("#deposit").hide();
+                $("#userName").attr("readonly", "true");
+                $("#consMobile").attr("readonly", "true");
+                $("#memberSelect").show();
+            }
+            if(memberType=="0"){
+                $("#deposit").show();
+                $("#userName").removeAttr("readonly");
+                $("#consMobile").removeAttr("readonly");
+                $("#memberSelect").hide();
+            }
+        })
         $("#memberId").on('change', function () {
             var mid = $(this).attr("value");
             var text = $(this).find("option:selected").text();
@@ -208,10 +210,11 @@
         $("#tutorId").on('change', function () {
             var price = $(this).find("option:selected").attr("data-price");
             if (price == undefined || price == '') {
-                $("#tutor_price").html("")
+                $("#tutor_price").val("0元/小时");
             } else {
-                $("#tutor_price").html("每小时:" + price + "<li class='fa fa-cny'></li>")
+                $("#tutor_price").val(price+"元/小时");
             }
         });
     });
+
 </script>
