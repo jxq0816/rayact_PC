@@ -162,6 +162,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#reserveDialogModal").draggable({
+            handle: ".modal-header"
+        });
         $("input[name='memberType']").click(function(){
             var memberType=$(this).val();
             if(memberType=="1"){

@@ -189,7 +189,6 @@
 			frequency = #{frequency},
 			cons_week = #{consWeek},
 			half_court = #{halfCourt},
-			cons_date = #{conDate},
 			start_time = #{startTime},
 			end_time = #{endTime},
 			cons_price = #{consPrice},

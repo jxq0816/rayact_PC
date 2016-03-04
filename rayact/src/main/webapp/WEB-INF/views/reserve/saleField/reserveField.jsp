@@ -239,9 +239,6 @@
 <!--end dialog-->
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field.js?t=" + Math.random() + "'><\/script>");
-    $("#reserveDialogModal").draggable({
-        handle: ".modal-header"
-    });
 </script>
 
 </body>
