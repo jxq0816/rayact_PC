@@ -506,7 +506,6 @@ CREATE TABLE reserve_storedcard_member_set
 	start_price Double,
 	end_price Double,
   give_price Double,
-  deadline DATE ,
   discount_rate double DEFAULT 0,
 	create_by varchar(64),
 	create_date datetime,

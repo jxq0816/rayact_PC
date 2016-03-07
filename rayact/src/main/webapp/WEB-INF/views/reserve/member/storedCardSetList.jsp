@@ -52,7 +52,6 @@
                                 <th>项目</th>
                                 <th>起止金额</th>
                                 <th>赠送金额</th>
-                                <th>截止日期</th>
                                 <th>折扣比率</th>
                                 <th>备注</th>
                                 <th>操作</th>
@@ -73,10 +72,6 @@
                                     </td>
 
                                     <td>${reserveStoredcardMemberSet.givePrice} 元</td>
-
-                                    <td><fmt:formatDate value="${reserveStoredcardMemberSet.deadline}"
-                                                        type="date"/></td>
-
 
                                     <td>${reserveStoredcardMemberSet.discountRate}%</td>
 

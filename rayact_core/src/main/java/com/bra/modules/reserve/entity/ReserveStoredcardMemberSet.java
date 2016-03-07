@@ -15,7 +15,6 @@ public class ReserveStoredcardMemberSet extends SaasEntity<ReserveStoredcardMemb
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
 	private ReserveProject reserveProject; //依赖项目
-	private Date deadline;  	//截止日期
 	private Double discountRate;	//打折比率
 	private Double startPrice;		// 起始金额
 	private Double endPrice;		// 结束金额
@@ -68,14 +67,6 @@ public class ReserveStoredcardMemberSet extends SaasEntity<ReserveStoredcardMemb
 
 	public void setReserveProject(ReserveProject reserveProject) {
 		this.reserveProject = reserveProject;
-	}
-
-	public Date getDeadline() {
-		return deadline;
-	}
-
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
 	}
 
 	public Double getDiscountRate() {
