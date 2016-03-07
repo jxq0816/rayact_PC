@@ -79,6 +79,8 @@
                                     <td>储值卡名称:</td>
                                     <td>
                                         <sys:select cssClass="input-xlarge" name="storedcardSet.id"
+                                                    defaultLabel="${reserveMember.storedcardSet.name}"
+                                                    defaultValue="${reserveMember.storedcardSet.id}"
                                                     items="${storedcardSetList}"
                                                     value="${storedcardSet}" itemLabel="name"
                                                     itemValue="id"></sys:select>
@@ -98,10 +100,10 @@
                                         <sys:select cssClass="input-xlarge" name="reserveVenue.id"
                                                     items="${venueList}"
                                                     value="${venue}"
+                                                    defaultLabel="${reserveMember.reserveVenue.name}"
+                                                    defaultValue="${reserveMember.reserveVenue.id}"
                                                     itemLabel="name"
                                                     itemValue="id"
-                                                    defaultValue=""
-                                                    defaultLabel="请选择场馆"
                                         ></sys:select>
                                     </td>
                                 </tr>

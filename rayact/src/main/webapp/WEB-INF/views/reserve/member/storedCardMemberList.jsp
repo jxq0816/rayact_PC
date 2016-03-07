@@ -60,15 +60,11 @@
                             <tr>
                                 <th>姓名</th>
                                 <th>手机号</th>
-                                <th>性别</th>
                                 <th>卡号</th>
                                 <th>开户场馆</th>
-                                <th>储值卡名称</th>
-                                <th>身份证</th>
-                                <th>地址</th>
                                 <th>余额</th>
-                                <th>备注</th>
-                                    <th>操作</th>
+                                <th>操作</th>
+                                <th>交易</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -81,45 +77,31 @@
                                             ${fns:hidePhone(reserveMember.mobile)}
                                     </td>
                                     <td>
-                                            ${fns:getDictLabel(reserveMember.sex, 'sex', '')}
-                                    </td>
-                                    <td>
                                             ${reserveMember.cartno}
                                     </td>
                                     <td>
                                             ${reserveMember.reserveVenue.name}
                                     </td>
                                     <td>
-                                            ${reserveMember.storedcardSet.name}
-                                    </td>
-                                    <td>
-                                            ${reserveMember.sfz}
-                                    </td>
-                                    <td>
-                                            ${reserveMember.address}
-                                    </td>
-
-                                    <td>
                                             ${reserveMember.remainder}
                                     </td>
                                     <td>
-                                            ${reserveMember.remarks}
+                                        <a class="btn btn-primary btn-xs"
+                                           href="${ctx}/reserve/storedCardMember/form?id=${reserveMember.id}"><i
+                                                class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs"
+                                           href="${ctx}/reserve/storedCardMember/delete?id=${reserveMember.id}"
+                                           onclick="return confirmb('确认要删除该会员吗？', this.href)"><i
+                                                class="fa fa-times"></i>删除</a>
                                     </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-xs"
-                                               href="${ctx}/reserve/storedCardMember/form?id=${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>修改</a>
-                                            <a class="btn btn-danger btn-xs"
-                                               href="${ctx}/reserve/storedCardMember/delete?id=${reserveMember.id}"
-                                               onclick="return confirmb('确认要删除该会员吗？', this.href)"><i
-                                                    class="fa fa-times"></i>删除</a>
-                                            <a class="btn btn-primary btn-xs rechargeBtn" data-id="${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>充值</a>
-                                            <a class="btn btn-primary btn-xs refundBtnForVIP" data-id="${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>大客户退费</a>
-                                            <a class="btn btn-primary btn-xs refundBtn" data-id="${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>退费</a>
-                                        </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs rechargeBtn" data-id="${reserveMember.id}"><i
+                                                class="fa fa-pencil"></i>充值</a>
+                                        <a class="btn btn-primary btn-xs refundBtnForVIP" data-id="${reserveMember.id}"><i
+                                                class="fa fa-pencil"></i>大客户退费</a>
+                                        <a class="btn btn-primary btn-xs refundBtn" data-id="${reserveMember.id}"><i
+                                                class="fa fa-pencil"></i>退费</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -213,7 +195,8 @@
             <!--end 大客户退费-->
         </div>
         <div class="modal-footer">
-            <button type="button" id="refundCloseForVIPBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+            <button type="button" id="refundCloseForVIPBtn" class="btn btn-default btn-flat md-close"
+                    data-dismiss="modal">
                 取消
             </button>
             <button type="button" id="refundSaveForVIPBtn" class="btn btn-primary btn-flat">保存</button>
