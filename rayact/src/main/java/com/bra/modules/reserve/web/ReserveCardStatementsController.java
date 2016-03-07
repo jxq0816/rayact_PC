@@ -166,7 +166,7 @@ public class ReserveCardStatementsController extends BaseController {
 	public String refund(Double realRefundVolume,String id) {
 		ReserveMember reserveMember=reserveMemberService.get(id);
 		Double remainder= reserveMember.getRemainder();
-		remainder+=realRefundVolume;
+		remainder+=realRefundVolume;//退货
 		reserveMember.setRemainder(remainder);
 		reserveMemberService.save(reserveMember);
 
@@ -174,6 +174,35 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveCardStatements.setTransactionType("2");//退费
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setTransactionVolume(realRefundVolume);
+		reserveCardStatementsService.save(reserveCardStatements);
+		return "success";
+	}
+	/*大客户退费表单*/
+	@RequestMapping(value = "refundForVIPForm")
+	@Token(save = true)
+	public String refundBtnForVIP(ReserveMember reserveMember, Model model) {
+		reserveMember=reserveMemberService.get(reserveMember.getId());
+		model.addAttribute("reserveMember", reserveMember);
+		return "reserve/member/storedCardMemberRefundForVIPForm";
+	}
+	/*大客户退费*/
+	@RequestMapping(value = "refundForVIP")
+	@ResponseBody
+	@Token(remove = true)
+	public String refundForVIP(Double refundVolume,String id) {
+		ReserveMember reserveMember=reserveMemberService.get(id);
+		Double remainder= reserveMember.getRemainder();
+		if(remainder<refundVolume){
+			return "退款金额不能大于余额";
+		}
+		remainder-=refundVolume;//回扣提现
+		reserveMember.setRemainder(remainder);
+		reserveMemberService.save(reserveMember);
+
+		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+		reserveCardStatements.setTransactionType("3");//大客户退费
+		reserveCardStatements.setReserveMember(reserveMember);
+		reserveCardStatements.setTransactionVolume(refundVolume);
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}
