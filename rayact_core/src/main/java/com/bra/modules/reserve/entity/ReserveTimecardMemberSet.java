@@ -15,7 +15,6 @@ public class ReserveTimecardMemberSet extends SaasEntity<ReserveTimecardMemberSe
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
 	private ReserveProject reserveProject; //依赖项目
-	private Date deadline;  	//截止日期
 	private Integer minutesPerTime; //分钟每次
 	private Integer startTime;		// 起始次数
 	private Integer endTime;		// 结束次数
@@ -68,14 +67,6 @@ public class ReserveTimecardMemberSet extends SaasEntity<ReserveTimecardMemberSe
 
 	public void setReserveProject(ReserveProject reserveProject) {
 		this.reserveProject = reserveProject;
-	}
-
-	public Date getDeadline() {
-		return deadline;
-	}
-
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
 	}
 
 	public Integer getMinutesPerTime() {

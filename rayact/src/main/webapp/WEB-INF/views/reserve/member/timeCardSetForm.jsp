@@ -54,17 +54,6 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">截止日期:</label>
-                <div class="col-sm-6">
-                    <input id="deadline" name="deadline" type="datetime" readonly="readonly"
-                           maxlength="20"
-                           class="input-large Wdate"
-                           value="<fmt:formatDate value="${deadline}" pattern="yyyy-MM-dd"/>"
-                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label class="col-sm-3 control-label">增送次数:</label>
                 <div class="col-sm-6">
                     <form:input path="giveTime" htmlEscape="false" maxlength="11" class="form-control "/>

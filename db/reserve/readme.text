@@ -3,3 +3,4 @@
 20120220:reserve_commodity_sell商品销售主表 添加销售类型：payType
 20120223:reserve_member 会员表 添加场馆外键：fk_reserve_venue_id
 20160224:reserve_project 项目表 添加用于移动端的接口标识：interface_id
+20160307:reserve_timecard_member_set 次卡设置 删除截止日期：deadline

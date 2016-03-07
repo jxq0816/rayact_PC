@@ -528,7 +528,6 @@ CREATE TABLE reserve_timecard_member_set
 	end_time int,
 	/*起止次数*/
   give_time int,
-  deadline DATE,
   minutes_per_time int,
 	create_by varchar(64),
 	create_date datetime,

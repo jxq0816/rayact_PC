@@ -54,7 +54,6 @@
                                 <th>项目</th>
                                 <th>次数</th>
                                 <th>赠送次数</th>
-                                <th>截止日期</th>
                                 <th>分钟/次</th>
                                 <th>备注</th>
                                 <th>操作</th>
@@ -74,7 +73,6 @@
                                     <td>
                                             ${reserveTimecardMemberSet.giveTime}次
                                     </td>
-                                    <td><fmt:formatDate value="${reserveTimecardMemberSet.deadline}" type="date"/></td>
 
                                     <td>
                                             ${reserveTimecardMemberSet.minutesPerTime}
