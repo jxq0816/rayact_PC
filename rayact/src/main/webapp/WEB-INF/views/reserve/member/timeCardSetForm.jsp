@@ -65,12 +65,22 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">分钟/次:</label>
+                <label class="col-sm-3 control-label">增送次数:</label>
                 <div class="col-sm-6">
                     <form:input path="giveTime" htmlEscape="false" maxlength="11" class="form-control "/>
                 </div>
                 <div class="col-sm-1">
-                    分钟
+                    次
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">周期：</label>
+                <div class="col-sm-6">
+                    <form:input path="minutesPerTime" htmlEscape="false" maxlength="11" class="form-control "/>
+                </div>
+                <div class="col-sm-1">
+                    分钟/次
                 </div>
             </div>
 
@@ -85,7 +95,7 @@
 
         </div>
         <div class="form-actions">
-           <input
+            <input
                     id="btnSubmit"
                     class="btn btn-primary"
                     type="submit"

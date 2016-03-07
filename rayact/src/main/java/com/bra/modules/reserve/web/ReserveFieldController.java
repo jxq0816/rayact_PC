@@ -113,7 +113,6 @@ public class ReserveFieldController extends BaseController {
 	}
 
 	@RequestMapping(value = "delete")
-	@Token(remove = true)
 	public String delete(ReserveField reserveField, RedirectAttributes redirectAttributes) {
 		reserveFieldService.delete(reserveField);
 		addMessage(redirectAttributes, "删除场地成功");
