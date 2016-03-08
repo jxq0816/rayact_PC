@@ -201,7 +201,7 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveMemberService.save(reserveMember);
 
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-		reserveCardStatements.setTransactionType("3");//大客户退费
+		reserveCardStatements.setTransactionType("2");//大客户退费
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setTransactionVolume(refundVolume);
 		reserveCardStatementsService.save(reserveCardStatements);
