@@ -151,29 +151,30 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}
-	/*退费表单*/
-	@RequestMapping(value = "refundForm")
+	/*销户表单*/
+	@RequestMapping(value = "cancellationForm")
 	@Token(save = true)
 	public String refundForm(ReserveMember reserveMember, Model model) {
 		reserveMember=reserveMemberService.get(reserveMember.getId());
 		model.addAttribute("reserveMember", reserveMember);
-		return "reserve/member/storedCardMemberRefundForm";
+		return "reserve/member/storedCardMemberCancellationForm";
 	}
-	/*退费*/
-	@RequestMapping(value = "refund")
+	/*销户*/
+	@RequestMapping(value = "cancellation")
 	@ResponseBody
 	@Token(remove = true)
 	public String refund(Double realRefundVolume,String id) {
 		ReserveMember reserveMember=reserveMemberService.get(id);
 		Double remainder= reserveMember.getRemainder();
-		remainder+=realRefundVolume;//退货
-		reserveMember.setRemainder(remainder);
-		reserveMemberService.save(reserveMember);
+		reserveMember.setRemainder(0.0);
+		reserveMemberService.save(reserveMember);//余额清空
+		reserveMemberService.delete(reserveMember);//销户
+		Double difference=remainder-realRefundVolume;//差额
 
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-		reserveCardStatements.setTransactionType("2");//退费
+		reserveCardStatements.setTransactionType("4");//销户退还用户余下的差额
 		reserveCardStatements.setReserveMember(reserveMember);
-		reserveCardStatements.setTransactionVolume(realRefundVolume);
+		reserveCardStatements.setTransactionVolume(difference);
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}

@@ -20,20 +20,20 @@ $(document).ready(function () {
             }
         });
     });
-    /*退费*/
-    $(".refundBtn").on('click', function () {
+    /*销户*/
+    $(".cancellationBtn").on('click', function () {
         var id = $(this).attr("data-id");
         jQuery.postItems({
-            url: ctx+'/reserve/reserveCardStatements/refundForm',
+            url: ctx+'/reserve/reserveCardStatements/cancellationForm',
             data: {id: id},
             success: function (result) {
 
-                $("#reserveForm").html(result);
-                $("#refundDialogBtn").click();
-                $("#reserveForm .select2").select2({
+                $("#cancellationForm").html(result);
+                $("#cancellationDialogBtn").click();
+                $("#cancellationForm .select2").select2({
                     width: '100%'
                 });
-                $('#reserveForm .icheck').iCheck({
+                $('#cancellationForm .icheck').iCheck({
                     checkboxClass: 'icheckbox_square-blue checkbox',
                     radioClass: 'iradio_square-blue'
                 });
@@ -41,27 +41,15 @@ $(document).ready(function () {
 
         });
     });
-    /*退费保存*/
-    $("#refundSaveBtn").on('click', function () {
+    /*销户保存*/
+    $("#cancellationFormSaveBtn").on('click', function () {
         var realRefundVolume = $("#realRefundVolume").val();
         realRefundVolume= $.trim(realRefundVolume);
-        var refundVolume =$("#refundVolume").val();
-        refundVolume= $.trim(refundVolume);
-        if (refundVolume == '') {
-            formLoding("请输入退费");
-            return;
-        }
-
-        if (realRefundVolume == '') {
-            formLoding("请输入实际费用");
-            return;
-        }
-
         var id = $("#id").val();
         var token = $("#token").val();
 
         jQuery.postItems({
-            url: ctx+'/reserve/reserveCardStatements/refund',
+            url: ctx+'/reserve/reserveCardStatements/cancellation',
             data: {
                 id: id,
                 token: token,
@@ -71,7 +59,7 @@ $(document).ready(function () {
                 if (result == "success") {
                     location.reload("true");
                 } else {
-                    formLoding('退费失败!');
+                    formLoding('销户失败!');
                 }
             }
         });
@@ -161,10 +149,3 @@ $(document).ready(function () {
         });
     });
 });
-function culculate() {
-    var refundVolume = $("#refundVolume").val();
-    refundVolume= $.trim(refundVolume);
-    var realRefundVolume = 0.9 * refundVolume;
-    realRefundVolume = realRefundVolume.toFixed(2);
-    $("#realRefundVolume").val(realRefundVolume);
-}

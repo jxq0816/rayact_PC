@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <div class="content">
     <form:form id="formBean" modelAttribute="reserveMember"
-               action="${ctx}/reserve/storedCardMember/save" method="post"
+               action="" method="post"
                class="form-horizontal">
         <form:hidden id="id" path="id"/>
         <input type="hidden" id="token" name="token" value="${token}"/>
@@ -48,19 +48,7 @@
             <tr>
                 <td>退费:</td>
                 <td colspan="3">
-                    <input id="refundVolume"  onkeyup="culculate()" name="transactionVolume" htmlEscape="false" maxlength="30" class="form-control required number"/>
-                </td>
-            </tr>
-            <tr>
-                <td>费率:</td>
-                <td colspan="3">
-                    10%
-                </td>
-            </tr>
-            <tr>
-                <td>实际费用:</td>
-                <td colspan="3">
-                    <input id="realRefundVolume" name="cost" htmlEscape="false" maxlength="30" class="form-control required number"/>
+                    <input id="refundVolume" name="transactionVolume" htmlEscape="false" maxlength="30" class="form-control required number"/>
                 </td>
             </tr>
         </table>
