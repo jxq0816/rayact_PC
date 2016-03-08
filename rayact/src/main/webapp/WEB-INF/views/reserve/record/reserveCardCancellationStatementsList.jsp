@@ -3,18 +3,18 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
-    <title>充值记录</title>
+    <title>储值卡会员销户记录</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="reserveCardRechargeStatements"></jsp:param>
+    <jsp:param name="action" value="reserveCardCancellationStatements"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>充值记录</h3>
+                    <h3>储值卡会员销户记录</h3>
                 </div>
 
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
@@ -62,9 +62,9 @@
                             <tr>
                                 <th>姓名</th>
                                 <th>卡号</th>
-                                <th>金额</th>
+                                <th>卡内余额</th>
+                                <th>退还金额</th>
                                 <th>电话</th>
-                                <th>支付方式</th>
                                 <th>操作人</th>
                                 <th>时间</th>
                             </tr>
@@ -79,29 +79,14 @@
                                             ${reserveCardStatements.reserveMember.cartno}
                                     </td>
                                     <td>
+                                            ${reserveCardStatements.transactionVolume/0.8}
+                                    </td>
+                                    <td>
                                             ${reserveCardStatements.transactionVolume}
                                     </td>
                                     <td>
                                             ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
 
-                                    </td>
-
-                                    <td>
-                                        <c:if test="${reserveCardStatements.payType eq 2}">
-                                            现金
-                                        </c:if>
-                                        <c:if test="${reserveCardStatements.payType eq 3}">
-                                            银行卡
-                                        </c:if>
-                                        <c:if test="${reserveCardStatements.payType eq 4}">
-                                            微信
-                                        </c:if>
-                                        <c:if test="${reserveCardStatements.payType eq 5}">
-                                            支付宝
-                                        </c:if>
-                                        <c:if test="${reserveCardStatements.payType eq 6}">
-                                            其他
-                                        </c:if>
                                     </td>
 
                                     <td>
@@ -118,6 +103,8 @@
                             <tr>
                                 <td>
                                     合计
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>

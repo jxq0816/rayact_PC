@@ -54,7 +54,7 @@
             <tr>
                 <td>实际费用:</td>
                 <td colspan="3">
-                    <input id="realRefundVolume" value="${reserveMember.remainder*0.8}"  class="form-control required number"">
+                    <input id="realRefundVolume" value="${reserveMember.remainder*0.8}" readonly="readonly" class="form-control required number"">
                 </td>
             </tr>
         </table>

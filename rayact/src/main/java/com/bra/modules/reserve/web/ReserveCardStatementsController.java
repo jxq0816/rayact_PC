@@ -84,6 +84,9 @@ public class ReserveCardStatementsController extends BaseController {
 		if("2".equals(type)){
 			rs= "reserve/record/reserveCardRefundStatementsList";
 		}
+		if("3".equals(type)){
+			rs= "reserve/record/reserveCardCancellationStatementsList";
+		}
 		return rs;
 	}
 	/*会员收入统计*/
@@ -172,10 +175,16 @@ public class ReserveCardStatementsController extends BaseController {
 		Double difference=remainder-realRefundVolume;//差额
 
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-		reserveCardStatements.setTransactionType("4");//销户退还用户余下的差额
+		reserveCardStatements.setTransactionType("2");//退费
 		reserveCardStatements.setReserveMember(reserveMember);
-		reserveCardStatements.setTransactionVolume(difference);
+		reserveCardStatements.setTransactionVolume(realRefundVolume);// 退还用户的金额
 		reserveCardStatementsService.save(reserveCardStatements);
+
+		ReserveCardStatements statements=new ReserveCardStatements();
+		statements.setTransactionType("3");//销户
+		statements.setReserveMember(reserveMember);
+		statements.setTransactionVolume(difference);//销户退还用户余下的差额
+		reserveCardStatementsService.save(statements);
 		return "success";
 	}
 	/*大客户退费表单*/
