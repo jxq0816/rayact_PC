@@ -72,6 +72,13 @@
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 
+		<!-- 超过时间限制是否回收 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 超时时间；单位为秒。180秒=3分钟 -->
+		<property name="removeAbandonedTimeout" value="180" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+
 		<!-- 配置初始化大小、最小、最大 -->
 		<property name="initialSize" value="${jdbc.pool.init}" />
 		<property name="minIdle" value="${jdbc.pool.minIdle}" />
@@ -90,9 +97,9 @@
 		<property name="testWhileIdle" value="true" />
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
 
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）
-		<property name="poolPreparedStatements" value="true" />
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
 
 		<!-- 配置监控统计拦截的filters -->
