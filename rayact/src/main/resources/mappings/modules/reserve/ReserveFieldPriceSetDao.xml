@@ -37,7 +37,8 @@
         SELECT
         <include refid="reserveFieldPriceSetColumns"/>
         FROM reserve_field_price_set a
-        <include refid="reserveFieldPriceSetJoins"/>
+		INNER JOIN reserve_venue v ON v.id = a.venue_id
+		INNER JOIN reserve_field f ON f.id = a.field_id
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
             <if test="week != null and week != ''">
@@ -47,10 +48,10 @@
                 and a.cons_type = #{consType}
             </if>
 			<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id != ''">
-				and a.venue_id = #{reserveVenue.id}
+				and a.venue_id = #{reserveVenue.id} and v.del_flag='0'
 			</if>
 			<if test="reserveField != null and reserveField.id != null and reserveField.id != ''">
-				and a.field_id = #{reserveField.id}
+				and a.field_id = #{reserveField.id} and f.del_flag='0'
 			</if>
         </where>
         <choose>

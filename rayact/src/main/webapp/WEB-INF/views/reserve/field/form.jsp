@@ -115,7 +115,7 @@
                                             </c:forEach>
                                         </select>
                                     </td>
-                                    <td>散客:</td>
+                                    <td>:</td>
                                     <td>
                                         <input type="text" id="retail" class="number form-control" style="width: 40px;height:30px"/>
                                     </td>
