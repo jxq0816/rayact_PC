@@ -54,7 +54,7 @@
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
+				ORDER BY ${page.orderBy},a.venue_id DESC ,a.project_id DESC
 			</when>
 			<otherwise>
 				ORDER BY a.name asc

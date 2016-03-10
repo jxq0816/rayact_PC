@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="field"></jsp:param>
 </jsp:include>
-<div class="cl-mcont" id="pcont">
+<div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
@@ -117,14 +117,14 @@
                                     </td>
                                     <td>散客:</td>
                                     <td>
-                                        <input type="text" id="retail" class="number form-control" style="width: 45px;"/>
+                                        <input type="text" id="retail" class="number form-control" style="width: 30px;height:30px"/>
                                     </td>
                                     <td>会员:</td>
                                     <td>
-                                        <input type="text" id="member" class="number form-control" style="width: 45px;"/>
+                                        <input type="text" id="member" class="number form-control" style="width: 30px;height:30px"/>
                                     </td>
                                     <td>团体:</td>
-                                    <td><input type="text" id="group" class="number form-control" style="width: 45px;"/></td>
+                                    <td><input type="text" id="group" class="number form-control" style="width: 30px;height:30px"/></td>
                                     <td valign="top"><input id="globalPrice" data="all" class="btn btn-primary"
                                                             type="button"
                                                             value="价格设定"/></td>
@@ -132,9 +132,8 @@
                             </table>
                             <table class="table table-bordered">
                                 <tr>
-                                    <td><a style="color: red" style="width: 25px;"
-                                           title="点击,设计全局数值" href="#" data="all" class="weekPriceTable">周一至周日</a></td>
-                                    <td></td>
+                                    <td colspan="2"><a style="color: red"
+                                           title="点击,设计全局数值" href="#" data="all" class="weekPriceTable">时间</a></td>
                                     <c:forEach items="${times}" var="t">
                                         <th><span>${t}</span></th>
                                     </c:forEach>
@@ -165,7 +164,7 @@
                                                        data="${priceSet.week}-${priceSet.consType}"
                                                        name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
                                                        class="number form-control"
-                                                       style="width: 45px;"/>
+                                                       style="width: 30px;height:30px"/>
                                             </td>
                                         </c:forEach>
                                     </tr>
@@ -209,14 +208,14 @@
                                     </td>
                                     <td>散客:</td>
                                     <td>
-                                        <input type="text" id="dataRetail" class="form-control number" style="width: 45px;"/>
+                                        <input type="text" id="dataRetail" class="form-control number" style="width: 30px;height: 30px;"/>
                                     </td>
                                     <td>会员:</td>
                                     <td>
-                                        <input type="text" id="dataMember" class="form-control number" style="width: 45px;"/>
+                                        <input type="text" id="dataMember" class="form-control number" style="width: 30px;height: 30px;"/>
                                     </td>
                                     <td>团体:</td>
-                                    <td><input type="text" id="dataGroup" class="form-control number" style="width: 45px;"/></td>
+                                    <td><input type="text" id="dataGroup" class="form-control number" style="width: 30px;height: 30px;"/></td>
                                     <td valign="top"><input id="addGlobalPrice" data="all" class="btn btn-primary"
                                                             type="button"
                                                             value="添加"/></td>
