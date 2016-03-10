@@ -115,11 +115,11 @@
                                             </c:forEach>
                                         </select>
                                     </td>
-                                    <td>:</td>
+                                    <td>市场价:</td>
                                     <td>
                                         <input type="text" id="retail" class="number form-control" style="width: 40px;height:30px"/>
                                     </td>
-                                    <td>会员:</td>
+                                    <td>会员价:</td>
                                     <td>
                                         <input type="text" id="member" class="number form-control" style="width: 40px;height:30px"/>
                                     </td>
