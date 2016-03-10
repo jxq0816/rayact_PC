@@ -78,11 +78,12 @@
 
                                     <td>储值卡名称:</td>
                                     <td>
-                                        <sys:select cssClass="input-xlarge" name="storedcardSet.id"
-                                                    defaultLabel="${reserveMember.storedcardSet.name}"
-                                                    defaultValue="${reserveMember.storedcardSet.id}"
+                                        <sys:select cssClass="input-medium" name="storedcardSet.id"
+                                                    defaultLabel="请选择"
+                                                    defaultValue=""
                                                     items="${storedcardSetList}"
-                                                    value="${storedcardSet}" itemLabel="name"
+                                                    value="${reserveMember.storedcardSet.id}"
+                                                    itemLabel="name"
                                                     itemValue="id"></sys:select>
                                     </td>
                                 </tr>
@@ -99,9 +100,9 @@
                                     <td colspan="3">
                                         <sys:select cssClass="input-xlarge" name="reserveVenue.id"
                                                     items="${venueList}"
-                                                    value="${venue}"
-                                                    defaultLabel="${reserveMember.reserveVenue.name}"
-                                                    defaultValue="${reserveMember.reserveVenue.id}"
+                                                    value="${reserveMember.reserveVenue.id}"
+                                                    defaultLabel="请选择"
+                                                    defaultValue=""
                                                     itemLabel="name"
                                                     itemValue="id"
                                         ></sys:select>
