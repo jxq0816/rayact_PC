@@ -12,7 +12,7 @@
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="padding-right: 0px">
             <div class="block-flat">
                 <div class="header">
                     <h3>场地管理</h3>
@@ -117,11 +117,11 @@
                                     </td>
                                     <td>散客:</td>
                                     <td>
-                                        <input type="text" id="retail" class="number form-control" style="width: 30px;height:30px"/>
+                                        <input type="text" id="retail" class="number form-control" style="width: 40px;height:30px"/>
                                     </td>
                                     <td>会员:</td>
                                     <td>
-                                        <input type="text" id="member" class="number form-control" style="width: 30px;height:30px"/>
+                                        <input type="text" id="member" class="number form-control" style="width: 40px;height:30px"/>
                                     </td>
                                     <td>团体:</td>
                                     <td><input type="text" id="group" class="number form-control" style="width: 30px;height:30px"/></td>
@@ -160,11 +160,12 @@
                                                 <input type="hidden"
                                                        name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
                                                        value="${t.time}"/>
-                                                <input value="${t.price}" type="text" data-time="${t.time}"
+                                                <input value="<fmt:formatNumber value='${t.price}' pattern='0'/>"
+                                                       type="text" data-time="${t.time}"
                                                        data="${priceSet.week}-${priceSet.consType}"
                                                        name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
                                                        class="number form-control"
-                                                       style="width: 30px;height:30px"/>
+                                                       style="width: 40px;height:30px"/>
                                             </td>
                                         </c:forEach>
                                     </tr>

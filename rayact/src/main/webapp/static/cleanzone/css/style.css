@@ -839,7 +839,6 @@ body.modal-open,
 
 /*Vertical Navigation*/
 .cl-sidebar {
-    background: #fff;
     position: absolute;
     width: 200px;
     z-index: 2;
@@ -1221,7 +1220,8 @@ body {
 .block-flat,
 .block-wizard {
     margin-bottom: 6px;
-    padding: 10px 10px;
+    padding-top: 10px;
+    padding-left: 10px;
     background: #FFF;
     border-radius: 3px;
     -webkit-border-radius: 3px;
