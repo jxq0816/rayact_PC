@@ -21,7 +21,7 @@ public class ReserveFieldPriceSet extends SaasEntity<ReserveFieldPriceSet> {
     private ReserveVenue reserveVenue;//所属场馆
     private ReserveField reserveField;//所属场地
     private String week;        // 星期几?(如:周日)
-    private String consType;        // 消费类型(1:散客,2:会员,3:团体)
+    private String consType;        // 消费类型(1:市场价,2:会员,3:团体)
     private String consPrice;        // 价格
     private String consJson;      //按照时间和价格组装成json
 

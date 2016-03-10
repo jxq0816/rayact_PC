@@ -136,7 +136,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             reserveDateList = TimeUtils.getWeekBettwnDays(reserveVenueCons.getEndDate());
         }
 
-        //1:散客;2:会员
+        //1:门市价;2:会员价
         //String consType = reserveVenueCons.getConsType();
         Date consDate = reserveVenueCons.getConsDate();
 

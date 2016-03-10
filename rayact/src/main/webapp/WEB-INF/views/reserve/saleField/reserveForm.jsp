@@ -107,13 +107,13 @@
             <div class="col-lg-6">
                 <div class="row">
                     <div class="form-group">
-                        <label for="isMember" class="control-label col-lg-3">顾客类型:</label>
+                        <label for="isMember" class="control-label col-lg-3">顾客标准:</label>
                         <div class="col-lg-3">
-                            <input type="radio" id="isMember" class="icheck" value="1" checked="checked"
-                                   name="memberType"/>会员
+                            <input type="radio" id="isMember" class="icheck" value="2" checked="checked"
+                                   name="consType"/>会员价
                         </div>
                         <div class="col-lg-3">
-                            <input type="radio" class="icheck" value="0" name="memberType"/>非会员
+                            <input type="radio" class="icheck" value="1" name="consType"/>门市价
                         </div>
                     </div>
                 </div>
@@ -165,15 +165,15 @@
         $("#reserveDialogModal").draggable({
             handle: ".modal-header"
         });
-        $("input[name='memberType']").click(function(){
-            var memberType=$(this).val();
-            if(memberType=="1"){
+        $("input[name='consType']").click(function(){
+            var consType=$(this).val();
+            if(consType=="2"){
                 $("#deposit").hide();
                 $("#userName").attr("readonly", "true");
                 $("#consMobile").attr("readonly", "true");
                 $("#memberSelect").show();
             }
-            if(memberType=="0"){
+            if(consType=="1"){
                 $("#deposit").show();
                 $("#userName").removeAttr("readonly");
                 $("#consMobile").removeAttr("readonly");
@@ -181,7 +181,6 @@
             }
         })
         $("#memberId").on('change', function () {
-            var mid = $(this).attr("value");
             var text = $(this).find("option:selected").text();
             var mobile = text.split('-')[0];
             var username = text.split('-')[1];

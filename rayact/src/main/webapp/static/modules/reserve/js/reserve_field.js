@@ -1,5 +1,88 @@
 $(document).ready(function () {
     $('.md-trigger').modalEffects();
+    //-------预定---------
+    $(".table-chang tbody td").on('dblclick', function () {
+        if (!$(this).hasClass("access")) {
+            return;
+        }
+        var field = $(this).attr("data-field");
+        var time = $(this).attr("data-time");
+        var price = $(this).attr("data-price");
+        if (price == null || price == "" || price == undefined) {
+            errorLoding("抱歉，该时间段价格尚未设定");
+            return;
+        }
+        var date = consDate;//日期
+        jQuery.postItems({
+            url: ctx + '/reserve/field/reserveForm',
+            data: {fieldId: field, time: time, date: date, venueId: venueId},
+            success: function (result) {
+                $("#reserveForm").html(result);
+                $("#reserveDialog").click();
+                $("#reserveForm .select2").select2({
+                    width: '100%'
+                });
+                $('#reserveForm .icheck').iCheck({
+                    checkboxClass: 'icheckbox_square-blue checkbox',
+                    radioClass: 'iradio_square-blue'
+                });
+            }
+        });
+    });
+    //保存预订数据
+    $("#saveBtn").on('click', function () {
+        var userName = $('#userName').val();
+        var consMobile = $("#consMobile").val();
+        var frequency = $("#frequency").val();
+        var endDate = $("#endDate").val();
+
+        if (userName == '') {
+            formLoding('请输入预定人姓名');
+            return false;
+        }
+        if (consMobile == '') {
+            formLoding('请输入预定人手机');
+            return false;
+        }
+        if (frequency == '2' || frequency == '3') {
+            if (endDate == '') {
+                formLoding('结束时间不能为空');
+                return false;
+            }
+        }
+        var data = $("#reserveFormBean").serializeArray();
+        $.postItems({
+            url: ctx + '/reserve/field/reservation',
+            data: data,
+            success: function (values) {
+                if (values) {
+                    $.each(values, function (index, item) {
+                        if (item.bool == "0") {
+                            formLoding('该时间段不可使用!');
+                        }
+                        else
+                        {
+                            formLoding('订单预定成功!');
+                            $(".table-chang tbody td").each(function (index) {
+                                var $this = $(this);
+                                var fieldId = $this.attr("data-field");
+                                var time = $this.attr("data-time");
+                                $.each(values, function (index, item) {
+                                    if (item.fieldId == fieldId && time == item.time) {
+                                        $this.removeClass("access");
+                                        $this.attr("status", "1");
+                                        $this.attr("data-item", item.itemId);
+                                        $this.text(userName);
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            }
+        });
+        $("#closeBtn").click();
+    });
     //-------取消预定---------
     function cancelReserve(t) {
         var itemId = t.attr("data-item");
@@ -183,35 +266,7 @@ $(document).ready(function () {
         });
     });
 
-    //-------预定---------
-    $(".table-chang tbody td").on('dblclick', function () {
-        if (!$(this).hasClass("access")) {
-            return;
-        }
-        var field = $(this).attr("data-field");
-        var time = $(this).attr("data-time");
-        var price = $(this).attr("data-price");
-        if (price == null || price == "" || price == undefined) {
-            errorLoding("抱歉，该时间段价格尚未设定");
-            return;
-        }
-        var date = consDate;//日期
-        jQuery.postItems({
-            url: ctx + '/reserve/field/reserveForm',
-            data: {fieldId: field, time: time, date: date, venueId: venueId},
-            success: function (result) {
-                $("#reserveForm").html(result);
-                $("#reserveDialog").click();
-                $("#reserveForm .select2").select2({
-                    width: '100%'
-                });
-                $('#reserveForm .icheck').iCheck({
-                    checkboxClass: 'icheckbox_square-blue checkbox',
-                    radioClass: 'iradio_square-blue'
-                });
-            }
-        });
-    });
+
     var accessMenuData = [[{
         text: "预定",
         func: function () {
@@ -271,59 +326,5 @@ $(document).ready(function () {
         }
     });
 
-    //保存预订数据
-    $("#saveBtn").on('click', function () {
-        var consType = $('input:radio[name=consType]:checked').val();
-        var userName = $('#userName').val();
-        var consMobile = $("#consMobile").val();
-        var frequency = $("#frequency").val();
-        var endDate = $("#endDate").val();
 
-        if (userName == '') {
-            formLoding('请输入预定人姓名');
-            return false;
-        }
-        if (consMobile == '') {
-            formLoding('请输入预定人手机');
-            return false;
-        }
-        if (frequency == '2' || frequency == '3') {
-            if (endDate == '') {
-                formLoding('结束时间不能为空');
-                return false;
-            }
-        }
-        var data = $("#reserveFormBean").serializeArray();
-        $.postItems({
-            url: ctx + '/reserve/field/reservation',
-            data: data,
-            success: function (values) {
-                if (values) {
-                    $.each(values, function (index, item) {
-                        if (item.bool == "0") {
-                            formLoding('该时间段不可使用!');
-                        }
-                        else
-                        {
-                            formLoding('订单预定成功!');
-                            $(".table-chang tbody td").each(function (index) {
-                                var $this = $(this);
-                                var fieldId = $this.attr("data-field");
-                                var time = $this.attr("data-time");
-                                $.each(values, function (index, item) {
-                                    if (item.fieldId == fieldId && time == item.time) {
-                                        $this.removeClass("access");
-                                        $this.attr("status", "1");
-                                        $this.attr("data-item", item.itemId);
-                                        $this.text(userName);
-                                    }
-                                });
-                            });
-                        }
-                    });
-                }
-            }
-        });
-        $("#closeBtn").click();
-    });
 });
