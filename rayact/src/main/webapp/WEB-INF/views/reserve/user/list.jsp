@@ -47,17 +47,32 @@
                     <div class="table-responsive">
                         <table>
                             <thead><tr><th>归属公司</th><th class="sort-column login_name">登录名</th>
-                                <th class="text-center primary-emphasis">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%>
+                                <th class="text-center">姓名</th><th>手机</th><th>角色</th>
                                 <th>操作</th></tr></thead>
                             <tbody>
                             <c:forEach items="${page.list}" var="user">
                                 <tr style="height: 30px;">
                                     <td>${user.company.name}</td>
-                                    <td><a href="${ctx}/sys/user/form?id=${user.id}">${user.loginName}</a></td>
-                                    <td class="text-center primary-emphasis">${user.name}</td>
+                                    <td><a href="${ctx}/reserve/user/form?id=${user.id}">${user.loginName}</a></td>
+                                    <td class="text-center">${user.name}</td>
                                     <td>${user.phone}</td>
-                                    <td>${user.mobile}</td><%--
-				<td>${user.roleNames}</td> --%>
+				                    <td>
+                                        <c:if test="${user.userType eq 1}">
+                                            超级管理员
+                                        </c:if>
+                                        <c:if test="${user.userType eq 2}">
+                                            场馆管理员
+                                        </c:if>
+                                        <c:if test="${user.userType eq 3}">
+                                            场地管理员
+                                        </c:if>
+                                        <c:if test="${user.userType eq 4}">
+                                            收银
+                                        </c:if>
+                                        <c:if test="${user.userType eq 5}">
+                                            财务
+                                        </c:if>
+                                    </td>
                                     <td>
                                         <a class="btn btn-primary btn-xs" href="${ctx}/reserve/user/form?id=${user.id}"><i
                                                 class="fa fa-pencil"></i>修改</a>

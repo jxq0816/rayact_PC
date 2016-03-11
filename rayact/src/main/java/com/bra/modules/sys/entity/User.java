@@ -36,7 +36,7 @@ public class User extends DataEntity<User> {
     private String email;    // 邮箱
     private String phone;    // 电话
     private String mobile;    // 手机
-    private String userType;// 用户类型(1:场馆管理员;2:场馆其它角色)
+    private String userType;// 用户类型(1:超级管理员；2:场馆管理员；3：场地管理员；4：收银；5：财务)
     private String loginIp;    // 最后登陆IP
     private Date loginDate;    // 最后登陆日期
     private String loginFlag;    // 是否允许登陆

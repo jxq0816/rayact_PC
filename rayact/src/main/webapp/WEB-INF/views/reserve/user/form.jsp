@@ -8,7 +8,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="venue"></jsp:param>
+    <jsp:param name="action" value="user"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="page-head">
@@ -97,15 +97,15 @@
 
                     <div class="col-sm-10">
                         <label><input type="radio" <j:if test="${'1' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="reserveRole.userType" class="icheck userType" value="1"/>管理员</label>
+                                      name="userType" class="icheck userType" value="1"/>超级管理员</label>
                         <label><input type="radio" <j:if test="${'2' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="reserveRole.userType" class="icheck userType" value="2"/>场馆管理员</label>
+                                      name="userType" class="icheck userType" value="2"/>场馆管理员</label>
                         <label><input type="radio" <j:if test="${'3' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="reserveRole.userType" class="icheck userType" value="3"/>财务</label>
+                                      name="userType" class="icheck userType" value="3"/>场地管理员</label>
                         <label><input type="radio" <j:if test="${'4' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="reserveRole.userType" class="icheck userType" value="4"/>收银</label>
+                                      name="userType" class="icheck userType" value="4"/>收银</label>
                         <label><input type="radio" <j:if test="${'5' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="reserveRole.userType" class="icheck userType" value="5"/>个人</label>
+                                      name="userType" class="icheck userType" value="5"/>财务</label>
                     </div>
                 </div>
 
