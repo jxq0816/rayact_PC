@@ -118,7 +118,7 @@ CREATE TABLE reserve_commodity
   commodity_type_id varchar(19),
   fk_reserve_venue_id VARCHAR (19) comment '场馆外键',
   shelves_status char(1) DEFAULT '0' NOT NULL,
-  unit VARCHAR(10) comment '单位',
+  unit int comment '规格',
   quick_search varchar(10) comment '快速搜索',
 	create_by varchar(64),
 	create_date datetime,

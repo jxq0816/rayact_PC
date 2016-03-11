@@ -115,7 +115,7 @@ public class ReserveCommodityController extends BaseController {
         commodity.setId(id);
         commodity=commodityService.get(commodity);
         int repertoryNum = commodity.getRepertoryNum();
-        repertoryNum += inRepertoryNum;
+        repertoryNum += inRepertoryNum*commodity.getUnit();
         commodity.setRepertoryNum(repertoryNum);
         commodityService.save(commodity);
         return "success";
@@ -127,6 +127,8 @@ public class ReserveCommodityController extends BaseController {
         if (!beanValidator(model, commodity)) {
             return form(commodity, model);
         }
+        //用户输入的库存是箱数，而数据库中存的是瓶数
+        commodity.setRepertoryNum(commodity.getUnit()*commodity.getRepertoryNum());
         commodityService.save(commodity);
         addMessage(redirectAttributes, "保存商品成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/commodity/list";

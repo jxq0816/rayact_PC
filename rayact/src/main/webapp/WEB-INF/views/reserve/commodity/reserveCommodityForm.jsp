@@ -83,7 +83,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td>单位：</td>
+                                        <td>规格：</td>
                                         <td>
                                             <form:input path="unit" htmlEscape="false"
                                                         class="form-control"/>

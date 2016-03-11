@@ -54,7 +54,7 @@
                                 <th>名称</th>
                                 <th>价格</th>
                                 <th>库存量</th>
-                                <th>单位</th>
+                                <th>规格</th>
                                 <th>类别</th>
                                 <th>场馆</th>
                                 <th>状态</th>
@@ -74,10 +74,10 @@
                                             ${commodity.price}&nbsp;元
                                     </td>
                                     <td>
-                                            ${commodity.repertoryNum}
+                                            ${commodity.repertoryNum}瓶
                                     </td>
                                     <td>
-                                            ${commodity.unit}
+                                            1*${commodity.unit}
                                     </td>
                                     <td>
                                             ${commodity.commodityType.name}

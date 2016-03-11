@@ -21,7 +21,7 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 	private ReserveVenue reserveVenue;//场馆
 
 	private String shelvesStatus;		// 上架状态
-	private String unit; //单位
+	private int unit; //规格
 	private String quickSearch;//快速搜索
 
 	public String getQuickSearch() {
@@ -32,11 +32,11 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 		this.quickSearch = quickSearch;
 	}
 
-	public String getUnit() {
+	public int getUnit() {
 		return unit;
 	}
 
-	public void setUnit(String unit) {
+	public void setUnit(int unit) {
 		this.unit = unit;
 	}
 
