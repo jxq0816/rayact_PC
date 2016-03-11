@@ -34,8 +34,9 @@
 										<td>
 											<sys:select cssClass="input-large" name="project.id"
 														items="${reserveProjectList}"
-														value="${project}" itemLabel="name" itemValue="id">
-
+														value="${reserveTutor.project.id}" itemLabel="name" itemValue="id"
+														defaultLabel="请选择"
+														defaultValue="">
 											</sys:select>
 										</td>
 									</tr>

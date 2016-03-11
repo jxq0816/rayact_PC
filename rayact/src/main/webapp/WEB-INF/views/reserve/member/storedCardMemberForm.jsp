@@ -28,16 +28,16 @@
                                 <sys:message content="${message}"/>
                             <table id="contentTable" class="table table-bordered">
                                 <tr>
+                                    <td>卡号:</td>
+                                    <td>
+                                        <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20"
+                                                    class="form-control required"/>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </td>
                                     <td>姓名:</td>
                                     <td><form:input path="name" htmlEscape="false" maxlength="30"
                                                     class="required form-control"/>
                                         <span class="help-inline"><font color="red">*</font> </span></td>
-                                    <td>手机号:</td>
-                                    <td>
-                                        <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
-                                                    class="form-control phone required"/>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td>身份证:</td>
@@ -60,13 +60,14 @@
                                                            itemLabel="label" itemValue="value"
                                                            htmlEscape="false"/>
                                     </td>
+                                    <td>手机号:</td>
 
-                                    <td>卡号:</td>
                                     <td>
-                                        <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20"
-                                                    class="form-control required"/>
+                                        <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
+                                                    class="form-control phone required"/>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </td>
+
                                 </tr>
                                 <tr>
                                     <td>余额:</td>
@@ -101,7 +102,7 @@
                                         <sys:select cssClass="input-xlarge" name="reserveVenue.id"
                                                     items="${venueList}"
                                                     value="${reserveMember.reserveVenue.id}"
-                                                    defaultLabel="请选择"
+                                                    defaultLabel="请选择开户场馆"
                                                     defaultValue=""
                                                     itemLabel="name"
                                                     itemValue="id"
