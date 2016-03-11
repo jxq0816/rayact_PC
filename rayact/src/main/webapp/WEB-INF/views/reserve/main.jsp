@@ -16,22 +16,23 @@
 
         <div class="row">
             <c:forEach items="${fns:getAuthByUser(fns:getUser())}" var="auth">
-                <div class="col-lg-2">
-                   <%-- <li class="">--%>
-                      <span style="margin-right:5px"><img
-                              src="${ctxStatic}/cleanzone/images/sidebar/${auth.code}.png"></img></span>
-                       <span>${auth.name}</span>
-                       <ul class="list-group">
-                           <c:forEach items="${auth.authorityList}" var="a">
-                               <li class="list-group-item"><a style="color:#3c3e43"
-                                       href="${ctx}${a.href}">${a.name}</a></li>
-                           </c:forEach>
-                       </ul>
+                <div class="col-lg-12">
+                        <%-- <li class="">--%>
+                    <span style="margin-left:30px;margin-bottom:10px">${auth.name}</span>
+                    <ul class="list-group">
+                        <div class="col-lg-12">
+                            <c:forEach items="${auth.authorityList}" var="a">
+                                <div class="col-lg-2" >
+                                    <a href="${ctx}${a.href}"><li class="list-group-item" style="background-color: #44b549;text-align:center"><span style="color:#3c3e43;">${a.name}</span></li></a>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </ul>
 
-                        <ul class="sub-menu">
+                    <ul class="sub-menu">
 
-                        </ul>
-                    <%--</li>--%>
+                    </ul>
+                        <%--</li>--%>
                 </div>
             </c:forEach>
         </div>
