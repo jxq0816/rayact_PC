@@ -63,7 +63,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="fa fa-gear"></span>
             </button>
-            <a class="navbar-brand" style="margin-left:15px;height:60px;margin-top: -5px;margin-bottom:4px;" href="#"></a>
+            <a class="navbar-brand" style="margin-left:15px;height:60px;margin-top: -5px;margin-bottom:4px;" href="${ctx}"></a>
         </div>
         <div class="navbar-collapse collapse" style="float:right">
 
