@@ -123,9 +123,10 @@
                     <label class="col-sm-2 control-label">权限:</label>
 
                     <div class="col-sm-10">
-                        <div class="row">
-                            <c:forEach items="${authList}" var="auth" varStatus="astatus">
-                                <div class="col-sm-4 col-md-4 col-lg-3 cl-mcont">
+
+                        <c:forEach items="${authList}" var="auth" varStatus="astatus">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-8 col-lg-10 cl-mcont">
                                     <div class="block-flat">
                                         <div class="header">
                                             <c:set value="" var="checked"></c:set>
@@ -134,39 +135,40 @@
                                                     <c:set value="checked='checked'" var="checked"></c:set>
                                                 </c:if>
                                             </c:forEach>
-                                            <input type="checkbox" ${checked}
-                                                   name="reserveRole.authorityList[${astatus.index}].code"
-                                                   class="icheck authCheck"
-                                                   value="${auth.code}"/>
-                                            <h6 class="visible-lg">${auth.name}</h6>
+                                            <label>
+                                                <input type="checkbox" ${checked}
+                                                       name="reserveRole.authorityList[${astatus.index}].code"
+                                                       class="icheck authCheck"
+                                                       value="${auth.code}"/>
+                                                    ${auth.name}
+                                            </label>
                                         </div>
-                                        <div class="content">
-                                            <c:forEach items="${auth.authorityList}" var="a" varStatus="s">
-                                                <div class="radio">
-                                                    <c:set value="" var="childchecked"></c:set>
-                                                    <c:forEach items="${userRole.authorityList}" var="ur">
-                                                        <c:if test="${ur.code eq auth.code}">
-                                                            <c:forEach items="${ur.authorityList}" var="child">
-                                                                <c:if test="${a.code eq child.code}">
-                                                                    <c:set value="checked='checked'"
-                                                                           var="childchecked"></c:set>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </c:if>
-                                                    </c:forEach>
+                                            <%-- <div class="content">--%>
+                                        <c:forEach items="${auth.authorityList}" var="a" varStatus="s">
+                                            <div class="radio col-lg-4">
+                                                <c:set value="" var="childchecked"></c:set>
+                                                <c:forEach items="${userRole.authorityList}" var="ur">
+                                                    <c:if test="${ur.code eq auth.code}">
+                                                        <c:forEach items="${ur.authorityList}" var="child">
+                                                            <c:if test="${a.code eq child.code}">
+                                                                <c:set value="checked='checked'"
+                                                                       var="childchecked"></c:set>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </c:forEach>
 
-                                                    <label> <input data-parent="${auth.code}"
-                                                                   type="checkbox" ${childchecked} value="${a.code}"
-                                                                   name="reserveRole.authorityList[${astatus.index}].authorityList[${s.index}].code"
-                                                                   class="icheck childAuthCheck"> ${a.name}</label>
-                                                </div>
-                                            </c:forEach>
-                                        </div>
+                                                <label> <input data-parent="${auth.code}"
+                                                               type="checkbox" ${childchecked} value="${a.code}"
+                                                               name="reserveRole.authorityList[${astatus.index}].authorityList[${s.index}].code"
+                                                               class="icheck childAuthCheck"> ${a.name}</label>
+                                            </div>
+                                        </c:forEach>
+                                            <%--</div>--%>
                                     </div>
                                 </div>
-                            </c:forEach>
-
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
 
