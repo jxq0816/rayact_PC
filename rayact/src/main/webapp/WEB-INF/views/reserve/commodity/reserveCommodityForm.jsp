@@ -50,17 +50,18 @@
                                             <sys:select cssClass="input-xlarge" name="commodityType.id"
                                                         cssStyle="width:150px"
                                                         items="${commodityTypeList}"
-                                                        value="${commodityType}"
+                                                        value="${commodity.commodityType.id}"
                                                         itemLabel="name"
                                                         itemValue="id"
                                                         defaultLabel="请选择商品类型"
+                                                        defaultValue=""
                                             ></sys:select>
                                         </td>
                                         <td>状态：</td>
                                         <td>
                                             <form:select path="shelvesStatus" class="input-xlarge">
-                                                <form:option value="0" label="下架"/>
                                                 <form:option value="1" label="上架"/>
+                                                <form:option value="0" label="下架"/>
                                             </form:select>
                                         </td>
                                     </tr>
@@ -106,7 +107,7 @@
                                             <sys:select cssClass="input-xlarge" name="reserveVenue.id"
                                                         cssStyle="width:150px"
                                                         items="${venueList}"
-                                                        value="${venue}"
+                                                        value="${commodity.reserveVenue.id}"
                                                         itemLabel="name"
                                                         itemValue="id"
                                                         defaultLabel="请选择场馆"
