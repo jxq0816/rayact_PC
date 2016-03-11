@@ -87,7 +87,7 @@ public class ReserveUserService extends CrudService<UserDao, User> {
             String venueJson = JsonUtils.writeObjectToJson(user.getReserveRole().getVenueList());
             reserveRole.setAuthority(authJson);
             reserveRole.setVenueJson(venueJson);
-            reserveRole.setUserType(user.getReserveRole().getUserType());
+            reserveRole.setUserType(user.getUserType());
             reserveRole.preInsert();
             reserveRoleDao.insert(reserveRole);
         }

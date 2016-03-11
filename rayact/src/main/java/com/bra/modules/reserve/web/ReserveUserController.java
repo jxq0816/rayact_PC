@@ -63,9 +63,6 @@ public class ReserveUserController extends BaseController {
         if (user.getCompany() == null || user.getCompany().getId() == null) {
             user.setCompany(UserUtils.getUser().getCompany());
         }
-        if (user.getCompany() == null || user.getCompany().getId() == null) {
-            user.setCompany(UserUtils.getUser().getCompany());
-        }
         model.addAttribute("user", user);
         if (StringUtils.isNotBlank(user.getId())) {
             model.addAttribute("userRole", reserveUserService.getRole(user));

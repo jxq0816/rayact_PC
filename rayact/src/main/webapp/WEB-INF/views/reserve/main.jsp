@@ -10,81 +10,30 @@
     <jsp:param name="action" value=""></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
-        <div class="cl-mcont">
+    <div class="cl-mcont">
 
         <!--当天得会员充值;场地售卖;商品售卖-->
-        <div class="row dash-cols">
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="block">
-                    <div class="header">
-                        <i class="fa fa-comment"></i><span style="font-size: 20px">会员充值</span>
-                    </div>
-                    <div class="content no-padding">
-                        <div class="fact-data text-center">
-                            <h3>当天</h3>
-                            <h2><a href="javascript:queryByDayForMemberIncome()">${rechargeOfDay}</a></h2>
-                        </div>
-                        <div class="fact-data text-center">
-                            <h3>当月</h3>
-                            <h2><a href="javascript:queryByMonthForMemberIncome()">${rechargeOfMonth}</a></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="block">
-                    <div class="header">
-                        <i class="fa fa-bug"></i><span style="font-size: 20px">场地售卖</span>
-                    </div>
-                    <div class="content no-padding">
-                        <div class="fact-data text-center">
-                            <h3>当天</h3>
-                            <h2><a href="${ctx}/reserve/saleVenueReport/list?search=1">${fieldTodayPrice}</a></h2>
-                        </div>
-                        <div class="fact-data text-center">
-                            <h3>当月</h3>
-                            <h2><a href="${ctx}/reserve/saleVenueReport/list?search=2">${fieldMonthPrice}</a></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="block">
-                    <div class="header">
-                        <i class="fa fa-comment"></i><span style="font-size: 20px">商品售卖</span>
-                    </div>
-                    <div class="content no-padding">
-                        <div class="fact-data text-center">
-                            <h3>当天</h3>
 
-                            <h2><a href="javascript:queryByDayForCommoditySell()">${sellOfToday}</a></h2>
-                        </div>
-                        <div class="fact-data text-center">
-                            <h3>当月</h3>
+        <div class="row">
+            <c:forEach items="${fns:getAuthByUser(fns:getUser())}" var="auth">
+                <div class="col-lg-2">
+                   <%-- <li class="">--%>
+                      <span style="margin-right:5px"><img
+                              src="${ctxStatic}/cleanzone/images/sidebar/${auth.code}.png"></img></span>
+                       <span>${auth.name}</span>
+                       <ul class="list-group">
+                           <c:forEach items="${auth.authorityList}" var="a">
+                               <li class="list-group-item"><a style="color:#3c3e43"
+                                       href="${ctx}${a.href}">${a.name}</a></li>
+                           </c:forEach>
+                       </ul>
 
-                            <h2><a href="javascript:queryByMonthForCommoditySell()">${sellOfMonth}</a></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <ul class="sub-menu">
 
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <div class="block">
-                    <div class="header">
-                        <i class="fa fa-comment"></i><span style="font-size: 20px">新增会员</span>
-                    </div>
-                    <div class="content no-padding">
-                        <div class="fact-data text-center">
-                            <h3>当月</h3>
-                            <h2>${registerNum}</h2>
-                        </div>
-                        <div class="fact-data text-center">
-                            <h3>总数</h3>
-                            <h2>${memberNum}</h2>
-                        </div>
-                    </div>
+                        </ul>
+                    <%--</li>--%>
                 </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </div>

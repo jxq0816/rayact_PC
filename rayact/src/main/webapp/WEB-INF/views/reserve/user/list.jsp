@@ -57,19 +57,19 @@
                                     <td class="text-center">${user.name}</td>
                                     <td>${user.phone}</td>
 				                    <td>
-                                        <c:if test="${user.userType eq 1}">
+                                        <c:if test="${user.reserveRole.userType eq 1}">
                                             超级管理员
                                         </c:if>
-                                        <c:if test="${user.userType eq 2}">
+                                        <c:if test="${user.reserveRole.userType eq 2}">
                                             场馆管理员
                                         </c:if>
-                                        <c:if test="${user.userType eq 3}">
+                                        <c:if test="${user.reserveRole.userType eq 3}">
                                             场地管理员
                                         </c:if>
-                                        <c:if test="${user.userType eq 4}">
+                                        <c:if test="${user.reserveRole.userType eq 4}">
                                             收银
                                         </c:if>
-                                        <c:if test="${user.userType eq 5}">
+                                        <c:if test="${user.reserveRole.userType eq 5}">
                                             财务
                                         </c:if>
                                     </td>

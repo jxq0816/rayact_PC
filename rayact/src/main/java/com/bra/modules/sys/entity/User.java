@@ -43,6 +43,8 @@ public class User extends DataEntity<User> {
     private String photo;    // 头像
     private String checkoutPwd;//结账密码
 
+    private ReserveRole reserveRole;
+
     private String oldLoginName;// 原登录名
     private String newPassword;    // 新密码
 
@@ -255,7 +257,6 @@ public class User extends DataEntity<User> {
 
     //----------------------和数据库无关字段-----------------
 
-    private ReserveRole reserveRole;
 
     public ReserveRole getReserveRole() {
         return reserveRole;

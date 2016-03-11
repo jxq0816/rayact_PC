@@ -44,6 +44,8 @@ public class User extends DataEntity<User> {
     private String oldLoginIp;    // 上次登陆IP
     private Date oldLoginDate;    // 上次登陆日期
 
+    private ReserveRole reserveRole;
+
     public User() {
         super();
         this.loginFlag = Global.YES;
@@ -250,7 +252,7 @@ public class User extends DataEntity<User> {
 
     //----------------------和数据库无关字段-----------------
 
-    private ReserveRole reserveRole;
+
 
     public ReserveRole getReserveRole() {
         return reserveRole;
