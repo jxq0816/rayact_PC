@@ -36,8 +36,13 @@ public class ReserveFieldPriceService {
 
     public Double getMemberDiscountRate(ReserveMember member){
         ReserveMember reserveMember = reserveMemberDao.get(member);
-        ReserveStoredcardMemberSet storedcardMemberSet = reserveStoredcardMemberSetDao.get(reserveMember.getStoredcardSet());
-        return storedcardMemberSet.getDiscountRate();
+        ReserveStoredcardMemberSet set = reserveMember.getStoredcardSet();
+        Double rate=null;
+        if(set!=null){
+            ReserveStoredcardMemberSet storedcardMemberSet = reserveStoredcardMemberSetDao.get(set);
+            rate=storedcardMemberSet.getDiscountRate();
+        }
+        return rate;
     }
 
     private void setWeek(ReserveFieldPriceSet reserveFieldPriceSet, Date date) {
