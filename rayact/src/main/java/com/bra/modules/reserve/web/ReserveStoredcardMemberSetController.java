@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveField;
 import com.bra.modules.reserve.entity.ReserveProject;
+import com.bra.modules.reserve.service.ReserveFieldService;
 import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveStoredcardMemberSetService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,6 +40,9 @@ public class ReserveStoredcardMemberSetController extends BaseController {
     @Autowired
     private ReserveProjectService reserveProjectService;
 
+    @Autowired
+    private ReserveFieldService reserveFieldService;
+
 
     @ModelAttribute
     public ReserveStoredcardMemberSet get(@RequestParam(required=false) String id) {
@@ -63,7 +68,12 @@ public class ReserveStoredcardMemberSetController extends BaseController {
     public String form(ReserveStoredcardMemberSet reservestoredCardMemberSet, Model model) {
 
         List<ReserveProject> reserveProjectList=reserveProjectService.findList(new ReserveProject());
+
+        ReserveField field=new ReserveField();
+        List<ReserveField> reserveFieldList = reserveFieldService.findList(field);
+
         model.addAttribute("reserveProjectList", reserveProjectList);
+        model.addAttribute("reserveFieldList", reserveFieldList);
         model.addAttribute("reservestoredCardMemberSet", reservestoredCardMemberSet);
         return "reserve/member/storedCardSetForm";
     }

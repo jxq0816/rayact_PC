@@ -44,6 +44,18 @@
                 </div>
             </div>
 
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">场地:</label>
+                    <div class="col-sm-6">
+                        <sys:select cssClass="input-large" name="reserveField.id"
+                                    items="${reserveFieldList}"
+                                    defaultLabel="请选择场地" defaultValue=""
+                                    value="${reserveField}" itemLabel="name" itemValue="id">
+
+                        </sys:select>
+                    </div>
+                </div>
+
             <div class="form-group">
                 <label class="col-sm-3 control-label">起止金额:</label>
                 <div class="col-sm-6">
