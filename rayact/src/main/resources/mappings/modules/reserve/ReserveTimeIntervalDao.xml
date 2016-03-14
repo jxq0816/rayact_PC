@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveTimeIntervalDao">
+
+    <sql id="timeIntervalColumns">
+        a.id AS "id",
+        a.name AS "name",
+        a.start_date AS "startDate",
+        a.end_date AS "endDate",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="timeIntervalJoins">
+    </sql>
+
+    <select id="get" resultType="ReserveTimeInterval">
+        SELECT
+        <include refid="timeIntervalColumns"/>
+        FROM reserve_time_interval a
+        <include refid="timeIntervalJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+
+
+    <select id="findList" resultType="ReserveTimeInterval">
+        SELECT
+        <include refid="timeIntervalColumns"/>
+        FROM reserve_time_interval a
+        <include refid="timeIntervalJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            <if test="name != null and name != ''">
+                AND a.name LIKE concat('%',#{name},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="ReserveTimeInterval">
+        SELECT
+        <include refid="timeIntervalColumns"/>
+        FROM reserve_time_interval a
+        <include refid="timeIntervalJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO reserve_time_interval(
+        id,
+        name,
+        start_date,
+        end_date,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag,
+        tenant_id
+        ) VALUES (
+        #{id},
+        #{name},
+        #{startDate},
+        #{endDate},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag},
+        #{tenantId}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE reserve_time_interval SET
+        name = #{name},
+        create_date = #{createDate},
+        end_date = #{endDate},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks},
+        tenant_id = #{tenantId}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE reserve_time_interval SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -558,6 +558,21 @@ CREATE TABLE reserve_tutor
 	PRIMARY KEY (id),
 	foreign key (fk_project_id) REFERENCES reserve_project(id) on DELETE CASCADE on UPDATE CASCADE
 );
-
+DROP TABLE if EXISTS  reserve_time_interval;
+create table reserve_time_interval
+(
+  id varchar(19) not null,
+  name varchar(30),
+  start_date date not null,
+  end_date date not null,
+  create_by varchar(64),
+	create_date datetime,
+	update_by varchar(64),
+	update_date datetime,
+	remarks varchar(255),
+	del_flag char(1) DEFAULT '0' NOT NULL,
+	tenant_id varchar(19) comment '路由标识',
+	PRIMARY KEY (id)
+)
 
 
