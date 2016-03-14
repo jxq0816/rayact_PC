@@ -64,10 +64,10 @@
                                             ${reserveTimeInterval.name}
                                     </a></td>
                                     <td>
-                                            ${reserveTimeInterval.startDate}
+                                            ${reserveTimeInterval.startMonth}月${reserveTimeInterval.startDate}日
                                     </td>
                                     <td>
-                                            ${reserveTimeInterval.endDate}
+                                            ${reserveTimeInterval.endMonth}月${reserveTimeInterval.endDate}日
                                     </td>
                                     <td>
                                             ${reserveTimeInterval.remarks}

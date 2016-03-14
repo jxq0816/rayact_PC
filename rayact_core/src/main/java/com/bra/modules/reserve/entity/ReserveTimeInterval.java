@@ -12,8 +12,10 @@ public class ReserveTimeInterval extends SaasEntity<ReserveTimeInterval> {
 	private static final long serialVersionUID = 1L;
 	private String id;//商品编号
 	private String name;		// 名称
-	private String startDate;		// 开始日期
-	private String endDate;		// 结束日期
+	private Integer startMonth;		// 开始月
+	private Integer endMonth;		// 结束月
+	private Integer startDate;		// 开始日
+	private Integer endDate;		// 结束日
 
 	@Override
 	public String getId() {
@@ -33,20 +35,35 @@ public class ReserveTimeInterval extends SaasEntity<ReserveTimeInterval> {
 		this.name = name;
 	}
 
-	public String getStartDate() {
+	public Integer getStartMonth() {
+		return startMonth;
+	}
+
+	public void setStartMonth(Integer startMonth) {
+		this.startMonth = startMonth;
+	}
+
+	public Integer getEndMonth() {
+		return endMonth;
+	}
+
+	public void setEndMonth(Integer endMonth) {
+		this.endMonth = endMonth;
+	}
+
+	public Integer getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Integer startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Integer getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Integer endDate) {
 		this.endDate = endDate;
 	}
-
 }

@@ -39,6 +39,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">开始月份：</label>
+                                        <div class="col-sm-6">
+                                            <form:input path="startMonth" htmlEscape="false"
+                                                        class="required form-control "/>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <span class="help-inline"> <font color="red">*</font></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">开始日期：</label>
                                         <div class="col-sm-6">
                                             <form:input path="startDate" htmlEscape="false"
@@ -48,6 +58,17 @@
                                             <span class="help-inline"> <font color="red">*</font></span>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">结束月份：</label>
+                                        <div class="col-sm-6">
+                                            <form:input path="endMonth" htmlEscape="false"
+                                                        class="required form-control "/>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <span class="help-inline"> <font color="red">*</font></span>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">结束日期：</label>
                                         <div class="col-sm-6">

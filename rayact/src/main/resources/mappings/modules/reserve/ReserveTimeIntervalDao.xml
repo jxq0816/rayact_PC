@@ -5,6 +5,8 @@
     <sql id="timeIntervalColumns">
         a.id AS "id",
         a.name AS "name",
+        a.start_month AS "startMonth",
+        a.end_month AS "endMonth",
         a.start_date AS "startDate",
         a.end_date AS "endDate",
         a.create_by AS "createBy.id",
@@ -71,6 +73,8 @@
         INSERT INTO reserve_time_interval(
         id,
         name,
+        start_month,
+        end_month,
         start_date,
         end_date,
         create_by,
@@ -83,6 +87,8 @@
         ) VALUES (
         #{id},
         #{name},
+        #{startMonth},
+        #{endMonth},
         #{startDate},
         #{endDate},
         #{createBy.id},
@@ -98,6 +104,8 @@
     <update id="update">
         UPDATE reserve_time_interval SET
         name = #{name},
+        create_month = #{createMonth},
+        end_month = #{endMonth},
         create_date = #{createDate},
         end_date = #{endDate},
         update_by = #{updateBy.id},

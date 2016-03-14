@@ -563,8 +563,10 @@ create table reserve_time_interval
 (
   id varchar(19) not null,
   name varchar(30),
-  start_date date not null,
-  end_date date not null,
+  start_month int  not null,
+  end_month int not null,
+  start_date int not null,
+  end_date int not null,
   create_by varchar(64),
 	create_date datetime,
 	update_by varchar(64),
