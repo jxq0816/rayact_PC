@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ReserveFieldPriceService {
 
+    @Autowired
+    private ReserveFieldService reserveFieldService;
     @Autowired
     private ReserveFieldPriceSetDao reserveFieldPriceSetDao;
     @Autowired
@@ -144,6 +147,12 @@ public class ReserveFieldPriceService {
      */
     public List<FieldPrice> findByDate(String venueId, String consType, Date date, List<String> times) {
         List<FieldPrice> fieldPriceList = Lists.newLinkedList();
+        //查询场馆中所有的主场
+        ReserveField field=new ReserveField();
+        ReserveVenue venue=new ReserveVenue();
+        venue.setId(venueId);
+        field.setReserveVenue(venue);
+        List<ReserveField> fullFieldList=reserveFieldService.findFullList(field);
 
         //查询已预定的信息
         ReserveVenueConsItem reserveVenueCons = new ReserveVenueConsItem();
@@ -169,15 +178,19 @@ public class ReserveFieldPriceService {
         }
         String weekType = TimeUtils.getWeekType(date);
         reserveFieldPriceSet.setWeek(weekType);
-
-        List<ReserveFieldPriceSet> reserveFieldPriceSetList = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);//获取场馆下所有的场地
-        for(ReserveFieldPriceSet ps:reserveFieldPriceSetList) {//遍历 每个场地
-            List<TimePrice> timePriceList = ps.getTimePriceList();
-            ps.setTimePriceList(timePriceList);
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList =new ArrayList<>();
+        for(ReserveField i:fullFieldList){
+            reserveFieldPriceSet.setReserveField(i);
+            List<ReserveFieldPriceSet> list = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
+            reserveFieldPriceSetList.addAll(list);
         }
-
         buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);
 
+      /*  for(ReserveFieldPriceSet ps:reserveFieldPriceSetList) {//遍历 每个场地
+
+            List<TimePrice> timePriceList = ps.getTimePriceList();
+            ps.setTimePriceList(timePriceList);
+        }*/
         return fieldPriceList;
     }
 

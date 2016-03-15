@@ -54,10 +54,10 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
         List<ReserveField> fullList=new ArrayList<ReserveField>();
         for(ReserveField field:list){
             ReserveFieldRelation relation=new ReserveFieldRelation();
-            relation.setParentField(field);
-            List<ReserveFieldRelation> relations=relationService.findList(relation);
+            relation.setChildField(field);
+            List<ReserveFieldRelation> relations=relationService.findList(relation);//查找该场地是不是半场
             field.setReserveFieldRelationList(relations);//设置子半场
-            if(relations==null||relations.size()==0){
+            if(relations==null||relations.size()==0){//
                 fullList.add(field);
             }
         }
