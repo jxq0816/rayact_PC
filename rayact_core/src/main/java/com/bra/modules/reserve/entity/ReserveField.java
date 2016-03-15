@@ -71,6 +71,15 @@ public class ReserveField extends SaasEntity<ReserveField> {
 	//--------------------以下和数据库无关字段------------------------------
 	private Double originalPrice;//原价格
 	private Double actualPrice;//实际价格
+	private ReserveField reserveParentField;//父场地
+
+	public ReserveField getReserveParentField() {
+		return reserveParentField;
+	}
+
+	public void setReserveParentField(ReserveField reserveParentField) {
+		this.reserveParentField = reserveParentField;
+	}
 
 	public Double getOriginalPrice() {
 		return originalPrice;
@@ -97,4 +106,6 @@ public class ReserveField extends SaasEntity<ReserveField> {
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
+
+
 }

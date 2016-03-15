@@ -104,7 +104,11 @@
                                             data-price="${price}"
                                             data-field="${file.fieldId}"
                                             data-time="${t}">
-                                                ${username}
+                                            <table class="table-half">
+                                                <tr>
+                                                    <td>半</td><td>全</td><td>半</td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
@@ -158,7 +162,11 @@
                                             data-price="${price}"
                                             data-field="${file.fieldId}"
                                             data-time="${t}">
-                                                ${username}
+                                            <table class="table-half">
+                                                <tr>
+                                                    <td>半</td><td>全</td><td>半</td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
@@ -213,7 +221,11 @@
                                             data-field="${file.fieldId}"
                                             data-time="${t}"
                                         >
-                                                <span id="">${username}</span>
+                                            <table class="table-half">
+                                                <tr>
+                                                    <td>半</td><td>全</td><td>半</td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>

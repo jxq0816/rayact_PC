@@ -73,6 +73,17 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">父场地</label>
+                                        <div class="col-sm-6">
+                                            <sys:select cssClass="input-medium" name="reserveParentField.id"
+                                                        value="reserveField.reserveParentField.id"
+                                                        items="${fields}" itemLabel="name" itemValue="id"
+                                                        defaultLabel="如果该场地为半场,请选择所属全场"
+                                                        defaultValue=""></sys:select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">备注</label>
                                         <div class="col-sm-6">
                                             <form:textarea path="remarks" htmlEscape="false" rows="4"

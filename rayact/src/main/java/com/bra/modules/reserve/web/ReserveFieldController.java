@@ -1,8 +1,9 @@
 package com.bra.modules.reserve.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.entity.*;
@@ -18,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
-import com.bra.common.web.BaseController;
-import com.bra.common.utils.StringUtils;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.List;
 
@@ -38,6 +36,8 @@ public class ReserveFieldController extends BaseController {
 
 	@Autowired
 	private ReserveFieldService reserveFieldService;
+	@Autowired
+	private ReserveFieldRelationService reserveFieldRalationService;
 	@Autowired
 	private ReserveProjectService reserveProjectService;
 	@Autowired
@@ -86,6 +86,10 @@ public class ReserveFieldController extends BaseController {
 			priceSet.setReserveVenue(reserveField.getReserveVenue());
 			priceSet.setReserveField(reserveField);
 		}
+		//场地列表
+		ReserveField field=new ReserveField();
+		List<ReserveField> fields=reserveFieldService.findList(field);
+		model.addAttribute("fields",fields);
 		//常规价格
 		model.addAttribute("priceSetList",reserveFieldPriceSetService.findListByField(priceSet));
 		//按日期价格
@@ -102,12 +106,18 @@ public class ReserveFieldController extends BaseController {
 
 	@RequestMapping(value = "save")
 	@Token(remove = true)
-	public String save(ReserveField reserveField, AttMainForm attMainForm, RoutinePrice routinePrice,HolidayPrice holidayPrice,
+	public String save(ReserveField reserveField,  AttMainForm attMainForm, RoutinePrice routinePrice,HolidayPrice holidayPrice,
 					   Model model, RedirectAttributes redirectAttributes) throws ParseException {
 		if (!beanValidator(model, reserveField)) {
-			return form(reserveField, model);
+			return form(reserveField,model);
 		}
 		reserveFieldService.save(reserveField, routinePrice,holidayPrice, attMainForm);
+		//全场与半场的关系保存
+		ReserveFieldRelation relation=new ReserveFieldRelation();
+		relation.setParentField(reserveField.getReserveParentField());
+		relation.setChildField(reserveField);
+		reserveFieldRalationService.save(relation);
+
 		addMessage(redirectAttributes, "保存场地成功");
 		return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
 	}

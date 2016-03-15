@@ -576,5 +576,20 @@ create table reserve_time_interval
 	tenant_id varchar(19) comment '路由标识',
 	PRIMARY KEY (id)
 )
+DROP TABLE IF EXISTS reserve_field_relation;
+CREATE TABLE reserve_field_relation (
+   id varchar(19) NOT NULL,
+   child_field_id VARCHAR (19) not null,
+   parent_field_id VARCHAR (19) not null,
+   create_by varchar(64) DEFAULT NULL,
+   create_date datetime DEFAULT NULL,
+   update_by varchar(64) DEFAULT NULL,
+   update_date datetime DEFAULT NULL,
+   remarks varchar(255) DEFAULT NULL,
+   del_flag char(1) NOT NULL DEFAULT '0',
+   tenant_id varchar(19) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+);
+
 
 

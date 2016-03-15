@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveFieldRelationDao">
+    
+	<sql id="reserveFieldRelationColumns">
+		a.id AS "id",
+		a.parent_field_id AS "parentField.id",
+		a.child_field_id AS "childField.id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+	</sql>
+	
+	<sql id="reserveFieldRelationJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveFieldRelation">
+		SELECT 
+			<include refid="reserveFieldRelationColumns"/>
+		FROM reserve_field_relation a
+		<include refid="reserveFieldRelationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveFieldRelation">
+		SELECT 
+			<include refid="reserveFieldRelationColumns"/>
+		FROM reserve_field_relation a
+		<include refid="reserveFieldRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveFieldRelation">
+		SELECT 
+			<include refid="reserveFieldRelationColumns"/>
+		FROM reserve_field_relation a
+		<include refid="reserveFieldRelationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_field_relation(
+			id,
+			parent_field_id,
+			child_field_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{parentField.id},
+			#{childField.id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_field_relation SET
+			parent_field_id = #{parentField.id},
+			child_field_id = #{childField.id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_field_relation SET
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
