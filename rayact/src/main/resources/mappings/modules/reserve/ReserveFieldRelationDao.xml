@@ -11,7 +11,7 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag",
+		a.del_flag AS "delFlag"
 	</sql>
 	
 	<sql id="reserveFieldRelationJoins">
@@ -23,6 +23,16 @@
 		FROM reserve_field_relation a
 		<include refid="reserveFieldRelationJoins"/>
 		WHERE a.id = #{id}
+		<if test="parentField != null">
+			<if test="parentField.id !=null and parentField.id != ''">
+				AND a.parent_field_id = #{parentField.id}
+			</if>
+		</if>
+		<if test="childField != null">
+			<if test="childField.id !=null and childField.id != ''">
+				AND a.child_field_id = #{childField.id}
+			</if>
+		</if>
 	</select>
 	
 	<select id="findList" resultType="ReserveFieldRelation">
@@ -32,6 +42,16 @@
 		<include refid="reserveFieldRelationJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="parentField != null">
+				<if test="parentField.id !=null and parentField.id != ''">
+					AND a.parent_field_id = #{parentField.id}
+				</if>
+			</if>
+			<if test="childField != null">
+				<if test="childField.id !=null and childField.id != ''">
+					AND a.child_field_id = #{childField.id}
+				</if>
+			</if>
 		</where>
 	</select>
 	

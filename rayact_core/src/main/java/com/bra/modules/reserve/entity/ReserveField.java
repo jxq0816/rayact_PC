@@ -6,6 +6,8 @@ package com.bra.modules.reserve.entity;
 import com.bra.common.persistence.SaasEntity;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
 /**
  * 场地管理Entity
  * @author 肖斌
@@ -18,9 +20,25 @@ public class ReserveField extends SaasEntity<ReserveField> {
 	private String available;		// 是否启用
 	private ReserveProject reserveProject;		// 所属项目
 	private ReserveVenue reserveVenue;//所属场馆
+	private ReserveField reserveParentField;//父场地
+	private List<ReserveFieldRelation> reserveFieldRelationList;//子场地
 
+	public ReserveField getReserveParentField() {
+		return reserveParentField;
+	}
 
-	
+	public void setReserveParentField(ReserveField reserveParentField) {
+		this.reserveParentField = reserveParentField;
+	}
+
+	public List<ReserveFieldRelation> getReserveFieldRelationList() {
+		return reserveFieldRelationList;
+	}
+
+	public void setReserveFieldRelationList(List<ReserveFieldRelation> reserveFieldRelationList) {
+		this.reserveFieldRelationList = reserveFieldRelationList;
+	}
+
 	public ReserveField() {
 		super();
 	}
@@ -71,15 +89,6 @@ public class ReserveField extends SaasEntity<ReserveField> {
 	//--------------------以下和数据库无关字段------------------------------
 	private Double originalPrice;//原价格
 	private Double actualPrice;//实际价格
-	private ReserveField reserveParentField;//父场地
-
-	public ReserveField getReserveParentField() {
-		return reserveParentField;
-	}
-
-	public void setReserveParentField(ReserveField reserveParentField) {
-		this.reserveParentField = reserveParentField;
-	}
 
 	public Double getOriginalPrice() {
 		return originalPrice;

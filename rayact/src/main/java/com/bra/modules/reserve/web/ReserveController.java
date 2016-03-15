@@ -21,10 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 场地预定管理
@@ -106,7 +108,7 @@ public class ReserveController extends BaseController {
             model.addAttribute("reserveVenue", reserveVenue);
             ReserveField reserveField = new ReserveField();
             reserveField.setReserveVenue(reserveVenue);
-            List<ReserveField> reserveFieldList = reserveFieldService.findList(reserveField);
+            List<ReserveField> reserveFieldList = reserveFieldService.findFullList(reserveField);//选择全场
             model.addAttribute("reserveFieldList", reserveFieldList);
             //上午场地价格
             List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);

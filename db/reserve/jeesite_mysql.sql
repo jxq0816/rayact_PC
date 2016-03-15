@@ -579,7 +579,7 @@ create table reserve_time_interval
 DROP TABLE IF EXISTS reserve_field_relation;
 CREATE TABLE reserve_field_relation (
    id varchar(19) NOT NULL,
-   child_field_id VARCHAR (19) not null,
+   child_field_id VARCHAR (19) UNIQUE not null,
    parent_field_id VARCHAR (19) not null,
    create_by varchar(64) DEFAULT NULL,
    create_date datetime DEFAULT NULL,

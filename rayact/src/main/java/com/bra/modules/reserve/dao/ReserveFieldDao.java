@@ -14,5 +14,5 @@ import com.bra.modules.reserve.entity.ReserveField;
  */
 @MyBatisDao
 public interface ReserveFieldDao extends CrudDao<ReserveField> {
-	
+
 }

@@ -27,106 +27,126 @@ import java.util.List;
 /**
  * 场地管理Controller
  *
- * @author 肖斌
+ * @author jiang
  * @version 2015-12-29
  */
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/reserveField")
 public class ReserveFieldController extends BaseController {
 
-	@Autowired
-	private ReserveFieldService reserveFieldService;
-	@Autowired
-	private ReserveFieldRelationService reserveFieldRalationService;
-	@Autowired
-	private ReserveProjectService reserveProjectService;
-	@Autowired
-	private ReserveVenueService reserveVenueService;
-	@Autowired
-	private ReserveFieldPriceSetService reserveFieldPriceSetService;
-	@Autowired
-	private ReserveFieldHolidayPriceSetService reserveFieldHolidayPriceSetService;
+    @Autowired
+    private ReserveFieldService reserveFieldService;
+    @Autowired
+    private ReserveFieldRelationService reserveFieldRalationService;
+    @Autowired
+    private ReserveProjectService reserveProjectService;
+    @Autowired
+    private ReserveVenueService reserveVenueService;
+    @Autowired
+    private ReserveFieldPriceSetService reserveFieldPriceSetService;
+    @Autowired
+    private ReserveFieldHolidayPriceSetService reserveFieldHolidayPriceSetService;
 
-	@ModelAttribute
-	public ReserveField get(@RequestParam(required = false) String id) {
-		ReserveField entity = null;
-		if (StringUtils.isNotBlank(id)) {
-			entity = reserveFieldService.get(id);
-		}
-		if (entity == null) {
-			entity = new ReserveField();
-		}
-		return entity;
-	}
+    @ModelAttribute
+    public ReserveField get(@RequestParam(required = false) String id) {
+        ReserveField entity = null;
+        if (StringUtils.isNotBlank(id)) {
+            entity = reserveFieldService.get(id);
+        }
+        if (entity == null) {
+            entity = new ReserveField();
+        }
+        return entity;
+    }
 
-	@RequestMapping(value = {"list", ""})
-	public String list(ReserveField reserveField, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveField> page = reserveFieldService.findPage(new Page<>(request, response), reserveField);
-		List<ReserveVenue> venues=reserveVenueService.findList(new ReserveVenue());
-		model.addAttribute("page", page);
-		model.addAttribute("venues", venues);
-		return "reserve/field/list";
-	}
+    @RequestMapping(value = {"list", ""})
+    public String list(ReserveField reserveField, HttpServletRequest request, HttpServletResponse response, Model model) {
+        Page<ReserveField> page = reserveFieldService.findPage(new Page<>(request, response), reserveField);
+        List<ReserveVenue> venues = reserveVenueService.findList(new ReserveVenue());
+        model.addAttribute("page", page);
+        model.addAttribute("venues", venues);
+        return "reserve/field/list";
+    }
 
-	@RequestMapping(value = "form")
-	@Token(save = true)
-	public String form(ReserveField reserveField, Model model) throws ParseException {
-		model.addAttribute("reserveField", reserveField);
-		model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
-		model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
-		//事件周期
-		model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
-		//获取营业时间
-		List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", 60);
-		model.addAttribute("times", times);
-		ReserveFieldPriceSet priceSet = null;
-		if (StringUtils.isNotBlank(reserveField.getId())) {
-			priceSet = new ReserveFieldPriceSet();
-			reserveField = reserveFieldService.get(reserveField.getId());
-			priceSet.setReserveVenue(reserveField.getReserveVenue());
-			priceSet.setReserveField(reserveField);
-		}
-		//场地列表
-		ReserveField field=new ReserveField();
-		List<ReserveField> fields=reserveFieldService.findList(field);
-		model.addAttribute("fields",fields);
-		//常规价格
-		model.addAttribute("priceSetList",reserveFieldPriceSetService.findListByField(priceSet));
-		//按日期价格
-		ReserveFieldHolidayPriceSet holidayPriceSet = null;
-		if (StringUtils.isNotBlank(reserveField.getId())) {
-			holidayPriceSet = new ReserveFieldHolidayPriceSet();
-			reserveField = reserveFieldService.get(reserveField.getId());
-			holidayPriceSet.setReserveVenue(reserveField.getReserveVenue());
-			holidayPriceSet.setReserveField(reserveField);
-		}
-		model.addAttribute("holidayPriceSetList",reserveFieldHolidayPriceSetService.findList(holidayPriceSet));
-		return "reserve/field/form";
-	}
+    @RequestMapping(value = "form")
+    @Token(save = true)
+    public String form(ReserveField reserveField, Model model) throws ParseException {
 
-	@RequestMapping(value = "save")
-	@Token(remove = true)
-	public String save(ReserveField reserveField,  AttMainForm attMainForm, RoutinePrice routinePrice,HolidayPrice holidayPrice,
-					   Model model, RedirectAttributes redirectAttributes) throws ParseException {
-		if (!beanValidator(model, reserveField)) {
-			return form(reserveField,model);
-		}
-		reserveFieldService.save(reserveField, routinePrice,holidayPrice, attMainForm);
-		//全场与半场的关系保存
-		ReserveFieldRelation relation=new ReserveFieldRelation();
-		relation.setParentField(reserveField.getReserveParentField());
-		relation.setChildField(reserveField);
-		reserveFieldRalationService.save(relation);
+        //获取营业时间
+        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", 60);
+        model.addAttribute("times", times);
+        ReserveFieldPriceSet priceSet = null;
+        if (StringUtils.isNotBlank(reserveField.getId())) {
+            priceSet = new ReserveFieldPriceSet();
+            reserveField = reserveFieldService.get(reserveField.getId());
+            priceSet.setReserveVenue(reserveField.getReserveVenue());
+            priceSet.setReserveField(reserveField);
+        }
+        //场地列表
+        List<ReserveField> fields = reserveFieldService.findList(new ReserveField());
 
-		addMessage(redirectAttributes, "保存场地成功");
-		return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
-	}
+        //常规价格
 
-	@RequestMapping(value = "delete")
-	public String delete(ReserveField reserveField, RedirectAttributes redirectAttributes) {
-		reserveFieldService.delete(reserveField);
-		addMessage(redirectAttributes, "删除场地成功");
-		return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
-	}
+        //按日期价格
+        ReserveFieldHolidayPriceSet holidayPriceSet = null;
+        if (StringUtils.isNotBlank(reserveField.getId())) {
+            holidayPriceSet = new ReserveFieldHolidayPriceSet();
+            reserveField = reserveFieldService.get(reserveField.getId());
+            holidayPriceSet.setReserveVenue(reserveField.getReserveVenue());
+            holidayPriceSet.setReserveField(reserveField);
+        }
+        //全场与半场之间的关系
+        ReserveFieldRelation reserveFieldRelation = new ReserveFieldRelation();
+        reserveFieldRelation.setChildField(reserveField);
+        List<ReserveFieldRelation> relations= reserveFieldRalationService.findList(reserveFieldRelation);
+        if(relations!=null && relations.size()!=0){
+            reserveFieldRelation = relations.get(0);
+            if (reserveFieldRelation != null) {
+                reserveField.setReserveParentField(reserveFieldRelation.getParentField());//设置父场地
+            }
+        }
+        //事件周期
+        model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
+        model.addAttribute("reserveField", reserveField);
+        model.addAttribute("fields", fields);
+        model.addAttribute("priceSetList", reserveFieldPriceSetService.findListByField(priceSet));
+        model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
+        model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
+        model.addAttribute("holidayPriceSetList", reserveFieldHolidayPriceSetService.findList(holidayPriceSet));
+        return "reserve/field/form";
+    }
+
+    @RequestMapping(value = "save")
+    @Token(remove = true)
+    public String save(ReserveField reserveField, AttMainForm attMainForm, RoutinePrice routinePrice, HolidayPrice holidayPrice,
+                       Model model, RedirectAttributes redirectAttributes) throws ParseException {
+        if (!beanValidator(model, reserveField)) {
+            return form(reserveField, model);
+        }
+        reserveFieldService.save(reserveField, routinePrice, holidayPrice, attMainForm);
+        //全场与半场的关系保存
+        ReserveField parentField = reserveField.getReserveParentField();
+        ReserveFieldRelation relation = new ReserveFieldRelation();
+        relation.setChildField(reserveField);//设置该厂为半子场
+        ReserveFieldRelation relationDB = reserveFieldRalationService.findList(relation).get(0);//数据库查询是否已有关系
+        if (relationDB == null) {
+            ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
+            fieldRelation.setChildField(reserveField);
+            fieldRelation.setParentField(parentField);
+            reserveFieldRalationService.save(fieldRelation);
+        } else {
+            relationDB.setParentField(parentField);
+            reserveFieldRalationService.save(relationDB);
+        }
+        addMessage(redirectAttributes, "保存场地成功");
+        return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
+    }
+
+    @RequestMapping(value = "delete")
+    public String delete(ReserveField reserveField, RedirectAttributes redirectAttributes) {
+        reserveFieldService.delete(reserveField);
+        addMessage(redirectAttributes, "删除场地成功");
+        return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
+    }
 
 }
