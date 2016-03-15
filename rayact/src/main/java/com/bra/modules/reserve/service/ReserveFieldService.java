@@ -48,7 +48,7 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
         List<ReserveField> list=super.findList(reserveField);
         return list;
     }
-
+    //查找全场
     public List<ReserveField> findFullList(ReserveField reserveField) {
         List<ReserveField> list=super.findList(reserveField);
         List<ReserveField> fullList=new ArrayList<ReserveField>();

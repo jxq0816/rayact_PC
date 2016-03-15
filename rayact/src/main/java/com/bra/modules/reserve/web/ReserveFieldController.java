@@ -85,8 +85,6 @@ public class ReserveFieldController extends BaseController {
         //场地列表
         List<ReserveField> fields = reserveFieldService.findList(new ReserveField());
 
-        //常规价格
-
         //按日期价格
         ReserveFieldHolidayPriceSet holidayPriceSet = null;
         if (StringUtils.isNotBlank(reserveField.getId())) {
@@ -109,6 +107,7 @@ public class ReserveFieldController extends BaseController {
         model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
         model.addAttribute("reserveField", reserveField);
         model.addAttribute("fields", fields);
+        //常规价格
         model.addAttribute("priceSetList", reserveFieldPriceSetService.findListByField(priceSet));
         model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
         model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));

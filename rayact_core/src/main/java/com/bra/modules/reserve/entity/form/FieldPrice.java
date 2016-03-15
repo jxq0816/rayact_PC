@@ -7,15 +7,23 @@ import java.util.List;
 
 /**
  * 场地价格
- * Created by xiaobin on 16/1/11.
+ * Created by jiang on 16/1/11.
  */
 public class FieldPrice implements Serializable{
 
     private String venueId;//所属场馆
     private String fieldId;//所属场地
     private String fieldName;//场地名称
+    private String haveHalfCourt;//是否有半场 0：没有 1：有
     private List<TimePrice> timePriceList = Lists.newArrayList();//(时间:价格)对应关系
 
+    public String getHaveHalfCourt() {
+        return haveHalfCourt;
+    }
+
+    public void setHaveHalfCourt(String haveHalfCourt) {
+        this.haveHalfCourt = haveHalfCourt;
+    }
 
     public String getVenueId() {
         return venueId;

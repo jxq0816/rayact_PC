@@ -10,8 +10,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TimePrice {
 
     private String time;
-
     private Double price;
+
+    private String startTime;
+    private String endTime;
+
+    private ReserveVenueConsItem consItem;
+
+    private String frequency;//频率(1:单次;2:每天;3:每周)
+    private String consWeek;//周几?
+    private String halfCourt;//是否半场
+
+    private String consType;
+    private String userName;
 
     public String getTime() {
         return time;
@@ -39,11 +50,7 @@ public class TimePrice {
         this.status = status;
     }
 
-    private String startTime;
 
-    private String endTime;
-
-    private ReserveVenueConsItem consItem;
 
     @JsonIgnore
     public ReserveVenueConsItem getConsItem() {
@@ -72,9 +79,7 @@ public class TimePrice {
         this.endTime = endTime;
     }
 
-    private String frequency;//频率(1:单次;2:每天;3:每周)
-    private String consWeek;//周几?
-    private String halfCourt;//是否半场
+
     @JsonIgnore
     public String getFrequency() {
         return frequency;
@@ -100,8 +105,7 @@ public class TimePrice {
         this.halfCourt = halfCourt;
     }
 
-    private String consType;
-    private String userName;
+
 
     @JsonIgnore
     public String getConsType() {

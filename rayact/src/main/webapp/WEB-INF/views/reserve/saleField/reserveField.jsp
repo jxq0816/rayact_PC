@@ -45,11 +45,12 @@
                         <div id="timeSlotDiv">
                             <c:forEach items="${timeSlot}" var="slot" varStatus="status">
                                 <li
-                                    &lt;%&ndash;  <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a
-                                      href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a>&ndash;%&gt;
-
+                                        &lt;%&ndash;
                                         <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a
-                                        href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a>
+                                        href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a>&ndash;%&gt;
+
+                                    <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a
+                                            href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a>
                                 </li>
                             </c:forEach>
                         </div>
@@ -86,9 +87,12 @@
                                         <c:set var="itemId" value="0"/>
                                         <c:set var="halfCourt" value="0"/>
                                         <c:set var="username" value=""/>
-                                        <%-- A场地 B时间 的状态--%>
+
+                                        <%--遍历场地的时间、价格--%>
                                         <c:forEach items="${file.timePriceList}" var="tp">
+                                            <%--检测到场地A,时间t--%>
                                             <j:if test="${t eq tp.time}">
+                                                <%--设置 A场地 时间T 的状态--%>
                                                 <c:set var="status" value="${tp.status}"/>
                                                 <c:set var="price" value="${tp.price}"/>
                                                 <c:set var="username" value="${tp.userName}"/>
@@ -96,20 +100,26 @@
                                                 <j:if test="${'1' eq tp.consItem.halfCourt}">
                                                     <c:set var="halfCourt" value="1"/>
                                                 </j:if>
+                                                <%-- A场地 B时间 的状态 结束--%>
                                             </j:if>
                                         </c:forEach>
-                                        <%-- A场地 B时间 的状态 结束--%>
+                                        <%-- A场地 B时间 的颜色--%>
                                         <td style="color: #000;" status="${status}" data-item="${itemId}"
                                             class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
                                             data-price="${price}"
                                             data-field="${file.fieldId}"
                                             data-time="${t}">
-                                            <table class="table-half">
-                                                <tr>
-                                                    <td>半</td><td>全</td><td>半</td>
-                                                </tr>
-                                            </table>
+                                            <j:if test="${file.haveHalfCourt eq '1'}">
+                                                <table class="table-half">
+                                                    <tr>
+                                                        <td>半</td>
+                                                        <td>全</td>
+                                                        <td>半</td>
+                                                    </tr>
+                                                </table>
+                                            </j:if>
                                         </td>
+                                        <%-- A场地 B时间 的颜色 结束--%>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
                                 </tr>
@@ -162,11 +172,15 @@
                                             data-price="${price}"
                                             data-field="${file.fieldId}"
                                             data-time="${t}">
-                                            <table class="table-half">
-                                                <tr>
-                                                    <td>半</td><td>全</td><td>半</td>
-                                                </tr>
-                                            </table>
+                                            <j:if test="${file.haveHalfCourt eq '1'}">
+                                                <table class="table-half">
+                                                    <tr>
+                                                        <td>半</td>
+                                                        <td>全</td>
+                                                        <td>半</td>
+                                                    </tr>
+                                                </table>
+                                            </j:if>
                                         </td>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
@@ -221,11 +235,15 @@
                                             data-field="${file.fieldId}"
                                             data-time="${t}"
                                         >
-                                            <table class="table-half">
-                                                <tr>
-                                                    <td>半</td><td>全</td><td>半</td>
-                                                </tr>
-                                            </table>
+                                            <j:if test="${file.haveHalfCourt eq '1'}">
+                                                <table class="table-half">
+                                                    <tr>
+                                                        <td>半</td>
+                                                        <td>全</td>
+                                                        <td>半</td>
+                                                    </tr>
+                                                </table>
+                                            </j:if>
                                         </td>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
