@@ -109,15 +109,20 @@
                                             data-price="${price}"
                                             data-field="${file.fieldId}"
                                             data-time="${t}">
-                                            <j:if test="${file.haveHalfCourt eq '1'}">
-                                                <table class="table-half">
-                                                    <tr>
-                                                        <td>半</td>
-                                                        <td>全</td>
-                                                        <td>半</td>
-                                                    </tr>
-                                                </table>
-                                            </j:if>
+                                            <c:choose>
+                                                <c:when test="${file.haveHalfCourt eq '1'}">
+                                                    <table class="table-half">
+                                                        <tr>
+                                                            <td class="reserveTd">半</td>
+                                                            <td class="reserveTd">全</td>
+                                                            <td class="reserveTd">半</td>
+                                                        </tr>
+                                                    </table>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${username}
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                         <%-- A场地 B时间 的颜色 结束--%>
                                     </c:forEach>
