@@ -96,11 +96,11 @@ public class ReserveFieldController extends BaseController {
         //全场与半场之间的关系
         ReserveFieldRelation reserveFieldRelation = new ReserveFieldRelation();
         reserveFieldRelation.setChildField(reserveField);
-        List<ReserveFieldRelation> relations= reserveFieldRalationService.findList(reserveFieldRelation);
-        if(relations!=null && relations.size()!=0){
+        List<ReserveFieldRelation> relations= reserveFieldRalationService.findList(reserveFieldRelation);//查询数据库是否已有父场地
+        if(relations!=null && relations.size()!=0){//已有父场地
             reserveFieldRelation = relations.get(0);
             if (reserveFieldRelation != null) {
-                reserveField.setReserveParentField(reserveFieldRelation.getParentField());//设置父场地
+                reserveField.setReserveParentField(reserveFieldRelation.getParentField());//给子场地设置父场地
             }
         }
         //事件周期
@@ -124,21 +124,27 @@ public class ReserveFieldController extends BaseController {
         }
         reserveFieldService.save(reserveField, routinePrice, holidayPrice, attMainForm);
         //全场与半场的关系保存
+        ReserveFieldRelation relation = new ReserveFieldRelation();
+        relation.setChildField(reserveField);//设置该厂为子半场
         ReserveField parentField = reserveField.getReserveParentField();
-        if(StringUtils.isNotEmpty(parentField.getId())){
-            ReserveFieldRelation relation = new ReserveFieldRelation();
-            relation.setChildField(reserveField);//设置该厂为半子场
+        if(StringUtils.isNotEmpty(parentField.getId())){//如果选择了父场地
             List<ReserveFieldRelation> relationDBList = reserveFieldRalationService.findList(relation);//数据库查询是否已有关系
-            if(relationDBList.size()==0){
+            if(relationDBList.size()==0){//没有则新建
                 ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
                 fieldRelation.setChildField(reserveField);
                 fieldRelation.setParentField(parentField);
                 reserveFieldRalationService.save(fieldRelation);
             }
-            else {
+            else {//已有则更新
                 ReserveFieldRelation relationDB=relationDBList.get(0);
                 relationDB.setParentField(parentField);
                 reserveFieldRalationService.save(relationDB);
+            }
+        }else{//如果没有选择父场地，则将数据库中已有的关系删除
+            List<ReserveFieldRelation> relationDBList = reserveFieldRalationService.findList(relation);//数据库查询是否已有关系
+            if(relationDBList.size()!=0){//已有则删除
+                ReserveFieldRelation relationDB=relationDBList.get(0);
+                reserveFieldRalationService.delete(relationDB);
             }
         }
         addMessage(redirectAttributes, "保存场地成功");
