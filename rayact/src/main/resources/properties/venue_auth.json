@@ -71,7 +71,7 @@
     "authorityList": [
       {
         "code": "reserveField",
-        "name": "场馆售卖",
+        "name": "场地售卖",
         "href":"/reserve/field/main",
         "authorityList": []
       },

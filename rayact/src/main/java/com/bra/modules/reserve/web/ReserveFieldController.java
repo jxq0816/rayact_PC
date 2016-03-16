@@ -128,13 +128,15 @@ public class ReserveFieldController extends BaseController {
         if(StringUtils.isNotEmpty(parentField.getId())){
             ReserveFieldRelation relation = new ReserveFieldRelation();
             relation.setChildField(reserveField);//设置该厂为半子场
-            ReserveFieldRelation relationDB = reserveFieldRalationService.findList(relation).get(0);//数据库查询是否已有关系
-            if (relationDB == null) {
+            List<ReserveFieldRelation> relationDBList = reserveFieldRalationService.findList(relation);//数据库查询是否已有关系
+            if(relationDBList.size()==0){
                 ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
                 fieldRelation.setChildField(reserveField);
                 fieldRelation.setParentField(parentField);
                 reserveFieldRalationService.save(fieldRelation);
-            } else {
+            }
+            else {
+                ReserveFieldRelation relationDB=relationDBList.get(0);
                 relationDB.setParentField(parentField);
                 reserveFieldRalationService.save(relationDB);
             }
