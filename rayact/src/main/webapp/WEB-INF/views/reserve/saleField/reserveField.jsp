@@ -207,10 +207,10 @@
                             <%--时刻--%>
                             </thead>
                             <tbody>
-
+                            <%-- 遍历所有全场的场地开始--%>
                             <c:forEach items="${venueFieldPriceListPM}" var="fullField" varStatus="status">
                                 <tr>
-                                        <%-- 纵坐标：场地--%>
+                                        <%-- 纵坐标：场地名称--%>
                                     <th><span>${fullField.fieldName}</span></th>
 
 
@@ -220,9 +220,12 @@
                                         <c:set var="itemId" value="0"/>
                                         <c:set var="halfCourt" value="0"/>
                                         <c:set var="username" value=""/>
-                                        <%-- A场地 B时间 的状态--%>
+
+                                        <%--遍历单个场地的时间、价格组成的Jason--%>
                                         <c:forEach items="${fullField.timePriceList}" var="tp">
+                                            <%--场地jason的时间与横坐标的时间一致 --%>
                                             <j:if test="${t eq tp.time}">
+                                                <%--设置单个场地 时间T 的状态--%>
                                                 <c:set var="status" value="${tp.status}"/>
                                                 <c:set var="price" value="${tp.price}"/>
                                                 <c:set var="username" value="${tp.userName}"/>
@@ -230,30 +233,98 @@
                                                 <j:if test="${'1' eq tp.consItem.halfCourt}">
                                                     <c:set var="halfCourt" value="1"/>
                                                 </j:if>
+                                                <%-- A场地 B时间 的状态 结束--%>
                                             </j:if>
                                         </c:forEach>
-                                        <%-- A场地 B时间 的状态 结束--%>
-                                        <td style="color: #000;" status="${status}" data-item="${itemId}"
-                                            class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
-                                            data-price="${price}"
-                                            data-field="${fullField.fieldId}"
-                                            data-time="${t}">
-                                            <j:if test="${fullField.haveHalfCourt eq '1'}">
-                                                <table class="table-half">
-                                                    <tr>
-                                                        <td>半</td>
-                                                        <td>全</td>
-                                                        <td>半</td>
-                                                    </tr>
-                                                </table>
-                                            </j:if>
-                                        </td>
+                                        <%-- A场地 B时间 的状态展示--%>
+                                        <c:choose>
+
+                                            <c:when test="${fullField.haveHalfCourt eq '1'}">
+                                                <td>
+                                                    <table class="table-half">
+                                                        <tr><%--遍历左半场 场地的时间、价格组成的Jason--%>
+                                                            <c:forEach items="${fullField.fieldPriceLeft.timePriceList}"
+                                                                       var="leftTimePrice">
+                                                                <%--场地的时间与横坐标的时间一致 --%>
+                                                                <j:if test="${t eq leftTimePrice.time}">
+                                                                    <%--设置左半场 场地 时间T 的状态--%>
+                                                                    <c:set var="leftStatus"
+                                                                           value="${leftTimePrice.status}"/>
+                                                                    <c:set var="leftPrice"
+                                                                           value="${leftTimePrice.price}"/>
+                                                                    <c:set var="leftUsername"
+                                                                           value="${leftTimePrice.userName}"/>
+                                                                    <c:set var="leftItemId"
+                                                                           value="${leftTimePrice.consItem.id}"/>
+                                                                    <%-- 左半场 场地 时间T 的状态结束--%>
+                                                                </j:if>
+                                                            </c:forEach>
+                                                            <td style="color: #000;" status="${leftStatus}"
+                                                                data-item="${leftItemId}"
+                                                                class="reserveTd <j:if test="${'0' eq leftStatus}">access</j:if> <j:ifelse test="${'4' eq leftStatus}"><j:then>red</j:then></j:ifelse>"
+                                                                data-price="${price}"
+                                                                data-field="${fullField.fieldPriceLeft.fieldId}"
+                                                                data-isHalfCourt="1"
+                                                                data-time="${t}">半
+                                                            </td>
+
+                                                            <td style="color: #000;" status="${status}"
+                                                                data-item="${itemId}"
+                                                                class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
+                                                                data-price="${price}"
+                                                                data-field="${fullField.fieldId}"
+                                                                data-isHalfCourt="0"
+                                                                data-time="${t}">全
+                                                            </td>
+
+                                                            <c:forEach
+                                                                    items="${fullField.fieldPriceRight.timePriceList}"
+                                                                    var="rightTimePrice">
+                                                                <%--场地的时间与横坐标的时间一致 --%>
+                                                                <j:if test="${t eq rightTimePrice.time}">
+                                                                    <%--设置右半场 场地 时间T 的状态--%>
+                                                                    <c:set var="rightStatus"
+                                                                           value="${rightTimePrice.status}"/>
+                                                                    <c:set var="rightPrice"
+                                                                           value="${rightTimePrice.price}"/>
+                                                                    <c:set var="rightUsername"
+                                                                           value="${rightTimePrice.userName}"/>
+                                                                    <c:set var="rightItemId"
+                                                                           value="${rightTimePrice.consItem.id}"/>
+                                                                    <%-- 右半场 场地 时间T 的状态结束--%>
+                                                                </j:if>
+                                                            </c:forEach>
+                                                            <td style="color: #000;" status="${rightStatus}"
+                                                                data-item="${rightItemId}"
+                                                                class="reserveTd <j:if test="${'0' eq rightStatus}">access</j:if> <j:ifelse test="${'4' eq rightStatus}"><j:then>red</j:then></j:ifelse>"
+                                                                data-price="${rightPrice}"
+                                                                data-field="${fullField.fieldPriceRight.fieldId}"
+                                                                data-isHalfCourt="1"
+                                                                data-time="${t}">半
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td style="color: #000;" status="${status}" data-item="${itemId}"
+                                                    class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
+                                                    data-price="${price}"
+                                                    data-field="${fullField.fieldId}"
+                                                    data-isHalfCourt="0"
+                                                    data-time="${t}">
+                                                        ${username}
+                                                </td>
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <%-- A场地 B时间 的状态展示 结束--%>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
                                 </tr>
                                 <%-- 纵坐标：场地 结束--%>
                             </c:forEach>
-
+                            <%-- 遍历所有全场 场地结束--%>
                             </tbody>
                         </table>
 
@@ -269,10 +340,10 @@
                             <%--时刻--%>
                             </thead>
                             <tbody>
-
+                            <%-- 遍历所有全场的场地开始--%>
                             <c:forEach items="${venueFieldPriceListEvening}" var="fullField" varStatus="status">
                                 <tr>
-                                        <%-- 纵坐标：场地--%>
+                                        <%-- 纵坐标：场地名称--%>
                                     <th><span>${fullField.fieldName}</span></th>
 
 
@@ -282,9 +353,12 @@
                                         <c:set var="itemId" value="0"/>
                                         <c:set var="halfCourt" value="0"/>
                                         <c:set var="username" value=""/>
-                                        <%-- A场地 B时间 的状态--%>
+
+                                        <%--遍历单个场地的时间、价格组成的Jason--%>
                                         <c:forEach items="${fullField.timePriceList}" var="tp">
+                                            <%--场地jason的时间与横坐标的时间一致 --%>
                                             <j:if test="${t eq tp.time}">
+                                                <%--设置单个场地 时间T 的状态--%>
                                                 <c:set var="status" value="${tp.status}"/>
                                                 <c:set var="price" value="${tp.price}"/>
                                                 <c:set var="username" value="${tp.userName}"/>
@@ -292,31 +366,98 @@
                                                 <j:if test="${'1' eq tp.consItem.halfCourt}">
                                                     <c:set var="halfCourt" value="1"/>
                                                 </j:if>
+                                                <%-- A场地 B时间 的状态 结束--%>
                                             </j:if>
                                         </c:forEach>
-                                        <%-- A场地 B时间 的状态 结束--%>
-                                        <td style="color: #000;" status="${status}" data-item="${itemId}"
-                                            class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
-                                            data-price="${price}"
-                                            data-field="${fullField.fieldId}"
-                                            data-time="${t}"
-                                        >
-                                            <j:if test="${fullField.haveHalfCourt eq '1'}">
-                                                <table class="table-half">
-                                                    <tr>
-                                                        <td>半</td>
-                                                        <td>全</td>
-                                                        <td>半</td>
-                                                    </tr>
-                                                </table>
-                                            </j:if>
-                                        </td>
+                                        <%-- A场地 B时间 的状态展示--%>
+                                        <c:choose>
+
+                                            <c:when test="${fullField.haveHalfCourt eq '1'}">
+                                                <td>
+                                                    <table class="table-half">
+                                                        <tr><%--遍历左半场 场地的时间、价格组成的Jason--%>
+                                                            <c:forEach items="${fullField.fieldPriceLeft.timePriceList}"
+                                                                       var="leftTimePrice">
+                                                                <%--场地的时间与横坐标的时间一致 --%>
+                                                                <j:if test="${t eq leftTimePrice.time}">
+                                                                    <%--设置左半场 场地 时间T 的状态--%>
+                                                                    <c:set var="leftStatus"
+                                                                           value="${leftTimePrice.status}"/>
+                                                                    <c:set var="leftPrice"
+                                                                           value="${leftTimePrice.price}"/>
+                                                                    <c:set var="leftUsername"
+                                                                           value="${leftTimePrice.userName}"/>
+                                                                    <c:set var="leftItemId"
+                                                                           value="${leftTimePrice.consItem.id}"/>
+                                                                    <%-- 左半场 场地 时间T 的状态结束--%>
+                                                                </j:if>
+                                                            </c:forEach>
+                                                            <td style="color: #000;" status="${leftStatus}"
+                                                                data-item="${leftItemId}"
+                                                                class="reserveTd <j:if test="${'0' eq leftStatus}">access</j:if> <j:ifelse test="${'4' eq leftStatus}"><j:then>red</j:then></j:ifelse>"
+                                                                data-price="${price}"
+                                                                data-field="${fullField.fieldPriceLeft.fieldId}"
+                                                                data-isHalfCourt="1"
+                                                                data-time="${t}">半
+                                                            </td>
+
+                                                            <td style="color: #000;" status="${status}"
+                                                                data-item="${itemId}"
+                                                                class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
+                                                                data-price="${price}"
+                                                                data-field="${fullField.fieldId}"
+                                                                data-isHalfCourt="0"
+                                                                data-time="${t}">全
+                                                            </td>
+
+                                                            <c:forEach
+                                                                    items="${fullField.fieldPriceRight.timePriceList}"
+                                                                    var="rightTimePrice">
+                                                                <%--场地的时间与横坐标的时间一致 --%>
+                                                                <j:if test="${t eq rightTimePrice.time}">
+                                                                    <%--设置右半场 场地 时间T 的状态--%>
+                                                                    <c:set var="rightStatus"
+                                                                           value="${rightTimePrice.status}"/>
+                                                                    <c:set var="rightPrice"
+                                                                           value="${rightTimePrice.price}"/>
+                                                                    <c:set var="rightUsername"
+                                                                           value="${rightTimePrice.userName}"/>
+                                                                    <c:set var="rightItemId"
+                                                                           value="${rightTimePrice.consItem.id}"/>
+                                                                    <%-- 右半场 场地 时间T 的状态结束--%>
+                                                                </j:if>
+                                                            </c:forEach>
+                                                            <td style="color: #000;" status="${rightStatus}"
+                                                                data-item="${rightItemId}"
+                                                                class="reserveTd <j:if test="${'0' eq rightStatus}">access</j:if> <j:ifelse test="${'4' eq rightStatus}"><j:then>red</j:then></j:ifelse>"
+                                                                data-price="${rightPrice}"
+                                                                data-field="${fullField.fieldPriceRight.fieldId}"
+                                                                data-isHalfCourt="1"
+                                                                data-time="${t}">半
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td style="color: #000;" status="${status}" data-item="${itemId}"
+                                                    class="reserveTd <j:if test="${'0' eq status}">access</j:if> <j:ifelse test="${'4' eq status}"><j:then>red</j:then><j:else><j:if test="${'1' eq halfCourt}">unpayed</j:if></j:else></j:ifelse>"
+                                                    data-price="${price}"
+                                                    data-field="${fullField.fieldId}"
+                                                    data-isHalfCourt="0"
+                                                    data-time="${t}">
+                                                        ${username}
+                                                </td>
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <%-- A场地 B时间 的状态展示 结束--%>
                                     </c:forEach>
                                         <%-- 横坐标：时间 结束--%>
                                 </tr>
                                 <%-- 纵坐标：场地 结束--%>
                             </c:forEach>
-
+                            <%-- 遍历所有全场 场地结束--%>
                             </tbody>
                         </table>
                     </div>
