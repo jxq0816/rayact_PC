@@ -274,12 +274,27 @@ public class ReserveFieldPriceService {
                     ReserveFieldPriceSet leftFieldSet = new ReserveFieldPriceSet();
                     leftFieldSet.setReserveField(fieldLeft);
                     leftFieldSet=reserveFieldPriceSetDao.findList(leftFieldSet).get(0);
-                    List<TimePrice> LeftTimePriceList = leftFieldSet.getTimePriceList();//获取左侧半场 时间和价格 组成的Jason
-                    FieldPrice leftFieldPrice=buildFieldPrice(LeftTimePriceList,venueConsList,leftFieldSet,times);
+                    List<TimePrice> leftTimePriceList = leftFieldSet.getTimePriceList();//获取左侧半场 时间和价格 组成的Jason
+                    FieldPrice leftFieldPrice=buildFieldPrice(leftTimePriceList,venueConsList,leftFieldSet,times);
                     leftFieldPrice.setFieldId(fieldLeftId);//设置场地编号
                     leftFieldPrice.setFieldName(fieldLeftName);//设置场地名称
                     leftFieldPrice.setHaveHalfCourt("0");//无半场
                     fieldPrice.setFieldPriceLeft(leftFieldPrice);//设置左半场
+
+                    ReserveFieldRelation relationRight=list.get(1);
+                    ReserveField fieldRight=relationRight.getChildField();
+                    fieldRight=reserveFieldService.get(fieldRight);//获取右侧半场的详细信息
+                    String fieldRightId=fieldRight.getId();
+                    String fieldRightName=fieldRight.getName();
+                    ReserveFieldPriceSet rightFieldSet = new ReserveFieldPriceSet();
+                    rightFieldSet.setReserveField(fieldRight);
+                    rightFieldSet=reserveFieldPriceSetDao.findList(rightFieldSet).get(0);
+                    List<TimePrice> rightTimePriceList = rightFieldSet.getTimePriceList();//获取右侧半场 时间和价格 组成的Jason
+                    FieldPrice rightFieldPrice=buildFieldPrice(rightTimePriceList,venueConsList,rightFieldSet,times);
+                    rightFieldPrice.setFieldId(fieldRightId);//设置场地编号
+                    rightFieldPrice.setFieldName(fieldRightName);//设置场地名称
+                    rightFieldPrice.setHaveHalfCourt("0");//无半场
+                    fieldPrice.setFieldPriceRight(rightFieldPrice);//设置右半场
 
                 }
                 fieldPrice.getTimePriceList().add(timePrice);
@@ -288,7 +303,7 @@ public class ReserveFieldPriceService {
         }
     }
     /*
-    查询半场 时间 价格 状态
+    查询半场的 时间 价格 状态
      */
     private FieldPrice buildFieldPrice(List<TimePrice> LeftTimePriceList, List<ReserveVenueConsItem> venueConsList,ReserveFieldPriceSet setLeft, List<String> times) {
 

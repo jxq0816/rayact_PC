@@ -108,8 +108,8 @@ public class ReserveController extends BaseController {
             model.addAttribute("reserveVenue", reserveVenue);
             ReserveField reserveField = new ReserveField();
             reserveField.setReserveVenue(reserveVenue);
-            List<ReserveField> reserveFieldList = reserveFieldService.findFullList(reserveField);//选择全场
-            model.addAttribute("reserveFieldList", reserveFieldList);
+           /* List<ReserveField> reserveFieldList = reserveFieldService.findFullList(reserveField);//选择全场
+            model.addAttribute("reserveFieldList", reserveFieldList);*/
             //上午场地价格
             List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);
             model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
