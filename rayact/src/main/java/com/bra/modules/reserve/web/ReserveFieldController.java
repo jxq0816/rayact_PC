@@ -125,17 +125,19 @@ public class ReserveFieldController extends BaseController {
         reserveFieldService.save(reserveField, routinePrice, holidayPrice, attMainForm);
         //全场与半场的关系保存
         ReserveField parentField = reserveField.getReserveParentField();
-        ReserveFieldRelation relation = new ReserveFieldRelation();
-        relation.setChildField(reserveField);//设置该厂为半子场
-        ReserveFieldRelation relationDB = reserveFieldRalationService.findList(relation).get(0);//数据库查询是否已有关系
-        if (relationDB == null) {
-            ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
-            fieldRelation.setChildField(reserveField);
-            fieldRelation.setParentField(parentField);
-            reserveFieldRalationService.save(fieldRelation);
-        } else {
-            relationDB.setParentField(parentField);
-            reserveFieldRalationService.save(relationDB);
+        if(StringUtils.isNotEmpty(parentField.getId())){
+            ReserveFieldRelation relation = new ReserveFieldRelation();
+            relation.setChildField(reserveField);//设置该厂为半子场
+            ReserveFieldRelation relationDB = reserveFieldRalationService.findList(relation).get(0);//数据库查询是否已有关系
+            if (relationDB == null) {
+                ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
+                fieldRelation.setChildField(reserveField);
+                fieldRelation.setParentField(parentField);
+                reserveFieldRalationService.save(fieldRelation);
+            } else {
+                relationDB.setParentField(parentField);
+                reserveFieldRalationService.save(relationDB);
+            }
         }
         addMessage(redirectAttributes, "保存场地成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
