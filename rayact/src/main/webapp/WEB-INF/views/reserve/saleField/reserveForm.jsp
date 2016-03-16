@@ -4,6 +4,7 @@
 <form id="reserveFormBean" class="form-horizontal">
     <input type="hidden" name="token" value="${token}"/>
     <input type="hidden" name="project.id" value="${reserveField.reserveProject.id}"/>
+    <input type="hidden" name="halfCourt" value="${isHalfCourt}"/>
 
     <div class="content text-justify" style="text-align: center;vertical-align: middle;">
         <div class="row">

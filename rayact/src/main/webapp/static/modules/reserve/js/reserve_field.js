@@ -273,13 +273,7 @@ $(document).ready(function () {
         func: function () {
             $(this).dblclick();
         }
-    }]/*, [{
-     text: "结账",
-     func: function () {
-     settlement($(this));
-     }
-     }]*/
-    ];
+    }]];
     var reserveMenuData = [[{
         text: "取消订单",
         func: function () {
@@ -307,13 +301,7 @@ $(document).ready(function () {
         func: function () {
             details($(this));
         }
-    }]/*, [{
-     text: "退款",
-     func: function () {
-     refund($(this));
-     }
-     }]*/
-    ];
+    }]];
     //mouserover
     $(".reserveTd").unbind("mouserover");
     $(".reserveTd").on('mousedown', function () {
