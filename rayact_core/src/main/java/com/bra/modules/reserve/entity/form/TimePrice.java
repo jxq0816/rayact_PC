@@ -24,6 +24,8 @@ public class TimePrice {
     private String consType;
     private String userName;
 
+    private String status = "0";//0:可预定,1:已预定,2:锁场,3:已取消,4:已结算
+
     public String getTime() {
         return time;
     }
@@ -40,7 +42,7 @@ public class TimePrice {
         this.price = price;
     }
 
-    private String status = "0";//0:可预定,1:已预定,2:锁场,3:已取消,4:已结算
+
 
     public String getStatus() {
         return status;
@@ -49,8 +51,6 @@ public class TimePrice {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
 
     @JsonIgnore
     public ReserveVenueConsItem getConsItem() {

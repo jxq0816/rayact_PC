@@ -70,10 +70,11 @@ $(document).ready(function () {
                                 var time = $this.attr("data-time");
                                 $.each(values, function (index, item) {
                                     if (item.fieldId == fieldId && time == item.time) {
-                                        $this.removeClass("access");
+                                        /*$this.removeClass("access");
                                         $this.attr("status", "1");
                                         $this.attr("data-item", item.itemId);
-                                        $this.text(userName);
+                                        $this.text(userName);*/
+                                        location.reload(true);
                                     }
                                 });
                             });
