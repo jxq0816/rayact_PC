@@ -16,6 +16,24 @@ public class FieldPrice implements Serializable{
     private String fieldName;//场地名称
     private String haveHalfCourt;//是否有半场 0：没有 1：有
     private List<TimePrice> timePriceList = Lists.newArrayList();//(时间:价格)对应关系
+    private FieldPrice fieldPriceLeft;//左侧半场
+    private FieldPrice fieldPriceRight;//右侧半场
+
+    public FieldPrice getFieldPriceRight() {
+        return fieldPriceRight;
+    }
+
+    public void setFieldPriceRight(FieldPrice fieldPriceRight) {
+        this.fieldPriceRight = fieldPriceRight;
+    }
+
+    public FieldPrice getFieldPriceLeft() {
+        return fieldPriceLeft;
+    }
+
+    public void setFieldPriceLeft(FieldPrice fieldPriceLeft) {
+        this.fieldPriceLeft = fieldPriceLeft;
+    }
 
     public String getHaveHalfCourt() {
         return haveHalfCourt;

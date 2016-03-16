@@ -119,7 +119,6 @@ public class ReserveController extends BaseController {
             //晚上场地价格
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
-
         }
         return "reserve/saleField/reserveField";
     }
