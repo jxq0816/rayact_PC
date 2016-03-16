@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="form-group">
                         <label for="reserveFieldName" class="col-sm-2 control-label"> 场地:</label>
-                        <div class="col-lg-4">
+                        <div class="col-lg-10">
                             <input readonly="readonly" id="reserveFieldName" class="form-control"
                                    value="${reserveField.name}"/>
                             <input type="hidden" id="consDate" name="consDate"
@@ -61,13 +61,17 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="halfCourt" class="control-label">类型:</label>
+                            <label for="isHalfCourt" class="control-label">类型:</label>
                         </div>
-                        <div class="col-lg-2">
-                            <input type="radio" id="halfCourt" name="halfCourt" value="1" class="icheck"/>半场
-                        </div>
-                        <div class="col-lg-2">
-                            <input type="radio" id="allCourt" name="halfCourt" value="0" class="icheck" checked="checked"/>全场
+                        <div class="col-lg-4">
+                            <j:if test="${'1' eq isHalfCourt}">
+                                <input readonly="readonly" id="isHalfCourt" class="form-control"
+                                       value="半场"/>
+                            </j:if>
+                            <j:if test="${'0' eq isHalfCourt}">
+                                <input readonly="readonly" id="isHalfCourt" class="form-control"
+                                       value="全场"/>
+                            </j:if>
                         </div>
                     </div>
                 </div>

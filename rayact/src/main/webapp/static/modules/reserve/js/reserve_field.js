@@ -5,9 +5,10 @@ $(document).ready(function () {
         if (!$(this).hasClass("access")) {
             return;
         }
-        var field = $(this).attr("data-field");
+        var fieldId = $(this).attr("data-field");
         var time = $(this).attr("data-time");
         var price = $(this).attr("data-price");
+        var isHalfCourt = $(this).attr("data-isHalfCourt");
         if (price == null || price == "" || price == undefined) {
             errorLoding("抱歉，该时间段价格尚未设定");
             return;
@@ -15,7 +16,7 @@ $(document).ready(function () {
         var date = consDate;//日期
         jQuery.postItems({
             url: ctx + '/reserve/field/reserveForm',
-            data: {fieldId: field, time: time, date: date, venueId: venueId},
+            data: {fieldId: fieldId, time: time, date: date, venueId: venueId,isHalfCourt:isHalfCourt},
             success: function (result) {
                 $("#reserveForm").html(result);
                 $("#reserveDialog").click();
