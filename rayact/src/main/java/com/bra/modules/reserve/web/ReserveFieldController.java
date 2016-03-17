@@ -45,6 +45,8 @@ public class ReserveFieldController extends BaseController {
     @Autowired
     private ReserveFieldPriceSetService reserveFieldPriceSetService;
     @Autowired
+    private ReserveTimeIntervalService reserveTimeIntervalService;
+    @Autowired
     private ReserveFieldHolidayPriceSetService reserveFieldHolidayPriceSetService;
 
     @ModelAttribute
@@ -71,7 +73,6 @@ public class ReserveFieldController extends BaseController {
     @RequestMapping(value = "form")
     @Token(save = true)
     public String form(ReserveField reserveField, Model model) throws ParseException {
-
         //获取营业时间
         List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", 60);
         model.addAttribute("times", times);
@@ -103,14 +104,26 @@ public class ReserveFieldController extends BaseController {
                 reserveField.setReserveParentField(reserveFieldRelation.getParentField());//给子场地设置父场地
             }
         }
+        //时令 默认全年
+        List<ReserveTimeInterval> reserveTimeIntervalList=reserveTimeIntervalService.findList(new ReserveTimeInterval());
+
+        //默认时令
+        ReserveTimeInterval reserveTimeInterval=new ReserveTimeInterval();
+        reserveTimeInterval.setName("全年");
+        List<ReserveTimeInterval> reserveTimeIntervals = reserveTimeIntervalService.findList(reserveTimeInterval);
+        if(reserveTimeIntervals!=null&&reserveTimeIntervals.size()!=0){
+            reserveTimeInterval=reserveTimeIntervals.get(0);
+        }
+
+        //常规价格
+        List<ReserveFieldPriceSet> priceSetList = reserveFieldPriceSetService.findListByField(priceSet);
+        model.addAttribute("reserveTimeInterval", reserveTimeInterval);
+        model.addAttribute("reserveTimeIntervalList", reserveTimeIntervalList);
         //事件周期
         model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
         model.addAttribute("reserveField", reserveField);
         model.addAttribute("fields", fields);
-        //常规价格
-        List<ReserveFieldPriceSet> priceSetList = reserveFieldPriceSetService.findListByField(priceSet);
         model.addAttribute("priceSetList", priceSetList);
-
         model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
         model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
         model.addAttribute("holidayPriceSetList", reserveFieldHolidayPriceSetService.findList(holidayPriceSet));

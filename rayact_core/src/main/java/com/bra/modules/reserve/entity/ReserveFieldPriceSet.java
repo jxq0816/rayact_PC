@@ -20,10 +20,19 @@ public class ReserveFieldPriceSet extends SaasEntity<ReserveFieldPriceSet> {
     private static final long serialVersionUID = 1L;
     private ReserveVenue reserveVenue;//所属场馆
     private ReserveField reserveField;//所属场地
-    private String week;        // 星期几?(如:周日)
+    private String week;            //星期  1：周一至周五 2：周六 3：周日
     private String consType;        // 消费类型(1:市场价,2:会员,3:团体)
     private String consPrice;        // 价格
     private String consJson;      //按照时间和价格组装成json
+    private ReserveTimeInterval reserveTimeInterval;//时令
+
+    public ReserveTimeInterval getReserveTimeInterval() {
+        return reserveTimeInterval;
+    }
+
+    public void setReserveTimeInterval(ReserveTimeInterval reserveTimeInterval) {
+        this.reserveTimeInterval = reserveTimeInterval;
+    }
 
     public ReserveFieldPriceSet() {
         super();

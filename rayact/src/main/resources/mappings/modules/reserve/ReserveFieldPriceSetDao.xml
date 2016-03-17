@@ -17,12 +17,14 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.fk_reserve_time_interval_id AS "reserveTimeInterval.id"
 	</sql>
 
     <sql id="reserveFieldPriceSetJoins">
 		LEFT JOIN reserve_venue v ON v.id = a.venue_id
 		LEFT JOIN reserve_field f ON f.id = a.field_id
+		LEFT JOIN reserve_time_interval t on t.id =a.fk_reserve_time_interval_id
 	</sql>
 
     <select id="get" resultType="ReserveFieldPriceSet">
@@ -38,7 +40,8 @@
         <include refid="reserveFieldPriceSetColumns"/>
         FROM reserve_field_price_set a
 		LEFT JOIN reserve_venue v ON v.id = a.venue_id
-		INNER JOIN reserve_field f ON f.id = a.field_id
+		LEFT JOIN reserve_field f ON f.id = a.field_id
+		LEFT JOIN reserve_time_interval t on t.id =a.fk_reserve_time_interval_id
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
             <if test="week != null and week != ''">
@@ -52,6 +55,9 @@
 			</if>
 			<if test="reserveField != null and reserveField.id != null and reserveField.id != ''">
 				and a.field_id = #{reserveField.id} and f.del_flag='0'
+			</if>
+			<if test="reserveTimeInterval != null and reserveTimeInterval.id != null and reserveTimeInterval.id != ''">
+				and t.id = #{reserveTimeInterval.id} and t.del_flag='0'
 			</if>
         </where>
         <choose>
@@ -91,6 +97,7 @@
 			cons_type,
 			cons_price,
 			cons_json,
+			fk_reserve_time_interval_id,
 			create_by,
 			create_date,
 			update_by,
@@ -106,6 +113,7 @@
 			#{consType},
 			#{consPrice},
 			#{consJson},
+			#{reserveTimeInterval.id},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -124,6 +132,7 @@
 			cons_type = #{consType},
 			cons_price = #{consPrice},
 			cons_json = #{consJson},
+			fk_reserve_time_interval_id = #{reserveTimeInterval.id},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
