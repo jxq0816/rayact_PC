@@ -6,10 +6,7 @@ import com.bra.common.utils.Collections3;
 import com.bra.common.utils.JsonUtils;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.dao.ReserveFieldDao;
-import com.bra.modules.reserve.entity.ReserveField;
-import com.bra.modules.reserve.entity.ReserveFieldHolidayPriceSet;
-import com.bra.modules.reserve.entity.ReserveFieldPriceSet;
-import com.bra.modules.reserve.entity.ReserveFieldRelation;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.TimePrice;
 import com.bra.modules.reserve.web.form.HolidayPrice;
 import com.bra.modules.reserve.web.form.RoutinePrice;
@@ -80,10 +77,12 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
 
         //常规价格保存
         List<ReserveFieldPriceSet> fieldPriceSetList = routinePrice.getFieldPriceSetList();
+        ReserveTimeInterval timeInterval=routinePrice.getReserveTimeInterval();
         if (!Collections3.isEmpty(fieldPriceSetList)) {
             for (ReserveFieldPriceSet fieldPriceSet : fieldPriceSetList) {
                 fieldPriceSet.setReserveVenue(reserveField.getReserveVenue());
                 fieldPriceSet.setReserveField(reserveField);
+                fieldPriceSet.setReserveTimeInterval(timeInterval);//设置时令
                 fieldPriceSet.setConsJson(getTimeJson(fieldPriceSet.getTimePriceList()));
                 reserveFieldPriceSetService.save(fieldPriceSet);
             }
