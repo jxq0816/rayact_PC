@@ -24,6 +24,7 @@
                         <form:hidden path="id"/>
                         <input type="hidden" name="token" value="${token}"/>
 
+
                         <div class="tab-container">
                             <ul class="nav nav-tabs" id="myTab">
                                 <li class="active"><a href="#home" data-toggle="tab">基本信息</a></li>
@@ -82,7 +83,15 @@
                                                             defaultValue=""></sys:select>
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">是否分时令</label>
+                                            <div class="col-sm-6">
+                                                <form:radiobuttons path="isTimeInterval" items="${fns:getDictList('yes_no')}"
+                                                                   itemLabel="label"
+                                                                   itemValue="value"
+                                                                   htmlEscape="false" class="icheck"/>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">备注</label>
                                             <div class="col-sm-6">

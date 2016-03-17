@@ -22,6 +22,15 @@ public class ReserveField extends SaasEntity<ReserveField> {
 	private ReserveVenue reserveVenue;//所属场馆
 	private ReserveField reserveParentField;//父场地
 	private List<ReserveFieldRelation> reserveFieldRelationList;//子场地
+	private String isTimeInterval;
+
+	public String getIsTimeInterval() {
+		return isTimeInterval;
+	}
+
+	public void setIsTimeInterval(String isTimeInterval) {
+		this.isTimeInterval = isTimeInterval;
+	}
 
 	public ReserveField getReserveParentField() {
 		return reserveParentField;

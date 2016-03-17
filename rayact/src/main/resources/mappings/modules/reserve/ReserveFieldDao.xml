@@ -16,6 +16,7 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
+		a.is_time_interval AS "isTimeInterval",
 		p.name AS "reserveProject.name",
 		v.name AS "reserveVenue.name"
 	</sql>
@@ -89,6 +90,7 @@
 			venue_id,
 			original_price,
 			actual_price,
+			is_time_interval,
 			create_by,
 			create_date,
 			update_by,
@@ -104,6 +106,7 @@
 			#{reserveVenue.id},
 			#{originalPrice},
 			#{actualPrice},
+			#{isTimeInterval},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -122,6 +125,7 @@
 			actual_price = #{actualPrice},
 			project_id = #{reserveProject.id},
 			venue_id = #{reserveVenue.id},
+			is_time_interval=#{isTimeInterval},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
