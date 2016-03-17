@@ -21,7 +21,6 @@
             <c:forEach items="${timesPM}" var="t">
                 <c:set var="status" value="0"/>
                 <c:set var="itemId" value="0"/>
-                <c:set var="username" value=""/>
 
                 <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
                 <c:forEach items="${fullField.timePriceList}" var="tp">
@@ -129,7 +128,7 @@
                                         data-price="${price}"
                                         data-field="${fullField.fieldPriceLeft.fieldId}"
                                         data-isHalfCourt="1"
-                                        data-time="${t}"> ${username}
+                                        data-time="${t}"> ${leftUsername}
                                     </td>
 
                                     <td style="color: #000;" status="${status}"
@@ -146,7 +145,7 @@
                                         data-price="${rightPrice}"
                                         data-field="${fullField.fieldPriceRight.fieldId}"
                                         data-isHalfCourt="1"
-                                        data-time="${t}">${username}
+                                        data-time="${t}">${rightUsername}
                                     </td>
                                 </tr>
                             </table>

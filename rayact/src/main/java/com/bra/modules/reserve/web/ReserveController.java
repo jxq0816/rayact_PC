@@ -231,15 +231,19 @@ public class ReserveController extends BaseController {
             ReserveVenueConsItem reserveVenueConsItem=new  ReserveVenueConsItem();
             reserveVenueConsItem.setReserveField(field);
             reserveVenueConsItem.setConsDate(consDate);
-            List<ReserveVenueConsItem> list = reserveVenueConsItemService.findList(reserveVenueConsItem);//查询该场地在预订date的预订状态
+            List<ReserveVenueConsItem> list = reserveVenueConsItemService.findRelationList(reserveVenueConsItem);//查询该场地在预订date的预订状态
             for(ReserveVenueConsItem item:list){
                 String start=item.getStartTime();//已预订开始时间
                 String end=item.getEndTime();//已预订结束时间
-                if(startTime.compareTo(start)>0 && startTime.compareTo(end)<0){//预订开始时间 介于 已预订区间
+                //第一个判断条件 假设 预订时间为15:30-16:00 已预订时间为15:30-16:30 startTime=start=15:30 startTime=start不可预订
+                //第二个判断条件 假设 预订时间为15:30-16:00  已预订时间为15:00-15:30 startTime=end=15:30 时间段正好错开 可预订
+                if(startTime.compareTo(start)>=0 && startTime.compareTo(end)<0){//预订开始时间 介于 已预订区间
                     bool=false;
                     break;
                 }
-                if(endTime.compareTo(start)>0 && endTime.compareTo(end)<0){//预订结束时间 介于 已预订区间
+                //第一个判断条件 假设 预订时间为15:30-16:00  已预订时间为16:00-16:30 endTime=stat=16:00 时间段正好错开 可预订
+                //第二个判断条件 假设 预订时间为15:30-16:30  已预订时间为16:00-16:30 endTime=end=16:30 不可预订
+                if(endTime.compareTo(start)>0 && endTime.compareTo(end)<=0){//预订结束时间 介于 已预订区间
                     bool=false;
                     break;
                 }
