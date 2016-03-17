@@ -37,7 +37,7 @@
         SELECT
         <include refid="reserveFieldPriceSetColumns"/>
         FROM reserve_field_price_set a
-		INNER JOIN reserve_venue v ON v.id = a.venue_id
+		LEFT JOIN reserve_venue v ON v.id = a.venue_id
 		INNER JOIN reserve_field f ON f.id = a.field_id
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}

@@ -108,7 +108,9 @@ public class ReserveFieldController extends BaseController {
         model.addAttribute("reserveField", reserveField);
         model.addAttribute("fields", fields);
         //常规价格
-        model.addAttribute("priceSetList", reserveFieldPriceSetService.findListByField(priceSet));
+        List<ReserveFieldPriceSet> priceSetList = reserveFieldPriceSetService.findListByField(priceSet);
+        model.addAttribute("priceSetList", priceSetList);
+
         model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
         model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
         model.addAttribute("holidayPriceSetList", reserveFieldHolidayPriceSetService.findList(holidayPriceSet));
