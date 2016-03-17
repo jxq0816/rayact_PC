@@ -590,6 +590,30 @@ CREATE TABLE reserve_field_relation (
    tenant_id varchar(19) DEFAULT NULL,
    PRIMARY KEY (`id`)
 );
+-- ----------------------------
+-- Table structure for reserve_field_price_set
+-- ----------------------------
+DROP TABLE IF EXISTS `reserve_field_price_set`;
+CREATE TABLE `reserve_field_price_set` (
+  `id` varchar(19) NOT NULL,
+  `venue_id` varchar(19) NOT NULL COMMENT '所属场馆',
+  `field_id` varchar(19) NOT NULL COMMENT '所属场地',
+  `week` varchar(5) DEFAULT NULL COMMENT '星期几?(如:周日)',
+  `field_time` varchar(10) DEFAULT NULL COMMENT '时间',
+  `fk_reserve_time_interval_id` varchar(19) DEFAULT NULL comment '时令外键',
+  `cons_type` varchar(1) DEFAULT NULL COMMENT '消费类型(1:散客,2:会员,3:团体)',
+  `cons_price` double DEFAULT NULL COMMENT '价格',
+  `cons_json` varchar(1000) DEFAULT NULL COMMENT '按照时间和价格组装成json',
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

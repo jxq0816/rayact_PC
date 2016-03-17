@@ -104,9 +104,9 @@
     <update id="update">
         UPDATE reserve_time_interval SET
         name = #{name},
-        create_month = #{createMonth},
+        start_month = #{startMonth},
         end_month = #{endMonth},
-        create_date = #{createDate},
+        start_date = #{startDate},
         end_date = #{endDate},
         update_by = #{updateBy.id},
         update_date = #{updateDate},
