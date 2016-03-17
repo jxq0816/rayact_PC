@@ -3,6 +3,7 @@ package com.bra.modules.reserve.service;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveFieldRelationDao;
 import com.bra.modules.reserve.entity.ReserveFieldRelation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,8 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class ReserveFieldRelationService extends CrudService<ReserveFieldRelationDao, ReserveFieldRelation> {
+    @Autowired
+    private ReserveFieldRelationDao dao;
 
     public ReserveFieldRelation get(String id) {
         ReserveFieldRelation reserveFieldRelation = super.get(id);
@@ -35,6 +38,11 @@ public class ReserveFieldRelationService extends CrudService<ReserveFieldRelatio
     @Transactional(readOnly = false)
     public void delete(ReserveFieldRelation relation) {
         super.delete(relation);
+    }
+
+    @Transactional(readOnly = false)
+    public void physicalDelete(ReserveFieldRelation relation) {
+        dao.physicalDelete(relation);
     }
 
 }

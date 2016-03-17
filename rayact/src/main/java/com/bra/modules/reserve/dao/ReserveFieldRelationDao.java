@@ -14,5 +14,5 @@ import com.bra.modules.reserve.entity.ReserveFieldRelation;
  */
 @MyBatisDao
 public interface ReserveFieldRelationDao extends CrudDao<ReserveFieldRelation> {
-	
+    void physicalDelete(ReserveFieldRelation relation);
 }
