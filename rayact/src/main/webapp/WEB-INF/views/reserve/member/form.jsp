@@ -81,7 +81,7 @@
                                         <div class="col-sm-6">
                                             <sys:select cssClass="input-xlarge" name="reserveVenue.id"
                                                         items="${venueList}"
-                                                        value="${venue}"
+                                                        value="${reserveMember.reserveVenue.id}"
                                                         itemLabel="name"
                                                         itemValue="id"
                                                         defaultValue=""
