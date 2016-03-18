@@ -88,7 +88,7 @@
                                                                items="${fns:getDictList('yes_no')}"
                                                                itemLabel="label"
                                                                itemValue="value"
-                                                               htmlEscape="false" class="icheck"/>
+                                                               htmlEscape="false" class="icheck required"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -130,5 +130,6 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"></script>
 </body>
 </html>
