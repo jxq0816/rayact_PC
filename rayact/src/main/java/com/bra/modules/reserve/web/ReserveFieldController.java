@@ -46,8 +46,6 @@ public class ReserveFieldController extends BaseController {
     private ReserveFieldPriceSetService reserveFieldPriceSetService;
     @Autowired
     private ReserveTimeIntervalService reserveTimeIntervalService;
-    @Autowired
-    private ReserveFieldHolidayPriceSetService reserveFieldHolidayPriceSetService;
 
     @ModelAttribute
     public ReserveField get(@RequestParam(required = false) String id) {
@@ -69,7 +67,20 @@ public class ReserveFieldController extends BaseController {
         model.addAttribute("venues", venues);
         return "reserve/field/list";
     }
-
+    //场地基本信息保存
+    @RequestMapping(value = "save")
+    @Token(remove = true)
+    public String save(ReserveField reserveField,
+                       Model model, RedirectAttributes redirectAttributes) throws ParseException {
+        if (!beanValidator(model, reserveField)) {
+            return form(reserveField, model);
+        }
+        reserveFieldService.save(reserveField);
+        addMessage(redirectAttributes, "保存场地基本信息成功");
+        redirectAttributes.addAttribute("reserveVenue.id",reserveField.getReserveVenue().getId());
+        return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/list";
+    }
+    //场地表单
     @RequestMapping(value = "form")
     @Token(save = true)
     public String form(ReserveField reserveField, Model model) throws ParseException {
@@ -91,7 +102,7 @@ public class ReserveFieldController extends BaseController {
         model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
         return "reserve/field/form";
     }
-
+    //场地价格设置表单
     @RequestMapping(value = "priceSetForm")
     @Token(save = true)
     public String priceSetForm(ReserveField reserveField, String timeIntervalId,Model model) throws ParseException {
@@ -139,17 +150,8 @@ public class ReserveFieldController extends BaseController {
             return "reserve/field/priceSetForm";
         }
     }
-    @RequestMapping(value = "save")
-    @Token(remove = true)
-    public String save(ReserveField reserveField,
-                       Model model, RedirectAttributes redirectAttributes) throws ParseException {
-        if (!beanValidator(model, reserveField)) {
-            return form(reserveField, model);
-        }
-        reserveFieldService.save(reserveField);
-        addMessage(redirectAttributes, "保存场地基本信息成功");
-        return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
-    }
+
+    //场地价格保存
     @RequestMapping(value = "savePrice")
     @Token(remove = true)
     public String savePrice(ReserveField reserveField, AttMainForm attMainForm, RoutinePrice routinePrice, HolidayPrice holidayPrice,
@@ -159,12 +161,14 @@ public class ReserveFieldController extends BaseController {
         }
         reserveFieldService.savePrice(reserveField, routinePrice, holidayPrice, attMainForm);
         addMessage(redirectAttributes, "保存场地成功");
+        redirectAttributes.addAttribute("reserveVenue.id",reserveField.getReserveVenue().getId());
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
     }
     @RequestMapping(value = "delete")
     public String delete(ReserveField reserveField, RedirectAttributes redirectAttributes) {
         reserveFieldService.delete(reserveField);
         addMessage(redirectAttributes, "删除场地成功");
+        redirectAttributes.addAttribute("reserveVenue.id",reserveField.getReserveVenue().getId());
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
     }
 
