@@ -81,6 +81,9 @@
                                     </td>
                                         <td>
                                             <a class="btn btn-primary btn-xs"
+                                               href="${ctx}/reserve/reserveField/priceSetForm?id=${reserveField.id}"><i
+                                                    class="fa fa-pencil"></i>价格设置</a>
+                                            <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveField/form?id=${reserveField.id}"><i
                                                     class="fa fa-pencil"></i>修改</a>
                                             <a class="btn btn-danger btn-xs"

@@ -73,27 +73,6 @@ public class ReserveFieldController extends BaseController {
     @RequestMapping(value = "form")
     @Token(save = true)
     public String form(ReserveField reserveField, Model model) throws ParseException {
-        //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", 60);
-        model.addAttribute("times", times);
-        ReserveFieldPriceSet priceSet = null;
-        if (StringUtils.isNotBlank(reserveField.getId())) {
-            priceSet = new ReserveFieldPriceSet();
-            reserveField = reserveFieldService.get(reserveField.getId());
-            priceSet.setReserveVenue(reserveField.getReserveVenue());
-            priceSet.setReserveField(reserveField);
-        }
-        //场地列表
-        List<ReserveField> fields = reserveFieldService.findList(new ReserveField());
-
-        //按日期价格
-        ReserveFieldHolidayPriceSet holidayPriceSet = null;
-        if (StringUtils.isNotBlank(reserveField.getId())) {
-            holidayPriceSet = new ReserveFieldHolidayPriceSet();
-            reserveField = reserveFieldService.get(reserveField.getId());
-            holidayPriceSet.setReserveVenue(reserveField.getReserveVenue());
-            holidayPriceSet.setReserveField(reserveField);
-        }
         //全场与半场之间的关系
         ReserveFieldRelation reserveFieldRelation = new ReserveFieldRelation();
         reserveFieldRelation.setChildField(reserveField);
@@ -104,70 +83,84 @@ public class ReserveFieldController extends BaseController {
                 reserveField.setReserveParentField(reserveFieldRelation.getParentField());//给子场地设置父场地
             }
         }
-        //时令 默认全年
-        List<ReserveTimeInterval> reserveTimeIntervalList=reserveTimeIntervalService.findList(new ReserveTimeInterval());
+        //场地列表
+        List<ReserveField> fields = reserveFieldService.findList(new ReserveField());
+        model.addAttribute("reserveField", reserveField);
+        model.addAttribute("fields", fields);
+        model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
+        model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
+        return "reserve/field/form";
+    }
+
+    @RequestMapping(value = "priceSetForm")
+    @Token(save = true)
+    public String priceSetForm(ReserveField reserveField, String timeIntervalId,Model model) throws ParseException {
+        //获取营业时间
+        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", 60);
+        model.addAttribute("times", times);
+        ReserveFieldPriceSet priceSet = new ReserveFieldPriceSet();
+        if (StringUtils.isNotBlank(reserveField.getId())) {
+            reserveField = reserveFieldService.get(reserveField.getId());
+            priceSet.setReserveVenue(reserveField.getReserveVenue());
+            priceSet.setReserveField(reserveField);
+        }
+
+        //时令列表
+        List<ReserveTimeInterval> reserveTimeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval() );
+
+        //时令 默认夏令
         if("1".equals(reserveField.getIsTimeInterval())){//该场地分时令
-            //默认时令
             ReserveTimeInterval reserveTimeInterval=new ReserveTimeInterval();
-            reserveTimeInterval.setName("夏令");
-            List<ReserveTimeInterval> reserveTimeIntervals = reserveTimeIntervalService.findList(reserveTimeInterval);
-            if(reserveTimeIntervals!=null&&reserveTimeIntervals.size()!=0){
-                reserveTimeInterval=reserveTimeIntervals.get(0);
+            if(StringUtils.isNoneEmpty(timeIntervalId)){
+                reserveTimeInterval=reserveTimeIntervalService.get(timeIntervalId);
+            }else{
+                reserveTimeInterval.setName("夏令");
+                List<ReserveTimeInterval> reserveTimeIntervals = reserveTimeIntervalService.findList(reserveTimeInterval);
+                if(reserveTimeIntervals!=null&&reserveTimeIntervals.size()!=0){
+                    reserveTimeInterval=reserveTimeIntervals.get(0);
+                }
             }
             model.addAttribute("reserveTimeInterval", reserveTimeInterval);
             priceSet.setReserveTimeInterval(reserveTimeInterval);//设置夏令
         }
         //常规价格
         List<ReserveFieldPriceSet> priceSetList = reserveFieldPriceSetService.findListByField(priceSet);
-
+        //时令列表
         model.addAttribute("reserveTimeIntervalList", reserveTimeIntervalList);
         //事件周期
         model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
         model.addAttribute("reserveField", reserveField);
-        model.addAttribute("fields", fields);
         model.addAttribute("priceSetList", priceSetList);
         model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
         model.addAttribute("projects", reserveProjectService.findList(new ReserveProject()));
-        model.addAttribute("holidayPriceSetList", reserveFieldHolidayPriceSetService.findList(holidayPriceSet));
-        return "reserve/field/form";
+        if("1".equals(reserveField.getIsTimeInterval())){//如果分时令，跳转到时令价格设置界面
+            return "reserve/field/timeIntervalPriceSetForm";
+        }else{
+            return "reserve/field/priceSetForm";
+        }
     }
-
     @RequestMapping(value = "save")
     @Token(remove = true)
-    public String save(ReserveField reserveField, AttMainForm attMainForm, RoutinePrice routinePrice, HolidayPrice holidayPrice,
+    public String save(ReserveField reserveField,
                        Model model, RedirectAttributes redirectAttributes) throws ParseException {
         if (!beanValidator(model, reserveField)) {
             return form(reserveField, model);
         }
-        reserveFieldService.save(reserveField, routinePrice, holidayPrice, attMainForm);
-        //全场与半场的关系保存
-        ReserveFieldRelation relation = new ReserveFieldRelation();
-        relation.setChildField(reserveField);//设置该厂为子半场
-        ReserveField parentField = reserveField.getReserveParentField();
-        if(StringUtils.isNotEmpty(parentField.getId())){//如果选择了父场地
-            List<ReserveFieldRelation> relationDBList = reserveFieldRalationService.findList(relation);//数据库查询是否已有关系
-            if(relationDBList.size()==0){//没有则新建
-                ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
-                fieldRelation.setChildField(reserveField);
-                fieldRelation.setParentField(parentField);
-                reserveFieldRalationService.save(fieldRelation);
-            }
-            else {//已有则更新
-                ReserveFieldRelation relationDB=relationDBList.get(0);
-                relationDB.setParentField(parentField);
-                reserveFieldRalationService.save(relationDB);
-            }
-        }else{//如果没有选择父场地，则将数据库中已有的关系删除
-            List<ReserveFieldRelation> relationDBList = reserveFieldRalationService.findList(relation);//数据库查询是否已有关系
-            if(relationDBList.size()!=0){//已有则删除
-                ReserveFieldRelation relationDB=relationDBList.get(0);
-                reserveFieldRalationService.delete(relationDB);
-            }
+        reserveFieldService.save(reserveField);
+        addMessage(redirectAttributes, "保存场地基本信息成功");
+        return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
+    }
+    @RequestMapping(value = "savePrice")
+    @Token(remove = true)
+    public String savePrice(ReserveField reserveField, AttMainForm attMainForm, RoutinePrice routinePrice, HolidayPrice holidayPrice,
+                       Model model, RedirectAttributes redirectAttributes) throws ParseException {
+        if (!beanValidator(model, reserveField)) {
+            return form(reserveField, model);
         }
+        reserveFieldService.savePrice(reserveField, routinePrice, holidayPrice, attMainForm);
         addMessage(redirectAttributes, "保存场地成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveField/?repage";
     }
-
     @RequestMapping(value = "delete")
     public String delete(ReserveField reserveField, RedirectAttributes redirectAttributes) {
         reserveFieldService.delete(reserveField);
