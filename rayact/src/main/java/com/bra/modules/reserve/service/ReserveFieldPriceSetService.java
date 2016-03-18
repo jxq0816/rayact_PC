@@ -1,9 +1,10 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-import java.util.Map;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
 import com.bra.common.utils.Collections3;
+import com.bra.modules.reserve.dao.ReserveFieldPriceSetDao;
+import com.bra.modules.reserve.entity.ReserveFieldPriceSet;
 import com.bra.modules.reserve.entity.form.TimePrice;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.google.common.collect.Lists;
@@ -11,10 +12,8 @@ import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveFieldPriceSet;
-import com.bra.modules.reserve.dao.ReserveFieldPriceSetDao;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 场地价格Service
@@ -61,7 +60,7 @@ public class ReserveFieldPriceSetService extends CrudService<ReserveFieldPriceSe
             Map<String, String> memberMap = Maps.newConcurrentMap();
             memberMap.put("1", "散客");
             memberMap.put("2", "会员");
-            memberMap.put("3", "团体");
+            //memberMap.put("3", "团体");
 
             ReserveFieldPriceSet fieldPriceSet;
             for (String weekKey : weekMap.keySet()) {
