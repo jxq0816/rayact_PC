@@ -72,7 +72,7 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
 
     @Transactional(readOnly = false)
     public void save(ReserveField reserveField, RoutinePrice routinePrice, HolidayPrice holidayPrice, AttMainForm attMainForm) {
-        super.save(reserveField);
+        super.save(reserveField);//先保存场地基本信息
         super.updateAttMain(reserveField, attMainForm);
 
         //常规价格保存
@@ -85,6 +85,29 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
                 fieldPriceSet.setReserveTimeInterval(timeInterval);//设置时令
                 fieldPriceSet.setConsJson(getTimeJson(fieldPriceSet.getTimePriceList()));
                 reserveFieldPriceSetService.save(fieldPriceSet);
+               /* //如果不分时令，直接存储
+                if("0".equals(reserveField.getIsTimeInterval())){
+                    reserveFieldPriceSetService.save(fieldPriceSet);
+                }
+                //如果分时令
+                if("1".equals(reserveField.getIsTimeInterval())){
+                    //如果是第一次存储价格
+                    if(StringUtils.isEmpty(fieldPriceSet.getId())){
+                        reserveFieldPriceSetService.save(fieldPriceSet);//直接保存
+                    }
+                    //如果是修改价格
+                    if(StringUtils.isNoneEmpty(fieldPriceSet.getId())){
+                        ReserveFieldPriceSet setFromDB = reserveFieldPriceSetService.get(fieldPriceSet);
+                        ReserveTimeInterval timeIntervalFromDB = setFromDB.getReserveTimeInterval();//原有时令
+                        String idFromDB=timeIntervalFromDB.getId();//原有时令的ID
+                        if(idFromDB.equals(fieldPriceSet.getReserveTimeInterval().getId())){//时令一致
+                            reserveFieldPriceSetService.save(fieldPriceSet);//更新时令价格
+                        }else{//是新的时令
+                            fieldPriceSet.setId(null);
+                            reserveFieldPriceSetService.save(fieldPriceSet);//存储新的时令价格
+                        }
+                    }
+                }*/
             }
         }
         //按日期价格保存

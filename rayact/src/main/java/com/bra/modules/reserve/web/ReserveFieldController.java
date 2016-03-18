@@ -106,18 +106,20 @@ public class ReserveFieldController extends BaseController {
         }
         //时令 默认全年
         List<ReserveTimeInterval> reserveTimeIntervalList=reserveTimeIntervalService.findList(new ReserveTimeInterval());
-
-        //默认时令
-        ReserveTimeInterval reserveTimeInterval=new ReserveTimeInterval();
-        reserveTimeInterval.setName("全年");
-        List<ReserveTimeInterval> reserveTimeIntervals = reserveTimeIntervalService.findList(reserveTimeInterval);
-        if(reserveTimeIntervals!=null&&reserveTimeIntervals.size()!=0){
-            reserveTimeInterval=reserveTimeIntervals.get(0);
+        if("1".equals(reserveField.getIsTimeInterval())){//该场地分时令
+            //默认时令
+            ReserveTimeInterval reserveTimeInterval=new ReserveTimeInterval();
+            reserveTimeInterval.setName("夏令");
+            List<ReserveTimeInterval> reserveTimeIntervals = reserveTimeIntervalService.findList(reserveTimeInterval);
+            if(reserveTimeIntervals!=null&&reserveTimeIntervals.size()!=0){
+                reserveTimeInterval=reserveTimeIntervals.get(0);
+            }
+            model.addAttribute("reserveTimeInterval", reserveTimeInterval);
+            priceSet.setReserveTimeInterval(reserveTimeInterval);//设置夏令
         }
-
         //常规价格
         List<ReserveFieldPriceSet> priceSetList = reserveFieldPriceSetService.findListByField(priceSet);
-        model.addAttribute("reserveTimeInterval", reserveTimeInterval);
+
         model.addAttribute("reserveTimeIntervalList", reserveTimeIntervalList);
         //事件周期
         model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
