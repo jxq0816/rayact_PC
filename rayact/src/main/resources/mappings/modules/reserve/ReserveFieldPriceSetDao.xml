@@ -146,4 +146,10 @@
 		WHERE id = #{id}
 	</update>
 
+
+	<delete id="physicalDelete">
+		DELETE FROM reserve_field_price_set
+		WHERE id = #{id}
+	</delete>
+
 </mapper>

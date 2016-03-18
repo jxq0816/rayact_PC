@@ -203,6 +203,7 @@ public class ReserveFieldPriceService {
                 reserveFieldPriceSet.setReserveTimeInterval(reserveTimeInterval);
             }
             List<ReserveFieldPriceSet> list= reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
+            reserveFieldPriceSet.setReserveTimeInterval(null);//将时令制空
             reserveFieldPriceSetList.addAll(list);
         }
         buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);//获取场地的价格列表

@@ -11,5 +11,5 @@ import com.bra.modules.reserve.entity.ReserveFieldPriceSet;
  */
 @MyBatisDao
 public interface ReserveFieldPriceSetDao extends CrudDao<ReserveFieldPriceSet> {
-	
+    void physicalDelete(ReserveFieldPriceSet reserveFieldPriceSet);
 }

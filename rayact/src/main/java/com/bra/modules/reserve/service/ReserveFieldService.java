@@ -77,7 +77,7 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
             for(ReserveTimeInterval i:timeIntervalList){
                 for(ReserveFieldPriceSet j:reserveFieldPriceSetService.findList(set)){
                     j.setReserveTimeInterval(i);
-                    reserveFieldPriceSetService.delete(j);//删除
+                    reserveFieldPriceSetService.physicalDelete(j);//删除
                 }
             }
         }

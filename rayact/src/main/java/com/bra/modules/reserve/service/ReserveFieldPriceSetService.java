@@ -9,6 +9,7 @@ import com.bra.modules.reserve.entity.form.TimePrice;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class ReserveFieldPriceSetService extends CrudService<ReserveFieldPriceSetDao, ReserveFieldPriceSet> {
+
+    @Autowired
+    private ReserveFieldPriceSetDao dao;
 
     public ReserveFieldPriceSet get(String id) {
         return super.get(id);
@@ -47,9 +51,16 @@ public class ReserveFieldPriceSetService extends CrudService<ReserveFieldPriceSe
         super.delete(reserveFieldPriceSet);
     }
 
+
+    @Transactional(readOnly = false)
+    public void physicalDelete(ReserveFieldPriceSet reserveFieldPriceSet) {
+        dao.physicalDelete(reserveFieldPriceSet);
+    }
+
+
     public List<ReserveFieldPriceSet> findListByField(ReserveFieldPriceSet reserveFieldPriceSet) {
 
-        List<ReserveFieldPriceSet> fieldPriceSetList = findList(reserveFieldPriceSet);
+        List<ReserveFieldPriceSet> fieldPriceSetList = super.findList(reserveFieldPriceSet);
         if (Collections3.isEmpty(fieldPriceSetList)) {//如果数据库中没有相关数据
             fieldPriceSetList = Lists.newArrayList();
             Map<String, String> weekMap = Maps.newConcurrentMap();
