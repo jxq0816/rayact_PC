@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,9 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class ReserveFieldPriceService {
+
+    @Autowired
+    private  ReserveTimeIntervalService reserveTimeIntervalService;
 
     @Autowired
     private ReserveFieldService reserveFieldService;
@@ -183,7 +187,48 @@ public class ReserveFieldPriceService {
         List<ReserveFieldPriceSet> reserveFieldPriceSetList =new ArrayList<>();
         for(ReserveField i:fullFieldList){//只处理全场
             reserveFieldPriceSet.setReserveField(i);
-            List<ReserveFieldPriceSet> list = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
+            if("1".equals(i.getIsTimeInterval())){//该场地分时令
+                Calendar cal = Calendar.getInstance();
+                int day = cal.get(Calendar.DATE);
+                int month = cal.get(Calendar.MONTH)+1;
+                List<ReserveTimeInterval> timeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval());
+                for(ReserveTimeInterval j:timeIntervalList){
+                    int endMonth=j.getEndMonth();
+                    int startMonth=j.getStartMonth();
+                    int startDate=j.getStartDate();
+                    int endDate=j.getEndDate();
+                    //不跨年 夏令：4-1至10-31
+                    if(startMonth<=month && month<=endMonth) {
+                        if(startDate<=day && day<=endDate){
+                            reserveFieldPriceSet.setReserveTimeInterval(j);
+                            break;
+                        }
+                    }
+                    // 冬令：11-1 至 3-31
+                    //跨年第一种
+                    if(startMonth>endMonth){
+                        //年初 如：系统时间(1):1月25日 (2):3月18日,介于冬令
+                        if((month<endMonth)||(month==endMonth && day<=endDate)){
+                            reserveFieldPriceSet.setReserveTimeInterval(j);
+                            break;
+                        }
+                        //年终 如：系统时间(1)12月12日（2）11月18日,介于冬令
+                        if((month>startMonth)||(month==startMonth && day>=startDate)){
+                            reserveFieldPriceSet.setReserveTimeInterval(j);
+                            break;
+                        }
+                    }
+                    //A令：11-8 至 11-1
+                    //跨年第二种
+                    if(startMonth==endMonth && startDate>endDate){
+                        if((month==startMonth && day>endDate && day<startDate)==false){
+                            reserveFieldPriceSet.setReserveTimeInterval(j);
+                            break;
+                        }
+                    }
+                }
+            }
+            List<ReserveFieldPriceSet> list= reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
             reserveFieldPriceSetList.addAll(list);
         }
         buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);//获取场地的价格列表
