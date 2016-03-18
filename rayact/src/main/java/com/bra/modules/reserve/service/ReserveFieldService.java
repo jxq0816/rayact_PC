@@ -28,6 +28,8 @@ import java.util.List;
 public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveField> {
 
     @Autowired
+    private ReserveTimeIntervalService reserveTimeIntervalService;
+    @Autowired
     private ReserveFieldPriceSetService reserveFieldPriceSetService;
     @Autowired
     private ReserveFieldHolidayPriceSetService reserveFieldHolidayPriceSetService;
@@ -67,6 +69,18 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
 
     @Transactional(readOnly = false)
     public void save(ReserveField reserveField) {
+        //如果不分时令，将系统原有分时令的价格信息删除
+        if("0".equals(reserveField.getIsTimeInterval())){
+            ReserveFieldPriceSet set=new ReserveFieldPriceSet();
+            set.setReserveField(reserveField);
+            List<ReserveTimeInterval> timeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval());
+            for(ReserveTimeInterval i:timeIntervalList){
+                for(ReserveFieldPriceSet j:reserveFieldPriceSetService.findList(set)){
+                    j.setReserveTimeInterval(i);
+                    reserveFieldPriceSetService.delete(j);//删除
+                }
+            }
+        }
         super.save(reserveField);
     }
 
