@@ -4,6 +4,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.common.utils.Collections3;
 import com.bra.common.utils.JsonUtils;
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.dao.ReserveFieldDao;
 import com.bra.modules.reserve.entity.*;
@@ -26,6 +27,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveField> {
+
 
     @Autowired
     private ReserveTimeIntervalService reserveTimeIntervalService;
@@ -69,6 +71,30 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
 
     @Transactional(readOnly = false)
     public void save(ReserveField reserveField) {
+        //全场与半场的关系保存
+        ReserveFieldRelation relation = new ReserveFieldRelation();
+        relation.setChildField(reserveField);//设置该厂为子半场
+        ReserveField parentField = reserveField.getReserveParentField();
+        if(StringUtils.isNotEmpty(parentField.getId())){//如果选择了父场地
+            List<ReserveFieldRelation> relationDBList = relationService.findList(relation);//数据库查询是否已有关系
+            if(relationDBList.size()==0){//没有则新建
+                ReserveFieldRelation fieldRelation = new ReserveFieldRelation();
+                fieldRelation.setChildField(reserveField);
+                fieldRelation.setParentField(parentField);
+                relationService.save(fieldRelation);
+            }
+            else {//已有则更新
+                ReserveFieldRelation relationDB=relationDBList.get(0);
+                relationDB.setParentField(parentField);
+                relationService.save(relationDB);
+            }
+        }else{//如果没有选择父场地，则将数据库中已有的关系删除
+            List<ReserveFieldRelation> relationDBList = relationService.findList(relation);//数据库查询是否已有关系
+            if(relationDBList.size()!=0){//已有则删除
+                ReserveFieldRelation relationDB=relationDBList.get(0);
+                relationService.delete(relationDB);
+            }
+        }
         //如果不分时令，将系统原有分时令的价格信息删除
         if("0".equals(reserveField.getIsTimeInterval())){
             ReserveFieldPriceSet set=new ReserveFieldPriceSet();

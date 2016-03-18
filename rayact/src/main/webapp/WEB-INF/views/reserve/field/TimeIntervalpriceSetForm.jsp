@@ -44,6 +44,7 @@
                             <div class="tab-content">
                                 <!--常规价格设置-->
                                 <div class="tab-pane active" id="profile">
+                                    <h5>${reserveField.reserveVenue.name} / ${reserveField.name}</h5>
                                     <table class="table table-bordered">
                                         <tr>
                                             <td><span id="weekTd" style="color: red">周一至周日</span></td>
@@ -61,7 +62,7 @@
                                                     </c:forEach>
                                                 </select>
                                             </td>
-                                           <td>时令</td>
+                                          <%-- <td>时令</td>
                                             <td>
                                                 <sys:select cssClass="input-medium " name=""
                                                             cssStyle="readonly:readonly"
@@ -69,7 +70,7 @@
                                                             items="${reserveTimeIntervalList}" itemLabel="name"
                                                             itemValue="id"
                                                 ></sys:select>
-                                            </td>
+                                            </td>--%>
                                             <td>市场价:</td>
                                             <td>
                                                 <input type="text" id="retail" class="number form-control"
@@ -80,9 +81,6 @@
                                                 <input type="text" id="member" class="number form-control"
                                                        style="width: 40px;height:30px"/>
                                             </td>
-                                            <td>团体:</td>
-                                            <td><input type="text" id="group" class="number form-control"
-                                                       style="width: 30px;height:30px"/></td>
                                             <td valign="top"><input id="globalPrice" data="all" class="btn btn-primary"
                                                                     type="button"
                                                                     value="价格设定"/></td>
@@ -100,8 +98,8 @@
                                         <!--周一至周五-->
                                         <c:forEach items="${priceSetList}" var="priceSet" varStatus="status">
                                             <tr>
-                                                <j:if test="${status.index==0||status.index==3||status.index==6}">
-                                                    <td rowspan="3" valign="top"><a data="${priceSet.week}"
+                                                <j:if test="${status.index==0||status.index==2||status.index==4}">
+                                                    <td rowspan="2" valign="top"><a data="${priceSet.week}"
                                                                                     style="color: red"
                                                                                     style="width: 25px;"
                                                                                     title="点击,设计全局数值" href="#"

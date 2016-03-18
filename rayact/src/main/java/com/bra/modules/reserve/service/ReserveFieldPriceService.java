@@ -293,13 +293,16 @@ public class ReserveFieldPriceService {
                         String fieldLeftName=fieldLeft.getName();
                         ReserveFieldPriceSet leftFieldSet = new ReserveFieldPriceSet();
                         leftFieldSet.setReserveField(fieldLeft);
-                        leftFieldSet=reserveFieldPriceSetDao.findList(leftFieldSet).get(0);
-                        List<TimePrice> leftTimePriceList = leftFieldSet.getTimePriceList();//获取左侧半场 时间和价格 组成的Jason
-                        FieldPrice leftFieldPrice=buildFieldPrice(leftTimePriceList,venueConsList,leftFieldSet,times);
-                        leftFieldPrice.setFieldId(fieldLeftId);//设置场地编号
-                        leftFieldPrice.setFieldName(fieldLeftName);//设置场地名称
-                        leftFieldPrice.setHaveHalfCourt("0");//无半场
-                        fieldPrice.setFieldPriceLeft(leftFieldPrice);//设置左半场
+                        List<ReserveFieldPriceSet> leftList = reserveFieldPriceSetDao.findList(leftFieldSet);
+                        if(leftList!=null&&leftList.size()!=0){
+                            leftFieldSet=reserveFieldPriceSetDao.findList(leftFieldSet).get(0);
+                            List<TimePrice> leftTimePriceList = leftFieldSet.getTimePriceList();//获取左侧半场 时间和价格 组成的Jason
+                            FieldPrice leftFieldPrice=buildFieldPrice(leftTimePriceList,venueConsList,leftFieldSet,times);
+                            leftFieldPrice.setFieldId(fieldLeftId);//设置场地编号
+                            leftFieldPrice.setFieldName(fieldLeftName);//设置场地名称
+                            leftFieldPrice.setHaveHalfCourt("0");//无半场
+                            fieldPrice.setFieldPriceLeft(leftFieldPrice);//设置左半场
+                        }
                     }
                     if(list.size()>=2){
                         ReserveFieldRelation relationRight=list.get(1);
@@ -309,13 +312,16 @@ public class ReserveFieldPriceService {
                         String fieldRightName=fieldRight.getName();
                         ReserveFieldPriceSet rightFieldSet = new ReserveFieldPriceSet();
                         rightFieldSet.setReserveField(fieldRight);
-                        rightFieldSet=reserveFieldPriceSetDao.findList(rightFieldSet).get(0);
-                        List<TimePrice> rightTimePriceList = rightFieldSet.getTimePriceList();//获取右侧半场 时间和价格 组成的Jason
-                        FieldPrice rightFieldPrice=buildFieldPrice(rightTimePriceList,venueConsList,rightFieldSet,times);
-                        rightFieldPrice.setFieldId(fieldRightId);//设置场地编号
-                        rightFieldPrice.setFieldName(fieldRightName);//设置场地名称
-                        rightFieldPrice.setHaveHalfCourt("0");//无半场
-                        fieldPrice.setFieldPriceRight(rightFieldPrice);//设置右半场
+                        List<ReserveFieldPriceSet> rightList = reserveFieldPriceSetDao.findList(rightFieldSet);
+                        if(rightList!=null&&rightList.size()!=0) {
+                            rightFieldSet = reserveFieldPriceSetDao.findList(rightFieldSet).get(0);
+                            List<TimePrice> rightTimePriceList = rightFieldSet.getTimePriceList();//获取右侧半场 时间和价格 组成的Jason
+                            FieldPrice rightFieldPrice = buildFieldPrice(rightTimePriceList, venueConsList, rightFieldSet, times);
+                            rightFieldPrice.setFieldId(fieldRightId);//设置场地编号
+                            rightFieldPrice.setFieldName(fieldRightName);//设置场地名称
+                            rightFieldPrice.setHaveHalfCourt("0");//无半场
+                            fieldPrice.setFieldPriceRight(rightFieldPrice);//设置右半场
+                        }
                     }
                 }
                 fieldPrice.getTimePriceList().add(timePrice);
