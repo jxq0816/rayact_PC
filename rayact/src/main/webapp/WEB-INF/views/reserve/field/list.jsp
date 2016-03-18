@@ -60,6 +60,7 @@
                                 <th>场地名称</th>
                                 <th>所属项目</th>
                                 <th>所属场馆</th>
+                                <th>是否分时令</th>
                                 <th>备注</th>
                                 <th>是否启用</th>
                                 <th>操作</th>
@@ -73,6 +74,7 @@
                                     </td>
                                     <td>${reserveField.reserveProject.name}</td>
                                     <td>${reserveField.reserveVenue.name}</td>
+                                    <td>${fns:getDictLabel(reserveField.isTimeInterval, 'yes_no', '')}</td>
                                     <td>
                                             ${reserveField.remarks}
                                     </td>

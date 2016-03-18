@@ -50,7 +50,7 @@ public class ReserveFieldPriceSetService extends CrudService<ReserveFieldPriceSe
     public List<ReserveFieldPriceSet> findListByField(ReserveFieldPriceSet reserveFieldPriceSet) {
 
         List<ReserveFieldPriceSet> fieldPriceSetList = findList(reserveFieldPriceSet);
-        if (Collections3.isEmpty(fieldPriceSetList)) {
+        if (Collections3.isEmpty(fieldPriceSetList)) {//如果数据库中没有相关数据
             fieldPriceSetList = Lists.newArrayList();
             Map<String, String> weekMap = Maps.newConcurrentMap();
             weekMap.put("1", "周一至周五");
@@ -74,10 +74,8 @@ public class ReserveFieldPriceSetService extends CrudService<ReserveFieldPriceSe
                     fieldPriceSetList.add(fieldPriceSet);
                 }
             }
-            return fieldPriceSetList;
-        } else {
-            return fieldPriceSetList;
         }
+        return fieldPriceSetList;
     }
 
     private List<TimePrice> getTimePrice() {

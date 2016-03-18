@@ -32,8 +32,7 @@
                             <div class="tab-content">
                                 <!--常规价格设置-->
                                 <div class="tab-pane active" id="profile">
-                                    场馆:${reserveField.reserveVenue.name}
-                                    场地:${reserveField.name}
+                                <h5>${reserveField.reserveVenue.name} / ${reserveField.name}</h5>
                                     <table class="table table-bordered">
                                         <tr>
                                             <td><span id="weekTd" style="color: red">周一至周日</span></td>
