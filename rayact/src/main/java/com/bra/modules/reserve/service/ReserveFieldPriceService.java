@@ -192,7 +192,7 @@ public class ReserveFieldPriceService {
         }
         String weekType = TimeUtils.getWeekType(date);
         reserveFieldPriceSet.setWeek(weekType);
-        List<ReserveFieldPriceSet> reserveFieldPriceSetList =new ArrayList<>();
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList =new ArrayList<ReserveFieldPriceSet>();
         for(ReserveField i:fullFieldList){//只处理全场
             reserveFieldPriceSet.setReserveField(i);
             if("1".equals(i.getIsTimeInterval())){//该场地分时令

@@ -35,10 +35,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="control" target="1.8" />
-      <module name="rayact" target="1.8" />
-      <module name="rayact_core" target="1.8" />
-      <module name="runtime" target="1.8" />
+      <module name="control" target="1.5" />
+      <module name="rayact" target="1.5" />
+      <module name="rayact_core" target="1.5" />
+      <module name="runtime" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
