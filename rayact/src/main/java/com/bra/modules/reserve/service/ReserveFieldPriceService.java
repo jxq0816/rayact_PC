@@ -91,6 +91,14 @@ public class ReserveFieldPriceService {
         priceSet.setWeek(weekType);
         priceSet.setReserveField(field);
 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int day = cal.get(Calendar.DATE);
+        int month = cal.get(Calendar.MONTH)+1;
+
+        ReserveTimeInterval timeInterval=reserveTimeIntervalService.findTimeInterval(month,day);
+        priceSet.setReserveTimeInterval(timeInterval);
+
         List<ReserveFieldPriceSet> priceSets = reserveFieldPriceSetDao.findList(priceSet);
         Double price = 0d;
 
@@ -191,42 +199,8 @@ public class ReserveFieldPriceService {
                 Calendar cal = Calendar.getInstance();
                 int day = cal.get(Calendar.DATE);
                 int month = cal.get(Calendar.MONTH)+1;
-                List<ReserveTimeInterval> timeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval());
-                for(ReserveTimeInterval j:timeIntervalList){
-                    int endMonth=j.getEndMonth();
-                    int startMonth=j.getStartMonth();
-                    int startDate=j.getStartDate();
-                    int endDate=j.getEndDate();
-                    //不跨年 夏令：4-1至10-31
-                    if(startMonth<=month && month<=endMonth) {
-                        if(startDate<=day && day<=endDate){
-                            reserveFieldPriceSet.setReserveTimeInterval(j);
-                            break;
-                        }
-                    }
-                    // 冬令：11-1 至 3-31
-                    //跨年第一种
-                    if(startMonth>endMonth){
-                        //年初 如：系统时间(1):1月25日 (2):3月18日,介于冬令
-                        if((month<endMonth)||(month==endMonth && day<=endDate)){
-                            reserveFieldPriceSet.setReserveTimeInterval(j);
-                            break;
-                        }
-                        //年终 如：系统时间(1)12月12日（2）11月18日,介于冬令
-                        if((month>startMonth)||(month==startMonth && day>=startDate)){
-                            reserveFieldPriceSet.setReserveTimeInterval(j);
-                            break;
-                        }
-                    }
-                    //A令：11-8 至 11-1
-                    //跨年第二种
-                    if(startMonth==endMonth && startDate>endDate){
-                        if((month==startMonth && day>endDate && day<startDate)==false){
-                            reserveFieldPriceSet.setReserveTimeInterval(j);
-                            break;
-                        }
-                    }
-                }
+                ReserveTimeInterval reserveTimeInterval = reserveTimeIntervalService.findTimeInterval(month, day);//查询系统时间属于哪个时令
+                reserveFieldPriceSet.setReserveTimeInterval(reserveTimeInterval);
             }
             List<ReserveFieldPriceSet> list= reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
             reserveFieldPriceSetList.addAll(list);

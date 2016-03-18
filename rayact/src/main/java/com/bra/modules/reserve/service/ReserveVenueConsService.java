@@ -1,12 +1,11 @@
 package com.bra.modules.reserve.service;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
-import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.ReserveVenueCons;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.event.venue.VenueCancelEvent;
 import com.bra.modules.reserve.event.venue.VenueCheckoutEvent;
 import com.bra.modules.reserve.event.venue.VenueReserveEvent;
@@ -18,9 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.dao.ReserveVenueConsDao;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 场地预定主表Service
@@ -160,7 +160,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 item.setConsPrice(price);
                 orderPrice += price;
                 item.preInsert();
-                reserveVenueConsItemDao.insert(item);
+                reserveVenueConsItemDao.insert(item);//保存预订信息
             }
 
             //查询会员打折信息
