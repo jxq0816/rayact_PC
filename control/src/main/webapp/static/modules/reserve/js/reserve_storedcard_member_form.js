@@ -27,7 +27,8 @@ function checkForm() {
                 errorLoding("身份证号重复");
                 return false;
             }else{
-                rs= true;
+                rs=true;
+                return true;
             }
         }
     });

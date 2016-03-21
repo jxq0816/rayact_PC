@@ -48,24 +48,27 @@ public class ReserveStoredCardMemberController extends BaseController {
 
 
     @ModelAttribute
-    public ReserveMember get(@RequestParam(required=false) String id) {
+    public ReserveMember get(@RequestParam(required = false) String id) {
         ReserveMember entity = null;
-        if (StringUtils.isNotBlank(id)){
+        if (StringUtils.isNotBlank(id)) {
             entity = reserveMemberService.get(id);
         }
-        if (entity == null){
+        if (entity == null) {
             entity = new ReserveMember();
         }
         return entity;
     }
 
-    @RequestMapping(value ="check")
+    @RequestMapping(value = "check")
     @ResponseBody
-    public String check(String id,String cardno,String mobile,String sfz,HttpServletRequest request, HttpServletResponse response){
-        String rs=null;
-        if(StringUtils.isNoneEmpty(cardno)) {
+    public String check(String id, String cardno, String mobile, String sfz, HttpServletRequest request, HttpServletResponse response) {
+        String rs = null;
+        //验证卡号
+        if (StringUtils.isNoneEmpty(cardno)) {
             ReserveMember rm1 = new ReserveMember();
-            rm1.setId(id);
+            if (StringUtils.isNoneEmpty(id)) {//修改用户
+                rm1.setId(id);
+            }
             rm1.setCartno(cardno);
             List<ReserveMember> list1 = reserveMemberService.findExactList(rm1);
             if (list1.size() != 0) {
@@ -73,33 +76,37 @@ public class ReserveStoredCardMemberController extends BaseController {
                 return rs;
             }
         }
-        if(StringUtils.isNoneEmpty(mobile)){
-            ReserveMember rm2=new ReserveMember();
-            rm2.setId(id);
+        //验证手机号
+        if (StringUtils.isNoneEmpty(mobile)) {
+            ReserveMember rm2 = new ReserveMember();
+            if (StringUtils.isNoneEmpty(id)) {//修改用户
+                rm2.setId(id);
+            }
             rm2.setMobile(mobile);
-            List<ReserveMember> list2=reserveMemberService.findExactList(rm2);
-            if(list2.size()!=0){
-                rs="2";//手机号重复
+            List<ReserveMember> list2 = reserveMemberService.findExactList(rm2);
+            if (list2.size() != 0) {
+                rs = "2";//手机号重复
                 return rs;
             }
         }
-
-        if(StringUtils.isNoneEmpty(sfz)){
-            ReserveMember rm3=new ReserveMember();
-            rm3.setId(id);
+        //验证身份证
+        if (StringUtils.isNoneEmpty(sfz)) {
+            ReserveMember rm3 = new ReserveMember();
+            if (StringUtils.isNoneEmpty(id)) {//修改用户
+                rm3.setId(id);
+            }
             rm3.setSfz(sfz);
-            List<ReserveMember> list3=reserveMemberService.findExactList(rm3);
-            if(list3.size()!=0){
-                rs="3";//身份证号重复
+            List<ReserveMember> list3 = reserveMemberService.findExactList(rm3);
+            if (list3.size() != 0) {
+                rs = "3";//身份证号重复
                 return rs;
             }
-
         }
         return rs;
     }
 
-    @RequestMapping(value ="list" )
-    public String list( String cartType, ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model){
+    @RequestMapping(value = "list")
+    public String list(String cartType, ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
         reserveMember.setCartType("1");
         Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
         model.addAttribute("page", page);
@@ -107,10 +114,10 @@ public class ReserveStoredCardMemberController extends BaseController {
     }
 
     @RequestMapping(value = "form")
-    @Token(save =true)
+    @Token(save = true)
     public String form(ReserveMember reserveMember, Model model) {
-        List<ReserveStoredcardMemberSet> storedcardSetList=storedcardSetService.findList(new ReserveStoredcardMemberSet());
-        List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+        List<ReserveStoredcardMemberSet> storedcardSetList = storedcardSetService.findList(new ReserveStoredcardMemberSet());
+        List<ReserveVenue> venueList = reserveVenueService.findList(new ReserveVenue());
         model.addAttribute("venueList", venueList);
         model.addAttribute("reserveMember", reserveMember);
         model.addAttribute("storedcardSetList", storedcardSetList);
@@ -118,26 +125,26 @@ public class ReserveStoredCardMemberController extends BaseController {
     }
 
     @RequestMapping(value = "save")
-    @Token(remove =true )
+    @Token(remove = true)
     public String save(ReserveMember reserveMember, Model model, RedirectAttributes redirectAttributes) {
-        if (!beanValidator(model, reserveMember)){
+        if (!beanValidator(model, reserveMember)) {
             return form(reserveMember, model);
         }
         reserveMember.setCartType("1");//储值卡会员
-        ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+        ReserveCardStatements reserveCardStatements = new ReserveCardStatements();
         reserveCardStatements.setReserveMember(reserveMember);
-        Double remainder=reserveMember.getRemainder();
-        if(remainder==null){
+        Double remainder = reserveMember.getRemainder();
+        if (remainder == null) {
             reserveMember.setRemainder(0.0);//设置默认余额
-        }else if(StringUtils.isEmpty(reserveMember.getId())){//新建用户
+        } else if (StringUtils.isEmpty(reserveMember.getId())) {//新建用户
             reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
             reserveCardStatements.setRemarks("储值卡会员注册");
             reserveCardStatements.setTransactionType("1");//交易类型
             reserveCardStatementsService.save(reserveCardStatements);
-        }else{//修改用户
-            ReserveMember reserveMemberOld=reserveMemberService.get(reserveMember);
-            Double remainderOld=reserveMemberOld.getRemainder();
-            Double transactionVolume=remainder-remainderOld;
+        } else {//修改用户
+            ReserveMember reserveMemberOld = reserveMemberService.get(reserveMember);
+            Double remainderOld = reserveMemberOld.getRemainder();
+            Double transactionVolume = remainder - remainderOld;
             reserveCardStatements.setTransactionVolume(transactionVolume);
             reserveCardStatements.setRemarks("超级管理员修改余额");
             reserveCardStatements.setTransactionType("3");//交易类型
@@ -145,13 +152,13 @@ public class ReserveStoredCardMemberController extends BaseController {
         }
         reserveMemberService.save(reserveMember);
         addMessage(redirectAttributes, "保存储值卡会员成功");
-        return "redirect:"+ Global.getAdminPath()+"/reserve/storedCardMember/list";
+        return "redirect:" + Global.getAdminPath() + "/reserve/storedCardMember/list";
     }
 
     @RequestMapping(value = "delete")
     public String delete(ReserveMember reserveMember, RedirectAttributes redirectAttributes) {
         reserveMemberService.delete(reserveMember);
         addMessage(redirectAttributes, "删除储值卡会员成功");
-        return "redirect:"+Global.getAdminPath()+"/reserve/storedCardMember/list";
+        return "redirect:" + Global.getAdminPath() + "/reserve/storedCardMember/list";
     }
 }
