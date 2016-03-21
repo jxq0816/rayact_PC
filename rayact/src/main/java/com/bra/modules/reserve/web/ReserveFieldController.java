@@ -107,7 +107,7 @@ public class ReserveFieldController extends BaseController {
     @Token(save = true)
     public String priceSetForm(ReserveField reserveField, String timeIntervalId,Model model) throws ParseException {
         //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", 60);
+        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "24:00:00", 60);
         model.addAttribute("times", times);
         ReserveFieldPriceSet priceSet = new ReserveFieldPriceSet();
         if (StringUtils.isNotBlank(reserveField.getId())) {

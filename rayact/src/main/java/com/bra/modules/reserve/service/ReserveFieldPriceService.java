@@ -189,7 +189,7 @@ public class ReserveFieldPriceService {
         if (StringUtils.isNotBlank(consType)) {
             reserveFieldPriceSet.setConsType(consType);
         }
-        String weekType = TimeUtils.getWeekType(date);
+        String weekType = TimeUtils.getWeekType(date);//获得当天属于周几
         reserveFieldPriceSet.setWeek(weekType);
         List<ReserveFieldPriceSet> reserveFieldPriceSetList =new ArrayList<ReserveFieldPriceSet>();
         for(ReserveField i:fullFieldList){//只处理全场

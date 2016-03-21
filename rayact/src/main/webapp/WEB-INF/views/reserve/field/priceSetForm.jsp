@@ -70,13 +70,13 @@
                                                                     value="价格设定"/></td>
                                         </tr>
                                     </table>
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" style="padding:1px">
                                         <tr>
                                             <td colspan="2"><a style="color: red"
                                                                title="点击,设计全局数值" href="#" data="all"
                                                                class="weekPriceTable">时间</a></td>
                                             <c:forEach items="${times}" var="t">
-                                                <th><span>${t}</span></th>
+                                                <th><span style="font-size: 10px">${t}</span></th>
                                             </c:forEach>
                                         </tr>
 
@@ -101,7 +101,7 @@
                                                        value="${priceSet.consType}"/>
                                                 <c:forEach items="${priceSet.timePriceList}" var="t"
                                                            varStatus="priceSetStatus">
-                                                    <td>
+                                                    <td style="padding:5px">
                                                         <input type="hidden"
                                                                name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
                                                                value="${t.time}"/>
@@ -109,8 +109,7 @@
                                                                type="text" data-time="${t.time}"
                                                                data="${priceSet.week}-${priceSet.consType}"
                                                                name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
-                                                               class="number form-control"
-                                                               style="width: 40px;height:30px"/>
+                                                               class="number form-control"/>
                                                     </td>
                                                 </c:forEach>
                                             </tr>

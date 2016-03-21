@@ -86,16 +86,6 @@ public class ReserveController extends BaseController {
         venue.getSqlMap().put("dsf", AuthorityUtils.getVenueIdSql("a.id"));
         List<ReserveVenue> reserveVenueList = reserveVenueService.findList(venue);
         model.addAttribute("reserveVenueList", reserveVenueList);
-        //获取营业时间
-        List<String> timesAM = TimeUtils.getTimeSpacListValue("09:00:00", "12:00:00", 30);
-        model.addAttribute("timesAM", timesAM);
-
-        List<String> timesPM = TimeUtils.getTimeSpacListValue("12:00:00", "17:00:00", 30);
-        model.addAttribute("timesPM", timesPM);
-
-        List<String> timesEvening = TimeUtils.getTimeSpacListValue("17:00:00", "23:00:00", 30);
-        model.addAttribute("timesEvening", timesEvening);
-
         //默认场馆的场地
         if (!Collections3.isEmpty(reserveVenueList)) {
             ReserveVenue reserveVenue;
@@ -109,12 +99,21 @@ public class ReserveController extends BaseController {
             ReserveField reserveField = new ReserveField();
             reserveField.setReserveVenue(reserveVenue);
             //上午场地价格
+            List<String> timesAM=new ArrayList<>();
+            timesAM.add("00:00-00:30");
+            timesAM.addAll(TimeUtils.getTimeSpacListValue("08:00:00", "12:00:00", 30));
+
+            model.addAttribute("timesAM", timesAM);
             List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);
             model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
             //下午场地价格
+            List<String> timesPM = TimeUtils.getTimeSpacListValue("12:00:00", "18:00:00", 30);
+            model.addAttribute("timesPM", timesPM);
             List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesPM);
             model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
             //晚上场地价格
+            List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:00:00", "24:00:00", 30);
+            model.addAttribute("timesEvening", timesEvening);
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         }
