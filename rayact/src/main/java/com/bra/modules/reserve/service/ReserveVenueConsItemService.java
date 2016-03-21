@@ -40,10 +40,11 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 	/*
 	相关场地预订状态的查询
 	 */
-	public List<ReserveVenueConsItem> findRelationList(ReserveVenueConsItem reserveVenueCons) {
+	public List<ReserveVenueConsItem> findRelationList(ReserveVenueConsItem item) {
+		//操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
 		List<ReserveVenueConsItem> reserveVenueConsItemList=new ArrayList<>();
-		reserveVenueConsItemList.addAll(super.findList(reserveVenueCons));
-		ReserveField field=reserveVenueCons.getReserveField();
+		reserveVenueConsItemList.addAll(super.findList(item));
+		ReserveField field=item.getReserveField();
 		field=reserveFieldService.get(field);
 		//查询相关父场地的预订状态
 		ReserveFieldRelation reserveFieldParentRelation=new ReserveFieldRelation();
@@ -51,8 +52,8 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 		List<ReserveFieldRelation> parentRelationList = reserveFieldRelationService.findList(reserveFieldParentRelation);
 		for(ReserveFieldRelation  relation: parentRelationList){
 			ReserveField parentFiled=relation.getParentField();
-			reserveVenueCons.setReserveField(parentFiled);
-			reserveVenueConsItemList.addAll(super.findList(reserveVenueCons));
+			item.setReserveField(parentFiled);
+			reserveVenueConsItemList.addAll(super.findList(item));
 		}
 		//查询相关子场地的预订状态
 		ReserveFieldRelation reserveFieldChildRelation=new ReserveFieldRelation();
@@ -60,8 +61,8 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 		List<ReserveFieldRelation> childRelationList = reserveFieldRelationService.findList(reserveFieldChildRelation);
 		for(ReserveFieldRelation  relation: childRelationList){
 			ReserveField childFiled=relation.getChildField();
-			reserveVenueCons.setReserveField(childFiled);
-			reserveVenueConsItemList.addAll(super.findList(reserveVenueCons));
+			item.setReserveField(childFiled);
+			reserveVenueConsItemList.addAll(super.findList(item));
 		}
 		return reserveVenueConsItemList;
 	}

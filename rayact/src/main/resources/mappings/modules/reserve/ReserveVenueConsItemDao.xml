@@ -97,7 +97,7 @@
                 and a.cons_data_id = #{consData.id}
             </if>
             <if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
-                and d.reserve_type != #{consData.reserveType}
+                and d.reserve_type = #{consData.reserveType}
             </if>
         </where>
         <choose>

@@ -200,6 +200,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             venueCons.setReserveType("3");//已经取消
             venueCons.preUpdate();
             dao.update(venueCons);
+            reserveVenueConsItemDao.delete(item);//删除订单明细
         } else if (TimeUtils.compare(startTime, item.getStartTime()) < 0 || TimeUtils.compare(endTime, item.getEndTime()) > 0) {
             return null;
         } else if (TimeUtils.compare(startTime, endTime) > 0) {

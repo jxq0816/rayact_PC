@@ -221,7 +221,7 @@ public class ReserveController extends BaseController {
     @Token(remove = true)
     public List<Map<String, String>> reservation(ReserveVenueCons reserveVenueCons) {
         boolean bool=true;//时间段是否可用
-        List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();
+        List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
         for(ReserveVenueConsItem i:itemList){//订单详情
             String startTime=i.getStartTime();
             String endTime=i.getEndTime();
