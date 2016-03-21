@@ -49,11 +49,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pull-right">
+                       <%-- <div class="pull-right">
                             <a class="btn btn-success" href="${ctx}/reserve/reserveMember/form">
                                 <i class="fa fa-plus"></i>添加
                             </a>
-                        </div>
+                        </div>--%>
                     </div>
                 </form:form>
                 <sys:message content="${message}"/>
