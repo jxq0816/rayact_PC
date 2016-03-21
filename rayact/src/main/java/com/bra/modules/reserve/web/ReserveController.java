@@ -288,9 +288,10 @@ public class ReserveController extends BaseController {
      */
     @RequestMapping(value = "settlementForm")
     public String settlementForm(String itemId, Model model) {
+        //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
         ReserveVenueConsItem search = new ReserveVenueConsItem();
-        consItem.getConsData().setReserveType("3");
+        //consItem.getConsData().setReserveType("3");
         search.setConsData(consItem.getConsData());
         ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
         model.addAttribute("cos", cons);
@@ -355,7 +356,7 @@ public class ReserveController extends BaseController {
     public String details(String itemId, Model model) {
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
         ReserveVenueConsItem search = new ReserveVenueConsItem();
-        consItem.getConsData().setReserveType("3");
+        //consItem.getConsData().setReserveType("3");
 
         search.setConsData(consItem.getConsData());
         ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
