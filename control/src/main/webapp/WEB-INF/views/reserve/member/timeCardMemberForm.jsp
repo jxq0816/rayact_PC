@@ -105,6 +105,6 @@
     </div>
 </div>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"></script>
-<script src="${ctxStatic}/modules/reserve/js/reserve_storedcard_member_form.js" type="text/javascript"></script>
+<script src="${ctxStatic}/modules/reserve/js/reserve_member_form.js" type="text/javascript"></script>
 </body>
 </html>

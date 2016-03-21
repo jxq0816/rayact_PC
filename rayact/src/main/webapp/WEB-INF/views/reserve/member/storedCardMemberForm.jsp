@@ -28,12 +28,12 @@
                                 <sys:message content="${message}"/>
                             <table id="contentTable" class="table table-bordered">
                                 <tr>
-                                    <td>卡号:</td>
+                                   <%-- <td>卡号:</td>
                                     <td>
                                         <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20"
                                                     class="form-control required"/>
                                         <span class="help-inline"><font color="red">*</font> </span>
-                                    </td>
+                                    </td>--%>
                                     <td>姓名:</td>
                                     <td><form:input path="name" htmlEscape="false" maxlength="30"
                                                     class="required form-control"/>
@@ -126,6 +126,6 @@
 </div>
 </div>
 </div>
-<script src="${ctxStatic}/modules/reserve/js/reserve_storedcard_member_form.js" type="text/javascript"></script>
+<script src="${ctxStatic}/modules/reserve/js/reserve_member_form.js" type="text/javascript"></script>
 </body>
 </html>

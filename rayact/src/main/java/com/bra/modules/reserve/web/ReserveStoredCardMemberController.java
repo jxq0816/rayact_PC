@@ -61,10 +61,10 @@ public class ReserveStoredCardMemberController extends BaseController {
 
     @RequestMapping(value = "check")
     @ResponseBody
-    public String check(String id, String cardno, String mobile, String sfz, HttpServletRequest request, HttpServletResponse response) {
+    public String check(String id, String mobile, String sfz, HttpServletRequest request, HttpServletResponse response) {
         String rs = null;
         //验证卡号
-        if (StringUtils.isNoneEmpty(cardno)) {
+        /*if (StringUtils.isNoneEmpty(cardno)) {
             ReserveMember rm1 = new ReserveMember();
             if (StringUtils.isNoneEmpty(id)) {//修改用户
                 rm1.setId(id);
@@ -75,7 +75,7 @@ public class ReserveStoredCardMemberController extends BaseController {
                 rs = "1";//卡号重复
                 return rs;
             }
-        }
+        }*/
         //验证手机号
         if (StringUtils.isNoneEmpty(mobile)) {
             ReserveMember rm2 = new ReserveMember();

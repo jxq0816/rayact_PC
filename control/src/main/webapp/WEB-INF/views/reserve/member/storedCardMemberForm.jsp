@@ -108,6 +108,6 @@
         </div>
     </div>
 </div>
-<script src="${ctxStatic}/modules/reserve/js/reserve_storedcard_member_form.js" type="text/javascript"></script>
+<script src="${ctxStatic}/modules/reserve/js/reserve_member_form.js" type="text/javascript"></script>
 </body>
 </html>
