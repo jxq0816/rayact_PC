@@ -127,7 +127,7 @@ public class ReserveFieldPriceService {
                 }
             }
        /* }*/
-        return price;
+        return price/2;//因为价格设定时，以一小时为单位，而预订时以半小时为单位，所以除2
     }
 
     private TimePrice timeHasPriceSet(String time, List<ReserveFieldPriceSet> priceSetList) {
