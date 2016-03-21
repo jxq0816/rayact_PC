@@ -1,7 +1,6 @@
 package com.bra.common.security;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -22,7 +21,7 @@ public class SecurityUtil {
                 return principal;
             }
 //			subject.logout();
-        } catch (UnavailableSecurityManagerException | InvalidSessionException ignored) {
+        } catch (Exception e) {
 
         }
         return null;

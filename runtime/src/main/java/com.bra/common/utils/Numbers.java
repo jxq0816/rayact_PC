@@ -16,7 +16,7 @@ public class Numbers {
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
             'Z'};
 
-    final static Map<Character, Integer> digitMap = new HashMap<>();
+    final static Map<Character, Integer> digitMap = new HashMap<Character, Integer>();
 
     static {
         for (int i = 0; i < digits.length; i++) {

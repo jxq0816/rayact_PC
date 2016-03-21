@@ -127,7 +127,7 @@ public class JsonUtils {
     }
 
     public static void main(String[] args){
-        Map<String,Double> map = new HashMap<>();
+        Map<String,Double> map = new HashMap<String, Double>();
         map.put("山东",1D);
         map.put("浙江",2D);
         System.out.println(JsonUtils.writeObjectToJson(map));
