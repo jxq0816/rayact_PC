@@ -38,7 +38,7 @@
                                                 ${sellDetail.reserveCommodity.name}
                                         </td>
                                         <td>
-                                                ${sellDetail.reserveCommodity.price}
+                                                ${sellDetail.price}
                                         </td>
                                         <td>
                                                 ${sellDetail.num}

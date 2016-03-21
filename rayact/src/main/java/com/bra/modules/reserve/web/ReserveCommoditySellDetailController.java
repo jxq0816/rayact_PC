@@ -1,14 +1,12 @@
 package com.bra.modules.reserve.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
-import com.bra.modules.reserve.service.ReserveCardStatementsService;
-import com.bra.modules.reserve.service.ReserveCommoditySellService;
-import com.bra.modules.reserve.service.ReserveMemberService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.bra.modules.reserve.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
-import com.bra.common.web.BaseController;
-import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.service.ReserveCommoditySellDetailService;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -34,6 +28,9 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/reserveCommoditySellDetail")
 public class ReserveCommoditySellDetailController extends BaseController {
+
+	@Autowired
+	private ReserveCommodityService reserveCommodityService;
 
 	@Autowired
 	private ReserveCommoditySellDetailService reserveCommoditySellDetailService;
@@ -99,20 +96,28 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
 			Double detailSum=price*num;
+			ReserveCommodity commodity=sellDetail.getReserveCommodity();//买的啥
 			sellDetail.setDetailSum(detailSum);
 			sellDetail.setReserveMember(reserveMember);
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
+			commodity=reserveCommodityService.get(commodity);
+			int repertoryNum=commodity.getRepertoryNum();
+			repertoryNum-=num;//商品出库
+			commodity.setRepertoryNum(repertoryNum);
+			reserveCommodityService.save(commodity);
+
 			reserveCommoditySellDetailService.save(sellDetail);
 		}
 		if("1".equals(payType)){// 1代表会员
 			if(reserveMember!=null){
 				reserveMember=reserveMemberService.get(reserveMember);
 				double remainder=reserveMember.getRemainder();
-				remainder-=total;
+				remainder-=total;//减去余额
 				reserveMember.setRemainder(remainder);
 				reserveMemberService.save(reserveMember);
 			}
 		}
+		//销售记录
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setTransactionType("3");//3代表消费
