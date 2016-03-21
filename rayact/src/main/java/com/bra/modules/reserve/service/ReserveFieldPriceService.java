@@ -1,6 +1,5 @@
 package com.bra.modules.reserve.service;
 
-import com.bra.common.utils.Collections3;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.*;
 import com.bra.modules.reserve.entity.*;
@@ -80,30 +79,30 @@ public class ReserveFieldPriceService {
     public Double getPrice(ReserveField field, String consType, Date date, String startTime, String endTime) {
         List<String> timeList = TimeUtils.getTimeSpace(startTime, endTime);
         String weekType = TimeUtils.getWeekType(date);
-        ReserveFieldHolidayPriceSet holidayPriceSet = new ReserveFieldHolidayPriceSet();
+        /*ReserveFieldHolidayPriceSet holidayPriceSet = new ReserveFieldHolidayPriceSet();
         holidayPriceSet.setDate(date);
         holidayPriceSet.setConsType(consType);
         holidayPriceSet.setReserveField(field);
-        List<ReserveFieldHolidayPriceSet> holidayPriceSetList = reserveFieldHolidayPriceSetDao.findList(holidayPriceSet);
+        List<ReserveFieldHolidayPriceSet> holidayPriceSetList = reserveFieldHolidayPriceSetDao.findList(holidayPriceSet);*/
 
         ReserveFieldPriceSet priceSet = new ReserveFieldPriceSet();
         priceSet.setConsType(consType);
         priceSet.setWeek(weekType);
         priceSet.setReserveField(field);
 
-        Calendar cal = Calendar.getInstance();
+       /* Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int day = cal.get(Calendar.DATE);
-        int month = cal.get(Calendar.MONTH)+1;
+        int month = cal.get(Calendar.MONTH)+1;*/
 
-        ReserveTimeInterval timeInterval=reserveTimeIntervalService.findTimeInterval(month,day);
-        priceSet.setReserveTimeInterval(timeInterval);
+       /* ReserveTimeInterval timeInterval=reserveTimeIntervalService.findTimeInterval(month,day);
+        priceSet.setReserveTimeInterval(timeInterval);*/
 
         List<ReserveFieldPriceSet> priceSets = reserveFieldPriceSetDao.findList(priceSet);
         Double price = 0d;
 
         List<String> times = Lists.newArrayList();
-        if (!Collections3.isEmpty(holidayPriceSetList)) {
+       /* if (!Collections3.isEmpty(holidayPriceSetList)) {
             for (String time : timeList) {
                 ReserveFieldHolidayPriceSet ps = timeHasHoliday(time, holidayPriceSetList);
                 if (ps != null) {
@@ -120,14 +119,14 @@ public class ReserveFieldPriceService {
                     }
                 }
             }
-        } else {
+        } else {*/
             for (String time : timeList) {
                 TimePrice tp = timeHasPriceSet(time, priceSets);
                 if (tp != null) {
                     price += tp.getPrice();
                 }
             }
-        }
+       /* }*/
         return price;
     }
 

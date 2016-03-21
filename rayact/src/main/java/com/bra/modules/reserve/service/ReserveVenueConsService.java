@@ -144,7 +144,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             reserveVenueCons.setConsDate(date);
             reserveVenueCons.preInsert();
             dao.insert(reserveVenueCons);
-            List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();
+            List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
             Double orderPrice = 0D;
 
             String consWeek = TimeUtils.getWeekOfDate(consDate);
