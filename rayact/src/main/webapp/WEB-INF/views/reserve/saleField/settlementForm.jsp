@@ -61,40 +61,27 @@
                 <input type="hidden" name="venueConsList[${status.index}].reserveVenue.id"
                        value="${item.reserveVenue.id}"/>
                 <input type="hidden" name="venueConsList[${status.index}].consPrice" value="${item.consPrice}"/>
+
+                <input type="hidden" name="venueConsList[${status.index}].startTime" value="${item.startTime}"/>
+                <input type="hidden" name="venueConsList[${status.index}].endTime" value="${item.endTime}"/>
+
+                <input type="hidden" name="venueConsList[${status.index}].halfCourt" value="${item.halfCourt}"/>
                 <tr>
                     <td>
                             ${item.reserveField.name}
                     </td>
                     <td>
-                        <select readonly="" onfocus="this.defaultIndex=this.selectedIndex;"
-                                onchange="this.selectedIndex=this.defaultIndex;" class="select2" id="startTime"
-                                name="venueConsList[${status.index}].startTime">
-                            <c:forEach items="${times}" var="t">
-                                <option
-                                        <j:if test="${t eq item.startTime}">selected="selected"</j:if>
-                                        value="${t}">${t}</option>
-                            </c:forEach>
-                        </select>
+                            ${item.startTime}
                     </td>
                     <td>
-                        <select class="select2" onfocus="this.defaultIndex=this.selectedIndex;"
-                                onchange="this.selectedIndex=this.defaultIndex;" id="endTime"
-                                name="venueConsList[${status.index}].endTime">
-                            <c:forEach items="${times}" var="t">
-                                <option
-                                        <j:if test="${t eq item.endTime}">selected="selected"</j:if>
-                                        value="${t}">${t}</option>
-                            </c:forEach>
-                        </select>
+                            ${item.endTime}
                     </td>
                     <td>
                         <j:ifelse test="${'1' eq item.halfCourt}"><j:then>是</j:then><j:else>否</j:else></j:ifelse>
-                        <input type="hidden" name="venueConsList[${status.index}].halfCourt"
-                               value="${item.halfCourt}"/>
                     </td>
                     <td>
                         <input type="text" style="width: 60px;" value="${item.consPrice}"
-                               class="form-control orderPrice"
+                               class="form-control orderPrice" readonly="readonly"
                                name="venueConsList[${status.index}].orderPrice"/>
                     </td>
                 </tr>

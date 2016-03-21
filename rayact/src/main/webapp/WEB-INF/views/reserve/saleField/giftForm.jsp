@@ -24,15 +24,21 @@
         </table>
     </div>
     <hr/>
-    <div class="content">
-        选择赠品:<select class="select2" id="gift">
-        <option value="">请选择</option>
-        <c:forEach items="${giftList}" var="gift">
-            <option data-name="${gift.name}" data-unit="${gift.unit}" value="${gift.id}">
-                    ${gift.quickSearch}-${gift.name}-单位:${gift.unit}
-            </option>
-        </c:forEach>
-    </select>
+
+    <div class="row">
+        <div class="form-group">
+            <label for="gift" class="col-sm-1 control-label">赠品:</label>
+            <div class="col-sm-4">
+                <select class="form-control input-sm" id="gift">
+                    <option value="">请选择</option>
+                    <c:forEach items="${giftList}" var="gift">
+                        <option data-name="${gift.name}" data-unit="${gift.unit}" value="${gift.id}">
+                                ${gift.quickSearch}-${gift.name}-单位:${gift.unit}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
     </div>
     <hr/>
     <div class="content">

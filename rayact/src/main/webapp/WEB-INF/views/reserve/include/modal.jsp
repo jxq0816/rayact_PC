@@ -29,7 +29,7 @@
 <!--取消订单-->
 <button class="btn btn-primary btn-flat md-trigger" id="cancelBtn" style="display: none" data-modal="cancel-primary">Basic Form
 </button>
-<div class="md-modal colored-header warning custom-width md-effect-12" id="cancel-primary">
+<div class="md-modal colored-header  custom-width md-effect-12" id="cancel-primary">
     <div class="md-content">
         <div class="modal-header">
             <h5>取消预定</h5>
@@ -55,7 +55,7 @@
 <!--结账-->
 <button class="btn btn-primary btn-flat md-trigger" id="settlementBtn" style="display: none" data-modal="settlement-primary">Basic Form
 </button>
-<div class="md-modal colored-header warning custom-width md-effect-12" id="settlement-primary">
+<div class="md-modal colored-header  custom-width md-effect-12" id="settlement-primary">
     <div class="md-content">
         <div class="modal-header">
             <h5>结算</h5>
@@ -81,7 +81,7 @@
 <!--查看详情-->
 <button class="btn btn-primary btn-flat md-trigger" id="detailsBtn" style="display: none" data-modal="details-primary">Basic Form
 </button>
-<div class="md-modal colored-header warning custom-width md-effect-12" id="details-primary">
+<div class="md-modal colored-header custom-width md-effect-12" id="details-primary">
     <div class="md-content">
         <div class="modal-header">
             <h5>预定详情</h5>
@@ -89,14 +89,14 @@
                     aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body form-horizontal" id="detailsForm">
-            <!--预定表单-->
+            <!--预定详情-->
 
 
-            <!--end 预定表单-->
+            <!--end 预定详情-->
         </div>
         <div class="modal-footer">
             <button type="button" id="closeDetailsBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                取消
+                关闭
             </button>
         </div>
     </div>
@@ -106,7 +106,7 @@
 <!--赠品-->
 <button class="btn btn-primary btn-flat md-trigger" id="giftBtn" style="display: none" data-modal="gift-primary">Basic Form
 </button>
-<div class="md-modal colored-header warning custom-width md-effect-12" id="gift-primary">
+<div class="md-modal colored-header  custom-width md-effect-12" id="gift-primary">
     <div class="md-content">
         <div class="modal-header">
             <h5>预定详情</h5>
@@ -132,7 +132,7 @@
 <!--结算详情-->
 <button class="btn btn-primary btn-flat md-trigger" id="settlementDetailBtn" style="display: none" data-modal="settlementDetail-primary">Basic Form
 </button>
-<div class="md-modal colored-header warning custom-width md-effect-12" id="settlementDetail-primary">
+<div class="md-modal colored-header  custom-width md-effect-12" id="settlementDetail-primary">
     <div class="md-content">
         <div class="modal-header">
             <h5>结算确认单</h5>
