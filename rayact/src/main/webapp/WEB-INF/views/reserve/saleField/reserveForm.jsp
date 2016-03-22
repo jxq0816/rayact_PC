@@ -41,7 +41,7 @@
                         </div>
                         <label for="endTime" class="col-lg-2 control-label" style="text-align: center">至</label>
                         <div class="col-sm-4">
-                            <select class="form-control input-sm" id="endTime" name="venueConsList[0].endTime">
+                            <select id="endTime" class="form-control input-sm"  name="venueConsList[0].endTime">
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq endTime}">selected="selected"</j:if>
@@ -184,7 +184,7 @@
                 $("#consMobile").removeAttr("readonly");
                 $("#memberSelect").hide();
             }
-        })
+        });
         $("#memberId").on('change', function () {
             var text = $(this).find("option:selected").text();
             var mobile = text.split('-')[0];

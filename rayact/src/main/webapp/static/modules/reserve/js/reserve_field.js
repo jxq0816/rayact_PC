@@ -36,6 +36,21 @@ $(document).ready(function () {
         var consMobile = $("#consMobile").val();
         var frequency = $("#frequency").val();
         var endDate = $("#endDate").val();
+        var startTime= $("#startTime").val();
+        var endTime= $("#endTime").val();
+
+        for( var i=0;i<startTime.length;i++){
+            var start=startTime.charAt(i);
+            var end=endTime.charAt(i);
+            if(start>end){
+                formLoding('开始时间不大于结束时间');
+                return false;
+            }
+        }
+        if(startTime==endTime){
+            formLoding('开始时间不能等于结束时间');
+            return false;
+        }
 
         if (userName == '') {
             formLoding('请输入预定人姓名');
