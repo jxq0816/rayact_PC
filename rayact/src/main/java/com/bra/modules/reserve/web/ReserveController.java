@@ -100,19 +100,19 @@ public class ReserveController extends BaseController {
             reserveField.setReserveVenue(reserveVenue);
             //上午场地价格
             List<String> timesAM=new ArrayList<>();
-            timesAM.add("00:00-00:30");
-            timesAM.addAll(TimeUtils.getTimeSpacListValue("08:00:00", "12:00:00", 30));
 
+            timesAM.addAll(TimeUtils.getTimeSpacListValue("08:00:00", "12:30:00", 30));
             model.addAttribute("timesAM", timesAM);
             List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);
             model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
             //下午场地价格
-            List<String> timesPM = TimeUtils.getTimeSpacListValue("12:00:00", "18:00:00", 30);
+            List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
             model.addAttribute("timesPM", timesPM);
             List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesPM);
             model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
             //晚上场地价格
-            List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:00:00", "24:00:00", 30);
+            List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "24:00:00", 30);
+            timesEvening.add("00:00-00:30");
             model.addAttribute("timesEvening", timesEvening);
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
@@ -129,7 +129,8 @@ public class ReserveController extends BaseController {
         model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
 
         //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
+        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "23:00:00", TimeUtils.BENCHMARK);
+        times.add("00:00");
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("date", consDate);
         model.addAttribute("times", times);
@@ -163,7 +164,8 @@ public class ReserveController extends BaseController {
             model.addAttribute("endTime", endTime);
         }
         model.addAttribute("item", item);
-        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
+        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "23:00:00", TimeUtils.BENCHMARK);
+        times.add("00:00");
         model.addAttribute("times", times);
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
@@ -302,8 +304,8 @@ public class ReserveController extends BaseController {
             model.addAttribute("tutorOrder", tutorOrderList.get(0));
         }
 
-        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
-        model.addAttribute("times", times);
+      /*  List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
+        model.addAttribute("times", times);*/
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
         return "reserve/saleField/settlementForm";
@@ -362,9 +364,9 @@ public class ReserveController extends BaseController {
         model.addAttribute("cos", cons);
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
-        List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
+      /*  List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);*/
         model.addAttribute("tutorOrderList", reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY));
-        model.addAttribute("times", times);
+      /*  model.addAttribute("times", times);*/
         //赠品
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
         return "reserve/saleField/details";
