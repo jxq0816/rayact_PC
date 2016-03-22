@@ -61,7 +61,7 @@
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
 .table-chang{width: 100%;overflow: hidden;float: left;}
 .table-chang th{font-size:10px;font-weight: normal;text-align: center;background: #f3f3f3;border: 1px solid #cdcdcd;width:50px}
-.table-chang td{width: 80px;height: 30px;background: #dcdcdc;border: 1px solid #fff;text-align: center;color: #fff;font-size: 8px;padding:0px}
+.table-chang td{width: 75px;height: 30px;background: #dcdcdc;border: 1px solid #fff;text-align: center;color: #fff;font-size: 8px;padding:0px}
 .table-half  td{width: 15px;height: 30px;background: #dcdcdc;border: 1px solid #fff;color: #fff;font-size: 8px;}
 .table-chang td a{display: block;width: 100%;height: 100%;}
 .table-chang td.access{background: #69d448;}
