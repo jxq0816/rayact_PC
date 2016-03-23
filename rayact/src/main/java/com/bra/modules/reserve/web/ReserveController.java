@@ -131,6 +131,7 @@ public class ReserveController extends BaseController {
         //获取营业时间
         List<String> times = TimeUtils.getTimeSpacList("08:00:00", "23:00:00", TimeUtils.BENCHMARK);
         times.add("00:00");
+        times.add("00:30");
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("date", consDate);
         model.addAttribute("times", times);
@@ -166,6 +167,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("item", item);
         List<String> times = TimeUtils.getTimeSpacList("08:00:00", "23:00:00", TimeUtils.BENCHMARK);
         times.add("00:00");
+        times.add("00:30");
         model.addAttribute("times", times);
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);

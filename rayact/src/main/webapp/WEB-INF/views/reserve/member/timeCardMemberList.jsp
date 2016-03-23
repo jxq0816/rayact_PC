@@ -35,10 +35,10 @@
                                                     class="form-control"/>
                                     </td>
 
-                                    <td>卡号：</td>
+                                  <%--  <td>卡号：</td>
                                     <td><form:input path="cartno" htmlEscape="false" maxlength="20"
                                                     class="form-control"/>
-                                    </td>
+                                    </td>--%>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
 
                                 </tr>
@@ -61,15 +61,15 @@
                                 <th>姓名</th>
                                 <th>手机号</th>
                                 <th>性别</th>
-                                <th>卡号</th>
+                              <%--  <th>卡号</th>--%>
                                 <th>场馆</th>
                                 <th>次卡名称</th>
-                                <th>身份证</th>
-                                <th>地址</th>
+                               <%-- <th>身份证</th>--%>
+                              <%--  <th>地址</th>--%>
                                 <th>剩余次数</th>
                                 <th>开始时间</th>
                                 <th>到期时间</th>
-                                <th>备注</th>
+                               <%-- <th>备注</th>--%>
                                     <th>操作</th>
                             </tr>
                             </thead>
@@ -85,21 +85,21 @@
                                     <td>
                                             ${fns:getDictLabel(reserveMember.sex, 'sex', '')}
                                     </td>
-                                    <td>
+                                  <%--  <td>
                                             ${reserveMember.cartno}
-                                    </td>
+                                    </td>--%>
                                     <td>
                                             ${reserveMember.reserveVenue.name}
                                     </td>
                                     <td>
                                             ${reserveMember.timecardSet.name}
                                     </td>
-                                    <td>
+                                 <%--   <td>
                                             ${reserveMember.sfz}
-                                    </td>
-                                    <td>
+                                    </td>--%>
+                                  <%--  <td>
                                             ${reserveMember.address}
-                                    </td>
+                                    </td>--%>
 
                                     <td>
                                             ${reserveMember.residue}
@@ -112,9 +112,9 @@
                                     <td>
                                         <fmt:formatDate value="${reserveMember.validityend}" type="date"/>
                                     </td>
-                                    <td>
+                                   <%-- <td>
                                             ${reserveMember.remarks}
-                                    </td>
+                                    </td>--%>
                                     <td>
                                         <a class="btn btn-primary btn-xs"
                                            href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
