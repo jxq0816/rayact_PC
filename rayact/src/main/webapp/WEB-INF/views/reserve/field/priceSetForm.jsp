@@ -55,12 +55,12 @@
                                             <td>市场价:</td>
                                             <td>
                                                 <input type="text" id="retail" class="number form-control"
-                                                       style="width: 40px;height:30px"/>
+                                                       style="width: 40px;height:30px;padding: 0px"/>
                                             </td>
                                             <td>会员价:</td>
                                             <td>
                                                 <input type="text" id="member" class="number form-control"
-                                                       style="width: 40px;height:30px"/>
+                                                       style="width: 40px;height:30px;padding: 0px"/>
                                             </td>
                                            <%-- <td>团体:</td>
                                             <td><input type="text" id="group" class="number form-control"
@@ -136,10 +136,10 @@
         //var start = new Date(startTime.replace(":", "/").replace(":", "/"));
         //var end = new Date(endTime.replace(":", "/").replace(":", "/"));
         //var local = new Date(localTime.replace(":", "/").replace(":", "/"));
-        if (localTime >= startTime && localTime <= endTime) {
+       /* if (localTime >= startTime && localTime <= endTime) {
             return true;
-        }
-        return false;
+        }*/
+        return true;
     }
     $(document).ready(function () {
         $('.icheck').iCheck({
@@ -185,9 +185,6 @@
             //retail member group
             var startTime = $("#startTime").val();
             var endTime = $("#endTime").val();
-            if (startTime > endTime) {
-                alert('开始时间不能大于结束时间');
-            }
             var type = $(this).attr("data");
             var weekTd = $("#weekTd").text();
             var retail = $("#retail").val();

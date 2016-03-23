@@ -70,7 +70,7 @@
                 <c:forEach items="${giftList}" var="gift">
                     <tr>
                         <td>${gift.gift.name}</td>
-                        <td>${gift.num}${gift.gift.unit}</td>
+                        <td>${gift.num}</td>
                     </tr>
                 </c:forEach>
             </table>
