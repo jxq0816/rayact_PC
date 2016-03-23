@@ -16,8 +16,19 @@ import java.util.Map;
 public class TimeUtils {
 
     public static final int BENCHMARK = 30;
-
-
+    /*
+        时间格式化：将凌晨时间小时+24，如01:00转化为25:00
+     */
+    public static String earlyMorningFormat(String time){
+        if(time.compareTo("03:00")<0){
+            String hour=time.substring(0,2);
+            int h=Integer.parseInt(hour)+24;//小时
+            hour=String.valueOf(h);
+            String minute=time.substring(2,5);
+            time=hour+minute;
+        }
+        return time;
+    }
     /**
      * 获取两个时间的间隔时间数量(按照半小时计算)
      *

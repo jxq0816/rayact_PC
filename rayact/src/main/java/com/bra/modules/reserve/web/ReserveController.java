@@ -224,6 +224,8 @@ public class ReserveController extends BaseController {
         for(ReserveVenueConsItem i:itemList){//订单详情
             String startTime=i.getStartTime();
             String endTime=i.getEndTime();
+            startTime=TimeUtils.earlyMorningFormat(startTime);
+            endTime=TimeUtils.earlyMorningFormat(endTime);
             ReserveField field=i.getReserveField();//场地
             Date consDate=reserveVenueCons.getConsDate();//日期
             //查询该场地，当天的已预订时间
@@ -234,14 +236,8 @@ public class ReserveController extends BaseController {
             for(ReserveVenueConsItem item:list){
                 String start=item.getStartTime();//已预订开始时间
                 String end=item.getEndTime();//已预订结束时间
-                //结束时间在凌晨
-                if(end.compareTo("03:00")<0){
-                    String hour=end.substring(0,2);
-                    int h=Integer.parseInt(hour)+24;//小时
-                    hour=String.valueOf(h);
-                    String minute=end.substring(2,5);
-                    end=hour+minute;
-                }
+                start=TimeUtils.earlyMorningFormat(start);
+                end=TimeUtils.earlyMorningFormat(end);
                 //第一个判断条件 假设 预订时间为15:30-16:00 已预订时间为15:30-16:30 startTime=start=15:30 startTime=start不可预订
                 //第二个判断条件 假设 预订时间为15:30-16:00  已预订时间为15:00-15:30 startTime=end=15:30 时间段正好错开 可预订
                 if(startTime.compareTo(start)>=0 && startTime.compareTo(end)<0){//预订开始时间 介于 已预订区间
@@ -431,21 +427,8 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "checkTime")
     @ResponseBody
     public String checkTime(String startTime,String endTime) {
-        //结束时间在凌晨
-        if(startTime.compareTo("03:00")<0){
-            String hour=startTime.substring(0,2);
-            int h=Integer.parseInt(hour)+24;//小时
-            hour=String.valueOf(h);
-            String minute=startTime.substring(2,5);
-            startTime=hour+minute;
-        }
-        if(endTime.compareTo("03:00")<0){
-            String hour=endTime.substring(0,2);
-            int h=Integer.parseInt(hour)+24;//小时
-            hour=String.valueOf(h);
-            String minute=endTime.substring(2,5);
-            endTime=hour+minute;
-        }
+        startTime=TimeUtils.earlyMorningFormat(startTime);
+        endTime=TimeUtils.earlyMorningFormat(endTime);
         if(startTime.compareTo(endTime)<0) {
             return "1";
         }else{
