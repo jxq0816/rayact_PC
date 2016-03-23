@@ -30,6 +30,13 @@ public class TimeUtils {
         try {
             Date start = DateUtils.parseDate(startTime, "HH:mm:ss");
             Date end = DateUtils.parseDate(endTime, "HH:mm:ss");
+            //凌晨的营业时间小于03:00
+            if(endTime.compareTo("03:00")<0){
+                Calendar   calendar   = Calendar.getInstance();
+                calendar.setTime(end);
+                calendar.add(Calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
+                end=calendar.getTime();   //这个时间就是日期往后推一天的结果
+            }
             Long t = (end.getTime() - start.getTime()) / (space * 60 * 1000);
             return t.intValue();
         } catch (Exception ex) {
@@ -65,7 +72,7 @@ public class TimeUtils {
     }
 
     /**
-     * 获取两个时间的间隔时间(半小时算)
+     * 获取两个时间的间隔时间(半小时算) 结果为12:00 12:30 13：00
      *
      * @param startTime
      * @param endTime
@@ -76,16 +83,13 @@ public class TimeUtils {
     public static List<String> getTimeSpacList(String startTime, String endTime, int space) {
         try {
             List<String> times = Lists.newArrayList();
-            int spac = getTimeSpac(startTime, endTime, space);
+            int spac = getTimeSpac(startTime, endTime, space);//该时间段有多少个时间单位
             Date start = DateUtils.parseDate(startTime, "HH:mm:ss");
-            //Date end = DateUtils.parseDate(endTime, "HH:mm:ss");
-            //Date spacTime;
-            times.add(DateUtils.formatDate(start, "HH:mm"));
+            times.add(DateUtils.formatDate(start, "HH:mm"));//开始时间格式化
             for (int i = 0; i < spac; i++) {
-                start = DateUtils.addMinutes(start, space);
+                start = DateUtils.addMinutes(start, space);//时间加上一个时间单位
                 times.add(DateUtils.formatDate(start, "HH:mm"));
             }
-            //times.add(DateUtils.formatDate(end, "HH:mm"));
             return times;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -93,7 +97,7 @@ public class TimeUtils {
     }
 
     /**
-     * 获取两个时间的间隔时间(半小时算)
+     * 获取两个时间的间隔时间(半小时算)结果为 12:00-12:30 12:30-13：00
      *
      * @param startTime
      * @param endTime

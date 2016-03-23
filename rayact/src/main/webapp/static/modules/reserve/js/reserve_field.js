@@ -38,31 +38,22 @@ $(document).ready(function () {
         var endDate = $("#endDate").val();
         var startTime= $("#startTime").val();
         var endTime= $("#endTime").val();
-        if(startTime=="00:30"){
-            formLoding('开始时间不能为闭馆时间');
+
+        if(startTime==endTime){
+            formLoding('开始时间应小于结束时间');
             return false;
         }
-        if(startTime=="00:00" && endTime!="00:30"){
-            formLoding('开始时间大于结束时间');
-            return false;
-        }
-        if((startTime!="00:00"||startTime!="00:30") && (endTime!="00:00" || endTime!="00:30")){
-            for( var i=0;i<startTime.length;i++){
-                var start=startTime.charAt(i);
-                var end=endTime.charAt(i);
-                if(end>start){
-                    break;
+
+        $.postItems({
+            url: ctx + '/reserve/field/checkTime',
+            data: {startTime:startTime,endTime:endTime},
+            success: function (values) {
+                if (values=="0") {
+                    formLoding('开始时间应小于结束时间');
+                    return false;
                 }
             }
-            if(startTime==endTime){
-                formLoding('开始时间不能等于结束时间');
-                return false;
-            }
-            if(i==startTime.length){
-                formLoding('开始时间不能小于结束时间');
-                return false;
-            }
-        }
+        });
 
         if (userName == '') {
             formLoding('请输入预定人姓名');

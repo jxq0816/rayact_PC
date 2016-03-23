@@ -111,8 +111,8 @@ public class ReserveController extends BaseController {
             List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesPM);
             model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
             //晚上场地价格
-            List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "24:00:00", 30);
-            timesEvening.add("00:00-00:30");
+            List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
+           /* timesEvening.add("00:00-00:30");*/
             model.addAttribute("timesEvening", timesEvening);
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
@@ -129,9 +129,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
 
         //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "23:00:00", TimeUtils.BENCHMARK);
-        times.add("00:00");
-        times.add("00:30");
+        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("date", consDate);
         model.addAttribute("times", times);
@@ -165,9 +163,7 @@ public class ReserveController extends BaseController {
             model.addAttribute("endTime", endTime);
         }
         model.addAttribute("item", item);
-        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "23:00:00", TimeUtils.BENCHMARK);
-        times.add("00:00");
-        times.add("00:30");
+        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);
         model.addAttribute("times", times);
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
@@ -238,6 +234,14 @@ public class ReserveController extends BaseController {
             for(ReserveVenueConsItem item:list){
                 String start=item.getStartTime();//已预订开始时间
                 String end=item.getEndTime();//已预订结束时间
+                //结束时间在凌晨
+                if(end.compareTo("03:00")<0){
+                    String hour=end.substring(0,2);
+                    int h=Integer.parseInt(hour)+24;//小时
+                    hour=String.valueOf(h);
+                    String minute=end.substring(2,5);
+                    end=hour+minute;
+                }
                 //第一个判断条件 假设 预订时间为15:30-16:00 已预订时间为15:30-16:30 startTime=start=15:30 startTime=start不可预订
                 //第二个判断条件 假设 预订时间为15:30-16:00  已预订时间为15:00-15:30 startTime=end=15:30 时间段正好错开 可预订
                 if(startTime.compareTo(start)>=0 && startTime.compareTo(end)<0){//预订开始时间 介于 已预订区间
@@ -422,5 +426,30 @@ public class ReserveController extends BaseController {
     public User checkUserPwd(String userPwd) {
         User user = systemService.getUserByPwd(userPwd);
         return user;
+    }
+
+    @RequestMapping(value = "checkTime")
+    @ResponseBody
+    public String checkTime(String startTime,String endTime) {
+        //结束时间在凌晨
+        if(startTime.compareTo("03:00")<0){
+            String hour=startTime.substring(0,2);
+            int h=Integer.parseInt(hour)+24;//小时
+            hour=String.valueOf(h);
+            String minute=startTime.substring(2,5);
+            startTime=hour+minute;
+        }
+        if(endTime.compareTo("03:00")<0){
+            String hour=endTime.substring(0,2);
+            int h=Integer.parseInt(hour)+24;//小时
+            hour=String.valueOf(h);
+            String minute=endTime.substring(2,5);
+            endTime=hour+minute;
+        }
+        if(startTime.compareTo(endTime)<0) {
+            return "1";
+        }else{
+            return "0";
+        }
     }
 }
