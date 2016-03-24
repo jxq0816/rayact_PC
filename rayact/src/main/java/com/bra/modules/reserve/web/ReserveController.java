@@ -413,6 +413,17 @@ public class ReserveController extends BaseController {
     @ResponseBody
     @Token(remove = true)
     public String saveGift(VenueGiftForm giftForm) {
+        List<ReserveVenueGift> giftList = giftForm.getGiftList();
+        for(ReserveVenueGift gift:giftList){
+            int giftNum=gift.getNum();
+            ReserveCommodity commodity=gift.getGift();
+            commodity=reserveCommodityService.get(commodity);
+            int storeNum=commodity.getRepertoryNum();
+            if(giftNum>storeNum){
+                return "fail";
+            }
+        }
+
         reserveVenueGiftService.saveVenueList(giftForm, ReserveVenueCons.MODEL_KEY);
         return "success";
     }

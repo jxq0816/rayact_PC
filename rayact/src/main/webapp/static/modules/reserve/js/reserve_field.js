@@ -178,9 +178,12 @@ $(document).ready(function () {
             url: ctx + '/reserve/field/saveGift',
             data: data,
             success: function (values) {
-                if (values) {
+                if (values=="success") {
                     successLoding('保存赠品成功!');
                     location.reload();
+                }
+                if(values=="fail"){
+                    errorLoding("库存量不足！")
                 }
             }
         });

@@ -35,8 +35,8 @@
                             <select class="form-control input-sm" id="gift">
                                 <option value="">请选择</option>
                                 <c:forEach items="${giftList}" var="gift">
-                                    <option data-name="${gift.name}" data-unit="${gift.unit}" value="${gift.id}">
-                                            ${gift.quickSearch}-${gift.name}-单位:${gift.unit}
+                                    <option data-name="${gift.name}" data-unit="${gift.unit}" value="${gift.id}" data-repertory-num="${gift.repertoryNum}">
+                                            ${gift.name}
                                     </option>
                                 </c:forEach>
                             </select>
@@ -48,9 +48,6 @@
                 <div class="content">
                     <h4>赠品列表</h4>
                     <table id="giftTable">
-                        <tr>
-
-                        </tr>
                     </table>
                 </div>
             </div>
@@ -64,9 +61,10 @@
             var id = $(this).val();
             var name = $(this).find("option:selected").attr("data-name");
             var unit = $(this).find("option:selected").attr("data-unit");
+            var repertoryNum = $(this).find("option:selected").attr("data-repertory-num");
             var html = '<tr><td>名称:<input type="hidden" name="giftList[' + length + '].modelId" value="${cos.id}"/>' + name + '</td>' +
-                    '<td>规格:1*' + unit + '</td>\
-                        <td>数量:<input type="text" name="giftList[' + length + '].num" value="1" class="form-control"></td>\
+                    '<td>库存:' + repertoryNum + '</td>\
+                    <td>数量:<input type="text" name="giftList[' + length + '].num" value="1" class="form-control"></td>\
                     <td> <input type="hidden" name="giftList[' + length + '].gift.id" value="' + id + '"/>\
                     <a class="btn btn-danger delGifTr btn-xs" <i class="fa fa-times"></i>删除</a></td></tr>';
             $("#giftTable").append(html);

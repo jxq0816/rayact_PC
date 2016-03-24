@@ -74,12 +74,12 @@
                                             <td>市场价:</td>
                                             <td>
                                                 <input type="text" id="retail" class="number form-control"
-                                                       style="width: 40px;height:30px"/>
+                                                       style="width: 40px;height:30px;padding: 0px"/>
                                             </td>
                                             <td>会员价:</td>
                                             <td>
                                                 <input type="text" id="member" class="number form-control"
-                                                       style="width: 40px;height:30px"/>
+                                                       style="width: 40px;height:30px;padding:0px"/>
                                             </td>
                                             <td valign="top"><input id="globalPrice" data="all" class="btn btn-primary"
                                                                     type="button"
