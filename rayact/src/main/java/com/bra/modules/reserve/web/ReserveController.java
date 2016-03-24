@@ -284,7 +284,7 @@ public class ReserveController extends BaseController {
     }
 
     /**
-     * 结算订单
+     * 结算订单的表单
      *
      * @param itemId
      * @return
@@ -294,20 +294,14 @@ public class ReserveController extends BaseController {
         //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
         ReserveVenueConsItem search = new ReserveVenueConsItem();
-        //consItem.getConsData().setReserveType("3");
         search.setConsData(consItem.getConsData());
         ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
         model.addAttribute("cos", cons);
-        //教练
-        model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
         if (!Collections3.isEmpty(tutorOrderList)) {
             model.addAttribute("tutorOrder", tutorOrderList.get(0));
         }
-
-      /*  List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);
-        model.addAttribute("times", times);*/
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
         return "reserve/saleField/settlementForm";
@@ -351,7 +345,8 @@ public class ReserveController extends BaseController {
     @Token(remove = true)
     public List<Map<String, String>> saveSettlement(ReserveVenueCons cons) {
         ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(cons);
-        return getReserveMap(venueCons.getVenueConsList());
+        List<Map<String, String>> list = getReserveMap(venueCons.getVenueConsList());
+        return list;
     }
 
     //订单详情
@@ -430,8 +425,8 @@ public class ReserveController extends BaseController {
 
     @RequestMapping(value = "checkUserPwd")
     @ResponseBody
-    public User checkUserPwd(String userPwd) {
-        User user = systemService.getUserByPwd(userPwd);
+    public User checkUserPwd(String id,String userPwd) {
+        User user = systemService.getUserByPwd(id,userPwd);
         return user;
     }
 

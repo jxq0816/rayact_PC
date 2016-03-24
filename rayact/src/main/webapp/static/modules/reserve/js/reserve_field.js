@@ -125,26 +125,7 @@ $(document).ready(function () {
         });
     }
 
-    //结账
-    function settlement(t) {
-        $("#settlementDetailForm").html("");
-        var itemId = t.attr("data-item");
-        jQuery.postItems({
-            url: ctx + '/reserve/field/settlementForm',
-            data: {itemId: itemId},
-            success: function (result) {
-                $("#settlementForm").html(result);
-                $("#settlementBtn").click();
-                $("#settlementForm .select2").select2({
-                    width: '100%'
-                });
-                $('#settlementForm .icheck').iCheck({
-                    checkboxClass: 'icheckbox_square-blue checkbox',
-                    radioClass: 'iradio_square-blue'
-                });
-            }
-        });
-    }
+
 
     //赠品
     function gift(t) {
@@ -228,7 +209,26 @@ $(document).ready(function () {
             }
         });
     }
-
+    //右击 结账
+    function settlement(t) {
+        $("#settlementDetailForm").html("");
+        var itemId = t.attr("data-item");
+        jQuery.postItems({
+            url: ctx + '/reserve/field/settlementForm',
+            data: {itemId: itemId},
+            success: function (result) {
+                $("#settlementForm").html(result);
+                $("#settlementBtn").click();
+                $("#settlementForm .select2").select2({
+                    width: '100%'
+                });
+                $('#settlementForm .icheck').iCheck({
+                    checkboxClass: 'icheckbox_square-blue checkbox',
+                    radioClass: 'iradio_square-blue'
+                });
+            }
+        });
+    }
     //结账
     $("#saveSettlementBtn").on('click', function () {
         var cosId = $("#cosId").val();
@@ -264,7 +264,7 @@ $(document).ready(function () {
             url: ctx + '/reserve/field/saveSettlement',
             data: data,
             success: function (values) {
-                if (values) {
+                if (values!=null) {
                     formLoding('保存结账单据成功!');
                     location.reload();
                 } else {

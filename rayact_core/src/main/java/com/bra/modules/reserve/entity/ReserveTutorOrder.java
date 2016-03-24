@@ -13,7 +13,7 @@ public class ReserveTutorOrder extends SaasEntity<ReserveTutorOrder> {
 	private static final long serialVersionUID = 1L;
 	private ReserveTutor tutor;		// 所属教练
 	private Double orderPrice;		// 教练费用
-	private Integer orderCount;    //订单数量
+	private Integer orderCount;    //订单数量 以半小时为单位
 	private Double totalPrice;
 	private String modelId;		// 业务编号(如:场地的教练费用的ID,人次售卖的教练费用的ID)
 	private String modelKey;		// 业务标识(如用field标识场地的教练费用,用visitor标识人次售卖的教练费用)

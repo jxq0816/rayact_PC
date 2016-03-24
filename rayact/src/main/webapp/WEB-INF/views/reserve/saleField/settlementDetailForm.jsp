@@ -13,26 +13,9 @@
                 </td>
                 <td>
                     <input type="hidden" name="itemId" value="${item.id}"/>
-                </td>
-                <j:if test="${!empty tutorOrder}">
                     <input type="hidden" name="tutorOrder.id" value="${tutorOrder.id}"/>
                     <input type="hidden" name="tutorOrder.orderPrice" id="tutorPrice" value="${tutorOrder.orderPrice}"/>
-                    <td>
-                        <label>
-                            <c:forEach items="${tutors}" var="tutor">
-                                ${tutor.name}
-                            </c:forEach>
-                        </label>
-                    </td>
-                    <td><label id="labelTutorPrice">每小时:${tutorOrder.orderPrice}元</label></td>
-                    <td>时长(小时):</td>
-                    <td>
-                        <label>
-                            <input type="text" id="tutorCount" name="tutorOrder.orderCount" class="form-control"
-                                   value="${tutorOrder.orderCount}"/>
-                        </label>
-                    </td>
-                </j:if>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -46,7 +29,12 @@
             <th>开始时间</th>
             <th>结束时间</th>
             <th>是否半场</th>
-            <th>价格</th>
+            <j:if test="${!empty tutorOrder}">
+                <th>
+                    教练
+                </th>
+            </j:if>
+            <th>合计</th>
             </thead>
             <tbody>
             <c:forEach items="${itemList}" var="item" varStatus="status">
@@ -65,9 +53,14 @@
                         <input type="hidden" name="venueConsList[${status.index}].halfCourt"
                                value="${item.halfCourt}"/>
                     </td>
+                    <j:if test="${!empty tutorOrder}">
+                        <td>
+                                ${tutorOrder.tutor.name}
+                        </td>
+                    </j:if>
                     <td>
                         <input type="text" style="width: 60px;" value="${item.consPrice}"
-                               class="form-control"
+                               class="form-control" readonly="readonly"
                                name="venueConsList[${status.index}].orderPrice"/>
                     </td>
                 </tr>
@@ -150,7 +143,8 @@
                 url: ctx + '/reserve/field/checkUserPwd',
                 data: {userPwd: userPwd},
                 success: function (result) {
-                    if (result && result.id != null) {
+                    if (result!=null && result.id != null) {
+                        successLoding("授权码正确!");
                         $("#checkoutId").val(result.id);
                         $("#detailOrderPrice").removeAttr("readonly");
                     }else{

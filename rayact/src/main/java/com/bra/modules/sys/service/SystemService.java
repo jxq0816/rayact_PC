@@ -3,10 +3,9 @@
  */
 package com.bra.modules.sys.service;
 
-import java.util.Date;
-
 import com.bra.common.config.Global;
 import com.bra.common.security.Digests;
+import com.bra.common.security.shiro.session.SessionDAO;
 import com.bra.common.service.BaseService;
 import com.bra.common.utils.Encodes;
 import com.bra.common.utils.MD5Util;
@@ -19,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.security.shiro.session.SessionDAO;
+import java.util.Date;
 
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
@@ -64,10 +63,13 @@ public class SystemService extends BaseService {
     }
 
     //查询用户授权码
-    public User getUserByPwd(String userPwd) {
-        User user = new User();
-        user.setCheckoutPwd(userPwd);
-        return userDao.getByUserPwd(user);
+    public User getUserByPwd(String id,String userPwd) {
+        User userFromBack=userDao.get("1");
+        String checkNo=userFromBack.getCheckoutPwd();
+        if(StringUtils.isNoneEmpty(checkNo)&&checkNo.equals(userPwd)){
+            return userFromBack;
+        }
+        return null;
     }
 
     @Transactional(readOnly = false)

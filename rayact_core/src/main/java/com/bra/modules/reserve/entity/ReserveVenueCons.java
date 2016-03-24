@@ -36,7 +36,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private Double cosOrderPrice;//预定时单据金额
     private Double consPrice;//预定金额
 
-    private Double discountPrice;//会员打折费
+    private Double discountPrice;//通过关系（经理以上领导）优惠价格
 
     private Double orderPrice;//场地实缴费金额
     private Double shouldPrice;//场地实缴费金额场地应缴费金额
@@ -91,7 +91,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
         this.userName = userName;
     }
 
-    @Length(min = 0, max = 1, message = "预订的类型1：散客 2：会员 3：团体长度必须介于 0 和 1 之间")
+    @Length(min = 0, max = 1, message = "预订的类型1：散客 2：会员 2")
     public String getConsType() {
         return consType;
     }

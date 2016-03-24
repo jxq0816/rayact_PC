@@ -72,7 +72,7 @@
             <button type="button" id="closeSettlementBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
                 取消
             </button>
-            <button type="button" id="saveSettlementBtn" class="btn btn-primary btn-flat">结算订单</button>
+            <button type="button" id="saveSettlementBtn" class="btn btn-primary btn-flat">结算确认</button>
         </div>
     </div>
 </div>
