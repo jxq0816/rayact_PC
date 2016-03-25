@@ -89,8 +89,16 @@ $(document).ready(function () {
     $("#refundSaveForVIPBtn").on('click', function () {
         var refundVolume =$("#refundVolume").val();
         refundVolume= $.trim(refundVolume);
-        if (refundVolume == '') {
+        if (refundVolume ==null || refundVolume=='' || refundVolume==undefined ) {
             formLoding("请输入退费");
+            return;
+        }
+        if(isNaN(refundVolume)){
+            errorLoding(" 退费金额必须为数字！");
+            return;
+        }
+        if(refundVolume<=0){
+            errorLoding(" 退费金额必须为正数！");
             return;
         }
         var id = $("#id").val();
@@ -119,6 +127,14 @@ $(document).ready(function () {
 
         if (rechargeVolume == '') {
             formLoding("请输入充值金额");
+            return;
+        }
+        if(isNaN(rechargeVolume)){
+            errorLoding(" 充值金额必须为数字！");
+            return;
+        }
+        if(rechargeVolume<=0){
+            errorLoding(" 充值金额必须为正数！");
             return;
         }
 
