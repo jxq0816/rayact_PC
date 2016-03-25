@@ -132,32 +132,33 @@
 </div>
 
 
-
 <!--结算详情-->
-<button class="btn btn-primary btn-flat md-trigger" id="settlementDetailBtn" style="display: none" data-modal="settlementDetail-primary">Basic Form
-</button>
-<div class="md-modal colored-header  custom-width md-effect-12" id="settlementDetail-primary">
-    <div class="md-content">
-        <div class="modal-header">
-            <h5>结算确认单</h5>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body form-horizontal" id="settlementDetailForm">
-            <!--预定表单-->
+<button id="settlementDetailBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDetailDialogModal"  data-toggle="modal">预订</button>
+<div class="modal fade"  style="width:auto;" id="settlementDetailDialogModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="settlementDetailLabel">结算</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="reserve_top_line">
 
-
-            <!--end 预定表单-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="closeSettlementDetailBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                取消
-            </button>
-            <button type="button" id="saveSettlementDetailBtn" class="btn btn-primary btn-flat">确定</button>
+                </div>
+                <div class="modal-body form-horizontal" id="settlementDetailForm">
+                    <!--结算表单-->
+                    <!--end 结算表单-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeSettlementDetailBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                    取消
+                </button>
+                <button type="button" id="saveSettlementDetailBtn" class="btn btn-primary btn-flat">确定</button>
+            </div>
         </div>
     </div>
 </div>
-
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field.js?t=" + Math.random() + "'><\/script>");
     $(document).ready(function () {
@@ -167,6 +168,11 @@
             refreshPositions: true
         });
         $("#giftDialogModal").draggable({
+            handle: ".modal-header",
+            cursor: 'move',
+            refreshPositions: true
+        });
+        $("#settlementDetailDialogModal").draggable({
             handle: ".modal-header",
             cursor: 'move',
             refreshPositions: true

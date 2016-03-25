@@ -62,6 +62,8 @@ public class ReserveController extends BaseController {
     private ReserveVenueGiftService reserveVenueGiftService;
     @Autowired
     private SystemService systemService;
+    @Autowired
+    private ReserveUserService userService;
 
 
     //场地状态界面
@@ -323,6 +325,12 @@ public class ReserveController extends BaseController {
         ReserveVenueConsItem search = new ReserveVenueConsItem();
         search.setConsData(venueCons);
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
+
+        User user=new User();
+        user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：场地管理员；4：收银；5：财务)
+        List<User> authUserList=userService.findList(user);
+
+        model.addAttribute("authUserList", authUserList);
         model.addAttribute("itemList", itemList);
         model.addAttribute("shouldPrice", shouldPrice);
         model.addAttribute("orderPrice", orderPrice);
@@ -342,7 +350,7 @@ public class ReserveController extends BaseController {
      */
     @RequestMapping(value = "saveSettlement")
     @ResponseBody
-    @Token(remove = true)
+    /*@Token(remove = true)*/
     public List<Map<String, String>> saveSettlement(ReserveVenueCons cons) {
         ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(cons);
         List<Map<String, String>> list = getReserveMap(venueCons.getVenueConsList());
@@ -422,11 +430,11 @@ public class ReserveController extends BaseController {
         reserveVenueGiftService.saveVenueList(giftForm, ReserveVenueCons.MODEL_KEY);
         return "success";
     }
-
-    @RequestMapping(value = "checkUserPwd")
+    //检测授权码
+    @RequestMapping(value = "checkUserAuth")
     @ResponseBody
-    public User checkUserPwd(String id,String userPwd) {
-        User user = systemService.getUserByPwd(id,userPwd);
+    public User checkUserAuth(String userId,String authPassword) {
+        User user = systemService.checkUserAuth(userId,authPassword);
         return user;
     }
 

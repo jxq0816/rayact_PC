@@ -6,7 +6,7 @@
                    action="${ctx}/reserve/commodity/inStorage" method="post"
                    class="form-horizontal">
             <form:hidden id="id" path="id"/>
-            <input type="hidden" id="token" value="${token}" />
+            <input type="hidden" name="token" value="${token}" />
             <div class="tab-pane active" id="home">
                 <table id="contentTable" class="table table-bordered">
                     <tr>

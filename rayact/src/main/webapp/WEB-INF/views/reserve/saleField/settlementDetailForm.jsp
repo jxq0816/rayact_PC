@@ -2,8 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="settlementDetailFormBean">
     <input type="hidden" name="id" value="${cos.id}"/>
-    <input type="hidden" id="settlementDetailToken" name="token" value="${token}"/>
-
+    <input type="hidden" name="token" value="${token}" />
     <div class="content">
         <table class="no-border">
             <tbody class="no-border-y">
@@ -105,40 +104,52 @@
         </div>
     </j:if>
     <hr/>
-    <div class="content">
         <div class="row">
+            <label for="detailShouldPrice" class="col-lg-2">应收:</label>
             <div class="col-lg-2">
-                <label id="totalPrice">应收(元):<input readonly="readonly" value="${shouldPrice}" type="text"
-                                                    id="detailShouldPrice" class="form-control"
-                                                    name="shouldPrice"/></label>
+                <input readonly="readonly" value="${shouldPrice}" type="text"
+                       id="detailShouldPrice" class="form-control"
+                       name="shouldPrice"/>
             </div>
-            <div class="col-lg-2" id="discountPriceDiv" style="display:none" >
-                <label>会员优惠(元):<input type="text" id="discountPrice" value="${discountPrice}" onkeyup="editPrice()" onafterpaste="editPrice()"
-                                      class="form-control number" name="discountPrice"/></label>
-            </div>
-            <div class="col-lg-2">
-                <label>实收(元):<input type="text" readonly="readonly" id="detailOrderPrice" value="${orderPrice}"
-                                    class="form-control required number" name="orderPrice"/>
-                    <a style="cursor: hand" id="editOrderPrice">
-                        <li class="fa fa-edit" onclick="changePrice()">修改价格</li>
-                    </a>
-                </label>
-            </div>
-            <div class="col-lg-6" id="button_userPwd" style="display: none">
-                    <label for="userPwd" class="col-lg-3">授权码:</label>
-                    <div class="col-lg-3">
-                        <input  id="userPwd" type="password" class="form-control"/>
+            <div class="col-lg-4" id="discountPriceDiv" style="display:none">
+                <div class="row">
+                    <label class="col-lg-6" for="discountPrice">会员优惠:</label>
+                    <div class="col-lg-6">
+                        <input type="text" id="discountPrice" value="${discountPrice}" onkeyup="editPrice()"
+                               onafterpaste="editPrice()"
+                               class="form-control " name="discountPrice"/>
                     </div>
-                    <label>
-                        <button type="button" onclick="checkAuthorization()" class="btn btn-info">验证</button>
-                    </label>
+                </div>
             </div>
-
+                <label for="detailOrderPrice" class="col-lg-2">实收: <a style="cursor: hand" id="editOrderPrice">
+                    <li class="fa fa-edit" onclick="changePrice()"></li>
+                </a></label>
+                <div class="col-lg-2">
+                <input type="text" readonly="readonly" id="detailOrderPrice" value="${orderPrice}"
+                                    class="form-control required number" name="orderPrice"/>
+                </div>
+                    <%-- --%>
+           <%-- <div class="col-lg-2">
+                <button type="button" onclick="changePrice()" class="btn btn-info">修改价格</button>
+            </div>--%>
         </div>
-    </div>
+        <hr/>
+        <div class="row" id="button_userPwd" style="display: none">
+            <label for="authUser" class="col-lg-2">授权人:</label>
+            <div class="col-lg-2">
+                <sys:select id="authUser" cssClass="form-control" name="user.id"
+                            items="${authUserList}"
+                            value="${user.id}"
+                            itemLabel="name"
+                            itemValue="id"
+                ></sys:select>
+            </div>
+            <label for="authPassword" class="col-lg-2">授权码:</label>
+            <div class="col-lg-2">
+                <input id="authPassword" type="password" class="form-control"/>
+            </div>
+            <label>
+                <button type="button" onclick="checkAuthorization()" class="btn btn-info">验证</button>
+            </label>
+        </div>
 </form>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-    });
-</script>

@@ -63,10 +63,10 @@ public class SystemService extends BaseService {
     }
 
     //查询用户授权码
-    public User getUserByPwd(String id,String userPwd) {
-        User userFromBack=userDao.get("1");
+    public User checkUserAuth(String userId,String authPassword) {
+        User userFromBack=userDao.get(userId);
         String checkNo=userFromBack.getCheckoutPwd();
-        if(StringUtils.isNoneEmpty(checkNo)&&checkNo.equals(userPwd)){
+        if(StringUtils.isNoneEmpty(checkNo)&&checkNo.equals(authPassword)){
             return userFromBack;
         }
         return null;

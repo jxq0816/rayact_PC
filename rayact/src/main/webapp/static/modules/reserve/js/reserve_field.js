@@ -373,10 +373,11 @@ function editPrice() {
     $("#detailOrderPrice").val(orderPrice);
 }
 function checkAuthorization() {
-    var userPwd = $("#userPwd").val();
+    var userId=$("#authUser").val();
+    var authPassword = $("#authPassword").val();
     jQuery.postItems({
-        url: ctx + '/reserve/field/checkUserPwd',
-        data: {userPwd: userPwd},
+        url: ctx + '/reserve/field/checkUserAuth',
+        data: {userId:userId,authPassword: authPassword},
         success: function (result) {
             if (result != null && result.id != null) {
                 successLoding("授权码正确!");
