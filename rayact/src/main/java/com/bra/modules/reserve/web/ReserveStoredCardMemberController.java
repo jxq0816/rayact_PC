@@ -134,14 +134,12 @@ public class ReserveStoredCardMemberController extends BaseController {
         ReserveCardStatements reserveCardStatements = new ReserveCardStatements();
         reserveCardStatements.setReserveMember(reserveMember);
         Double remainder = reserveMember.getRemainder();
+
         if (remainder == null) {
             reserveMember.setRemainder(0.0);//设置默认余额
-        } else if (StringUtils.isEmpty(reserveMember.getId())) {//新建用户
-            reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
-            reserveCardStatements.setRemarks("储值卡会员注册");
-            reserveCardStatements.setTransactionType("1");//交易类型
-            reserveCardStatementsService.save(reserveCardStatements);
-        } else {//修改用户
+            reserveMemberService.save(reserveMember);
+        } else if (reserveMember.getId()!=null&&!StringUtils.isEmpty(reserveMember.getId())) {//修改用户
+            reserveMemberService.save(reserveMember);
             ReserveMember reserveMemberOld = reserveMemberService.get(reserveMember);
             Double remainderOld = reserveMemberOld.getRemainder();
             Double transactionVolume = remainder - remainderOld;
@@ -149,8 +147,15 @@ public class ReserveStoredCardMemberController extends BaseController {
             reserveCardStatements.setRemarks("超级管理员修改余额");
             reserveCardStatements.setTransactionType("3");//交易类型
             reserveCardStatementsService.save(reserveCardStatements);
+        } else {//新增用户
+            reserveMemberService.save(reserveMember);
+            reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
+            reserveCardStatements.setRemarks("储值卡会员注册");
+            reserveCardStatements.setTransactionType("1");//交易类型
+            reserveCardStatementsService.save(reserveCardStatements);
+
         }
-        reserveMemberService.save(reserveMember);
+
         addMessage(redirectAttributes, "保存储值卡会员成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/storedCardMember/list";
     }

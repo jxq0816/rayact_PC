@@ -109,7 +109,7 @@ public class ReserveCommodityController extends BaseController {
 
     @RequestMapping(value = "inStorage")
     @ResponseBody
-    @Token(remove = true)
+   /* @Token(remove = true)*/
     public String inStorage(String id, Integer inRepertoryNum) {
         ReserveCommodity commodity = new ReserveCommodity();
         commodity.setId(id);
@@ -128,7 +128,7 @@ public class ReserveCommodityController extends BaseController {
             return form(commodity, model);
         }
         //用户输入的库存是箱数，而数据库中存的是瓶数
-        commodity.setRepertoryNum(commodity.getUnit()*commodity.getRepertoryNum());
+        //commodity.setRepertoryNum(commodity.getUnit()*commodity.getRepertoryNum());
         commodityService.save(commodity);
         addMessage(redirectAttributes, "保存商品成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/commodity/list";
