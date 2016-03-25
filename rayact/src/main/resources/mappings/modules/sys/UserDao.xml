@@ -24,7 +24,6 @@
 		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
-		a.checkout_pwd,
     	c.name AS "company.name",
     	r.id AS "reserveRole.id",
     	r.user_type AS "reserveRole.userType"

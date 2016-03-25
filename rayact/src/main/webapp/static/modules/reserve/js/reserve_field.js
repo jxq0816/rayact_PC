@@ -16,7 +16,7 @@ $(document).ready(function () {
         var date = consDate;//日期
         jQuery.postItems({
             url: ctx + '/reserve/field/reserveForm',
-            data: {fieldId: fieldId, time: time, date: date, venueId: venueId,isHalfCourt:isHalfCourt},
+            data: {fieldId: fieldId, time: time, date: date, venueId: venueId, isHalfCourt: isHalfCourt},
             success: function (result) {
                 $("#reserveForm").html(result);
                 $("#reserveDialog").click();
@@ -36,19 +36,19 @@ $(document).ready(function () {
         var consMobile = $("#consMobile").val();
         var frequency = $("#frequency").val();
         var endDate = $("#endDate").val();
-        var startTime= $("#startTime").val();
-        var endTime= $("#endTime").val();
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
 
-        if(startTime==endTime){
+        if (startTime == endTime) {
             formLoding('开始时间应小于结束时间');
             return false;
         }
 
         $.postItems({
             url: ctx + '/reserve/field/checkTime',
-            data: {startTime:startTime,endTime:endTime},
+            data: {startTime: startTime, endTime: endTime},
             success: function (values) {
-                if (values=="0") {
+                if (values == "0") {
                     formLoding('开始时间应小于结束时间');
                     return false;
                 }
@@ -79,8 +79,7 @@ $(document).ready(function () {
                         if (item.bool == "0") {
                             formLoding('该时间段不可使用!');
                         }
-                        else
-                        {
+                        else {
                             formLoding('订单预定成功!');
                             $(".table-chang tbody td").each(function (index) {
                                 var $this = $(this);
@@ -89,9 +88,9 @@ $(document).ready(function () {
                                 $.each(values, function (index, item) {
                                     if (item.fieldId == fieldId && time == item.time) {
                                         /*$this.removeClass("access");
-                                        $this.attr("status", "1");
-                                        $this.attr("data-item", item.itemId);
-                                        $this.text(userName);*/
+                                         $this.attr("status", "1");
+                                         $this.attr("data-item", item.itemId);
+                                         $this.text(userName);*/
                                         location.reload(true);
                                     }
                                 });
@@ -126,7 +125,6 @@ $(document).ready(function () {
     }
 
 
-
     //赠品
     function gift(t) {
         var itemId = t.attr("data-item");
@@ -159,11 +157,11 @@ $(document).ready(function () {
             url: ctx + '/reserve/field/saveGift',
             data: data,
             success: function (values) {
-                if (values=="success") {
+                if (values == "success") {
                     successLoding('保存赠品成功!');
                     location.reload();
                 }
-                if(values=="fail"){
+                if (values == "fail") {
                     errorLoding("库存量不足！")
                 }
             }
@@ -209,6 +207,7 @@ $(document).ready(function () {
             }
         });
     }
+
     //右击 结账
     function settlement(t) {
         $("#settlementDetailForm").html("");
@@ -229,6 +228,7 @@ $(document).ready(function () {
             }
         });
     }
+
     //结账
     $("#saveSettlementBtn").on('click', function () {
         var cosId = $("#cosId").val();
@@ -255,8 +255,23 @@ $(document).ready(function () {
         });
     });
 
+    /* $("#editOrderPrice").on('click', function () {
+
+     });*/
     //确认结账
     $("#saveSettlementDetailBtn").on('click', function () {
+
+        var detailShouldPrice = $("#detailShouldPrice").val();
+        var discountPrice = $("#discountPrice").val();
+        if(isNaN(discountPrice)){
+            errorLoding("优惠金额必须为数字！");
+            return;
+        }
+        var price = $("#detailOrderPrice").val();
+        if (price < 0 || discountPrice > detailShouldPrice) {
+            errorLoding("优惠金额不能大于应收金额！");
+            return;
+        }
         var value = $("#detailOrderPrice").val();
         $("#orderPrice").val(value);
         var data = $("#settlementFormBean").serializeArray();
@@ -264,7 +279,7 @@ $(document).ready(function () {
             url: ctx + '/reserve/field/saveSettlement',
             data: data,
             success: function (values) {
-                if (values!=null) {
+                if (values != null) {
                     formLoding('保存结账单据成功!');
                     location.reload();
                 } else {
@@ -336,6 +351,39 @@ $(document).ready(function () {
             $(this).smartMenu(reserveMenuData, {name: "reserve"});
         }
     });
-
-
 });
+//修改价格的连接
+function changePrice() {
+    $("#button_userPwd").show();
+}
+//修改结算价格
+function editPrice() {
+    var discountPrice = $("#discountPrice").val();
+    if(isNaN(discountPrice)){
+        errorLoding("优惠金额必须为数字！");
+        return;
+    }
+    var detailShouldPrice = $("#detailShouldPrice").val();
+
+    var orderPrice = detailShouldPrice - discountPrice;
+    if (orderPrice < 0) {
+        errorLoding("优惠金额不能大于应收金额！");
+        return;
+    }
+    $("#detailOrderPrice").val(orderPrice);
+}
+function checkAuthorization() {
+    var userPwd = $("#userPwd").val();
+    jQuery.postItems({
+        url: ctx + '/reserve/field/checkUserPwd',
+        data: {userPwd: userPwd},
+        success: function (result) {
+            if (result != null && result.id != null) {
+                successLoding("授权码正确!");
+                $("#discountPriceDiv").show();
+            } else {
+                errorLoding("授权码不正确!");
+            }
+        }
+    });
+}

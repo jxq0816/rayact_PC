@@ -107,51 +107,38 @@
     <hr/>
     <div class="content">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-lg-2">
                 <label id="totalPrice">应收(元):<input readonly="readonly" value="${shouldPrice}" type="text"
                                                     id="detailShouldPrice" class="form-control"
                                                     name="shouldPrice"/></label>
             </div>
-            <div class="col-sm-3">
-                <label>会员优惠(元):<input type="text" readonly="readonly" id="discountPrice" value="${discountPrice}"
-                                      class="form-control" name="discountPrice"/></label>
+            <div class="col-lg-2" id="discountPriceDiv" style="display:none" >
+                <label>会员优惠(元):<input type="text" id="discountPrice" value="${discountPrice}" onkeyup="editPrice()" onafterpaste="editPrice()"
+                                      class="form-control number" name="discountPrice"/></label>
             </div>
-            <div class="col-sm-3">
+            <div class="col-lg-2">
                 <label>实收(元):<input type="text" readonly="readonly" id="detailOrderPrice" value="${orderPrice}"
-                                    class="form-control" name="orderPrice"/></label>
-                <a style="cursor: hand" id="editOrderPrice">
-                    <li class="fa fa-edit"></li>
-                </a>
-            </div>
-            <div class="col-sm-3" id="button_userPwd" style="display: none">
-                <label>授权码:
-                    <input type="password" id="userPwd" class="form-control"/>
-                    <button type="button" id="userPwdBtn" class="btn btn-info">确认</button>
+                                    class="form-control required number" name="orderPrice"/>
+                    <a style="cursor: hand" id="editOrderPrice">
+                        <li class="fa fa-edit" onclick="changePrice()">修改价格</li>
+                    </a>
                 </label>
             </div>
+            <div class="col-lg-6" id="button_userPwd" style="display: none">
+                    <label for="userPwd" class="col-lg-3">授权码:</label>
+                    <div class="col-lg-3">
+                        <input  id="userPwd" type="password" class="form-control"/>
+                    </div>
+                    <label>
+                        <button type="button" onclick="checkAuthorization()" class="btn btn-info">验证</button>
+                    </label>
+            </div>
+
         </div>
     </div>
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#editOrderPrice").on('click', function () {
-            $("#button_userPwd").show();
-        });
-        $("#userPwdBtn").on('click', function () {
-            var userPwd = $("#userPwd").val();
-            jQuery.postItems({
-                url: ctx + '/reserve/field/checkUserPwd',
-                data: {userPwd: userPwd},
-                success: function (result) {
-                    if (result!=null && result.id != null) {
-                        successLoding("授权码正确!");
-                        $("#checkoutId").val(result.id);
-                        $("#detailOrderPrice").removeAttr("readonly");
-                    }else{
-                        errorLoding("授权码不正确!");
-                    }
-                }
-            });
-        });
+
     });
 </script>

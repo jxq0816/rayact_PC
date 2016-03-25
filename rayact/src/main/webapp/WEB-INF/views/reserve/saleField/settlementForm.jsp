@@ -124,13 +124,6 @@
                                                     class="form-control"
                                                     name="shouldPrice"/></label>
                 </div>
-            <j:if test="${'2' eq cos.consType}">
-                <div class="col-sm-4">
-                    <label>优惠(元):<input type="text" value="${cos.discountPrice}" id="discountPrice"
-                                        class="form-control"
-                                        name="discountPrice"/></label>
-                </div>
-            </j:if>
             <div class="col-sm-4">
                 <label>实收(元):<input type="text" readonly="readonly" id="orderPrice" class="form-control"
                                     name="orderPrice"/></label>
