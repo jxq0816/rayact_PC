@@ -11,6 +11,10 @@ function checkForm() {
         errorLoding("手机号不能为空");
         return false;
     }
+    if(checkMobile(mobile)==false){
+        errorLoding("请输入正确的手机号");
+        return false;
+    }
     if(name==''|| name==null || name==undefined){
         errorLoding("姓名不能为空");
         return false;
@@ -38,4 +42,13 @@ function checkForm() {
         }
     });
     return rs;
+}
+function checkMobile(s){
+    var length = s.length;
+    if(length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(14[0-9]{1})|)+\d{8})$/.test(s) )
+    {
+        return true;
+    }else{
+        return false;
+    }
 }
