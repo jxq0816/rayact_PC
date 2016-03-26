@@ -73,10 +73,10 @@
                                 </td>
 
                                 <td>
-                                    <button id="${commodity.id}" class="btn btn-primary btn-xs"
+                                    <input type="button" id="${commodity.id}" class="btn btn-primary btn-xs" value="售卖" <j:if test="${commodity.repertoryNum==0}">disabled="true"</j:if>
                                             onclick="outStorage('${commodity.id}','${commodity.name}',${commodity.price},${commodity.repertoryNum})">
-                                        售卖
-                                    </button>
+
+                                    </input>
                                 </td>
                             </tr>
                         </c:forEach>

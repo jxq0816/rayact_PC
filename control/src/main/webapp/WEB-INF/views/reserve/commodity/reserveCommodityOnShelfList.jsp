@@ -75,10 +75,12 @@
                                 </td>
 
                                 <td>
+                                   <%-- <j:if test="">--%>
                                     <button id="${commodity.id}" class="btn btn-primary btn-xs"
                                             onclick="outStorage('${commodity.id}','${commodity.name}',${commodity.price})">
                                         售卖
                                     </button>
+                                    <%--</j:if>--%>
                                 </td>
                             </tr>
                         </c:forEach>
