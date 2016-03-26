@@ -79,7 +79,7 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 			}
 			for (ReserveMemberDayReport report : dayReports) {
 				Double bill=report.getBill();
-				if (bill != 0.0) {
+				if (bill!=null && bill != 0.0) {
 					list.add(report);
 				}
 			}

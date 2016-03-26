@@ -4,7 +4,7 @@
 <head>
     <meta name="decorator" content="main"/>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
-    <title>会员收入统计</title>
+    <title>会员充值统计</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>会员收入统计</h3>
+                    <h3>会员充值统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
                            action="${ctx}/reserve/reserveCardStatements/memberIncomeReport"
@@ -76,7 +76,6 @@
                         <table>
                             <thead>
                             <tr>
-                                <th>项目</th>
                                 <th>储值卡收入</th>
                                 <th>现金收入</th>
                                 <th>银行卡收入</th>
@@ -90,9 +89,6 @@
                             <tbody>
                             <c:forEach items="${collectReport}" var="report">
                                 <tr>
-                                    <td>
-                                            ${report.reserveProject.name}
-                                    </td>
                                     <td>
                                             ${report.storedCardBill}
                                     </td>

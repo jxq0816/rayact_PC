@@ -43,15 +43,7 @@
                                                 defaultLabel="----请选择-----"
                                                 defaultValue=""></sys:select>
                                 </td>
-                                <td>项目:</td>
-                                <td>
 
-                                    <sys:select cssClass="input-large" name="reserveProject.id"
-                                                value="project"
-                                                items="${projectList}" itemLabel="name" itemValue="id"
-                                                defaultLabel="----请选择-----"
-                                                defaultValue=""></sys:select>
-                                </td>
                                 <td>类型：</td>
                                 <td>
                                     <div class="btn-group" id="payType">
@@ -68,14 +60,14 @@
                                 </td>
                                 <td>
                                     <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveMemberIntervalReport.startDate}"/>"
-                                           name="startDate" id="startDate" type="text" readonly="readonly"
+                                           name="startDate" id="startDate" type="text"
                                            maxlength="20"
                                            class="input-medium form-control Wdate "
                                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </td>
                                 <td>
                                     <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveMemberIntervalReport.endDate}"/>"
-                                           name="endDate" id="endDate" type="text" readonly="readonly"
+                                           name="endDate" id="endDate" type="text"
                                            maxlength="20"
                                            class="input-medium form-control Wdate "
                                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
@@ -97,9 +89,7 @@
                             <thead>
                             <tr>
                                 <th>日期</th>
-                                <th>储值卡类型</th>
                                 <th>现金收入</th>
-                                <th>储值卡收入</th>
                                 <th>银行卡收入</th>
                                 <th>微信收入</th>
                                 <th>支付宝收入</th>
@@ -117,15 +107,6 @@
                                         <fmt:formatDate value="${reserveMemberIntervalReport.endDate}"
                                                         timeStyle="date"></fmt:formatDate>
 
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.reserveProject.name}~${intervalReport.storedcardMemberSet.name}
-                                    </td>
-
-
-                                    <td>
-                                            ${intervalReport.storedCardBill}
                                     </td>
 
                                     <td>
@@ -161,14 +142,6 @@
                                         <td>
                                             <fmt:formatDate value="${dayReport.day}"
                                                             timeStyle="date"></fmt:formatDate>
-                                        </td>
-
-                                        <td>
-                                               ${dayReport.storedcardMemberSet.name}
-                                        </td>
-
-                                        <td>
-                                                ${dayReport.storedCardBill}
                                         </td>
 
                                         <td>

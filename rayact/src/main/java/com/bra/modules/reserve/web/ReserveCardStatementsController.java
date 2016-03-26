@@ -7,7 +7,6 @@ import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveMember;
-import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import com.bra.modules.reserve.service.ReserveCardStatementsService;
@@ -113,11 +112,8 @@ public class ReserveCardStatementsController extends BaseController {
 			model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);//请求参数返回
 			return "reserve/report/memberIncomeCollectReport";
 		}else{
-			reserveMemberIntervalReport.setReserveProject(reserveProjectService.get(reserveMemberIntervalReport.getReserveProject()));//项目信息完善
-			List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
 			List<ReserveMemberIntervalReport> intervalReports=reserveCardStatementsService.memberIncomeIntervalReport(reserveMemberIntervalReport);
 			model.addAttribute("intervalReports", intervalReports);
-			model.addAttribute("projectList", projectList);
 			model.addAttribute("reserveMemberIntervalReport", reserveMemberIntervalReport);//请求参数返回
 			return "reserve/report/memberIncomeDetailReport";
 		}
@@ -175,13 +171,13 @@ public class ReserveCardStatementsController extends BaseController {
 		Double difference=remainder-realRefundVolume;//差额
 
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-		reserveCardStatements.setTransactionType("3");//销户记录
+		reserveCardStatements.setTransactionType("5");//销户退还用户的金额记录
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setTransactionVolume(realRefundVolume);// 退还用户的金额
 		reserveCardStatementsService.save(reserveCardStatements);
 
 		ReserveCardStatements statements=new ReserveCardStatements();
-		statements.setTransactionType("4");//销户违约金
+		statements.setTransactionType("6");//销户违约金
 		statements.setReserveMember(reserveMember);
 		statements.setTransactionVolume(difference);//销户退还用户余下的差额
 		reserveCardStatementsService.save(statements);

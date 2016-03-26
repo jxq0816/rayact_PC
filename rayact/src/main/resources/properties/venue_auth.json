@@ -149,7 +149,7 @@
       },
       {
         "code": "memberIncomeReport",
-        "name": "会员收入统计",
+        "name": "会员充值统计",
         "href":"/reserve/reserveCardStatements/memberIncomeReport",
         "authorityList": []
       },
