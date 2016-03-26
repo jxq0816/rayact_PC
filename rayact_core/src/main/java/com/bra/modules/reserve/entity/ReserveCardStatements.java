@@ -13,7 +13,7 @@ public class ReserveCardStatements extends SaasEntity<ReserveCardStatements> {
 	
 	private static final long serialVersionUID = 1L;
 	private ReserveMember reserveMember;	// 会员编号外键
-	private String transactionType;  //交易类型 (1：充值，2：退费，3：商品消费 4:超级管理员修改余额 5：销户退还用户的金额 6：销户违约金)
+	private String transactionType;  //交易类型 (1：充值，2：退费，3：商品消费 4:超级管理员修改余额 5：销户退还用户的金额 6：销户违约金;7:次卡充值)
 	private Double transactionVolume;		// 交易额
 	private String payType; //充值类型(2:现金,3:银行卡,4:微信,5:支付宝,6:其它)
 

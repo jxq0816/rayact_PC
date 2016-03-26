@@ -78,13 +78,15 @@
 
 
                                 <tr>
-                                    <td>卡号截止日期:</td>
+                                   <%-- <td>卡号截止日期:</td>
                                     <td>
                                         <input name="validityend" type="text" readonly="readonly" maxlength="20"
                                                class="input-large Wdate "
                                                value="<fmt:formatDate value="${reserveMember.validityend}" pattern="yyyy-MM-dd"/>"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </td>
+                                    </td>--%>
+
+
 
                                     <td>剩余次数:</td>
                                     <td>

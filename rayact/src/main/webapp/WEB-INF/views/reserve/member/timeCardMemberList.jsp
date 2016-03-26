@@ -117,6 +117,9 @@
                                     </td>--%>
                                     <td>
                                         <a class="btn btn-primary btn-xs"
+                                           onclick="addTime('${reserveMember.id}')"><i
+                                                class="fa fa-pencil"></i>冲次</a>
+                                        <a class="btn btn-primary btn-xs"
                                            href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
                                                 class="fa fa-pencil"></i>修改</a>
                                         <a class="btn btn-danger btn-xs"
@@ -146,5 +149,7 @@
         </div>
     </div>
 </div>
+<jsp:include page="timeCardAddDialog.jsp"></jsp:include>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/timecard.js"></script>
 </body>
 </html>

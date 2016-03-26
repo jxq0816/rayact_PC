@@ -5,6 +5,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveTimecardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
@@ -59,6 +60,31 @@ public class ReserveTimeCardMemberController extends BaseController {
         Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
         model.addAttribute("page", page);
         return "reserve/member/timeCardMemberList";
+    }
+    //储值冲次数
+    @RequestMapping(value = "addTimeForm")
+    public String addTimeForm(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model){
+        reserveMember = reserveMemberService.get(reserveMember);
+        model.addAttribute("reserveMember", reserveMember);
+        return "reserve/member/timeCardAddForm";
+    }
+    //次卡充值保存
+    @RequestMapping(value = "addTime")
+    public String addTime(String id, Double rechargeVolume,int time,String payType,Model model){
+
+        ReserveMember reserveMember = reserveMemberService.get(id);
+        int residue=reserveMember.getResidue();
+        residue+=time;
+        reserveMember.setResidue(residue);
+        reserveMemberService.save(reserveMember);
+        //记录次卡充值记录
+        ReserveCardStatements statement=new ReserveCardStatements();
+        statement.setReserveMember(reserveMember);
+        statement.setTransactionVolume(rechargeVolume);
+        statement.setTransactionType("7");
+        statement.setPayType(payType);
+        model.addAttribute("reserveMember", reserveMember);
+        return "reserve/member/timeCardAddForm";
     }
 
     @RequestMapping(value = "form")
