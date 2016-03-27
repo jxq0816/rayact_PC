@@ -76,7 +76,7 @@
 
                                         <td>库存数量：</td>
                                         <td>
-                                            <form:input path="repertoryNum" htmlEscape="false" readonly="true"
+                                            <form:input path="repertoryNum" htmlEscape="false"
                                                         class="form-control required"/>
                                             <span class="help-inline"><font color="red">*</font> </span>
                                         </td>

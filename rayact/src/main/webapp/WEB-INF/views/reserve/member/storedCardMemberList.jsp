@@ -16,7 +16,7 @@
                 <div class="header">
                     <h3>储值卡会员列表</h3>
                 </div>
-                <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/"
+                <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/storedCardMember/list"
                            method="post" class="breadcrumb form-search ">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
