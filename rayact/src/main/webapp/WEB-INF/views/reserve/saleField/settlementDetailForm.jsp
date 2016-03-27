@@ -137,7 +137,7 @@
         <div class="row" id="button_userPwd" style="display: none">
             <label for="authUser" class="col-lg-2">授权人:</label>
             <div class="col-lg-2">
-                <sys:select id="authUser" cssClass="form-control" name="user.id"
+                <sys:select id="authUser" cssClass="form-control" name="checkOutUser.id"
                             items="${authUserList}"
                             value="${user.id}"
                             itemLabel="name"

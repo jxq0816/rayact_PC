@@ -32,6 +32,8 @@ import java.util.Map;
 public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, ReserveVenueCons> {
 
     @Autowired
+    private StoredCardMemberService storedCardMemberService;
+    @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
@@ -126,6 +128,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Transactional(readOnly = false)
     public void save(ReserveVenueCons reserveVenueCons) {
         ReserveMember consumer = reserveVenueCons.getMember();
+        consumer=storedCardMemberService.get(consumer);
         ReserveStoredcardMemberSet card = consumer.getStoredcardSet();
 
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
@@ -162,7 +165,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                     price = reserveFieldPriceService.getPrice(item.getReserveField(), "1", reserveVenueCons.getConsDate(), item.getStartTime(), item.getEndTime());
                     Double rate = reserveFieldPriceService.getMemberDiscountRate(reserveVenueCons.getMember());
                     if (rate != null && rate != 0) {
-                        price = price - (price * rate / 100);
+                        price = price * rate*0.01;
                     }
                 }
                 //教练费不打折

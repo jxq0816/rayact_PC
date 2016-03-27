@@ -157,7 +157,7 @@ $(document).ready(function () {
             },
             success: function (result) {
                 if (result == "success") {
-                    location.reload("true");
+                    location.reload(true);
                 } else {
                     formLoding('充值失败!');
                 }
