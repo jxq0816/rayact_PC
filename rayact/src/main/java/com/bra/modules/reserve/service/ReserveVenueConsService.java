@@ -128,9 +128,13 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Transactional(readOnly = false)
     public void save(ReserveVenueCons reserveVenueCons) {
         ReserveMember consumer = reserveVenueCons.getMember();
-        consumer=storedCardMemberService.get(consumer);
-        ReserveStoredcardMemberSet card = consumer.getStoredcardSet();
-
+        ReserveStoredcardMemberSet card=null;
+        if(consumer!=null){
+            consumer=storedCardMemberService.get(consumer);
+            if(consumer!=null){
+                card = consumer.getStoredcardSet();
+            }
+        }
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
         String frequency = reserveVenueCons.getFrequency();//频率
 

@@ -25,9 +25,6 @@
                                 <td>${venueOrder.orderPrice}</td>
                                 <td>支付方式:</td>
                                 <td>
-                                    <j:if test="${'1' eq venueOrder.consType}">
-                                        会员卡
-                                    </j:if>
                                     <j:if test="${'2' eq venueOrder.consType}">
                                         现金
                                     </j:if>
