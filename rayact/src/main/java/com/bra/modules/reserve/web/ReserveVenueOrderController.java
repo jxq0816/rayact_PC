@@ -1,19 +1,18 @@
 package com.bra.modules.reserve.web;
 
+import com.bra.common.config.Global;
 import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.ViewResult;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
-import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.bra.common.config.Global;
-import com.bra.common.web.BaseController;
 
 import java.util.List;
 
@@ -63,14 +62,14 @@ public class ReserveVenueOrderController extends BaseController {
         model.addAttribute("memberList", reserveMemberService.findList(new ReserveMember()));
         return "reserve/visitorsSetOrder/form";
     }
-
+    //确认购买 表单
     @RequestMapping(value = "detail")
     @Token(save = true)
     public String detail(ReserveVenueOrder reserveVenueOrder, Model model) {
         model.addAttribute("venueOrder", reserveVenueOrder);
         return "reserve/visitorsSetOrder/detail";
     }
-
+    //确认购买
     @RequestMapping(value = "save")
     @ResponseBody
     @Token(remove = true)

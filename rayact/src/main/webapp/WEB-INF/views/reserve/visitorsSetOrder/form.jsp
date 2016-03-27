@@ -45,7 +45,7 @@
                                 <td class="text-right"><input readonly="readonly" id="consMobile" name="consMobile"
                                                               type="text"
                                                               class="form-control"/></td>
-                                <td>数量:</td>
+                                <td>人数:</td>
                                 <td>
                                     <input type="text" class="form-control number" name="collectCount" id="collectCount"
                                            value="1"/>
@@ -58,7 +58,7 @@
             </div>
 
             <!--应收金额-->
-            <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
+            <%--<div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
                 <div class="block-flat">
                     <div class="header">
                         <h5 class="visible-lg">应收金额</h5>
@@ -157,7 +157,7 @@
                             </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
 

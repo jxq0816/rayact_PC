@@ -77,13 +77,13 @@
       },
       {
         "code": "vistorsSet",
-        "name": "人次售卖",
+        "name": "场次票售卖",
         "href":"/reserve/reserveVenueOrder/list",
         "authorityList": []
       },
       {
         "code": "venueVisitorsSet",
-        "name": "人次票设置",
+        "name": "场次票设置",
         "href":"/reserve/reserveVenueVisitorsSet/list",
         "authorityList": []
       },

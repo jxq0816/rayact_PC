@@ -1,16 +1,18 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-import java.util.Map;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.common.utils.StringUtils;
+import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
+import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.entity.ReserveVenueOrder;
 import com.bra.modules.reserve.event.visitors.VenueOrderEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveVenueOrder;
-import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 场地人次票订单Service
@@ -21,6 +23,9 @@ import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
 @Service
 @Transactional(readOnly = true)
 public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, ReserveVenueOrder> {
+
+    @Autowired
+    private ReserveMemberService memberService;
 
     public ReserveVenueOrder get(String id) {
         return super.get(id);
@@ -48,6 +53,14 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
 
     @Transactional(readOnly = false)
     public void save(ReserveVenueOrder reserveVenueOrder) {
+        if(reserveVenueOrder.getMember()!=null&& StringUtils.isNoneEmpty(reserveVenueOrder.getMember().getId())){
+            ReserveMember member=memberService.get(reserveVenueOrder.getMember());
+            int residue=member.getResidue();
+            int orderResidue=reserveVenueOrder.getCollectCount();
+            residue-=orderResidue;//次数减
+            member.setResidue(residue);
+            memberService.save(member);
+        }
         super.save(reserveVenueOrder);
         applicationContext.publishEvent(new VenueOrderEvent(reserveVenueOrder));
     }
