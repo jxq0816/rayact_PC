@@ -43,6 +43,16 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     private String halfCourt;//是否半场(1:是) by jiang
 
+    private String checkOutUserId;
+
+    public String getCheckOutUserId() {
+        return checkOutUserId;
+    }
+
+    public void setCheckOutUserId(String checkOutUserId) {
+        this.checkOutUserId = checkOutUserId;
+    }
+
     private User checkOutUser;
 
 

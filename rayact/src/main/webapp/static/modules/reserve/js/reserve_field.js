@@ -272,8 +272,6 @@ $(document).ready(function () {
             errorLoding("优惠金额不能大于应收金额！");
             return;
         }
-        var value = $("#detailOrderPrice").val();
-        $("#orderPrice").val(value);
         var data = $("#settlementFormBean").serializeArray();
         $.postItems({
             url: ctx + '/reserve/field/saveSettlement',
@@ -381,6 +379,8 @@ function checkAuthorization() {
         success: function (result) {
             if (result != null && result.id != null) {
                 successLoding("授权码正确!");
+                document.getElementById("checkOutUserId").value=userId;
+                alert(document.getElementById("checkOutUserId").value);
                 $("#discountPriceDiv").show();
             } else {
                 errorLoding("授权码不正确!");

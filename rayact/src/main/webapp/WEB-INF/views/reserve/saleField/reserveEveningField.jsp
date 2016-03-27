@@ -128,7 +128,7 @@
                                         data-price="${price}"
                                         data-field="${fullField.fieldPriceLeft.fieldId}"
                                         data-isHalfCourt="1"
-                                        data-time="${t}"> ${leftUsername}
+                                        data-time="${t}"> <%--${leftUsername}--%>
                                     </td>
 
                                     <td style="color: #000;" status="${status}"
@@ -137,7 +137,7 @@
                                         data-price="${price}"
                                         data-field="${fullField.fieldId}"
                                         data-isHalfCourt="0"
-                                        data-time="${t}"> ${username}
+                                        data-time="${t}"> <%--${username}--%>
                                     </td>
                                     <td style="color: #000;" status="${rightStatus}"
                                         data-item="${rightItemId}"
@@ -145,7 +145,7 @@
                                         data-price="${rightPrice}"
                                         data-field="${fullField.fieldPriceRight.fieldId}"
                                         data-isHalfCourt="1"
-                                        data-time="${t}">${rightUsername}
+                                        data-time="${t}"><%--${rightUsername}--%>
                                     </td>
                                 </tr>
                             </table>

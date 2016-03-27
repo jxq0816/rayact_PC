@@ -137,13 +137,14 @@
         <div class="row" id="button_userPwd" style="display: none">
             <label for="authUser" class="col-lg-2">授权人:</label>
             <div class="col-lg-2">
-                <sys:select id="authUser" cssClass="form-control" name="checkOutUser.id"
+                <sys:select id="authUser" cssClass="form-control" name=""
                             items="${authUserList}"
-                            value="${user.id}"
+                            value="${cons.checkOutUser.id}"
                             itemLabel="name"
                             itemValue="id"
                 ></sys:select>
             </div>
+            <input id="checkOutUserId" name="checkOutUserId" value=""/>
             <label for="authPassword" class="col-lg-2">授权码:</label>
             <div class="col-lg-2">
                 <input id="authPassword" type="password" class="form-control"/>
