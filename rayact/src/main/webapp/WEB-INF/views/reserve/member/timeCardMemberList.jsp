@@ -118,7 +118,7 @@
                                     <td>
                                         <a class="btn btn-primary btn-xs"
                                            onclick="addTime('${reserveMember.id}')"><i
-                                                class="fa fa-pencil"></i>冲次</a>
+                                                class="fa fa-pencil"></i>充值</a>
                                         <a class="btn btn-primary btn-xs"
                                            href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
                                                 class="fa fa-pencil"></i>修改</a>

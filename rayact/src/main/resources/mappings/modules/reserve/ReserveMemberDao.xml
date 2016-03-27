@@ -29,6 +29,7 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		p.id as "storedcardSet.id",
+		q.id as "timecardSet.id",
 		p.name as "storedcardSet.name",
 		q.name as "timecardSet.name"
 	</sql>

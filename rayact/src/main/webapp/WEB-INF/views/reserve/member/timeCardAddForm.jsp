@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
-
 <form id="reserveFormBean" class="form-horizontal">
     <input id="id" type="hidden" value="${reserveMember.id}">
     <div class="content text-justify" style="text-align: center;vertical-align: middle;">
@@ -67,36 +65,25 @@
             </div>
         </div>
         <div class="row">
-            <div class="content">
-                支付方式:
-                <table class="no-border" id="payType">
-                    <tbody class="no-border-y">
-                    <tr>
-                        <td>
-                            <label class="radio-inline">
-                                <input type="radio" class="icheck" value="2"
-                                       <j:if test="${'1' eq cos.consType}">checked="checked"</j:if>
-                                       name="payType"/>现金
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" class="icheck" value="3" name="payType"/>银行卡
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" class="icheck" value="4" name="payType"/>微信
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" class="icheck" value="5" name="payType"/>支付宝
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" class="icheck" value="6" name="payType"/>其它
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" class="icheck" value="7" name="payType"/>欠账
-                            </label>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <label for="time" class="control-label col-lg-2">支付方式:</label>
+            <div class="col-lg-8">
+                <div class="btn-group" id="payType">
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" id="cash" value="2" checked="checked" name="payType"/>现金
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" id="card" value="3" name="payType"/>银行卡
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" id="weixin" value="4" name="payType"/>微信
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" id="alipay" value="5" name="payType"/>支付宝
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" id="other" value="6" name="payType"/>其它
+                    </label>
+                </div>
             </div>
         </div>
     </div>

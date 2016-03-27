@@ -69,7 +69,8 @@
                                     <td colspan="3">
                                         <sys:select cssClass="input-xlarge" name="timecardSet.id"
                                                     items="${timecardSetList}"
-                                                    value="${timecardSet}" itemLabel="name" itemValue="id"
+                                                    value="${reserveMember.timecardSet.id}"
+                                                    itemLabel="name" itemValue="id"
                                                     defaultLabel="请选择次卡"
                                                     defaultValue="">
                                         </sys:select>
@@ -109,7 +110,7 @@
                                     <td colspan="3">
                                         <sys:select cssClass="input-xlarge" name="reserveVenue.id"
                                                     items="${venueList}"
-                                                    value="${venue}"
+                                                    value="${reserveMember.reserveVenue.id}"
                                                     itemLabel="name"
                                                     itemValue="id"
                                                     defaultValue=""
