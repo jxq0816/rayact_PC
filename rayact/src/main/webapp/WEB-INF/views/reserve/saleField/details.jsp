@@ -16,7 +16,7 @@
                 <j:if test="${!empty tutorOrderList}">
                     <c:forEach items="${tutorOrderList}" var="tutorOrder">
                         <td>教练:</td><td>${tutorOrder.tutor.name}</td>
-                        <td>${tutorOrder.totalPrice/2}</td>
+                        <td>教练费用:</td><td>${tutorOrder.totalPrice/2}</td>
                     </c:forEach>
                 </j:if>
             </tr>
@@ -32,7 +32,7 @@
             <th>结束时间</th>
             <th>频率</th>
             <th>是否半场</th>
-            <th>价格</th>
+            <th>应收(场地费+教练费)</th>
             </thead>
             <tbody>
             <c:forEach items="${itemList}" var="item" varStatus="status">
