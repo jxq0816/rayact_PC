@@ -101,6 +101,9 @@ public class ReserveTimeCardMemberController extends BaseController {
     @Token(remove=true)
     public String save(ReserveMember reserveMember, Model model, RedirectAttributes redirectAttributes) {
         reserveMember.setCartType("2");
+        if(reserveMember.getResidue()==null){
+            reserveMember.setResidue(0);
+        }
         if(reserveMember.getId().isEmpty()){
             reserveMember.setValiditystart(new Date());
         }

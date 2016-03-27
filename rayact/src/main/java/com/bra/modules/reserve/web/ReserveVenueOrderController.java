@@ -3,7 +3,6 @@ package com.bra.modules.reserve.web;
 import com.bra.common.config.Global;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.common.web.ViewResult;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
@@ -26,6 +25,8 @@ import java.util.List;
 @RequestMapping(value = "${adminPath}/reserve/reserveVenueOrder")
 public class ReserveVenueOrderController extends BaseController {
 
+    @Autowired
+    private ReserveTimecardMemberSetService reserveTimecardMemberSetService;
     @Autowired
     private ReserveVenueOrderService reserveVenueOrderService;
     @Autowired
@@ -55,7 +56,8 @@ public class ReserveVenueOrderController extends BaseController {
     @RequestMapping(value = "form")
     @Token(save = true)
     public String form(String vsId, Model model) {
-        model.addAttribute("visitorsSet", reserveVenueVisitorsSetService.get(vsId));
+        ReserveVenueVisitorsSet set = reserveVenueVisitorsSetService.get(vsId);
+        model.addAttribute("visitorsSet",set);
         //教练
         model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
         //会员
@@ -72,13 +74,40 @@ public class ReserveVenueOrderController extends BaseController {
     //确认购买
     @RequestMapping(value = "save")
     @ResponseBody
-    @Token(remove = true)
-    public ViewResult save(ReserveVenueOrder reserveVenueOrder, Model model, RedirectAttributes redirectAttributes) {
-        if (!beanValidator(model, reserveVenueOrder)) {
-            return new ViewResult(false, model.asMap().get("message").toString());
+  /*  @Token(remove = true)*/
+    public String save(ReserveVenueOrder reserveVenueOrder, Model model, RedirectAttributes redirectAttributes) {
+
+        ReserveTimecardMemberSet memberTimecarSet=null;
+        ReserveVenueVisitorsSet typeSet = reserveVenueOrder.getVisitorsSet();//获得场次票的属性
+        typeSet=reserveVenueVisitorsSetService.get(typeSet);
+        ReserveProject p = typeSet.getProject();
+        //如果是会员预订
+        if(reserveVenueOrder.getMember()!=null&& StringUtils.isNoneEmpty(reserveVenueOrder.getMember().getId())){
+            ReserveMember member=reserveMemberService.get(reserveVenueOrder.getMember());
+            memberTimecarSet = member.getTimecardSet();//该用户不拥有打折次卡
+            if(memberTimecarSet==null){
+                return "2";//new ViewResult(false, "该用户没有次卡！");
+            }
+            memberTimecarSet=reserveTimecardMemberSetService.get(memberTimecarSet);
+            ReserveProject project = memberTimecarSet.getReserveProject();
+
+            if(p.getId().equals(project.getId())){
+                int residue=member.getResidue();
+                int orderResidue=reserveVenueOrder.getCollectCount();
+                if(orderResidue>residue){
+                    return "3";//new ViewResult(false, "该用户剩余次数不足！剩余次数="+residue);
+                }
+                residue-=orderResidue;//次数减
+                member.setResidue(residue);
+                reserveMemberService.save(member);
+                reserveVenueOrderService.save(reserveVenueOrder);//会员预订保存
+            }else{
+                return "4";//new ViewResult(false, "该用户的次票不可在该场地使用！");
+            }
+        }else{
+            reserveVenueOrderService.save(reserveVenueOrder);//非会员
         }
-        reserveVenueOrderService.save(reserveVenueOrder);
-        return new ViewResult(true, "保存成功");
+        return "1";//new ViewResult(true, "保存成功");
     }
 
     @RequestMapping(value = "delete")

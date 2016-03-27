@@ -15,8 +15,8 @@
                 </td>
                 <j:if test="${!empty tutorOrderList}">
                     <c:forEach items="${tutorOrderList}" var="tutorOrder">
-                        <td>${tutorOrder.tutor.name}(教练):</td>
-                        <td>${tutorOrder.totalPrice}</td>
+                        <td>教练:</td><td>${tutorOrder.tutor.name}</td>
+                        <td>${tutorOrder.totalPrice/2}</td>
                     </c:forEach>
                 </j:if>
             </tr>

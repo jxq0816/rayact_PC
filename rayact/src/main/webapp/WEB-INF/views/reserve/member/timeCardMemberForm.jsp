@@ -91,7 +91,7 @@
 
                                     <td>剩余次数:</td>
                                     <td>
-                                        <form:input path="residue" htmlEscape="false" maxlength="11"
+                                        <form:input path="residue" htmlEscape="false" maxlength="11" readonly="true"
                                                     class="form-control "/>&nbsp;次
                                     </td>
                                 </tr>

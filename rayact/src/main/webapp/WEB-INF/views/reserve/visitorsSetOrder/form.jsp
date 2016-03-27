@@ -57,107 +57,110 @@
                 </div>
             </div>
 
-            <!--应收金额-->
-            <%--<div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
-                <div class="block-flat">
-                    <div class="header">
-                        <h5 class="visible-lg">应收金额</h5>
-                    </div>
-                    <div class="content">
-                        <table class="no-border">
-                            <tbody class="no-border-y">
-                            <tr>
-                                <td>订单金额:</td>
-                                <td><input type="text" id="orderPrice" readonly="readonly" value="${visitorsSet.price}"
-                                           class="form-control" name="orderPrice"/></td>
-                            </tr>
-                            <tr>
-                                <td>教练</td>
-                                <td>
-                                    <select id="tutorId" name="tutor.id" class="select2">
-                                        <option value="">如果使用了教练,请选择</option>
-                                        <c:forEach items="${tutors}" var="t">
-                                            <option data-price="${t.price}" value="${t.id}">${t.name}</option>
-                                        </c:forEach>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>合计:</td>
-                                <td>
-                                    <span id="orderTotal">${visitorsSet.price}</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!--支付方式-->
-            <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
-                <div class="block-flat">
-                    <div class="header">
-                        <h5 class="visible-lg">支付方式</h5>
-                    </div>
-                    <div class="content">
-                        <table class="no-border">
-                            <tbody class="no-border-y">
-                            <tr>
-                                <td>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="icheck"
-                                               checked="checked" value="1"
-                                               name="payType"/>会员卡
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="icheck" value="2"
-                                               name="payType"/>现金
-                                    </label>
-                                    <br/>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="icheck" value="3" name="payType"/>银行卡
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="icheck" value="4" name="payType"/>微信
-                                    </label><br/>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="icheck" value="5" name="payType"/>支付宝
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="icheck" value="6" name="payType"/>其它
-                                    </label>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div id="order" style="display:none">
+                <!--应收金额-->
+                <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h5 class="visible-lg">应收金额</h5>
+                        </div>
+                        <div class="content">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
+                                <tr>
+                                    <td>订单金额:</td>
+                                    <td><input type="text" id="orderPrice" readonly="readonly"
+                                               value="${visitorsSet.price}"
+                                               class="form-control" name="orderPrice"/></td>
+                                </tr>
+                                <tr>
+                                    <td>教练</td>
+                                    <td>
+                                        <select id="tutorId" name="tutor.id" class="select2">
+                                            <option value="">如果使用了教练,请选择</option>
+                                            <c:forEach items="${tutors}" var="t">
+                                                <option data-price="${t.price}" value="${t.id}">${t.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>合计:</td>
+                                    <td>
+                                        <span id="orderTotal">${visitorsSet.price}</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!--实收金额-->
-            <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
-                <div class="block-flat">
-                    <div class="header">
-                        <h5 class="visible-lg">实收金额</h5>
+                <!--支付方式-->
+                <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h5 class="visible-lg">支付方式</h5>
+                        </div>
+                        <div class="content">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
+                                <tr>
+                                    <td>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck"
+                                                   checked="checked" value="1"
+                                                   name="payType"/>会员卡
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="2"
+                                                   name="payType"/>现金
+                                        </label>
+                                        <br/>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="3" name="payType"/>银行卡
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="4" name="payType"/>微信
+                                        </label><br/>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="5" name="payType"/>支付宝
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="6" name="payType"/>其它
+                                        </label>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="content">
-                        <table class="no-border">
-                            <tbody class="no-border-y">
-                            <tr>
-                                <td>支付金额:</td>
-                                <td><input type="text" id="collectPrice" class="form-control"
-                                           value="${visitorsSet.price}" name="collectPrice"/></td>
-                            </tr>
-                            <tr>
-                                <td>备注:</td>
-                                <td>
-                                    <textarea id="remarks" class="form-control" name="remarks"></textarea>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>--%>
+                </div>
+
+                <!--实收金额-->
+                <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
+                    <div class="block-flat">
+                        <div class="header">
+                            <h5 class="visible-lg">实收金额</h5>
+                        </div>
+                        <div class="content">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
+                                <tr>
+                                    <td>支付金额:</td>
+                                    <td><input type="text" id="collectPrice" class="form-control"
+                                               value="${visitorsSet.price}" name="collectPrice"/></td>
+                                </tr>
+                                <tr>
+                                    <td>备注:</td>
+                                    <td>
+                                        <textarea id="remarks" class="form-control" name="remarks"></textarea>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -173,12 +176,14 @@
             $("#consMobile").attr("readonly", "readonly");
             $("input[name='payType'][value='1']").iCheck('check');
             $("input[name='payType'][value='1']").iCheck('enable');
+            $("#order").hide();//隐藏订单金额
         });
 
         $("#nMember").on('ifChecked', function () {
             $("#consPrice").removeAttr("readonly");
             $("#userName").removeAttr("readonly");
             $("#consMobile").removeAttr("readonly");
+            $("#order").show();//显示订单金额
 //            $("input[name='payType'][value='2']").attr('checked','checked');
             // alert($("input[name='payType'][value='2']").val());
             $("input[name='payType'][value='2']").iCheck('check');

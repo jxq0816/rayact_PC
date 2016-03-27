@@ -142,12 +142,6 @@
         "authorityList": []
       },
       {
-        "code": "totalIncomeReport",
-        "name": "总收入统计",
-        "href":"/reserve/reserveVenue/totalIncomeReport",
-        "authorityList": []
-      },
-      {
         "code": "memberIncomeReport",
         "name": "会员充值统计",
         "href":"/reserve/reserveCardStatements/memberIncomeReport",
@@ -163,12 +157,6 @@
         "code": "venueIncomeReport",
         "name": "场馆收入统计",
         "href":"/reserve/reserveVenue/report",
-        "authorityList": []
-      },
-      {
-        "code": "dataListener",
-        "name": "监控",
-        "href":"/reserve/reserveListener/report",
         "authorityList": []
       }
     ]

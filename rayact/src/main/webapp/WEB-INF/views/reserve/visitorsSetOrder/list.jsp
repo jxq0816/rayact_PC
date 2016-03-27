@@ -101,10 +101,18 @@
                 data: formJson,
                 success: function (result) {
                     if(result){
-                        if (result.status == false) {
-                            formLoding(result.message);
-                        } else {
-                            location.reload();
+                        if (result=="1") {
+                            formLoding("保存成功");
+                            $("#closeBtn").click();
+                        }
+                        if (result=="2") {
+                            formLoding("该用户没有次卡");
+                        }
+                        if (result=="3") {
+                            formLoding("该用户剩余次数不足");
+                        }
+                        if (result=="4") {
+                            formLoding("该用户的次票不可在该场地使用,请使用非会员，现金结账");
                         }
                     }else{
                         formLoding("保存失败");

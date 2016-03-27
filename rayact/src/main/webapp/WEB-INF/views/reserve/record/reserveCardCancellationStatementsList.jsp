@@ -22,7 +22,7 @@
                            method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-                    <input id="transactionType" name="transactionType" type="hidden" value="1"/>
+                    <input id="transactionType" name="transactionType" type="hidden" value="3"/>
                     <div class="row">
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             <table class="no-border">
@@ -34,14 +34,14 @@
                                     <td>时间:</td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
-                                               name="startDate" id="startDate" type="text" readonly="readonly"
+                                               name="startDate" id="startDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                         </td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
-                                               name="endDate" id="endDate" type="text" readonly="readonly"
+                                               name="endDate" id="endDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
