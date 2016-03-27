@@ -99,6 +99,7 @@
             <if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
                 and d.reserve_type = #{consData.reserveType}
             </if>
+			and d.reserve_type = '3'
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">

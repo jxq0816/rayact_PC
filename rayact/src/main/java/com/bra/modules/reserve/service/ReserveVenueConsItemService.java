@@ -43,7 +43,7 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 	public List<ReserveVenueConsItem> findRelationList(ReserveVenueConsItem item) {
 		//操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
 		List<ReserveVenueConsItem> reserveVenueConsItemList=new ArrayList<>();
-		reserveVenueConsItemList.addAll(super.findList(item));
+		reserveVenueConsItemList.addAll(super.findList(item));//本场地的预订状态
 		ReserveField field=item.getReserveField();
 		field=reserveFieldService.get(field);
 		//查询相关父场地的预订状态

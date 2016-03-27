@@ -2,6 +2,7 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
 import com.bra.modules.reserve.entity.*;
@@ -149,6 +150,9 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         for (Date date : reserveDateList) {
             reserveVenueCons.setConsDate(date);
             reserveVenueCons.preInsert();
+            if(StringUtils.isEmpty(reserveVenueCons.getConsMobile())){
+                reserveVenueCons.setConsMobile("000");
+            }
             dao.insert(reserveVenueCons);//保存订单
             List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
             Double orderPrice = 0D;//订单价格

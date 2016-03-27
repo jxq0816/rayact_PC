@@ -59,10 +59,10 @@ $(document).ready(function () {
             formLoding('请输入预定人姓名');
             return false;
         }
-        if (consMobile == '') {
+      /*  if (consMobile == '') {
             formLoding('请输入预定人手机');
             return false;
-        }
+        }*/
         if (frequency == '2' || frequency == '3') {
             if (endDate == '') {
                 formLoding('结束时间不能为空');
