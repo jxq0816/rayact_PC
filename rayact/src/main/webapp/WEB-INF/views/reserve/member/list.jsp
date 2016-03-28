@@ -74,7 +74,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${page.list}" var="reserveMember">
+                            <c:forEach items="${memberList}" var="reserveMember">
                                 <tr>
                                     <td><a href="${ctx}/reserve/reserveMember/form?id=${reserveMember.id}">
                                             ${reserveMember.name}
@@ -111,7 +111,7 @@
                             </tbody>
                         </table>
 
-                        <div class="row">
+                       <%-- <div class="row">
                             <div class="col-sm-12">
 
                                 <div class="pull-right">
@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>
+                        </div>--%>
 
                     </div>
                 </div>

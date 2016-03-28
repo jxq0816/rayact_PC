@@ -1,12 +1,13 @@
 package com.bra.modules.reserve.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveVenueService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
-import com.bra.common.web.BaseController;
-import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.entity.ReserveMember;
-import com.bra.modules.reserve.service.ReserveMemberService;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -54,8 +50,11 @@ public class ReserveMemberController extends BaseController {
 	
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember); 
-		model.addAttribute("page", page);
+		//Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember);
+		//model.addAttribute("page", page);
+		List<ReserveMember> memberList=reserveMemberService.findList(reserveMember);
+
+		model.addAttribute("memberList", memberList);
 		return "reserve/member/list";
 	}
 

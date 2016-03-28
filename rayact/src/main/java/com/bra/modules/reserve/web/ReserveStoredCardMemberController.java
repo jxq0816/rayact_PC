@@ -1,7 +1,6 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
@@ -108,8 +107,10 @@ public class ReserveStoredCardMemberController extends BaseController {
     @RequestMapping(value = "list")
     public String list(String cartType, ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
         reserveMember.setCartType("1");
-        Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
-        model.addAttribute("page", page);
+       /* Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
+        model.addAttribute("page", page);*/
+        List<ReserveMember> memberList=reserveMemberService.findList(reserveMember);
+        model.addAttribute("memberList", memberList);
         return "reserve/member/storedCardMemberList";
     }
 
