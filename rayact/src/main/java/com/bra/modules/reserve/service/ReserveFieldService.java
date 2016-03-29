@@ -4,7 +4,6 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.common.utils.Collections3;
 import com.bra.common.utils.JsonUtils;
-import com.bra.common.utils.StringUtils;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.dao.ReserveFieldDao;
 import com.bra.modules.reserve.entity.*;
@@ -71,7 +70,7 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
 
     @Transactional(readOnly = false)
     public void save(ReserveField reserveField) {
-        //全场与半场的关系保存
+       /* //全场与半场的关系保存
         ReserveFieldRelation relation = new ReserveFieldRelation();
         relation.setChildField(reserveField);//设置该厂为子半场
         ReserveField parentField = reserveField.getReserveParentField();
@@ -94,7 +93,7 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
                 ReserveFieldRelation relationDB=relationDBList.get(0);
                 relationService.delete(relationDB);
             }
-        }
+        }*/
         //如果不分时令，将系统原有分时令的价格信息删除
         if("0".equals(reserveField.getIsTimeInterval())){
             ReserveFieldPriceSet set=new ReserveFieldPriceSet();

@@ -23,16 +23,16 @@
 
                             <form:form id="inputForm" modelAttribute="reserveFieldRelation"
                                        action="${ctx}/reserve/reserveFieldRelation/save"
-                                       method="post" class="form-horizontal" onsubmit="return checkChildRelation()">
-                                <form:hidden path="id"/>
-                                <form:hidden path="childField.id" value="${reserveFieldRelation.childField.id}"/>
+                                       method="post" class="form-horizontal">
+                                <form:hidden id="id" path="id"/>
                                 <input type="hidden" name="token" value="${token}"/>
                                 <sys:message content="${message}"/>
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">全场：</label>
                                     <div class="col-sm-6">
-                                        <sys:select cssClass="input-xlarge" name="parentField.id"
+                                        <sys:select cssClass="input-xlarge" id="parentFieldId"
+                                                    name="parentField.id"
                                                     items="${fields}"
                                                     value="${reserveFieldRelation.parentField.id}"
                                                     itemLabel="name"
@@ -48,9 +48,10 @@
                                     <div class="col-sm-6">
                                         <j:if test="${reserveFieldRelation.id!=''}">
                                             ${reserveFieldRelation.childField.name}
+                                            <input type="hidden" path="childField.id" value="${reserveFieldRelation.childField.id}"/>
                                         </j:if>
                                         <j:if test="${reserveFieldRelation.id==null}">
-                                            <sys:select cssClass="input-xlarge" name="childField.id"
+                                            <sys:select cssClass="input-xlarge" name="childField.id" id="childFieldId"
                                                         items="${fields}"
                                                         value="${reserveFieldRelation.childField.id}"
                                                         itemLabel="name"
@@ -63,7 +64,7 @@
                                 </div>
 
                                 <div c lass="form-actions">
-                                    <input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
+                                    <input id="btnSubmit" class="btn btn-primary" type="button" value="保 存"/>&nbsp;
                                     <input id="btnCancel" class="btn" type="button" value="返 回"
                                            onclick="history.go(-1)"/>
                                 </div>
@@ -75,6 +76,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"></script>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/reserve_fieldRelation_form.js"></script>
 </body>
 </html>

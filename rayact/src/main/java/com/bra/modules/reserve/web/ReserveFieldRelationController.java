@@ -70,31 +70,39 @@ public class ReserveFieldRelationController extends BaseController {
 
     @RequestMapping(value = "checkChildRelation")
     @ResponseBody
-    public String checkChildRelation(ReserveFieldRelation reserveFieldRelation, Model model, RedirectAttributes redirectAttributes) {
+    public String checkChildRelation(String id,String childFieldId) {
         ReserveFieldRelation relation=new ReserveFieldRelation();
-        relation.setChildField(reserveFieldRelation.getChildField());
+        ReserveField child=new ReserveField();
+        child.setId(childFieldId);
+        relation.setChildField(child);
         List<ReserveFieldRelation> list=reserveFieldRelationService.findList(relation);
         if(list.size()!=0) {
-            String idFront=reserveFieldRelation.getId();
             //添加关系且数据库已存在该半场
-            if (StringUtils.isEmpty(idFront)) {
+            if (StringUtils.isEmpty(id)) {
                 return "false";
             }else{//修改关系
                 return "true";
             }
+        }else{
+            return "true";
         }
-        return "";
     }
 
     @RequestMapping(value = "save")
-    @Token(remove = true)
-    public String save(ReserveFieldRelation reserveFieldRelation, Model model, RedirectAttributes redirectAttributes) {
-        if (!beanValidator(model, reserveFieldRelation)) {
-            return form(reserveFieldRelation, model);
+    @ResponseBody
+    public String save(String id,String parentFieldId,String childFieldId,RedirectAttributes redirectAttributes) {
+        ReserveFieldRelation reserveFieldRelation =new ReserveFieldRelation();
+        if(StringUtils.isNoneEmpty(id)){
+            reserveFieldRelation.setId(id);
         }
+        ReserveField parentField=new ReserveField();
+        parentField.setId(parentFieldId);
+        reserveFieldRelation.setParentField(parentField);
+        ReserveField childField=new ReserveField();
+        childField.setId(childFieldId);
+        reserveFieldRelation.setChildField(childField);
         reserveFieldRelationService.save(reserveFieldRelation);
-        addMessage(redirectAttributes, "保存场地关系成功");
-        return "redirect:" + Global.getAdminPath() + "/reserve/reserveFieldRelation/list";
+        return "success";
     }
 
     @RequestMapping(value = "delete")
