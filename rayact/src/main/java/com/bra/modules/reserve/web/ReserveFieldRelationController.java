@@ -107,7 +107,7 @@ public class ReserveFieldRelationController extends BaseController {
 
     @RequestMapping(value = "delete")
     public String delete(ReserveFieldRelation reserveFieldRelation, RedirectAttributes redirectAttributes) {
-        reserveFieldRelationService.delete(reserveFieldRelation);
+        reserveFieldRelationService.physicalDelete(reserveFieldRelation);
         addMessage(redirectAttributes, "删除场地关系成功");
         return "redirect:" + Global.getAdminPath() + "/reserve/reserveFieldRelation/list";
     }

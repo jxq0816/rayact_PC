@@ -193,6 +193,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 reserveVenueCons.setOrderPrice(price);
                 item.preInsert();
                 reserveVenueConsItemDao.insert(item);//保存预订信息
+                orderPrice+=price;
             }
             reserveVenueCons.setOrderPrice(orderPrice);
             dao.update(reserveVenueCons);//订单价格更改
