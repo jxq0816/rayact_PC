@@ -45,12 +45,12 @@
                                         </select>
                                     </td>
                                     <td>时间:</td>
-                                    <td><input name="startDate" value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>" type="text" id="startDate" readonly="readonly"
+                                    <td><input name="startDate" value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>" type="text" id="startDate"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                /></td>
                                     <td>
-                                        <input name="endDate" value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"  type="text" id="endDate" readonly="readonly"
+                                        <input name="endDate" value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"  type="text" id="endDate"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                />

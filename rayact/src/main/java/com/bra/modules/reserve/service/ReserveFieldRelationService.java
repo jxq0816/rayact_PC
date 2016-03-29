@@ -21,11 +21,6 @@ public class ReserveFieldRelationService extends CrudService<ReserveFieldRelatio
     @Autowired
     private ReserveFieldRelationDao dao;
 
-    public ReserveFieldRelation get(String id) {
-        ReserveFieldRelation reserveFieldRelation = super.get(id);
-        return reserveFieldRelation;
-    }
-
     public List<ReserveFieldRelation> findList(ReserveFieldRelation relation) {
         return super.findList(relation);
     }

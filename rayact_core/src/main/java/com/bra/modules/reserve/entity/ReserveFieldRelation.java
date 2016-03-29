@@ -6,8 +6,8 @@ package com.bra.modules.reserve.entity;
 import com.bra.common.persistence.SaasEntity;
 
 /**
- * 场地管理Entity
- * @author 肖斌
+ * 场地管理关系Entity
+ * @author jiang
  * @version 2015-12-29
  */
 public class ReserveFieldRelation extends SaasEntity<ReserveFieldRelation> {
