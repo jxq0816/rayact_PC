@@ -63,7 +63,9 @@ public class FieldProjectListener {
             value = Maps.newConcurrentMap();
             for (Map<String, Object> map : venueConsMap) {
                 if (project.getName().equals(map.get("projectName"))) {
-                    total += NumberUtils.toDouble(map.get("orderPrice").toString());
+                    if(map.get("orderPrice")!=null){
+                        total += NumberUtils.toDouble(map.get("orderPrice").toString());
+                    }
                 }
             }
             value.put("name", project.getName());

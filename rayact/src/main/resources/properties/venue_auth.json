@@ -155,7 +155,7 @@
       },
       {
         "code": "venueIncomeReport",
-        "name": "场馆收入统计",
+        "name": "场地收入统计",
         "href":"/reserve/reserveVenue/report",
         "authorityList": []
       }
