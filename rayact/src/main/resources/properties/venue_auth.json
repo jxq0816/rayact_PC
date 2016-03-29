@@ -16,6 +16,12 @@
         "authorityList": []
       },
       {
+        "code": "fieldRelation",
+        "name": "场地关系管理",
+        "href":"/reserve/reserveFieldRelation/list",
+        "authorityList": []
+      },
+      {
         "code": "user",
         "name": "用户管理",
         "href":"/reserve/user/list",

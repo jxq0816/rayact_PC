@@ -5,7 +5,9 @@
 	<sql id="reserveFieldRelationColumns">
 		a.id AS "id",
 		a.parent_field_id AS "parentField.id",
+		b.name as "parentField.name",
 		a.child_field_id AS "childField.id",
+		c.name as "childField.name",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -15,6 +17,8 @@
 	</sql>
 	
 	<sql id="reserveFieldRelationJoins">
+		LEFT JOIN reserve_field as b on b.id=a.parent_field_id
+		LEFT JOIN reserve_field as c on c.id=a.child_field_id
 	</sql>
     
 	<select id="get" resultType="ReserveFieldRelation">
@@ -53,6 +57,7 @@
 				</if>
 			</if>
 		</where>
+		ORDER by a.parent_field_id
 	</select>
 	
 	<select id="findAllList" resultType="ReserveFieldRelation">

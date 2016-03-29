@@ -1,0 +1,80 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+<html>
+<head>
+    <title>场地关系管理</title>
+    <meta name="decorator" content="main"/>
+</head>
+<body>
+<jsp:include page="/WEB-INF/views/include/sidebar.jsp">
+    <jsp:param name="action" value="field"></jsp:param>
+</jsp:include>
+<div class="container-fluid" id="pcont">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-flat">
+                <div class="header">
+                    <h3>场地关系列表</h3>
+                </div>
+
+
+                <%--<form:form id="searchForm" modelAttribute="reserveField" action="${ctx}/reserve/reserveField/"
+                           method="post" class="breadcrumb form-search">
+                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <table class="no-border">
+                                <tbody class="no-border-y">
+                                <tr>
+                                    <td>父场地：</td>
+                                    <td><sys:select cssClass="input-medium" name="parentField.id"
+                                                    value="${reserveFieldRelation.parentField.id}"
+                                                    items="${parentField}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select></td>
+                                    <td>子场地：</td>
+                                    <td><form:input path="name" htmlEscape="false" cssstyle="width:70px;" maxlength="30"
+                                                    class="form-control"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="pull-right">
+                            <a class="btn btn-success" href="${ctx}/reserve/reserveField/form">
+                                <i class="fa fa-plus"></i>添加
+                            </a>
+                        </div>
+                    </div>
+                </form:form>--%>
+                <sys:message content="${message}"/>
+                <div class="content">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>父场地名称</th>
+                                <th>子场地名称</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${reserveFieldRelationList}" var="reserveFieldRelation">
+                                <tr>
+                                    <td>${reserveFieldRelation.parentField.name}</td>
+                                    <td>${reserveFieldRelation.childField.name}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
