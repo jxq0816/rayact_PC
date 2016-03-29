@@ -1,14 +1,14 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveCommodityDao;
+import com.bra.modules.reserve.entity.ReserveCommodity;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveCommodity;
-import com.bra.modules.reserve.dao.ReserveCommodityDao;
+import java.util.List;
 
 /**
  * 商品Service
@@ -29,6 +29,13 @@ public class ReserveCommodityService extends CrudService<ReserveCommodityDao, Re
 	}
 	
 	public List<ReserveCommodity> findList(ReserveCommodity commodity) {
+		if (commodity != null) {
+
+			if (commodity.getSqlMap().get("dsf") == null) {
+				String dsf = AuthorityUtils.getDsf("a.id");
+				commodity.getSqlMap().put("dsf", dsf);
+			}
+		}
 		return super.findList(commodity);
 	}
 	

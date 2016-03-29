@@ -70,7 +70,9 @@
             <if test="shelvesStatus != null and shelvesStatus != ''">
                 AND a.shelves_status=#{shelvesStatus}
             </if>
+            ${sqlMap.dsf}
         </where>
+
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">
                 ORDER BY ${page.orderBy}

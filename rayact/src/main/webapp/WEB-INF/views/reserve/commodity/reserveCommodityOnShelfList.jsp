@@ -54,7 +54,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${page.list}" var="commodity">
+                        <c:forEach items="${list}" var="commodity">
                             <tr>
                                 <td><a href="${ctx}/reserve/commodity/form?id=${commodity.id}">
                                         ${commodity.commodityId}
@@ -82,7 +82,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div class="row">
+                    <%--<div class="row">
                         <div class="col-sm-12">
                             <div class="pull-right">
                                 <div class="dataTables_paginate paging_bs_normal">
@@ -91,7 +91,7 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
                 <%--end of left--%>
                 <%-- right start--%>

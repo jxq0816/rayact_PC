@@ -1,7 +1,6 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
@@ -71,8 +70,11 @@ public class ReserveCommodityController extends BaseController {
 
     @RequestMapping(value = {"list", ""})
     public String list(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
-        model.addAttribute("page", page);
+       /* Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
+        model.addAttribute("page", page);*/
+
+        List<ReserveCommodity> list = commodityService.findList(commodity);
+        model.addAttribute("list",list);
         return "reserve/commodity/reserveCommodityList";
     }
 
@@ -80,8 +82,10 @@ public class ReserveCommodityController extends BaseController {
     @Token(save = true)
     public String sellList(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
         commodity.setShelvesStatus("1");
-        Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
-        model.addAttribute("page", page);
+      /*  Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
+        model.addAttribute("page", page);*/
+        List<ReserveCommodity> list = commodityService.findList(commodity);
+        model.addAttribute("list",list);
         return "reserve/commodity/reserveCommodityOnShelfList";
     }
 
