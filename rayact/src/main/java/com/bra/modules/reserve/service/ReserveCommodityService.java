@@ -30,9 +30,8 @@ public class ReserveCommodityService extends CrudService<ReserveCommodityDao, Re
 	
 	public List<ReserveCommodity> findList(ReserveCommodity commodity) {
 		if (commodity != null) {
-
 			if (commodity.getSqlMap().get("dsf") == null) {
-				String dsf = AuthorityUtils.getDsf("a.id");
+				String dsf = AuthorityUtils.getDsf("v.id");
 				commodity.getSqlMap().put("dsf", dsf);
 			}
 		}
