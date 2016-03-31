@@ -1,16 +1,14 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-import java.util.Map;
-
-import com.bra.modules.reserve.entity.ReserveCardStatements;
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveMemberDao;
+import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveMember;
-import com.bra.modules.reserve.dao.ReserveMemberDao;
+import java.util.List;
 
 /**
  * 会员管理Service
@@ -26,6 +24,10 @@ public class ReserveMemberService extends CrudService<ReserveMemberDao, ReserveM
 	}
 	
 	public List<ReserveMember> findList(ReserveMember reserveMember) {
+		if (reserveMember != null) {
+			if (reserveMember.getSqlMap().get("sql") == null)
+				reserveMember.getSqlMap().put("sql", AuthorityUtils.getDsf("v.id"));
+		}
 		return super.findList(reserveMember);
 	}
 	public List<ReserveMember> findExactList(ReserveMember reserveMember) {
