@@ -15,6 +15,8 @@
                     </thead>
                     <tbody>
 
+
+
                     <input type="hidden" name="token" value="${token}"/>
                     <c:forEach items="${sellDetailList}" var="reserveCommoditySellDetail" varStatus="status">
                         <tr>
