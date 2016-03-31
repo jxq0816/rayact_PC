@@ -12,6 +12,7 @@ import com.bra.modules.reserve.event.venue.VenueReserveEvent;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.bra.modules.reserve.web.form.SaleVenueLog;
+import com.bra.modules.sys.entity.User;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,28 +58,30 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     /**
      * 结账
      *
-     * @param cons
+     * @param
      */
     @Transactional(readOnly = false)
-    public ReserveVenueCons saveConsOrder(ReserveVenueCons cons) {
-        ReserveVenueCons reserveVenueCons = get(cons.getId());
-        Double total = cons.getOrderPrice();
-        reserveVenueCons.setPayType(cons.getPayType());
-        reserveVenueCons.setOrderPrice(total);
-        reserveVenueCons.setShouldPrice(cons.getShouldPrice());
-        reserveVenueCons.setCheckOutUser(cons.getCheckOutUser());
-        for (ReserveVenueConsItem item : cons.getVenueConsList()) {
+    public ReserveVenueCons saveConsOrder(String id,String payType,String authUserId,Double discountPrice,Double consPrice) {
+
+        ReserveVenueCons reserveVenueCons = get(id);
+        reserveVenueCons.setPayType(payType);
+        User checkOutUser=new User();
+        checkOutUser.setId(authUserId);
+        reserveVenueCons.setCheckOutUser(checkOutUser);//授权人
+        reserveVenueCons.setDiscountPrice(discountPrice);//优惠
+        reserveVenueCons.setConsPrice(consPrice);//结算价格
+      /*  for (ReserveVenueConsItem item : cons.getVenueConsList()) {
             ReserveVenueConsItem consItem = reserveVenueConsItemDao.get(item.getId());
             consItem.setOrderPrice(item.getOrderPrice());
             reserveVenueConsItemDao.update(consItem);
-        }
+        }*/
 
         //ConsType:2:已预定;payType:1:会员卡;
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");
             reserveVenueCons.preUpdate();
             dao.update(reserveVenueCons);
-            reserveVenueCons.setVenueConsList(cons.getVenueConsList());
+            //reserveVenueCons.setVenueConsList(cons.getVenueConsList());
             //会员扣款;结算教练(事件通知)
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);
@@ -155,7 +158,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             }
             dao.insert(reserveVenueCons);//保存订单
             List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
-            Double orderPrice = 0D;//订单价格
+            Double sum = 0D;//订单价格
 
             String consWeek = TimeUtils.getWeekOfDate(consDate);
             for (ReserveVenueConsItem item : itemList) {
@@ -193,9 +196,10 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 reserveVenueCons.setOrderPrice(price);
                 item.preInsert();
                 reserveVenueConsItemDao.insert(item);//保存预订信息
-                orderPrice+=price;
+                sum+=price;
             }
-            reserveVenueCons.setOrderPrice(orderPrice);
+            reserveVenueCons.setShouldPrice(sum);//应收：没有优惠券，应收等于订单金额
+            reserveVenueCons.setOrderPrice(sum);//订单金额
             dao.update(reserveVenueCons);//订单价格更改
             //预定教练
             List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());

@@ -71,6 +71,7 @@ public class ReserveController extends BaseController {
     public String main(Long t, String venueId, Model model) throws ParseException {
         //当前日期
         Date defaultDate = DateUtils.parseDate(DateUtils.getDate(), "yyyy-MM-dd");
+        System.out.println("123");
         //获取可预定时间段:一周
         Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
         model.addAttribute("timeSlot", timeSlot);
@@ -350,9 +351,10 @@ public class ReserveController extends BaseController {
      */
     @RequestMapping(value = "saveSettlement")
     @ResponseBody
-    /*@Token(remove = true)*/
-    public List<Map<String, String>> saveSettlement(ReserveVenueCons cons) {
-        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(cons);
+    @Token(remove = true)
+    public List<Map<String, String>> saveSettlement(String id,String payType,String authUserId,Double discountPrice,Double consPrice) {
+
+        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(id,payType,authUserId,discountPrice,consPrice);
         List<Map<String, String>> list = getReserveMap(venueCons.getVenueConsList());
         return list;
     }

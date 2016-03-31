@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="settlementDetailFormBean">
-    <input type="hidden" name="id" value="${cos.id}"/>
-    <input type="hidden" name="token" value="${token}" />
+    <input type="hidden" id="id" name="id" value="${cos.id}"/>
+    <input type="hidden" id="token" name="token" value="${token}" />
+    <input type="hidden" id="payType" name="payType" value="${payType}" />
     <div class="content">
         <table class="no-border">
             <tbody class="no-border-y">
@@ -121,11 +122,11 @@
                     </div>
                 </div>
             </div>
-                <label for="detailOrderPrice" class="col-lg-2">实收: <a style="cursor: hand" id="editOrderPrice">
+                <label for="consPrice" class="col-lg-2">实收: <a style="cursor: hand" id="editOrderPrice">
                     <li class="fa fa-edit" onclick="changePrice()"></li>
                 </a></label>
                 <div class="col-lg-2">
-                <input type="text" readonly="readonly" id="detailOrderPrice" value="${orderPrice}"
+                <input type="text" readonly="readonly" id="consPrice" value="${orderPrice}"
                                     class="form-control required number" name="orderPrice"/>
                 </div>
                     <%-- --%>
@@ -144,7 +145,7 @@
                             itemValue="id"
                 ></sys:select>
             </div>
-            <input id="checkOutUserId" name="checkOutUserId" value=""/>
+           <%-- <input id="checkOutUserId" name="checkOutUserId" value=""/>--%>
             <label for="authPassword" class="col-lg-2">授权码:</label>
             <div class="col-lg-2">
                 <input id="authPassword" type="password" class="form-control"/>

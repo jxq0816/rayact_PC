@@ -261,21 +261,39 @@ $(document).ready(function () {
     //确认结账
     $("#saveSettlementDetailBtn").on('click', function () {
 
-        var detailShouldPrice = $("#detailShouldPrice").val();
+        var shouldPrice = $("#detailShouldPrice").val();
         var discountPrice = $("#discountPrice").val();
         if(isNaN(discountPrice)){
             errorLoding("优惠金额必须为数字！");
             return;
         }
-        var price = $("#detailOrderPrice").val();
-        if (price < 0 || discountPrice > detailShouldPrice) {
+        if (eval(discountPrice) > eval(shouldPrice)) {
             errorLoding("优惠金额不能大于应收金额！");
             return;
         }
-        var data = $("#settlementFormBean").serializeArray();
+       /* 以上为数据验证*/
+        var consPrice=$("#consPrice").val();//实收
+        if(eval(consPrice) < 0){
+            errorLoding("结账金额不能小于0！");
+            return;
+        }
+        var authUserId=$("#authUser").val();
+        var id=$("#id").val();
+        var token=$("#token").val();
+        var payType=$("#payType").val();
+
+
+      /*  var data = $("#settlementFormBean").serializeArray();*/
         $.postItems({
-            url: ctx + '/reserve/field/saveSettlement',
-            data: data,
+            url: ctx + '/reserve/field/saveSettlement?random='+Math.random(),
+            data: {
+                token:token,
+                id:id,
+                payType:payType,
+                authUserId:authUserId,
+                discountPrice:discountPrice,
+                consPrice:consPrice
+            },
             success: function (values) {
                 if (values != null) {
                     formLoding('保存结账单据成功!');
@@ -363,12 +381,12 @@ function editPrice() {
     }
     var detailShouldPrice = $("#detailShouldPrice").val();
 
-    var orderPrice = detailShouldPrice - discountPrice;
-    if (orderPrice < 0) {
+    var consPrice = detailShouldPrice - discountPrice;
+    if (consPrice < 0) {
         errorLoding("优惠金额不能大于应收金额！");
         return;
     }
-    $("#detailOrderPrice").val(orderPrice);
+    $("#consPrice").val(consPrice);
 }
 function checkAuthorization() {
     var userId=$("#authUser").val();
@@ -379,8 +397,6 @@ function checkAuthorization() {
         success: function (result) {
             if (result != null && result.id != null) {
                 successLoding("授权码正确!");
-                document.getElementById("checkOutUserId").value=userId;
-                alert(document.getElementById("checkOutUserId").value);
                 $("#discountPriceDiv").show();
             } else {
                 errorLoding("授权码不正确!");

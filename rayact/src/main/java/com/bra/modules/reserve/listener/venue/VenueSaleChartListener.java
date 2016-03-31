@@ -1,10 +1,8 @@
 package com.bra.modules.reserve.listener.venue;
 
 import com.bra.common.utils.Collections3;
-import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.ReserveVenueCons;
-import com.bra.modules.reserve.entity.ReserveVenueOrder;
 import com.bra.modules.reserve.event.main.MainControlerEvent;
 import com.bra.modules.reserve.service.ReserveVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueOrderService;
@@ -17,7 +15,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +47,14 @@ public class VenueSaleChartListener {
 
         for (Map<String,Object> map : venueConsList) {
             dateList.add("'" + map.get("updateDate") + "'");
-            venueListJson.add(map.get("updateDate").toString());
-            volumeList.add(map.get("orderPrice").toString());
+            Object updateDate = map.get("updateDate");
+            if(updateDate!=null){
+                venueListJson.add(updateDate.toString());
+            }
+            Object orderPrice=map.get("orderPrice");
+            if(orderPrice!=null){
+                volumeList.add(orderPrice.toString());
+            }
         }
 
         data.put("venueListJson",venueListJson);
@@ -80,7 +83,10 @@ public class VenueSaleChartListener {
         List<Map<String,Object>> venueConsList = reserveVenueConsService.sellOfChart(venueCons);
         Double todayPrice = 0D;
         for (Map<String,Object> cons : venueConsList) {
-            todayPrice += NumberUtils.toDouble(cons.get("orderPrice").toString());
+            Object orderPrice=cons.get("orderPrice");
+            if(orderPrice!=null){
+                todayPrice += NumberUtils.toDouble(orderPrice.toString());
+            }
         }
         data.put("fieldTodayPrice", todayPrice);
 
