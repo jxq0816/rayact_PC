@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>场地售卖报表</h3>
+                    <h3>场地利用率报表</h3>
                 </div>
                 <form id="searchForm" action="${ctx}/reserve/saleVenueReport/listOpenRate"
                       method="post" class="content">
@@ -53,7 +53,9 @@
                                                <j:if test="${'4' eq search}">onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false})" </j:if>
                                                value="${reserveVenue.endDate}"/>
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -106,6 +108,11 @@
                 WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
             });
         });
+    });
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/saleVenueReport/listOpenRateExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/saleVenueReport/listOpenRate");
     });
 </script>
 </body>

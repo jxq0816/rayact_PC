@@ -74,7 +74,9 @@
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                               value="查询"/></td>
+                                               value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -148,5 +150,12 @@
     </div>
 </div>
 <script src="${ctxStatic}/modules/reserve/js/commodity_income_record.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCommoditySell/commodityIncomeIntervalReportExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCommoditySell/commodityIncomeIntervalReport");
+    });
+</script>
 </body>
 </html>

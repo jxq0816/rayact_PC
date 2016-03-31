@@ -50,7 +50,9 @@
                                     </td>
 
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                               value="查询"/></td>
+                                               value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -141,5 +143,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCardStatements/listExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCardStatements/list");
+    });
+</script>
 </body>
 </html>

@@ -50,7 +50,7 @@
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/><input id="btnExport" class="btn btn-primary" type="button" value="导出"/></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -106,5 +106,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCommoditySellDetail/findSellDetailListExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCommoditySellDetail/findSellDetailList");
+    });
+</script>
 </body>
 </html>

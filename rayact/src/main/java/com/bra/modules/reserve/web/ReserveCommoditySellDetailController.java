@@ -2,11 +2,13 @@ package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
+import com.bra.modules.reserve.utils.ExcelInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -140,6 +144,27 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		Page<ReserveCommoditySellDetail> page = reserveCommoditySellDetailService.findSellDetailList(new Page<ReserveCommoditySellDetail>(request, response), reserveCommoditySellDetail);
 		model.addAttribute("page", page);
 		return "reserve/record/reserveCommoditySellDetailList";
+	}
+
+	@RequestMapping(value = {"findSellDetailListExport", ""})
+	public void findSellDetailListExport(ReserveCommoditySellDetail reserveCommoditySellDetail, HttpServletResponse response)throws Exception {
+		List<ReserveCommoditySellDetail> list = reserveCommoditySellDetailService.findSellDetailList(reserveCommoditySellDetail);
+		String[] titles = {"商品名称","商品类型","购买数量","单价","合计","售卖人","时间"};
+		List<String[]> contentList = new ArrayList<>();
+		for(ReserveCommoditySellDetail map :list){
+			String[] o = new String[7];
+			o[0] = map.getReserveCommodity().getName();
+			o[1] = map.getReserveCommodity().getCommodityType().getName();
+			o[2] = String.valueOf(map.getNum());
+			o[3] = String.valueOf(map.getPrice());
+			o[4] =  String.valueOf(map.getDetailSum());
+			o[5] =  map.getUpdateBy().getName();
+			o[6] =  DateUtils.formatDate(map.getCreateDate(),"yyyy-MM-dd HH:mm:ss");
+			contentList.add(o);
+		}
+		Date now = new Date();
+		ExcelInfo info = new ExcelInfo(response,"商品销售记录"+ DateUtils.formatDate(now),titles,contentList);
+		info.export();
 	}
 
 	@RequestMapping(value = "form")

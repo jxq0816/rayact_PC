@@ -55,7 +55,9 @@
                                                class="input-medium form-control Wdate "
                                                />
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -115,6 +117,11 @@
                 WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
             });
         });
+    });
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/saleVenue/listExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/saleVenue/list");
     });
 </script>
 </body>

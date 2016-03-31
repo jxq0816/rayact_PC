@@ -53,7 +53,7 @@
                                                <j:if test="${'4' eq search}">onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false})" </j:if>
                                                value="${reserveVenue.endDate}"/>
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/><input id="btnExport" class="btn btn-primary" type="button" value="导出"/></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -116,6 +116,11 @@
                 WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
             });
         });
+    });
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/saleVenueReport/export");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/saleVenueReport/list");
     });
 </script>
 </body>

@@ -36,6 +36,14 @@
                         </tr>
                     </c:forEach>
                     <tr>
+                        <td>总计</td>
+                        <td></td>
+                        <td><input class="form-control" type="text"
+                                   name="realPrice"
+                                   value="${reserveCommoditySellDetail.price}"
+                                   placeholder="${reserveCommoditySellDetail.price}" readonly></td>
+                    </tr>
+                    <tr>
                         <td>
                             支付方式:
                         </td>

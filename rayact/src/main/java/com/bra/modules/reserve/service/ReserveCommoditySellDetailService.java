@@ -1,14 +1,13 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
+import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
-import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
+import java.util.List;
 
 /**
  * 商品销售明细Service
@@ -36,6 +35,10 @@ public class ReserveCommoditySellDetailService extends CrudService<ReserveCommod
         reserveCommoditySellDetail.setPage(page);
         page.setList(dao.findSellDetailList(reserveCommoditySellDetail));
         return page;
+    }
+
+    public List<ReserveCommoditySellDetail> findSellDetailList(ReserveCommoditySellDetail reserveCommoditySellDetail) {
+        return dao.findSellDetailList(reserveCommoditySellDetail);
     }
 
     @Transactional(readOnly = false)

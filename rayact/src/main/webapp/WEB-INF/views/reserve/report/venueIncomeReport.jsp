@@ -71,7 +71,9 @@
                                                value="<fmt:formatDate value="${incomeReport.endDate}" type="date"></fmt:formatDate>"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -175,5 +177,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/reserveVenue/reportExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/reserveVenue/report");
+    });
+</script>
 </body>
 </html>

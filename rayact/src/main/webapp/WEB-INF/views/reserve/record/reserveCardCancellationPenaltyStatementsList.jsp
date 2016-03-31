@@ -22,7 +22,7 @@
                            method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-                    <input id="transactionType" name="transactionType" type="hidden" value="1"/>
+                    <input id="transactionType" name="transactionType" type="hidden" value="4"/>
                     <div class="row">
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             <table class="no-border">
@@ -47,7 +47,9 @@
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                               value="查询"/></td>
+                                               value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -139,5 +141,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCardStatements/listExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/reserveCardStatements/list");
+    });
+</script>
 </body>
 </html>
