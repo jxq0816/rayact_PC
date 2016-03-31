@@ -228,40 +228,10 @@ $(document).ready(function () {
             }
         });
     }
-
-    //结账
-    $("#asd").on('click', function () {
-        var cosId = $("#cosId").val();
-        var shouldPrice = $("#shouldPrice").val();
-        var orderPrice = $("#orderPrice").val();
-        var discountPrice = $("#discountPrice").val();
-        var payType = $('#payType input:radio:checked').val();
-        jQuery.postItems({
-            url: ctx + '/reserve/field/settlementDetailForm',
-            data: {
-                cosId: cosId,
-                payType: payType,
-                shouldPrice: shouldPrice,
-                orderPrice: orderPrice,
-                discountPrice: discountPrice
-            },
-            success: function (result) {
-                $("#closeSettlementBtn").click();
-                $("#settlementDetailForm").html(result);
-                $("#settlementDetailBtn").click();
-                var token = $("#settlementDetailToken").val();
-                $("#settlementToken").val(token);
-            }
-        });
-    });
-
-    /* $("#editOrderPrice").on('click', function () {
-
-     });*/
     //确认结账
     $("#saveSettlementBtn").on('click', function () {
 
-        var shouldPrice = $("#detailShouldPrice").val();
+        var shouldPrice = $("#shouldPrice").val();
         var discountPrice = $("#discountPrice").val();
         if(isNaN(discountPrice)){
             errorLoding("优惠金额必须为数字！");
@@ -272,7 +242,11 @@ $(document).ready(function () {
             return;
         }
        /* 以上为数据验证*/
-        var consPrice=$("#consPrice").val();//实收
+        var consPrice=shouldPrice-discountPrice;
+        if(isNaN(consPrice)){
+            errorLoding("结算金额必须为数字！");
+            return;
+        }
         if(eval(consPrice) < 0){
             errorLoding("结账金额不能小于0！");
             return;
@@ -381,9 +355,9 @@ function editPrice() {
         errorLoding("优惠金额必须为数字！");
         return;
     }
-    var detailShouldPrice = $("#detailShouldPrice").val();
+    var shouldPrice = $("#shouldPrice").val();
 
-    var consPrice = detailShouldPrice - discountPrice;
+    var consPrice = shouldPrice - discountPrice;
     if (consPrice < 0) {
         errorLoding("优惠金额不能大于应收金额！");
         return;

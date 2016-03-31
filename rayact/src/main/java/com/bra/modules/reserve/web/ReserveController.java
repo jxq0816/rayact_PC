@@ -317,8 +317,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("order", order);
         //赠品
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(order.getId(), ReserveVenueCons.MODEL_KEY)));
-        return "reserve/saleField/settlementDetailForm";
-        //return "reserve/saleField/settlementForm";
+        return "reserve/saleField/settlementForm";
     }
     /**
      * 结算订单

@@ -3,20 +3,18 @@
 <form id="settlementDetailFormBean">
     <input type="hidden" id="id" name="id" value="${order.id}"/>
     <input type="hidden" id="token" name="token" value="${token}" />
-    ${payType}
-    <input type="hidden" id="payType" name="payType" value="${payType}" />
     <div class="content">
         <table class="no-border">
             <tbody class="no-border-y">
             <tr>
-                <td>预定人:${cos.userName}(<j:ifelse
+                <td>预定人:${order.userName}(<j:ifelse
                         test="${'1' eq cos.consType}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
                 </td>
-                <td>
+               <%-- <td>
                     <input type="hidden" name="itemId" value="${item.id}"/>
                     <input type="hidden" name="tutorOrder.id" value="${tutorOrder.id}"/>
                     <input type="hidden" name="tutorOrder.orderPrice" id="tutorPrice" value="${tutorOrder.orderPrice}"/>
-                </td>
+                </td>--%>
             </tr>
             </tbody>
         </table>
@@ -121,10 +119,10 @@
     </j:if>
     <hr/>
         <div class="row">
-            <label for="detailShouldPrice" class="col-lg-2">应收:</label>
+            <label for="shouldPrice" class="col-lg-2">应收:</label>
             <div class="col-lg-2">
                 <input readonly="readonly" value="${order.shouldPrice}" type="text"
-                       id="detailShouldPrice" class="form-control"
+                       id="shouldPrice" class="form-control"
                        name="shouldPrice"/>
             </div>
             <div class="col-lg-4" id="discountPriceDiv" style="display:none">
