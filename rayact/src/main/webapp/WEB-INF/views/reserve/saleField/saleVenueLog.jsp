@@ -20,7 +20,7 @@
                 <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
                       method="post" class="breadcrumb form-search">
                     <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
@@ -45,14 +45,17 @@
                                         </select>
                                     </td>
                                     <td>时间:</td>
-                                    <td><input name="startDate" value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>" type="text" id="startDate"
+                                    <td><input name="startDate" value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>"
+                                               type="text" id="startDate"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
                                                /></td>
                                     <td>
                                         <input name="endDate" value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"  type="text" id="endDate"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
                                                />
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>

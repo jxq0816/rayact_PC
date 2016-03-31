@@ -71,6 +71,7 @@ public class ReserveController extends BaseController {
     public String main(Long t, String venueId, Model model) throws ParseException {
         //当前日期
         Date defaultDate = DateUtils.parseDate(DateUtils.getDate(), "yyyy-MM-dd");
+        System.out.println("123");
         //获取可预定时间段:一周
         Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
         model.addAttribute("timeSlot", timeSlot);
@@ -292,56 +293,32 @@ public class ReserveController extends BaseController {
      * @return
      */
     @RequestMapping(value = "settlementForm")
+    @Token(save = true)
     public String settlementForm(String itemId, Model model) {
         //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
-        ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
+        ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
         ReserveVenueConsItem search = new ReserveVenueConsItem();
         search.setConsData(consItem.getConsData());
-        ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
-        model.addAttribute("cos", cons);
+        ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
+
         //教练订单
-        List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
+        List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(order.getId(), ReserveVenueCons.MODEL_KEY);
         if (!Collections3.isEmpty(tutorOrderList)) {
             model.addAttribute("tutorOrder", tutorOrderList.get(0));
         }
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
-        return "reserve/saleField/settlementForm";
-    }
-
-    @RequestMapping(value = "settlementDetailForm")
-    @Token(save = true)
-    public String settlementDetailForm(String cosId,String payType, Double shouldPrice, Double orderPrice, Double discountPrice, Model model) {
-        ReserveVenueCons cons = reserveVenueConsService.get(cosId);
-        model.addAttribute("cos", cons);
-        //教练
-        model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
-        //教练订单
-        List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
-        if (!Collections3.isEmpty(tutorOrderList)) {
-            model.addAttribute("tutorOrder", tutorOrderList.get(0));
-        }
-        ReserveVenueCons venueCons = new ReserveVenueCons(cons.getId());
-        ReserveVenueConsItem search = new ReserveVenueConsItem();
-        search.setConsData(venueCons);
-        List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
-
         User user=new User();
         user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：场地管理员；4：收银；5：财务)
         List<User> authUserList=userService.findList(user);
-
         model.addAttribute("authUserList", authUserList);
         model.addAttribute("itemList", itemList);
-        model.addAttribute("shouldPrice", shouldPrice);
-        model.addAttribute("orderPrice", orderPrice);
-        model.addAttribute("discountPrice", discountPrice);
-        model.addAttribute("payType", payType);
+
+        model.addAttribute("order", order);
         //赠品
-        model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
-        return "reserve/saleField/settlementDetailForm";
+        model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(order.getId(), ReserveVenueCons.MODEL_KEY)));
+        return "reserve/saleField/settlementForm";
     }
-
-
     /**
      * 结算订单
      *
@@ -350,9 +327,10 @@ public class ReserveController extends BaseController {
      */
     @RequestMapping(value = "saveSettlement")
     @ResponseBody
-    /*@Token(remove = true)*/
-    public List<Map<String, String>> saveSettlement(ReserveVenueCons cons) {
-        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(cons);
+    @Token(remove = true)
+    public List<Map<String, String>> saveSettlement(String id,String payType,String authUserId,Double discountPrice,Double consPrice) {
+
+        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(id,payType,authUserId,discountPrice,consPrice);
         List<Map<String, String>> list = getReserveMap(venueCons.getVenueConsList());
         return list;
     }

@@ -38,7 +38,7 @@
                                                maxlength="20"
                                                class="input-medium form-control Wdate"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                        </td>
+                                    </td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
                                                name="endDate" id="endDate" type="text"
