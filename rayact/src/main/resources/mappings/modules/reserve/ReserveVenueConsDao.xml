@@ -52,7 +52,7 @@
         </if>
         ${sqlMap.dsf}
         <if test="sqlMap.startDate != null and sqlMap.endDate != null">
-            and (a.update_date BETWEEN #{sqlMap.startDate} AND #{sqlMap.endDate})
+            and (Date(a.update_date) BETWEEN DATE (#{sqlMap.startDate}) AND DATE(#{sqlMap.endDate}))
         </if>
         ORDER BY a.update_date DESC
     </select>
@@ -92,7 +92,7 @@
             and year(a.update_date)=year(CURDATE())
         </if>
         <if test="sqlMap.startDate != null and sqlMap.endDate != null">
-            and (a.update_date BETWEEN #{sqlMap.startDate} AND #{sqlMap.endDate})
+            and (Date(a.update_date) BETWEEN DATE (#{sqlMap.startDate}) AND DATE(#{sqlMap.endDate}))
         </if>
         ${sqlMap.dsf}
         group by d.name
@@ -118,7 +118,7 @@
             and year(a.update_date)=year(CURDATE())
         </if>
         <if test="sqlMap.startDate != null and sqlMap.endDate != null">
-            and (a.update_date BETWEEN #{sqlMap.startDate} AND #{sqlMap.endDate})
+            and (Date(a.update_date) BETWEEN DATE (#{sqlMap.startDate}) AND DATE(#{sqlMap.endDate}))
         </if>
         ${sqlMap.dsf}
         group by c.name,f.name,p.name
@@ -140,7 +140,7 @@
         left JOIN  reserve_project as p ON a.project_id = p.id
         where a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
         <if test="startDate != null and endDate != null">
-            and (a.update_date BETWEEN #{startDate} AND #{endDate})
+            and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
         <if test="user!=null and user.id!=null and user.id!=''">
             and a.create_by = #{user.id}
@@ -164,7 +164,7 @@
           where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
           and a.del_flag = '0' and a.tenant_id = #{tenantId}
           <if test="startDate != null and endDate != null">
-              and (a.update_date BETWEEN #{startDate} AND #{endDate})
+              and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
           </if>
           <if test="user!=null and user.id!=null and user.id!=''">
               and a.create_by = #{user.id}
@@ -240,7 +240,7 @@
             </if>
             ${sqlMap.dsf}
             <if test="sqlMap.startDate != null and sqlMap.endDate != null">
-                and (a.update_date BETWEEN #{sqlMap.startDate} AND #{sqlMap.endDate})
+                and (Date(a.update_date) BETWEEN DATE (#{sqlMap.startDate}) AND DATE(#{sqlMap.endDate}))
             </if>
         </where>
         <choose>
