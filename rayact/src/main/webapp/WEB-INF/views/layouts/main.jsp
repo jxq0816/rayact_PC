@@ -70,13 +70,14 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown profile_menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#0b0b0b">${fns:getUser().name}<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
-                        <li class="divider"></li>
-                    </ul>
+                  <%--  <ul class="dropdown-menu">--%>
+
+                       <%-- <li class="divider"></li>--%>
+                  <%--  </ul>--%>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a style="color:#0b0b0b"  href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
                 <li><a style="color:#0b0b0b" href="${ctx}/logout">退出</a></li>
             </ul>
         </div><!--/.nav-collapse -->
