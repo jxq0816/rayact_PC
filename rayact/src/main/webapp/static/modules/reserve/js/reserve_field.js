@@ -230,7 +230,7 @@ $(document).ready(function () {
     }
 
     //结账
-    $("#saveSettlementBtn").on('click', function () {
+    $("#asd").on('click', function () {
         var cosId = $("#cosId").val();
         var shouldPrice = $("#shouldPrice").val();
         var orderPrice = $("#orderPrice").val();
@@ -259,7 +259,7 @@ $(document).ready(function () {
 
      });*/
     //确认结账
-    $("#saveSettlementDetailBtn").on('click', function () {
+    $("#saveSettlementBtn").on('click', function () {
 
         var shouldPrice = $("#detailShouldPrice").val();
         var discountPrice = $("#discountPrice").val();
@@ -280,9 +280,11 @@ $(document).ready(function () {
         var authUserId=$("#authUser").val();
         var id=$("#id").val();
         var token=$("#token").val();
-        var payType=$("#payType").val();
-
-
+        var payType = $("#payType2 input:radio:checked").val();
+        if(payType=="" || payType==null || payType==undefined){
+            errorLoding("请选择支付类型！");
+            return;
+        }
       /*  var data = $("#settlementFormBean").serializeArray();*/
         $.postItems({
             url: ctx + '/reserve/field/saveSettlement?random='+Math.random(),

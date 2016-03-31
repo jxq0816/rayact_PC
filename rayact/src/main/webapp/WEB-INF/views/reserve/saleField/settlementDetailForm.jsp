@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="settlementDetailFormBean">
-    <input type="hidden" id="id" name="id" value="${cos.id}"/>
+    <input type="hidden" id="id" name="id" value="${order.id}"/>
     <input type="hidden" id="token" name="token" value="${token}" />
+    ${payType}
     <input type="hidden" id="payType" name="payType" value="${payType}" />
     <div class="content">
         <table class="no-border">
@@ -71,24 +72,38 @@
     <hr/>
     <div class="content">
         支付方式:
-        <j:if test="${'1' eq payType}">
-            会员卡
-        </j:if>
-        <j:if test="${'2' eq payType}">
-            现金
-        </j:if>
-        <j:if test="${'3' eq payType}">
-            银行卡
-        </j:if>
-        <j:if test="${'4' eq payType}">
-            微信
-        </j:if>
-        <j:if test="${'5' eq payType}">
-            支付宝
-        </j:if>
-        <j:if test="${'6' eq payType}">
-            其它
-        </j:if>
+        <table class="no-border" id="payType2">
+            <tbody class="no-border-y">
+            <tr>
+                <td>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck"
+                               <j:if test="${'1' eq order.consType}">disabled="disabled"</j:if> value="1"
+                               <j:if test="${'2' eq order.consType}">checked="checked"</j:if> name="payType"/>会员卡
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="2"
+                               <j:if test="${'1' eq order.consType}">checked="checked"</j:if> name="payType"/>现金
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="3" name="payType"/>银行卡
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="4" name="payType"/>微信
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="5" name="payType"/>支付宝
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="6" name="payType"/>其它
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="7" name="payType"/>打白条
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <j:if test="${!empty giftList}">
         <hr/>
@@ -108,7 +123,7 @@
         <div class="row">
             <label for="detailShouldPrice" class="col-lg-2">应收:</label>
             <div class="col-lg-2">
-                <input readonly="readonly" value="${shouldPrice}" type="text"
+                <input readonly="readonly" value="${order.shouldPrice}" type="text"
                        id="detailShouldPrice" class="form-control"
                        name="shouldPrice"/>
             </div>
@@ -116,7 +131,7 @@
                 <div class="row">
                     <label class="col-lg-6" for="discountPrice">会员优惠:</label>
                     <div class="col-lg-6">
-                        <input type="text" id="discountPrice" value="${discountPrice}" onkeyup="editPrice()"
+                        <input type="text" id="discountPrice" value="${order.discountPrice}" onkeyup="editPrice()"
                                onafterpaste="editPrice()"
                                class="form-control " name="discountPrice"/>
                     </div>
@@ -126,7 +141,7 @@
                     <li class="fa fa-edit" onclick="changePrice()"></li>
                 </a></label>
                 <div class="col-lg-2">
-                <input type="text" readonly="readonly" id="consPrice" value="${orderPrice}"
+                <input type="text" readonly="readonly" id="consPrice" value="${order.orderPrice}"
                                     class="form-control required number" name="orderPrice"/>
                 </div>
                     <%-- --%>
