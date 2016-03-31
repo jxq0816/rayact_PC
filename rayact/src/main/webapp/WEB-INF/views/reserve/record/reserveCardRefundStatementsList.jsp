@@ -36,14 +36,14 @@
                                     <td>时间:</td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
-                                               name="startDate" id="startDate" type="text" readonly="readonly"
+                                               name="startDate" id="startDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
-                                               name="endDate" id="endDate" type="text" readonly="readonly"
+                                               name="endDate" id="endDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>

@@ -126,29 +126,19 @@
     </select>
 
     <select id="findOrderLog" resultType="java.util.Map">
-        select a.venue_id,v.name,a.user_name,a.cons_mobile,a.cons_date,a.order_price,
-        a.should_price,a.pay_type,a.create_by,u.name as create_user,
-        '1' as reserve_type,p.name as projectName
-        from reserve_venue_cons a,reserve_venue v,reserve_user u,reserve_project p
-        where a.venue_id = v.id and a.create_by = u.id and a.project_id = p.id
-        and a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
-        <if test="startDate != null and endDate != null">
-            and (a.update_date BETWEEN #{startDate} AND #{endDate})
-        </if>
-        <if test="user!=null and user.id!=null and user.id!=''">
-            and a.create_by = #{user.id}
-        </if>
-        <if test="venue!=null and venue.id!=null and venue.id!=''">
-            and a.venue_id = #{venue.id}
-        </if>
-        ${dsf}
-        union
-        select a.venue_id,v.name,a.user_name,a.cons_mobile,a.update_date,a.collect_price as order_price,
-        a.collect_price as should_price,a.pay_type,a.create_by,u.name as create_user,'2' as reserve_type,p.name as
-        projectName
-        from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
-        where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
-        and a.del_flag = '0' and a.tenant_id = #{tenantId}
+        select a.venue_id,v.name,
+        a.user_name,a.cons_mobile,a.cons_date,a.update_date,
+        a.order_price,a.should_price,a.discount_price,a.cons_price,
+        a.pay_type,
+        a.create_by,
+        u.name as create_user,
+        a.checkout_id,
+        p.name as projectName
+        from reserve_venue_cons as a
+        LEFT JOIN  reserve_venue as v ON a.venue_id = v.id
+        LEFT JOIN  reserve_user as u on a.create_by = u.id
+        left JOIN  reserve_project as p ON a.project_id = p.id
+        where a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
         <if test="startDate != null and endDate != null">
             and (a.update_date BETWEEN #{startDate} AND #{endDate})
         </if>
@@ -160,6 +150,29 @@
         </if>
         ${dsf}
         ORDER BY cons_date DESC
+    </select>
+
+    <select id="findTimeCardSaleLog" resultType="java.util.Map">
+          select a.venue_id,v.name,
+          a.user_name,a.cons_mobile,a.update_date as cons_date,a.update_date,
+          a.collect_price as order_price,a.collect_price as should_price,a.collect_price as cons_price,
+          a.pay_type,
+          a.create_by,
+          u.name as create_user,
+          p.name as projectName
+          from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
+          where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
+          and a.del_flag = '0' and a.tenant_id = #{tenantId}
+          <if test="startDate != null and endDate != null">
+              and (a.update_date BETWEEN #{startDate} AND #{endDate})
+          </if>
+          <if test="user!=null and user.id!=null and user.id!=''">
+              and a.create_by = #{user.id}
+          </if>
+          <if test="venue!=null and venue.id!=null and venue.id!=''">
+              and a.venue_id = #{venue.id}
+          </if>
+        ORDER BY order_date DESC
     </select>
 
     <select id="sellMonthOfChart" resultType="java.math.BigDecimal">

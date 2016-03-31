@@ -34,6 +34,8 @@ import java.util.Map;
 public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, ReserveVenueCons> {
 
     @Autowired
+    private ReserveUserService reserveUserService;
+    @Autowired
     private StoredCardMemberService storedCardMemberService;
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
@@ -43,11 +45,28 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     private ReserveTutorService reserveTutorService;
 
     public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
-        return dao.findOrderLog(venueLog);
+        List<Map<String, Object>> list=dao.findOrderLog(venueLog);
+        for(Map<String, Object> i:list){
+            String id= (String) i.get("checkout_id");
+            if(StringUtils.isNoneEmpty(id)){
+                User author=reserveUserService.get(id);
+                if(author!=null){
+                    String name=author.getName();
+                    i.put("checkout_name",name);
+                }
+            }
+        }
+        List<Map<String, Object>> timeCardSaleLog=dao.findTimeCardSaleLog(venueLog);
+        for(Map<String, Object> i:timeCardSaleLog){
+            i.put("discount_price",0);
+        }
+        list.addAll(timeCardSaleLog);
+        return list;
     }
 
     public List<Map<String, Object>> findPriceGroupProject(ReserveVenueCons venueCons) {
-        return dao.findPriceGroupProject(venueCons);
+        List<Map<String, Object>> list = dao.findPriceGroupProject(venueCons);
+        return list;
     }
 
     public List<Map<String, Object>> findPriceGroupProjectReport(ReserveVenueCons venueCons) {

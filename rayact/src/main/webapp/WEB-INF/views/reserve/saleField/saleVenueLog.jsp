@@ -76,9 +76,13 @@
                                 <th>所属项目</th>
                                 <th>订单金额</th>
                                 <th>应收金额</th>
+                                <th>优惠金额</th>
+                                <th>实收金额</th>
                                 <th>支付类型</th>
                                 <th>操作人</th>
+                                <th>授权人</th>
                                 <th>订单时间</th>
+                                <th>操作时间</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -91,11 +95,13 @@
                                     </td>
                                     <td>${order.order_price}</td>
                                     <td>${order.should_price}</td>
-                                    <td>
-                                            ${fns:getPayType(order.pay_type)}
-                                    </td>
+                                    <td>${order.discount_price}</td>
+                                    <td>${order.cons_price}</td>
+                                    <td>${fns:getPayType(order.pay_type)}</td>
                                     <td>${order.create_user}</td>
+                                    <td>${order.checkout_name}</td>
                                     <td><fmt:formatDate value="${order.cons_date}" type="date"></fmt:formatDate></td>
+                                    <td><fmt:formatDate value="${order.update_date}" type="both"></fmt:formatDate></td>
                                 </tr>
                             </c:forEach>
 
