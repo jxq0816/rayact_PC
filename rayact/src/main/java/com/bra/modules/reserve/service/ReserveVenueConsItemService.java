@@ -38,12 +38,11 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 	}
 	public List<ReserveVenueConsItem> findList(ReserveVenueConsItem reserveVenueCons) {
 		List<ReserveVenueConsItem> list=super.findList(reserveVenueCons);
-		List<ReserveVenueConsItem> cancelList=dao.findCancelList(reserveVenueCons);//查询已取消的订单
-		list.addAll(cancelList);
 		return list;
 	}
 
 	public List<ReserveVenueConsItem> findCancelList(ReserveVenueConsItem reserveVenueCons) {
+		reserveVenueCons.setDelFlag("1");
 		return dao.findCancelList(reserveVenueCons);
 	}
 
