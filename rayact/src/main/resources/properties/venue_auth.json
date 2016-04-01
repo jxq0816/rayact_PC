@@ -136,15 +136,9 @@
     "name": "报表管理",
     "authorityList": [
       {
-        "code": "saleVenueReport",
-        "name": "场地售卖报表",
-        "href":"/reserve/saleVenueReport/list",
-        "authorityList": []
-      },
-      {
-        "code": "listOpenRate",
-        "name": "场地利用率",
-        "href":"/reserve/saleVenueReport/listOpenRate",
+        "code": "totalIncomeReport",
+        "name": "总收入统计",
+        "href":"/reserve/reserveVenue/totalIncomeReport",
         "authorityList": []
       },
       {
@@ -163,6 +157,18 @@
         "code": "venueIncomeReport",
         "name": "场地收入统计",
         "href":"/reserve/reserveVenue/report",
+        "authorityList": []
+      },
+      {
+        "code": "saleVenueReport",
+        "name": "场地售卖报表",
+        "href":"/reserve/saleVenueReport/list",
+        "authorityList": []
+      },
+      {
+        "code": "listOpenRate",
+        "name": "场地利用率",
+        "href":"/reserve/saleVenueReport/listOpenRate",
         "authorityList": []
       }
     ]
