@@ -42,7 +42,7 @@
         t.name AS "reserveCommodity.commodityType.name",
         a.fk_reserve_commodity_sell_id AS "reserveCommoditySell.id",
         a.num AS "num",
-        a.price AS "reserveCommodity.price",
+        a.price AS "price",
         a.detail_sum AS "detailSum",
         a.create_by AS "createBy.id",
         a.create_date AS "createDate",
