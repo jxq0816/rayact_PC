@@ -37,8 +37,17 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 		return dao.findVenueConsByMoblie(reserveVenueCons);
 	}
 	public List<ReserveVenueConsItem> findList(ReserveVenueConsItem reserveVenueCons) {
-		return super.findList(reserveVenueCons);
+		List<ReserveVenueConsItem> list=super.findList(reserveVenueCons);
+		List<ReserveVenueConsItem> cancelList=dao.findCancelList(reserveVenueCons);//查询已取消的订单
+		list.addAll(cancelList);
+		return list;
 	}
+
+	public List<ReserveVenueConsItem> findCancelList(ReserveVenueConsItem reserveVenueCons) {
+		return dao.findCancelList(reserveVenueCons);
+	}
+
+
 	/*
 	相关场地预订状态的查询
 	 */
