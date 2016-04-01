@@ -79,9 +79,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		Double total=0.0;
 		String payType=sellDetailList.getPayType();
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
-			Double price=sellDetail.getPrice();
-			Integer num=sellDetail.getNum();
-			Double detailSum=price*num;
+			Double detailSum=sellDetail.getDetailSum();
 			total+=detailSum;
 		}
 		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
@@ -97,11 +95,9 @@ public class ReserveCommoditySellDetailController extends BaseController {
 
 		//销售明细表
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
-			Double price=sellDetail.getPrice();
 			Integer num=sellDetail.getNum();
-			Double detailSum=price*num;
+			Double detailSum=sellDetail.getDetailSum();
 			ReserveCommodity commodity=sellDetail.getReserveCommodity();//买的啥
-			sellDetail.setDetailSum(detailSum);
 			sellDetail.setReserveMember(reserveMember);
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			commodity=reserveCommodityService.get(commodity);

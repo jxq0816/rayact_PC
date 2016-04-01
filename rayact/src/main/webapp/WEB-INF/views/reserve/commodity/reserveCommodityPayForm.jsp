@@ -11,12 +11,11 @@
                         <th>商品名称</th>
                         <th>数量</th>
                         <th>单价</th>
+                        <th>总价</th>
+                        <th>备注</th>
                     </tr>
                     </thead>
                     <tbody>
-
-
-
                     <input type="hidden" name="token" value="${token}"/>
                     <c:forEach items="${sellDetailList}" var="reserveCommoditySellDetail" varStatus="status">
                         <tr>
@@ -35,16 +34,16 @@
                                        name="reserveCommoditySellDetailList[${status.index}].price"
                                        value="${reserveCommoditySellDetail.price}"
                                        placeholder="${reserveCommoditySellDetail.price}" readonly></td>
+                            <td><input class="form-control" type="text"
+                                       name="reserveCommoditySellDetailList[${status.index}].detailSum"
+                                       value="${reserveCommoditySellDetail.num * reserveCommoditySellDetail.price}"
+                                       placeholder="${reserveCommoditySellDetail.num * reserveCommoditySellDetail.price}"></td>
+                            <td><input class="form-control" type="text"
+                                       name="reserveCommoditySellDetailList[${status.index}].remarks"
+                                       value="${reserveCommoditySellDetail.remarks}"
+                                       placeholder="${reserveCommoditySellDetail.remarks}"></td>
                         </tr>
                     </c:forEach>
-                    <tr>
-                        <td>总计</td>
-                        <td></td>
-                        <td><input class="form-control" type="text"
-                                   name="realPrice"
-                                   value="${reserveCommoditySellDetail.price}"
-                                   placeholder="${reserveCommoditySellDetail.price}" readonly></td>
-                    </tr>
                     <tr>
                         <td>
                             支付方式:
