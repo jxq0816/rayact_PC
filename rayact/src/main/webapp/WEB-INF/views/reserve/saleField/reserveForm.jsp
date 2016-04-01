@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
-
 <form id="reserveFormBean" class="form-horizontal">
     <input type="hidden" name="token" value="${token}"/>
     <input type="hidden" name="project.id" value="${reserveField.reserveProject.id}"/>
@@ -83,7 +82,6 @@
                         <div class="col-sm-4">
                             <select id="tutorId" name="tutor.id" class="form-control input-sm">
                                 <option value="">请选择</option>
-
                                 <c:forEach items="${tutors}" var="t">
                                     <option data-price="${t.price}" value="${t.id}" onclick="">${t.name}</option>
                                 </c:forEach>
@@ -126,7 +124,7 @@
                     <div class="form-group">
                         <label for="memberId" class="control-label col-lg-3">会员姓名:</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="memberId" name="member.id">
+                            <select style="width: 200px;" class="select2" id="memberId" name="member.id">
                                 <option value="">--请选择--</option>
                                 <c:forEach items="${memberList}" var="m">
                                     <option value="${m.id}">${m.mobile}-${m.name}</option>
@@ -223,5 +221,4 @@
             }
         });
     });
-
 </script>
