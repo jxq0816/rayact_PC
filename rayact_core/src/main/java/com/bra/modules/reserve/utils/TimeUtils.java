@@ -217,6 +217,38 @@ public class TimeUtils {
         }
         return list;
     }
+    //获得区间时间
+    public static List<Date> getIntervalWeekDayList(Date start ,Date end,String week){
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(start);
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(end);
+        List<Date> list = Lists.newArrayList();
+        while(endCal.after(startCal)|| endCal.equals(startCal)){
+            Date date=startCal.getTime();
+            if(getWeekOfDate(date).equals(week)){
+                list.add(date);
+            }
+            startCal.add(Calendar.DATE, 1);
+        }
+        return list;
+    }
+
+    public static List<Date> getIntervalDayList(Date start ,Date end){
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(start);
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(end);
+        List<Date> list = Lists.newArrayList();
+        while(endCal.after(startCal)|| endCal.equals(startCal)){
+            Date date=startCal.getTime();
+            list.add(date);
+            startCal.add(Calendar.DATE, 1);
+        }
+        return list;
+    }
 
     public static void main(String[] args) throws ParseException {
 

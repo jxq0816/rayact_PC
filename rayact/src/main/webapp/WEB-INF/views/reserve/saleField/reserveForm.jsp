@@ -15,7 +15,7 @@
                             <input readonly="readonly" id="reserveFieldName" class="form-control"
                                    value="${reserveField.name}"/>
                             <input type="hidden" id="consDate" name="consDate"
-                                   value="${date}"/>
+                                   value="${consDate}"/>
                             <input type="hidden" name="projectId" value="${reserveField.reserveProject.id}"/>
                             <input type="hidden" name="reserveVenue.id" value="${venueId}"/>
                             <input type="hidden" id="fieldId" name="venueConsList[0].reserveField.id"
@@ -75,7 +75,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="form-group">
                         <label for="tutorId" class="col-sm-2 control-label">教练:</label>
@@ -93,18 +92,36 @@
                         <div class="col-lg-4">
                             <input readonly="readonly" id="tutor_price" class="form-control"
                                    value="0元/小时"/>
-                        </span>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="tutorId" class="control-label col-sm-2">备注:</label>
-                        <div class="col-sm-9">
-                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        <label for="startDate" class="col-sm-2 control-label">开始日期:</label>
+                        <div class="col-sm-4">
+                            <input name="startDate" value="${consDate}"
+                                   type="text" id="startDate"
+                                   maxlength="20"
+                                   class="input-medium form-control Wdate "
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
+                            />
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="endDate" class="control-label">结束日期:</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <input name="endDate" value="${consDate}"
+                                   type="text" id="endDate"
+                                   maxlength="20"
+                                   class="input-medium form-control Wdate "
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
+                            />
+                            </span>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-lg-6">
@@ -156,6 +173,14 @@
                         <div class="col-lg-6"><input id="consMobile" name="consMobile"
                                                      type="text" readonly="readonly"
                                                      class="form-control"/></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="remarks" class="control-label col-sm-3">备注:</label>
+                        <div class="col-sm-9">
+                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>

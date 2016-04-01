@@ -33,6 +33,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private String reserveType;    //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
     private Date consDate;        // 预定日期(yyyy-MM-dd)
 
+
     private Double cosOrderPrice;//预定时单据金额
     private Double consPrice;//预定金额
 
@@ -217,6 +218,9 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     //-------------以下和数据库无关字段-----------------
 
     private ReserveTutor tutor;
+    private Date endDate;//预定结束日期(按照频率)
+    private Date startDate; //预订开始日期
+    private String frequency;//频率(1:单次;2:每天;3:每周)
 
     public ReserveTutor getTutor() {
         return tutor;
@@ -236,10 +240,13 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
         this.tutorOrder = tutorOrder;
     }
 
-    private Date endDate;//预定结束日期(按照频率)
+    public Date getStartDate() {
+        return startDate;
+    }
 
-    private String frequency;//频率(1:单次;2:每天;3:每周)
-
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
     public Date getEndDate() {
         return endDate;
     }

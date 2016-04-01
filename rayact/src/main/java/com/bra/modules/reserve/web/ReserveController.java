@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 场地预定管理
@@ -134,7 +131,7 @@ public class ReserveController extends BaseController {
         //获取营业时间
         List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
-        model.addAttribute("date", consDate);
+        model.addAttribute("consDate", consDate);
         model.addAttribute("times", times);
         //会员
         ReserveMember reserveMember = new ReserveMember();
@@ -223,6 +220,8 @@ public class ReserveController extends BaseController {
     @Token(remove = true)
     public List<Map<String, String>> reservation(ReserveVenueCons reserveVenueCons) {
         boolean bool=true;//时间段是否可用
+        String frequency=reserveVenueCons.getFrequency();//频率
+        Date consDate=reserveVenueCons.getConsDate();
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
         for(ReserveVenueConsItem i:itemList){//订单详情
             String startTime=i.getStartTime();
@@ -230,48 +229,64 @@ public class ReserveController extends BaseController {
             startTime=TimeUtils.earlyMorningFormat(startTime);
             endTime=TimeUtils.earlyMorningFormat(endTime);
             ReserveField field=i.getReserveField();//场地
-            Date consDate=reserveVenueCons.getConsDate();//日期
-            //查询该场地，当天的已预订时间
-            ReserveVenueConsItem reserveVenueConsItem=new  ReserveVenueConsItem();
-            reserveVenueConsItem.setReserveField(field);
-            reserveVenueConsItem.setConsDate(consDate);
-            List<ReserveVenueConsItem> list = reserveVenueConsItemService.findRelationList(reserveVenueConsItem);//查询该场地在预订date的预订状态
-            for(ReserveVenueConsItem item:list){
-                String start=item.getStartTime();//已预订开始时间
-                String end=item.getEndTime();//已预订结束时间
-                start=TimeUtils.earlyMorningFormat(start);
-                end=TimeUtils.earlyMorningFormat(end);
-                //第一个判断条件 假设 预订时间为15:30-16:00 已预订时间为15:30-16:30 startTime=start=15:30 startTime=start不可预订
-                //第二个判断条件 假设 预订时间为15:30-16:00  已预订时间为15:00-15:30 startTime=end=15:30 时间段正好错开 可预订
-                if(startTime.compareTo(start)>=0 && startTime.compareTo(end)<0){//预订开始时间 介于 已预订区间
-                    bool=false;
-                    break;
-                }
-                //第一个判断条件 假设 预订时间为15:30-16:00  已预订时间为16:00-16:30 endTime=stat=16:00 时间段正好错开 可预订
-                //第二个判断条件 假设 预订时间为15:30-16:30  已预订时间为16:00-16:30 endTime=end=16:30 不可预订
-                if(endTime.compareTo(start)>0 && endTime.compareTo(end)<=0){//预订结束时间 介于 已预订区间
-                    bool=false;
-                    break;
-                }
-                if(startTime.compareTo(start)<0 && endTime.compareTo(end)>0){// 预订区间 包含 已预订区间
-                    bool=false;
-                    break;
+
+            Date startDate=reserveVenueCons.getStartDate();//预订开始日期
+            Date endDate=reserveVenueCons.getEndDate();//预订结束日期
+            //遍历该日期区间 的场地是否有预订
+            //单次
+            if("1".equals(frequency)){
+                bool=reserveVenueConsItemService.checkReserveTime(consDate,field,startTime,endTime);
+            }else if("2".equals(frequency)){//每天
+                List<Date> list=TimeUtils.getIntervalDayList(startDate,endDate);
+               for(Date date:list){
+                   bool=reserveVenueConsItemService.checkReserveTime(date,field,startTime,endTime);
+                   if(bool==false){
+                       break;
+                   }
+               }
+            }else if("3".equals(frequency)){//每周
+                String week=TimeUtils.getWeekOfDate(consDate);
+                List<Date> list= TimeUtils.getIntervalWeekDayList(startDate,endDate,week);
+                for(Date date:list){
+                    bool=reserveVenueConsItemService.checkReserveTime(date,field,startTime,endTime);
+                    if(bool==false){
+                        break;
+                    }
                 }
             }
         }
-        List<Map<String, String>> list=new ArrayList<>();
         Map<String, String> map = Maps.newConcurrentMap();
+        List<Map<String, String>> list=new ArrayList<>();
         if(bool){
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//预定
-            reserveVenueConsService.save(reserveVenueCons);//保存预订信息
-
-            Map<String, String> data;
+            Date startDate=reserveVenueCons.getStartDate();//预订开始日期
+            Date endDate=reserveVenueCons.getEndDate();//预订结束日期
+            if("1".equals(frequency)){
+                reserveVenueCons.preInsert();
+                reserveVenueCons.setConsDate(consDate);
+                reserveVenueConsService.save(reserveVenueCons);//保存预订信息
+            }else if("2".equals(frequency)){//每天
+                List<Date> dayList=TimeUtils.getIntervalDayList(startDate,endDate);
+                for(Date d:dayList){
+                    reserveVenueCons.preInsert();
+                    reserveVenueCons.setConsDate(d);
+                    reserveVenueConsService.save(reserveVenueCons);//保存预订信息
+                }
+            }else if("3".equals(frequency)){//每周
+                String week=TimeUtils.getWeekOfDate(consDate);
+                List<Date> weekDayList= TimeUtils.getIntervalWeekDayList(startDate,endDate,week);
+                for(Date date:weekDayList){
+                    reserveVenueCons.preInsert();
+                    reserveVenueCons.setConsDate(date);
+                    reserveVenueConsService.save(reserveVenueCons);//保存预订信息
+                }
+            }
             for (ReserveVenueConsItem item : itemList) {
                 String startTime = item.getStartTime();
                 String endTime = item.getEndTime();
                 List<String> times = TimeUtils.getTimeSpacListValue(startTime + ":00", endTime + ":00", 30);
                 for (String time : times) {
-                    data = Maps.newConcurrentMap();
+                    Map<String, String> data = Maps.newConcurrentMap();
                     data.put("fieldId", item.getReserveField().getId());
                     data.put("time", time);
                     data.put("itemId", item.getId());

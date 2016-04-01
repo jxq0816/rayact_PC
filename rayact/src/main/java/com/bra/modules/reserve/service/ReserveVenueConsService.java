@@ -161,16 +161,16 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
         String frequency = reserveVenueCons.getFrequency();//频率
 
-        List<Date> reserveDateList = Lists.newArrayList(reserveVenueCons.getConsDate());
-        if ("2".equals(reserveVenueCons.getFrequency())) {//每天
+       /*  List<Date> reserveDateList = Lists.newArrayList(reserveVenueCons.getConsDate());
+       if ("2".equals(reserveVenueCons.getFrequency())) {//每天
             reserveDateList = TimeUtils.getDayBettwnDays(reserveVenueCons.getEndDate());
         } else if ("3".equals(reserveVenueCons.getFrequency())) {
             reserveDateList = TimeUtils.getWeekBettwnDays(reserveVenueCons.getEndDate());
-        }
-        Date consDate = reserveVenueCons.getConsDate();//预订日期
+        }*/
+        //
 
-        for (Date date : reserveDateList) {
-            reserveVenueCons.setConsDate(date);
+       /* for (Date date : reserveDateList) {*/
+            //reserveVenueCons.setConsDate(date);
             reserveVenueCons.preInsert();
             if(StringUtils.isEmpty(reserveVenueCons.getConsMobile())){
                 reserveVenueCons.setConsMobile("000");
@@ -178,7 +178,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             dao.insert(reserveVenueCons);//保存订单
             List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
             Double sum = 0D;//订单价格
-
+            Date consDate = reserveVenueCons.getConsDate();//预订日期
             String consWeek = TimeUtils.getWeekOfDate(consDate);
             for (ReserveVenueConsItem item : itemList) {
                 item.setConsDate(consDate);//预订时间
@@ -186,7 +186,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 item.setConsWeek(consWeek);
                 item.setHalfCourt(halfCourt);//设置半场
                 item.setFrequency(frequency);//设置频率
-                Double price = null;
+                Double price = null;//订单明细的价格
                 //会员无打折卡
                 if (card == null) {
                     price = reserveFieldPriceService.getPrice(item.getReserveField(), reserveVenueCons.getConsType(),
@@ -212,11 +212,10 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                     price += tutorConsume;//订单价格增加教练费
                 }
                 item.setConsPrice(price);//单项金额
-                reserveVenueCons.setOrderPrice(price);
                 item.preInsert();
                 reserveVenueConsItemDao.insert(item);//保存预订信息
                 sum+=price;
-            }
+           /* }*/
             reserveVenueCons.setShouldPrice(sum);//应收：没有优惠券，应收等于订单金额
             reserveVenueCons.setOrderPrice(sum);//订单金额
             dao.update(reserveVenueCons);//订单价格更改
