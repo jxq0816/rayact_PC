@@ -8,6 +8,7 @@ import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveTimecardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveTimecardMemberSetService;
 import com.bra.modules.reserve.service.ReserveVenueService;
@@ -40,6 +41,8 @@ public class ReserveTimeCardMemberController extends BaseController {
 
     @Autowired
     private ReserveVenueService reserveVenueService;
+    @Autowired
+    private ReserveCardStatementsService reserveCardStatementsService;
 
     @ModelAttribute
     public ReserveMember get(@RequestParam(required=false) String id) {
@@ -83,6 +86,8 @@ public class ReserveTimeCardMemberController extends BaseController {
         statement.setTransactionVolume(rechargeVolume);
         statement.setTransactionType("7");
         statement.setPayType(payType);
+        statement.setRemarks("次卡充值");
+        reserveCardStatementsService.save(statement);
         addMessage(redirectAttributes, "保存储值卡会员成功");
         return "redirect:"+ Global.getAdminPath()+"/reserve/timeCardMember/list";
     }
