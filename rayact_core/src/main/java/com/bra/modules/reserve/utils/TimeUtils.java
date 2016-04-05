@@ -41,6 +41,12 @@ public class TimeUtils {
         try {
             Date start = DateUtils.parseDate(startTime, "HH:mm:ss");
             Date end = DateUtils.parseDate(endTime, "HH:mm:ss");
+            if(startTime.compareTo("03:00")<0){
+                Calendar   calendar   = Calendar.getInstance();
+                calendar.setTime(start);
+                calendar.add(Calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
+                start=calendar.getTime();   //这个时间就是日期往后推一天的结果
+            }
             //凌晨的营业时间小于03:00
             if(endTime.compareTo("03:00")<0){
                 Calendar   calendar   = Calendar.getInstance();

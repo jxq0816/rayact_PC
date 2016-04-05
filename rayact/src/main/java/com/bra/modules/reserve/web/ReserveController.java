@@ -226,8 +226,8 @@ public class ReserveController extends BaseController {
         for(ReserveVenueConsItem i:itemList){//订单详情
             String startTime=i.getStartTime();
             String endTime=i.getEndTime();
-            startTime=TimeUtils.earlyMorningFormat(startTime);
-            endTime=TimeUtils.earlyMorningFormat(endTime);
+          /*  startTime=TimeUtils.earlyMorningFormat(startTime);
+            endTime=TimeUtils.earlyMorningFormat(endTime);*/
             ReserveField field=i.getReserveField();//场地
 
             Date startDate=reserveVenueCons.getStartDate();//预订开始日期
