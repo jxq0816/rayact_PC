@@ -127,8 +127,9 @@ public class ReserveController extends BaseController {
         model.addAttribute("reserveField", reserveField);
         model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
 
-        //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);
+        //获取预定开始时间
+        String start=time.substring(0,5)+":00";
+        List<String> times = TimeUtils.getTimeSpacList(start, "00:30:00", TimeUtils.BENCHMARK);
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("consDate", consDate);
         model.addAttribute("times", times);
