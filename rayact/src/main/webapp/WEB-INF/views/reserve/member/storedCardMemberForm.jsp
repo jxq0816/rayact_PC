@@ -98,7 +98,7 @@
                             <tr>
                                 <td>场馆：</td>
                                 <td colspan="3">
-                                    <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                    <sys:select cssClass="input-xlarge" name="reserveVenue.id" id="reserveVenue_id"
                                                 items="${venueList}"
                                                 value="${reserveMember.reserveVenue.id}"
                                                 defaultLabel="请选择开户场馆"
@@ -112,7 +112,7 @@
                         <div>
                             <input id="btnSubmit"
                                    class="btn btn-primary"
-                                   type="submit"
+                                   type="submit"required
                                    value="保 存"/>&nbsp;
                             <input id="btnCancel" class="btn" type="button" value="返 回"
                                    onclick="history.go(-1)"/>

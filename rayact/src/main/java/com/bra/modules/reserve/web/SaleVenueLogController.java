@@ -57,17 +57,22 @@ public class SaleVenueLogController extends BaseController {
         venue.getSqlMap().put("dsf",AuthorityUtils.getVenueIdSql("a.id"));
         venueLog.setDsf(AuthorityUtils.getVenueIdSql("a.venue_id"));
         List<Map<String, Object>> sellLog = reserveVenueConsService.findOrderLog(venueLog);
-        String[] titles = {"所属场馆","所属项目","订单金额","应收金额","支付类型","操作人","订单时间"};
+        String[] titles = {"所属场馆","所属项目","订单金额","应收金额","优惠金额","实收金额","支付类型","预定人","操作人","授权人","订单时间","操作时间"};
         List<String[]> contentList = new ArrayList<>();
         for(Map<String,Object> map :sellLog){
-            String[] o = new String[7];
+            String[] o = new String[12];
             o[0] = String.valueOf(map.get("name"));
             o[1] = String.valueOf(map.get("projectName")+getType(String.valueOf(map.get("reserve_type"))));
             o[2] = map.get("order_price")!=null?String.valueOf( map.get("order_price")):"";
             o[3] = map.get("should_price")!=null?String.valueOf(map.get("should_price")):"";
-            o[4] =  map.get("pay_type")!=null? VenueOrderUtils.getPayType(String.valueOf(map.get("pay_type"))):"";
-            o[5] =  map.get("create_user")!=null?String.valueOf(map.get("create_user")):"";
-            o[6] =  map.get("cons_date")!=null?String.valueOf(map.get("cons_date")):"";
+            o[4] = map.get("discount_price")!=null?String.valueOf(map.get("discount_price")):"";
+            o[5] = map.get("cons_price")!=null?String.valueOf(map.get("cons_price")):"";
+            o[6] =  map.get("pay_type")!=null? VenueOrderUtils.getPayType(String.valueOf(map.get("pay_type"))):"";
+            o[7] =  map.get("user_name")!=null?String.valueOf(map.get("user_name")):"";
+            o[8] =  map.get("create_user")!=null?String.valueOf(map.get("create_user")):"";
+            o[9] =  map.get("checkout_name")!=null?String.valueOf(map.get("checkout_name")):"";
+            o[10] =  map.get("cons_date")!=null?String.valueOf(map.get("cons_date")):"";
+            o[11] =  map.get("update_date")!=null?String.valueOf(map.get("update_date")):"";
             contentList.add(o);
         }
         Date now = new Date();

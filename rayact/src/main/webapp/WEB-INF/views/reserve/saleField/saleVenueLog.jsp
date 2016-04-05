@@ -79,6 +79,7 @@
                                 <th>优惠金额</th>
                                 <th>实收金额</th>
                                 <th>支付类型</th>
+                                <th>预定人</th>
                                 <th>操作人</th>
                                 <th>授权人</th>
                                 <th>订单时间</th>
@@ -98,6 +99,7 @@
                                     <td>${order.discount_price}</td>
                                     <td>${order.cons_price}</td>
                                     <td>${fns:getPayType(order.pay_type)}</td>
+                                    <td>${order.user_name}</td>
                                     <td>${order.create_user}</td>
                                     <td>${order.checkout_name}</td>
                                     <td><fmt:formatDate value="${order.cons_date}" type="date"></fmt:formatDate></td>

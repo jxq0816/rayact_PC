@@ -126,7 +126,7 @@
     </select>
 
     <select id="findOrderLog" resultType="java.util.Map">
-        select a.venue_id,v.name,
+        select a.user_name,a.venue_id,v.name,
         a.user_name,a.cons_mobile,a.cons_date,a.update_date,
         a.order_price,a.should_price,a.discount_price,a.cons_price,
         a.pay_type,

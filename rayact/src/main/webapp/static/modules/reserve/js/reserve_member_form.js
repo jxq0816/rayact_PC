@@ -7,6 +7,7 @@ function checkForm() {
     var mobile = $("#mobile").val().trim();
     var sfz = $("#sfz").val().trim();
     var name=$("#name").val().trim();
+    var venue=$("#reserveVenue_id").val();
     if(mobile==''|| mobile==null || mobile==undefined){
         errorLoding("手机号不能为空");
         return false;
@@ -17,6 +18,11 @@ function checkForm() {
     }
     if(name==''|| name==null || name==undefined){
         errorLoding("姓名不能为空");
+        return false;
+    }
+
+    if(!venue){
+        errorLoding("场馆不能为空");
         return false;
     }
     jQuery.postItems({

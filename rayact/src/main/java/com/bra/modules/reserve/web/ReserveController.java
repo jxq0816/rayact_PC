@@ -177,15 +177,13 @@ public class ReserveController extends BaseController {
      * 取消预定
      *
      * @param itemId
-     * @param startTime
-     * @param endTime
      * @return
      */
     @RequestMapping(value = "cancelReservation")
     @ResponseBody
     @Token(remove = true)
-    public List<Map<String, String>> cancelReservation(String itemId, String startTime, String endTime, String tutorOrderId) {
-        List<ReserveVenueConsItem> itemList = reserveVenueConsService.cancelReserve(itemId, startTime, endTime, tutorOrderId);
+    public List<Map<String, String>> cancelReservation(String itemId,String tutorOrderId) {
+        List<ReserveVenueConsItem> itemList = reserveVenueConsService.cancelReserve(itemId,tutorOrderId);
         return getReserveMap(itemList);
     }
 

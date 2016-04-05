@@ -45,6 +45,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     private ReserveTutorService reserveTutorService;
     @Autowired
     private  ReserveCardStatementsService reserveCardStatementsService;
+    @Autowired
+    private ReserveMemberService reserveMemberService;
 
     public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
         List<Map<String, Object>> list=dao.findOrderLog(venueLog);
@@ -240,16 +242,12 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
      * 取消预定
      *
      * @param itemId
-     * @param startTime
-     * @param endTime
      * @param tutorOrderId
      * @return
      */
     @Transactional(readOnly = false)
-    public List<ReserveVenueConsItem> cancelReserve(String itemId, String startTime, String endTime, String
+    public List<ReserveVenueConsItem> cancelReserve(String itemId,String
             tutorOrderId) {
-        if (startTime.equals(endTime))
-            return null;
         List<ReserveVenueConsItem> consItemList = Lists.newArrayList();
         ReserveVenueConsItem item = reserveVenueConsItemDao.get(itemId);
         ReserveVenueCons venueCons = dao.get(item.getConsData().getId());

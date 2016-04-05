@@ -14,7 +14,7 @@
                 <td>
                     <div class="row">
                         <div class="col-lg-5">
-                            <select class="select2" id="startTime" name="startTime">
+                            <select class="select2" id="startTime" name="startTime" disabled>
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq startTime}">selected="selected"</j:if>
@@ -26,7 +26,7 @@
                             至
                         </div>
                         <div class="col-lg-5">
-                            <select class="select2" id="endTime" name="endTime">
+                            <select class="select2" id="endTime" name="endTime" disabled>
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq endTime}">selected="selected"</j:if>
