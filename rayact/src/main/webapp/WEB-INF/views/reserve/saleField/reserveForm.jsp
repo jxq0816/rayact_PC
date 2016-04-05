@@ -133,7 +133,7 @@
                                    name="consType"/>会员价
                         </div>
                         <div class="col-lg-3">
-                            <input type="radio" class="icheck" value="1" name="consType"/>门市价
+                            <input type="radio" id="nMember" class="icheck" value="1" name="consType"/>门市价
                         </div>
                     </div>
                 </div>
@@ -190,23 +190,21 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#reserveDialogModal").draggable({
-            handle: ".modal-header"
+        //$("#reserveDialogModal").draggable({
+           // handle: ".modal-header"
+        //});
+        $("#isMember").on('ifChecked', function () {
+            $("#deposit").hide();
+            $("#userName").attr("readonly", "true");
+            $("#consMobile").attr("readonly", "true");
+            $("#memberSelect").show();
         });
-        $("input[name='consType']").click(function(){
-            var consType=$(this).val();
-            if(consType=="2"){
-                $("#deposit").hide();
-                $("#userName").attr("readonly", "true");
-                $("#consMobile").attr("readonly", "true");
-                $("#memberSelect").show();
-            }
-            if(consType=="1"){
-                $("#deposit").show();
-                $("#userName").removeAttr("readonly");
-                $("#consMobile").removeAttr("readonly");
-                $("#memberSelect").hide();
-            }
+
+        $("#nMember").on('ifChecked', function () {
+            $("#deposit").show();
+            $("#userName").removeAttr("readonly");
+            $("#consMobile").removeAttr("readonly");
+            $("#memberSelect").hide();
         });
         $("#memberId").on('change', function () {
             var text = $(this).find("option:selected").text();
