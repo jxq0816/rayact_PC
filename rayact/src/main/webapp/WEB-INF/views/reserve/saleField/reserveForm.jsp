@@ -98,7 +98,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label for="startDate" class="col-sm-2 control-label">开始日期:</label>
+                        <label for="startDate" class="col-sm-2 control-label">开始:</label>
                         <div class="col-sm-4">
                             <input name="startDate" value="${consDate}"
                                    type="text" id="startDate"
@@ -108,7 +108,7 @@
                             />
                         </div>
                         <div class="col-lg-2">
-                            <label for="endDate" class="control-label">结束日期:</label>
+                            <label for="endDate" class="control-label">结束:</label>
                         </div>
                         <div class="col-lg-4">
                             <input name="endDate" value="${consDate}"
