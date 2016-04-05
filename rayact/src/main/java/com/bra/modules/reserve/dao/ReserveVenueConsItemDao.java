@@ -21,4 +21,6 @@ public interface ReserveVenueConsItemDao extends CrudDao<ReserveVenueConsItem> {
 
     List<ReserveVenueConsItem> findListByDate(ReserveVenueConsItem reserveVenueCons);
 
+    List<ReserveVenueConsItem> findCancelList(ReserveVenueConsItem reserveVenueCons);
+
 }

@@ -242,7 +242,11 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         List<ReserveVenueConsItem> consItemList = Lists.newArrayList();
         ReserveVenueConsItem item = reserveVenueConsItemDao.get(itemId);
         ReserveVenueCons venueCons = dao.get(item.getConsData().getId());
-        if (item.getStartTime().equals(startTime) && endTime.equals(item.getEndTime())) {
+        dao.delete(venueCons);//删除订单
+        reserveVenueConsItemDao.delete(item);//删除订单明细
+
+
+        /*if (item.getStartTime().equals(startTime) && endTime.equals(item.getEndTime())) {
             venueCons.setReserveType("3");//已经取消
             venueCons.preUpdate();
             dao.update(venueCons);
@@ -293,7 +297,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             consItemList.add(item2);
             reserveVenueConsItemDao.insert(item1);
             reserveVenueConsItemDao.insert(item2);
-        }
+        }*/
         //修改教练订单
         applicationContext.publishEvent(new VenueCancelEvent(venueCons, tutorOrderId));
         return consItemList;

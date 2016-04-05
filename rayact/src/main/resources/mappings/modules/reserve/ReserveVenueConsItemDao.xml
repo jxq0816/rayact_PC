@@ -99,19 +99,15 @@
             <if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
                 and d.reserve_type = #{consData.reserveType}
             </if>
-			<if test="consData == null or consData.reserveType == null or consData.reserveType ==''">
-				and d.reserve_type = '3'
-			</if>
-
         </where>
-        <choose>
-            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
-                ORDER BY ${page.orderBy}
-            </when>
-            <otherwise>
-                ORDER BY a.update_date DESC
-            </otherwise>
-        </choose>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
     </select>
 
     <select id="findAllList" resultType="ReserveVenueConsItem">
