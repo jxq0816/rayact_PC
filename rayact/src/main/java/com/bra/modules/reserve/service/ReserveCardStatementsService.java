@@ -109,4 +109,8 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	public List<Map<String,Object>> rechargeOfChart(ReserveCardStatements reserveCardStatements) {
 		return dao.rechargeOfChart(reserveCardStatements);
 	}
+
+	public List<Map<String,Object>> allReport(ReserveCardStatements reserveCardStatements) {
+		return dao.allReport(reserveCardStatements);
+	}
 }

@@ -136,9 +136,9 @@
     "name": "报表管理",
     "authorityList": [
       {
-        "code": "totalIncomeReport",
+        "code": "allReport",
         "name": "总收入统计",
-        "href":"/reserve/reserveVenue/totalIncomeReport",
+        "href":"/reserve/reserveSellReport/list",
         "authorityList": []
       },
       {

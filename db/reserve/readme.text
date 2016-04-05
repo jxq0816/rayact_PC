@@ -6,3 +6,4 @@
 20160307:reserve_timecard_member_set 次卡设置 删除截止日期：deadline
 20160307:reserve_storedcard_member_set 储值卡设置 删除截止日期：deadline
 20160311:reserve_commodity 商品设置 将单位unit改为商品规格，类型改为int
+20160311:reserve_card_statements 新增场馆字段

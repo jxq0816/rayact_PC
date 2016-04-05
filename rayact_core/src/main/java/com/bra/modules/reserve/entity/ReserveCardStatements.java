@@ -13,9 +13,9 @@ public class ReserveCardStatements extends SaasEntity<ReserveCardStatements> {
 	
 	private static final long serialVersionUID = 1L;
 	private ReserveMember reserveMember;	// 会员编号外键
-	private String transactionType;  //交易类型 (1：储值卡充值，2：退费，3：商品消费 4:超级管理员修改余额 5：销户退还用户的金额 6：销户违约金;7:次卡充值)
+	private String transactionType;  //交易类型 (1：储值卡充值，2：退费，3：商品消费 4:超级管理员修改余额 5：销户退还用户的金额 6：销户违约金;7:次卡充值,8:场地收入，9：次卡消费)
 	private Double transactionVolume;		// 交易额
-	private String payType; //充值类型(2:现金,3:银行卡,4:微信,5:支付宝,6:其它)
+	private String payType; //充值类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:其它，7：次卡)
 
 	public String getPayType() {
 		return payType;
@@ -73,5 +73,15 @@ public class ReserveCardStatements extends SaasEntity<ReserveCardStatements> {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	//--------------------------------------
+	//交易发生场馆
+	private ReserveVenue venue;
+	public void setVenue(ReserveVenue venue){
+		this.venue = venue;
+	}
+	public ReserveVenue getVenue(){
+		return venue;
 	}
 }

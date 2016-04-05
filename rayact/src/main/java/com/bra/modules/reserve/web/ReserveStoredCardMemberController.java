@@ -147,12 +147,14 @@ public class ReserveStoredCardMemberController extends BaseController {
             reserveCardStatements.setTransactionVolume(transactionVolume);
             reserveCardStatements.setRemarks("超级管理员修改余额");
             reserveCardStatements.setTransactionType("4");//交易类型
+            reserveCardStatements.setVenue(reserveMember.getReserveVenue());
             reserveCardStatementsService.save(reserveCardStatements);
         } else {//新增用户
             reserveMemberService.save(reserveMember);
             reserveCardStatements.setTransactionVolume(reserveMember.getRemainder());
             reserveCardStatements.setRemarks("储值卡会员注册");
             reserveCardStatements.setTransactionType("1");//交易类型
+            reserveCardStatements.setVenue(reserveMember.getReserveVenue());
             reserveCardStatementsService.save(reserveCardStatements);
 
         }

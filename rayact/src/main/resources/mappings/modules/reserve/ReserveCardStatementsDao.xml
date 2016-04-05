@@ -6,6 +6,7 @@
 		a.id AS "id",
 		a.transaction_type AS "transactionType",
 		a.fk_reserve_member_id AS "reserveMember.id",
+		a.venue_id AS "venue.id",
 		a.transaction_volume AS "transactionVolume",
 		a.pay_type AS "payType",
 		a.create_by AS "createBy.id",
@@ -23,6 +24,7 @@
 	<sql id="reserveCardStatementsJoins">
 		left JOIN reserve_member as m on m.id=a.fk_reserve_member_id
 		LEFT JOIN  reserve_user as u on u.id=a.create_by
+		LEFT JOIN  reserve_venue as v on v.id = a.venue_id
 	</sql>
 
 	<select id="rechargeOfToday" resultType="BigDecimal">
@@ -59,12 +61,8 @@
 
 	<select id="memberIncomeCollectReport" resultType="ReserveMemberIntervalReport">
 		select
-		<if test="reserveVenue!=null">
-			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
-				v.id as "reserveVenue.id",
-				v.name as "reserveVenue.name",
-			</if>
-		</if>
+		v.id as "reserveVenue.id",
+		v.name as "reserveVenue.name",
 		SUM(a.transaction_volume) AS "bill",
 		sum(if(pay_type=1,a.transaction_volume,0)) AS "storedCardBill",
 		sum(if(pay_type=2,a.transaction_volume,0)) AS "cashBill",
@@ -81,17 +79,11 @@
 			<if test="startDate!=null and endDate !=null">
 				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
 			</if>
-			<if test="reserveVenue!=null and reserveVenue !=null">
-				<if test="reserveVenue.id!=null and reserveVenue.id!=''">
+			<if test="reserveVenue!=null">
 					and v.id=#{reserveVenue.id}
-				</if>
 			</if>
 		</where>
-		<if test="reserveVenue!=null">
-			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
-				GROUP BY v.id
-			</if>
-		</if>
+		GROUP BY v.id
 	</select>
 
 	<select id="memberIncomeIntervalReport" resultType="ReserveMemberIntervalReport">
@@ -229,7 +221,8 @@
 			update_date,
 			remarks,
 			del_flag,
-			tenant_id
+			tenant_id,
+			venue_id
 		) VALUES (
 			#{id},
 			#{reserveMember.id},
@@ -242,7 +235,8 @@
 			#{updateDate},
 			#{remarks},
 			#{delFlag},
-			#{tenantId}
+			#{tenantId},
+			#{venue.id}
 		)
 	</insert>
 
@@ -255,7 +249,8 @@
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
-			tenant_id = #{tenantId}
+			tenant_id = #{tenantId},
+			venue_id = #{venue.id}
 		WHERE id = #{id}
 	</update>
 
@@ -264,5 +259,21 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+	<select id="allReport" resultType="java.util.Map">
+		SELECT
+			s.venue_id as venue_id,
+			v.name as venue_name,
+			SUM(case when s.transaction_type = '1' or s.transaction_type = '7' THEN s.transaction_volume ELSE 0 END) AS store_in,
+			SUM(case WHEN s.transaction_type = '3' THEN s.transaction_volume ELSE 0 END) AS commodity_in,
+		 	SUM(CASE WHEN s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS field_in,
+			SUM(CASE WHEN s.pay_type = '1' THEN s.transaction_volume ELSE 0 END) AS store_cost,
+		 	SUM(CASE WHEN s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS time_cost
+		FROM reserve_card_statements s
+		LEFT JOIN reserve_venue v on s.venue_id = v.id
+		where 1=1
+		${sqlMap.dsf}
+		GROUP BY s.venue_id
+	</select>
 
 </mapper>

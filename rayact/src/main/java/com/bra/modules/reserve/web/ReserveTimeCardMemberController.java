@@ -86,6 +86,7 @@ public class ReserveTimeCardMemberController extends BaseController {
         statement.setTransactionVolume(rechargeVolume);
         statement.setTransactionType("7");
         statement.setPayType(payType);
+        statement.setVenue(reserveMember.getReserveVenue());
         statement.setRemarks("次卡充值");
         reserveCardStatementsService.save(statement);
         addMessage(redirectAttributes, "保存储值卡会员成功");

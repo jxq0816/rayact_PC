@@ -43,6 +43,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     private ReserveFieldPriceService reserveFieldPriceService;
     @Autowired
     private ReserveTutorService reserveTutorService;
+    @Autowired
+    private  ReserveCardStatementsService reserveCardStatementsService;
 
     public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
         List<Map<String, Object>> list=dao.findOrderLog(venueLog);
@@ -104,6 +106,16 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             //会员扣款;结算教练(事件通知)
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);
+            //记录日志
+            ReserveCardStatements card = new ReserveCardStatements();
+            card.setVenue(reserveVenueCons.getReserveVenue());
+            card.setTransactionVolume(consPrice);
+            card.setPayType(payType);
+            card.setCreateDate(new Date());
+            card.setTransactionType("8");
+            card.setReserveMember(reserveVenueCons.getMember());
+            card.setRemarks("场地收入");
+            reserveCardStatementsService.save(card);
             return reserveVenueCons;
         }
         return null;

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -92,7 +93,9 @@ public class ReserveVenueController extends BaseController {
         Date startDate=intervalTotalReport.getStartDate();
         Date endDate=intervalTotalReport.getEndDate();
         if(startDate==null){
-            startDate=new Date();//默认当天
+            Calendar start = Calendar.getInstance();
+            start.add(Calendar.DAY_OF_MONTH,-1);
+            startDate=start.getTime();
             intervalTotalReport.setStartDate(startDate);
         }
         if(endDate==null){

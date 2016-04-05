@@ -3,12 +3,14 @@ package com.bra.modules.reserve.service;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveVenueOrder;
 import com.bra.modules.reserve.event.visitors.VenueOrderEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,8 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
 
     @Autowired
     private ReserveMemberService memberService;
+    @Autowired
+    private  ReserveCardStatementsService reserveCardStatementsService;
 
     public ReserveVenueOrder get(String id) {
         return super.get(id);
@@ -52,6 +56,15 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
     @Transactional(readOnly = false)
     public void save(ReserveVenueOrder reserveVenueOrder) {
         super.save(reserveVenueOrder);
+        //记录日志
+        ReserveCardStatements card = new ReserveCardStatements();
+        card.setVenue(reserveVenueOrder.getReserveVenue());
+        card.setTransactionVolume(reserveVenueOrder.getCollectPrice());
+        card.setCreateDate(new Date());
+        card.setTransactionType("9");
+        card.setReserveMember(reserveVenueOrder.getMember());
+        card.setRemarks("次卡消费");
+        reserveCardStatementsService.save(card);
         applicationContext.publishEvent(new VenueOrderEvent(reserveVenueOrder));
     }
 

@@ -117,11 +117,15 @@ public class ReserveCommoditySellDetailController extends BaseController {
 				reserveMemberService.save(reserveMember);
 			}
 		}
+		ReserveCommoditySellDetail a = sellDetailList.getReserveCommoditySellDetailList().get(0);
+		ReserveCommodity b = reserveCommodityService.get(a.getReserveCommodity().getId());
 		//销售记录
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+		reserveCardStatements.setVenue(b.getReserveVenue());
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setTransactionType("3");//3代表消费
 		reserveCardStatements.setPayType(payType);
+		reserveCardStatements.setRemarks("商品收入");
 		reserveCardStatements.setTransactionVolume(total);//消费额
 		reserveCardStatementsService.save(reserveCardStatements);
 

@@ -421,6 +421,7 @@ CREATE TABLE reserve_card_statements
 	remarks varchar(255),
 	del_flag char(1) DEFAULT '0' NOT NULL,
 	tenant_id varchar(19) comment '路由标识',
+	venue_id varchar(19) comment '交易所属场馆'
 	PRIMARY KEY (id)
 );
 

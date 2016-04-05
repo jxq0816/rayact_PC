@@ -332,8 +332,10 @@ public class ReserveCardStatementsController extends BaseController {
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 		reserveCardStatements.setTransactionType("1");//充值
 		reserveCardStatements.setReserveMember(reserveMember);
+		reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 		reserveCardStatements.setTransactionVolume(rechargeVolume);
 		reserveCardStatements.setPayType(payType);
+
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}
@@ -360,12 +362,14 @@ public class ReserveCardStatementsController extends BaseController {
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 		reserveCardStatements.setTransactionType("5");//销户退还用户的金额记录
 		reserveCardStatements.setReserveMember(reserveMember);
+		reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 		reserveCardStatements.setTransactionVolume(realRefundVolume);// 退还用户的金额
 		reserveCardStatementsService.save(reserveCardStatements);
 
 		ReserveCardStatements statements=new ReserveCardStatements();
 		statements.setTransactionType("6");//销户违约金
 		statements.setReserveMember(reserveMember);
+		reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 		statements.setTransactionVolume(difference);//销户退还用户余下的差额
 		reserveCardStatementsService.save(statements);
 		return "success";
@@ -395,6 +399,7 @@ public class ReserveCardStatementsController extends BaseController {
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 		reserveCardStatements.setTransactionType("2");//大客户退费
 		reserveCardStatements.setReserveMember(reserveMember);
+		reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 		reserveCardStatements.setTransactionVolume(refundVolume);
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";

@@ -95,5 +95,5 @@ public class ReserveCommoditySellDetail extends SaasEntity<ReserveCommoditySellD
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
 }
