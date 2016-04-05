@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
-<table class="table-chang" style="width:auto;">
+<table class="table-chang">
     <thead>
     <%--时刻--%>
     <tr>
