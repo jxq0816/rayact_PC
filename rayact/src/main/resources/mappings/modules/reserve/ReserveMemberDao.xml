@@ -88,6 +88,7 @@
 				AND a.id !=#{id}
 			</if>
 		</where>
+		${sqlMap.sql}
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}

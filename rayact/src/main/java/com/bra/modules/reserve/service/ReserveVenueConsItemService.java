@@ -91,6 +91,8 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 
 	public boolean checkReserveTime(Date consDate,ReserveField field,String startTime,String endTime){
 		Boolean bool=true;
+		startTime=TimeUtils.earlyMorningFormat(startTime);//将凌晨00：00 转化为24:00
+		endTime=TimeUtils.earlyMorningFormat(endTime);
 		//查询该场地，当天的已预订时间
 		ReserveVenueConsItem reserveVenueConsItem=new  ReserveVenueConsItem();
 		reserveVenueConsItem.setReserveField(field);

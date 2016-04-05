@@ -215,14 +215,13 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 item.preInsert();
                 reserveVenueConsItemDao.insert(item);//保存预订信息
                 sum+=price;
-           /* }*/
+            }
             reserveVenueCons.setShouldPrice(sum);//应收：没有优惠券，应收等于订单金额
             reserveVenueCons.setOrderPrice(sum);//订单金额
             dao.update(reserveVenueCons);//订单价格更改
             //预定教练
             List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());
             applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));//?????
-        }
     }
 
     /**
