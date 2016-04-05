@@ -18,7 +18,8 @@
                     <h3>场地管理</h3>
                 </div>
                 <div class="content">
-                    <form:form id="inputForm" modelAttribute="reserveField" action="${ctx}/reserve/reserveField/savePrice"
+                    <form:form id="inputForm" modelAttribute="reserveField"
+                               action="${ctx}/reserve/reserveField/savePrice"
                                method="post"
                                class="form-horizontal">
                         <form:hidden path="id"/>
@@ -32,7 +33,7 @@
                             <div class="tab-content">
                                 <!--常规价格设置-->
                                 <div class="tab-pane active" id="profile">
-                                <h5>${reserveField.reserveVenue.name} / ${reserveField.name}</h5>
+                                    <h5>${reserveField.reserveVenue.name} / ${reserveField.name}</h5>
                                     <table class="table table-bordered">
                                         <tr>
                                             <td><span id="weekTd" style="color: red">周一至周日</span></td>
@@ -62,9 +63,6 @@
                                                 <input type="text" id="member" class="number form-control"
                                                        style="width: 40px;height:30px;padding: 0px"/>
                                             </td>
-                                           <%-- <td>团体:</td>
-                                            <td><input type="text" id="group" class="number form-control"
-                                                       style="width: 30px;height:30px"/></td>--%>
                                             <td valign="top"><input id="globalPrice" data="all" class="btn btn-primary"
                                                                     type="button"
                                                                     value="价格设定"/></td>
@@ -79,41 +77,48 @@
                                                 <th><span style="font-size: 10px">${t}</span></th>
                                             </c:forEach>
                                         </tr>
-
+                                            <%-- 这层遍历主要是为了获得某个周次的价格--%>
                                         <c:forEach items="${priceSetList}" var="priceSet" varStatus="status">
                                             <tr>
-                                                <!--周次-->
+                                                    <%--第0-1行：周一到周五 第2-3行：周六 第4-5行：周日--%>
                                                 <j:if test="${status.index==0||status.index==2||status.index==4}">
-                                                    <td rowspan="2" valign="top"><a data="${priceSet.week}"
-                                                                                    style="color: red"
-                                                                                    style="width: 25px;"
-                                                                                    title="点击,设计全局数值" href="#"
-                                                                                    class="weekPriceTable">${priceSet.weekName}</a>
+                                                    <td rowspan="2" valign="top">
+                                                        <a data="${priceSet.week}"
+                                                           style="color: red"
+                                                           style="width: 25px;"
+                                                           title="点击,设计全局数值" href="#"
+                                                           class="weekPriceTable">${priceSet.weekName}</a>
                                                     </td>
                                                 </j:if>
-                                                <%--顾客类型--%>
+                                                    <%--第0-1行：周一到周五 第2-3行：周六 第4-5行：周日--%>
                                                 <td valign="top">${priceSet.consTypeName}</td>
+                                                    <%--顾客标准--%>
                                                 <input type="hidden" name="fieldPriceSetList[${status.index}].id"
-                                                       value="${priceSet.id}"/>
+                                                       value="${priceSet.id}"/><%--价格设置的id--%>
                                                 <input type="hidden" name="fieldPriceSetList[${status.index}].week"
-                                                       value="${priceSet.week}"/>
-                                                <input type="hidden" name="fieldPriceSetList[${status.index}].consType"
+                                                       value="${priceSet.week}"/><%--周次--%>
+                                                <input type="hidden"
+                                                       name="fieldPriceSetList[${status.index}].consType"
                                                        value="${priceSet.consType}"/>
-                                                <c:forEach items="${priceSet.timePriceList}" var="t"
-                                                           varStatus="priceSetStatus">
-                                                    <td style="padding:5px">
-                                                        <input type="hidden"
-                                                               name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
-                                                               value="${t.time}"/>
-                                                        <input value="<fmt:formatNumber value='${t.price}' pattern='0'/>"
-                                                               type="text" data-time="${t.time}"
-                                                               data="${priceSet.week}-${priceSet.consType}"
-                                                               name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
-                                                               class="number form-control"/>
-                                                    </td>
+                                                    <%-- 这层遍历主要是为了获得时间的index 从而遍历出每个时间的价格--%>
+                                                    <c:forEach items="${priceSet.timePriceList}" var="t"
+                                                               varStatus="priceSetStatus">
+
+                                                            <td style="padding:5px">
+                                                                <input type="hidden"
+                                                                       name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
+                                                                       value="${t.time}"/>
+                                                                <input value="<fmt:formatNumber value='${t.price}' pattern='0'/>"
+                                                                       type="text" data-time="${t.time}"
+                                                                       data="${priceSet.week}-${priceSet.consType}"
+                                                                       name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
+                                                                       class="number form-control"/>
+                                                            </td>
                                                 </c:forEach>
+                                                    <%-- 这层遍历主要是为了获得时间的index 从而遍历出每个时间的价格--%>
                                             </tr>
                                         </c:forEach>
+                                            <%-- 这层遍历主要是为了获得某个周次的价格--%>
                                     </table>
                                 </div>
                             </div>
@@ -136,9 +141,9 @@
         //var start = new Date(startTime.replace(":", "/").replace(":", "/"));
         //var end = new Date(endTime.replace(":", "/").replace(":", "/"));
         //var local = new Date(localTime.replace(":", "/").replace(":", "/"));
-       /* if (localTime >= startTime && localTime <= endTime) {
-            return true;
-        }*/
+        /* if (localTime >= startTime && localTime <= endTime) {
+         return true;
+         }*/
         return true;
     }
     $(document).ready(function () {

@@ -68,7 +68,6 @@ public class ReserveController extends BaseController {
     public String main(Long t, String venueId, Model model) throws ParseException {
         //当前日期
         Date defaultDate = DateUtils.parseDate(DateUtils.getDate(), "yyyy-MM-dd");
-        System.out.println("123");
         //获取可预定时间段:一周
         Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
         model.addAttribute("timeSlot", timeSlot);
@@ -101,7 +100,7 @@ public class ReserveController extends BaseController {
             //上午场地价格
             List<String> timesAM=new ArrayList<>();
 
-            timesAM.addAll(TimeUtils.getTimeSpacListValue("08:00:00", "12:30:00", 30));
+            timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
             model.addAttribute("timesAM", timesAM);
             List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);
             model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);

@@ -94,7 +94,7 @@ public class ReserveFieldPriceSetService extends CrudService<ReserveFieldPriceSe
     private List<TimePrice> getTimePrice() {
         List<TimePrice> timePriceList = Lists.newArrayList();
         try {
-            List<String> times = TimeUtils.getTimeSpacList("08:00:00", "24:00:00", 60);
+            List<String> times = TimeUtils.getTimeSpacList("06:00:00", "24:00:00", 60);
             TimePrice timePrice;
             for (String time : times) {
                 timePrice = new TimePrice();
