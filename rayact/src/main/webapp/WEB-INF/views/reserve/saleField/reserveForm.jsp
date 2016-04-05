@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="date_div" style="display: none">
                     <div class="form-group">
                         <label for="startDate" class="col-sm-2 control-label">开始:</label>
                         <div class="col-sm-4">
