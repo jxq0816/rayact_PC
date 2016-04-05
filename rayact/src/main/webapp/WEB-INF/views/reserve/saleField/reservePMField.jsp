@@ -12,7 +12,7 @@
     <%--时刻--%>
     </thead>
     <tbody>
-    <%-- 遍历所有全场的场地开始--%>
+    <%-- 遍历所有场地开始--%>
     <c:forEach items="${venueFieldPriceListPM}" var="fullField" varStatus="status">
         <tr>
                 <%-- 纵坐标：场地名称--%>
@@ -21,6 +21,9 @@
             <c:forEach items="${timesPM}" var="t">
                 <c:set var="status" value="0"/>
                 <c:set var="itemId" value="0"/>
+                <c:set var="leftStatus" value="0"/>
+                <c:set var="rightStatus" value="0"/>
+                <c:set var="fullStatus" value="0"/>
 
                 <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
                 <c:forEach items="${fullField.timePriceList}" var="tp">
