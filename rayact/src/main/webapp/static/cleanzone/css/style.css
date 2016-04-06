@@ -13,7 +13,7 @@ body {
     padding: 0;
     background-color: #E7E8EB;
     font-family: Helvetica, Georgia, Arial, sans-serif, 宋体;
-    font-size: 12px;
+    font-size: 18px;
     color: #555;
     opacity: 0;
     margin-left: -20px;
@@ -114,6 +114,7 @@ ul {
 #pcont {
     position: relative;
     padding-left: 0px;
+    width:80%;
 }
 
 .back-to-top {
@@ -840,7 +841,7 @@ body.modal-open,
 /*Vertical Navigation*/
 .cl-sidebar {
     position: absolute;
-    width: 200px;
+    width: 15%;
     z-index: 2;
 }
 
@@ -860,7 +861,7 @@ body.modal-open,
     padding: 0;
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
-    width: 200px;
+    width: 100%;
 }
 
 .cl-vnavigation .parent a {
@@ -872,8 +873,8 @@ body.modal-open,
     border-bottom: 1px solid #fff;
     display: block;
     padding: 14px 18px 13px 15px;
-    color: #000;
-    font-size: 12px;
+    color: #5B5B5B;
+    font-size: 18px;
     font-weight: 300;
     white-space: nowrap;
 }
@@ -973,7 +974,7 @@ body.modal-open,
 
 #cl-wrapper.fixed-menu .menu-space {
     position: fixed;
-    width: 156px;
+    width: 15%;
     background: #fff;
 }
 
@@ -1141,9 +1142,9 @@ body.modal-open,
 }
 
 .cl-vnavigation .parent ul li a {
-    font-size: 11px;
+    font-size: 16px;
     background-image: none;
-    padding: 7px 18px 7px 42px;
+    padding-left:25% ;
     background-color: #fff;
 }
 
@@ -6853,7 +6854,7 @@ ul.timeline li > .date {
     }
 
     .sb-collapsed .cl-vnavigation .parent > a {
-        background: url("../images/arrow.png") no-repeat scroll right 14px top 18px rgba(0, 0, 0, 0);
+        background: url("../images/arrow.png") no-repeat scroll right 5px top 0px rgba(0, 0, 0, 0);
     }
 
     .sb-collapsed .cl-vnavigation li a span {

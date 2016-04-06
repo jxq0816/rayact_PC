@@ -10,71 +10,30 @@
     <jsp:param name="action" value=""></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
-    <div>
-        <div class="col-sm-4 col-md-4 col-lg-2">
-            <div class="block-flat">
-                <div class="header">
-                    <h3 class="visible-sm visible-md">会员充值</h3>
-
-                    <h3 class="visible-lg">会员充值</h3>
-                </div>
-                <div class="content">
-                    <p>
-                        <a type="button" href="${ctx}/reserve/storedCardMember/list"
-                           class="btn btn-default btn-cart btn-twitter bg"><i
-                                class="fa fa-shopping-cart"></i></a>
-                    </p>
-                </div>
+    <div class="row">
+        <div class="col-lg-2 ">
+        </div>
+        <div class="col-lg-4 ">
+            <div>
+                <a href="${ctx}/reserve/storedCardMember/list"><img src="${ctxStatic}/modules/reserve/images/member_incharge.png"/></a>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-2">
-            <div class="block-flat">
-                <div class="header">
-                    <h3 class="visible-sm visible-md">场地售卖</h3>
-
-                    <h3 class="visible-lg">场地售卖</h3>
-                </div>
-                <div class="content">
-                    <p>
-                        <a type="button" href="${ctx}/reserve/field/main"
-                           class="btn btn-default btn-cart btn-twitter bg"><i
-                                class="fa fa-shopping-cart"></i></a>
-                    </p>
-                </div>
-            </div>
+        <div class="col-lg-2 ">
         </div>
-
-        <div class="col-sm-4 col-md-4 col-lg-2">
-            <div class="block-flat">
-                <div class="header">
-                    <h3 class="visible-sm visible-md">场次售卖</h3>
-
-                    <h3 class="visible-lg">场次售卖</h3>
-                </div>
-                <div class="content">
-                    <p>
-                        <a type="button" href="${ctx}/reserve/reserveVenueOrder/list"
-                           class="btn btn-default btn-cart btn-twitter bg"><i
-                                class="fa fa-shopping-cart"></i></a>
-                    </p>
-                </div>
-            </div>
+        <div class="col-lg-4">
+            <a type="button" href="${ctx}/reserve/field/main"><img src="${ctxStatic}/modules/reserve/images/sale_field.png" /></a>
         </div>
-        <div class="col-sm-4 col-md-4 col-lg-2">
-            <div class="block-flat">
-                <div class="header">
-                    <h3 class="visible-sm visible-md">商品售卖</h3>
-
-                    <h3 class="visible-lg">商品售卖</h3>
-                </div>
-                <div class="content">
-                    <p>
-                        <a type="button" href="${ctx}/reserve/commodity/onShelfList"
-                           class="btn btn-default btn-cart btn-twitter bg"><i
-                                class="fa fa-shopping-cart"></i></a>
-                    </p>
-                </div>
-            </div>
+    </div>
+    <div class="row" style="margin-top:50px">
+        <div class="col-lg-2 ">
+        </div>
+        <div class="col-lg-4">
+            <a type="button" href="${ctx}/reserve/reserveVenueOrder/list"><img src="${ctxStatic}/modules/reserve/images/sale_time_filed.png" /></a>
+        </div>
+        <div class="col-lg-2 ">
+        </div>
+        <div class="col-lg-4">
+            <a type="button" href="${ctx}/reserve/commodity/onShelfList"><img src="${ctxStatic}/modules/reserve/images/sale_commodity.png" /></a>
         </div>
     </div>
 </div>
