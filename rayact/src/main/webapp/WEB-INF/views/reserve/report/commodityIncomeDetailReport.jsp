@@ -28,9 +28,8 @@
                                 <tr>
                                     <td>场馆:</td>
                                     <td>
-
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                    value="reserveVenue"
+                                                    value="${reserveCommodityIntervalReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
@@ -38,7 +37,7 @@
                                     <td>商品类型:</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="reserveCommodityType.id"
-                                                    value="reserveCommodityType"
+                                                    value="${reserveCommodityIntervalReport.reserveCommodityType.id}"
                                                     items="${reserveCommodityTypeList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
@@ -95,8 +94,6 @@
 
 
                 <div class="content">
-                    场馆：${reserveCommodityIntervalReport.reserveVenue.name}
-                    商品类型：${reserveCommodityIntervalReport.reserveCommodityType.name}
                     <div class="table-responsive">
                         <table>
                             <thead>
