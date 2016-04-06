@@ -198,6 +198,8 @@
             $("#userName").attr("readonly", "true");
             $("#consMobile").attr("readonly", "true");
             $("#memberSelect").show();
+            $("#userName").attr("value", "");
+            $("#consMobile").attr("value", "");
         });
 
         $("#nMember").on('ifChecked', function () {
@@ -205,6 +207,10 @@
             $("#userName").removeAttr("readonly");
             $("#consMobile").removeAttr("readonly");
             $("#memberSelect").hide();
+            $("#memberId").val("");
+            $("#s2id_memberId").find(".select2-chosen").html("--请选择--");
+            $("#userName").attr("value", "");
+            $("#consMobile").attr("value", "");
         });
         $("#memberId").on('change', function () {
             var text = $(this).find("option:selected").text();
