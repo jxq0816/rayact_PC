@@ -136,6 +136,7 @@ public class ReserveVenueController extends BaseController {
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         model.addAttribute("incomeReport",incomeReport);//收入统计
+        model.addAttribute("venueProjectReport",venueProjectReport);//查询参数回传
         if("1".equals(queryType)){
             return "reserve/report/venueIncomeReport";
         }else{
