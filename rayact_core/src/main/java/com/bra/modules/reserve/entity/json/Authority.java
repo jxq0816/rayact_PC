@@ -28,11 +28,17 @@ public class Authority {
     private String href ;
 
     public String getCode() {
-        return code;
+        if(this.code!=null)
+             return code.split(",")[0];
+        else
+            return null;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        if(code!=null)
+            this.code = code.split(",")[0];
+        else
+            this.code = code;
     }
 
     public String getName() {

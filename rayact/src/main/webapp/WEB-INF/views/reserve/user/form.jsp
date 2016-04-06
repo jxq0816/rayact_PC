@@ -169,7 +169,12 @@
                                                 <label> <input data-parent="${auth.code}"
                                                                type="checkbox" ${childchecked} value="${a.code}"
                                                                name="reserveRole.authorityList[${astatus.index}].authorityList[${s.index}].code"
-                                                               class="icheck childAuthCheck"> ${a.name}</label>
+                                                               class="icheck childAuthCheck"> ${a.name}
+                                                        <input
+                                                           type="hidden"
+                                                           name="reserveRole.authorityList[${astatus.index}].authorityList[${s.index}].code"
+                                                           >
+                                                </label>
                                             </div>
                                             <%-- 子权限 end--%>
                                         </c:forEach>
