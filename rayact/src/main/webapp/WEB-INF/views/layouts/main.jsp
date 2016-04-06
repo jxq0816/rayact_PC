@@ -32,7 +32,8 @@
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/behaviour/general.js"></script>
     <script src="${ctxStatic}/cleanzone/js/jquery.ui/jquery-ui.js" type="text/javascript"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.easypiechart/jquery.easy-pie-chart.js"></script>
+    <script type="text/javascript"
+            src="${ctxStatic}/cleanzone/js/jquery.easypiechart/jquery.easy-pie-chart.js"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.nestable/jquery.nestable.js"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/bootstrap.switch/bootstrap-switch.min.js"></script>
     <script type="text/javascript"
@@ -43,12 +44,13 @@
     <script src="${ctxStatic}/cleanzone/js/intro.js/intro.js" type="text/javascript"></script>
     <script src="${ctxStatic}/cleanzone/js/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="${ctxStatic}/cleanzone/js/jquery.parsley/dist/parsley.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.niftymodals/css/component.css" />
+    <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.niftymodals/css/component.css"/>
     <link href="${ctxStatic}/cleanzone/css/style.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.gritter/js/jquery.gritter.js"></script>
-    <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.niftymodals/js/jquery.modalEffects.js"></script>
+    <script type="text/javascript"
+            src="${ctxStatic}/cleanzone/js/jquery.niftymodals/js/jquery.modalEffects.js"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.icheck/icheck.min.js"></script>
-    <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
+    <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet"/>
     <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
     <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 
@@ -57,28 +59,22 @@
 </head>
 
 <body>
-<div id="head-nav" class="navbar navbar-default navbar-fixed-top" style="height:64px;border-top: 4px solid #44b549;">
+<div id="head-nav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="fa fa-gear"></span>
             </button>
-            <a class="navbar-brand" style="margin-left:15px;height:60px;margin-top: -5px;margin-bottom:4px;" href="${ctx}"></a>
+            <a class="navbar-brand" style="margin-left: 10%;" href=""></a>
         </div>
-        <div class="navbar-collapse collapse" style="float:right">
+        <div class="navbar-collapse collapse" style="float:right;margin-top: 20px">
 
-            <ul class="nav navbar-nav">
-                <li class="dropdown profile_menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#0b0b0b">${fns:getUser().name}<b class="caret"></b></a>
-                  <%--  <ul class="dropdown-menu">--%>
-
-                       <%-- <li class="divider"></li>--%>
-                  <%--  </ul>--%>
+            <ul class="nav navbar-nav navbar-right" >
+                <li>
+                    <a  href="">欢迎回来，${fns:getUser().name}</a></li>
                 </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a style="color:#0b0b0b"  href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
-                <li><a style="color:#0b0b0b" href="${ctx}/logout">退出</a></li>
+                <li><a href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
+                <li><a href="${ctx}/logout"><img src="${ctxStatic}/cleanzone/images/logout.png"/></a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -86,9 +82,9 @@
 
 <div id="cl-wrapper" class="fixed-menu">
 
-<!-- Bootstrap core JavaScript
-  ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+    <!-- Bootstrap core JavaScript
+      ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     <sitemesh:body/>
 </div>
 <script type="text/javascript">
@@ -109,7 +105,8 @@
                 <div class="bootbox-body">确认删除？</div>
             </div>
             <div class="modal-footer">
-                <button data-bb-handler="cancel" type="button" data-dismiss="modal" class="btn cancel btn-default">取消</button>
+                <button data-bb-handler="cancel" type="button" data-dismiss="modal" class="btn cancel btn-default">取消
+                </button>
                 <button data-bb-handler="confirm" type="button" class="btn confirm btn-primary">确认</button>
             </div>
         </div>

@@ -269,24 +269,22 @@ pre {
 .navbar {
     border: 0;
     background-color: #fff;
-    border-top: 4px solid #44b549;
+   /* border-top: 4px solid #44b549;*/
+    background: url(../images/head.png) no-repeat;
     color: #FFF;
     padding-left: 10px;
     padding-right: 25px;
+    height:10%;
 }
 
 .navbar-default .navbar-brand {
-    padding-left: 35px;
-    text-align: left;
-    width: 206px;
-    color: #FFF;
+   /* margin与bootstrap冲突，需要在页面定义style*/
+    width: 114px;
+    height:70px;
     background: url(../images/side.png) no-repeat 0 11px;
-    background-size: 122px 60px;
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-    font-weight: 300;
-    font-size: 19px;
-    line-height: 18px;
-    height: auto;
+   /* background-size: 122px 60px;*/
+    line-height: 56px;
+    margin-top:1%;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -1186,7 +1184,8 @@ body {
     display: table;
     width: 100%;
     position: absolute;
-    height: 100%;
+    margin-top:1%;
+    height: 80%;
 }
 
 .cl-sidebar {
