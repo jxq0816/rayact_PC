@@ -28,9 +28,8 @@
                                 <tr>
                                     <td>场馆:</td>
                                     <td>
-
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                    value="reserveVenue"
+                                                    value="${venueProjectReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
@@ -39,7 +38,7 @@
                                     <td>
 
                                         <sys:select cssClass="input-large" name="reserveProject.id"
-                                                    value="reserveProject"
+                                                    value="${venueProjectReport.reserveProject.id}"
                                                     items="${reserveProjectList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
@@ -80,7 +79,6 @@
                         </div>
                     </div>
                 </form:form>
-                时间:<fmt:formatDate value="${incomeReport.startDate}" type="date"></fmt:formatDate>至<fmt:formatDate value="${incomeReport.endDate}" type="date"></fmt:formatDate>
                 <div class="content">
                     <div class="table-responsive">
                         <table>

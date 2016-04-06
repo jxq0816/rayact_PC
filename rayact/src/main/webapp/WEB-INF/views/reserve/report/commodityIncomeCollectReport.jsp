@@ -29,7 +29,7 @@
                                     <td>
 
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                    value="reserveVenue"
+                                                    value="${reserveCommodityIntervalReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
@@ -84,10 +84,7 @@
                     </div>
                 </form:form>
                 <sys:msg content="${message}"/>
-
-
                 <div class="content">
-                    场馆：${reserveCommodityIntervalReport.reserveVenue.name}
                     <div class="table-responsive">
                         <table>
                             <thead>

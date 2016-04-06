@@ -10,7 +10,7 @@
     <jsp:param name="action" value=""></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
-    <div class="cl-mcont">
+    <div>
         <div class="col-sm-4 col-md-4 col-lg-2">
             <div class="block-flat">
                 <div class="header">
@@ -47,9 +47,9 @@
         <div class="col-sm-4 col-md-4 col-lg-2">
             <div class="block-flat">
                 <div class="header">
-                    <h3 class="visible-sm visible-md">人次售卖</h3>
+                    <h3 class="visible-sm visible-md">场次售卖</h3>
 
-                    <h3 class="visible-lg">人次售卖</h3>
+                    <h3 class="visible-lg">场次售卖</h3>
                 </div>
                 <div class="content">
                     <p>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="content">
                     <p>
-                        <a type="button" href=""
+                        <a type="button" href="${ctx}/reserve/commodity/onShelfList"
                            class="btn btn-default btn-cart btn-twitter bg"><i
                                 class="fa fa-shopping-cart"></i></a>
                     </p>
