@@ -28,14 +28,6 @@
                                         场馆:
                                     </td>
                                     <td>
-                                        <sys:select cssClass="input-xlarge" name="reserveVenue.id"
-                                                    items="${venueList}"
-                                                    value="${reserveMember.reserveVenue.id}"
-                                                    itemLabel="name"
-                                                    itemValue="id"
-                                                    defaultValue=""
-                                                    defaultLabel="请选择场馆"
-                                        ></sys:select>
                                         <select name="venue.id" class="select2">
                                             <option value="">---请选择---</option>
                                             <c:forEach items="${venueList}" var="venue">

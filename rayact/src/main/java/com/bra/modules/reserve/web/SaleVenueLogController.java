@@ -44,7 +44,7 @@ public class SaleVenueLogController extends BaseController {
         ReserveVenue venue = new ReserveVenue();
         venue.getSqlMap().put("dsf",AuthorityUtils.getVenueIdSql("a.id"));
         model.addAttribute("venueList",reserveVenueService.findList(venue));
-        model.addAttribute("venueLog",venueLog);
+        model.addAttribute("venueLog",venueLog);//参数返回
 
         venueLog.setDsf(AuthorityUtils.getVenueIdSql("a.venue_id"));
         model.addAttribute("venueLogList", reserveVenueConsService.findOrderLog(venueLog));
