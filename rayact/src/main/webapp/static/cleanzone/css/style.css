@@ -113,8 +113,7 @@ ul {
 
 #pcont {
     position: relative;
-    padding-left: 0px;
-    width:80%;
+    width:85%;
 }
 
 .back-to-top {
@@ -274,7 +273,7 @@ pre {
     color: #FFF;
     padding-left: 10px;
     padding-right: 25px;
-    height:10%;
+    height:90px;
 }
 
 .navbar-default .navbar-brand {
