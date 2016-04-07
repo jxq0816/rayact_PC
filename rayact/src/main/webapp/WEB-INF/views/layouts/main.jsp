@@ -67,7 +67,6 @@
             </button>
             <a class="navbar-brand" style="margin-left: 10%;" href="${ctx}"></a>
         </div>
-        <img style="margin-left:133px;margin-top:80px;" src="${ctxStatic}/cleanzone/images/triangle.png"/>
 
         <div class="navbar-collapse collapse" style="float:right;margin-top: 20px">
 
