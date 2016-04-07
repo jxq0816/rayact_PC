@@ -11,28 +11,18 @@
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
-        <div class="col-lg-2 ">
-        </div>
-        <div class="col-lg-4 ">
-            <div class="thumbnail">
+        <div class="col-lg-6" align="center">
                 <a href="${ctx}/reserve/storedCardMember/list"><img src="${ctxStatic}/modules/reserve/images/member_incharge.png"/></a>
-            </div>
         </div>
-        <div class="col-lg-2 ">
-        </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6" align="center">
             <a type="button" href="${ctx}/reserve/field/main"><img src="${ctxStatic}/modules/reserve/images/sale_field.png" /></a>
         </div>
     </div>
-    <div class="row" style="margin-top:50px">
-        <div class="col-lg-2 ">
-        </div>
-        <div class="col-lg-4">
+    <div class="row">
+        <div class="col-lg-6" align="center">
             <a type="button" href="${ctx}/reserve/reserveVenueOrder/list"><img src="${ctxStatic}/modules/reserve/images/sale_time_filed.png" /></a>
         </div>
-        <div class="col-lg-2 ">
-        </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6" align="center">
             <a type="button" href="${ctx}/reserve/commodity/onShelfList"><img src="${ctxStatic}/modules/reserve/images/sale_commodity.png" /></a>
         </div>
     </div>
