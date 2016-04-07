@@ -170,6 +170,12 @@
         "name": "场地利用率",
         "href":"/reserve/saleVenueReport/listOpenRate",
         "authorityList": []
+      },
+      {
+        "code": "dataListener",
+        "name": "数据监控",
+        "href":"/reserve/reserveListener/report",
+        "authorityList": []
       }
     ]
   },
