@@ -65,13 +65,13 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="fa fa-gear"></span>
             </button>
-            <a class="navbar-brand" style="margin-left: 10%;" href=""></a>
+            <a class="navbar-brand" style="margin-left: 10%;" href="${ctx}"></a>
         </div>
         <div class="navbar-collapse collapse" style="float:right;margin-top: 20px">
 
             <ul class="nav navbar-nav navbar-right" >
                 <li>
-                    <a  href="">欢迎回来，${fns:getUser().name}</a></li>
+                    <a  href="${ctx}">欢迎回来，${fns:getUser().name}</a></li>
                 </li>
                 <li><a href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
                 <li><a href="${ctx}/logout"><img src="${ctxStatic}/cleanzone/images/logout.png"/></a></li>
@@ -85,7 +85,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <sitemesh:body/>
 </div>
-<div  class="" style="z-index: 1000;width:1920px;height:90px;text-align:center;position: absolute;bottom: 0px;left:0px;background:url('${ctxStatic}/cleanzone/images/foot.jpg')">
+<div  class="" style="z-index: 1000;width:1920px;height:90px;text-align:center;position: fixed;bottom: 0px;left:0px;background:url('${ctxStatic}/cleanzone/images/foot.jpg')">
     <div style="font-size:20px;font-weight:bold;color: #FFFFFF;padding:30px">Powered by 北京博云睿动科技有限公司版权所有</div>
 </div>
 <script type="text/javascript">
