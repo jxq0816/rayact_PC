@@ -14,7 +14,7 @@
         <div class="col-lg-2 ">
         </div>
         <div class="col-lg-4 ">
-            <div>
+            <div class="thumbnail">
                 <a href="${ctx}/reserve/storedCardMember/list"><img src="${ctxStatic}/modules/reserve/images/member_incharge.png"/></a>
             </div>
         </div>

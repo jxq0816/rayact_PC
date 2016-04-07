@@ -11,39 +11,46 @@
     <jsp:param name="action" value="vistorsSet"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
-    <div class="tab-tit-first">
-        <ul>
-            <li <j:if test="${empty projectId}">class="on"</j:if>><a href="${ctx}/reserve/reserveVenueOrder/list">所有</a></li>
-            <c:forEach items="${projects}" var="project" varStatus="status">
-                <li <j:if test="${project.id eq projectId}">class="on"</j:if>><a
-                        href="${ctx}/reserve/reserveVenueOrder/list?project.id=${project.id}">${project.name}</a></li>
-            </c:forEach>
-        </ul>
-    </div>
-    <div class="cl-mcont">
+    <div class="block-flat">
+        <div class="tab-tit-first">
+            <ul>
+                <li <j:if test="${empty projectId}">class="on"</j:if>><a
+                        href="${ctx}/reserve/reserveVenueOrder/list">所有</a>
+                </li>
+                <c:forEach items="${projects}" var="project" varStatus="status">
+                    <li <j:if test="${project.id eq projectId}">class="on"</j:if>><a
+                            href="${ctx}/reserve/reserveVenueOrder/list?project.id=${project.id}">${project.name}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+        <%-- <div class="cl-mcont">--%>
+
         <div class="row">
-            <c:forEach items="${visitorsSets}" var="vs">
+            <div class="col-md-12">
+                <c:forEach items="${visitorsSets}" var="vs">
                 <div class="col-sm-4 col-md-4 col-lg-2">
-                    <div class="block-flat">
-                        <div class="header">
-                            <h3 class="visible-sm visible-md">${vs.name}</h3>
 
-                            <h3 class="visible-lg">${vs.name}</h3>
-                        </div>
-                        <div class="content">
-                            <p><b>${vs.project.name}</b><b>(${vs.price}<i class="fa fa-cny"></i>)</b></p>
+                    <div class="header">
+                        <h3 class="visible-sm visible-md">${vs.name}</h3>
 
-                            <p>
-                                <button type="button" data-id="${vs.id}"
-                                        class="btn btn-default btn-cart btn-twitter bg"><i
-                                        class="fa fa-shopping-cart"></i></button>
-                            </p>
-                        </div>
+                        <h3 class="visible-lg">${vs.name}</h3>
+                    </div>
+                    <div class="content">
+                        <p><b>${vs.project.name}</b><b>(${vs.price}<i class="fa fa-cny"></i>)</b></p>
+
+                        <p>
+                            <button type="button" data-id="${vs.id}"
+                                    class="btn btn-default btn-cart btn-twitter bg"><i
+                                    class="fa fa-shopping-cart"></i></button>
+                        </p>
                     </div>
                 </div>
+            </div>
             </c:forEach>
         </div>
     </div>
+    <%-- </div>--%>
 </div>
 
 <button class="btn btn-primary btn-flat md-trigger" id="reserveBtn" style="display: none" data-modal="form-primary">
@@ -100,21 +107,21 @@
                 url: '${ctx}/reserve/reserveVenueOrder/save',
                 data: formJson,
                 success: function (result) {
-                    if(result){
-                        if (result=="1") {
+                    if (result) {
+                        if (result == "1") {
                             formLoding("保存成功");
                             $("#closeBtn").click();
                         }
-                        if (result=="2") {
+                        if (result == "2") {
                             formLoding("该用户没有次卡");
                         }
-                        if (result=="3") {
+                        if (result == "3") {
                             formLoding("该用户剩余次数不足");
                         }
-                        if (result=="4") {
+                        if (result == "4") {
                             formLoding("该用户的次票不可在该场地使用,请使用非会员，现金结账");
                         }
-                    }else{
+                    } else {
                         formLoding("保存失败");
                     }
                 }
