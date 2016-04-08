@@ -86,9 +86,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <sitemesh:body/>
 </div>
-<div  class="" style="width:1920px;height:1000px;display: none">
-    <div style="font-size:18px;font-family:Verdana,'华文细黑';color: #FFFFFF;padding:30px">Powered by 北京博云睿动科技有限公司版权所有</div>
-</div>
 <div  class="" style="z-index: 1000;width:1920px;height:90px;text-align:center;position: fixed;bottom: 0px;left:0px;background:url('${ctxStatic}/cleanzone/images/foot.jpg')">
     <div style="font-size:18px;font-family:Verdana,'华文细黑';color: #FFFFFF;padding:30px">Powered by 北京博云睿动科技有限公司版权所有</div>
 </div>
