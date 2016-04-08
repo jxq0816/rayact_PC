@@ -159,8 +159,8 @@ public class ReserveController extends BaseController {
         if (StringUtils.isNoneBlank(time)) {
             String startTime = time.split("-")[0];
             String endTime = time.split("-")[1];
-            model.addAttribute("startTime", startTime);
-            model.addAttribute("endTime", endTime);
+            model.addAttribute("startTime", item.getStartTime());
+            model.addAttribute("endTime", item.getEndTime());
         }
         model.addAttribute("item", item);
         List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);

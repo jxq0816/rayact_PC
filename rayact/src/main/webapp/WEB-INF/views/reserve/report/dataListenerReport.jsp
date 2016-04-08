@@ -18,53 +18,53 @@
         <div class="row dash-cols">
             <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
-                    <div class="header">
-                        <i class="fa fa-comment"></i><span style="font-size: 20px">会员充值</span>
+                    <div class="header"style="background:#5e3bb9;color: #fff;text-align: center">
+                        <i class="fa"></i><span style="font-size: 20px">会员充值</span>
                     </div>
-                    <div class="content no-padding">
+                    <div class="content no-padding" style="background:#5e3bb9;color: #fff">
                         <div class="fact-data text-center">
                             <h3>当天</h3>
-                            <h2><a href="javascript:queryByDayForMemberIncome()">${rechargeOfDay}</a></h2>
+                            <h2><a style="color:#fff " href="javascript:queryByDayForMemberIncome()">${rechargeOfDay}</a></h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
-                            <h2><a href="javascript:queryByMonthForMemberIncome()">${rechargeOfMonth}</a></h2>
+                            <h2><a style="color:#fff " href="javascript:queryByMonthForMemberIncome()">${rechargeOfMonth}</a></h2>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
-                    <div class="header">
-                        <i class="fa fa-bug"></i><span style="font-size: 20px">场地售卖</span>
+                    <div class="header" style="background:#00a400;color: #fff;text-align: center">
+                        <i class="fa"></i><span style="font-size: 20px">场地售卖</span>
                     </div>
-                    <div class="content no-padding">
+                    <div class="content no-padding" style="background:#00a400;color: #fff">
                         <div class="fact-data text-center">
                             <h3>当天</h3>
-                            <h2><a href="${ctx}/reserve/saleVenueReport/list?alone=${alone}&search=1">${fieldTodayPrice}</a></h2>
+                            <h2><a style="color:#fff " href="${ctx}/reserve/saleVenueReport/list?alone=${alone}&search=1">${fieldTodayPrice}</a></h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
-                            <h2><a href="${ctx}/reserve/saleVenueReport/list?alone=${alone}&search=2">${fieldMonthPrice}</a></h2>
+                            <h2><a style="color:#fff " href="${ctx}/reserve/saleVenueReport/list?alone=${alone}&search=2">${fieldMonthPrice}</a></h2>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
-                    <div class="header">
-                        <i class="fa fa-comment"></i><span style="font-size: 20px">商品售卖</span>
+                    <div class="header" style="background:#004bc0;color: #fff;text-align: center">
+                        <i class="fa"></i><span style="font-size: 20px">商品售卖</span>
                     </div>
-                    <div class="content no-padding">
+                    <div class="content no-padding" style="background:#004bc0;color: #fff">
                         <div class="fact-data text-center">
                             <h3>当天</h3>
 
-                            <h2><a href="javascript:queryByDayForCommoditySell()">${sellOfToday}</a></h2>
+                            <h2><a href="javascript:queryByDayForCommoditySell()" style="color:#fff ">${sellOfToday}</a></h2>
                         </div>
                         <div class="fact-data text-center">
                             <h3>当月</h3>
 
-                            <h2><a href="javascript:queryByMonthForCommoditySell()">${sellOfMonth}</a></h2>
+                            <h2><a href="javascript:queryByMonthForCommoditySell()" style="color:#fff ">${sellOfMonth}</a></h2>
                         </div>
                     </div>
                 </div>
@@ -72,10 +72,10 @@
 
             <div class="col-sm-6 col-md-6 col-lg-3">
                 <div class="block">
-                    <div class="header">
-                        <i class="fa fa-comment"></i><span style="font-size: 20px">新增会员</span>
+                    <div class="header" style="background:#8644ac;color: #fff;text-align: center">
+                        <i class="fa"></i><span style="font-size: 20px">新增会员</span>
                     </div>
-                    <div class="content no-padding">
+                    <div class="content no-padding" style="background:#8644ac;color: #fff">
                         <div class="fact-data text-center">
                             <h3>当月</h3>
                             <h2>${registerNum}</h2>
