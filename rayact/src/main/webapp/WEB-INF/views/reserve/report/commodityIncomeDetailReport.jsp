@@ -7,9 +7,11 @@
     <title>商品收入统计</title>
 </head>
 <body>
+<c:if test="${param.alone != 'true'}">
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="commodityIncomeRecord"></jsp:param>
 </jsp:include>
+</c:if>
 <div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
@@ -18,7 +20,7 @@
                     <h3>商品收入统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCommodityIntervalReport"
-                           action="${ctx}/reserve/reserveCommoditySell/commodityIncomeIntervalReport"
+                           action="${ctx}/reserve/reserveCommoditySell/commodityIncomeIntervalReport?alone=${alone}"
                            method="post" class="breadcrumb form-search">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">

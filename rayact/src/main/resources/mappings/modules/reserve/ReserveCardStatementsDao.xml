@@ -262,18 +262,21 @@
 
 	<select id="allReport" resultType="java.util.Map">
 		SELECT
-			s.venue_id as venue_id,
+			v.id as venue_id,
 			v.name as venue_name,
 			SUM(case when s.transaction_type = '1' or s.transaction_type = '7' THEN s.transaction_volume ELSE 0 END) AS store_in,
 			SUM(case WHEN s.transaction_type = '3' THEN s.transaction_volume ELSE 0 END) AS commodity_in,
 		 	SUM(CASE WHEN s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS field_in,
 			SUM(CASE WHEN s.pay_type = '1' THEN s.transaction_volume ELSE 0 END) AS store_cost,
 		 	SUM(CASE WHEN s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS time_cost
-		FROM reserve_card_statements s
-		LEFT JOIN reserve_venue v on s.venue_id = v.id
+		FROM reserve_venue v
+		LEFT JOIN reserve_card_statements s on s.venue_id = v.id
+		<if test="startDate!=null and endDate !=null">
+		and datediff(s.update_date,#{startDate})>=0 and datediff(#{endDate},s.update_date)>=0
+		</if>
 		where 1=1
 		${sqlMap.dsf}
-		GROUP BY s.venue_id
+		GROUP BY v.id
 	</select>
 
 </mapper>

@@ -68,7 +68,7 @@
 		</div>
 	</form>
 	<div class="footer">
-		Copyright &copy; ${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productName')}</a>
+		Copyright &copy; ${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productorName')}</a>
 	</div>
 	<script src="${ctxStatic}/flash/zoom.min.js" type="text/javascript"></script>
 </body>
