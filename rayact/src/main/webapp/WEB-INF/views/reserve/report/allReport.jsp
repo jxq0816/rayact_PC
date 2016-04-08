@@ -14,9 +14,11 @@
     <title>场馆收入汇总</title>
 </head>
 <body>
+<c:if test="${param.alone != 'true'}">
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="allReport"></jsp:param>
 </jsp:include>
+</c:if>
 <div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
@@ -25,7 +27,7 @@
                     <h3>场馆收入统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
-                           action="${ctx}/reserve/reserveSellReport/list"
+                           action="${ctx}/reserve/reserveSellReport/list?alone=${alone}"
                            method="post" class="breadcrumb form-search form-horizontal form-inline">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">

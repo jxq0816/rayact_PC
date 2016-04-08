@@ -7,9 +7,11 @@
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
 </head>
 <body>
+<c:if test="${param.alone != 'true'}">
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="saleVenueReport"></jsp:param>
 </jsp:include>
+</c:if>
 <div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
@@ -17,7 +19,7 @@
                 <div class="header">
                     <h3>场地售卖报表</h3>
                 </div>
-                <form id="searchForm" action="${ctx}/reserve/saleVenueReport/list"
+                <form id="searchForm" action="${ctx}/reserve/saleVenueReport/list?alone=${alone}"
                       method="post" class="content">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -31,11 +33,11 @@
                                         <div class="tab-tit-first">
                                             <ul>
                                                 <li <j:if test="${'1' eq search}">class="on"</j:if>><a
-                                                        href="${ctx}/reserve/saleVenueReport/list?search=1">当天</a></li>
+                                                        href="${ctx}/reserve/saleVenueReport/list?search=1&alone=${alone}">当天</a></li>
                                                 <li <j:if test="${'2' eq search}">class="on"</j:if>><a
-                                                        href="${ctx}/reserve/saleVenueReport/list?search=2">当月</a></li>
+                                                        href="${ctx}/reserve/saleVenueReport/list?search=2&alone=${alone}">当月</a></li>
                                                 <li <j:if test="${'3' eq search}">class="on"</j:if>><a
-                                                        href="${ctx}/reserve/saleVenueReport/list?search=3">当年</a></li>
+                                                        href="${ctx}/reserve/saleVenueReport/list?search=3&alone=${alone}">当年</a></li>
                                                 <li id="userDesign" style="cursor: hand;"
                                                     <j:if test="${'4' eq search}">class="on"</j:if>><a>自定义</a></li>
                                             </ul>

@@ -3,14 +3,20 @@
  */
 package com.bra.modules.sys.web;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
 import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
+import com.bra.common.security.shiro.session.SessionDAO;
+import com.bra.common.servlet.ValidateCodeServlet;
+import com.bra.common.utils.CacheUtils;
+import com.bra.common.utils.CookieUtils;
+import com.bra.common.utils.IdGen;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.utils.AuthorityUtils;
+import com.bra.modules.sys.security.FormAuthenticationFilter;
+import com.bra.modules.sys.utils.UserUtils;
+import com.google.common.collect.Maps;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.WebUtils;
@@ -21,17 +27,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.google.common.collect.Maps;
-import com.bra.common.config.Global;
-import com.bra.common.security.shiro.session.SessionDAO;
-import com.bra.common.servlet.ValidateCodeServlet;
-import com.bra.common.utils.CacheUtils;
-import com.bra.common.utils.CookieUtils;
-import com.bra.common.utils.IdGen;
-import com.bra.common.utils.StringUtils;
-import com.bra.common.web.BaseController;
-import com.bra.modules.sys.security.FormAuthenticationFilter;
-import com.bra.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * 登录Controller
@@ -166,6 +164,10 @@ public class LoginController extends BaseController {
         }
         if("4".equals(AuthorityUtils.getUserType())){//营业员
             return "redirect:" + adminPath + "/reserve/salesMain";
+        }
+        if("3".equals(AuthorityUtils.getUserType())){//高管
+            request.getSession().setAttribute("alone","true");
+            return "redirect:" + adminPath + "/reserve/reserveListener/report?alone=true";
         }
         return "redirect:" + adminPath + "/reserve/main";
     }

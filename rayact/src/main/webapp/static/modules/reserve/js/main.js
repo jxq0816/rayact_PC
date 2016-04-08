@@ -40,21 +40,21 @@ function getMonthEndDate() {
 function queryByDayForMemberIncome() {
     var startDate=formatDate(now);
     var endDate=formatDate(now);
-    location.href=ctx + "/reserve/reserveCardStatements/memberIncomeReport?transactionType=1&startDate="+startDate+"&endDate="+endDate;
+    location.href=ctx + "/reserve/reserveCardStatements/memberIncomeReport?alone=${alone}&transactionType=1&startDate="+startDate+"&endDate="+endDate;
 }
 function queryByMonthForMemberIncome() {
     var startDate=getMonthStartDate();
     var endDate=getMonthEndDate();
-    location.href=ctx + "/reserve/reserveCardStatements/memberIncomeReport?transactionType=1&startDate="+startDate+"&endDate="+endDate;
+    location.href=ctx + "/reserve/reserveCardStatements/memberIncomeReport?alone=${alone}&transactionType=1&startDate="+startDate+"&endDate="+endDate;
 }
 
 function queryByDayForCommoditySell() {
     var startDate=formatDate(now);
     var endDate=formatDate(now);
-    location.href=ctx + "/reserve/reserveCommoditySell/commodityIncomeIntervalReport?startDate="+startDate+"&endDate="+endDate;
+    location.href=ctx + "/reserve/reserveCommoditySell/commodityIncomeIntervalReport?alone=${alone}&startDate="+startDate+"&endDate="+endDate;
 }
 function queryByMonthForCommoditySell() {
     var startDate=getMonthStartDate();
     var endDate=getMonthEndDate();
-    location.href=ctx + "/reserve/reserveCommoditySell/commodityIncomeIntervalReport?&startDate="+startDate+"&endDate="+endDate;
+    location.href=ctx + "/reserve/reserveCommoditySell/commodityIncomeIntervalReport?alone=${alone}&&startDate="+startDate+"&endDate="+endDate;
 }
