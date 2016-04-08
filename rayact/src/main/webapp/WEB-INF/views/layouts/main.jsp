@@ -53,7 +53,7 @@
     <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet"/>
     <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
     <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-
+    <script src="${ctxStatic}/cleanzone/js/echart/echarts.common.min.js" type="text/javascript"></script>
     <script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
@@ -65,16 +65,27 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="fa fa-gear"></span>
             </button>
-            <a class="navbar-brand" style="margin-left: 10%;" href="${ctx}"></a>
+            <c:if test="${alone != 'true'}">
+                <a class="navbar-brand" style="margin-left: 10%;" href="${ctx}"></a>
+            </c:if>
+            <c:if test="${alone == 'true'}">
+                <a class="navbar-brand" style="margin-left: 10%;" href="${ctx}/reserve/reserveListener/report?alone=true"></a>
+            </c:if>
         </div>
-
         <div class="navbar-collapse collapse" style="float:right;margin-top: 20px">
 
             <ul class="nav navbar-nav navbar-right" >
                 <li>
-                    <a  href="${ctx}">欢迎回来，${fns:getUser().name}</a></li>
+                    <c:if test="${alone != 'true'}">
+                        <a  href="${ctx}">欢迎回来，${fns:getUser().name}</a>
+                    </c:if>
+                    <c:if test="${alone == 'true'}">
+                        <a  href="${ctx}/reserve/reserveListener/report?alone=true">欢迎回来，${fns:getUser().name}</a>
+                    </c:if>
                 </li>
-                <li><a href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
+                <c:if test="${alone != 'true'}">
+                    <li><a href="${ctx}/reserve/user/updatePasswordForm">修改密码</a></li>
+                </c:if>
                 <li><a href="${ctx}/logout"><img src="${ctxStatic}/cleanzone/images/logout.png"/></a></li>
             </ul>
         </div><!--/.nav-collapse -->
