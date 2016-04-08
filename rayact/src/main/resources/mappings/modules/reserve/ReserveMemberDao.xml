@@ -35,9 +35,9 @@
 	</sql>
 	
 	<sql id="reserveMemberJoins">
-		left join reserve_storedcard_member_set as p on p.id=a.fk_reserve_storedcard_member_set_id
-		left join reserve_timecard_member_set as q on q.id=a.fk_reserve_timecard_member_set_id
-		left join reserve_venue as v on v.id=a.fk_reserve_venue_id
+		left join reserve_storedcard_member_set as p on (p.id=a.fk_reserve_storedcard_member_set_id and p.del_flag='0')
+		left join reserve_timecard_member_set as q on (q.id=a.fk_reserve_timecard_member_set_id and q.del_flag='0')
+		left join reserve_venue as v on (v.id=a.fk_reserve_venue_id and v.del_flag='0')
 	</sql>
     
 	<select id="get" resultType="ReserveMember">
