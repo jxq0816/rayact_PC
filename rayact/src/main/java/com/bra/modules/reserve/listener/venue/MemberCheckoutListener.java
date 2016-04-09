@@ -28,7 +28,7 @@ public class MemberCheckoutListener{
             if (reserveMember.getRemainder() == null) {
                 reserveMember.setRemainder(0D);
             }
-            reserveMember.setRemainder(reserveMember.getRemainder() - venueCons.getOrderPrice());
+            reserveMember.setRemainder(reserveMember.getRemainder() - venueCons.getConsPrice());
             storedCardMemberService.save(reserveMember);
         }
     }
