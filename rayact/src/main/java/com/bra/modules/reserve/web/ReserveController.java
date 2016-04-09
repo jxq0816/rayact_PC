@@ -15,6 +15,7 @@ import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,18 +68,21 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "main")
     public String main(Long t, String venueId, Model model) throws ParseException {
         //当前日期
-        Date defaultDate = DateUtils.parseDate(DateUtils.getDate(), "yyyy-MM-dd");
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DAY_OF_MONTH,-1);
+        Date nowDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");
+        Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(yesterday.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");
         //获取可预定时间段:一周
-        Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
+        Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 8);
         model.addAttribute("timeSlot", timeSlot);
         //默认时间
         if (t != null) {
-            defaultDate = new Date(t);
+            nowDate = new Date(t);
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String consDateFormat=format.format(defaultDate);
+        String consDateFormat=format.format(nowDate);
         model.addAttribute("consDateFormat", consDateFormat);
-        model.addAttribute("consDate", defaultDate);
+        model.addAttribute("consDate", nowDate);
 
         //获得所有场馆信息
         ReserveVenue venue = new ReserveVenue();
@@ -102,18 +106,18 @@ public class ReserveController extends BaseController {
 
             timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
             model.addAttribute("timesAM", timesAM);
-            List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesAM);
+            List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", nowDate, timesAM);
             model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
             //下午场地价格
             List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
             model.addAttribute("timesPM", timesPM);
-            List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesPM);
+            List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", nowDate, timesPM);
             model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
             //晚上场地价格
             List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
            /* timesEvening.add("00:00-00:30");*/
             model.addAttribute("timesEvening", timesEvening);
-            List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", defaultDate, timesEvening);
+            List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", nowDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         }
         return "reserve/saleField/reserveField";
@@ -152,16 +156,12 @@ public class ReserveController extends BaseController {
     //取消预定表单
     @RequestMapping(value = "cancelForm")
     @Token(save = true)
-    public String cancelForm(Model model, String fieldId, String itemId, String time) {
+    public String cancelForm(Model model, String itemId) {
         ReserveVenueConsItem item = reserveVenueConsItemService.get(itemId);
         ReserveVenueCons cons = reserveVenueConsService.get(item.getConsData().getId());
         model.addAttribute("cos", cons);
-        if (StringUtils.isNoneBlank(time)) {
-            String startTime = time.split("-")[0];
-            String endTime = time.split("-")[1];
-            model.addAttribute("startTime", item.getStartTime());
-            model.addAttribute("endTime", item.getEndTime());
-        }
+        model.addAttribute("startTime", item.getStartTime());
+        model.addAttribute("endTime", item.getEndTime());
         model.addAttribute("item", item);
         List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);
         model.addAttribute("times", times);
