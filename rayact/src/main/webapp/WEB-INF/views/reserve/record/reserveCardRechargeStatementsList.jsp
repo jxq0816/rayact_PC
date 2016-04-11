@@ -21,8 +21,6 @@
                            action="${ctx}/reserve/reserveCardStatements/list"
                            method="post">
                 <div class="breadcrumb form-search">
-                        <%-- <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                         <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>--%>
                     <input id="transactionType" name="transactionType" type="hidden" value="1"/>
                     <div class="row">
                         <div class="col-sm-10 col-md-10 col-lg-10">
