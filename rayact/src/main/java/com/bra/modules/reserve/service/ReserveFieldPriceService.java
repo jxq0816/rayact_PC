@@ -79,54 +79,29 @@ public class ReserveFieldPriceService {
     public Double getPrice(ReserveField field, String consType, Date date, String startTime, String endTime) {
         List<String> timeList = TimeUtils.getTimeSpace(startTime, endTime);
         String weekType = TimeUtils.getWeekType(date);
-        /*ReserveFieldHolidayPriceSet holidayPriceSet = new ReserveFieldHolidayPriceSet();
-        holidayPriceSet.setDate(date);
-        holidayPriceSet.setConsType(consType);
-        holidayPriceSet.setReserveField(field);
-        List<ReserveFieldHolidayPriceSet> holidayPriceSetList = reserveFieldHolidayPriceSetDao.findList(holidayPriceSet);*/
-
         ReserveFieldPriceSet priceSet = new ReserveFieldPriceSet();
         priceSet.setConsType(consType);
         priceSet.setWeek(weekType);
         priceSet.setReserveField(field);
-
-       /* Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int day = cal.get(Calendar.DATE);
-        int month = cal.get(Calendar.MONTH)+1;*/
-
-       /* ReserveTimeInterval timeInterval=reserveTimeIntervalService.findTimeInterval(month,day);
-        priceSet.setReserveTimeInterval(timeInterval);*/
+        field=reserveFieldService.get(field);
+        //如果场地区分时令，按时令取价格
+        if("1".equals(field.getIsTimeInterval())){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int day = cal.get(Calendar.DATE);
+            int month = cal.get(Calendar.MONTH)+1;
+            ReserveTimeInterval timeInterval=reserveTimeIntervalService.findTimeInterval(month,day);
+            priceSet.setReserveTimeInterval(timeInterval);
+        }
 
         List<ReserveFieldPriceSet> priceSets = reserveFieldPriceSetDao.findList(priceSet);
         Double price = 0d;
-
-        List<String> times = Lists.newArrayList();
-       /* if (!Collections3.isEmpty(holidayPriceSetList)) {
-            for (String time : timeList) {
-                ReserveFieldHolidayPriceSet ps = timeHasHoliday(time, holidayPriceSetList);
-                if (ps != null) {
-                    price += ps.getConsPrice();
-                } else {
-                    times.add(time);
-                }
-            }
-            if (!Collections3.isEmpty(times)) {
-                for (String time : times) {
-                    TimePrice tp = timeHasPriceSet(time, priceSets);
-                    if (tp != null) {
-                        price += tp.getPrice();
-                    }
-                }
-            }
-        } else {*/
         for (String time : timeList) {
             TimePrice tp = timeHasPriceSet(time, priceSets);
             if (tp != null) {
                 price += tp.getPrice();
             }
         }
-       /* }*/
         return price / 2;//因为价格设定时，以一小时为单位，而预订时以半小时为单位，所以除2
     }
 
