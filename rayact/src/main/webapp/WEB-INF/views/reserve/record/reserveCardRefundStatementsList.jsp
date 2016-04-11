@@ -20,9 +20,8 @@
 
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
                            action="${ctx}/reserve/reserveCardStatements/list"
-                           method="post" class="breadcrumb form-search">
-                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+                           method="post">
+                <div class="breadcrumb form-search">
                     <input id="transactionType" name="transactionType" type="hidden" value="2"/>
                     <div class="row">
                         <div class="col-sm-10 col-md-10 col-lg-10">
@@ -58,7 +57,8 @@
                             </table>
                         </div>
                     </div>
-                </form:form>
+
+                </div>
                 <sys:message content="${message}"/>
                 <div class="content">
                     <div class="table-responsive">
@@ -131,7 +131,7 @@
 
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -139,15 +139,16 @@
                         </div>
                     </div>
                 </div>
+                </form:form>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    $("#btnExport").click(function(){
-        $("#searchForm").attr("action","${ctx}/reserve/reserveCardStatements/listExport");
+    $("#btnExport").click(function () {
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveCardStatements/listExport");
         $("#searchForm").submit();
-        $("#searchForm").attr("action","${ctx}/reserve/reserveCardStatements/list");
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveCardStatements/list");
     });
 </script>
 </body>
