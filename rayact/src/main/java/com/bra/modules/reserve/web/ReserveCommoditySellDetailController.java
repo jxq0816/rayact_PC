@@ -143,6 +143,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	public String findSellDetailList(ReserveCommoditySellDetail reserveCommoditySellDetail, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveCommoditySellDetail> page = reserveCommoditySellDetailService.findSellDetailList(new Page<ReserveCommoditySellDetail>(request, response), reserveCommoditySellDetail);
 		model.addAttribute("page", page);
+		model.addAttribute("search", reserveCommoditySellDetail);
 		return "reserve/record/reserveCommoditySellDetailList";
 	}
 

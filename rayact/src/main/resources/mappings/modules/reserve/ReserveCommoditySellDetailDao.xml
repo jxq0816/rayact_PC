@@ -69,7 +69,7 @@
                 </if>
             </if>
             <if test="startDate!=null and endDate !=null">
-                and (a.create_date between #{startDate} and #{endDate})
+                and (Date(a.create_date) between Date(#{startDate}) and Date(#{endDate}))
             </if>
         </where>
         <choose>
