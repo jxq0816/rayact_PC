@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,14 @@ public class ReserveSellReportController extends BaseController {
             if (reserveCardStatements.getSqlMap().get("dsf") == null)
                 reserveCardStatements.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
         }
+        if(reserveCardStatements.getStartDate()==null||reserveCardStatements.getEndDate()==null){
+            Calendar c = Calendar.getInstance();
+            reserveCardStatements.setEndDate(c.getTime());
+            Calendar c2 = Calendar.getInstance();
+            c2.set(Calendar.HOUR_OF_DAY,6);
+            c2.set(Calendar.MINUTE,0);
+            reserveCardStatements.setStartDate(c2.getTime());
+        }
         List<Map<String,Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
         ReserveVenue v = new ReserveVenue();
         List<ReserveVenue> list = reserveVenueService.findList(v);
@@ -49,6 +58,14 @@ public class ReserveSellReportController extends BaseController {
     public @ResponseBody Map listChart(ReserveCardStatements reserveCardStatements) {
         if (reserveCardStatements.getSqlMap().get("dsf") == null)
             reserveCardStatements.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+        if(reserveCardStatements.getStartDate()==null||reserveCardStatements.getEndDate()==null){
+            Calendar c = Calendar.getInstance();
+            reserveCardStatements.setEndDate(c.getTime());
+            Calendar c2 = Calendar.getInstance();
+            c2.set(Calendar.HOUR_OF_DAY,6);
+            c2.set(Calendar.MINUTE,0);
+            reserveCardStatements.setStartDate(c2.getTime());
+        }
         List<Map<String,Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
         ReserveVenue v = new ReserveVenue();
         List<ReserveVenue> list = reserveVenueService.findList(v);
