@@ -5,7 +5,7 @@
               required="true" %>
 <%@ attribute name="message" type="java.lang.String" required="false" %>
 <%@ attribute name="bootstrap3" type="java.lang.Boolean" required="false" %>
-<%@ attribute name="formId" type="java.lang.String" required="true" %>
+<%@ attribute name="formId" type="java.lang.String" required="false" %>
 <%@ attribute name="pageNoTag" type="java.lang.String" required="false" %>
 <%@ attribute name="pageSizeTag" type="java.lang.String" required="false" %>
 <%@ attribute name="action" type="java.lang.String" required="false" %>
