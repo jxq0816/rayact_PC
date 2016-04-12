@@ -43,7 +43,13 @@ public interface ReserveVenueConsDao extends CrudDao<ReserveVenueCons> {
      * @return
      */
     List<Map<String,Object>> findOpenRateReport(ReserveVenueCons venueCons);
-
+    /*
+        查询当年的销量柱状图
+     */
+    List<Map<String,Object>> sellOfHistogram(ReserveVenueCons venueCons);
+    /*
+        查询当天的销售量
+    */
     List<Map<String,Object>> sellOfChart(ReserveVenueCons venueCons);
 
     BigDecimal sellMonthOfChart(ReserveVenueCons venueCons);

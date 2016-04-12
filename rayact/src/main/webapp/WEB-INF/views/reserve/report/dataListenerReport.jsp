@@ -91,7 +91,7 @@
         <!--报表-->
         <div class="row dash-cols">
 
-            <div class="col-sm-12 col-md-12">
+            <div class="col-sm-6 col-md-6">
                 <div class="block">
                     <div class="content" style="padding: 30px">
                         <div class="header no-border" style="text-align: right;">
@@ -115,38 +115,13 @@
                 </div>
             </div>
 
-            <%--<div class="col-sm-6 col-md-6">--%>
-                <%--<div class="block">--%>
-                    <%--<div class="header no-border">--%>
-                        <%--<h2>场地售卖</h2>--%>
-                    <%--</div>--%>
-                    <%--<div class="content">--%>
-                        <%--<div id="field_statistics" style="height:280px;"></div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-
-            <%--<div class="col-sm-6 col-md-6">--%>
-                <%--<div class="block">--%>
-                    <%--<div class="header no-border">--%>
-                        <%--<h2>项目占比</h2>--%>
-                    <%--</div>--%>
-                    <%--<div class="content">--%>
-                        <%--<div id="project_statistics" style="height:280px;"></div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-
-            <%--<div class="col-sm-6 col-md-6">--%>
-                <%--<div class="block">--%>
-                    <%--<div class="header no-border">--%>
-                        <%--<h2>商品销售</h2>--%>
-                    <%--</div>--%>
-                    <%--<div class="content">--%>
-                        <%--<div id="sell_statistics" style="height:280px;"></div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
+            <div class="col-sm-6 col-md-6">
+                <div class="block">
+                    <div class="content">
+                        <div id="field_statistics" style="height:280px;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -217,146 +192,49 @@
     $("#btnSubmit").on("click",function(){
         drawChart();
     });
-    <%--$(document).ready(function () {--%>
-        <%--//initialize the javascript--%>
-        <%--App.dashBoard();--%>
-        <%--//场地售卖--%>
-        <%--var fieldChart = echarts.init(document.getElementById('field_statistics'));--%>
-        <%--fieldoption = {--%>
-            <%--tooltip: {--%>
-                <%--trigger: 'axis'--%>
-            <%--},--%>
-            <%--legend: {--%>
-                <%--data: ['场地售卖']--%>
-            <%--},--%>
-            <%--toolbox: {--%>
-                <%--show: false--%>
-            <%--},--%>
-            <%--calculable: false,--%>
-            <%--xAxis: [--%>
-                <%--{--%>
-                    <%--type: 'category',--%>
-                    <%--boundaryGap: false,--%>
-                    <%--data: [${fieldChartMapX}]--%>
-                <%--}--%>
-            <%--],--%>
-            <%--yAxis: [--%>
-                <%--{--%>
-                    <%--type: 'value'--%>
-                <%--}--%>
-            <%--],--%>
-            <%--series: [--%>
-                <%--{--%>
-                    <%--name: '场地售卖',--%>
-                    <%--type: 'line',--%>
-                    <%--stack: '总量',--%>
-                    <%--data: [${fieldChartMapY}]--%>
-                <%--}--%>
-            <%--]--%>
-        <%--};--%>
-        <%--fieldChart.setOption(fieldoption);--%>
-        <%--//会员--%>
-        <%--var memberChart = echarts.init(document.getElementById('member_statistics'));--%>
-        <%--memeberoption = {--%>
-            <%--tooltip: {--%>
-                <%--trigger: 'axis'--%>
-            <%--},--%>
-            <%--legend: {--%>
-                <%--data: ['会员充值']--%>
-            <%--},--%>
-            <%--toolbox: {--%>
-                <%--show: false--%>
-            <%--},--%>
-            <%--calculable: false,--%>
-            <%--xAxis: [--%>
-                <%--{--%>
-                    <%--type: 'category',--%>
-                    <%--boundaryGap: false,--%>
-                    <%--data: [${memberChartMapX}]--%>
-                <%--}--%>
-            <%--],--%>
-            <%--yAxis: [--%>
-                <%--{--%>
-                    <%--type: 'value'--%>
-                <%--}--%>
-            <%--],--%>
-            <%--series: [--%>
-                <%--{--%>
-                    <%--name: '会员充值',--%>
-                    <%--type: 'line',--%>
-                    <%--stack: '总量',--%>
-                    <%--data: [${memberChartMapY}]--%>
-                <%--}--%>
-            <%--]--%>
-        <%--};--%>
-        <%--memberChart.setOption(memeberoption);--%>
-
-        <%--//项目占比--%>
-        <%--var projectChart = echarts.init(document.getElementById('project_statistics'));--%>
-        <%--projectOption = {--%>
-            <%--title: {--%>
-                <%--text: '项目销售占比',--%>
-                <%--subtext: '',--%>
-                <%--x: 'center'--%>
-            <%--},--%>
-            <%--tooltip: {--%>
-                <%--trigger: 'item',--%>
-                <%--formatter: "{a} <br/>{b} : {c} ({d}%)"--%>
-            <%--},--%>
-            <%--legend: {--%>
-                <%--orient: 'vertical',--%>
-                <%--x: 'left',--%>
-                <%--data: [${projectFieldNameList}]--%>
-            <%--},--%>
-            <%--calculable: true,--%>
-            <%--series: [--%>
-                <%--{--%>
-                    <%--name: '项目销售占比',--%>
-                    <%--type: 'pie',--%>
-                    <%--radius: '55%',--%>
-                    <%--center: ['50%', '60%'],--%>
-                    <%--data:${projectFieldChart}--%>
-                <%--}--%>
-            <%--]--%>
-        <%--};--%>
-        <%--projectChart.setOption(projectOption);--%>
-
-        <%--//商品销售--%>
-        <%--var sellChart = echarts.init(document.getElementById('sell_statistics'));--%>
-        <%--sellOption = {--%>
-            <%--tooltip: {--%>
-                <%--trigger: 'axis'--%>
-            <%--},--%>
-            <%--legend: {--%>
-                <%--data: ['商品销售']--%>
-            <%--},--%>
-            <%--toolbox: {--%>
-                <%--show: false--%>
-            <%--},--%>
-            <%--calculable: false,--%>
-            <%--xAxis: [--%>
-                <%--{--%>
-                    <%--type: 'category',--%>
-                    <%--boundaryGap: false,--%>
-                    <%--data: [${sellChartMapX}]--%>
-                <%--}--%>
-            <%--],--%>
-            <%--yAxis: [--%>
-                <%--{--%>
-                    <%--type: 'value'--%>
-                <%--}--%>
-            <%--],--%>
-            <%--series: [--%>
-                <%--{--%>
-                    <%--name: '商品销售',--%>
-                    <%--type: 'line',--%>
-                    <%--stack: '总量',--%>
-                    <%--data: [${sellChartMapY}]--%>
-                <%--}--%>
-            <%--]--%>
-        <%--};--%>
-        <%--sellChart.setOption(sellOption);--%>
-    <%--});--%>
+    $(document).ready(function () {
+        //initialize the javascript
+        App.dashBoard();
+        //场地售卖
+        var fieldChart = echarts.init(document.getElementById('field_statistics'));
+        fieldOption = {
+            title : {
+                text: '场地收入',
+                subtext: ''
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:[${venueListJson}]
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                ${seriesJson}
+            ]
+        };
+        fieldChart.setOption(fieldOption);
+    });
     var now;
     var nowMonth;
     $(document).ready(function () {

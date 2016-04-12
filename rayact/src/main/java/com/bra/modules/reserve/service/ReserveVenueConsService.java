@@ -127,6 +127,10 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         return super.get(id);
     }
 
+    public List<Map<String, Object>> sellOfHistogram(ReserveVenueCons venueCons) {
+        return dao.sellOfHistogram(venueCons);
+    }
+
     public List<Map<String, Object>> sellOfChart(ReserveVenueCons venueCons) {
         return dao.sellOfChart(venueCons);
     }

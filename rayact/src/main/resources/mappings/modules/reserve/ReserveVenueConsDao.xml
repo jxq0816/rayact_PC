@@ -223,6 +223,18 @@
         ) c group by c.updateDate order by c.updateDate
     </select>
 
+    <select id="sellOfHistogram" resultType="java.util.Map">
+        SELECT
+           SUM(transaction_volume) as transactionVolume,MONTH(a.update_date) as month,v.name as venueName,v.id as venueId
+        FROM
+            reserve_card_statements a
+            LEFT JOIN reserve_venue v on v.id=a.venue_id
+        WHERE
+            transaction_type = '8' or transaction_type = '9'
+            ${sqlMap.dsf}
+        group by MONTH(a.update_date),venue_id
+    </select>
+
     <select id="findList" resultType="ReserveVenueCons">
         SELECT
         <include refid="reserveVenueConsDataColumns"/>
