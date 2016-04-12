@@ -13,6 +13,7 @@ import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
+import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -62,7 +63,8 @@ public class ReserveController extends BaseController {
     private SystemService systemService;
     @Autowired
     private ReserveUserService userService;
-
+    @Autowired
+    private ReserveRoleService reserveRoleService;
 
     //场地状态界面
     @RequestMapping(value = "main")
@@ -321,10 +323,30 @@ public class ReserveController extends BaseController {
         }
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
+
+        ReserveRole reserveRole = new ReserveRole();
+        reserveRole.setUser(UserUtils.getUser());
+        List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+        String venueId=null;
+        for(String i:venueIds){
+            venueId=i;//收银所在职的场馆
+        }
         User user=new User();
-        user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：场地管理员；4：收银；5：财务)
-        List<User> authUserList=userService.findList(user);
-        model.addAttribute("authUserList", authUserList);
+        user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：高管；4：收银；5：财务)
+        List<User> authUserList=userService.findList(user);//所有的场馆管理员
+        List<User> authUsers=new ArrayList<>();//当前场馆管理员
+        for(User u:authUserList){
+            ReserveRole role = new ReserveRole();
+            role.setUser(u);
+            List<String> ids = reserveRoleService.findVenueIdsByRole(role);
+            for(String j:ids){
+                //场馆管理员所在职的场馆编号为j
+                if(venueId.equals(j)){
+                    authUsers.add(u);
+                }
+            }
+        }
+        model.addAttribute("authUserList", authUsers);
         model.addAttribute("itemList", itemList);
 
         model.addAttribute("order", order);
