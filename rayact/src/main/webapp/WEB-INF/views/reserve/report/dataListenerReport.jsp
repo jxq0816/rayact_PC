@@ -199,7 +199,7 @@
         var fieldChart = echarts.init(document.getElementById('field_statistics'));
         fieldOption = {
             title : {
-                text: '场地收入',
+                text: '场馆收入统计',
                 subtext: ''
             },
             tooltip : {

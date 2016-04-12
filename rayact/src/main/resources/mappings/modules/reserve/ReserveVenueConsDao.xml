@@ -230,7 +230,7 @@
             reserve_card_statements a
             LEFT JOIN reserve_venue v on v.id=a.venue_id
         WHERE
-            transaction_type = '8' or transaction_type = '9'
+            transaction_type = '8' or transaction_type = '9' or transaction_type = '3' or transaction_type = '6'
             ${sqlMap.dsf}
         group by MONTH(a.update_date),venue_id
     </select>
