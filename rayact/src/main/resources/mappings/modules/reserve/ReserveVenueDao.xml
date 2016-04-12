@@ -153,14 +153,14 @@
         d.name AS "reserveProject.name",
         #{startDate} AS "startDate",
         #{endDate} AS "endDate",
-        sum(b.order_price) AS "bill",
-        sum(if(pay_type=1,b.order_price,0)) AS "fieldBillStoredCard",
-        sum(if(pay_type=2,b.order_price,0)) AS "fieldBillCash",
-        sum(if(pay_type=3,b.order_price,0)) AS "fieldBillBankCard",
-        sum(if(pay_type=4,b.order_price,0)) AS "fieldBillWeiXin",
-        sum(if(pay_type=5,b.order_price,0)) AS "fieldBillAliPay",
-        sum(if(pay_type=6,b.order_price,0)) AS "fieldBillOther",
-        sum(if(pay_type=7,b.order_price,0)) AS "fieldBillDue"
+        sum(b.cons_price) AS "bill",
+        sum(if(pay_type=1,b.cons_price,0)) AS "fieldBillStoredCard",
+        sum(if(pay_type=2,b.cons_price,0)) AS "fieldBillCash",
+        sum(if(pay_type=3,b.cons_price,0)) AS "fieldBillBankCard",
+        sum(if(pay_type=4,b.cons_price,0)) AS "fieldBillWeiXin",
+        sum(if(pay_type=5,b.cons_price,0)) AS "fieldBillAliPay",
+        sum(if(pay_type=6,b.cons_price,0)) AS "fieldBillOther",
+        sum(if(pay_type=7,b.cons_price,0)) AS "fieldBillDue"
         from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue
         as e
         <where>

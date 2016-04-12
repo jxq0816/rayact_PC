@@ -73,12 +73,12 @@
     <select id="findPriceGroupProjectReport" resultType="java.util.Map">
         select d.name as projectName,sum(should_price) as shouldPrice,sum(b.order_price )as
         orderPrice,sum(b.discount_price) as discountPrice,count(pay_Type) as total,
-        sum(case pay_Type when '1' then b.order_price else 0 end) memberPrice,
-        sum(case pay_Type when '2' then b.order_price else 0 end) moneyPrice,
-        sum(case pay_Type when '3' then b.order_price else 0 end) cardPrice,
-        sum(case pay_Type when '4' then b.order_price else 0 end) weixinPrice,
-        sum(case pay_Type when '5' then b.order_price else 0 end) zfbPrice,
-        sum(case pay_Type when '6' then b.order_price else 0 end) otherPrice
+        sum(case pay_Type when '1' then b.cons_price else 0 end) memberPrice,
+        sum(case pay_Type when '2' then b.cons_price else 0 end) moneyPrice,
+        sum(case pay_Type when '3' then b.cons_price else 0 end) cardPrice,
+        sum(case pay_Type when '4' then b.cons_price else 0 end) weixinPrice,
+        sum(case pay_Type when '5' then b.cons_price else 0 end) zfbPrice,
+        sum(case pay_Type when '6' then b.cons_price else 0 end) otherPrice
         from reserve_venue_cons_item a,reserve_venue_cons b,reserve_field c,reserve_project d
         where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id
         and a.del_flag = '0' and a.tenant_id = #{tenantId} and b.reserve_type='4'
@@ -177,52 +177,50 @@
 
     <select id="sellMonthOfChart" resultType="java.math.BigDecimal">
         SELECT sum(c.orderPrice) AS orderPrice from(
-        SELECT
-        SUM(a.order_price) AS "orderPrice"
-        from reserve_venue_cons as a
-        WHERE a.del_flag = '0' and a.reserve_type = '4'
-        and month(a.update_date)=month(CURDATE()) and a.tenant_id = #{tenantId}
-        ${sqlMap.dsf}
-        GROUP BY
-        date_format(a.update_date, '%Y-%m-%d')
-        UNION
-        select sum(a.collect_price) as "orderPrice"
-        from reserve_venue_order a
-        WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
-        and month(a.update_date)=month(CURDATE())
-        ${sqlMap.dsf}) c
+            SELECT
+            SUM(a.cons_price) AS "orderPrice"
+            from reserve_venue_cons as a
+            WHERE a.del_flag = '0' and a.reserve_type = '4'
+            and month(a.cons_date)=month(CURDATE()) and a.tenant_id = #{tenantId}
+            ${sqlMap.dsf}
+            GROUP BY
+            date_format(a.cons_date, '%Y-%m-%d')
+            UNION
+            select sum(a.collect_price) as "orderPrice"
+            from reserve_venue_order a
+            WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
+            and month(a.update_date)=month(CURDATE())
+            ${sqlMap.dsf}
+        ) c
     </select>
 
 
     <select id="sellOfChart" resultType="java.util.Map">
         SELECT sum(c.orderPrice) AS orderPrice,c.updateDate from(
-        SELECT
-        SUM(a.order_price) AS "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as venueId
-        from reserve_venue_cons as a
-        WHERE a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
-        <![CDATA[
-		and DATE_SUB(CURDATE(), INTERVAL #{sqlMap.day} DAY) <= date(a.update_date)
-		]]>
-        <if test="reserveVenue!=null and reserveVenue.id!=null and reserveVenue.id!=''">
-            and a.venue_id = #{reserveVenue.id}
-        </if>
-        ${sqlMap.dsf}
-        GROUP BY
-        date_format(a.update_date, '%Y-%m-%d'),a.venue_id
-        UNION
-        select sum(a.collect_price) as "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate",a.venue_id as
-        venueId
-        from reserve_venue_order a
-        WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
-        <![CDATA[
-		and DATE_SUB(CURDATE(), INTERVAL #{sqlMap.day} DAY) <= date(a.update_date)
-		]]>
-        <if test="reserveVenue!=null and reserveVenue.id!=null and reserveVenue.id!=''">
-            and a.venue_id = #{reserveVenue.id}
-        </if>
-        ${sqlMap.dsf}
-        GROUP BY
-        date_format(a.update_date, '%Y-%m-%d'),a.venue_id) c group by c.updateDate order by c.updateDate
+            SELECT
+            SUM(a.cons_price) AS "orderPrice",date_format(a.cons_date,'%Y-%m-%d') AS "updateDate"
+            from reserve_venue_cons as a
+            WHERE a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
+            <![CDATA[
+            and Date(a.cons_date)=DATE(CURRENT_DATE())
+            ]]>
+            <if test="reserveVenue!=null and reserveVenue.id!=null and reserveVenue.id!=''">
+                and a.venue_id = #{reserveVenue.id}
+            </if>
+            ${sqlMap.dsf}
+            GROUP BY
+            date_format(a.update_date, '%Y-%m-%d')
+            UNION
+            select sum(a.collect_price) as "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
+            from reserve_venue_order a
+            WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
+            <![CDATA[
+            and Date(a.update_date)=DATE(CURRENT_DATE())
+            ]]>
+            ${sqlMap.dsf}
+            GROUP BY
+            date_format(a.update_date, '%Y-%m-%d')
+        ) c group by c.updateDate order by c.updateDate
     </select>
 
     <select id="findList" resultType="ReserveVenueCons">
