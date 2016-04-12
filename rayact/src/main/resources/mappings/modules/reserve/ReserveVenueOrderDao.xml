@@ -82,29 +82,29 @@
 	<select id="findPriceGroupProjectReport" resultType="java.util.Map">
 		SELECT sum(a.collect_price) as orderPrice,c.name as projectName,
         count(pay_Type) as total,
-		sum(case pay_Type when '1' then 1 else 0 end) memberCount,
-        sum(case pay_Type when '2' then 1 else 0 end) moneyCount,
-        sum(case pay_Type when '3' then 1 else 0 end) cardCount,
-        sum(case pay_Type when '4' then 1 else 0 end) weixinCount,
-        sum(case pay_Type when '5' then 1 else 0 end) zfbCount,
-        sum(case pay_Type when '6' then 1 else 0 end) otherCount
+		sum(case pay_Type when '1' then a.collect_price else 0 end) memberPrice,
+        sum(case pay_Type when '2' then a.collect_price else 0 end) moneyPrice,
+        sum(case pay_Type when '3' then a.collect_price else 0 end) cardPrice,
+        sum(case pay_Type when '4' then a.collect_price else 0 end) weixinPrice,
+        sum(case pay_Type when '5' then a.collect_price else 0 end) zfbPrice,
+        sum(case pay_Type when '6' then a.collect_price else 0 end) otherPrice
 		FROM reserve_venue_order a,reserve_venue_visitors_set b,reserve_project c
 		where a.del_flag = '0' and a.visitors_set_id = b.id and b.project_id = c.id
         and a.tenant_id = #{tenantId}
-		<if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search == '1' ">
+		<if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search = '1' ">
 			and date(a.update_date)=date(CURDATE())
 		</if>
-		<if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search == '2' ">
+		<if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search = '2' ">
 			and month(a.update_date)=month(CURDATE())
 		</if>
-		<if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search == '3' ">
+		<if test="sqlMap.search != null and sqlMap.search != '' and sqlMap.search = '3' ">
 			and year(a.update_date)=year(CURDATE())
 		</if>
 		<if test="sqlMap.startDate != null and sqlMap.endDate != null">
 			and (a.update_date BETWEEN #{sqlMap.startDate} AND #{sqlMap.endDate})
 		</if>
 		${sqlMap.dsf}
-		group by c.name
+		group by c.id
 	</select>
 
     <select id="findAllList" resultType="ReserveVenueOrder">
