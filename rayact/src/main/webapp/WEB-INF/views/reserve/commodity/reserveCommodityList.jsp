@@ -173,9 +173,12 @@
 
         $(".instorageBtn").on('click', function () {
             var id = $(this).attr("data-id");
+
             jQuery.postItems({
                 url: '${ctx}/reserve/commodity/inStorageUrl',
-                data: {id: id},
+                data: {
+                    id: id
+                },
                 success: function (result) {
                     if (result) {
                         $("#reserveForm").html(result);
@@ -193,19 +196,31 @@
         });
         //保存
         $("#saveBtn").on('click', function () {
-            var inRepertoryNum = $("#inRepertoryNum").val();
-            if (inRepertoryNum == '') {
-                formLoding("请输入入库数量");
+            var id = $("#id").val();
+            var token=$("#token").val();
+            var inRepertoryBoxNum=$("#inRepertoryBoxNum").val();
+            var boxPrice=$("#boxPrice").val();
+            if(inRepertoryBoxNum==null || inRepertoryBoxNum==undefined || inRepertoryBoxNum=='') {
+                errorLoding('请输入箱数!');
+                return;
+            }else if(isNaN(inRepertoryBoxNum)){
+                errorLoding('入库量必须为数字!');
                 return;
             }
-            var id = $("#id").val();
-            var token = $("#token").val();
+            if(boxPrice==null || boxPrice==undefined || boxPrice=='') {
+                errorLoding('请输入单箱价格!');
+                return;
+            }else if(isNaN(boxPrice)){
+                errorLoding('单箱价格必须为数字!');
+                return;
+            }
             jQuery.postItems({
                 url: '${ctx}/reserve/commodity/inStorage',
                 data: {
                     id: id,
-                    inRepertoryNum: inRepertoryNum,
-                    token: token
+                    token: token,
+                    inRepertoryBoxNum:inRepertoryBoxNum,
+                    boxPrice:boxPrice
                 },
                 success: function (result) {
                     if (result == "success") {

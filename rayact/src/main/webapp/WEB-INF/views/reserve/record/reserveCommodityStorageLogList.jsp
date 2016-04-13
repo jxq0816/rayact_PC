@@ -83,6 +83,9 @@
 												${reserveCommodityStorageLog.boxNum}
 										</td>
 										<td>
+												${reserveCommodityStorageLog.num}
+										</td>
+										<td>
 												${reserveCommodityStorageLog.beforeNum}
 										</td>
 										<td>

@@ -6,7 +6,7 @@
                    action="${ctx}/reserve/commodity/inStorage" method="post"
                    class="form-horizontal">
             <form:hidden id="id" path="id"/>
-            <input type="hidden" name="token" value="${token}" />
+            <input type="hidden" id="token" name="token" value="${token}" />
             <div class="tab-pane active" id="home">
                 <table id="contentTable" class="table table-bordered">
                     <tr>
@@ -64,18 +64,22 @@
                                 ${commodity.quickSearch}
                         </td>
                     </tr>
-
-
                     <tr>
-                        <td>备注：</td>
+                        <td>商品备注：</td>
                         <td colspan="3">
                                 ${commodity.remarks}
                         </td>
                     </tr>
                     <tr>
-                        <td>入库数量：</td>
-                        <td colspan="3">
-                            <input id="inRepertoryNum" name="inRepertoryNum" htmlEscape="false"
+                        <td>入库箱数：</td>
+                        <td>
+                            <input id="inRepertoryBoxNum" name="inRepertoryBoxNum" htmlEscape="false"
+                                   class="form-control  required"/>
+                            <span class="help-inline"><font color="red">*</font> </span>
+                        </td>
+                        <td>单箱金额：</td>
+                        <td>
+                            <input id="boxPrice" name="boxPrice" htmlEscape="false"
                                    class="form-control  required"/>
                             <span class="help-inline"><font color="red">*</font> </span>
                         </td>

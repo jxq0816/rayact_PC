@@ -5,7 +5,9 @@
 	<sql id="reserveCommodityStorageLogColumns">
 		a.id AS "id",
 		a.fk_reserve_venue_id AS "reserveVenue.id",
+		venue.name AS "reserveVenue.name",
 		a.fk_reserve_commodity_id AS "reserveCommodity.id",
+		commodity.name AS "reserveCommodity.name",
 		a.box_num AS "boxNum",
 		a.num AS "num",
 		a.before_num AS "beforeNum",
@@ -13,6 +15,7 @@
 		a.box_price AS "boxPrice",
 		a.price AS "price",
 		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -22,6 +25,9 @@
 	</sql>
 	
 	<sql id="reserveCommodityStorageLogJoins">
+		LEFT JOIN reserve_commodity as commodity on a.fk_reserve_commodity_id=commodity.id
+		LEFT JOIN reserve_venue as venue on a.fk_reserve_venue_id=venue.id
+		LEFT JOIN  reserve_user as u on u.id=a.create_by
 	</sql>
     
 	<select id="get" resultType="ReserveCommodityStorageLog">

@@ -5,9 +5,11 @@ import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveCommodity;
+import com.bra.modules.reserve.entity.ReserveCommodityStorageLog;
 import com.bra.modules.reserve.entity.ReserveCommodityType;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCommodityService;
+import com.bra.modules.reserve.service.ReserveCommodityStorageLogService;
 import com.bra.modules.reserve.service.ReserveCommodityTypeService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class ReserveCommodityController extends BaseController {
 
     @Autowired
     private ReserveCommodityTypeService reserveCommodityTypeService;
+
+    @Autowired
+    private ReserveCommodityStorageLogService reserveCommodityStorageLogService;
 
     @ModelAttribute
     public ReserveCommodity get(@RequestParam(required = false) String id) {
@@ -113,15 +118,27 @@ public class ReserveCommodityController extends BaseController {
 
     @RequestMapping(value = "inStorage")
     @ResponseBody
-   /* @Token(remove = true)*/
-    public String inStorage(String id, Integer inRepertoryNum) {
+    @Token(remove = true)
+    public String inStorage(String id, Integer inRepertoryBoxNum,Double boxPrice) {
         ReserveCommodity commodity = new ReserveCommodity();
         commodity.setId(id);
         commodity=commodityService.get(commodity);
-        int repertoryNum = commodity.getRepertoryNum();
-        repertoryNum += inRepertoryNum*commodity.getUnit();
-        commodity.setRepertoryNum(repertoryNum);
+        int repertoryNumBefore = commodity.getRepertoryNum();//入库前的库存
+        int num= inRepertoryBoxNum*commodity.getUnit();
+        int repertoryNumAfter =repertoryNumBefore+num;//入库后的库存
+        commodity.setRepertoryNum(repertoryNumAfter);
         commodityService.save(commodity);
+
+        ReserveCommodityStorageLog log=new ReserveCommodityStorageLog();
+        log.setReserveCommodity(commodity);
+        log.setReserveVenue(commodity.getReserveVenue());
+        log.setBoxNum(inRepertoryBoxNum);
+        log.setBoxPrice(boxPrice);
+        log.setPrice(boxPrice/inRepertoryBoxNum);
+        log.setNum(num);
+        log.setAfterNum(repertoryNumAfter);
+        log.setBeforeNum(repertoryNumBefore);
+        reserveCommodityStorageLogService.save(log);
         return "success";
     }
 
