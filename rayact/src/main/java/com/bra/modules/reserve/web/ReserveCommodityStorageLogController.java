@@ -5,7 +5,9 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveCommodityStorageLog;
+import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCommodityStorageLogService;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,8 @@ public class ReserveCommodityStorageLogController extends BaseController {
 
 	@Autowired
 	private ReserveCommodityStorageLogService reserveCommodityStorageLogService;
+	@Autowired
+	private ReserveVenueService reserveVenueService;
 	
 	@ModelAttribute
 	public ReserveCommodityStorageLog get(@RequestParam(required=false) String id) {
@@ -47,6 +51,7 @@ public class ReserveCommodityStorageLogController extends BaseController {
 		Page<ReserveCommodityStorageLog> page = reserveCommodityStorageLogService.findPage(new Page<ReserveCommodityStorageLog>(request, response), reserveCommodityStorageLog); 
 		model.addAttribute("page", page);
 		model.addAttribute("query", reserveCommodityStorageLog);
+		model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));
 		return "reserve/record/reserveCommodityStorageLogList";
 	}
 

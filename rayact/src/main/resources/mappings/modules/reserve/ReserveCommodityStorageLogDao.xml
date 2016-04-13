@@ -44,7 +44,15 @@
 		FROM reserve_commodity_storage_log a
 		<include refid="reserveCommodityStorageLogJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL}  and a.tenant_id = #{tenantId}
+			<if test="startDate!=null and endDate !=null">
+				and (Date(a.create_date) between Date(#{startDate}) and Date(#{endDate}))
+			</if>
+			<if test="reserveVenue != null">
+				<if test="reserveVenue.id !=null and reserveVenue.id != ''">
+					AND a.fk_reserve_venue_id = #{reserveVenue.id}
+				</if>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
