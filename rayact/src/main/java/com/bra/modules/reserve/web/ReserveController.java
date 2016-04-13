@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -60,9 +61,11 @@ public class ReserveController extends BaseController {
     private ReserveVenueGiftService reserveVenueGiftService;
     @Autowired
     private SystemService systemService;
-
     @Autowired
-    private ReserveRoleService reserveRoleService;
+    private ReserveUserService userService;
+    @Autowired
+    private ReserveVenueApplyCutService reserveVenueApplyCutService;
+
 
     //场地状态界面
     @RequestMapping(value = "main")
@@ -236,12 +239,12 @@ public class ReserveController extends BaseController {
                 bool=reserveVenueConsItemService.checkReserveTime(consDate,field,startTime,endTime);
             }else if("2".equals(frequency)){//每天
                 List<Date> list=TimeUtils.getIntervalDayList(startDate,endDate);
-               for(Date date:list){
-                   bool=reserveVenueConsItemService.checkReserveTime(date,field,startTime,endTime);
-                   if(bool==false){
-                       break;
-                   }
-               }
+                for(Date date:list){
+                    bool=reserveVenueConsItemService.checkReserveTime(date,field,startTime,endTime);
+                    if(bool==false){
+                        break;
+                    }
+                }
             }else if("3".equals(frequency)){//每周
                 String week=TimeUtils.getWeekOfDate(consDate);
                 List<Date> list= TimeUtils.getIntervalWeekDayList(startDate,endDate,week);
@@ -314,6 +317,14 @@ public class ReserveController extends BaseController {
         search.setConsData(consItem.getConsData());
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
 
+        ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
+        applycut.getSqlMap().put("dsf"," and c.id = '"+order.getId()+"' ");
+        List<ReserveVenueApplyCut> cuts = reserveVenueApplyCutService.findList(applycut);
+        if(cuts!=null&&cuts.size()>0){
+            applycut = cuts.get(0);
+            order.setDiscountPrice(applycut.getCutPrice());
+        }
+        order.setConsPrice(order.getShouldPrice()-applycut.getCutPrice());
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(order.getId(), ReserveVenueCons.MODEL_KEY);
         if (!Collections3.isEmpty(tutorOrderList)) {
@@ -321,8 +332,10 @@ public class ReserveController extends BaseController {
         }
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
-        List<User> authUsers=reserveRoleService.findCheckOutUser();
-        model.addAttribute("authUserList", authUsers);
+        User user=new User();
+        user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：场地管理员；4：收银；5：财务)
+        List<User> authUserList=userService.findList(user);
+        model.addAttribute("authUserList", authUserList);
         model.addAttribute("itemList", itemList);
 
         model.addAttribute("order", order);
@@ -437,5 +450,74 @@ public class ReserveController extends BaseController {
         }else{
             return "0";
         }
+    }
+
+    //
+    @RequestMapping(value = "applyCut")
+    @Token(save = true)
+    public String applyCut(String itemId, Model model) {
+        ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
+        ReserveVenueConsItem search = new ReserveVenueConsItem();
+        consItem.getConsData().setReserveType("3");
+        search.setConsData(consItem.getConsData());
+        ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
+        User u = new User();
+        u.setUserType("3");
+        List<User> list = userService.findList(u);
+        model.addAttribute("cons", cons);
+        model.addAttribute("users",list);
+        ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
+        if(cons!=null&&cons.getId()!=null){
+            applycut.getSqlMap().put("dsf"," and c.id = '"+cons.getId()+"' ");
+        }
+        List<ReserveVenueApplyCut> cuts = reserveVenueApplyCutService.findList(applycut);
+        if(cuts!=null&&cuts.size()>0){
+            model.addAttribute("applyCut",cuts.get(0) );
+            return "reserve/saleField/applyCutFormDone";
+        }else{
+            return "reserve/saleField/applyCutForm";
+        }
+    }
+
+    //保存赠品
+    @RequestMapping(value = "saveApplyCut")
+    @ResponseBody
+    public String saveApplyCut(HttpServletRequest request) {
+        String consId = request.getParameter("consId");
+        if(consId!=null&&!"".equals(consId)){
+            String userId = request.getParameter("userId");
+            String remarks = request.getParameter("remarks");
+            ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
+            User user = userService.getUser(userId);
+            ReserveVenueCons cons = reserveVenueConsService.get(consId);
+            reserveVenueApplyCut.setVenue(cons.getReserveVenue());
+            reserveVenueApplyCut.setApplyer(user);
+            reserveVenueApplyCut.setMember(cons.getMember());
+            reserveVenueApplyCut.setCons(cons);
+            reserveVenueApplyCut.setPrice(cons.getOrderPrice());
+            reserveVenueApplyCut.setConsDate(cons.getConsDate());
+            reserveVenueApplyCut.setDone("0");
+            reserveVenueApplyCut.setRemarks(remarks);
+            reserveVenueApplyCut.setName(cons.getUserName());
+            reserveVenueApplyCut.setTel(cons.getConsMobile());
+            reserveVenueApplyCutService.save(reserveVenueApplyCut);
+            return "success";
+        }
+        return "fail";
+    }
+
+    //移动端优惠通知列表
+    @RequestMapping(value = "mobile/cutlist")
+    @ResponseBody
+    public String cutList(HttpServletRequest request) {
+        String userId = request.getParameter("userId");
+        String status = request.getParameter("status");
+        if(userId!=null&&!"".equals(userId)){
+            ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
+            reserveVenueApplyCut.getSqlMap().put("dsf"," and a.apply_user_id = '"+userId+"' and a.done = '"+status+"' ");
+            List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(reserveVenueApplyCut);
+            return "success";
+        }
+        return "fail";
     }
 }

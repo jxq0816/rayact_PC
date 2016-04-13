@@ -3,18 +3,18 @@
  */
 package com.bra.modules.sys.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.config.Global;
 import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
 import com.bra.common.security.shiro.session.SessionDAO;
 import com.bra.common.servlet.ValidateCodeServlet;
-import com.bra.common.utils.CacheUtils;
-import com.bra.common.utils.CookieUtils;
-import com.bra.common.utils.IdGen;
-import com.bra.common.utils.StringUtils;
+import com.bra.common.utils.*;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.utils.AuthorityUtils;
+import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.security.FormAuthenticationFilter;
+import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -213,4 +214,62 @@ public class LoginController extends BaseController {
         }
         return loginFailNum >= 3;
     }
+
+
+    private SystemService systemService;
+    /**
+     * 获取系统业务对象
+     */
+    public SystemService getSystemService() {
+        if (systemService == null) {
+            systemService = SpringContextHolder.getBean(SystemService.class);
+        }
+        return systemService;
+    }
+
+
+    /**
+     * 移动登录
+     */
+    @RequestMapping(value = "${adminPath}/mobile/login")
+    public String mobileLogin(HttpServletRequest request, HttpServletResponse response) {
+        String un = request.getParameter("username");
+        String pw = request.getParameter("password");
+        String mobileLogin = request.getParameter("mobileLogin");
+        if("true".equals(mobileLogin)){
+            JSONObject rtn = new JSONObject();
+            User user = getSystemService().getUserByLoginName(un);
+            if (user != null) {
+                if (Global.NO.equals(user.getLoginFlag())) {
+                    rtn.put("status","201");
+                    rtn.put("msg","禁止登录");
+                }else {
+                    if(MD5Util.getMD5String(pw).equals(user.getPassword())){
+                        rtn.put("status","200");
+                        rtn.put("id",user.getId());
+                        rtn.put("name",user.getName());
+                        rtn.put("role", user.getReserveRole().getUserType());
+                    }else{
+                        rtn.put("status","203");
+                        rtn.put("msg","用户名密码错误");
+                    }
+                }
+
+            } else {
+                rtn.put("status","202");
+                rtn.put("msg","无此用户");
+            }
+            try {
+                response.reset();
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+                response.getWriter().print(rtn.toJSONString());
+                return null;
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
 }

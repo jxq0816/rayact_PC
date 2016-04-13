@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 11Service
@@ -121,5 +122,12 @@ public class ReserveVenueConsItemService extends CrudService<ReserveVenueConsIte
 			}
 		}
 		return bool;
+	}
+
+	public int getUsedVenueNum(ReserveVenueConsItem reserveVenueCons) {
+		return dao.getUsedVenueNum(reserveVenueCons);
+	}
+	public List<Map<String,Object>> getUsedVenueNumByProject(ReserveVenueConsItem reserveVenueCons) {
+		return dao.getUsedVenueNumByProject(reserveVenueCons);
 	}
 }

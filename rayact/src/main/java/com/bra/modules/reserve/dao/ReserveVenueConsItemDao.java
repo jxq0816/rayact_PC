@@ -5,6 +5,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 场地预定
@@ -22,5 +23,8 @@ public interface ReserveVenueConsItemDao extends CrudDao<ReserveVenueConsItem> {
     List<ReserveVenueConsItem> findListByDate(ReserveVenueConsItem reserveVenueCons);
 
     List<ReserveVenueConsItem> findCancelList(ReserveVenueConsItem reserveVenueCons);
+
+    int getUsedVenueNum(ReserveVenueConsItem reserveVenueCons);
+    List<Map<String,Object>> getUsedVenueNumByProject(ReserveVenueConsItem reserveVenueCons);
 
 }

@@ -14,7 +14,10 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/reserve/reserveVenue/mobile/rv/list = anon
+				${adminPath}/reserve/reserveVenue/mobile/rv/detail = anon
 				/static/** = anon
+				${adminPath}/mobile/login = anon
 				/userfiles/** = anon
 				${adminPath}/cas = cas
 				${adminPath}/login = authc

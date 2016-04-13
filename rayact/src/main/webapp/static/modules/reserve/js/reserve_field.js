@@ -146,6 +146,26 @@ $(document).ready(function () {
         });
     }
 
+    //申请优惠
+    function applycut(t) {
+        var itemId = t.attr("data-item");
+        jQuery.postItems({
+            url: ctx + '/reserve/field/applyCut',
+            data: {itemId: itemId},
+            success: function (result) {
+                $("#applyCutForm").html(result);
+                $("#applyCutBtn").click();
+                $("#applyCutForm .select2").select2({
+                    width: '100%'
+                });
+                $('#applyCutForm .icheck').iCheck({
+                    checkboxClass: 'icheckbox_square-blue checkbox',
+                    radioClass: 'iradio_square-blue'
+                });
+            }
+        });
+    }
+
     //保存赠品
     $("#saveGiftBtn").on('click', function () {
         var data = $("#giftFormBean").serializeArray();
@@ -168,6 +188,31 @@ $(document).ready(function () {
             }
         });
     });
+
+    //保存优惠申请
+    $("#saveApplyCutBtn").on('click', function () {
+        var data = $("#applyCutFormBean").serializeArray();
+        var applyer = $("#userId").val();
+        if(!applyer){
+            formLoding('请选择通知人!');
+            return;
+        }
+        $.postItems({
+            url: ctx + '/reserve/field/saveApplyCut',
+            data: data,
+            success: function (values) {
+                if (values == "success") {
+                    successLoding('发送通知成功!');
+                    location.reload();
+                }
+                if (values == "fail") {
+                    errorLoding("发送通知失败！")
+                }
+            }
+
+        });
+    });
+
 
     //查看详情
     function details(t) {
@@ -310,6 +355,11 @@ $(document).ready(function () {
             cancelReserve($(this));
         }
     }], [{
+        text: "申请优惠",
+        func: function () {
+            applycut($(this));
+        }
+    }],[{
         text: "预定详情",
         func: function () {
             details($(this));

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveVenueApplyCutDao">
+
+    <sql id="reserveVenueApplyCutColumns">
+		a.id AS "id",
+		a.done AS "done",
+		a.name AS "name",
+		a.apply_user_id AS "applyer.id",
+		u.name AS "applyer.name",
+		a.venue_id AS "venue.id",
+		a.cut_price AS "cutPrice",
+		a.price AS "price",
+		a.cons_time AS "consDate",
+		a.cons_id AS "cons.id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.tel AS "tel",
+		a.member_id AS "member.id",
+		m.name AS "member.name",
+		a.del_flag AS "delFlag"
+	</sql>
+
+    <sql id="reserveVenueApplyCutJoins">
+        LEFT JOIN reserve_member m ON  a.member_id = m.id
+        LEFT JOIN reserve_venue v ON a.venue_id = v.id
+        LEFT JOIN reserve_user u ON a.apply_user_id = u.id
+        LEFT JOIN reserve_venue_cons c ON a.cons_id = c.id
+    </sql>
+
+    <select id="get" resultType="ReserveVenueApplyCut">
+        SELECT
+        <include refid="reserveVenueApplyCutColumns"/>
+        FROM reserve_venue_apply_cut a
+        <include refid="reserveVenueApplyCutJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="ReserveVenueApplyCut">
+        SELECT
+        <include refid="reserveVenueApplyCutColumns"/>
+        FROM reserve_venue_apply_cut a
+        <include refid="reserveVenueApplyCutJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            ${sqlMap.dsf}
+        </where>
+    </select>
+
+
+    <insert id="insert">
+		INSERT INTO reserve_venue_apply_cut(
+		done,
+		id,
+		name,
+		price,
+		cut_price,
+		cons_time,
+		cons_id,
+		member_id,
+		apply_user_id,
+		venue_id,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		remarks,
+		tel,
+		tenant_id,
+		del_flag
+		) VALUES (
+		#{done},
+		#{id},
+		#{name},
+		#{price},
+		#{cutPrice},
+		#{consDate},
+		#{cons.id},
+		#{member.id},
+		#{applyer.id},
+		#{venue.id},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{remarks},
+		#{tel},
+		#{tenantId},
+		#{delFlag}
+		)
+	</insert>
+
+    <update id="update">
+		UPDATE reserve_venue_apply_cut SET
+		name = #{name},
+		done = #{done},
+		price = #{price},
+		cut_price = #{cutPrice},
+		cons_time = #{consDate},
+		cons_id = #{cons.id},
+		member_id = #{member.id},
+		apply_user_id = #{applyer.id},
+		venue_id = #{venue.id},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate},
+		tel = #{tel},
+		tenant_id = #{tenantId},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+
+    <update id="delete">
+		UPDATE reserve_venue_apply_cut SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+</mapper>

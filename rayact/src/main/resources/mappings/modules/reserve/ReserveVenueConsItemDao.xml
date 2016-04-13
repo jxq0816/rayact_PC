@@ -223,4 +223,31 @@
         <include refid="reserveVenueConsJoins"/>
         WHERE a.cons_mobile like concat('%',#{consMobile},'%') and tenant_id = #{tenantId}
     </select>
+	<select id="getUsedVenueNum" parameterType="ReserveVenueConsItem" resultType="int">
+		SELECT COUNT( CASE WHEN tmp2.parent_field_id is NULL THEN tmp2.field_id END)+2*COUNT( CASE WHEN parent_field_id is not NULL  THEN tmp2.field_id END) FROM (
+		SELECT DISTINCT(tmp.field_id),r.parent_field_id FROM
+		(SELECT i.field_id
+		FROM reserve_venue_cons_item i
+		WHERE
+		STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.end_time),'%Y-%m-%d %H:%i') &gt;= NOW()
+		AND STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.start_time),'%Y-%m-%d %H:%i') &lt;= NOW()
+		AND i.venue_id = #{reserveVenue.id}) tmp
+		LEFT JOIN reserve_field_relation r on r.parent_field_id = tmp.field_id) tmp2
+	</select>
+	<select id="getUsedVenueNumByProject" parameterType="ReserveVenueConsItem" resultType="Map">
+		SELECT COUNT( CASE WHEN tmp2.parent_field_id is NULL THEN tmp2.field_id END)+2*COUNT( CASE WHEN parent_field_id is not NULL  THEN tmp2.field_id END) AS num,
+				tmp2.project_id AS projectId,
+				tmp2.name AS projectName
+		FROM
+		(
+			SELECT DISTINCT(tmp.field_id),r.parent_field_id,f.project_id,p.name FROM
+			(SELECT i.field_id
+			FROM reserve_venue_cons_item i
+			WHERE
+			STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.end_time),'%Y-%m-%d %H:%i') &gt;= NOW()
+			AND STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.start_time),'%Y-%m-%d %H:%i') &lt;= NOW()
+			AND i.venue_id = #{reserveVenue.id}
+		) tmp
+		LEFT JOIN reserve_field_relation r on r.parent_field_id = tmp.field_id ,reserve_field f,reserve_project p WHERE tmp.field_id = f.id AND p.id = f.project_id)  tmp2 GROUP BY tmp2.project_id;
+	</select>
 </mapper>

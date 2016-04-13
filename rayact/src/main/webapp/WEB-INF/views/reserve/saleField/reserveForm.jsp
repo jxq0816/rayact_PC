@@ -144,7 +144,7 @@
                             <select style="width: 200px;" class="select2" id="memberId" name="member.id">
                                 <option value="">--请选择--</option>
                                 <c:forEach items="${memberList}" var="m">
-                                    <option value="${m.id}">${m.mobile}-${m.name}</option>
+                                    <option value="${m.id}">${m.cartno}-${m.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -217,7 +217,7 @@
             var mobile = text.split('-')[0];
             var username = text.split('-')[1];
             $("#userName").attr("value", username);
-            $("#consMobile").attr("value", mobile);
+            //$("#consMobile").attr("value", mobile);
         });
 
         $("#startTime").on('change', function () {

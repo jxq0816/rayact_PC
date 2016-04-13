@@ -132,6 +132,34 @@
     </div>
 </div>
 
+<!-- 申请优惠Modal -->
+<button class="btn btn-primary btn-flat md-trigger" id="applyCutBtn" style="display: none" data-modal="applyCut-primary">Basic Form
+</button>
+<div class="md-modal colored-header custom-width md-effect-12" id="applyCut-primary">
+    <div class="md-content">
+        <div class="modal-header">
+            <h5>申请优惠</h5>
+            <button type="button" class="close md-close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body form-horizontal" id="applyCutForm">
+            <!--预定详情-->
+
+
+            <!--end 预定详情-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="saveApplyCutBtn" class="btn btn-default btn-flat">
+                确定
+            </button>
+            <button type="button" id="closeApplyCutBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                关闭
+            </button>
+
+        </div>
+    </div>
+</div>
+
 
 <%--<!--结算详情-->
 <button id="settlementDetailBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDetailDialogModal"  data-toggle="modal">预订</button>
@@ -161,23 +189,3 @@
         </div>
     </div>
 </div>--%>
-<script>
-    document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field.js?t=" + Math.random() + "'><\/script>");
-    $(document).ready(function () {
-        $("#reserveDialogModal").draggable({
-            handle: ".modal-header",
-            cursor: 'move',
-            refreshPositions: true
-        });
-        $("#giftDialogModal").draggable({
-            handle: ".modal-header",
-            cursor: 'move',
-            refreshPositions: true
-        });
-        $("#settlementDetailDialogModal").draggable({
-            handle: ".modal-header",
-            cursor: 'move',
-            refreshPositions: true
-        });
-    });
-</script>

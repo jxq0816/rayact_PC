@@ -139,7 +139,7 @@
                     <li class="fa fa-edit" onclick="changePrice()"></li>
                 </a></label>
                 <div class="col-lg-2">
-                <input type="text" readonly="readonly" id="consPrice" value="${order.orderPrice}"
+                <input type="text" readonly="readonly" id="consPrice" value="${order.consPrice}"
                                     class="form-control required number" name="orderPrice"/>
                 </div>
                     <%-- --%>

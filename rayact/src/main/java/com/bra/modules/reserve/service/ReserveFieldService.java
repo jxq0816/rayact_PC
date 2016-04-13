@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 场地管理Service
@@ -127,6 +128,10 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
     @Transactional(readOnly = false)
     public void delete(ReserveField reserveField) {
         super.delete(reserveField);
+    }
+
+    public List<Map<String,Object>> getFieldNumByProject(ReserveField field){
+        return dao.getFieldNumByProject(field);
     }
 
 }
