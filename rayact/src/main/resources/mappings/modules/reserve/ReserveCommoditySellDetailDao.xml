@@ -76,6 +76,7 @@
             <if test="startDate!=null and endDate !=null">
                 and (Date(a.create_date) between Date(#{startDate}) and Date(#{endDate}))
             </if>
+            ${sqlMap.saas}
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">
