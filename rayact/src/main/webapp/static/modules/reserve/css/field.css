@@ -28,6 +28,8 @@
 .filed{background-color: #fff;}
 .tab-tit{height: 35px;overflow: hidden;border-bottom: 2px solid #5b9aef;
     padding-left: 0px;margin-top: 15px;font-size: 14px;}
+.tab-time{overflow: hidden;
+    padding-left: 0px;margin-top: 15px;font-size: 14px;}
 .tab-tit .f22{font-size: 16px;}
 .tab-tit li {
     float: left;

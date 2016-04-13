@@ -33,14 +33,14 @@
                     </ul>
                     <ul class="table-ul">
                         <li style="margin-left: 0px;"><span class="green-bg-color"></span>可预订</li>
-                       <%-- <li><span class="blue-bg-color"></span>已选场次</li>--%>
+                        <%-- <li><span class="blue-bg-color"></span>已选场次</li>--%>
                         <li><span class="grey-bg-color"></span>已占用</li>
                         <li><span class="red-bg-color"></span>已付款</li>
                     </ul>
                 </div>
                 <%-- 周几，日期--%>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <div class="tab-tit">
                             <ul>
                                 <div id="timeSlotDiv">
@@ -54,29 +54,29 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="tab-tit">
+                    <div class="col-lg-5">
+                        <div class="tab-time">
                             <form:form id="searchForm"
                                        action="${ctx}/reserve/field/main"
                                        method="post">
-                                <input name="venueId" type="hidden" value="${reserveVenue.id}"/>
-                                <table class="no-border">
-                                    <tbody class="no-border-y">
-                                    <tr>
-                                        <td>预订日期：</td>
-                                        <td>
-                                            <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${consDate}"/>"
-                                                   name="consDate" type="text"
-                                                   class="input-small form-control Wdate col-lg-1"
-                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                        </td>
-                                        <td>
-                                            <input id="btnSubmit" class="btn btn-primary" type="submit"
-                                                   value="查询"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <input name="venueId" type="hidden" value="${reserveVenue.id}"/>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label for="consDate" class="control-label">预订日期:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${consDate}"/>"
+                                               id="consDate" name="consDate" type="text"
+                                               class="input-small form-control Wdate col-lg-1"
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                               value="查询"/>
+                                    </div>
+                                </div>
                             </form:form>
                         </div>
                     </div>
