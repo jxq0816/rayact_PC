@@ -81,10 +81,10 @@
                                     <th>购买数量</th>
                                     <th>单价</th>
                                     <th>合计</th>
-                                    <th>备注</th>
                                     <th>售卖人</th>
                                     <th>场馆</th>
                                     <th>时间</th>
+                                    <th>备注</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -95,11 +95,11 @@
                                         <td>${reserveCommoditySellDetail.num}</td>
                                         <td>${reserveCommoditySellDetail.price}</td>
                                         <td>${reserveCommoditySellDetail.detailSum}</td>
-                                        <td>${reserveCommoditySellDetail.remarks}</td>
                                         <td>${reserveCommoditySellDetail.updateBy.name}</td>
                                         <td>${reserveCommoditySellDetail.reserveCommodity.reserveVenue.name}</td>
                                         <td><fmt:formatDate value="${reserveCommoditySellDetail.createDate}"
                                                             type="both"/></td>
+                                        <td>${reserveCommoditySellDetail.remarks}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
