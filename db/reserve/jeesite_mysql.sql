@@ -615,6 +615,26 @@ CREATE TABLE `reserve_field_price_set` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `reserve_commodity_storage_log`;
+CREATE TABLE `reserve_commodity_storage_log` (
+  `id` varchar(19) NOT NULL,
+  `fk_reserve_venue_id` varchar(19) NOT NULL COMMENT '所属场馆',
+	`fk_reserve_commodity_id` varchar(19) NOT NULL COMMENT '入库商品',
+   box_num int NOT NULL COMMENT '入库箱数',
+  `num` int NOT NULL COMMENT '入库瓶数',
+   before_num int NOT NULL COMMENT '入库前多少瓶',
+   after_num int NOT NULL COMMENT '入库后多少瓶',
+   box_price DOUBLE NOT NULL COMMENT '一箱的价格',
+   price DOUBLE NOT NULL COMMENT '一瓶水的入库价格',
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

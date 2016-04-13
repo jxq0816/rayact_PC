@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveCommodityStorageLogDao">
+    
+	<sql id="reserveCommodityStorageLogColumns">
+		a.id AS "id",
+		a.fk_reserve_venue_id AS "reserveVenue.id",
+		a.fk_reserve_commodity_id AS "reserveCommodity.id",
+		a.box_num AS "boxNum",
+		a.num AS "num",
+		a.before_num AS "beforeNum",
+		a.after_num AS "afterNum",
+		a.box_price AS "boxPrice",
+		a.price AS "price",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
+	</sql>
+	
+	<sql id="reserveCommodityStorageLogJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveCommodityStorageLog">
+		SELECT 
+			<include refid="reserveCommodityStorageLogColumns"/>
+		FROM reserve_commodity_storage_log a
+		<include refid="reserveCommodityStorageLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveCommodityStorageLog">
+		SELECT 
+			<include refid="reserveCommodityStorageLogColumns"/>
+		FROM reserve_commodity_storage_log a
+		<include refid="reserveCommodityStorageLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveCommodityStorageLog">
+		SELECT 
+			<include refid="reserveCommodityStorageLogColumns"/>
+		FROM reserve_commodity_storage_log a
+		<include refid="reserveCommodityStorageLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_commodity_storage_log(
+			id,
+			fk_reserve_venue_id,
+			fk_reserve_commodity_id,
+			box_num,
+			num,
+			before_num,
+			after_num,
+			box_price,
+			price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{reserveVenue.id},
+			#{reserveCommodity.id},
+			#{boxNum},
+			#{num},
+			#{beforeNum},
+			#{afterNum},
+			#{boxPrice},
+			#{price},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_commodity_storage_log SET 	
+			fk_reserve_venue_id = #{reserveVenue.id},
+			fk_reserve_commodity_id = #{reserveCommodity.id},
+			box_num = #{boxNum},
+			num = #{num},
+			before_num = #{beforeNum},
+			after_num = #{afterNum},
+			box_price = #{boxPrice},
+			price = #{price},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_commodity_storage_log SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

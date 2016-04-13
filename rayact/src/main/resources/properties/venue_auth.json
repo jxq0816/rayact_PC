@@ -218,6 +218,12 @@
         "name": "商品销售记录",
         "href":"/reserve/reserveCommoditySellDetail/findSellDetailList",
         "authorityList": []
+      },
+      {
+        "code": "reserveCommodityStorageLog",
+        "name": "商品入库记录",
+        "href":"/reserve/reserveCommodityStorageLog/list",
+        "authorityList": []
       }
     ]
   }
