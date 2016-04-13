@@ -65,6 +65,19 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
         }
         return fullList;
     }
+    //获得场地的类型 0:全场 1:半场
+    public String getFiledType(ReserveField reserveField) {
+        ReserveFieldRelation relation=new ReserveFieldRelation();
+        relation.setChildField(reserveField);//该场地作为子场
+        List<ReserveFieldRelation> relations=relationService.findList(relation);//查找该场地是不是半场
+        String type;
+        if(relations==null|| relations.size()==0){
+            type="0";//全场
+        }else{
+            type="1";//半场
+        }
+        return type;
+    }
 
     public Page<ReserveField> findPage(Page<ReserveField> page, ReserveField reserveField) {
         return super.findPage(page, reserveField);

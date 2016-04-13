@@ -132,9 +132,10 @@ public class ReserveController extends BaseController {
     //预定表单
     @RequestMapping(value = "reserveForm")
     @Token(save = true)
-    public String reserveForm(Model model, String fieldId, Long date, String time, String venueId,String isHalfCourt) throws ParseException {
+    public String reserveForm(Model model, String fieldId, Long date, String time, String venueId) throws ParseException {
         ReserveField reserveField = reserveFieldService.get(fieldId);
         model.addAttribute("reserveField", reserveField);
+        String isHalfCourt=reserveFieldService.getFiledType(reserveField);
         model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
 
         //获取预定开始时间

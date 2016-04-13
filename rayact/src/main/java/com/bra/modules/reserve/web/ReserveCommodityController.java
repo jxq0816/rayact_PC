@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -134,7 +135,10 @@ public class ReserveCommodityController extends BaseController {
         log.setReserveVenue(commodity.getReserveVenue());
         log.setBoxNum(inRepertoryBoxNum);
         log.setBoxPrice(boxPrice);
-        log.setPrice(boxPrice/inRepertoryBoxNum);
+        Double price=boxPrice/commodity.getUnit();
+        BigDecimal priceBig = new BigDecimal(price);
+        priceBig.setScale(2, BigDecimal.ROUND_HALF_UP);
+        log.setPrice(priceBig.doubleValue());
         log.setNum(num);
         log.setAfterNum(repertoryNumAfter);
         log.setBeforeNum(repertoryNumBefore);
