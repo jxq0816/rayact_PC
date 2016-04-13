@@ -33,29 +33,55 @@
                     </ul>
                     <ul class="table-ul">
                         <li style="margin-left: 0px;"><span class="green-bg-color"></span>可预订</li>
-                        <li><span class="blue-bg-color"></span>已选场次</li>
+                       <%-- <li><span class="blue-bg-color"></span>已选场次</li>--%>
                         <li><span class="grey-bg-color"></span>已占用</li>
                         <li><span class="red-bg-color"></span>已付款</li>
                     </ul>
                 </div>
                 <%-- 周几，日期--%>
-                <div class="tab-tit">
-                    <a name="order"></a>
-                    <ul>
-                        <div id="timeSlotDiv">
-                            <c:forEach items="${timeSlot}" var="slot" varStatus="status">
-                                <li
-                                        &lt;%&ndash;
-                                        <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a
-                                        href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a>&ndash;%&gt;
-
-                                    <j:if test="${consDate.time eq slot.value}">class="on"</j:if> ><a
-                                            href="javascript:filedStatus('${reserveVenue.id}','${slot.value}')">${slot.key}</a>
-                                </li>
-                            </c:forEach>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="tab-tit">
+                            <ul>
+                                <div id="timeSlotDiv">
+                                    <c:forEach items="${timeSlot}" var="slot" varStatus="status">
+                                        <li
+                                                <j:if test="${consDate.time eq slot.value}">class="on"</j:if> >
+                                            <a href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a>
+                                        </li>
+                                    </c:forEach>
+                                </div>
+                            </ul>
                         </div>
-                    </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="tab-tit">
+                            <form:form id="searchForm"
+                                       action="${ctx}/reserve/field/main"
+                                       method="post">
+                                <input name="venueId" type="hidden" value="${reserveVenue.id}"/>
+                                <table class="no-border">
+                                    <tbody class="no-border-y">
+                                    <tr>
+                                        <td>预订日期：</td>
+                                        <td>
+                                            <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${consDate}"/>"
+                                                   name="consDate" type="text"
+                                                   class="input-small form-control Wdate col-lg-1"
+                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                        </td>
+                                        <td>
+                                            <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                                   value="查询"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form:form>
+                        </div>
+                    </div>
                 </div>
+
                 <%-- 周几，日期 结束--%>
 
                 <div class="sy-tab-cont">

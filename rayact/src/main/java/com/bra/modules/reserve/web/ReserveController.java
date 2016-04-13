@@ -69,23 +69,27 @@ public class ReserveController extends BaseController {
 
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Long t, String venueId, Model model) throws ParseException {
-        //当前日期
+    public String main(Long t,Date consDate,String venueId, Model model) throws ParseException {
         Calendar yesterday = Calendar.getInstance();
-        yesterday.add(Calendar.DAY_OF_MONTH,-1);
-        Date nowDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");
-        Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(yesterday.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");
+        //如果预订日期是通过下拉选择的
+        if(t==null&&consDate!=null){
+            yesterday.setTime(consDate);
+        }else{
+            consDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得今天的日期
+        }
+        yesterday.add(Calendar.DAY_OF_MONTH,-1);//获得预订日期的上一天
+        Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(yesterday.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得昨天的日期
         //获取可预定时间段:一周
         Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 8);
         model.addAttribute("timeSlot", timeSlot);
-        //默认时间
+        //如果是通过超链接 点击选择的时间
         if (t != null) {
-            nowDate = new Date(t);
+            consDate = new Date(t);
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String consDateFormat=format.format(nowDate);
+        String consDateFormat=format.format(consDate);//预订日期的格式化
         model.addAttribute("consDateFormat", consDateFormat);
-        model.addAttribute("consDate", nowDate);
+        model.addAttribute("consDate", consDate);//预订日期回传
 
         //获得所有场馆信息
         ReserveVenue venue = new ReserveVenue();
@@ -109,18 +113,17 @@ public class ReserveController extends BaseController {
 
             timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
             model.addAttribute("timesAM", timesAM);
-            List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", nowDate, timesAM);
+            List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesAM);
             model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
             //下午场地价格
             List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
             model.addAttribute("timesPM", timesPM);
-            List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", nowDate, timesPM);
+            List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesPM);
             model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
             //晚上场地价格
             List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
-           /* timesEvening.add("00:00-00:30");*/
             model.addAttribute("timesEvening", timesEvening);
-            List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", nowDate, timesEvening);
+            List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         }
         return "reserve/saleField/reserveField";
