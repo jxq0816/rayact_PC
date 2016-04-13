@@ -39,6 +39,8 @@
         m.name AS "reserveMember.name",
         a.fk_reserve_commodity_id AS "reserveCommodity.id",
         commodity.name AS "reserveCommodity.name",
+        venue.id AS "reserveCommodity.reserveVenue.id",
+        venue.name AS "reserveCommodity.reserveVenue.name",
         t.name AS "reserveCommodity.commodityType.name",
         a.fk_reserve_commodity_sell_id AS "reserveCommoditySell.id",
         a.num AS "num",
@@ -54,13 +56,16 @@
         FROM reserve_commodity_sell_detail as a
         left join reserve_member as m on a.fk_reserve_member_id=m.id
         LEFT JOIN  reserve_user as u on u.id=a.create_by
-        ,reserve_commodity as commodity,reserve_commodity_type as t
+        ,reserve_commodity as commodity,reserve_commodity_type as t,reserve_venue as venue
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND
-            a.fk_reserve_commodity_id=commodity.id and commodity.commodity_type_id =t.id
+            a.fk_reserve_commodity_id=commodity.id and commodity.commodity_type_id =t.id and commodity.fk_reserve_venue_id=venue.id
             <if test="reserveCommodity != null">
                 <if test="reserveCommodity.name !=null and reserveCommodity.name !=''">
                     and commodity.name LIKE concat('%',#{reserveCommodity.name},'%')
+                </if>
+                <if test="reserveCommodity.reserveVenue !=null and reserveCommodity.reserveVenue.id !=null and reserveCommodity.reserveVenue.id !=''">
+                    and venue.id = #{reserveCommodity.reserveVenue.id}
                 </if>
             </if>
             <if test="reserveCommoditySell != null">

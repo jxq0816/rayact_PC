@@ -4,6 +4,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
 import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ReserveCommoditySellDetailService extends CrudService<ReserveCommoditySellDetailDao, ReserveCommoditySellDetail> {
 
+    @Autowired
+    private ReserveCommodityService reserveCommodityService;
+
     public ReserveCommoditySellDetail get(String id) {
         return super.get(id);
     }
@@ -33,7 +37,8 @@ public class ReserveCommoditySellDetailService extends CrudService<ReserveCommod
 
     public Page<ReserveCommoditySellDetail> findSellDetailList(Page<ReserveCommoditySellDetail> page, ReserveCommoditySellDetail reserveCommoditySellDetail) {
         reserveCommoditySellDetail.setPage(page);
-        page.setList(dao.findSellDetailList(reserveCommoditySellDetail));
+        List<ReserveCommoditySellDetail> list = dao.findSellDetailList(reserveCommoditySellDetail);
+        page.setList(list);
         return page;
     }
 

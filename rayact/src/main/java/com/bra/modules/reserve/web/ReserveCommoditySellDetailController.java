@@ -48,6 +48,9 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	@Autowired
 	private ReserveCardStatementsService reserveCardStatementsService;
 
+	@Autowired
+	private ReserveVenueService reserveVenueService;
+
 	@ModelAttribute
 	public ReserveCommoditySellDetail get(@RequestParam(required=false) String id) {
 		ReserveCommoditySellDetail entity = null;
@@ -141,9 +144,11 @@ public class ReserveCommoditySellDetailController extends BaseController {
 
 	@RequestMapping(value = {"findSellDetailList", ""})
 	public String findSellDetailList(ReserveCommoditySellDetail reserveCommoditySellDetail, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
 		Page<ReserveCommoditySellDetail> page = reserveCommoditySellDetailService.findSellDetailList(new Page<ReserveCommoditySellDetail>(request, response), reserveCommoditySellDetail);
 		model.addAttribute("page", page);
 		model.addAttribute("search", reserveCommoditySellDetail);
+		model.addAttribute("venueList", venueList);
 		return "reserve/record/reserveCommoditySellDetailList";
 	}
 

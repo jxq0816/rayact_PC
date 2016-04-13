@@ -23,38 +23,49 @@
                         <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 
                         <div class="row">
-                            <div class="col-sm-10 col-md-10 col-lg-10">
-                                <table class="no-border">
-                                    <tbody class="no-border-y">
-                                    <tr>
-                                        <td>商品名称:</td>
-                                        <td>
-                                            <form:input path="reserveCommodity.name" htmlEscape="false"
-                                                        cssstyle="width:50px;"
-                                                        maxlength="30"
-                                                        class="form-control"/>
-                                        </td>
-                                        <td>时间:</td>
-                                        <td>
-                                            <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
-                                                   name="startDate" id="startDate" type="text"
-                                                   maxlength="20"
-                                                   class="input-medium form-control Wdate "
-                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                        </td>
-                                        <td>
-                                            <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.endDate}"/>"
-                                                   name="endDate" id="endDate" type="text"
-                                                   maxlength="20"
-                                                   class="input-medium form-control Wdate "
-                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                        </td>
-                                        <td><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                                   value="查询"/><input id="btnExport" class="btn btn-primary"
-                                                                      type="button" value="导出"/></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label" style="height: 36px;line-height:36px;overflow: hidden;">所属场馆:</label>
+                                    <div class="col-sm-2 ">
+                                        <sys:select cssClass="input-large"  name="reserveCommodity.reserveVenue.id"
+                                                    value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
+                                                    items="${venueList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">商品名称:</label>
+                                    <div class="col-sm-1">
+                                        <form:input path="reserveCommodity.name" htmlEscape="false"
+                                                    cssstyle="width:50px;"
+                                                    maxlength="30"
+                                                    class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">时间:</label>
+                                    <div class="col-sm-2">
+                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
+                                               name="startDate" id="startDate" type="text"
+                                               maxlength="20"
+                                               class="input-medium form-control Wdate "
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.endDate}"/>"
+                                               name="endDate" id="endDate" type="text"
+                                               maxlength="20"
+                                               class="input-medium form-control Wdate "
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                           value="查询"/><input id="btnExport" class="btn btn-primary"
+                                                              type="button" value="导出"/></td>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,6 +83,7 @@
                                     <th>合计</th>
                                     <th>备注</th>
                                     <th>售卖人</th>
+                                    <th>场馆</th>
                                     <th>时间</th>
                                 </tr>
                                 </thead>
@@ -85,6 +97,7 @@
                                         <td>${reserveCommoditySellDetail.detailSum}</td>
                                         <td>${reserveCommoditySellDetail.remarks}</td>
                                         <td>${reserveCommoditySellDetail.updateBy.name}</td>
+                                        <td>${reserveCommoditySellDetail.reserveCommodity.reserveVenue.name}</td>
                                         <td><fmt:formatDate value="${reserveCommoditySellDetail.createDate}"
                                                             type="both"/></td>
                                     </tr>
