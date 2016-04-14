@@ -89,7 +89,7 @@ public class ReserveVenueController extends BaseController {
         }
         reserveVenueService.save(reserveVenue, attMainForm);
         addMessage(redirectAttributes, "保存场馆成功");
-        return "redirect:" + Global.getAdminPath() + "/reserve/reserveVenue/?repage";
+        return "redirect:" + Global.getAdminPath() + "/reserve/reserveVenue/list";
     }
 
     @RequestMapping(value = "delete")
