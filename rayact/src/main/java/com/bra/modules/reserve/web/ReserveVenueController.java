@@ -96,7 +96,7 @@ public class ReserveVenueController extends BaseController {
     public String delete(ReserveVenue reserveVenue,RedirectAttributes redirectAttributes) {
         reserveVenueService.delete(reserveVenue);
         addMessage(redirectAttributes, "删除场馆成功");
-        return "redirect:" + Global.getAdminPath() + "/reserve/reserveVenue/?repage";
+        return "redirect:" + Global.getAdminPath() + "/reserve/reserveVenue/list";
     }
 
     @RequestMapping(value = "totalIncomeReport")
