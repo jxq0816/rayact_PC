@@ -19,9 +19,14 @@ import java.util.List;
  */
 @MyBatisDao
 public interface ReserveVenueDao extends CrudDao<ReserveVenue> {
-    List<ReserveVenueProjectFieldDayReport> dayReport(ReserveVenueProjectFieldDayReport dayReport);
+    /*查询 场馆下的项目*/
+    List<ReserveVenueProjectIntervalReport> findVenueProjectList(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport);
 
-    List<ReserveVenueProjectIntervalReport> reserveVenueProjectIntervalReport(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport);
+    List<ReserveVenueProjectFieldDayReport> dayReport(ReserveVenueProjectFieldDayReport dayReport);
+   /* 场地包场收入*/
+    List<ReserveVenueProjectIntervalReport> reserveVenueProjectBlockIntervalReport(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport);
+    /* 场地散客收入*/
+    List<ReserveVenueProjectIntervalReport> reserveVenueProjectDividedIntervalReport(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport);
 
     List<ReserveVenueProjectFieldIntervalReport> reserveVenueProjectFieldIntervalReport(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport);
 }
