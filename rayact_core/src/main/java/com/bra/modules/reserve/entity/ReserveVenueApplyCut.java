@@ -25,6 +25,16 @@ public class ReserveVenueApplyCut extends SaasEntity<ReserveVenueApplyCut> {
     private Date consDate;//订单时间
     private String tel;//客户电话
 
+    public String getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(String isNew) {
+        this.isNew = isNew;
+    }
+
+    private String isNew;//是否是新的
+
     private String startTime;
     private String endTime;
 

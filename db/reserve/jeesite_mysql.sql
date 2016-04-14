@@ -637,4 +637,32 @@ CREATE TABLE `reserve_commodity_storage_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+-- ----------------------------
+-- Table structure for reserve_venue_apply_cut
+-- ----------------------------
+DROP TABLE IF EXISTS `reserve_venue_apply_cut`;
+CREATE TABLE `reserve_venue_apply_cut` (
+  `id` varchar(19) NOT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `cut_price` decimal(10,2) DEFAULT NULL,
+  `cons_time` datetime DEFAULT NULL,
+  `cons_id` varchar(19) DEFAULT NULL,
+  `member_id` varchar(19) DEFAULT NULL,
+  `done` varchar(2) DEFAULT NULL,
+  `apply_user_id` varchar(19) DEFAULT NULL,
+  `venue_id` varchar(19) DEFAULT NULL,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL,
+  `is_new` varchar(2) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+
 

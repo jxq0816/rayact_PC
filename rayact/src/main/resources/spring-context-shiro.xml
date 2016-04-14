@@ -14,10 +14,18 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/reserve/reserveSellReport/mobile/commAll = anon
+				${adminPath}/reserve/reserveSellReport/mobile/commIncome = anon
+				${adminPath}/reserve/reserveSellReport/mobile/storeIncome = anon
+				${adminPath}/reserve/reserveSellReport/mobile/fieldIncome = anon
+				${adminPath}/reserve/reserveVenue/mobile/venueAll = anon
+				${adminPath}/reserve/reserveSellReport/mobile/incomeAll = anon
+				${adminPath}/reserve/field/mobile/cutlist = anon
+				${adminPath}/reserve/field/mobile/cutprice = anon
 				${adminPath}/reserve/reserveVenue/mobile/rv/list = anon
 				${adminPath}/reserve/reserveVenue/mobile/rv/detail = anon
-				/static/** = anon
 				${adminPath}/mobile/login = anon
+				/static/** = anon
 				/userfiles/** = anon
 				${adminPath}/cas = cas
 				${adminPath}/login = authc

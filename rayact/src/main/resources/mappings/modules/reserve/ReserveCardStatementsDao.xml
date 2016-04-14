@@ -262,21 +262,83 @@
 
 	<select id="allReport" resultType="java.util.Map">
 		SELECT
-			v.id as venue_id,
-			v.name as venue_name,
-			SUM(case when s.transaction_type = '1' or s.transaction_type = '7' THEN s.transaction_volume ELSE 0 END) AS store_in,
-			SUM(case WHEN s.transaction_type = '3' THEN s.transaction_volume ELSE 0 END) AS commodity_in,
-		 	SUM(CASE WHEN s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS field_in,
-			SUM(CASE WHEN s.pay_type = '1' THEN s.transaction_volume ELSE 0 END) AS store_cost,
-		 	SUM(CASE WHEN s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS time_cost
+		v.id as venue_id,
+		v.name as venue_name,
+		SUM(case when s.transaction_type = '1' or s.transaction_type = '7' THEN s.transaction_volume ELSE 0 END) AS store_in,
+		SUM(case WHEN s.transaction_type = '3' THEN s.transaction_volume ELSE 0 END) AS commodity_in,
+		SUM(CASE WHEN s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS field_in,
+		SUM(CASE WHEN s.transaction_type = '6' THEN s.transaction_volume ELSE 0 END) AS break_in,
+		SUM(CASE WHEN s.transaction_type = '3' or s.transaction_type = '6' or s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS all_in,
+		SUM(CASE WHEN s.pay_type = '1' THEN s.transaction_volume ELSE 0 END) AS store_cost,
+		SUM(CASE WHEN s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS time_cost
 		FROM reserve_venue v
 		LEFT JOIN reserve_card_statements s on s.venue_id = v.id
 		<if test="startDate!=null and endDate !=null">
-		and datediff(s.update_date,#{startDate})>=0 and datediff(#{endDate},s.update_date)>=0
+			and datediff(s.update_date,#{startDate})>=0 and datediff(#{endDate},s.update_date)>=0
 		</if>
-		where 1=1
+		where 1=1 and v.tenant_id = #{tenantId}
 		${sqlMap.dsf}
 		GROUP BY v.id
 	</select>
+	<select id="fieldIncome" resultType="java.util.Map" parameterType="SearchForm">
+		SELECT
+		f.name AS field_name,
+		SUM(CASE WHEN half_court = '0' THEN price ELSE 0 END) AS fullprice,
+		SUM(CASE WHEN half_court = '1' THEN price ELSE 0 END) AS halfprice,
+		SUM(CASE WHEN half_court = '0' THEN num ELSE 0 END) AS fullnum,
+		SUM(CASE WHEN half_court = '1' THEN num ELSE 0 END) AS halfnum
+		FROM
+		(SELECT f.* FROM reserve_field f LEFT JOIN reserve_field_relation r ON f.id = r.child_field_id WHERE r.parent_field_id is null) f
+		LEFT JOIN
+		(
+			SELECT
+			SUM(i.cons_price) AS price,
+			COUNT(i.field_id) AS num,
+			i.field_id,
+			i.half_court
+			FROM reserve_venue_cons_item i
+			WHERE i.half_court = '0'
+			<if test="startDate!=null and endDate !=null">
+				and datediff(i.update_date,#{startDate})>=0 and datediff(#{endDate},i.update_date)>=0
+			</if>
+			GROUP BY i.field_id
+			UNION
+			SELECT
+			SUM(i.cons_price),
+			COUNT(i.field_id) AS num,
+			r.parent_field_id,
+			i.half_court
+			FROM reserve_venue_cons_item i LEFT JOIN reserve_field_relation r ON i.field_id = r.child_field_id
+			WHERE i.half_court = '1'
+			<if test="startDate!=null and endDate !=null">
+				and datediff(i.update_date,#{startDate})>=0 and datediff(#{endDate},i.update_date)>=0
+			</if>
+			GROUP BY r.parent_field_id
+		) tmp ON f.id = tmp.field_id WHERE f.venue_id = #{venueId} GROUP BY f.id
+	</select>
 
+	<select id="storeIncome" resultType="java.util.Map" parameterType="SearchForm">
+		SELECT m.name,s.transaction_volume,s.pay_type,date_format(s.create_date,'%Y-%c-%d %h:%i:%s') as storeTime
+		FROM reserve_card_statements s
+		LEFT JOIN reserve_member m ON s.fk_reserve_member_id = m.id
+		WHERE s.transaction_type = '7' or s.transaction_type = '1'
+		<if test="startDate!=null and endDate !=null">
+			and datediff(s.update_date,#{startDate})>=0 and datediff(#{endDate},s.update_date)>=0
+		</if>
+		and s.venue_id = #{venueId}
+	</select>
+
+	<select id="commIncome" resultType="java.util.Map" parameterType="SearchForm">
+		SELECT c.`name` AS  commname,
+		SUM(rd.num) AS num,
+		SUM(rd.detail_sum) AS  price
+		FROM  reserve_commodity_sell_detail rd
+		LEFT JOIN reserve_commodity c  on c.id = rd.fk_reserve_commodity_id
+		LEFT JOIN reserve_venue v ON v.id = c.fk_reserve_venue_id
+		WHERE c.fk_reserve_venue_id = #{venueId}
+		<if test="startDate!=null and endDate !=null">
+			and datediff(rd.update_date,#{startDate})>=0 and datediff(#{endDate},rd.update_date)>=0
+		</if>
+		GROUP BY rd.fk_reserve_commodity_id
+	</select>
 </mapper>

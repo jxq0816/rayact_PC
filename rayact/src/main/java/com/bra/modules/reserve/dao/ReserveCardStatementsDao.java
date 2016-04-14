@@ -5,6 +5,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.form.ReserveMemberDayReport;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
+import com.bra.modules.reserve.entity.form.SearchForm;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,4 +32,10 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
      List<Map<String,Object>> allReport(ReserveCardStatements reserveCardStatements);
 
      List<ReserveMemberDayReport> memberIncomeDayReport(ReserveMemberDayReport reserveMemberDayReport);
+
+     List<Map<String,Object>> fieldIncome(SearchForm searchForm);
+
+     List<Map<String,Object>> storeIncome(SearchForm searchForm);
+
+     List<Map<String,Object>> commIncome(SearchForm searchForm);
 }

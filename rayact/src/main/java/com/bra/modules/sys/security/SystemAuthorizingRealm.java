@@ -1,10 +1,5 @@
 package com.bra.modules.sys.security;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
 import com.bra.common.config.Global;
 import com.bra.common.security.CustomCredentialsMatcher;
 import com.bra.common.security.Principal;
@@ -30,6 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 系统安全认证实现类
  *
@@ -48,7 +47,6 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-
         int activeSessionSize = getSystemService().getSessionDao().getActiveSessions(false).size();
         if (logger.isDebugEnabled()) {
             logger.debug("login submit, active session size: {}, username: {}", activeSessionSize, token.getUsername());
