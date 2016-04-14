@@ -181,7 +181,7 @@
   },
   {
     "code": "operationLog",
-    "name": "流水",
+    "name": "日志管理",
     "authorityList": [
       {
         "code": "reserveCardRechargeStatements",

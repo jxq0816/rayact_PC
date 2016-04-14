@@ -4,7 +4,7 @@
     <thead>
     <%--时刻--%>
     <tr>
-        <th>上午</th>
+        <th>晚上</th>
         <c:forEach items="${timesEvening}" var="t">
             <th style="background-color: #fff;">${t}</th>
         </c:forEach>
