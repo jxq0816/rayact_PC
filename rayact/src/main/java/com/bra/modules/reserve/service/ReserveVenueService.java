@@ -125,6 +125,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         Double otherSum=0.0;
         Double dueSum=0.0;
         List<ReserveVenueProjectIntervalReport>  venueProjectList=dao.findVenueProjectList(venueProjectReport);//查询场馆下的所有场地
+
         List<ReserveVenueProjectIntervalReport> venueProjectBlockReports = dao.reserveVenueProjectBlockIntervalReport(venueProjectReport);//场馆 项目 包场 收入统计
         List<ReserveVenueProjectIntervalReport> venueProjectDividedReports = dao.reserveVenueProjectDividedIntervalReport(venueProjectReport);//场馆 项目 散客 收入统计
         for(ReserveVenueProjectIntervalReport i:venueProjectList){// 遍历 场馆和项目
@@ -182,10 +183,12 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             otherSum+=other;
             dueSum+=due;
         }
-        for (ReserveVenueProjectIntervalReport projectIntervalReport : venueProjectBlockReports) {//场馆 项目遍历
-            List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(projectIntervalReport);//场馆 项目 场地 收入统计
-            projectIntervalReport.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
+        /*明细 开始*/
+        for (ReserveVenueProjectIntervalReport i : venueProjectList) {//场馆 项目遍历
+            List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//场馆 项目 场地 收入统计
+            i.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
         }
+        /*明细 结束*/
         //场地 项目 总合计设置
         ReserveVenueIncomeIntervalReport venueReport=new ReserveVenueIncomeIntervalReport();
         venueReport.setBill(billSum);
@@ -207,11 +210,11 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     public List<ReserveVenueProjectFieldIntervalReport> reserveVenueProjectFieldIntervalReport(ReserveVenueProjectIntervalReport projectIntervalReport) {
 
         List<ReserveVenueProjectFieldIntervalReport> filedReports = dao.reserveVenueProjectFieldIntervalReport(projectIntervalReport);
-        for(ReserveVenueProjectFieldIntervalReport report:filedReports){
+     /*   for(ReserveVenueProjectFieldIntervalReport report:filedReports){
 
             List<ReserveVenueProjectFieldDayReport> dayReports=this.dayReport(report);
             report.setDayReports(dayReports);
-        }
+        }*/
         return filedReports;
     }
 
