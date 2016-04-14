@@ -74,9 +74,9 @@
                                 <th>场馆</th>
                                 <th>商品收入</th>
                                 <th>场地收入</th>
-                                <th>充值收入</th>
-                                <th>储值卡消费</th>
-                                <th>次卡消费</th>
+                                <th>违约金收入</th>
+                                <%--<th>储值卡消费</th>--%>
+                                <%--<th>次卡消费</th>--%>
                                 <th>合计</th>
                             </tr>
                             </thead>
@@ -95,20 +95,24 @@
                                             ${allReport.field_in}
                                     </td>
 
-                                    <td class="store_in">
-                                            ${allReport.store_in}
+                                    <td class="break_in">
+                                            ${allReport.break_in}
                                     </td>
 
-                                    <td class="store_cost">
-                                            ${allReport.store_cost}
-                                    </td>
+                                    <%--<td class="store_in">--%>
+                                            <%--${allReport.store_in}--%>
+                                    <%--</td>--%>
 
-                                    <td class="time_cost">
-                                            ${allReport.time_cost}
-                                    </td>
+                                    <%--<td class="store_cost">--%>
+                                            <%--${allReport.store_cost}--%>
+                                    <%--</td>--%>
+
+                                    <%--<td class="time_cost">--%>
+                                            <%--${allReport.time_cost}--%>
+                                    <%--</td>--%>
 
                                     <td class="all">
-                                            ${allReport.commodity_in + allReport.field_in + allReport.store_in - allReport.store_cost - allReport.time_cost}
+                                            ${allReport.commodity_in + allReport.field_in + allReport.break_in}
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -124,20 +128,24 @@
                                         ${allReport.field_in}
                                     </td>
 
-                                    <td class="store_in_all">
-                                        ${allReport.store_in}
+                                    <td class="break_in_all">
+                                        ${allReport.break_in}
                                     </td>
 
-                                    <td class="store_cost_all">
-                                        ${allReport.store_cost}
-                                    </td>
+                                    <%--<td class="store_in_all">--%>
+                                        <%--${allReport.store_in}--%>
+                                    <%--</td>--%>
 
-                                    <td class="time_cost_all">
-                                        ${allReport.time_cost}
-                                    </td>
+                                    <%--<td class="store_cost_all">--%>
+                                        <%---${allReport.store_cost}--%>
+                                    <%--</td>--%>
+
+                                    <%--<td class="time_cost_all">--%>
+                                       <%--- ${allReport.time_cost}--%>
+                                    <%--</td>--%>
 
                                     <td class="all_all">
-                                        ${allReport.commodity_in + allReport.field_in + allReport.store_in - allReport.store_cost - allReport.time_cost}
+                                        ${allReport.commodity_in + allReport.field_in + allReport.break_in}
                                     </td>
                                 </tr>
                             </tbody>
@@ -166,21 +174,26 @@
             field += parseFloat($(this).html());
         });
         $(".field_in_all").html(field);
-        var store = 0;
-        $(".store_in").each(function(){
-            store += parseFloat($(this).html());
+        var breaks = 0;
+        $(".break_in").each(function(){
+            breaks += parseFloat($(this).html());
         });
-        $(".store_in_all").html(store);
-        var store_cost = 0;
-        $(".store_cost").each(function(){
-            store_cost += parseFloat($(this).html());
-        });
-        $(".store_cost_all").html(store_cost);
-        var time_cost = 0;
-        $(".time_cost").each(function(){
-            time_cost += parseFloat($(this).html());
-        });
-        $(".time_cost_all").html(time_cost);
+        $(".break_in_all").html(breaks);
+//        var store = 0;
+//        $(".store_in").each(function(){
+//            store += parseFloat($(this).html());
+//        });
+//        $(".store_in_all").html(store);
+//        var store_cost = 0;
+//        $(".store_cost").each(function(){
+//            store_cost += parseFloat($(this).html());
+//        });
+//        $(".store_cost_all").html(store_cost);
+//        var time_cost = 0;
+//        $(".time_cost").each(function(){
+//            time_cost += parseFloat($(this).html());
+//        });
+//        $(".time_cost_all").html(time_cost);
         var all = 0;
         $(".all").each(function(){
             all += parseFloat($(this).html());

@@ -9,6 +9,7 @@ import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.ReserveMemberDayReport;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
+import com.bra.modules.reserve.entity.form.SearchForm;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,4 +114,17 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	public List<Map<String,Object>> allReport(ReserveCardStatements reserveCardStatements) {
 		return dao.allReport(reserveCardStatements);
 	}
+
+	public List<Map<String,Object>> fieldIncome(SearchForm searchForm) {
+		return dao.fieldIncome(searchForm);
+	}
+
+	public List<Map<String,Object>> storeIncome(SearchForm searchForm) {
+		return dao.storeIncome(searchForm);
+	}
+
+	public List<Map<String,Object>> commIncome(SearchForm searchForm) {
+		return dao.commIncome(searchForm);
+	}
+
 }

@@ -325,4 +325,26 @@ public class ReserveVenueController extends BaseController {
         }
         return JSONArray.toJSONString(rtn);
     }
+
+    @RequestMapping(value = "mobile/venueAll")
+    public @ResponseBody String venueAll(HttpServletRequest request) {
+        List<Map<String,String>> rtn = new ArrayList<>();
+        ReserveVenue reserveVenue = new ReserveVenue();
+        String userId = request.getParameter("userId");
+        if(userId!=null&&!userId.equals("")){
+            User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
+            reserveVenue.setTenantId(user.getCompany().getId());
+        }
+        reserveVenue.getSqlMap().put("dsf"," and 1=1 ");
+        List<ReserveVenue> vs = reserveVenueService.findList(reserveVenue);
+        if(vs!=null){
+            for(ReserveVenue v:vs){
+                Map<String,String> node = new HashMap<>();
+                node.put("venueId",v.getId());
+                node.put("venueName",v.getName());
+                rtn.add(node);
+            }
+        }
+        return JSONArray.toJSONString(rtn);
+    }
 }

@@ -3,6 +3,7 @@
 <mapper namespace="com.bra.modules.reserve.dao.ReserveVenueApplyCutDao">
 
     <sql id="reserveVenueApplyCutColumns">
+        a.is_new AS "isNew",
 		a.id AS "id",
 		a.done AS "done",
 		a.name AS "name",
@@ -53,6 +54,7 @@
 
     <insert id="insert">
 		INSERT INTO reserve_venue_apply_cut(
+		is_new,
 		done,
 		id,
 		name,
@@ -72,6 +74,7 @@
 		tenant_id,
 		del_flag
 		) VALUES (
+		#{isNew},
 		#{done},
 		#{id},
 		#{name},
@@ -95,6 +98,7 @@
 
     <update id="update">
 		UPDATE reserve_venue_apply_cut SET
+		is_new = #{isNew},
 		name = #{name},
 		done = #{done},
 		price = #{price},
@@ -107,7 +111,6 @@
 		update_by = #{updateBy.id},
 		update_date = #{updateDate},
 		tel = #{tel},
-		tenant_id = #{tenantId},
 		remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
