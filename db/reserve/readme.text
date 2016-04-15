@@ -8,3 +8,4 @@
 20160311:reserve_commodity 商品设置 将单位unit改为商品规格，类型改为int
 20160311:reserve_card_statements 新增场馆字段
 20160413:新增reserve_commodity_storage_log表
+20160414:新增reserve_reserve_apply_cut表

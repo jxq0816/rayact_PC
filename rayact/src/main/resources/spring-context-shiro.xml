@@ -70,6 +70,7 @@
 	
 	<!-- 自定义会话管理配置 -->
 	<bean id="sessionManager" class="com.bra.common.security.shiro.session.SessionManager">
+		<property name ="sessionListeners" ref="mySessionListener"/>
 		<property name="sessionDAO" ref="sessionDAO"/>
 		
 		<!-- 会话超时时间，单位：毫秒  -->
@@ -82,6 +83,10 @@
  		
 		<property name="sessionIdCookie" ref="sessionIdCookie"/>
 		<property name="sessionIdCookieEnabled" value="true"/>
+
+	</bean>
+
+	<bean id="mySessionListener" class="com.bra.modules.sys.listener.OnlineUserListener">
 	</bean>
 	
 	<!-- 指定本系统SESSIONID, 默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
@@ -89,6 +94,7 @@
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 	    <constructor-arg name="name" value="jeesite.session.id"/>
 	</bean>
+
 
 	<!-- 自定义Session存储容器 -->
 <!-- 	<bean id="sessionDAO" class="com.bra.common.security.shiro.session.JedisSessionDAO"> -->
