@@ -266,7 +266,7 @@
 		v.name as venue_name,
 		SUM(case when s.transaction_type = '1' or s.transaction_type = '7' THEN s.transaction_volume ELSE 0 END) AS store_in,
 		SUM(case WHEN s.transaction_type = '3' THEN s.transaction_volume ELSE 0 END) AS commodity_in,
-		SUM(CASE WHEN s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS field_in,
+		SUM(CASE WHEN s.transaction_type = '8' or s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS field_in,
 		SUM(CASE WHEN s.transaction_type = '6' THEN s.transaction_volume ELSE 0 END) AS break_in,
 		SUM(CASE WHEN s.transaction_type = '3' or s.transaction_type = '6' or s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS all_in,
 		SUM(CASE WHEN s.pay_type = '1' THEN s.transaction_volume ELSE 0 END) AS store_cost,
@@ -329,16 +329,14 @@
 	</select>
 
 	<select id="commIncome" resultType="java.util.Map" parameterType="SearchForm">
-		SELECT c.`name` AS  commname,
-		SUM(rd.num) AS num,
-		SUM(rd.detail_sum) AS  price
-		FROM  reserve_commodity_sell_detail rd
-		LEFT JOIN reserve_commodity c  on c.id = rd.fk_reserve_commodity_id
-		LEFT JOIN reserve_venue v ON v.id = c.fk_reserve_venue_id
-		WHERE c.fk_reserve_venue_id = #{venueId}
+		SELECT v.name,sum(cd.num) as num,SUM(cd.detail_sum) as income
+		FROM reserve_venue v
+		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.name = #{venueId}
+		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
+		WHERE
 		<if test="startDate!=null and endDate !=null">
-			and datediff(rd.update_date,#{startDate})>=0 and datediff(#{endDate},rd.update_date)>=0
+			datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>
-		GROUP BY rd.fk_reserve_commodity_id
+		GROUP BY v.name
 	</select>
 </mapper>

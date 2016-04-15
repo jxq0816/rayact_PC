@@ -84,7 +84,7 @@ public class ReserveSellReportController extends BaseController {
     }
 
     @RequestMapping(value = "mobile/incomeAll")
-    public @ResponseBody String incomeAll(HttpServletRequest request) {
+    public String incomeAll(HttpServletRequest request) {
         String userId = request.getParameter("userId");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("startDate");
@@ -106,11 +106,13 @@ public class ReserveSellReportController extends BaseController {
             reserveCardStatements.setStartDate(c2.getTime());
         }
         List<Map<String,Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
-        return JSONArray.toJSONString(rtn);
+        request.setAttribute("rtn",rtn);
+        //return JSONArray.toJSONString(rtn);
+        return "/reserve/report/incomeAll";
     }
 
     @RequestMapping(value = "mobile/fieldIncome")
-    public @ResponseBody String fieldIncome(HttpServletRequest request) {
+    public String fieldIncome(HttpServletRequest request) {
         String venueId = request.getParameter("venueId");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
@@ -129,12 +131,14 @@ public class ReserveSellReportController extends BaseController {
             form.setStartDate(c2.getTime());
         }
         List<Map<String,Object>> rtn = reserveCardStatementsService.fieldIncome(form);
-        return JSONArray.toJSONString(rtn);
+        request.setAttribute("rtn",rtn);
+        return "/reserve/report/fieldIncome";
+        //return JSONArray.toJSONString(rtn);
     }
 
 
     @RequestMapping(value = "mobile/storeIncome")
-    public @ResponseBody String storeIncome(HttpServletRequest request) {
+    public String storeIncome(HttpServletRequest request) {
         String venueId = request.getParameter("venueId");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
@@ -153,7 +157,8 @@ public class ReserveSellReportController extends BaseController {
             form.setStartDate(c2.getTime());
         }
         List<Map<String,Object>> rtn = reserveCardStatementsService.storeIncome(form);
-        return JSONArray.toJSONString(rtn);
+        return "/reserve/report/storeIncome";
+        //return JSONArray.toJSONString(rtn);
     }
 
     @RequestMapping(value = "mobile/commIncome")
@@ -182,25 +187,34 @@ public class ReserveSellReportController extends BaseController {
         }
         reserveVenue.getSqlMap().put("dsf"," and 1=1 ");
         List<ReserveVenue> vs = reserveVenueService.findList(reserveVenue);
-        if(vs!=null){
-            for(ReserveVenue v:vs){
+        ReserveCommodity reserveCommodity = new ReserveCommodity();
+        if(userId!=null&&!userId.equals("")){
+            User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
+            reserveCommodity.setTenantId(user.getCompany().getId());
+        }
+        reserveCommodity.getSqlMap().put("dsf"," and 1=1 ");
+        List<ReserveCommodity> cs = reserveCommodityService.findList(reserveCommodity);
+        if(cs!=null){
+            for(ReserveCommodity c:cs){
                 Map<String,String> node = new HashMap<>();
-                node.put("venueId",v.getId());
-                node.put("venueName",v.getName());
-                form.setVenueId(v.getId());
+                node.put("commId",c.getId());
+                node.put("commName",c.getName());
+                form.setVenueId(c.getName());
                 List<Map<String,Object>> tmp = reserveCardStatementsService.commIncome(form);
                 node.put("data",JSONArray.toJSONString(tmp));
                 rtn.add(node);
             }
         }
-        return JSONArray.toJSONString(rtn);
+        request.setAttribute("vs",vs);
+        request.setAttribute("rtn",rtn);
+        return "/reserve/report/commIncome";
+        //return JSONArray.toJSONString(rtn);
     }
 
     @RequestMapping(value = "mobile/commAll")
-    public @ResponseBody String commAll(HttpServletRequest request) {
+    public String commAll(HttpServletRequest request) {
         List<Map<String,String>> rtn = new ArrayList<>();
         String userId = request.getParameter("userId");
-        SearchForm form = new SearchForm();
         ReserveCommodity reserveCommodity = new ReserveCommodity();
         if(userId!=null&&!userId.equals("")){
             User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
@@ -216,7 +230,9 @@ public class ReserveSellReportController extends BaseController {
                 rtn.add(node);
             }
         }
-        return JSONArray.toJSONString(rtn);
+        request.setAttribute("rtn",rtn);
+        //return JSONArray.toJSONString(rtn);
+        return "reserve/report/commIncome";
     }
 
 
