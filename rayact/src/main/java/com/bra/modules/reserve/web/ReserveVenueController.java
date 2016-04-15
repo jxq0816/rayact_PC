@@ -124,14 +124,10 @@ public class ReserveVenueController extends BaseController {
     }
 
     @RequestMapping(value = "report")
-    public String report(ReserveVenueProjectIntervalReport venueProjectReport, String queryType, Model model) {
+    public String report(ReserveVenueProjectIntervalReport venueProjectReport, @RequestParam(required=false,defaultValue="1",value="queryType") String queryType, Model model) {
         Date startDate=venueProjectReport.getStartDate();
         Date endDate=venueProjectReport.getEndDate();
         venueProjectReport.setReserveVenue(reserveVenueService.get(venueProjectReport.getReserveVenue()));
-        List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
-        model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
-        List<ReserveProject> reserveProjectList=reserveProjectService.findList(new ReserveProject());
-        model.addAttribute("reserveProjectList",reserveProjectList);//收入统计
         if(startDate==null){
             startDate=new Date();//默认当天
             venueProjectReport.setStartDate(startDate);
@@ -140,17 +136,20 @@ public class ReserveVenueController extends BaseController {
             endDate=new Date();//默认当天
             venueProjectReport.setEndDate(endDate);
         }
-        if(StringUtils.isEmpty(queryType)){
-            queryType="1";
-        }
         ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport);//场馆区间报表
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         model.addAttribute("incomeReport",incomeReport);//收入统计
         model.addAttribute("venueProjectReport",venueProjectReport);//查询参数回传
+        List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
+        model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
+        List<ReserveProject> reserveProjectList=reserveProjectService.findList(new ReserveProject());
+        model.addAttribute("reserveProjectList",reserveProjectList);//收入统计
         if("1".equals(queryType)){
             return "reserve/report/venueIncomeReport";
         }else{
+            List<ReserveVenueProjectIntervalReport> venueProjectDividedReports = reserveVenueService.reserveVenueProjectDividedIntervalReport(venueProjectReport);//场馆 项目 散客 收入统计
+            model.addAttribute("venueProjectDividedReports",venueProjectDividedReports);//查询参数回传
             return "reserve/report/venueIncomeDetailReport";
         }
     }

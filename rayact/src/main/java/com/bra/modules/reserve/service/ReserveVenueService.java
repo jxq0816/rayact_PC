@@ -114,6 +114,11 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         }
         return list;
     }
+    /* 场地散客收入*/
+    public List<ReserveVenueProjectIntervalReport> reserveVenueProjectDividedIntervalReport(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport){
+        List<ReserveVenueProjectIntervalReport> venueProjectDividedReports = dao.reserveVenueProjectDividedIntervalReport(reserveVenueProjectIntervalReport);//场馆 项目 散客 收入统计
+        return venueProjectDividedReports;
+    }
     //场馆收入统计
     public ReserveVenueIncomeIntervalReport reserveVenueIncomeIntervalReport(ReserveVenueProjectIntervalReport venueProjectReport) {
         Double billSum=0.0;
