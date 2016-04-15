@@ -558,6 +558,31 @@ public class ReserveController extends BaseController {
         return "[]";
     }
 
+    //移动端优惠通知列表
+    @RequestMapping(value = "mobile/cutlist/hasNew")
+    @ResponseBody
+    public String hasNew(HttpServletRequest request) {
+        Map<String,String> rtn = new HashMap<>();
+        String userId = request.getParameter("userId");
+        if(userId!=null&&!"".equals(userId)){
+            User user = systemService.getUser(userId);
+            ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
+            reserveVenueApplyCut.setTenantId(user.getCompany().getId());
+            reserveVenueApplyCut.getSqlMap().put("dsf"," and a.apply_user_id = '"+userId+"' and a.done = '0' and a.is_new = '1' ");
+            List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(reserveVenueApplyCut);
+            if(list!=null&&list.size()>0){
+                rtn.put("hasNew","1");
+                return JSONObject.toJSONString(rtn);
+            }else{
+                rtn.put("hasNew","0");
+                return JSONObject.toJSONString(rtn);
+            }
+
+        }
+        rtn.put("hasNew","0");
+        return JSONObject.toJSONString(rtn);
+    }
+
     //移动端优惠反馈
     @RequestMapping(value = "mobile/cutprice")
     @ResponseBody

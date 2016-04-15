@@ -13,13 +13,13 @@
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.js"></script>
     <title></title>
     <style>
-        table tr td {
-            height: 60px;
+        body{
+            background-color: #ebedf1;
         }
     </style>
 </head>
 <body style="padding: 0;margin: 0">
-<table width="100%" height="80%" border="1" style="text-align: center;font-size:40px;background-color: #ebedf1;margin: 0;padding: 0">
+<table width="100%"  border="1" style="text-align: center;font-size:40px;background-color: #ebedf1;margin: 0;padding: 0">
         <tr>
             <td width="1000px"  >会员</td>
             <td width="1000px"  >充值金额</td>
@@ -41,7 +41,7 @@
         </tr>
     </c:forEach>
 </table>
-<span>总计：${param.startDate}~${param.endDate}&nbsp;&nbsp;&nbsp;<b class="sum"></b></span>
+<div style="text-align: center;font-size:40px;background-color: #ebedf1;margin: auto">总计：&nbsp;<b class="sum" style="font-size:80px;color: #b93434"></b></div>
 <script>
     $(function(){
         var c = 0;

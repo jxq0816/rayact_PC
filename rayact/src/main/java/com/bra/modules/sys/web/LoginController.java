@@ -30,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,6 +42,8 @@ import java.util.Map;
  */
 @Controller
 public class LoginController extends BaseController {
+
+    public static List<Map<String,String>> users = new ArrayList<>();
 
     @Autowired
     private SessionDAO sessionDAO;
@@ -134,7 +139,11 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "${adminPath}")
     public String index(HttpServletRequest request, HttpServletResponse response) {
         Principal principal = SecurityUtil.getPrincipal();
-
+        System.out.print(users.size()+"ggggggggggggggggggggggggggggggg");
+        Map<String,String> user = new HashMap<>();
+        user.put("sid",request.getSession().getId());
+        user.put("userName",principal.getLoginName());
+        users.add(user);
         // 登录成功后，验证码计算器清零
         isValidateCodeLogin(principal.getLoginName(), false, true);
 

@@ -157,12 +157,13 @@ public class ReserveSellReportController extends BaseController {
             form.setStartDate(c2.getTime());
         }
         List<Map<String,Object>> rtn = reserveCardStatementsService.storeIncome(form);
+        request.setAttribute("rtn",rtn);
         return "/reserve/report/storeIncome";
         //return JSONArray.toJSONString(rtn);
     }
 
     @RequestMapping(value = "mobile/commIncome")
-    public @ResponseBody String commIncome(HttpServletRequest request) {
+    public String commIncome(HttpServletRequest request) {
         List<Map<String,String>> rtn = new ArrayList<>();
         String userId = request.getParameter("userId");
         String startDate = request.getParameter("startDate");

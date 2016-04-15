@@ -321,7 +321,7 @@
 		SELECT m.name,s.transaction_volume,s.pay_type,date_format(s.create_date,'%Y-%c-%d %h:%i:%s') as storeTime
 		FROM reserve_card_statements s
 		LEFT JOIN reserve_member m ON s.fk_reserve_member_id = m.id
-		WHERE s.transaction_type = '7' or s.transaction_type = '1'
+		WHERE (s.transaction_type = '7' or s.transaction_type = '1')
 		<if test="startDate!=null and endDate !=null">
 			and datediff(s.update_date,#{startDate})>=0 and datediff(#{endDate},s.update_date)>=0
 		</if>

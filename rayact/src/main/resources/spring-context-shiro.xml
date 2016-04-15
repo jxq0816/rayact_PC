@@ -14,6 +14,7 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/reserve/field/mobile/cutlist/hasNew = anon
 				${adminPath}/reserve/reserveSellReport/mobile/commAll = anon
 				${adminPath}/reserve/reserveSellReport/mobile/commIncome = anon
 				${adminPath}/reserve/reserveSellReport/mobile/storeIncome = anon
