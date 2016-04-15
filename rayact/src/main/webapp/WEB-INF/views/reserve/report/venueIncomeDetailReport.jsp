@@ -126,9 +126,11 @@
                                     </td>
                                     <td>
                                             ${report.fieldBillStoredCard}
+                                                <c:set var="fieldBillStoredCard" value="${fieldBillStoredCard+report.fieldBillStoredCard}"/>
                                     </td>
                                     <td>
                                             ${report.fieldBillCash}
+                                                <c:set var="fieldBillCash" value="${fieldBillCash+report.fieldBillCash}"/>
                                     </td>
                                     <td>
                                             ${report.fieldBillBankCard}

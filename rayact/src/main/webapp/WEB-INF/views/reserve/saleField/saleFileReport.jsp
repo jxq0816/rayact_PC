@@ -2,14 +2,14 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>场地售卖报表</title>
+    <title>项目收入统计</title>
     <meta name="decorator" content="main"/>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
 </head>
 <body>
 <c:if test="${param.alone != 'true'}">
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="saleVenueReport"></jsp:param>
+    <jsp:param name="action" value="projectIncomeReport"></jsp:param>
 </jsp:include>
 </c:if>
 <div class="container-fluid" id="pcont">
@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>场地售卖报表</h3>
+                    <h3>项目收入统计</h3>
                 </div>
                 <form id="searchForm" action="${ctx}/reserve/saleVenueReport/list?alone=${alone}"
                       method="post" class="content">

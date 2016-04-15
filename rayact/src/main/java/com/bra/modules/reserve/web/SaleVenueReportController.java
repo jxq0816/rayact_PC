@@ -39,6 +39,7 @@ public class SaleVenueReportController extends BaseController {
     @Autowired
     private ReserveVenueService reserveVenueService;
 
+   /* 项目收入报表*/
     @RequestMapping(value = "list")
     public String list(Model model, String search, Date startDate, Date endDate) {
 

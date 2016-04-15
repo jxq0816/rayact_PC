@@ -160,8 +160,8 @@
         "authorityList": []
       },
       {
-        "code": "saleVenueReport",
-        "name": "场地售卖报表",
+        "code": "projectIncomeReport",
+        "name": "项目收入统计",
         "href":"/reserve/saleVenueReport/list",
         "authorityList": []
       },
