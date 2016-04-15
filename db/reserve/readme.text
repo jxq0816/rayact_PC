@@ -9,3 +9,4 @@
 20160311:reserve_card_statements 新增场馆字段
 20160413:新增reserve_commodity_storage_log表
 20160414:新增reserve_reserve_apply_cut表
+20160415:reserve_reserve_apply_cut 新增is_new 是不是新增的请求

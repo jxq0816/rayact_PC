@@ -28,9 +28,8 @@
                                 <tr>
                                     <td>场馆:</td>
                                     <td>
-
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                    value="reserveVenue"
+                                                    value="${intervalTotalReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
@@ -57,12 +56,12 @@
                     </div>
                 </form:form>
                 <div class="content">
-                    场馆：${intervalTotalReport.reserveVenue.name}
                     <div class="table-responsive">
                         <table>
                             <thead>
                             <tr>
-                                <th>时间</th>
+                                <th>场馆</th>
+                                <th>收入类型</th>
                                 <th>储值卡</th>
                                 <th>现金</th>
                                 <th>银行卡</th>
@@ -75,39 +74,42 @@
                             </thead>
                             <tbody>
                             <%-- 总统计 开始 --%>
+                            <c:forEach items="${totalIntervalReportList}" var="report">
                             <tr>
                                 <td>
-                                    <fmt:formatDate value="${intervalTotalReport.startDate}" type="date"></fmt:formatDate>
-                                    至
-                                    <fmt:formatDate value="${intervalTotalReport.endDate}" type="date"></fmt:formatDate>
+                                    ${report.reserveVenue.name}
                                 </td>
                                 <td>
-                                    ${intervalTotalReport.storedCardBill}
-                                </td>
-
-                                <td>
-                                    ${intervalTotalReport.cashBill}
+                                    ${report.transactionType}
                                 </td>
                                 <td>
-                                    ${intervalTotalReport.bankCardBill}
+                                    ${report.storedCardBill}
                                 </td>
 
                                 <td>
-                                    ${intervalTotalReport.weiXinBill}
+                                    ${report.cashBill}
                                 </td>
                                 <td>
-                                    ${intervalTotalReport.aliPayBill}
+                                    ${report.bankCardBill}
+                                </td>
+
+                                <td>
+                                    ${report.weiXinBill}
                                 </td>
                                 <td>
-                                    ${intervalTotalReport.otherBill}
+                                    ${report.aliPayBill}
                                 </td>
                                 <td>
-                                    ${intervalTotalReport.dueBill}
+                                    ${report.otherBill}
                                 </td>
                                 <td>
-                                    ${intervalTotalReport.bill}
+                                    ${report.dueBill}
+                                </td>
+                                <td>
+                                    ${report.bill}
                                 </td>
                             </tr>
+                            </c:forEach>
                             <%-- 总统计 结束 --%>
 
                             </tbody>

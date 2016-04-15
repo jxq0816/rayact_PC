@@ -9,6 +9,7 @@ import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldDayReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
+import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ import java.util.List;
  */
 @MyBatisDao
 public interface ReserveVenueDao extends CrudDao<ReserveVenue> {
+    /*总收入统计*/
+    List<ReserveVenueTotalIntervalReport> totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport);
     /*查询 场馆下的项目*/
     List<ReserveVenueProjectIntervalReport> findVenueProjectList(ReserveVenueProjectIntervalReport reserveVenueProjectIntervalReport);
 

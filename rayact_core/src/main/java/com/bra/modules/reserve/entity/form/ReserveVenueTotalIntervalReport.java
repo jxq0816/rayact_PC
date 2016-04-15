@@ -2,13 +2,9 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.modules.reserve.entity.ReserveField;
-import com.bra.modules.reserve.entity.ReserveProject;
-import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 场馆收入统计Entity
@@ -20,6 +16,12 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     private static final long serialVersionUID = 1L;
 
+    private ReserveVenue reserveVenue;//场馆
+
+
+    private String transactionType;//交易类型
+
+    private String payType;//支付类型
 
     private Double bill;//消费金额
 
@@ -33,11 +35,13 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     private Double  aliPayBill;//支付宝
 
-    private Double  dueBill;// 欠账
-
     private Double  otherBill;// 其它
 
-    private ReserveVenue reserveVenue;//场馆
+    private Double  dueBill;// 欠账
+
+
+
+
 
     private Date startDate;//开始日期
 
@@ -131,4 +135,21 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
     public void setReserveVenue(ReserveVenue reserveVenue) {
         this.reserveVenue = reserveVenue;
     }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
 }

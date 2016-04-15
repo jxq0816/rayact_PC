@@ -104,22 +104,17 @@ public class ReserveVenueController extends BaseController {
         Date startDate=intervalTotalReport.getStartDate();
         Date endDate=intervalTotalReport.getEndDate();
         if(startDate==null){
-            Calendar start = Calendar.getInstance();
-            start.add(Calendar.DAY_OF_MONTH,-1);
-            startDate=start.getTime();
-            intervalTotalReport.setStartDate(startDate);
+            intervalTotalReport.setStartDate(new Date());
         }
         if(endDate==null){
-            endDate=new Date();//默认当天
-            intervalTotalReport.setEndDate(endDate);
+            intervalTotalReport.setEndDate(new Date());
         }
-        intervalTotalReport.setReserveVenue(reserveVenueService.get(intervalTotalReport.getReserveVenue()));
         List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
 
-        intervalTotalReport=reserveVenueService.totalIncomeReport(intervalTotalReport);
+        List<ReserveVenueTotalIntervalReport> totalIntervalReportList=reserveVenueService.totalIncomeReport(intervalTotalReport);
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
-
-        model.addAttribute("intervalTotalReport",intervalTotalReport);//请求参数&返回结果
+        model.addAttribute("intervalTotalReport",intervalTotalReport);//请求参数
+        model.addAttribute("totalIntervalReportList",totalIntervalReportList);//返回结果
         return "reserve/report/venueIncomeTotalReport";
     }
 
