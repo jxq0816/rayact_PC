@@ -424,6 +424,9 @@ CREATE TABLE reserve_card_statements
 	venue_id varchar(19) comment '交易所属场馆'
 	PRIMARY KEY (id)
 );
+alter table  reserve_card_statements add fk_reserve_commodity_id VARCHAR(19);
+alter table  reserve_card_statements  add transaction_num int;
+alter table  reserve_card_statements  add member_remainder double;
 
 -- ----------------------------
 -- Table structure for reserve_member

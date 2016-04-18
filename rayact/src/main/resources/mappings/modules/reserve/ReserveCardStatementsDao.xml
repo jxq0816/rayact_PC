@@ -8,7 +8,11 @@
 		a.fk_reserve_member_id AS "reserveMember.id",
 		a.venue_id AS "venue.id",
 		v.name as "venue.name",
+		a.fk_reserve_commodity_id as "reserveCommodity.id",
+		commodity.name as "reserveCommodity.name",
+		a.transaction_num as "transactionNum",
 		a.transaction_volume AS "transactionVolume",
+		a.member_remainder AS "reserveMember.remainder",
 		a.pay_type AS "payType",
 		a.create_by AS "createBy.id",
 		a.update_by AS "updateBy.id",
@@ -25,6 +29,7 @@
 
 	<sql id="reserveCardStatementsJoins">
 		left JOIN reserve_member as m on m.id=a.fk_reserve_member_id
+		left JOIN reserve_commodity as commodity on commodity.id=a.fk_reserve_commodity_id
 		LEFT JOIN  reserve_user as crt on crt.id=a.create_by
 		LEFT JOIN  reserve_user as upt on upt.id=a.create_by
 		LEFT JOIN  reserve_venue as v on v.id = a.venue_id
@@ -218,8 +223,11 @@
 		INSERT INTO reserve_card_statements(
 			id,
 			fk_reserve_member_id,
+			fk_reserve_commodity_id,
 			transaction_type,
+			transaction_num,
 			transaction_volume,
+			member_remainder,
 			pay_type,
 			create_by,
 			create_date,
@@ -232,8 +240,11 @@
 		) VALUES (
 			#{id},
 			#{reserveMember.id},
+			#{reserveCommodity.id},
 			#{transactionType},
+			#{transactionNum},
 			#{transactionVolume},
+			#{reserveMember.remainder},
 			#{payType},
 			#{createBy.id},
 			#{createDate},

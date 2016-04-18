@@ -72,10 +72,10 @@
                                         </j:if>
                                     </td>
                                     <td>
-
+                                            ${statement.reserveCommodity.name}
                                     </td>
                                     <td>
-
+                                            ${statement.transactionNum}
                                     </td>
                                     <td>
                                         <j:if test="${statement.transactionType!=1}">
@@ -83,7 +83,7 @@
                                         </j:if>
                                     </td>
                                     <td>
-
+                                            ${statement.reserveMember.remainder}
                                     </td>
                                     <td>
                                             ${statement.updateBy.name}
