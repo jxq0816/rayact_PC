@@ -63,6 +63,7 @@
                                 <th>卡号</th>
                                 <th>卡号类型</th>
                                 <th>备注</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -86,6 +87,10 @@
                                     </td>
                                     <td>
                                             ${reserveMember.remarks}
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs"
+                                           href="${ctx}/reserve/reserveMember/statements?memberId=${reserveMember.id}">交易明细</a>
                                     </td>
                                 </tr>
                             </c:forEach>

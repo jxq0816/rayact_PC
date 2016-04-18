@@ -93,6 +93,7 @@
                                            href="${ctx}/reserve/storedCardMember/delete?id=${reserveMember.id}"
                                            onclick="return confirmb('确认要删除该会员吗？', this.href)"><i
                                                 class="fa fa-times"></i>删除</a>
+
                                     </td>
                                     <td>
                                         <a class="btn btn-primary btn-xs rechargeBtn" data-id="${reserveMember.id}"><i

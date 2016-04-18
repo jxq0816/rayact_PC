@@ -88,7 +88,6 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		}
 		return list;
 	}
-
 	@Transactional(readOnly = false)
 	public void save(ReserveCardStatements reserveCardStatements) {
 		super.save(reserveCardStatements);

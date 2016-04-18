@@ -5,8 +5,10 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class ReserveMemberController extends BaseController {
 
 	@Autowired
 	private ReserveVenueService reserveVenueService;
+
+	@Autowired
+	private ReserveCardStatementsService reserveCardStatementsService;
 	
 	@ModelAttribute
 	public ReserveMember get(@RequestParam(required=false) String id) {
@@ -88,6 +93,17 @@ public class ReserveMemberController extends BaseController {
 	@ResponseBody
 	public ReserveMember loadMember(String id){
 		return reserveMemberService.get(id);
+	}
+
+	@RequestMapping(value = "statements")
+	public String statements(String memberId, HttpServletRequest request, HttpServletResponse response, Model model){
+		ReserveCardStatements query=new ReserveCardStatements();
+		ReserveMember member=new ReserveMember();
+		member.setId(memberId);
+		query.setReserveMember(member);
+		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response),query);
+		model.addAttribute("page", page);
+		return "reserve/member/statements";
 	}
 
 }

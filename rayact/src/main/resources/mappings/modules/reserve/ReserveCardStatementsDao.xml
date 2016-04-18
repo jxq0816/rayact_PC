@@ -7,12 +7,14 @@
 		a.transaction_type AS "transactionType",
 		a.fk_reserve_member_id AS "reserveMember.id",
 		a.venue_id AS "venue.id",
+		v.name as "venue.name",
 		a.transaction_volume AS "transactionVolume",
 		a.pay_type AS "payType",
 		a.create_by AS "createBy.id",
-		u.name AS "createBy.name",
-		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
+		crt.name AS "createBy.name",
+		upt.name AS "updateBy.name",
+		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
@@ -23,7 +25,8 @@
 
 	<sql id="reserveCardStatementsJoins">
 		left JOIN reserve_member as m on m.id=a.fk_reserve_member_id
-		LEFT JOIN  reserve_user as u on u.id=a.create_by
+		LEFT JOIN  reserve_user as crt on crt.id=a.create_by
+		LEFT JOIN  reserve_user as upt on upt.id=a.create_by
 		LEFT JOIN  reserve_venue as v on v.id = a.venue_id
 	</sql>
 
@@ -165,6 +168,9 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 			<if test="reserveMember!=null">
+				<if test="reserveMember.id !=null and reserveMember.id !=''">
+					and a.fk_reserve_member_id=#{reserveMember.id}
+				</if>
 				<if test="reserveMember.name !=null and reserveMember.name !=''">
 					and ( (m.name like concat('%',#{reserveMember.name},'%')) or (m.cartno like
 					concat('%',#{reserveMember.name},'%')) or (m.mobile like concat('%',#{reserveMember.name},'%')) )
