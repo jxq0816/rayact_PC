@@ -175,23 +175,34 @@
 		v.id as "reserveVenue.id",
 		v.name as "reserveVenue.name",
 		case s.transaction_type
+        <if test="queryType !=null and '0'.toString()==queryType">
             when 1 then "充值"
+        </if>
 			when 3 then "商品"
 			when 8 then "场地售卖"
 			when 9 then "场次票售卖"
             when 10 then "教练收入"
 		END
 		as "transactionType",
-		Sum(s.transaction_volume) as bill,
-		sum(if(s.pay_type=1,s.transaction_volume,0)) AS "storedCardBill",
+        <if test="queryType !=null and '0'.toString()==queryType">
+                sum(if(s.pay_type=1,s.transaction_volume,0)) AS "storedCardBill",
+                sum(if(s.pay_type=6,s.transaction_volume,0)) AS "otherBill",
+                sum(if(s.pay_type=7,s.transaction_volume,0)) AS "dueBill",
+        </if>
         sum(if(s.pay_type=2,s.transaction_volume,0)) AS "cashBill",
         sum(if(s.pay_type=3,s.transaction_volume,0)) AS "bankCardBill",
         sum(if(s.pay_type=4,s.transaction_volume,0)) AS "weiXinBill",
-        sum(if(s.pay_type=5,s.transaction_volume,0)) AS "aliPayBill",
-        sum(if(s.pay_type=6,s.transaction_volume,0)) AS "otherBill",
-        sum(if(s.pay_type=7,s.transaction_volume,0)) AS "dueBill"
+        sum(if(s.pay_type=5,s.transaction_volume,0)) AS "aliPayBill"
 		FROM reserve_venue v
-		inner JOIN reserve_card_statements s on (s.venue_id = v.id and (s.transaction_type='1' or s.transaction_type='3' or s.transaction_type='8' or s.transaction_type='9' or s.transaction_type='10'))
+		inner JOIN reserve_card_statements s on (s.venue_id = v.id and
+            (
+                s.transaction_type='3'
+                <if test="queryType !=null and '0'.toString()==queryType">
+                    or s.transaction_type='1'
+                </if>
+                or s.transaction_type='8' or s.transaction_type='9' or s.transaction_type='10'
+            )
+        )
         <where>
             s.pay_type!='' and s.transaction_type!='' and s.del_flag = #{DEL_FLAG_NORMAL} and s.tenant_id = #{tenantId}
             <if test="reserveVenue !=null ">
@@ -202,6 +213,7 @@
             <if test="startDate !=null and endDate !=null">
                 and (Date(s.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
+            ${sqlMap.dsf}
         </where>
 		group by s.transaction_type, v.id
         order by v.id
