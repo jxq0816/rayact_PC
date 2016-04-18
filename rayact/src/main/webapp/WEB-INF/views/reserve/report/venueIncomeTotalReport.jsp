@@ -18,9 +18,6 @@
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/totalIncomeReport"
                            method="post" class="breadcrumb form-search">
-                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-
                     <div class="row">
                         <div class="col-sm-7 col-md-7 col-lg-7">
                             <table class="no-border">
@@ -34,7 +31,6 @@
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
-                                    <td>卡号类型:</td>
                                     <td>
                                         <label class="radio-inline">
                                             <input type="radio" class="icheck" value="0"
@@ -77,13 +73,21 @@
                                 <th>银行卡</th>
                                 <th>微信</th>
                                 <th>支付宝</th>
-                                <th>其它</th>
+                                <th>优惠券</th>
                                 <th>欠账</th>
                                 <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>
                             <%-- 总统计 开始 --%>
+                            <c:set var="billStoredCard" value="0"/>
+                            <c:set var="billCash" value="0"/>
+                            <c:set var="billBankCard" value="0"/>
+                            <c:set var="billWeiXin" value="0"/>
+                            <c:set var="billAliPay" value="0"/>
+                            <c:set var="billOther" value="0"/>
+                            <c:set var="billDue" value="0"/>
+                            <c:set var="bill" value="0"/>
                             <c:forEach items="${totalIntervalReportList}" var="report">
                             <tr>
                                 <td>
@@ -94,34 +98,73 @@
                                 </td>
                                 <td>
                                     ${report.storedCardBill}
+                                        <c:set var="billStoredCard" value="${billStoredCard+report.storedCardBill}"/>
                                 </td>
 
                                 <td>
                                     ${report.cashBill}
+                                        <c:set var="billCash" value="${billCash+report.cashBill}"/>
                                 </td>
                                 <td>
                                     ${report.bankCardBill}
+                                        <c:set var="billBankCard" value="${billBankCard+report.cashBill}"/>
                                 </td>
 
                                 <td>
                                     ${report.weiXinBill}
+                                        <c:set var="billWeiXin" value="${billWeiXin+report.weiXinBill}"/>
                                 </td>
                                 <td>
                                     ${report.aliPayBill}
+                                        <c:set var="billAliPay" value="${billAliPay+report.aliPayBill}"/>
                                 </td>
                                 <td>
                                     ${report.otherBill}
+                                        <c:set var="billOther" value="${billOther+report.otherBill}"/>
                                 </td>
                                 <td>
                                     ${report.dueBill}
+                                        <c:set var="billDue" value="${billDue+report.dueBill}"/>
                                 </td>
                                 <td>
                                     ${report.bill}
+                                        <c:set var="bill" value="${bill+report.bill}"/>
                                 </td>
                             </tr>
                             </c:forEach>
                             <%-- 总统计 结束 --%>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    ${billStoredCard}
+                                </td>
 
+                                <td>
+                                    ${billCash}
+                                </td>
+                                <td>
+                                    ${billBankCard}
+                                </td>
+
+                                <td>
+                                    ${billWeiXin}
+                                </td>
+                                <td>
+                                    ${billAliPay}
+                                </td>
+                                <td>
+                                    ${billOther}
+                                </td>
+                                <td>
+                                    ${billDue}
+                                </td>
+                                <td>
+                                    ${bill}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
