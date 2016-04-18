@@ -10,11 +10,6 @@
                 <td>预定人:${order.userName}(<j:ifelse
                         test="${'1' eq cos.consType}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
                 </td>
-               <%-- <td>
-                    <input type="hidden" name="itemId" value="${item.id}"/>
-                    <input type="hidden" name="tutorOrder.id" value="${tutorOrder.id}"/>
-                    <input type="hidden" name="tutorOrder.orderPrice" id="tutorPrice" value="${tutorOrder.orderPrice}"/>
-                </td>--%>
             </tr>
             </tbody>
         </table>
@@ -27,13 +22,16 @@
             <th>场地</th>
             <th>开始时间</th>
             <th>结束时间</th>
-            <th>是否半场</th>
+            <th>场地类型</th>
+            <th>场地费用</th>
             <j:if test="${!empty tutorOrder}">
                 <th>
                     教练
                 </th>
+                <th>
+                    教练费用
+                </th>
             </j:if>
-            <th>合计</th>
             </thead>
             <tbody>
             <c:forEach items="${itemList}" var="item" varStatus="status">
@@ -48,20 +46,25 @@
                             ${item.endTime}
                     </td>
                     <td>
-                        <j:ifelse test="${'1' eq item.halfCourt}"><j:then>是</j:then><j:else>否</j:else></j:ifelse>
+                        <j:ifelse test="${'1' eq item.halfCourt}">
+                            <j:then>半场</j:then>
+                            <j:else>全场</j:else>
+                        </j:ifelse>
                         <input type="hidden" name="venueConsList[${status.index}].halfCourt"
                                value="${item.halfCourt}"/>
+                    </td>
+                    <td>
+                            ${item.consPrice}
                     </td>
                     <j:if test="${!empty tutorOrder}">
                         <td>
                                 ${tutorOrder.tutor.name}
                         </td>
+                        <td>
+                                ${tutorOrder.totalPrice}
+                        </td>
                     </j:if>
-                    <td>
-                        <input type="text" style="width: 60px;" value="${item.consPrice}"
-                               class="form-control" readonly="readonly"
-                               name="venueConsList[${status.index}].orderPrice"/>
-                    </td>
+
                 </tr>
             </c:forEach>
             </tbody>
@@ -152,6 +155,8 @@
             <label for="authUser" class="col-lg-2">授权人:</label>
             <div class="col-lg-2">
                 <sys:select id="authUser" cssClass="form-control" name=""
+                            defaultLabel="请选择"
+                            defaultValue=""
                             items="${authUserList}"
                             value="${cons.checkOutUser.id}"
                             itemLabel="name"

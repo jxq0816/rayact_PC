@@ -32,16 +32,16 @@ public class TutorReserveListener{
     protected void onEvent(VenueReserveEvent event) {
         List<String> timeList = event.getTimeList();
         ReserveVenueCons reserveVenueCons = event.getReserveVenueCons();
-        int length = timeList.size() / 2 + timeList.size() % 2;
+        Integer length = timeList.size();//时间以半小时单位.统计预订了多长时间
         if (reserveVenueCons.getTutor() != null && StringUtils.isNotBlank(reserveVenueCons.getTutor().getId())) {
             ReserveTutor tutor = reserveTutorService.get(new ReserveTutor(reserveVenueCons.getTutor().getId()));
             ReserveTutorOrder tutorOrder = new ReserveTutorOrder();
             tutorOrder.setModelId(reserveVenueCons.getId());
             tutorOrder.setTutor(tutor);
             tutorOrder.setModelKey(ReserveVenueCons.MODEL_KEY);
-            tutorOrder.setOrderPrice(tutor.getPrice());
+            tutorOrder.setOrderPrice(tutor.getPrice()/2);
             tutorOrder.setOrderCount(length);
-            tutorOrder.setTotalPrice(tutor.getPrice() * length);
+            tutorOrder.setTotalPrice(tutor.getPrice()/2 * length);//时间以半小时单位，而教练的费用以一小时为单位，所以需要除2
             tutorOrder.setReserveType("1");
             reserveTutorOrderService.save(tutorOrder);
         }

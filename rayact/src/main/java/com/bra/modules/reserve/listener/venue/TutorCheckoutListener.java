@@ -29,9 +29,9 @@ public class TutorCheckoutListener{
         if (tutorOrder != null) {
             tutorOrder.setModelId(cons.getId());
             tutorOrder.setModelKey(ReserveVenueCons.MODEL_KEY);
-            tutorOrder.setTotalPrice(tutorOrder.getOrderPrice() * tutorOrder.getOrderCount());
             tutorOrder.setReserveType("2");
             reserveTutorOrderService.save(tutorOrder);
+
         }
     }
 }

@@ -10,13 +10,10 @@
                 <td>预定人:${cos.userName}(<j:ifelse
                         test="${'1' eq cos.consType}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
                 </td>
-                <td>
-                    <input type="hidden" name="itemId" value="${item.id}"/>
-                </td>
                 <j:if test="${!empty tutorOrderList}">
                     <c:forEach items="${tutorOrderList}" var="tutorOrder">
                         <td>教练:</td><td>${tutorOrder.tutor.name}</td>
-                        <td>教练费用:</td><td>${tutorOrder.totalPrice/2}</td>
+                        <td>教练费用:</td><td>${tutorOrder.totalPrice}</td>
                     </c:forEach>
                 </j:if>
             </tr>
@@ -30,9 +27,8 @@
             <th>场地</th>
             <th>开始时间</th>
             <th>结束时间</th>
-            <th>频率</th>
-            <th>是否半场</th>
-            <th>应收(场地费+教练费)</th>
+            <th>场地类型</th>
+            <th>场地费用</th>
             </thead>
             <tbody>
             <c:forEach items="${itemList}" var="item" varStatus="status">
@@ -47,16 +43,17 @@
                             ${item.endTime}
                     </td>
                     <td>
-                        <j:if test="${'1' eq item.frequency}">单次</j:if>
-                        <j:if test="${'2' eq item.frequency}">每天</j:if>
-                        <j:if test="${'3' eq item.frequency}">每周(${item.consWeek})</j:if>
-                    </td>
-                    <td>
-                        <j:ifelse test="${'1' eq item.halfCourt}"><j:then>是</j:then><j:else>否</j:else></j:ifelse>
+                        <j:ifelse test="${'1' eq item.halfCourt}">
+                            <j:then>半场</j:then>
+                            <j:else>全场</j:else>
+                        </j:ifelse>
+                        <input type="hidden" name="venueConsList[${status.index}].halfCourt"
+                               value="${item.halfCourt}"/>
                     </td>
                     <td>
                             ${item.consPrice}
                     </td>
+
                 </tr>
             </c:forEach>
             </tbody>

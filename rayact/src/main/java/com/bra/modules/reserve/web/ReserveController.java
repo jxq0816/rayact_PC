@@ -231,8 +231,6 @@ public class ReserveController extends BaseController {
         for(ReserveVenueConsItem i:itemList){//订单详情
             String startTime=i.getStartTime();
             String endTime=i.getEndTime();
-          /*  startTime=TimeUtils.earlyMorningFormat(startTime);
-            endTime=TimeUtils.earlyMorningFormat(endTime);*/
             ReserveField field=i.getReserveField();//场地
 
             Date startDate=reserveVenueCons.getStartDate();//预订开始日期
@@ -317,8 +315,6 @@ public class ReserveController extends BaseController {
     public String settlementForm(String itemId, Model model) {
         //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
-        ReserveVenueConsItem search = new ReserveVenueConsItem();
-        search.setConsData(consItem.getConsData());
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
 
         ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
@@ -334,10 +330,12 @@ public class ReserveController extends BaseController {
         if (!Collections3.isEmpty(tutorOrderList)) {
             model.addAttribute("tutorOrder", tutorOrderList.get(0));
         }
+        ReserveVenueConsItem search = new ReserveVenueConsItem();
+        search.setConsData(consItem.getConsData());
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
         User user=new User();
-        user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：场地管理员；4：收银；5：财务)
+        user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：高管；4：收银；5：财务)
         List<User> authUserList=userService.findList(user);
         model.addAttribute("authUserList", authUserList);
         model.addAttribute("itemList", itemList);
