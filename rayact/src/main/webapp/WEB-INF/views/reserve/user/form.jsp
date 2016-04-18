@@ -101,7 +101,7 @@
                         <label><input type="radio" <j:if test="${'2' eq userRole.userType}"> checked="checked" </j:if>
                                       name="userType" class="icheck userType" value="2"/>场馆管理员</label>
                         <label><input type="radio" <j:if test="${'3' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="userType" class="icheck userType" value="3"/>场地管理员</label>
+                                      name="userType" class="icheck userType" value="3"/>高管</label>
                         <label><input type="radio" <j:if test="${'4' eq userRole.userType}"> checked="checked" </j:if>
                                       name="userType" class="icheck userType" value="4"/>收银</label>
                         <label><input type="radio" <j:if test="${'5' eq userRole.userType}"> checked="checked" </j:if>
