@@ -34,6 +34,16 @@
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
+                                    <td>卡号类型:</td>
+                                    <td>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="0"
+                                                   <j:if test="${'0' eq intervalTotalReport.queryType}">checked="checked"</j:if> name="queryType"/>流水
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="icheck" value="1"
+                                                   <j:if test="${'1' eq intervalTotalReport.queryType}">checked="checked"</j:if> name="queryType"/>收益
+                                        </label>
                                     <td>
                                         <input name="startDate" id="startDate" type="text"
                                                maxlength="20"

@@ -175,9 +175,11 @@
 		v.id as "reserveVenue.id",
 		v.name as "reserveVenue.name",
 		case s.transaction_type
+            when 1 then "充值"
 			when 3 then "商品"
 			when 8 then "场地售卖"
 			when 9 then "场次票售卖"
+            when 10 then "教练收入"
 		END
 		as "transactionType",
 		Sum(s.transaction_volume) as bill,
@@ -189,7 +191,7 @@
         sum(if(s.pay_type=6,s.transaction_volume,0)) AS "otherBill",
         sum(if(s.pay_type=7,s.transaction_volume,0)) AS "dueBill"
 		FROM reserve_venue v
-		inner JOIN reserve_card_statements s on (s.venue_id = v.id and (s.transaction_type='3' or s.transaction_type='8' or s.transaction_type='9'))
+		inner JOIN reserve_card_statements s on (s.venue_id = v.id and (s.transaction_type='1' or s.transaction_type='3' or s.transaction_type='8' or s.transaction_type='9' or s.transaction_type='10'))
         <where>
             s.pay_type!='' and s.transaction_type!='' and s.del_flag = #{DEL_FLAG_NORMAL} and s.tenant_id = #{tenantId}
             <if test="reserveVenue !=null ">

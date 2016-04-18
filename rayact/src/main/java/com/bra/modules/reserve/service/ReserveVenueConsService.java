@@ -93,18 +93,11 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         reserveVenueCons.setCheckOutUser(checkOutUser);//授权人
         reserveVenueCons.setDiscountPrice(discountPrice);//优惠
         reserveVenueCons.setConsPrice(consPrice);//结算价格
-      /*  for (ReserveVenueConsItem item : cons.getVenueConsList()) {
-            ReserveVenueConsItem consItem = reserveVenueConsItemDao.get(item.getId());
-            consItem.setOrderPrice(item.getOrderPrice());
-            reserveVenueConsItemDao.update(consItem);
-        }*/
-
         //ConsType:2:已预定;payType:1:会员卡;
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");
             reserveVenueCons.preUpdate();
             dao.update(reserveVenueCons);
-            //reserveVenueCons.setVenueConsList(cons.getVenueConsList());
             //会员扣款;结算教练(事件通知)
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);

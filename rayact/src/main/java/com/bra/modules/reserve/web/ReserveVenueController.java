@@ -101,6 +101,9 @@ public class ReserveVenueController extends BaseController {
 
     @RequestMapping(value = "totalIncomeReport")
     public String totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport, Model model) {
+        if(StringUtils.isEmpty(intervalTotalReport.getQueryType())){
+            intervalTotalReport.setQueryType("0");//默认流水
+        }
         Date startDate=intervalTotalReport.getStartDate();
         Date endDate=intervalTotalReport.getEndDate();
         if(startDate==null){

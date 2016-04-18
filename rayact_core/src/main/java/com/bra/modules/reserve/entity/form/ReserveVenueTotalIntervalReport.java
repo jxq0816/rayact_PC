@@ -18,6 +18,7 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     private ReserveVenue reserveVenue;//场馆
 
+    private String queryType;//查询类型 0:流水统计 1:收益统计
 
     private String transactionType;//交易类型
 
@@ -38,10 +39,6 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
     private Double  otherBill;// 其它
 
     private Double  dueBill;// 欠账
-
-
-
-
 
     private Date startDate;//开始日期
 
@@ -150,6 +147,14 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     public void setPayType(String payType) {
         this.payType = payType;
+    }
+
+    public String getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
     }
 
 }
