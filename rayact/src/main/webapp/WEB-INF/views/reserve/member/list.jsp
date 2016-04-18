@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>用户管理</h3>
+                    <h3>会员列表</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/"
                            method="post" class="breadcrumb form-search">
@@ -49,11 +49,6 @@
                                 </tbody>
                             </table>
                         </div>
-                       <%-- <div class="pull-right">
-                            <a class="btn btn-success" href="${ctx}/reserve/reserveMember/form">
-                                <i class="fa fa-plus"></i>添加
-                            </a>
-                        </div>--%>
                     </div>
                 </form:form>
                 <sys:message content="${message}"/>
@@ -68,13 +63,10 @@
                                 <th>卡号</th>
                                 <th>卡号类型</th>
                                 <th>备注</th>
-                                <shiro:hasPermission name="reserve:reserveMember:edit">
-                                    <th>操作</th>
-                                </shiro:hasPermission>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${memberList}" var="reserveMember">
+                            <c:forEach items="${page.list}" var="reserveMember">
                                 <tr>
                                     <td><a href="${ctx}/reserve/reserveMember/form?id=${reserveMember.id}">
                                             ${reserveMember.name}
@@ -95,33 +87,22 @@
                                     <td>
                                             ${reserveMember.remarks}
                                     </td>
-                                    <shiro:hasPermission name="reserve:reserveMember:edit">
-                                        <td>
-                                            <a class="btn btn-primary btn-xs"
-                                               href="${ctx}/reserve/reserveMember/form?id=${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>修改</a>
-                                            <a class="btn btn-danger btn-xs"
-                                               href="${ctx}/reserve/reserveMember/delete?id=${reserveMember.id}"
-                                               onclick="return confirmb('确认要删除该会员吗？', this.href)"><i
-                                                    class="fa fa-times"></i>删除</a>
-                                        </td>
-                                    </shiro:hasPermission>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
 
-                       <%-- <div class="row">
+                       <div class="row">
                             <div class="col-sm-12">
 
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>--%>
+                        </div>
 
                     </div>
                 </div>

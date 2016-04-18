@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
@@ -50,11 +51,8 @@ public class ReserveMemberController extends BaseController {
 	
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
-		//Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember);
-		//model.addAttribute("page", page);
-		List<ReserveMember> memberList=reserveMemberService.findList(reserveMember);
-
-		model.addAttribute("memberList", memberList);
+		Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember);
+		model.addAttribute("page", page);
 		return "reserve/member/list";
 	}
 
