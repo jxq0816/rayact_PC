@@ -127,7 +127,7 @@
                                             <input type="radio" class="icheck" value="5" name="payType"/>支付宝
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" class="icheck" value="6" name="payType"/>其它
+                                            <input type="radio" class="icheck" value="6" name="payType"/>优惠券
                                         </label>
                                     </td>
                                 </tr>

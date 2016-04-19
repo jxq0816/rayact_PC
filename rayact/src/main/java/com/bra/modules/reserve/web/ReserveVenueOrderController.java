@@ -52,7 +52,7 @@ public class ReserveVenueOrderController extends BaseController {
         model.addAttribute("projects", projects);
         return "reserve/visitorsSetOrder/list";
     }
-
+    //人次票 付款界面
     @RequestMapping(value = "form")
     @Token(save = true)
     public String form(String vsId, Model model) {
