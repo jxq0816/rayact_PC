@@ -20,6 +20,7 @@ import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
+import com.bra.modules.sys.web.LoginController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,9 +102,6 @@ public class ReserveVenueController extends BaseController {
 
     @RequestMapping(value = "totalIncomeReport")
     public String totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport, Model model) {
-        if(StringUtils.isEmpty(intervalTotalReport.getQueryType())){
-            intervalTotalReport.setQueryType("0");//默认流水
-        }
         Date startDate=intervalTotalReport.getStartDate();
         Date endDate=intervalTotalReport.getEndDate();
         if(startDate==null){
@@ -267,7 +265,17 @@ public class ReserveVenueController extends BaseController {
                 Map<String,String> venueNode = new HashMap();
                 venueNode.put("venueName",v.getName());
                 venueNode.put("venueId",v.getId());
-                venueNode.put("managerName","");//从排班中获取
+                List<Map<String,String>> users = LoginController.users;
+                String userName = "";
+                for(Map<String,String> user : users){
+                    if(user.get("venuesId").contains(v.getId())){
+                        userName += user.get("userName")+";";
+                    }
+                }
+                if(!"".equals(userName)){
+                    userName.substring(0,userName.length()-1);
+                }
+                venueNode.put("managerName",userName);//从排班中获取
                 venueNode.put("managerId","");//从排班中获取
                 List<AttMain> attMains = new ArrayList();
                 AttMainService attMainService = SpringContextHolder.getBean("attMainService");

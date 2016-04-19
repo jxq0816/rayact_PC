@@ -11,6 +11,8 @@ import com.bra.common.security.shiro.session.SessionDAO;
 import com.bra.common.servlet.ValidateCodeServlet;
 import com.bra.common.utils.*;
 import com.bra.common.web.BaseController;
+import com.bra.modules.reserve.entity.ReserveRole;
+import com.bra.modules.reserve.service.ReserveRoleService;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.security.FormAuthenticationFilter;
@@ -139,11 +141,20 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "${adminPath}")
     public String index(HttpServletRequest request, HttpServletResponse response) {
         Principal principal = SecurityUtil.getPrincipal();
-        System.out.print(users.size()+"ggggggggggggggggggggggggggggggg");
+        ReserveRoleService reserveRoleService = SpringContextHolder.getBean("reserveRoleService");
+        ReserveRole reserveRole = new ReserveRole();
+        reserveRole.setUser(UserUtils.getUser());
+        List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+        String ids = "";
+        for(String v:venueIds){
+            ids += v;
+        }
         Map<String,String> user = new HashMap<>();
         user.put("sid",request.getSession().getId());
-        user.put("userName",principal.getLoginName());
+        user.put("userName",principal.getName());
+        user.put("venuesId",ids);
         users.add(user);
+
         // 登录成功后，验证码计算器清零
         isValidateCodeLogin(principal.getLoginName(), false, true);
 

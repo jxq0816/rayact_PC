@@ -2,7 +2,6 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
-import com.bra.common.utils.Collections3;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
@@ -49,7 +48,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Autowired
     private ReserveMemberService reserveMemberService;
     @Autowired
-    private ReserveTutorOrderService reserveTutorOrderService;
+    private ReserveVenueApplyCutService reserveVenueApplyCutService;
 
     public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
         List<Map<String, Object>> list = dao.findOrderLog(venueLog);
@@ -100,31 +99,21 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         reserveVenueCons.setCheckOutUser(checkOutUser);//授权人
         reserveVenueCons.setDiscountPrice(discountPrice);//优惠
         reserveVenueCons.setConsPrice(consPrice);//结算价格
-        //ConsType:1:已预定;payType:1:会员卡;
+      /*  for (ReserveVenueConsItem item : cons.getVenueConsList()) {
+            ReserveVenueConsItem consItem = reserveVenueConsItemDao.get(item.getId());
+            consItem.setOrderPrice(item.getOrderPrice());
+            reserveVenueConsItemDao.update(consItem);
+        }*/
+
+        //ConsType:2:已预定;payType:1:会员卡;
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");
             reserveVenueCons.preUpdate();
             dao.update(reserveVenueCons);
-            //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
-            ReserveVenueCons order = dao.get(id);//获得订单
-            List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(order.getId(), ReserveVenueCons.MODEL_KEY);
-            ReserveTutorOrder tutorOrder=null;
-            for(ReserveTutorOrder i:tutorOrderList){
-                tutorOrder=i;
-                reserveVenueCons.setTutorOrder(i);
-            }
-            if (!Collections3.isEmpty(tutorOrderList)) {
-                //会员扣款;结算教练(事件通知)
-                VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
-                applicationContext.publishEvent(venueCheckoutEvent);
-                ReserveCardStatements statements=new ReserveCardStatements();
-                statements.setTransactionType("10");//教练收入
-                statements.setReserveMember(order.getMember());
-                statements.setPayType(payType);
-                statements.setTransactionVolume(tutorOrder.getTotalPrice());
-                statements.setVenue(reserveVenueCons.getReserveVenue());
-                reserveCardStatementsService.save(statements);
-            }
+            //reserveVenueCons.setVenueConsList(cons.getVenueConsList());
+            //会员扣款;结算教练(事件通知)
+            VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
+            applicationContext.publishEvent(venueCheckoutEvent);
             //记录日志
             ReserveCardStatements card = new ReserveCardStatements();
             card.setVenue(reserveVenueCons.getReserveVenue());
@@ -142,6 +131,17 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 i.;
             }
             reserveCardStatementsService.save(card);
+            //清空优惠申请
+            ReserveVenueApplyCut cut = new ReserveVenueApplyCut();
+            cut.getSqlMap().put("dsf"," and c.id = '"+ reserveVenueCons.getId()+"' ");
+            List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(cut);
+            if(list!=null){
+                for(ReserveVenueApplyCut cc:list){
+                    cc.setDelFlag("1");
+                    cc.setDone("1");
+                    reserveVenueApplyCutService.save(cc);
+                }
+            }
             return reserveVenueCons;
         }
         return null;
@@ -232,9 +232,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                     price = price * rate * 0.01;
                 }
             }
-            item.setConsPrice(price);//场地消费金额
-            item.preInsert();
-            reserveVenueConsItemDao.insert(item);//保存预订信息
             //教练费不打折
             ReserveTutor tutor = reserveVenueCons.getTutor();
             tutor = reserveTutorService.get(tutor);
@@ -248,6 +245,9 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 double tutorConsume = halfHourNum * hourPrice / 2;
                 price += tutorConsume;//订单价格增加教练费
             }
+            item.setConsPrice(price);//单项金额
+            item.preInsert();
+            reserveVenueConsItemDao.insert(item);//保存预订信息
             sum += price;
         }
         reserveVenueCons.setShouldPrice(sum);//应收：没有优惠券，应收等于订单金额
@@ -255,7 +255,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         dao.update(reserveVenueCons);//订单价格更改
         //预定教练
         List<String> timeList = TimeUtils.getTimeSpace(itemList.get(0).getStartTime(), itemList.get(0).getEndTime());
-        applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));
+        applicationContext.publishEvent(new VenueReserveEvent(reserveVenueCons, timeList));//?????
     }
 
     /**

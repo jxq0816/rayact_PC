@@ -3,6 +3,7 @@
 <form id="applyCutFormBean" class="form-horizontal">
     <input type="hidden" name="id" value="${applyCut.id}"/>
     <input type="hidden" name="consId" value="${cons.id}"/>
+    <input type="hidden" name="isNew" value="1"/>
     <div class="content text-justify" style="text-align: center;vertical-align: middle;">
         <div class="row">
             <div class="col-lg-12  reserve_mid_line">
