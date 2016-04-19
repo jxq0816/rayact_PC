@@ -541,7 +541,27 @@ CREATE TABLE reserve_timecard_member_set
 	tenant_id varchar(19) comment '路由标识',
 	PRIMARY KEY (id)
 );
+DROP TABLE if exists reserve_time_card_prepayment;
+/*次卡设置*/
+CREATE TABLE reserve_time_card_prepayment
+(
+	id varchar(19) NOT NULL,
+	name varchar(30),
+	fk_reserve_member_id varchar(19) default null comment '会员',
+	fk_reserve_project_id varchar(19) default null comment '项目',
+	remain_time int comment '剩余次数',
+	remainder double comment '余额',
+	single_time_price double comment '单次金额',
 
+	create_by varchar(64),
+	create_date datetime,
+	update_by varchar(64),
+	update_date datetime,
+	remarks varchar(255),
+	del_flag char(1) DEFAULT '0' NOT NULL,
+	tenant_id varchar(19) comment '路由标识',
+	PRIMARY KEY (id)
+);
 /*教练表*/
 DROP TABLE if EXISTS  reserve_tutor;
 CREATE TABLE reserve_tutor
