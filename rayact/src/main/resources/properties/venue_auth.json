@@ -188,12 +188,18 @@
         "name": "发票管理",
         "href":"/reserve/reserveInvoice/list",
         "authorityList": []
+      },
+      {
+        "code": "tutorOrder",
+        "name": "教练订单",
+        "href":"/reserve/reserveTutorOrder/orderAll",
+        "authorityList": []
       }
     ]
   },
   {
     "code": "operationLog",
-    "name": "操作日志",
+    "name": "日志管理",
     "authorityList": [
       {
         "code": "reserveCardRechargeStatements",

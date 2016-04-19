@@ -1,14 +1,14 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveTutorOrderDao;
+import com.bra.modules.reserve.entity.ReserveTutorOrder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveTutorOrder;
-import com.bra.modules.reserve.dao.ReserveTutorOrderDao;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 教练订单Service
@@ -61,6 +61,14 @@ public class ReserveTutorOrderService extends CrudService<ReserveTutorOrderDao, 
     public List<ReserveTutorOrder> findByReserveType(String modelId, String modelKey) {
         ReserveTutorOrder tutorOrder = new ReserveTutorOrder(modelId, modelKey);
         return dao.findByReserveType(tutorOrder);
+    }
+
+    public List<Map<String,Object>> getTutorDetail(ReserveTutorOrder order){
+        return dao.getTutorDetail(order);
+    }
+
+    public List<Map<String,Object>> getTutorOrderAll(ReserveTutorOrder order){
+        return dao.getTutorOrderAll(order);
     }
 
 }

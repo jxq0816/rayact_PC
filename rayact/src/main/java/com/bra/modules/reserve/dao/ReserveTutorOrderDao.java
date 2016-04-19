@@ -5,6 +5,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveTutorOrder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 教练订单DAO接口
@@ -26,4 +27,6 @@ public interface ReserveTutorOrderDao extends CrudDao<ReserveTutorOrder> {
 
     //根据类型查询教练订单
     List<ReserveTutorOrder> findByReserveType(ReserveTutorOrder tutorOrder);
+    List<Map<String,Object>> getTutorDetail(ReserveTutorOrder tutorOrder);
+    List<Map<String,Object>> getTutorOrderAll(ReserveTutorOrder tutorOrder);
 }
