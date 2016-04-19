@@ -87,7 +87,7 @@ public class ReserveSellReportController extends BaseController {
     public String incomeAll(HttpServletRequest request) {
         String userId = request.getParameter("userId");
         String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
         Date start =  DateUtils.parseDate(startDate);
         Date end = DateUtils.parseDate(endDate);
         ReserveCardStatements reserveCardStatements = new ReserveCardStatements();
