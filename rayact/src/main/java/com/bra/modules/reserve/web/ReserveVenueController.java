@@ -43,7 +43,7 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/reserveVenue")
 public class ReserveVenueController extends BaseController {
-    private String rootURL = "http://192.168.8.3:8080/rayact";
+    private String rootURL = "http://101.200.148.75:8080";
     @Autowired
     private ReserveFieldRelationService reserveFieldRelationService;
     @Autowired
