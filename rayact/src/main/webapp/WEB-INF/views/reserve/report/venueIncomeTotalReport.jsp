@@ -68,14 +68,14 @@
                             <tr>
                                 <th>场馆</th>
                                 <th>收入类型</th>
-                                <j:if test="${'0' eq intervalTotalReport.queryType}">
+                                <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <th>储值卡</th>
                                 </j:if>
                                 <th>现金</th>
                                 <th>银行卡</th>
                                 <th>微信</th>
                                 <th>支付宝</th>
-                                <j:if test="${'0' eq intervalTotalReport.queryType}">
+                                <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <th>优惠券</th>
                                     <th>欠账</th>
                                 </j:if>
@@ -84,7 +84,7 @@
                             </thead>
                             <tbody>
                             <%-- 总统计 开始 --%>
-                            <j:if test="${'0' eq intervalTotalReport.queryType}">
+                            <j:if test="${'1' eq intervalTotalReport.queryType}">
                                 <c:set var="billStoredCard" value="0"/>
                                 <c:set var="billOther" value="0"/>
                                 <c:set var="billDue" value="0"/>
@@ -102,7 +102,7 @@
                                 <td>
                                     ${report.transactionType}
                                 </td>
-                                <j:if test="${'0' eq intervalTotalReport.queryType}">
+                                <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                     ${report.storedCardBill}
                                         <c:set var="billStoredCard" value="${billStoredCard+report.storedCardBill}"/>
@@ -126,7 +126,7 @@
                                     ${report.aliPayBill}
                                         <c:set var="billAliPay" value="${billAliPay+report.aliPayBill}"/>
                                 </td>
-                                <j:if test="${'0' eq intervalTotalReport.queryType}">
+                                <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                             ${report.otherBill}
                                         <c:set var="billOther" value="${billOther+report.otherBill}"/>
@@ -145,7 +145,7 @@
                                 </td>
                                 <td>
                                 </td>
-                                <j:if test="${'0' eq intervalTotalReport.queryType}">
+                                <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                             ${billStoredCard}
                                     </td>
@@ -163,7 +163,7 @@
                                 <td>
                                     ${billAliPay}
                                 </td>
-                                <j:if test="${'0' eq intervalTotalReport.queryType}">
+                                <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                             ${billOther}
                                     </td>

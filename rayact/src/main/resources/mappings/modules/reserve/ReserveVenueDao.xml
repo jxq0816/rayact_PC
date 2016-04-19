@@ -184,7 +184,7 @@
             when 10 then "教练收入"
 		END
 		as "transactionType",
-        <if test="queryType !=null and '0'.toString()==queryType">
+        <if test="queryType !=null and '1'.toString()==queryType">
                 sum(if(s.pay_type=1,s.transaction_volume,0)) AS "storedCardBill",
                 sum(if(s.pay_type=6,s.transaction_volume,0)) AS "otherBill",
                 sum(if(s.pay_type=7,s.transaction_volume,0)) AS "dueBill",
