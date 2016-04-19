@@ -3,6 +3,8 @@ package com.bra.modules.reserve.entity;
 import com.bra.common.persistence.SaasEntity;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Date;
+
 /**
  * 教练订单Entity
  * @author 肖斌
@@ -18,6 +20,8 @@ public class ReserveTutorOrder extends SaasEntity<ReserveTutorOrder> {
 	private String modelId;		// 业务编号(如:场地的教练费用的ID,人次售卖的教练费用的ID)
 	private String modelKey;		// 业务标识(如用field标识场地的教练费用,用visitor标识人次售卖的教练费用)
 	private String reserveType;     //1:预定,2:结账,3:取消
+	private Date startDate;
+	private Date endDate;
 	
 	public ReserveTutorOrder() {
 		super();
@@ -89,5 +93,21 @@ public class ReserveTutorOrder extends SaasEntity<ReserveTutorOrder> {
 
 	public void setReserveType(String reserveType) {
 		this.reserveType = reserveType;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 }

@@ -102,9 +102,6 @@ public class ReserveVenueController extends BaseController {
 
     @RequestMapping(value = "totalIncomeReport")
     public String totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport, Model model) {
-        if(StringUtils.isEmpty(intervalTotalReport.getQueryType())){
-            intervalTotalReport.setQueryType("0");//默认流水
-        }
         Date startDate=intervalTotalReport.getStartDate();
         Date endDate=intervalTotalReport.getEndDate();
         if(startDate==null){
@@ -254,6 +251,7 @@ public class ReserveVenueController extends BaseController {
                 for(ReserveField f:fields){
                     ReserveFieldRelation r = new ReserveFieldRelation();
                     r.setParentField(f);
+                    r.setTenantId(tenantId);
                     List<ReserveFieldRelation> rs = reserveFieldRelationService.findList(r);
                     if(rs==null||rs.size()<=0){
                         sum += 1;

@@ -1,10 +1,14 @@
 package com.bra.modules.reserve.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
+import com.bra.common.utils.DateUtils;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.bra.modules.reserve.entity.ReserveTutor;
+import com.bra.modules.reserve.entity.ReserveTutorOrder;
+import com.bra.modules.reserve.service.ReserveTutorOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
-import com.bra.common.web.BaseController;
-import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.entity.ReserveTutorOrder;
-import com.bra.modules.reserve.service.ReserveTutorOrderService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 教练订单Controller
@@ -74,6 +77,45 @@ public class ReserveTutorOrderController extends BaseController {
 		reserveTutorOrderService.delete(reserveTutorOrder);
 		addMessage(redirectAttributes, "删除教练订单成功");
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveTutorOrder/?repage";
+	}
+
+	@RequestMapping(value = "orderDetail")
+	public String orderDetail(HttpServletRequest request,HttpServletResponse response,Model model) {
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		Date start = new Date();
+		Date end = new Date();
+		if(!"".equals(startDate)&&!"".equals(endDate)){
+			start = DateUtils.parseDate(startDate);
+			end = DateUtils.parseDate(endDate);
+		}
+		String tutorId = request.getParameter("tutorId");
+		ReserveTutorOrder order = new ReserveTutorOrder();
+		order.setStartDate(start);
+		order.setEndDate(end);
+		ReserveTutor tutor = new ReserveTutor();
+		tutor.setId(tutorId);
+		order.setTutor(tutor);
+		Page page = new Page<ReserveTutorOrder>(request, response);
+		order.setPage(page);
+		List<Map<String,Object>> list = reserveTutorOrderService.getTutorDetail(order);
+		page.setList(list);
+		model.addAttribute("page", page);
+		return "modules/reserve/tutorDetailList";
+	}
+
+	@RequestMapping(value = "orderAll")
+	public String orderAll(ReserveTutorOrder reserveTutorOrder,HttpServletRequest request,HttpServletResponse response,Model model) {
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		request.setAttribute("startDate",startDate);
+		request.setAttribute("endDate",endDate);
+		Page page = new Page<ReserveTutorOrder>(request, response);
+		reserveTutorOrder.setPage(page);
+		List<Map<String,Object>> list = reserveTutorOrderService.getTutorOrderAll(reserveTutorOrder);
+		page.setList(list);
+		model.addAttribute("page", page);
+		return "reserve/commodity/tutorOrderAll";
 	}
 
 }
