@@ -130,6 +130,9 @@ public class ReserveController extends BaseController {
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         }
+        if ("5".equals(AuthorityUtils.getUserType())){
+            return "reserve/saleField/reserveFieldStatus";
+        }
         return "reserve/saleField/reserveField";
     }
 
