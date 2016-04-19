@@ -79,7 +79,7 @@
                                     <th>优惠券</th>
                                     <th>欠账</th>
                                 </j:if>
-
+                                <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -95,6 +95,7 @@
                             <c:set var="billAliPay" value="0"/>
 
                             <c:forEach items="${totalIntervalReportList}" var="report">
+                                <c:set var="sum" value="0"/>
                             <tr>
                                 <td>
                                     ${report.reserveVenue.name}
@@ -106,40 +107,51 @@
                                     <td>
                                     ${report.storedCardBill}
                                         <c:set var="billStoredCard" value="${billStoredCard+report.storedCardBill}"/>
+                                        <c:set var="sum" value="${sum+report.storedCardBill}"/>
                                     </td>
                                 </j:if>
 
                                 <td>
                                     ${report.cashBill}
                                         <c:set var="billCash" value="${billCash+report.cashBill}"/>
+                                        <c:set var="sum" value="${sum+report.cashBill}"/>
                                 </td>
                                 <td>
                                     ${report.bankCardBill}
-                                        <c:set var="billBankCard" value="${billBankCard+report.cashBill}"/>
+                                        <c:set var="billBankCard" value="${billBankCard+report.bankCardBill}"/>
+                                        <c:set var="sum" value="${sum+report.bankCardBill}"/>
                                 </td>
 
                                 <td>
                                     ${report.weiXinBill}
                                         <c:set var="billWeiXin" value="${billWeiXin+report.weiXinBill}"/>
+                                        <c:set var="sum" value="${sum+report.weiXinBill}"/>
                                 </td>
                                 <td>
                                     ${report.aliPayBill}
                                         <c:set var="billAliPay" value="${billAliPay+report.aliPayBill}"/>
+                                        <c:set var="sum" value="${sum+report.aliPayBill}"/>
                                 </td>
                                 <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                             ${report.otherBill}
                                         <c:set var="billOther" value="${billOther+report.otherBill}"/>
+                                                <c:set var="sum" value="${sum+report.otherBill}"/>
                                     </td>
                                     <td>
                                             ${report.dueBill}
                                         <c:set var="billDue" value="${billDue+report.dueBill}"/>
+                                                <c:set var="sum" value="${sum+report.dueBill}"/>
                                     </td>
                                 </j:if>
+                                <td>
+                                        ${sum}
+                                </td>
 
                             </tr>
                             </c:forEach>
                             <%-- 总统计 结束 --%>
+                            <c:set var="totalSum" value="0"/>
                             <tr>
                                 <td>
                                 </td>
@@ -148,29 +160,39 @@
                                 <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                             ${billStoredCard}
+                                                <c:set var="totalSum" value="${totalSum+billStoredCard}"/>
                                     </td>
                                 </j:if>
                                 <td>
                                     ${billCash}
+                                        <c:set var="totalSum" value="${totalSum+billCash}"/>
                                 </td>
                                 <td>
                                     ${billBankCard}
+                                        <c:set var="totalSum" value="${totalSum+billBankCard}"/>
                                 </td>
 
                                 <td>
                                     ${billWeiXin}
+                                        <c:set var="totalSum" value="${totalSum+billWeiXin}"/>
                                 </td>
                                 <td>
                                     ${billAliPay}
+                                        <c:set var="totalSum" value="${totalSum+billAliPay}"/>
                                 </td>
                                 <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>
                                             ${billOther}
+                                                <c:set var="totalSum" value="${totalSum+billOther}"/>
                                     </td>
                                     <td>
                                             ${billDue}
+                                                <c:set var="totalSum" value="${totalSum+billDue}"/>
                                     </td>
                                 </j:if>
+                                <td>
+                                    ${totalSum}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
