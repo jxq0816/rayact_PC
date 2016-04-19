@@ -11,3 +11,4 @@
 20160414:新增reserve_reserve_apply_cut表
 20160415:reserve_apply_cut 新增is_new 是不是新增的请求
 20160418:reserve_card_statements 将transaction_type的字段类型改为char(2)
+20160419:新增发票管理表reserve_invoice

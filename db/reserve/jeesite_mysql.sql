@@ -667,5 +667,29 @@ CREATE TABLE `reserve_venue_apply_cut` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
+DROP TABLE IF EXISTS `reserve_invoice`;
+CREATE TABLE `reserve_invoice` (
+  `id` varchar(19) NOT NULL,
+  `user_name` varchar(200) DEFAULT NULL,
+  `invoice_head` char(200) DEFAULT NULL,
+  `invoice_project` varchar(200) DEFAULT NULL,
+  `invoice_price` decimal(19,0) DEFAULT NULL,
+  `consumer_time` date DEFAULT NULL,
+  `apply_time` date DEFAULT NULL,
+  `is_express` varchar(2) DEFAULT NULL,
+  `address` varchar(600) DEFAULT NULL,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL,
+  `is_done` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 

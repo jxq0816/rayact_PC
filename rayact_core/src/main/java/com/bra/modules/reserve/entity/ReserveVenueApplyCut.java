@@ -26,11 +26,11 @@ public class ReserveVenueApplyCut extends SaasEntity<ReserveVenueApplyCut> {
     private String tel;//客户电话
 
     public String getIsNew() {
-        return isNew;
+        return (isNew!=null&&!"".equals(isNew))?isNew:"1";
     }
 
     public void setIsNew(String isNew) {
-        this.isNew = isNew;
+        this.isNew = (isNew!=null&&!"".equals(isNew))?isNew:"1";
     }
 
     private String isNew;//是否是新的
