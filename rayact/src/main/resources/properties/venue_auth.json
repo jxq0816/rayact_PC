@@ -182,6 +182,12 @@
         "name": "数据监控",
         "href":"/reserve/reserveListener/report",
         "authorityList": []
+      },
+      {
+        "code": "invoiceList",
+        "name": "发票管理",
+        "href":"/reserve/reserveInvoice/list",
+        "authorityList": []
       }
     ]
   },

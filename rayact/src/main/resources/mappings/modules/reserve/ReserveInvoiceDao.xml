@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveInvoiceDao">
+    
+	<sql id="reserveInvoiceColumns">
+		a.id AS "id",
+		a.is_done AS  "isDone",
+		a.user_name AS "userName",
+		a.invoice_head AS "invoiceHead",
+		a.invoice_project AS "invoiceProject",
+		a.invoice_price AS "invoicePrice",
+		a.consumer_time AS "consumerTime",
+		a.apply_time AS "applyTime",
+		a.is_express AS "isExpress",
+		a.address AS "address",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
+	</sql>
+	
+	<sql id="reserveInvoiceJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveInvoice">
+		SELECT 
+			<include refid="reserveInvoiceColumns"/>
+		FROM reserve_invoice a
+		<include refid="reserveInvoiceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveInvoice">
+		SELECT 
+			<include refid="reserveInvoiceColumns"/>
+		FROM reserve_invoice a
+		<include refid="reserveInvoiceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.tenant_id = #{tenantId}
+			<if test="userName != null">
+				and a.user_name LIKE
+				<if test="dbName == 'oracle'">'%'||#{userName}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{userName}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{userName},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveInvoice">
+		SELECT 
+			<include refid="reserveInvoiceColumns"/>
+		FROM reserve_invoice a
+		<include refid="reserveInvoiceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND a.tenant_id = #{tenantId}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_invoice(
+			id,
+			user_name,
+			is_done,
+			invoice_head,
+			invoice_project,
+			invoice_price,
+			consumer_time,
+			apply_time,
+			is_express,
+			address,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{userName},
+			#{isDone},
+			#{invoiceHead},
+			#{invoiceProject},
+			#{invoicePrice},
+			#{consumerTime},
+			#{applyTime},
+			#{isExpress},
+			#{address},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_invoice SET 	
+			user_name = #{userName},
+			is_done = #{isDone},
+			invoice_head = #{invoiceHead},
+			invoice_project = #{invoiceProject},
+			invoice_price = #{invoicePrice},
+			consumer_time = #{consumerTime},
+			apply_time = #{applyTime},
+			is_express = #{isExpress},
+			address = #{address},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_invoice SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
