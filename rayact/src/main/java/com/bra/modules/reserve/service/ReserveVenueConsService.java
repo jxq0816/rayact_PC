@@ -127,10 +127,15 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             ReserveVenueConsItem search = new ReserveVenueConsItem();
             search.setConsData(reserveVenueCons);
             List<ReserveVenueConsItem> itemList = reserveVenueConsItemDao.findList(search);
+            int num=0;
             for(ReserveVenueConsItem i:itemList){
-                i.;
+                String start=i.getStartTime()+":00";
+                String end=i.getEndTime()+":00";
+                num=TimeUtils.getTimeSpac(start,end,60);
             }
+            card.setTransactionNum(num);//预订了几个小时
             reserveCardStatementsService.save(card);
+            //记录日志 结束
             //清空优惠申请
             ReserveVenueApplyCut cut = new ReserveVenueApplyCut();
             cut.getSqlMap().put("dsf"," and c.id = '"+ reserveVenueCons.getId()+"' ");
