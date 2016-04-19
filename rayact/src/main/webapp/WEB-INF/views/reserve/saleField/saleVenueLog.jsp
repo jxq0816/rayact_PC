@@ -82,6 +82,7 @@
                                 <tr>
                                     <th>所属场馆</th>
                                     <th>所属项目</th>
+                                    <th>时间区间</th>
                                     <th>订单金额</th>
                                     <th>应收金额</th>
                                     <th>优惠金额</th>
@@ -98,10 +99,8 @@
                                 <c:forEach items="${venueLogList}" var="order">
                                     <tr style="height: 30px;">
                                         <td>${order.name}</td>
-                                        <td>${order.projectName}
-                                            <j:if test="${'1' eq order.reserve_type}">(场次)</j:if>
-                                            <j:if test="${'2' eq order.reserve_type}">(人次)</j:if>
-                                        </td>
+                                        <td>${order.projectName}</td>
+                                        <td>${order.startTime}—${order.endTime}</td>
                                         <td>${order.order_price}</td>
                                         <td>${order.should_price}</td>
                                         <td>${order.discount_price}</td>

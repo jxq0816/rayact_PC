@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,8 +59,9 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
         ReserveCardStatements card = new ReserveCardStatements();
         card.setVenue(reserveVenueOrder.getReserveVenue());
         card.setTransactionVolume(reserveVenueOrder.getCollectPrice());
-        card.setCreateDate(new Date());
         card.setPayType(reserveVenueOrder.getPayType());
+        card.setTransactionNum(reserveVenueOrder.getCollectCount());
+        card.setTransactionVolume(reserveVenueOrder.getCollectPrice());
         card.setTransactionType("9");
         card.setReserveMember(reserveVenueOrder.getMember());
         card.setRemarks("次卡消费");

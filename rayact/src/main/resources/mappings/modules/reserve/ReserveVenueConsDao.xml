@@ -132,8 +132,11 @@
         a.create_by,
         u.name as create_user,
         a.checkout_id,
-        p.name as projectName
+        p.name as projectName,
+        i.start_time as startTime,
+        i.end_time as endTime
         from reserve_venue_cons as a
+        LEFT JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
         LEFT JOIN  reserve_venue as v ON a.venue_id = v.id
         LEFT JOIN  reserve_user as u on a.create_by = u.id
         left JOIN  reserve_project as p ON a.project_id = p.id

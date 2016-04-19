@@ -23,10 +23,10 @@ public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
 	private String userName;		// 订单人姓名
 	private String orderType;		// 订单类型1：散客 2：会员
 	private Date orderDate;		// 预定日期(yyyy-MM-dd)
-	private Double orderPrice;		// 场地订单金额
+	private Double orderPrice;		// 场次票单价
+	private Integer collectCount;		// 商品数量
 	private Double collectPrice;		// 实收金额
 	private String payType;		// 支付类型(1:会员卡,2:现金,3:银行卡,4:微信,5:支付宝,6:其它)
-	private Integer collectCount;		// 商品数量
 	
 	public ReserveVenueOrder() {
 		super();
