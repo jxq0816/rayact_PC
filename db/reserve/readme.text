@@ -14,3 +14,4 @@
 20160418:reserve_card_statements 添加字段商品外键 fk_reserve_commodity_id VARCHAR(19)
 20160418:reserve_card_statements 添加字段交易数量 transaction_num int
 20160418:reserve_card_statements 添加会员余额 member_remainder double
+20160418:新增发票管理表reserve_invoice
