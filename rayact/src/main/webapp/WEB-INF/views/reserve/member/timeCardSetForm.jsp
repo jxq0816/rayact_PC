@@ -38,7 +38,7 @@
                     <sys:select cssClass="input-large" name="reserveProject.id"
                                 items="${reserveProjectList}"
                                 defaultLabel="全部" defaultValue=""
-                                value="${reserveProject}" itemLabel="name" itemValue="id">
+                                value="${reserveTimecardMemberSet.reserveProject.id}" itemLabel="name" itemValue="id">
 
                     </sys:select>
                 </div>
