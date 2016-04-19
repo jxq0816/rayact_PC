@@ -11,3 +11,6 @@
 20160414:新增reserve_reserve_apply_cut表
 20160415:reserve_apply_cut 新增is_new 是不是新增的请求
 20160418:reserve_card_statements 将transaction_type的字段类型改为char(2)
+20160418:reserve_card_statements 添加字段商品外键 fk_reserve_commodity_id VARCHAR(19)
+20160418:reserve_card_statements 添加字段交易数量 transaction_num int
+20160418:reserve_card_statements 添加会员余额 member_remainder double

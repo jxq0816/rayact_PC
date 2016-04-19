@@ -83,13 +83,17 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
     /**
      * 结账
-     *
+     * id:订单编号
+     * payType:支付类型
+     * authUserId:授权人编号
+     * discountPrice:优惠金额
+     * consPrice：实收金额
      * @param
      */
     @Transactional(readOnly = false)
     public ReserveVenueCons saveConsOrder(String id, String payType, String authUserId, Double discountPrice, Double consPrice) {
 
-        ReserveVenueCons reserveVenueCons = get(id);
+        ReserveVenueCons reserveVenueCons = dao.get(id);
         reserveVenueCons.setPayType(payType);
         User checkOutUser = new User();
         checkOutUser.setId(authUserId);
@@ -127,9 +131,16 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             card.setTransactionVolume(consPrice);
             card.setPayType(payType);
             card.setCreateDate(new Date());
-            card.setTransactionType("8");
+            card.setTransactionType("8");//场地收入
             card.setReserveMember(reserveVenueCons.getMember());
             card.setRemarks("场地收入");
+
+            ReserveVenueConsItem search = new ReserveVenueConsItem();
+            search.setConsData(reserveVenueCons);
+            List<ReserveVenueConsItem> itemList = reserveVenueConsItemDao.findList(search);
+            for(ReserveVenueConsItem i:itemList){
+                i.;
+            }
             reserveCardStatementsService.save(card);
             return reserveVenueCons;
         }

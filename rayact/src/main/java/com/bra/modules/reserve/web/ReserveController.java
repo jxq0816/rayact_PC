@@ -338,8 +338,6 @@ public class ReserveController extends BaseController {
         user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：高管；4：收银；5：财务)
         List<User> authUserList=userService.findList(user);
         model.addAttribute("authUserList", authUserList);
-        model.addAttribute("itemList", itemList);
-
         model.addAttribute("order", order);
         //赠品
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(order.getId(), ReserveVenueCons.MODEL_KEY)));
