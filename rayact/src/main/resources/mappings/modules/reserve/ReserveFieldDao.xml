@@ -141,7 +141,7 @@
 
 	<select id="getFieldNumByProject" parameterType="ReserveField" resultType="Map">
 		SELECT
-		COUNT(CASE WHEN tmp.parent_field_id IS NULL THEN tmp.id END) +2*COUNT(CASE WHEN tmp.parent_field_id IS NOT NULL THEN tmp.id END) AS num,
+		COUNT(CASE WHEN tmp.parent_field_id IS NULL THEN tmp.id END) AS num,
 		tmp.project_id AS projectId,
 		tmp.name AS projectName
 		FROM

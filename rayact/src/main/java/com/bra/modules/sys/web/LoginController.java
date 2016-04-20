@@ -141,19 +141,28 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "${adminPath}")
     public String index(HttpServletRequest request, HttpServletResponse response) {
         Principal principal = SecurityUtil.getPrincipal();
-        ReserveRoleService reserveRoleService = SpringContextHolder.getBean("reserveRoleService");
-        ReserveRole reserveRole = new ReserveRole();
-        reserveRole.setUser(UserUtils.getUser());
-        List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
-        String ids = "";
-        for(String v:venueIds){
-            ids += v;
+        boolean isLogin = false;
+        for(Map<String,String> u:users){
+            if(principal.getId().equals(u.get("userId"))){
+                isLogin = true;
+            }
         }
-        Map<String,String> user = new HashMap<>();
-        user.put("sid",request.getSession().getId());
-        user.put("userName",principal.getName());
-        user.put("venuesId",ids);
-        users.add(user);
+        if(!isLogin){
+            ReserveRoleService reserveRoleService = SpringContextHolder.getBean("reserveRoleService");
+            ReserveRole reserveRole = new ReserveRole();
+            reserveRole.setUser(UserUtils.getUser());
+            List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+            String ids = "";
+            for(String v:venueIds){
+                ids += v;
+            }
+            Map<String,String> user = new HashMap<>();
+            user.put("sid",request.getSession().getId());
+            user.put("userId",principal.getId());
+            user.put("userName",principal.getName());
+            user.put("venuesId",ids);
+            users.add(user);
+        }
 
         // 登录成功后，验证码计算器清零
         isValidateCodeLogin(principal.getLoginName(), false, true);
