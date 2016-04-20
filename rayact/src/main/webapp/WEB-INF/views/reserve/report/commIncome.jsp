@@ -54,7 +54,30 @@
         </c:forEach>
         </tr>
     </c:forEach>
+    <tr>
+        <td>总计</td>
+        <script>
+            var allData = eval('(${all})');
+        </script>
+        <c:forEach items="${vs}" var="v">
+            <script>
+                var tmpv = "${v.name}";
+                var length = allData.length;
+                console.log("00000000"+length);
+                var flag = false;
+                for(var j = 0 ; j <length ; j++){
+                    console.log("1111111"+allData[j].venue_name);
+                    if(tmpv==allData[j].venue_name){
+                        document.write("<td>"+allData[j].commodity_in +"元</td>");
+                        flag = true;
+                    }
+                }
+                if(!flag){
+                    document.write("<td>0元</td>");
+                }
+            </script>
+        </c:forEach>
+    </tr>
 </table>
-<div style="text-align: center;font-size:40px;background-color: #ebedf1;margin: auto">总计：&nbsp;<b class="sum" style="font-size:80px;color: #b93434"><script>document.write(ssum.toFixed(2));</script>￥</b></div>
 </body>
 </html>

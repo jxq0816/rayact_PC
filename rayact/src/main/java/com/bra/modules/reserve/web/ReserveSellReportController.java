@@ -214,6 +214,23 @@ public class ReserveSellReportController extends BaseController {
                 }
             }
         }
+        ReserveCardStatements reserveCardStatements = new ReserveCardStatements();
+        reserveCardStatements.setStartDate(start);
+        reserveCardStatements.setEndDate(end);
+        if(userId!=null&&!userId.equals("")){
+            User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
+            reserveCardStatements.setTenantId(user.getCompany().getId());
+        }
+        if(reserveCardStatements.getStartDate()==null||reserveCardStatements.getEndDate()==null){
+            Calendar c = Calendar.getInstance();
+            reserveCardStatements.setEndDate(c.getTime());
+            Calendar c2 = Calendar.getInstance();
+            c2.set(Calendar.HOUR_OF_DAY,6);
+            c2.set(Calendar.MINUTE,0);
+            reserveCardStatements.setStartDate(c2.getTime());
+        }
+        List<Map<String,Object>> all = reserveCardStatementsService.allReport(reserveCardStatements);
+        request.setAttribute("all",JSONArray.toJSONString(all));
         request.setAttribute("vs",vs);
         request.setAttribute("rtn",rtn);
         return "/reserve/report/commIncome";
