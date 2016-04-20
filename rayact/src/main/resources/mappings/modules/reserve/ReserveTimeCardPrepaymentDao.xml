@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveTimeCardPrepaymentDao">
+    
+	<sql id="reserveTimeCardPrepaymentColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.fk_reserve_member_id AS "reserveMember.id",
+		m.name AS "reserveMember.name",
+		a.fk_reserve_project_id AS "reserveProject.id",
+		p.name AS "reserveProject.name",
+		a.remain_time AS "remainTime",
+		a.remainder AS "remainder",
+		a.single_time_price AS "singleTimePrice",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
+	</sql>
+	
+	<sql id="reserveTimeCardPrepaymentJoins">
+		LEFT JOIN reserve_member as m on m.id=a.fk_reserve_member_id
+		LEFT JOIN reserve_project as p on p.id=a.fk_reserve_project_id
+	</sql>
+    
+	<select id="get" resultType="ReserveTimeCardPrepayment">
+		SELECT 
+			<include refid="reserveTimeCardPrepaymentColumns"/>
+		FROM reserve_time_card_prepayment a
+		<include refid="reserveTimeCardPrepaymentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveTimeCardPrepayment">
+		SELECT 
+			<include refid="reserveTimeCardPrepaymentColumns"/>
+		FROM reserve_time_card_prepayment a
+		<include refid="reserveTimeCardPrepaymentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="reserveMember!=null">
+				<if test="reserveMember.id!=null and reserveMember.id!=''">
+					AND a.fk_reserve_member_id=#{reserveMember.id}
+				</if>
+			</if>
+			<if test="reserveProject!=null">
+				<if test="reserveProject.id!=null and reserveProject.id!=''">
+					AND a.fk_reserve_project_id=#{reserveProject.id}
+				</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveTimeCardPrepayment">
+		SELECT 
+			<include refid="reserveTimeCardPrepaymentColumns"/>
+		FROM reserve_time_card_prepayment a
+		<include refid="reserveTimeCardPrepaymentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_time_card_prepayment(
+			id,
+			name,
+			fk_reserve_member_id,
+			fk_reserve_project_id,
+			remain_time,
+			remainder,
+			single_time_price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{name},
+			#{reserveMember.id},
+			#{reserveProject.id},
+			#{remainTime},
+			#{remainder},
+			#{singleTimePrice},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_time_card_prepayment SET 	
+			name = #{name},
+			fk_reserve_member_id = #{reserveMember.id},
+			fk_reserve_project_id = #{reserveProject.id},
+			remain_time = #{remainTime},
+			remainder = #{remainder},
+			single_time_price = #{singleTimePrice},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_time_card_prepayment SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

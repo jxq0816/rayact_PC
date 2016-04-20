@@ -1,17 +1,12 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
-import com.bra.modules.reserve.entity.ReserveCardStatements;
-import com.bra.modules.reserve.entity.ReserveMember;
-import com.bra.modules.reserve.entity.ReserveTimecardMemberSet;
-import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.service.ReserveCardStatementsService;
-import com.bra.modules.reserve.service.ReserveMemberService;
-import com.bra.modules.reserve.service.ReserveTimecardMemberSetService;
-import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +39,8 @@ public class ReserveTimeCardMemberController extends BaseController {
     private ReserveVenueService reserveVenueService;
     @Autowired
     private ReserveCardStatementsService reserveCardStatementsService;
+    @Autowired
+    private ReserveTimeCardPrepaymentService reserveTimeCardPrepaymentService;
 
     @ModelAttribute
     public ReserveMember get(@RequestParam(required=false) String id) {
@@ -57,12 +55,10 @@ public class ReserveTimeCardMemberController extends BaseController {
     }
 
     @RequestMapping(value = "list")
-    public String list(String cartType,ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model){
+    public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model){
         reserveMember.setCartType("2");
-       /* Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
-        model.addAttribute("page", page);*/
-        List<ReserveMember> memberList=reserveMemberService.findList(reserveMember);
-        model.addAttribute("memberList", memberList);
+        Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
+        model.addAttribute("page", page);
         return "reserve/member/timeCardMemberList";
     }
     //储值冲次数
@@ -76,10 +72,28 @@ public class ReserveTimeCardMemberController extends BaseController {
     @RequestMapping(value = "addTime")
     public String addTime(String id, Double rechargeVolume,int time,String payType,RedirectAttributes redirectAttributes){
         ReserveMember reserveMember = reserveMemberService.get(id);
+        //预付款
+        ReserveTimecardMemberSet timecardMemberSet=timecardSetService.get(reserveMember.getTimecardSet());
+        ReserveTimeCardPrepayment prepayment=new ReserveTimeCardPrepayment();
+        prepayment.setRemainder(rechargeVolume);
+        prepayment.setRemainTime(time);
+        prepayment.setReserveMember(reserveMember);
+        prepayment.setReserveProject(timecardMemberSet.getReserveProject());
+        double singlePrice=rechargeVolume/time;
+        DecimalFormat df=new DecimalFormat("0.00");
+        singlePrice=new Double(df.format(singlePrice).toString());
+        prepayment.setSingleTimePrice(singlePrice);
+        reserveTimeCardPrepaymentService.save(prepayment);
+        //预付款 结束
+        //余额 剩余次数 更新
         int residue=reserveMember.getResidue();
+        double remain=reserveMember.getRemainder();
         residue+=time;
+        remain+=rechargeVolume;
         reserveMember.setResidue(residue);
+        reserveMember.setRemainder(remain);
         reserveMemberService.save(reserveMember);
+        //余额 剩余次数 更新 结束
         //记录次卡充值记录
         ReserveCardStatements statement=new ReserveCardStatements();
         statement.setReserveMember(reserveMember);

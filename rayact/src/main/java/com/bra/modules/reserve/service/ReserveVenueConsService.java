@@ -250,61 +250,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         ReserveVenueCons venueCons = dao.get(item.getConsData().getId());
         dao.delete(venueCons);//删除订单
         reserveVenueConsItemDao.delete(item);//删除订单明细
-
-
-        /*if (item.getStartTime().equals(startTime) && endTime.equals(item.getEndTime())) {
-            venueCons.setReserveType("3");//已经取消
-            venueCons.preUpdate();
-            dao.update(venueCons);
-            reserveVenueConsItemDao.delete(item);//删除订单明细
-        } else if (TimeUtils.compare(startTime, item.getStartTime()) < 0 || TimeUtils.compare(endTime, item.getEndTime()) > 0) {
-            return null;
-        } else if (TimeUtils.compare(startTime, endTime) > 0) {
-            return null;
-        } else if (TimeUtils.compare(startTime, item.getStartTime()) == 0) {
-            item.setStartTime(endTime);
-            Double price = reserveFieldPriceService.getPrice(item.getReserveField(), venueCons.getConsType(), venueCons.getConsDate(), item.getStartTime(), item.getEndTime());
-            item.setConsPrice(price);
-            item.preUpdate();
-            reserveVenueConsItemDao.update(item);
-        } else if (TimeUtils.compare(endTime, item.getEndTime()) == 0) {
-            item.setEndTime(startTime);
-            Double price = reserveFieldPriceService.getPrice(item.getReserveField(), venueCons.getConsType(), venueCons.getConsDate(), item.getStartTime(), item.getEndTime());
-            item.setConsPrice(price);
-            item.preUpdate();
-            reserveVenueConsItemDao.update(item);
-        } else {
-            reserveVenueConsItemDao.delete(item);
-            ReserveVenueConsItem item1 = new ReserveVenueConsItem();
-            item1.setConsData(item.getConsData());
-            item1.setConsPrice(item.getConsPrice());
-            item1.setStartTime(item.getStartTime());
-            item1.setEndTime(startTime);
-            item1.setReserveVenue(item.getReserveVenue());
-            item1.setReserveField(item.getReserveField());
-            item1.setId(null);
-            Double price = reserveFieldPriceService.getPrice(item1.getReserveField(), venueCons.getConsType(), venueCons.getConsDate(), item1.getStartTime(), item1.getEndTime());
-            item1.setConsPrice(price);
-            item1.preInsert();
-
-            ReserveVenueConsItem item2 = new ReserveVenueConsItem();
-            item2.setConsData(item.getConsData());
-            item2.setConsPrice(item.getConsPrice());
-            item2.setStartTime(endTime);
-            item2.setEndTime(item.getEndTime());
-            item2.setId(null);
-            item2.setReserveVenue(item.getReserveVenue());
-            item2.setReserveField(item.getReserveField());
-            Double price2 = reserveFieldPriceService.getPrice(item2.getReserveField(), venueCons.getConsType(), venueCons.getConsDate(), item2.getStartTime(), item2.getEndTime());
-            item2.setConsPrice(price2);
-            item2.preInsert();
-
-            consItemList.add(item1);
-            consItemList.add(item2);
-            reserveVenueConsItemDao.insert(item1);
-            reserveVenueConsItemDao.insert(item2);
-        }*/
-        //修改教练订单
         applicationContext.publishEvent(new VenueCancelEvent(venueCons, tutorOrderId));
         return consItemList;
     }

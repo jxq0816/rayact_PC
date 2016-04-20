@@ -34,11 +34,6 @@
                                     <td><form:input path="mobile" htmlEscape="false" maxlength="20"
                                                     class="form-control"/>
                                     </td>
-
-                                  <%--  <td>卡号：</td>
-                                    <td><form:input path="cartno" htmlEscape="false" maxlength="20"
-                                                    class="form-control"/>
-                                    </td>--%>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
 
                                 </tr>
@@ -61,20 +56,16 @@
                                 <th>姓名</th>
                                 <th>手机号</th>
                                 <th>性别</th>
-                              <%--  <th>卡号</th>--%>
                                 <th>场馆</th>
                                 <th>次卡名称</th>
-                               <%-- <th>身份证</th>--%>
-                              <%--  <th>地址</th>--%>
                                 <th>剩余次数</th>
                                 <th>开始时间</th>
                                 <th>到期时间</th>
-                               <%-- <th>备注</th>--%>
                                     <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${memberList}" var="reserveMember">
+                            <c:forEach items="${page.list}" var="reserveMember">
                                 <tr>
                                     <td><a href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}">
                                             ${reserveMember.name}
@@ -85,22 +76,12 @@
                                     <td>
                                             ${fns:getDictLabel(reserveMember.sex, 'sex', '')}
                                     </td>
-                                  <%--  <td>
-                                            ${reserveMember.cartno}
-                                    </td>--%>
                                     <td>
                                             ${reserveMember.reserveVenue.name}
                                     </td>
                                     <td>
                                             ${reserveMember.timecardSet.name}
                                     </td>
-                                 <%--   <td>
-                                            ${reserveMember.sfz}
-                                    </td>--%>
-                                  <%--  <td>
-                                            ${reserveMember.address}
-                                    </td>--%>
-
                                     <td>
                                             ${reserveMember.residue}
                                     </td>
@@ -112,13 +93,13 @@
                                     <td>
                                         <fmt:formatDate value="${reserveMember.validityend}" type="date"/>
                                     </td>
-                                   <%-- <td>
-                                            ${reserveMember.remarks}
-                                    </td>--%>
                                     <td>
                                         <a class="btn btn-primary btn-xs"
                                            onclick="addTime('${reserveMember.id}')"><i
                                                 class="fa fa-pencil"></i>充值</a>
+                                        <a class="btn btn-primary btn-xs"
+                                           href="${ctx}/reserve/reserveTimeCardPrepayment?memberId=${reserveMember.id}"
+                                                class="fa fa-pencil">预付款</a>
                                         <a class="btn btn-primary btn-xs"
                                            href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
                                                 class="fa fa-pencil"></i>修改</a>
@@ -132,17 +113,16 @@
                             </tbody>
                         </table>
 
-                        <%--<div class="row">
+                        <div class="row">
                             <div class="col-sm-12">
-
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
                 </div>
             </div>
