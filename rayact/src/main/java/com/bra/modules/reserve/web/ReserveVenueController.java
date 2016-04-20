@@ -323,6 +323,8 @@ public class ReserveVenueController extends BaseController {
                         node.put("usedRate",String.valueOf(sum==0?0:usedNum*100/sum));
                     }
                 }
+                String url = getProjectImgUrl(String.valueOf(f.get("projectName")));
+                node.put("projectUrl",url);
                 if(!node.containsKey("usedNum")){
                     node.put("usedNum","0");
                 }
@@ -355,5 +357,17 @@ public class ReserveVenueController extends BaseController {
             }
         }
         return JSONArray.toJSONString(rtn);
+    }
+
+    private String getProjectImgUrl(String name){
+        if("篮球".equals(name)){
+            return rootURL+"/static/images/basketball.png";
+        }else if("足球".equals(name)){
+            return rootURL+"/static/images/football.png";
+        }else if("网球".equals(name)){
+            return rootURL+"/static/images/tennis.png";
+        }else{
+            return rootURL+"/static/images/basketball.png";
+        }
     }
 }
