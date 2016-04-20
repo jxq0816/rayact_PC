@@ -313,9 +313,9 @@
 			COUNT(i.field_id) AS num,
 			i.field_id,
 			i.half_court
-			FROM reserve_venue_cons_item i
-			WHERE i.half_court = '0' AND i.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="startDate!=null and endDate !=null">
+			FROM reserve_venue_cons_item i LEFT JOIN reserve_venue_cons c ON i.cons_data_id = c.id
+			WHERE i.half_court = '0' AND i.del_flag = #{DEL_FLAG_NORMAL} AND c.reserve_type = '4'
+		    <if test="startDate!=null and endDate !=null">
 				and datediff(i.cons_date,#{startDate})>=0 and datediff(#{endDate},i.cons_date)>=0
 			</if>
 			GROUP BY i.field_id
@@ -326,7 +326,8 @@
 			r.parent_field_id,
 			i.half_court
 			FROM reserve_venue_cons_item i LEFT JOIN reserve_field_relation r ON i.field_id = r.child_field_id
-			WHERE i.half_court = '1' AND i.del_flag = #{DEL_FLAG_NORMAL}
+		    LEFT JOIN reserve_venue_cons c ON i.cons_data_id = c.id
+			WHERE i.half_court = '1' AND i.del_flag = #{DEL_FLAG_NORMAL} AND c.reserve_type = '4'
 			<if test="startDate!=null and endDate !=null">
 				and datediff(i.cons_date,#{startDate})>=0 and datediff(#{endDate},i.cons_date)>=0
 			</if>

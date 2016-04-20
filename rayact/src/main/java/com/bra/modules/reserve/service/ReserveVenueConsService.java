@@ -250,6 +250,15 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         ReserveVenueCons venueCons = dao.get(item.getConsData().getId());
         dao.delete(venueCons);//删除订单
         reserveVenueConsItemDao.delete(item);//删除订单明细
+        ReserveVenueApplyCut cut = new ReserveVenueApplyCut();//删除优惠申请
+        cut.getSqlMap().put("dsf"," and c.id = '"+venueCons.getId()+"' ");
+        List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(cut);
+        if(list!=null){
+            for(ReserveVenueApplyCut c:list){
+                c.setDone("1");
+                reserveVenueApplyCutService.save(c);
+            }
+        }
         applicationContext.publishEvent(new VenueCancelEvent(venueCons, tutorOrderId));
         return consItemList;
     }

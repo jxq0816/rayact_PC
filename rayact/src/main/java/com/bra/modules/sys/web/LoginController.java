@@ -147,6 +147,10 @@ public class LoginController extends BaseController {
                 isLogin = true;
             }
         }
+        User admin = SpringContextHolder.getBean(SystemService.class).getUser(principal.getId());//管理员不记录
+        if("1".equals(admin.getUserType())){
+            isLogin = true;
+        }
         if(!isLogin){
             ReserveRoleService reserveRoleService = SpringContextHolder.getBean("reserveRoleService");
             ReserveRole reserveRole = new ReserveRole();
