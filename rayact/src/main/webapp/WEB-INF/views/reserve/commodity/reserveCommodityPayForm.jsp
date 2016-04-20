@@ -98,19 +98,7 @@
         $("#isMember").on('ifChecked', function () {
             $("#reserveMemberSelect").removeAttr("disabled");
         });
-        $("#cash").on('ifChecked', function () {
-            $("#reserveMemberSelect").attr("disabled","disabled");
-        });
-        $("#card").on('ifChecked', function () {
-            $("#reserveMemberSelect").attr("disabled","disabled");
-        });
-        $("#weixin").on('ifChecked', function () {
-            $("#reserveMemberSelect").attr("disabled","disabled");
-        });
-        $("#alipay").on('ifChecked', function () {
-            $("#reserveMemberSelect").attr("disabled","disabled");
-        });
-        $("#other").on('ifChecked', function () {
+        $("#isMember").on('ifUnchecked', function () {
             $("#reserveMemberSelect").attr("disabled","disabled");
         });
     })
