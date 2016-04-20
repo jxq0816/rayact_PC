@@ -713,6 +713,25 @@ CREATE TABLE `reserve_invoice` (
   KEY `member_id` (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Table structure for 多方式支付
+-- ----------------------------
+DROP TABLE IF EXISTS `reserve_multiple_payment`;
+CREATE TABLE `reserve_multiple_payment` (
+  `id` varchar(19) NOT NULL,
+  `order_id` varchar(19) NOT NULL comment '订单编号',
+  `pay_type` CHAR NOT NULL,
+  `payment_amount` decimal(18,2) NOT NULL,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

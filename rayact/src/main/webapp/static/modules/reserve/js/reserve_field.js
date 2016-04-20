@@ -397,7 +397,12 @@ $(document).ready(function () {
 });
 //修改价格的连接
 function changePrice() {
-    $("#button_userPwd").show();
+    if(document.getElementById('changePrice').style.display == "none"){
+        $("#changePrice").show();
+    }else{
+        $("#changePrice").hide();
+    }
+
 }
 //修改结算价格
 function editPrice() {
