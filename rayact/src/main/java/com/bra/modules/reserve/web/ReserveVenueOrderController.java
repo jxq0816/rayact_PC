@@ -92,42 +92,53 @@ public class ReserveVenueOrderController extends BaseController {
             }
             memberTimecarSet=reserveTimecardMemberSetService.get(memberTimecarSet);
             ReserveProject project = memberTimecarSet.getReserveProject();
-
-
+            //如果用户 拥有该项目的折扣卡
             if(p.getId().equals(project.getId())){
                 int residue=member.getResidue();//次卡剩余次数 等于 预付款的次数之和
+                double remainder=member.getRemainder();
                 int ticketNum=reserveVenueOrder.getCollectCount();//买了几张票
                 if(ticketNum>residue){
                     return "3";//new ViewResult(false, "该用户剩余次数不足！剩余次数="+residue);
+                }else{
+                    residue-=ticketNum;//修改该用户的剩余次数
                 }
-                residue-=ticketNum;//总次数减
                /* 预付次数减*/
+                Double collectPrice=0.0;
                 ReserveTimeCardPrepayment prepayment=new ReserveTimeCardPrepayment();
                 prepayment.setReserveMember(member);
                 prepayment.setReserveProject(project);
                 List<ReserveTimeCardPrepayment> list = reserveTimeCardPrepaymentService.findList(prepayment);
+
                 for(ReserveTimeCardPrepayment i:list){
-                    double remainder=i.getRemainder();//预付款余额
+                    double remainderPre=i.getRemainder();//预付款余额
                     double singleTimePrice=i.getSingleTimePrice();//单价
                     int remainTime=i.getRemainTime();//预付剩余次数
+                    //如果剩余次数大于等于购买票数
                     if(remainTime>=ticketNum){
-                        remainder-=singleTimePrice*ticketNum;
-                        i.setRemainder(remainder);//预付款余额 减掉
+                        collectPrice+=singleTimePrice*ticketNum;//统计本次交易额
+                        remainderPre-=singleTimePrice*ticketNum;
+                        i.setRemainder(remainderPre);//修改预付款余额
                         remainTime-=ticketNum;
-                        i.setRemainTime(remainTime);//次数减
+                        i.setRemainTime(remainTime);//修改预付款次数
                         reserveTimeCardPrepaymentService.save(i);
                         break;//本次预付款就可以结清
                     }else{
+                        //如果剩余次数 小于 购买票数
+                        collectPrice+=remainderPre;//统计本次交易额
                         i.setRemainTime(0);//次数减为零
                         i.setRemainder(0.0);//余额清空
                         reserveTimeCardPrepaymentService.save(i);
-                        ticketNum-=remainTime;
+                        ticketNum-=remainTime;//修改购买票数
                         continue;//需要 其它的预付款 来结算
                     }
                 }
-                member.setResidue(residue);
+                member.setResidue(residue);//保存剩余次数
+                remainder-=collectPrice;
+                member.setRemainder(remainder);//会员余额更新
                 reserveMemberService.save(member);
-                reserveVenueOrderService.save(reserveVenueOrder);//会员预订保存
+                reserveVenueOrder.setCollectPrice(collectPrice);//订单金额，即本次交易额
+                reserveVenueOrder.setMember(member);
+                reserveVenueOrderService.save(reserveVenueOrder);//会员结算保存
             }else{
                 return "4";//new ViewResult(false, "该用户的次票不可在该场地使用！");
             }
