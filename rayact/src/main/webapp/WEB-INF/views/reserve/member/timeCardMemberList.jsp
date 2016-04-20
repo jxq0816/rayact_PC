@@ -58,6 +58,7 @@
                                 <th>性别</th>
                                 <th>场馆</th>
                                 <th>次卡名称</th>
+                                <th>余额</th>
                                 <th>剩余次数</th>
                                 <th>开始时间</th>
                                 <th>到期时间</th>
@@ -81,6 +82,9 @@
                                     </td>
                                     <td>
                                             ${reserveMember.timecardSet.name}
+                                    </td>
+                                    <td>
+                                            ${reserveMember.remainder}
                                     </td>
                                     <td>
                                             ${reserveMember.residue}
