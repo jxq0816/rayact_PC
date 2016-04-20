@@ -52,7 +52,8 @@
 </div>
 <!--end 取消订单-->
 
-<button id="settlementBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDialogModal"  data-toggle="modal">预订</button>
+<%--结账模态--%>
+<button id="settlementBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDialogModal"  data-toggle="modal">结账</button>
 <div class="modal fade"  style="width:auto;" id="settlementDialogModal" tabindex="-1" style="display: none"  aria-labelledby="settlementModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -65,8 +66,8 @@
 
                 </div>
                 <div class="modal-body form-horizontal" id="settlementForm">
-                    <!--预定表单-->
-                    <!--end 预定表单-->
+                    <!--结账模态-->
+                    <!--end 结账模态-->
                 </div>
             </div>
             <div class="modal-footer">
@@ -78,7 +79,7 @@
         </div>
     </div>
 </div>
-
+<%--结账模态--%>
 <!--查看详情-->
 <button class="btn btn-primary btn-flat md-trigger" id="detailsBtn" style="display: none" data-modal="details-primary">Basic Form
 </button>
@@ -159,33 +160,8 @@
         </div>
     </div>
 </div>
-
-
-<%--<!--结算详情-->
-<button id="settlementDetailBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDetailDialogModal"  data-toggle="modal">预订</button>
-<div class="modal fade"  style="width:auto;" id="settlementDetailDialogModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h4 class="modal-title" id="settlementDetailLabel">结算</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="reserve_top_line">
-
-                </div>
-                <div class="modal-body form-horizontal" id="settlementDetailForm">
-                    <!--结算表单-->
-                    <!--end 结算表单-->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="closeSettlementDetailBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                    取消
-                </button>
-                <button type="button" id="saveSettlementDetailBtn" class="btn btn-primary btn-flat">确定</button>
-            </div>
-        </div>
-    </div>
-</div>--%>
+<script>
+    $("#settlementDialogModal").draggable({
+        handle: ".modal-header"
+    });
+</script>
