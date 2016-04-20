@@ -197,13 +197,21 @@ public class ReserveSellReportController extends BaseController {
         List<ReserveCommodity> cs = reserveCommodityService.findList(reserveCommodity);
         if(cs!=null){
             for(ReserveCommodity c:cs){
-                Map<String,String> node = new HashMap<>();
-                node.put("commId",c.getId());
-                node.put("commName",c.getName());
-                form.setVenueId(c.getName());
-                List<Map<String,Object>> tmp = reserveCardStatementsService.commIncome(form);
-                node.put("data",JSONArray.toJSONString(tmp));
-                rtn.add(node);
+                boolean hasIn = false;
+                for(Map<String,String> n:rtn){
+                    if(c.getName().equals(n.get("commName"))){
+                        hasIn = true;
+                    }
+                }
+                if(!hasIn){
+                    Map<String,String> node = new HashMap<>();
+                    node.put("commId",c.getId());
+                    node.put("commName",c.getName());
+                    form.setVenueId(c.getName());
+                    List<Map<String,Object>> tmp = reserveCardStatementsService.commIncome(form);
+                    node.put("data", JSONArray.toJSONString(tmp));
+                    rtn.add(node);
+                }
             }
         }
         request.setAttribute("vs",vs);

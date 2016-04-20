@@ -285,7 +285,7 @@
 		SUM(case WHEN s.transaction_type = '3' THEN s.transaction_volume ELSE 0 END) AS commodity_in,
 		SUM(CASE WHEN s.transaction_type = '8' or s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS field_in,
 		SUM(CASE WHEN s.transaction_type = '6' THEN s.transaction_volume ELSE 0 END) AS break_in,
-		SUM(CASE WHEN s.transaction_type = '3' or s.transaction_type = '6' or s.transaction_type = '8' THEN s.transaction_volume ELSE 0 END) AS all_in,
+		SUM(CASE WHEN s.transaction_type = '3' or s.transaction_type = '6' or s.transaction_type = '8' or s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS all_in,
 		SUM(CASE WHEN s.pay_type = '1' THEN s.transaction_volume ELSE 0 END) AS store_cost,
 		SUM(CASE WHEN s.transaction_type = '9' THEN s.transaction_volume ELSE 0 END) AS time_cost
 		FROM reserve_venue v
@@ -305,7 +305,7 @@
 		SUM(CASE WHEN half_court = '0' THEN num ELSE 0 END) AS fullnum,
 		SUM(CASE WHEN half_court = '1' THEN num ELSE 0 END) AS halfnum
 		FROM
-		(SELECT f.* FROM reserve_field f LEFT JOIN reserve_field_relation r ON f.id = r.child_field_id WHERE r.parent_field_id is null) f
+		(SELECT f.* FROM reserve_field f LEFT JOIN reserve_field_relation r ON f.id = r.child_field_id WHERE r.parent_field_id is null AND f.del_flag = #{DEL_FLAG_NORMAL}) f
 		LEFT JOIN
 		(
 			SELECT
@@ -314,9 +314,9 @@
 			i.field_id,
 			i.half_court
 			FROM reserve_venue_cons_item i
-			WHERE i.half_court = '0'
+			WHERE i.half_court = '0' AND i.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="startDate!=null and endDate !=null">
-				and datediff(i.update_date,#{startDate})>=0 and datediff(#{endDate},i.update_date)>=0
+				and datediff(i.cons_date,#{startDate})>=0 and datediff(#{endDate},i.cons_date)>=0
 			</if>
 			GROUP BY i.field_id
 			UNION
@@ -326,9 +326,9 @@
 			r.parent_field_id,
 			i.half_court
 			FROM reserve_venue_cons_item i LEFT JOIN reserve_field_relation r ON i.field_id = r.child_field_id
-			WHERE i.half_court = '1'
+			WHERE i.half_court = '1' AND i.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="startDate!=null and endDate !=null">
-				and datediff(i.update_date,#{startDate})>=0 and datediff(#{endDate},i.update_date)>=0
+				and datediff(i.cons_date,#{startDate})>=0 and datediff(#{endDate},i.cons_date)>=0
 			</if>
 			GROUP BY r.parent_field_id
 		) tmp ON f.id = tmp.field_id WHERE f.venue_id = #{venueId} GROUP BY f.id
