@@ -542,7 +542,11 @@ public class ReserveController extends BaseController {
                     item.setTenantId(user.getCompany().getId());
                     item.setConsData(reserveVenueCons);
                     List<ReserveVenueConsItem> items = reserveVenueConsItemService.findList(item);
-                    node.put("timeArea",items.get(0).getStartTime()+"~"+items.get(0).getEndTime());
+                    if(items!=null&&items.size()>0){
+                        node.put("timeArea",items.get(0).getStartTime()+"~"+items.get(0).getEndTime());
+                    }else{
+                        node.put("timeArea","");
+                    }
                     node.put("memberName",reserveVenueCons.getUserName());
                     node.put("orderDate",DateUtils.formatDate(reserveVenueCons.getConsDate()));
                     node.put("orderPrice",String.valueOf(reserveVenueCons.getShouldPrice()));
