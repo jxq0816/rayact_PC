@@ -64,7 +64,7 @@
     </div>
     <hr/>
     <div class="row">
-        <label for="memberCard" class="col-lg-2">支付:</label>
+        <label for="memberCard" class="col-lg-2">支付方式:</label>
         <div class="col-lg-8">
             <label class="radio-inline">
                 <input type="radio" class="icheck" id="memberCard"
@@ -94,13 +94,12 @@
                 <input type="radio" class="icheck" onchange="alert(1)" value="8" id="multiplePayRadio" name="payType"/>多方式付款
             </label>
         </div>
-        <%-- <div class="col-lg-2">
-             <button type="button" id="multiplePayButton"  class="btn btn-primary btn-flat" >多方式付款</button>
-         </div>--%>
     </div>
     <hr/>
-    <div class="row" id="multiplePay" style="display: none">
+    <div class="row" id="multiplePay" style="display: none;">
         <div class="row">
+            <div class="col-lg-3">
+            </div>
             <label for="shouldPrice" class="col-lg-1">会员卡:</label>
             <div class="col-lg-1">
                 <input value="" type="text"
@@ -128,6 +127,8 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-lg-3">
+            </div>
             <label for="shouldPrice" class="col-lg-1">支付宝:</label>
             <div class="col-lg-1">
                 <input value="" type="text"

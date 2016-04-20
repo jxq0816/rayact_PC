@@ -55,7 +55,7 @@
 <%--结账模态--%>
 <button id="settlementBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDialogModal"  data-toggle="modal">结账</button>
 <div class="modal fade" id="settlementDialogModal" tabindex="-1" style="display: none;"  aria-labelledby="settlementModalLabel" aria-hidden="true">
-    <div class="modal-dialog " style="width: 80%">
+    <div class="modal-dialog " style="width: 1600px">
         <div class="modal-content" >
             <div class="modal-header">
                 <h4 class="modal-title" id="settlementModalLabel">结算</h4>
@@ -160,8 +160,9 @@
         </div>
     </div>
 </div>
+<%--
 <script>
     $("#settlementDialogModal").draggable({
         handle: ".modal-dialog"
     });
-</script>
+</script>--%>
