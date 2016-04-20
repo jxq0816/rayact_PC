@@ -26,6 +26,7 @@
                                 <th>剩余次数</th>
                                 <th>余额</th>
                                 <th>单次价格</th>
+                                <th>充值时间</th>
                                 <th>备注</th>
                             </tr>
                             </thead>
@@ -46,6 +47,10 @@
                                     </td>
                                     <td>
                                             ${prepayment.singleTimePrice}
+                                    </td>
+                                    <td>
+
+                                            <fmt:formatDate value="${prepayment.createDate}" type="both"/>
                                     </td>
                                     <td>
                                             ${prepayment.remarks}
@@ -73,13 +78,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.icheck').iCheck({
-            checkboxClass: 'icheckbox_square-blue checkbox',
-            radioClass: 'iradio_square-blue'
-        });
-    });
-</script>
 </body>
 </html>

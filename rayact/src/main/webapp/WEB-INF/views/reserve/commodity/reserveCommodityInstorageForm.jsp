@@ -91,3 +91,11 @@
         </form:form>
     </table>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.icheck').iCheck({
+            checkboxClass: 'icheckbox_square-blue checkbox',
+            radioClass: 'iradio_square-blue'
+        });
+    });
+</script>

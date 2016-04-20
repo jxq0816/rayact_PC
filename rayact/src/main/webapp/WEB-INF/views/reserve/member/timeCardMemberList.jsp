@@ -102,7 +102,7 @@
                                            onclick="addTime('${reserveMember.id}')"><i
                                                 class="fa fa-pencil"></i>充值</a>
                                         <a class="btn btn-primary btn-xs"
-                                           href="${ctx}/reserve/reserveTimeCardPrepayment?memberId=${reserveMember.id}"
+                                           href="${ctx}/reserve/reserveTimeCardPrepayment/list?memberId=${reserveMember.id}"
                                                 class="fa fa-pencil">预付款</a>
                                         <a class="btn btn-primary btn-xs"
                                            href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i

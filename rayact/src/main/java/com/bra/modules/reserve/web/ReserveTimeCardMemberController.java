@@ -87,7 +87,11 @@ public class ReserveTimeCardMemberController extends BaseController {
         //预付款 结束
         //余额 剩余次数 更新
         int residue=reserveMember.getResidue();
-        double remain=reserveMember.getRemainder();
+        double remain=0.0;
+        if(reserveMember.getRemainder()!=null){
+            remain=reserveMember.getRemainder();
+        }
+
         residue+=time;//次数添加
         remain+=rechargeVolume;//余额增加
         reserveMember.setResidue(residue);
