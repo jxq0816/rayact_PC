@@ -47,7 +47,7 @@
                                             ${statement.reserveMember.cartno}
                                     </td>
                                     <td>
-                                        <j:if test="${statement.transactionType==1}">
+                                        <j:if test="${statement.transactionType==1 or statement.transactionType==7}">
                                             ${statement.transactionVolume}
                                         </j:if>
                                     </td>
@@ -78,7 +78,7 @@
                                             ${statement.transactionNum}
                                     </td>
                                     <td>
-                                        <j:if test="${statement.transactionType!=1}">
+                                        <j:if test="${statement.transactionType!=1 and statement.transactionType!=7}">
                                             ${statement.transactionVolume}
                                         </j:if>
                                     </td>
