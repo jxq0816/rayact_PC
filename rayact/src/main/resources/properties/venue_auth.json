@@ -199,7 +199,7 @@
   },
   {
     "code": "operationLog",
-    "name": "日志管理",
+    "name": "操作日志",
     "authorityList": [
       {
         "code": "reserveCardRechargeStatements",
