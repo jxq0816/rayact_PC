@@ -6,15 +6,15 @@
         <table>
             <thead>
             <tr>
-                <th>支付方式</th>
-                <th>支付金额</th>
+                <th class="text-center">支付方式</th>
+                <th class="text-center">支付金额</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${page.list}" var="payment">
                 <tr>
-                    <td class="text-center">${payment.payType}</td>
-                    <td class="text-center">${payment.paymentAmount}</td>
+                    <td class="text-center">${fns:getPayType(payment.payType)}</td>
+                    <td class="text-center">${payment.paymentAmount}元</td>
                 </tr>
             </c:forEach>
             </tbody>

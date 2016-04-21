@@ -163,7 +163,7 @@
 <%--多方式付款详情模态--%>
 <button id="multiplePaymentsBtn"  style="display: none" class="btn btn-primary btn-large" href="#multiplePaymentsDialogModal"  data-toggle="modal">多方式付款详情</button>
 <div class="modal fade" id="multiplePaymentsDialogModal" tabindex="-1" style="display: none;"  aria-labelledby="multiplePaymentsDialogModalLabel" aria-hidden="true">
-    <div class="modal-dialog " style="width: 1600px">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content" >
             <div class="modal-header">
                 <h4 class="modal-title">多方式付款详情</h4>
@@ -180,9 +180,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closeMultiplePaymentsBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                    取消
+                    确定
                 </button>
-                <button type="button" id="saveMultiplePaymentsBtn" class="btn btn-primary btn-flat">确定</button>
             </div>
         </div>
     </div>

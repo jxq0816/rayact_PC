@@ -34,7 +34,7 @@
 		<include refid="reserveMultiplePaymentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}  and a.tenant_id = #{tenantId}
-			<if test="orderId!=null and orderId !=''">
+			<if test="orderId !=null and orderId !=''">
 				and a.order_id=#{orderId}
 			</if>
 		</where>
