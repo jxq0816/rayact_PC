@@ -90,16 +90,31 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
      * @param
      */
     @Transactional(readOnly = false)
-    public ReserveVenueCons saveConsOrder(String id, String payType, String authUserId, Double discountPrice, Double consPrice) {
+    public ReserveVenueCons saveConsOrder(String id, String payType, String authUserId, Double discountPrice, Double consPrice,
+                                          Double memberCardInput,
+                                          Double cashInput,
+                                          Double bankCardInput,
+                                          Double weiXinInput,
+                                          Double aliPayInput,
+                                          Double couponInput,
+                                          Double owningInput) {
 
         ReserveVenueCons reserveVenueCons = dao.get(id);
         reserveVenueCons.setPayType(payType);
+        reserveVenueCons.setMemberCardInput(memberCardInput);
+        reserveVenueCons.setCashInput(cashInput);
+        reserveVenueCons.setBankCardInput(bankCardInput);
+        reserveVenueCons.setWeiXinInput(weiXinInput);
+        reserveVenueCons.setAliPayInput(aliPayInput);
+        reserveVenueCons.setCouponInput(couponInput);
+        reserveVenueCons.setOwningInput(owningInput);
         User checkOutUser = new User();
         checkOutUser.setId(authUserId);
         reserveVenueCons.setCheckOutUser(checkOutUser);//授权人
         reserveVenueCons.setDiscountPrice(discountPrice);//优惠
         reserveVenueCons.setConsPrice(consPrice);//结算价格
-        //ConsType:2:已预定;payType:1:会员卡;
+
+        //reserveType:1:已预定;payType:1:会员卡;
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");
             reserveVenueCons.preUpdate();

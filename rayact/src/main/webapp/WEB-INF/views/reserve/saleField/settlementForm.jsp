@@ -64,10 +64,10 @@
     </div>
     <hr/>
     <div class="row" id="payTypeDIV">
-        <label for="memberCard" class="col-lg-2">支付方式:</label>
+        <label for="memberCardRadio" class="col-lg-2">支付方式:</label>
         <div class="col-lg-8">
             <label class="radio-inline">
-                <input type="radio" class="icheck" id="memberCard"
+                <input type="radio" class="icheck" id="memberCardRadio"
                        <j:if test="${'1' eq order.consType}">disabled="disabled"</j:if> value="1"
                        <j:if test="${'2' eq order.consType}">checked="checked"</j:if> name="payType"/>会员卡
             </label>
@@ -100,52 +100,38 @@
         <div class="row">
             <div class="col-lg-3">
             </div>
-            <label for="shouldPrice" class="col-lg-1">会员卡:</label>
+            <label for="memberCardInput"  class="col-lg-1">会员卡:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input id="memberCardInput" value="0" type="text" class="form-control"/>
             </div>
-            <label for="shouldPrice" class="col-lg-1">现金:</label>
+            <label for="cashInput" class="col-lg-1">现金:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input  id="cashInput" value="0" type="text" class="form-control"/>
             </div>
 
-            <label for="shouldPrice" class="col-lg-1">银行卡:</label>
+            <label for="bankCardInput" class="col-lg-1">银行卡:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input  id="bankCardInput" value="0" type="text" class="form-control"/>
             </div>
-            <label for="shouldPrice" class="col-lg-1">微信:</label>
+            <label for="weiXinInput" class="col-lg-1">微信:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input id="weiXinInput" value="0" type="text" class="form-control"/>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-3">
             </div>
-            <label for="shouldPrice" class="col-lg-1">支付宝:</label>
+            <label for="aliPayInput" class="col-lg-1">支付宝:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input id="aliPayInput" type="text" class="form-control" value="0"/>
             </div>
-            <label for="shouldPrice" class="col-lg-1">优惠券:</label>
+            <label for="couponInput" class="col-lg-1">优惠券:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input id="couponInput" type="text" class="form-control" value="0"/>
             </div>
-            <label for="shouldPrice" class="col-lg-1">打白条:</label>
+            <label for="owningInput" class="col-lg-1">打白条:</label>
             <div class="col-lg-1">
-                <input value="" type="text"
-                       class="form-control"
-                       name="shouldPrice"/>
+                <input id="owningInput" type="text" class="form-control" value="0"/>
             </div>
         </div>
     </div>

@@ -305,7 +305,27 @@ $(document).ready(function () {
             errorLoding("请选择支付类型！");
             return;
         }
-      /*  var data = $("#settlementFormBean").serializeArray();*/
+        var memberCardInput=0;
+        var cashInput=0;
+        var bankCardInput=0;
+        var weiXinInput=0;
+        var aliPayInput=0;
+        var couponInput=0;
+        var owningInput=0;
+        if(payType=='8'){
+            memberCardInput=eval($("#memberCardInput").val());
+            cashInput=eval($("#cashInput").val());
+            bankCardInput=eval($("#bankCardInput").val()) ;
+            weiXinInput=eval($("#weiXinInput").val()) ;
+            aliPayInput=eval($("#aliPayInput").val()) ;
+            couponInput=eval($("#couponInput").val()) ;
+            owningInput=eval($("#owningInput").val()) ;
+            var sum=eval(memberCardInput+cashInput+bankCardInput+weiXinInput+aliPayInput+couponInput+owningInput);
+            if(sum!=consPrice){
+                errorLoding("多方式付款的总和不等于实收");
+                return;
+            }
+        }
         $.postItems({
             url: ctx + '/reserve/field/saveSettlement?random='+Math.random(),
             data: {
@@ -314,7 +334,14 @@ $(document).ready(function () {
                 payType:payType,
                 authUserId:authUserId,
                 discountPrice:discountPrice,
-                consPrice:consPrice
+                consPrice:consPrice,
+                memberCardInput:memberCardInput,
+                cashInput:cashInput,
+                bankCardInput:bankCardInput,
+                weiXinInput:weiXinInput,
+                aliPayInput:aliPayInput,
+                couponInput:couponInput,
+                owningInput:owningInput,
             },
             success: function (values) {
                 if (values != null) {

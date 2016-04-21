@@ -359,9 +359,18 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "saveSettlement")
     @ResponseBody
     @Token(remove = true)
-    public List<Map<String, String>> saveSettlement(String id,String payType,String authUserId,Double discountPrice,Double consPrice) {
+    public List<Map<String, String>> saveSettlement(String id,String payType,String authUserId,Double discountPrice,Double consPrice,
+                                                    Double memberCardInput,
+                                                    Double cashInput,
+                                                    Double bankCardInput,
+                                                    Double weiXinInput,
+                                                    Double aliPayInput,
+                                                    Double couponInput,
+                                                    Double owningInput
+                                                    ) {
 
-        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(id,payType,authUserId,discountPrice,consPrice);
+        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(id,payType,authUserId,discountPrice,consPrice,
+                memberCardInput,cashInput,bankCardInput,weiXinInput,aliPayInput,couponInput,owningInput);
         List<Map<String, String>> list = getReserveMap(venueCons.getVenueConsList());
         return list;
     }

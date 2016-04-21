@@ -46,8 +46,16 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     private User checkOutUser;
 
-
     private String payType;//预定金额支付类型(1:会员卡;2:现金;3:银行卡;4:微信;5:支付宝;6:其它)
+
+    /*多方式付款*/
+    private Double memberCardInput;
+    private Double cashInput;
+    private Double bankCardInput;
+    private Double weiXinInput;
+    private Double aliPayInput;
+    private Double couponInput;
+    private Double owningInput;
 
     private List<ReserveVenueConsItem> venueConsList = Lists.newArrayList();//预订详情
 
@@ -213,6 +221,62 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     public void setCheckOutUser(User checkOutUser) {
         this.checkOutUser = checkOutUser;
+    }
+
+    public Double getMemberCardInput() {
+        return memberCardInput;
+    }
+
+    public void setMemberCardInput(Double memberCardInput) {
+        this.memberCardInput = memberCardInput;
+    }
+
+    public Double getCashInput() {
+        return cashInput;
+    }
+
+    public void setCashInput(Double cashInput) {
+        this.cashInput = cashInput;
+    }
+
+    public Double getBankCardInput() {
+        return bankCardInput;
+    }
+
+    public void setBankCardInput(Double bankCardInput) {
+        this.bankCardInput = bankCardInput;
+    }
+
+    public Double getWeiXinInput() {
+        return weiXinInput;
+    }
+
+    public void setWeiXinInput(Double weiXinInput) {
+        this.weiXinInput = weiXinInput;
+    }
+
+    public Double getAliPayInput() {
+        return aliPayInput;
+    }
+
+    public void setAliPayInput(Double aliPayInput) {
+        this.aliPayInput = aliPayInput;
+    }
+
+    public Double getCouponInput() {
+        return couponInput;
+    }
+
+    public void setCouponInput(Double couponInput) {
+        this.couponInput = couponInput;
+    }
+
+    public Double getOwningInput() {
+        return owningInput;
+    }
+
+    public void setOwningInput(Double owningInput) {
+        this.owningInput = owningInput;
     }
 
     //-------------以下和数据库无关字段-----------------
