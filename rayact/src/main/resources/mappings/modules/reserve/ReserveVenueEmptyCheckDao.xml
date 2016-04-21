@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveVenueEmptyCheckDao">
+    
+	<sql id="reserveVenueEmptyCheckColumns">
+		a.id AS "id",
+		a.venue_id AS "venue.id",
+		a.field_id AS "field.id",
+		a.start_time AS "startTime",
+		a.end_time AS "endTime",
+		a.check_date AS "checkDate",
+		a.check_week AS "checkWeek",
+		a.check_status AS "checkStatus",
+		a.half_court AS "halfCourt",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
+	</sql>
+	
+	<sql id="reserveVenueEmptyCheckJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveVenueEmptyCheck">
+		SELECT 
+			<include refid="reserveVenueEmptyCheckColumns"/>
+		FROM reserve_venue_empty_check a
+		<include refid="reserveVenueEmptyCheckJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveVenueEmptyCheck">
+		SELECT 
+			<include refid="reserveVenueEmptyCheckColumns"/>
+		FROM reserve_venue_empty_check a
+		<include refid="reserveVenueEmptyCheckJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="checkDate != null and checkDate != ''">
+				and (a.check_date = #{checkDate}
+				<!-- <if test="frequency!=null and frequency!=''">
+                     <![CDATA[
+                     or (a.frequency='3' and a.cons_week=#{consWeek} and a.start_date<=date(now()) and a.end_date>=date(now())) or (a.frequency='2' and a.start_date<=date(now()) and a.end_date>=date(now()))
+                     ]]>
+                 </if>-->
+				)
+			</if>
+			<if test="venue != null and venue.id != null and venue.id !=''">
+				and a.venue_id = #{venue.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveVenueEmptyCheck">
+		SELECT 
+			<include refid="reserveVenueEmptyCheckColumns"/>
+		FROM reserve_venue_empty_check a
+		<include refid="reserveVenueEmptyCheckJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_venue_empty_check(
+			id,
+			venue_id,
+			field_id,
+			start_time,
+			end_time,
+			check_date,
+			check_week,
+			check_status,
+			half_court,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{venue.id},
+			#{field.id},
+			#{startTime},
+			#{endTime},
+			#{checkDate},
+			#{checkWeek},
+			#{checkStatus},
+			#{halfCourt},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_venue_empty_check SET 	
+			venue_id = #{venue.id},
+			field_id = #{field.id},
+			start_time = #{startTime},
+			end_time = #{endTime},
+			check_date = #{checkDate},
+			check_week = #{checkWeek},
+			check_status = #{checkStatus},
+			half_court = #{halfCourt},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_venue_empty_check SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
