@@ -165,6 +165,7 @@ public class LoginController extends BaseController {
             user.put("userId",principal.getId());
             user.put("userName",principal.getName());
             user.put("venuesId",ids);
+            user.put("mobile",admin.getMobile());
             users.add(user);
         }
 

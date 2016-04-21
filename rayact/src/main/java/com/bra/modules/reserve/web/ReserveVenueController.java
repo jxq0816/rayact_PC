@@ -272,18 +272,22 @@ public class ReserveVenueController extends BaseController {
                 List<Map<String,String>> users = LoginController.users;
                 String userName = "";
                 String userIds = "";
+                String mobile = "";
                 for(Map<String,String> user : users){
                     if(user.get("venuesId").contains(v.getId())){
                         userName += user.get("userName")+",";
                         userIds += user.get("userId")+",";
+                        mobile += user.get("mobile")+",";
                     }
                 }
                 if(!"".equals(userName)&&!"".equals(userIds)){
                     userName = userName.substring(0,userName.length()-1);
                     userIds = userIds.substring(0,userIds.length()-1);
+                    mobile = mobile.substring(0,mobile.length()-1);
                 }
                 venueNode.put("managerName",userName);//从排班中获取
                 venueNode.put("managerId",userIds);//从排班中获取
+                venueNode.put("mobile",mobile);
                 List<AttMain> attMains = new ArrayList();
                 AttMainService attMainService = SpringContextHolder.getBean("attMainService");
                 attMains = attMainService.getAttMain(v.getId(), "ReserveVenue", "venuePic");
