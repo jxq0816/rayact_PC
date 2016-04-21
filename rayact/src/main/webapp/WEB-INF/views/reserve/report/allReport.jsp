@@ -11,7 +11,7 @@
 <head>
     <meta name="decorator" content="main"/>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
-    <title>场馆收入统计</title>
+    <title>场馆收益统计</title>
 </head>
 <body>
 <c:if test="${param.alone != 'true'}">
