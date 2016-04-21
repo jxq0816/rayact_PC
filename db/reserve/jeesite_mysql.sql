@@ -732,6 +732,31 @@ CREATE TABLE `reserve_multiple_payment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Table structure for reserve_venue_empty_check
+-- ----------------------------
+DROP TABLE IF EXISTS `reserve_venue_empty_check`;
+CREATE TABLE `reserve_venue_empty_check` (
+  `id` varchar(19) NOT NULL,
+  `venue_id` varchar(19) DEFAULT NULL COMMENT '场馆ID',
+  `field_id` varchar(19) DEFAULT NULL COMMENT '场地ID',
+  `start_time` varchar(12) DEFAULT NULL COMMENT '预定时间',
+  `end_time` varchar(12) DEFAULT NULL COMMENT '预定时间',
+  `check_date` date DEFAULT NULL COMMENT '预定时间',
+  `check_week` varchar(5) DEFAULT NULL COMMENT '周几',
+  `check_status` varchar(2) DEFAULT NULL COMMENT '审核状态（1，通过；2，未通过）',
+  `half_court` varchar(2) DEFAULT NULL COMMENT '是否半场(1:是)',
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 

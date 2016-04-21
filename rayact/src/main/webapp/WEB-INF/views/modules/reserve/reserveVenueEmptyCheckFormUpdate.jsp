@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <form id="checkEmptyBean" class="form-horizontal">
-	<input type="hidden" name="token" value="${token}"/>
-	<input type="hidden" name="id" value="${token}"/>
+	<input type="hidden" name="id" value="${check.id}"/>
 	<input type="hidden" name="halfCourt" value="${isHalfCourt}"/>
 	<div class="content text-justify" style="text-align: center;vertical-align: middle;">
 		<div class="row">
@@ -49,11 +48,14 @@
 					<div class="form-group">
 						<label for="normalStatus" class="col-sm-2 control-label">审核状态:</label>
 						<div class="col-lg-2">
-							<input type="radio" id="normalStatus" class="icheck" value="0" checked="checked"
+							<input type="radio" id="normalStatus" class="icheck" value="0"
+								   <c:if test="${check.checkStatus == '0'}">checked="checked"</c:if>
 								   name="checkStatus"/>正常
 						</div>
 						<div class="col-lg-3">
-							<input type="radio" id="abnormalStatus" class="icheck" value="1" name="checkStatus"/>异常
+							<input type="radio" id="abnormalStatus" class="icheck" value="1"
+								   <c:if test="${check.checkStatus == '1'}">checked="checked"</c:if>
+								   name="checkStatus"/>异常
 						</div>
 					</div>
 				</div>
@@ -61,7 +63,7 @@
 					<div class="form-group">
 						<label for="remarks" class="col-sm-2 control-label">备注:</label>
 						<div class="col-sm-9">
-							<textarea id="remarks" name="remarks" class="form-control"></textarea>
+							<textarea id="remarks" name="remarks" class="form-control">${check.remarks}</textarea>
 						</div>
 					</div>
 				</div>

@@ -69,6 +69,8 @@ public class ReserveController extends BaseController {
     private ReserveVenueApplyCutService reserveVenueApplyCutService;
     @Autowired
     private ReserveProjectService reserveProjectService;
+    @Autowired
+    private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
 
 
     //场地状态界面
@@ -635,5 +637,67 @@ public class ReserveController extends BaseController {
         Map<String,String> node = new HashMap<>();
         node.put("status","fail");
         return JSONObject.toJSONString(node);
+    }
+
+    //空场审核
+    @RequestMapping(value = "checkEmpty")
+    @Token(save = true)
+    public String checkEmpty(Model model, String fieldId, Long date, String time, String venueId) throws ParseException {
+        ReserveField reserveField = reserveFieldService.get(fieldId);
+        model.addAttribute("reserveField", reserveField);
+        String isHalfCourt=reserveFieldService.getFiledType(reserveField);
+        model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
+        //获取预定开始时间
+        String start=time.substring(0,5)+":00";
+        List<String> times = TimeUtils.getTimeSpacList(start, "00:30:00", TimeUtils.BENCHMARK);
+        String checkDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
+        model.addAttribute("checkDate", checkDate);
+        model.addAttribute("times", times);
+        if (StringUtils.isNotBlank(time)) {
+            String[] timeStr = time.split("-");
+            model.addAttribute("startTime", timeStr[0]);
+            model.addAttribute("endTime", timeStr[1]);
+        }
+        model.addAttribute("venueId", venueId);
+        return "modules/reserve/reserveVenueEmptyCheckForm";
+    }
+
+    //空场审核
+    @RequestMapping(value = "checkEmptyUpdate")
+    @Token(save = true)
+    public String checkEmptyUpdate(Model model,String checkId) throws ParseException {
+        ReserveVenueEmptyCheck check = reserveVenueEmptyCheckService.get(checkId);
+        ReserveField reserveField = reserveFieldService.get(check.getField().getId());
+        model.addAttribute("check",check);
+        model.addAttribute("reserveField", reserveField);
+        model.addAttribute("isHalfCourt", check.getHalfCourt());//是否半场
+        //获取预定开始时间
+        String start=check.getStartTime()+":00";
+        List<String> times = TimeUtils.getTimeSpacList(start, "00:30:00", TimeUtils.BENCHMARK);
+        model.addAttribute("checkDate", DateUtils.formatDate(check.getCheckDate()));
+        model.addAttribute("times", times);
+        model.addAttribute("startTime", check.getStartTime());
+        model.addAttribute("endTime", check.getEndTime());
+        model.addAttribute("venueId", check.getVenue().getId());
+        return "modules/reserve/reserveVenueEmptyCheckFormUpdate";
+    }
+
+    //空场审核
+    @RequestMapping(value = "saveCheckEmpty")
+    @Token(save = true)
+    @ResponseBody
+    public String saveCheckEmpty(ReserveVenueEmptyCheck reserveVenueEmptyCheck) throws ParseException {
+        boolean bool = true;//时间段是否可用
+        Date checkDate = reserveVenueEmptyCheck.getCheckDate();
+        String startTime = reserveVenueEmptyCheck.getStartTime();
+        String endTime = reserveVenueEmptyCheck.getEndTime();
+        ReserveField field = reserveVenueEmptyCheck.getField();//场地
+        bool = reserveVenueConsItemService.checkReserveTime(checkDate,field,startTime,endTime);
+        if(bool){
+            reserveVenueEmptyCheckService.save(reserveVenueEmptyCheck);//保存预订信息
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 }

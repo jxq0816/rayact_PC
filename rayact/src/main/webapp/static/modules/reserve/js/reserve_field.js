@@ -59,10 +59,10 @@ $(document).ready(function () {
             formLoding('请输入预定人姓名');
             return false;
         }
-      /*  if (consMobile == '') {
-            formLoding('请输入预定人手机');
-            return false;
-        }*/
+        /*  if (consMobile == '') {
+         formLoding('请输入预定人手机');
+         return false;
+         }*/
         if (frequency == '2' || frequency == '3') {
             if (endDate == '') {
                 formLoding('结束时间不能为空');
@@ -82,20 +82,20 @@ $(document).ready(function () {
                         else {
                             formLoding('订单预定成功!');
                             location.reload(true);
-                           /* $(".table-chang tbody td").each(function (index) {
-                                var $this = $(this);
-                                var fieldId = $this.attr("data-field");
-                                var time = $this.attr("data-time");
-                                $.each(values, function (index, item) {
-                                    if (item.fieldId == fieldId && time == item.time) {
-                                        /!*$this.removeClass("access");
-                                         $this.attr("status", "1");
-                                         $this.attr("data-item", item.itemId);
-                                         $this.text(userName);*!/
-                                        location.reload(true);
-                                    }
-                                });
-                            });*/
+                            /* $(".table-chang tbody td").each(function (index) {
+                             var $this = $(this);
+                             var fieldId = $this.attr("data-field");
+                             var time = $this.attr("data-time");
+                             $.each(values, function (index, item) {
+                             if (item.fieldId == fieldId && time == item.time) {
+                             /!*$this.removeClass("access");
+                             $this.attr("status", "1");
+                             $this.attr("data-item", item.itemId);
+                             $this.text(userName);*!/
+                             location.reload(true);
+                             }
+                             });
+                             });*/
                         }
                     });
                 }
@@ -165,6 +165,49 @@ $(document).ready(function () {
             }
         });
     }
+    //空场审核
+    function checkEmpty(t) {
+        var fieldId = $(t).attr("data-field");
+        var time = $(t).attr("data-time");
+        var isHalfCourt = $(t).attr("data-isHalfCourt");
+        var date = consDate;//日期
+        jQuery.postItems({
+            url: ctx + '/reserve/field/checkEmpty',
+            data: {fieldId: fieldId, time: time, date: date, venueId: venueId, isHalfCourt: isHalfCourt},
+            success: function (result) {
+                $("#checkEmptyForm").html(result);
+                $("#checkEmptyDialog").click();
+                $("#checkEmptyForm .select2").select2({
+                    width: '100%'
+                });
+                $('#checkEmptyForm .icheck').iCheck({
+                    checkboxClass: 'icheckbox_square-blue checkbox',
+                    radioClass: 'iradio_square-blue'
+                });
+            }
+        });
+    }
+
+    //空场审核
+    function updateCheckEmpty(t) {
+        var checkId = $(t).attr("data-check");
+        jQuery.postItems({
+            url: ctx + '/reserve/field/checkEmptyUpdate',
+            data: {checkId: checkId},
+            success: function (result) {
+                $("#checkEmptyForm").html(result);
+                $("#checkEmptyDialog").click();
+                $("#checkEmptyForm .select2").select2({
+                    width: '100%'
+                });
+                $('#checkEmptyForm .icheck').iCheck({
+                    checkboxClass: 'icheckbox_square-blue checkbox',
+                    radioClass: 'iradio_square-blue'
+                });
+            }
+        });
+    }
+
 
     //保存赠品
     $("#saveGiftBtn").on('click', function () {
@@ -213,6 +256,24 @@ $(document).ready(function () {
         });
     });
 
+    //保存空场审核
+    $("#saveCheckBtn").on('click', function () {
+        var data = $("#checkEmptyBean").serializeArray();
+        $.postItems({
+            url: ctx + '/reserve/field/saveCheckEmpty',
+            data: data,
+            success: function (values) {
+                if (values == "success") {
+                    successLoding('保存成功!');
+                    location.reload();
+                }
+                if (values == "fail") {
+                    errorLoding("保存失败！")
+                }
+            }
+
+        });
+    });
 
     //查看详情
     function details(t) {
@@ -287,7 +348,7 @@ $(document).ready(function () {
             errorLoding("优惠金额不能大于应收金额！");
             return;
         }
-       /* 以上为数据验证*/
+        /* 以上为数据验证*/
         var consPrice=shouldPrice-discountPrice;
         if(isNaN(consPrice)){
             errorLoding("结算金额必须为数字！");
@@ -305,27 +366,7 @@ $(document).ready(function () {
             errorLoding("请选择支付类型！");
             return;
         }
-        var memberCardInput=0;
-        var cashInput=0;
-        var bankCardInput=0;
-        var weiXinInput=0;
-        var aliPayInput=0;
-        var couponInput=0;
-        var owningInput=0;
-        if(payType=='8'){
-            memberCardInput=eval($("#memberCardInput").val());
-            cashInput=eval($("#cashInput").val());
-            bankCardInput=eval($("#bankCardInput").val()) ;
-            weiXinInput=eval($("#weiXinInput").val()) ;
-            aliPayInput=eval($("#aliPayInput").val()) ;
-            couponInput=eval($("#couponInput").val()) ;
-            owningInput=eval($("#owningInput").val()) ;
-            var sum=eval(memberCardInput+cashInput+bankCardInput+weiXinInput+aliPayInput+couponInput+owningInput);
-            if(sum!=consPrice){
-                errorLoding("多方式付款的总和不等于实收");
-                return;
-            }
-        }
+        /*  var data = $("#settlementFormBean").serializeArray();*/
         $.postItems({
             url: ctx + '/reserve/field/saveSettlement?random='+Math.random(),
             data: {
@@ -334,14 +375,7 @@ $(document).ready(function () {
                 payType:payType,
                 authUserId:authUserId,
                 discountPrice:discountPrice,
-                consPrice:consPrice,
-                memberCardInput:memberCardInput,
-                cashInput:cashInput,
-                bankCardInput:bankCardInput,
-                weiXinInput:weiXinInput,
-                aliPayInput:aliPayInput,
-                couponInput:couponInput,
-                owningInput:owningInput,
+                consPrice:consPrice
             },
             success: function (values) {
                 if (values != null) {
@@ -370,12 +404,19 @@ $(document).ready(function () {
     });
 
 
+
     var accessMenuData = [[{
         text: "预定",
         func: function () {
             $(this).dblclick();
         }
-    }]];
+    }],
+        [{
+            text: "空场审核",
+            func: function () {
+                checkEmpty($(this));
+            }
+        }]];
     var reserveMenuData = [[{
         text: "取消订单",
         func: function () {
@@ -409,6 +450,12 @@ $(document).ready(function () {
             details($(this));
         }
     }]];
+    var checkEmptyMenuData = [[{
+        text: "空场情况",
+        func: function () {
+            updateCheckEmpty($(this));
+        }
+    }]];
     //mouserover
     $(".reserveTd").unbind("mouserover");
     $(".reserveTd").on('mousedown', function () {
@@ -416,8 +463,9 @@ $(document).ready(function () {
             $(this).smartMenu(accessMenuData, {name: "access"});
         } else if ($(this).hasClass("red")) {//已经结账
             $(this).smartMenu(checkoutMenuData, {name: "checkout"});
-        }
-        else {//取消预定
+        }else if($(this).hasClass("normal")||$(this).hasClass("abnormal")){
+            $(this).smartMenu(checkEmptyMenuData, {name: "checkEmpty"});
+        }else {//取消预定
             $(this).smartMenu(reserveMenuData, {name: "reserve"});
         }
     });

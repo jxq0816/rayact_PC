@@ -41,6 +41,8 @@ public class ReserveFieldPriceService {
     private ReserveStoredcardMemberSetDao reserveStoredcardMemberSetDao;
     @Autowired
     private ReserveFieldRelationService relationService;
+    @Autowired
+    private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
 
     public Double getMemberDiscountRate(ReserveMember member) {
         ReserveMember reserveMember = reserveMemberDao.get(member);
@@ -154,7 +156,11 @@ public class ReserveFieldPriceService {
         reserveVenueCons.setConsData(venueCons);
         //查询所有预定的信息(作为本场地的预定标记)
         List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueCons);
-
+        //查询已审核的信息
+        ReserveVenueEmptyCheck reserveVenueEmptyCheck = new ReserveVenueEmptyCheck();
+        reserveVenueEmptyCheck.setVenue(new ReserveVenue(venueId));
+        reserveVenueEmptyCheck.setCheckDate(date);
+        List<ReserveVenueEmptyCheck> emptyChecks = reserveVenueEmptyCheckService.findList(reserveVenueEmptyCheck);
         //查询价格
         ReserveFieldPriceSet reserveFieldPriceSet = new ReserveFieldPriceSet();
         reserveFieldPriceSet.setReserveVenue(new ReserveVenue(venueId));
@@ -180,7 +186,7 @@ public class ReserveFieldPriceService {
             reserveFieldPriceSet.setReserveTimeInterval(null);//将时令制空
             reserveFieldPriceSetList.addAll(list);
         }
-        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);//获取场地的价格列表
+        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表
 
         return fieldPriceList;
     }
@@ -205,6 +211,21 @@ public class ReserveFieldPriceService {
         }
         return null;
     }
+    private ReserveVenueEmptyCheck hasCheck(List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet fieldPriceSet, String time) {
+        for (ReserveVenueEmptyCheck check : checks) {
+            if (fieldPriceSet.getReserveField().getId().equals(check.getField().getId())) {
+                String startTime = check.getStartTime();
+                String endTime = check.getEndTime();
+                List<String> times = TimeUtils.getTimeSpacListValue(startTime + ":00", endTime + ":00", 30);
+                for (String t : times) {
+                    if (time.equals(t)) {
+                        return check;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     //获取场地的时间，价格，状态
     /*
@@ -214,7 +235,7 @@ public class ReserveFieldPriceService {
         times：时间表
      */
     private void buildTimePrice(List<FieldPrice> fieldPriceList, List<ReserveFieldPriceSet> reserveFieldPriceSetList,
-                                List<ReserveVenueConsItem> venueConsList, List<String> times) {
+                                List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
 
         FieldPrice fieldPrice;
         //遍历场地的时间价格列表
@@ -252,6 +273,13 @@ public class ReserveFieldPriceService {
                 } else {
                     timePrice.setStatus("0");//没有预订
                 }
+                //查询时间time是否已经通过空场审核
+                ReserveVenueEmptyCheck check = hasCheck(reserveVenueEmptyChecks, fieldPriceSet, time);
+                if (check != null) {//已经审核
+                    timePrice.setCheck(check);//设置审核
+                    timePrice.setUserName(check.getCreateBy().getName());//审核人
+                    timePrice.setStatus("0"+check.getCheckStatus());//审核状态
+                }
                 //查询该场地是否有半场
                 ReserveFieldRelation relation = new ReserveFieldRelation();
                 relation.setParentField(field);
@@ -277,7 +305,7 @@ public class ReserveFieldPriceService {
                             if (parentList != null && parentList.size() != 0) {
                                 ReserveFieldPriceSet j = parentList.get(0);//这里会有6个时间价格的设置，只需要取一个，目的是获取时间段，然后根据时间段和场地，来查询是否可预订
                                 List<TimePrice> fullTimePriceList = j.getTimePriceList();//获取全场 时间和价格 组成的Jason
-                                FieldPrice fullFieldPrice = buildFieldPrice(fullTimePriceList, venueConsList, fullFieldSet, times);// 查询全场的 时间 价格 状态
+                                FieldPrice fullFieldPrice = buildFieldPrice(fullTimePriceList, venueConsList,reserveVenueEmptyChecks, fullFieldSet, times);// 查询全场的 时间 价格 状态
                                 fullFieldPrice.setFieldId(fieldParentId);//设置场地编号
                                 fullFieldPrice.setFieldName(fieldParentName);//设置场地名称
                                 fullFieldPrice.setHaveHalfCourt("0");//无半场
@@ -299,7 +327,7 @@ public class ReserveFieldPriceService {
                         if (leftList != null && leftList.size() != 0) {
                             leftFieldSet = reserveFieldPriceSetDao.findList(leftFieldSet).get(0);
                             List<TimePrice> leftTimePriceList = leftFieldSet.getTimePriceList();//获取左侧半场 时间和价格 组成的Jason
-                            FieldPrice leftFieldPrice = buildFieldPrice(leftTimePriceList, venueConsList, leftFieldSet, times);// 查询半场的 时间 价格 状态
+                            FieldPrice leftFieldPrice = buildFieldPrice(leftTimePriceList, venueConsList,reserveVenueEmptyChecks, leftFieldSet, times);// 查询半场的 时间 价格 状态
                             leftFieldPrice.setFieldId(fieldLeftId);//设置场地编号
                             leftFieldPrice.setFieldName(fieldLeftName);//设置场地名称
                             leftFieldPrice.setHaveHalfCourt("0");//无半场
@@ -318,7 +346,7 @@ public class ReserveFieldPriceService {
                         if (rightList != null && rightList.size() != 0) {//如果设置价格不为空
                             rightFieldSet = reserveFieldPriceSetDao.findList(rightFieldSet).get(0);
                             List<TimePrice> rightTimePriceList = rightFieldSet.getTimePriceList();//获取右侧半场 时间和价格 组成的Jason
-                            FieldPrice rightFieldPrice = buildFieldPrice(rightTimePriceList, venueConsList, rightFieldSet, times);// 查询半场的 时间 价格 状态
+                            FieldPrice rightFieldPrice = buildFieldPrice(rightTimePriceList, venueConsList,reserveVenueEmptyChecks, rightFieldSet, times);// 查询半场的 时间 价格 状态
                             rightFieldPrice.setFieldId(fieldRightId);//设置场地编号
                             rightFieldPrice.setFieldName(fieldRightName);//设置场地名称
                             rightFieldPrice.setHaveHalfCourt("0");//无半场
@@ -335,7 +363,7 @@ public class ReserveFieldPriceService {
     /*
     查询半场的 时间 价格 状态
      */
-    private FieldPrice buildFieldPrice(List<TimePrice> LeftTimePriceList, List<ReserveVenueConsItem> venueConsList, ReserveFieldPriceSet setLeft, List<String> times) {
+    private FieldPrice buildFieldPrice(List<TimePrice> LeftTimePriceList, List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet setLeft, List<String> times) {
 
         FieldPrice leftFieldPrice = new FieldPrice();
         for (String i : times) {
@@ -361,6 +389,13 @@ public class ReserveFieldPriceService {
                 LeftTimePrice.setStatus(cons.getConsData().getReserveType());
             } else {
                 LeftTimePrice.setStatus("0");
+            }
+            //查询时间time是否已经通过空场审核
+            ReserveVenueEmptyCheck check = hasCheck(checks, setLeft, i);
+            if (check != null) {//已经审核
+                LeftTimePrice.setCheck(check);//设置审核
+                LeftTimePrice.setUserName(check.getCreateBy().getName());//审核人
+                LeftTimePrice.setStatus("0"+check.getCheckStatus());//审核状态
             }
             leftFieldPrice.getTimePriceList().add(LeftTimePrice);
         }

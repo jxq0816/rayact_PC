@@ -192,8 +192,7 @@ $(document).ready(function () {
             $(this).smartMenu(accessMenuData, {name: "access"});
         } else if ($(this).hasClass("red")) {//已经结账
             $(this).smartMenu(checkoutMenuData, {name: "checkout"});
-        }
-        else {//取消预定
+        }else {//取消预定
             $(this).smartMenu(reserveMenuData, {name: "reserve"});
         }
     });
