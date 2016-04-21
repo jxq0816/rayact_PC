@@ -226,22 +226,66 @@
         e.name AS "reserveVenue.name",
         d.id AS "reserveProject.id",
         d.name AS "reserveProject.name",
-        #{startDate} AS "startDate",
-        #{endDate} AS "endDate",
         sum(b.cons_price) AS "bill",
-        sum(if(pay_type=1,b.cons_price,0)) AS "fieldBillStoredCard",
-        sum(if(pay_type=2,b.cons_price,0)) AS "fieldBillCash",
-        sum(if(pay_type=3,b.cons_price,0)) AS "fieldBillBankCard",
-        sum(if(pay_type=4,b.cons_price,0)) AS "fieldBillWeiXin",
-        sum(if(pay_type=5,b.cons_price,0)) AS "fieldBillAliPay",
-        sum(if(pay_type=6,b.cons_price,0)) AS "fieldBillOther",
-        sum(if(pay_type=7,b.cons_price,0)) AS "fieldBillDue"
-        from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue as e
+        sum(
+        case
+        WHEN b.pay_type=1 then b.cons_price
+        WHEN p.pay_type=1 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillStoredCard",
+        sum(
+        case
+        WHEN b.pay_type=2 then b.cons_price
+        WHEN p.pay_type=2 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillCash",
+        sum(
+        case
+        WHEN b.pay_type=3 then b.cons_price
+        WHEN p.pay_type=3 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillBankCard",
+        sum(
+        case
+        WHEN b.pay_type=4 then b.cons_price
+        WHEN p.pay_type=4 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillWeiXin",
+        sum(
+        case
+        WHEN b.pay_type=5 then b.cons_price
+        WHEN p.pay_type=5 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillAliPay",
+        sum(
+        case
+        WHEN b.pay_type=6 then b.cons_price
+        WHEN p.pay_type=6 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillOther",
+        sum(
+        case
+        WHEN b.pay_type=7 then b.cons_price
+        WHEN p.pay_type=7 then p.payment_amount
+        ELSE 0
+        end
+        ) AS "fieldBillDue"
+        from
+        reserve_venue_cons as b
+        LEFT JOIN reserve_multiple_payment as p on p.order_id=b.id
+        LEFT JOIN reserve_venue_cons_item as a on a.cons_data_id=b.id
+        LEFT JOIN reserve_field as c on a.field_id=c.id
+        LEFT JOIN reserve_project as d on c.project_id=d.id
+        LEFT JOIN reserve_venue as e on a.venue_id=e.id
         <where>
-            a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id
-            and a.del_flag = #{DEL_FLAG_NORMAL}
+            a.del_flag = #{DEL_FLAG_NORMAL}
             and a.tenant_id = #{tenantId} and b.reserve_type='4'
-            and a.venue_id=e.id
             <if test="reserveVenue !=null ">
                 <if test="reserveVenue.id !=null and reserveVenue.id !=''">
                     and a.venue_id=#{reserveVenue.id}

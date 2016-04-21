@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>场馆收入统计</h3>
+                    <h3>场馆收益统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
                            action="${ctx}/reserve/reserveSellReport/list?alone=${alone}"
