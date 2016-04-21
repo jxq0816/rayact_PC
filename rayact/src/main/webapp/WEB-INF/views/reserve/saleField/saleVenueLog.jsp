@@ -80,6 +80,7 @@
                             <table>
                                 <thead>
                                 <tr>
+                                    <th>订单编号</th>
                                     <th>所属场馆</th>
                                     <th>所属项目</th>
                                     <th>时间区间</th>
@@ -98,6 +99,7 @@
                                 <tbody>
                                 <c:forEach items="${venueLogList}" var="order">
                                     <tr style="height: 30px;">
+                                        <td>${order.id}</td>
                                         <td>${order.name}</td>
                                         <td>${order.projectName}</td>
                                         <td>${order.startTime}—${order.endTime}</td>
@@ -105,7 +107,11 @@
                                         <td>${order.should_price}</td>
                                         <td>${order.discount_price}</td>
                                         <td>${order.cons_price}</td>
-                                        <td>${fns:getPayType(order.pay_type)}</td>
+                                        <td>${fns:getPayType(order.pay_type)}
+                                            <j:if test="${order.pay_type==8}">
+                                                    <a onclick="multiple_payments('${order.id}')">详情</a>
+                                            </j:if>
+                                        </td>
                                         <td>${order.user_name}</td>
                                         <td>${order.create_user}</td>
                                         <td>${order.checkout_name}</td>
@@ -127,24 +133,14 @@
         </div>
     </div>
 </div>
+<%@include file="../include/modal.jsp" %>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#userDesign").on('click', function () {
-            $(".tab-tit-first ul li").removeClass("on");
-            $(this).addClass("on");
-            $("#startDate").unbind('click').bind('click', function () {
-                WdatePicker({dateFmt: 'yyyy-MM-dd', isShowClear: false});
-            });
-            $("#endDate").unbind('click').bind('click', function () {
-                WdatePicker({dateFmt: 'yyyy-MM-dd', isShowClear: false});
-            });
-        });
-    });
     $("#btnExport").click(function () {
         $("#searchForm").attr("action", "${ctx}/reserve/saleVenue/listExport");
         $("#searchForm").submit();
         $("#searchForm").attr("action", "${ctx}/reserve/saleVenue/list");
     });
 </script>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/multiple_payments.js?t=" + Math.random()></script>
 </body>
 </html>

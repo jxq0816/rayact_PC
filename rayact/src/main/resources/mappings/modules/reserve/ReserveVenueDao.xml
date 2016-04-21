@@ -253,8 +253,7 @@
                 </if>
             </if>
             <if test="startDate !=null and endDate !=null">
-                and datediff(Date(b.cons_date), Date(#{startDate}))>=0
-                and datediff(Date(#{endDate}),Date(b.cons_date))>=0
+                and (Date(b.cons_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
         </where>
         GROUP BY d.id
@@ -341,8 +340,7 @@
                 </if>
             </if>
             <if test="startDate !=null and endDate !=null">
-                and datediff(Date(b.cons_date), Date(#{startDate}))>=0
-                and datediff(Date(#{endDate}),Date(b.cons_date))>=0
+                and (Date(b.cons_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
         </where>
             GROUP BY c.id

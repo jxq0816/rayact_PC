@@ -33,7 +33,10 @@
 		FROM reserve_multiple_payment a
 		<include refid="reserveMultiplePaymentJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL}  and a.tenant_id = #{tenantId}
+			<if test="orderId!=null and orderId !=''">
+				and a.order_id=#{orderId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
