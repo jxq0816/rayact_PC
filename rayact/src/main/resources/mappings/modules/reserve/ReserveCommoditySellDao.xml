@@ -46,8 +46,6 @@
 
 	<select id="commodityIncomeCollectReport" resultType="ReserveCommodityIntervalReport">
 		SELECT
-		v.id as "reserveVenue.id",
-		v.name as "reserveVenue.name",
 		t.id as "reserveCommodityType.id",
 		t.name as "reserveCommodityType.name",
 		sum(d.detail_sum) as "bill",
@@ -58,26 +56,22 @@
 		sum(if(pay_type=5,d.detail_sum,0)) AS "aliPayBill",
 		sum(if(pay_type=6,d.detail_sum,0)) AS "otherBill",
 		sum(if(pay_type=7,d.detail_sum,0)) AS "dueBill"
-		from reserve_commodity_sell_detail as d ,reserve_commodity_sell as s,reserve_commodity_type as t, reserve_commodity as c,reserve_venue as v
-		<where>
-			d.del_flag = #{DEL_FLAG_NORMAL} and d.tenant_id = #{tenantId}
-			and d.fk_reserve_commodity_id=c.id and c.commodity_type_id=t.id
-			and d.fk_reserve_commodity_sell_id=s.id
-			<if test="startDate!=null and endDate !=null">
-				and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
-			</if>
-			<if test="reserveVenue!=null">
-				<if test="reserveVenue.id!=null and reserveVenue.id!=''">
-					and v.id=#{reserveVenue.id}
-				</if>
-			</if>
-		</where>
-		GROUP BY
+		from reserve_commodity_sell_detail as d
+		LEFT JOIN reserve_commodity_sell as s ON d.fk_reserve_commodity_sell_id = s.id
+		LEFT JOIN reserve_commodity as c ON c.id = d.fk_reserve_commodity_id
+		LEFT JOIN reserve_commodity_type as t ON c.commodity_type_id = t.id
+		LEFT JOIN reserve_venue as v ON c.fk_reserve_venue_id = v.id
+		WHERE
+		d.del_flag = '0' and d.tenant_id = '1'
+		<if test="startDate!=null and endDate !=null">
+			and datediff(d.update_date,#{startDate})>=0 and datediff(#{endDate},d.update_date)>=0
+		</if>
 		<if test="reserveVenue!=null">
 			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
-				v.id,
+				and v.id=#{reserveVenue.id}
 			</if>
 		</if>
+		GROUP BY
 		t.id
 	</select>
 

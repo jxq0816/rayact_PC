@@ -82,7 +82,7 @@
 		from reserve_card_statements as a ,reserve_member as m ,reserve_venue as v
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-		  	and a.transaction_type='1' and a.fk_reserve_member_id=m.id
+		  	and (a.transaction_type='1' or a.transaction_type='7') and a.fk_reserve_member_id=m.id
 			and v.id= m.fk_reserve_venue_id
 			<if test="startDate!=null and endDate !=null">
 				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
