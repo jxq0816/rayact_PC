@@ -63,7 +63,7 @@
         </table>
     </div>
     <hr/>
-    <div class="row">
+    <div class="row" id="payTypeDIV">
         <label for="memberCard" class="col-lg-2">支付方式:</label>
         <div class="col-lg-8">
             <label class="radio-inline">
@@ -91,7 +91,7 @@
                 <input type="radio" class="icheck" value="7" name="payType"/>打白条
             </label>
             <label class="radio-inline">
-                <input type="radio" class="icheck" onchange="alert(1)" value="8" id="multiplePayRadio" name="payType"/>多方式付款
+                <input type="radio" class="icheck"  value="8" id="multiplePayRadio" name="payType"/>多方式付款
             </label>
         </div>
     </div>

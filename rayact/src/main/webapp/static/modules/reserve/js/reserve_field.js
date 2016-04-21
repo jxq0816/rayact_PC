@@ -300,7 +300,7 @@ $(document).ready(function () {
         var authUserId=$("#authUser").val();
         var id=$("#id").val();
         var token=$("#token").val();
-        var payType = $("#payType2 input:radio:checked").val();
+        var payType = $("#payTypeDIV input:radio:checked").val();
         if(payType=="" || payType==null || payType==undefined){
             errorLoding("请选择支付类型！");
             return;
