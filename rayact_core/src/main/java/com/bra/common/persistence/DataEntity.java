@@ -49,8 +49,12 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 			this.updateBy = user;
 			this.createBy = user;
 		}
-		this.updateDate = new Date();
-		this.createDate = this.updateDate;
+		if(this.updateDate==null){
+			this.updateDate = new Date();
+		}
+		if(this.createDate==null){
+			this.createDate = this.updateDate;
+		}
 	}
 	
 	/**

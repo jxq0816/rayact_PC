@@ -47,8 +47,10 @@ public class MemberCheckoutListener{
         //记录日志
         String payType=venueCons.getPayType();
         ReserveCardStatements statements = new ReserveCardStatements();
+        Date consDate=venueCons.getConsDate();
+        statements.setCreateDate(consDate);//订单与结算的日期保持一致， 即使第2天结算，也会将流水计入订单的日期
+        statements.setUpdateDate(consDate);
         statements.setVenue(venueCons.getReserveVenue());
-        statements.setCreateDate(new Date());
         statements.setTransactionType("8");//场地收入
         statements.setReserveMember(venueCons.getMember());
         statements.setRemarks("场地收入");
