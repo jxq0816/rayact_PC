@@ -53,8 +53,14 @@
                                                class="input-medium form-control Wdate "
                                                value="<fmt:formatDate value="${intervalTotalReport.endDate}" type="date"></fmt:formatDate>"
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                        <input name="isChecked" id="isChecked" type="hidden"
+                                               value="${isChecked}"/>
+                                        <input name="checkStatus" id="checkStatus" type="hidden"
+                                               value="${checkStatus}"/>
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                        <input id="btnCheck" class="btn btn-primary" type="button" value="审核通过"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -202,5 +208,33 @@
         </div>
     </div>
 </div>
+<div id="checkedMark" style="color:red;position: fixed;bottom:200px;right:200px;transform:rotate(45deg);
+-ms-transform:rotate(45deg);font-size: 70px;
+-moz-transform:rotate(45deg);
+-webkit-transform:rotate(45deg);
+-o-transform:rotate(45deg);background: rgba(0,0,0,0);border:1px #ff0900 solid">
+    已审核
+</div>
+<script>
+    $("#btnCheck").on('click',function(){
+        if(confirm("确认该时间段内的数据核验完毕？")){
+            $("#isChecked").val("true");
+            $("#searchForm").submit();
+        }
+    });
+    $(function(){
+        var checkStatus = "${checkStatus}";
+        if(checkStatus == "1"){//无水印，可审
+            $("#checkedMark").hide();
+            $("#btnCheck").show();
+        }else if(checkStatus == "2"){//无水印，不可审
+            $("#checkedMark").hide();
+            $("#btnCheck").hide();
+        }else if(checkStatus == "3"){//有水印，不可审
+            $("#btnCheck").hide();
+            $("#checkedMark").show();
+        }
+    });
+</script>
 </body>
 </html>

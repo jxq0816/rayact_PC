@@ -107,6 +107,7 @@ public class ReserveSellReportController extends BaseController {
         }
         List<Map<String,Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
         request.setAttribute("rtn",rtn);
+        request.setAttribute("jsonRtn",JSONArray.toJSONString(rtn));
         //return JSONArray.toJSONString(rtn);
         return "/reserve/report/incomeAll";
     }

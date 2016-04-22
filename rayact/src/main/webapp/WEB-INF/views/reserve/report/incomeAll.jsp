@@ -11,6 +11,7 @@
 <head>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.js"></script>
+    <script src="${ctxStatic}/cleanzone/js/echart/echarts.common.min.js" type="text/javascript"></script>
     <title></title>
     <style>
         body{
@@ -43,6 +44,7 @@
             <td class="aa"  >${aa.all_in}</td>
         </tr>
 </table>
+<div id="all_report" style="width:100%;height:400px;padding: 20px"></div>
 <script>
     $(function(){
         var c = 0;
@@ -69,6 +71,61 @@
             a += at ;
         })
         $(".aa").html(a);
+    });
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('all_report'));
+    var drawChart = function(){
+            var rtn = eval('(${jsonRtn})');
+            var vschart = new Array();
+            for(var i = 0 ; i < rtn.length ; i++){
+                vschart.push(rtn[i].venue_name);
+            }
+            var rtnchart = new Array();
+            for(var j = 0 ; j < rtn.length ; j++){
+                var tmp = {};
+                tmp.name = rtn[j].venue_name;
+                tmp.value = parseFloat(rtn[j].all_in);
+                rtnchart.push(tmp);
+            }
+            // 指定图表的配置项和数据
+            option = {
+                title : {
+                    text: '场馆收入统计',
+                    subtext: '',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: vschart
+                },
+                series : [
+                    {
+                        name: '收入来源',
+                        type: 'pie',
+                        radius : '80%',
+                        center: ['50%', '60%'],
+                        data:rtnchart,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+    }
+    $(function(){
+        drawChart();
     });
 </script>
 </body>

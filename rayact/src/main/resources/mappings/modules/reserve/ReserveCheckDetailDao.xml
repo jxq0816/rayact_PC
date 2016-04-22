@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveCheckDetailDao">
+    
+	<sql id="reserveCheckDetailColumns">
+		a.id AS "id",
+		a.venue_id AS "venue.id",
+		a.start_date AS "startDate",
+		a.end_date AS "endDate",
+		a.check_date AS "checkDate",
+		a.item_name AS "itemName",
+		a.check_status AS "checkStatus",
+		a.url AS "url",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
+	</sql>
+	
+	<sql id="reserveCheckDetailJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveCheckDetail">
+		SELECT 
+			<include refid="reserveCheckDetailColumns"/>
+		FROM reserve_check_detail a
+		<include refid="reserveCheckDetailJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveCheckDetail">
+		SELECT 
+			<include refid="reserveCheckDetailColumns"/>
+		FROM reserve_check_detail a
+		<include refid="reserveCheckDetailJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="venue.id != null and venue.id != ''">
+				and a.venue_id = #{venue.id}
+			</if>
+			<if test="itemName != null and itemName != ''">
+				and a.item_name = #{itemName}
+			</if>
+			<if test="startDate!=null and endDate !=null">
+				AND  datediff(#{startDate},a.start_date)>=0 and datediff(a.end_date,#{endDate})>=0
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveCheckDetail">
+		SELECT 
+			<include refid="reserveCheckDetailColumns"/>
+		FROM reserve_check_detail a
+		<include refid="reserveCheckDetailJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_check_detail(
+			id,
+			venue_id,
+			start_date,
+			end_date,
+			check_date,
+			item_name,
+			check_status,
+			url,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
+		) VALUES (
+			#{id},
+			#{venue.id},
+			#{startDate},
+			#{endDate},
+			#{checkDate},
+			#{itemName},
+			#{checkStatus},
+			#{url},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_check_detail SET 	
+			venue_id = #{venue.id},
+			start_date = #{startDate},
+			end_date = #{endDate},
+			check_date = #{checkDate},
+			item_name = #{itemName},
+			check_status = #{checkStatus},
+			url = #{url},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_check_detail SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -27,8 +27,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>手机号或姓名:</td>
-                                <td>
+                                <td class="memberSelect">手机号或姓名:</td>
+                                <td class="memberSelect">
                                     <select style="width: 80px;" id="memberId" class="select2" name="member.id">
                                         <option value="">--请输入选择--</option>
                                         <c:forEach items="${memberList}" var="m">
@@ -174,6 +174,7 @@
             $("#consPrice").attr("readonly", "readonly");
             $("#userName").attr("readonly", "readonly");
             $("#consMobile").attr("readonly", "readonly");
+            $(".memberSelect").show();
             $("input[name='payType'][value='1']").iCheck('check');
             $("input[name='payType'][value='1']").iCheck('enable');
             $("#order").hide();//隐藏订单金额
@@ -183,6 +184,11 @@
             $("#consPrice").removeAttr("readonly");
             $("#userName").removeAttr("readonly");
             $("#consMobile").removeAttr("readonly");
+            $(".memberSelect").hide();
+            $("#memberId").val("");
+            $("#s2id_memberId").find(".select2-chosen").html("--请选择--");
+            $("#userName").attr("value", "");
+            $("#consMobile").attr("value", "");
             $("#order").show();//显示订单金额
 //            $("input[name='payType'][value='2']").attr('checked','checked');
             // alert($("input[name='payType'][value='2']").val());

@@ -17,6 +17,7 @@ import com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalRepor
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
 import com.bra.modules.reserve.service.*;
+import com.bra.modules.reserve.utils.CheckUtils;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
@@ -101,7 +102,13 @@ public class ReserveVenueController extends BaseController {
     }
 
     @RequestMapping(value = "totalIncomeReport")
-    public String totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport, Model model) {
+    public String totalIncomeReport(HttpServletRequest request,ReserveVenueTotalIntervalReport intervalTotalReport, Model model) {
+        String check = request.getParameter("isChecked");
+        if("true".equals(check)){
+            CheckUtils.saveCheckRecord(request,"totalIncomeReport");
+        }
+        //检查是否已经审核过
+        request.setAttribute("checkStatus",CheckUtils.hasCheckRecord(request,"totalIncomeReport"));
         if(StringUtils.isEmpty(intervalTotalReport.getQueryType())){
             intervalTotalReport.setQueryType("0");//默认流水
         }
