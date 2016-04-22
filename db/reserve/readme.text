@@ -18,3 +18,4 @@
 20160420:新增次卡预付款表reserve_time_card_prepayment
 20160420:新增多方式付款表reserve_multiple_payment
 20160421:新增空场审核表reserve_venue_empty_check
+20160422:新增流水统计审核表reserve_check_detail
