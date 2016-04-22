@@ -102,6 +102,11 @@
         });
 
         $("#saveBtn").on('click', function () {
+            var collectPrice=$("#collectPrice").val();
+            if(isNaN(collectPrice)){
+                errorLoding("支付金额必须为数字");
+                return;
+            }
             var formJson = $("#formBean").serializeArray();
             jQuery.postItems({
                 url: '${ctx}/reserve/reserveVenueOrder/save',
