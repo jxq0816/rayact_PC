@@ -13,6 +13,7 @@
 		a.check_status AS "checkStatus",
 		a.half_court AS "halfCourt",
 		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -22,6 +23,7 @@
 	</sql>
 	
 	<sql id="reserveVenueEmptyCheckJoins">
+		LEFT JOIN reserve_user u ON u.id = a.create_by
 	</sql>
     
 	<select id="get" resultType="ReserveVenueEmptyCheck">

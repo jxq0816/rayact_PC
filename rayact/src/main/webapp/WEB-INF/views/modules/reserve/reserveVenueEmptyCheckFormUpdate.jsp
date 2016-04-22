@@ -61,6 +61,15 @@
 				</div>
 				<div class="row">
 					<div class="form-group">
+						<label for="remarks" class="col-sm-2 control-label">审核人:</label>
+						<div class="col-sm-9">
+							<input readonly="readonly" id="createby" class="form-control"
+								   value="${check.createBy.name}"/>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
 						<label for="remarks" class="col-sm-2 control-label">备注:</label>
 						<div class="col-sm-9">
 							<textarea id="remarks" name="remarks" class="form-control">${check.remarks}</textarea>
