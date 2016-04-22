@@ -756,6 +756,28 @@ CREATE TABLE `reserve_venue_empty_check` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Table structure for reserve_check_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `reserve_check_detail`;
+CREATE TABLE `reserve_check_detail` (
+  `id` varchar(19) NOT NULL,
+  `venue_id` varchar(19) DEFAULT NULL COMMENT '场馆ID',
+  `start_date` date DEFAULT NULL COMMENT '预定时间',
+  `end_date` date DEFAULT NULL COMMENT '预定时间',
+  `check_date` date DEFAULT NULL COMMENT '预定时间',
+  `item_name` varchar(64) DEFAULT NULL,
+  `check_status` varchar(2) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
