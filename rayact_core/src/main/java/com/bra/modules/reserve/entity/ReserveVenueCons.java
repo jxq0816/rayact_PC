@@ -18,10 +18,7 @@ import java.util.List;
 public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     public static final String RESERVATION = "1";//预定
-    public static final String SALEGOODS = "2";//售卖商品
-
     public static final String MODEL_KEY = "field";
-
     private static final long serialVersionUID = 1L;
 
     private ReserveMember member;        // 会员ID
@@ -34,18 +31,15 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private Date consDate;        // 预定日期(yyyy-MM-dd)
 
 
-    private Double cosOrderPrice;//预定时单据金额
-    private Double consPrice;//预定金额
+    private Double cosOrderPrice;//预定时单据金额??????????
 
     private Double discountPrice;//通过关系（经理以上领导）优惠价格
+    private Double orderPrice;//订单金额
+    private Double shouldPrice;//场地应缴费金额
+    private Double consPrice;//实收金额
 
-    private Double orderPrice;//场地实缴费金额
-    private Double shouldPrice;//场地实缴费金额场地应缴费金额
-
-    private String halfCourt;//是否半场(1:是) by jiang
-
+    private String halfCourt;//是否半场(1:是)
     private User checkOutUser;
-
     private String payType;//预定金额支付类型(1:会员卡;2:现金;3:银行卡;4:微信;5:支付宝;6:其它)
 
     /*多方式付款*/
@@ -58,6 +52,15 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private Double owningInput;
 
     private List<ReserveVenueConsItem> venueConsList = Lists.newArrayList();//预订详情
+    private List<ReserveTutorOrder> tutorOrderList;//教练预订列表
+
+    public List<ReserveTutorOrder> getTutorOrderList() {
+        return tutorOrderList;
+    }
+
+    public void setTutorOrderList(List<ReserveTutorOrder> tutorOrderList) {
+        this.tutorOrderList = tutorOrderList;
+    }
 
     public ReserveVenueCons() {
         super();

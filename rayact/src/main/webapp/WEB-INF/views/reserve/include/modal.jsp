@@ -53,7 +53,7 @@
 <!--end 取消订单-->
 
 <%--结账模态--%>
-<button id="settlementBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDialogModal"  data-toggle="modal">结账</button>
+<button id="settlementBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDialogModal"  data-toggle="modal">结算</button>
 <div class="modal fade" id="settlementDialogModal" tabindex="-1" style="display: none;"  aria-labelledby="settlementModalLabel" aria-hidden="true">
     <div class="modal-dialog " style="width: 1600px">
         <div class="modal-content" >
@@ -214,6 +214,34 @@
     </div>
 </div>
 <%--结账模态--%>
+
+<button id="settlementResultBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementResultDialogModal"  data-toggle="modal">付款成功</button>
+<div class="modal fade" id="settlementResultDialogModal" tabindex="-1" style="display: none;"  aria-labelledby="settlementResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h4 class="modal-title">付款成功</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="reserve_top_line">
+
+                </div>
+                <div class="modal-body form-horizontal" id="settlementResultForm">
+                    <!--付款成功模态-->
+                    <!--end 付款成功模态-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeSettlementResultBtn"  onclick="location.reload();" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                    确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <%--
 <script>

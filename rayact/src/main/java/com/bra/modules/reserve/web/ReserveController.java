@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -359,22 +360,23 @@ public class ReserveController extends BaseController {
      * @return
      */
     @RequestMapping(value = "saveSettlement")
-    @ResponseBody
     @Token(remove = true)
-    public List<Map<String, String>> saveSettlement(String id,String payType,String authUserId,Double discountPrice,Double consPrice,
-                                                    Double memberCardInput,
-                                                    Double cashInput,
-                                                    Double bankCardInput,
-                                                    Double weiXinInput,
-                                                    Double aliPayInput,
-                                                    Double couponInput,
-                                                    Double owningInput
-                                                    ) {
+    public String saveSettlement(String id, String payType, String authUserId,
+                                 @RequestParam(required=false,defaultValue="0") Double discountPrice,
+                                 Double consPrice,
+                                 Double memberCardInput,
+                                 Double cashInput,
+                                 Double bankCardInput,
+                                 Double weiXinInput,
+                                 Double aliPayInput,
+                                 Double couponInput,
+                                 Double owningInput,
+                                 Model model) {
 
-        ReserveVenueCons venueCons = reserveVenueConsService.saveConsOrder(id,payType,authUserId,discountPrice,consPrice,
+        ReserveVenueCons venueCons = reserveVenueConsService.saveSettlement(id,payType,authUserId,discountPrice,consPrice,
                 memberCardInput,cashInput,bankCardInput,weiXinInput,aliPayInput,couponInput,owningInput);
-        List<Map<String, String>> list = getReserveMap(venueCons.getVenueConsList());
-        return list;
+        model.addAttribute("venueCons",venueCons);
+        return "reserve/saleField/settlementResult";
     }
 
     //订单详情

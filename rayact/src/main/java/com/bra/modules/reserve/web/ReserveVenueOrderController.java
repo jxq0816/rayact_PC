@@ -95,13 +95,13 @@ public class ReserveVenueOrderController extends BaseController {
             //如果用户 拥有该项目的折扣卡
             if(p.getId().equals(project.getId())){
                 int residue=member.getResidue();//次卡剩余次数 等于 预付款的次数之和
-                double remainder=member.getRemainder();
                 int ticketNum=reserveVenueOrder.getCollectCount();//买了几张票
                 if(ticketNum>residue){
                     return "3";//new ViewResult(false, "该用户剩余次数不足！剩余次数="+residue);
                 }else{
                     residue-=ticketNum;//修改该用户的剩余次数
                 }
+                double remainder=member.getRemainder();
                /* 预付次数减*/
                 Double collectPrice=0.0;
                 ReserveTimeCardPrepayment prepayment=new ReserveTimeCardPrepayment();

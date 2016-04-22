@@ -378,12 +378,11 @@ $(document).ready(function () {
                 consPrice:consPrice
             },
             success: function (values) {
-                if (values != null) {
+                     $("#closeSettlementBtn").click();
+                    $("#settlementResultForm").html(values);
+                    $("#settlementResultBtn").click();
                     formLoding('保存结账单据成功!');
-                    location.reload();
-                } else {
-                    formLoding('保存结账单据出错!');
-                }
+                   /* location.reload();*/
             }
         });
     });

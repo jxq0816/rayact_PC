@@ -46,7 +46,7 @@
                                value="${item.halfCourt}"/>
                     </td>
                     <td>
-                            ${item.consPrice}
+                            ${item.orderPrice}
                     </td>
                     <j:if test="${!empty tutorOrder}">
                         <td>

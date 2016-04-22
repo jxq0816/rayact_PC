@@ -15,8 +15,8 @@ public class ReserveVenueConsItem extends SaasEntity<ReserveVenueConsItem> {
 	private static final long serialVersionUID = 1L;
 	private ReserveVenue reserveVenue;//所属场馆
 	private ReserveField reserveField;//所属场地
-	private Double consPrice;		// cons_price(系统价格)
-	private Double orderPrice;   	//实际收费价格
+	private Double consPrice;		//(实际收费价格)
+	private Double orderPrice;   	//
 	private String consInfo;//预定信息
 	private Date consDate;//预订时间
 	private String frequency;//频率(1:单次;2:每天;3:每周)
