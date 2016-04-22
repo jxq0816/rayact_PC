@@ -378,11 +378,12 @@ $(document).ready(function () {
                 consPrice:consPrice
             },
             success: function (values) {
-                     $("#closeSettlementBtn").click();
-                    $("#settlementResultForm").html(values);
-                    $("#settlementResultBtn").click();
+                if (values != null) {
                     formLoding('保存结账单据成功!');
-                   /* location.reload();*/
+                    location.reload();
+                } else {
+                    formLoding('保存结账单据出错!');
+                }
             }
         });
     });
@@ -404,36 +405,17 @@ $(document).ready(function () {
 
 
 
-    var accessMenuData = [[{
-        text: "预定",
-        func: function () {
-            $(this).dblclick();
-        }
-    }]];
+    var accessMenuData = [
+        [{
+            text: "空场审核",
+            func: function () {
+                checkEmpty($(this));
+            }
+        }]];
     var reserveMenuData = [[{
-        text: "取消订单",
-        func: function () {
-            cancelReserve($(this));
-        }
-    }], [{
-        text: "申请优惠",
-        func: function () {
-            applycut($(this));
-        }
-    }],[{
         text: "预定详情",
         func: function () {
             details($(this));
-        }
-    }], [{
-        text: "赠品",
-        func: function () {
-            gift($(this));
-        }
-    }], [{
-        text: "结账",
-        func: function () {
-            settlement($(this));
         }
     }]
     ];
@@ -441,6 +423,12 @@ $(document).ready(function () {
         text: "查看详情",
         func: function () {
             details($(this));
+        }
+    }]];
+    var checkEmptyMenuData = [[{
+        text: "空场情况",
+        func: function () {
+            updateCheckEmpty($(this));
         }
     }]];
     //mouserover
@@ -451,8 +439,8 @@ $(document).ready(function () {
         } else if ($(this).hasClass("red")) {//已经结账
             $(this).smartMenu(checkoutMenuData, {name: "checkout"});
         }else if($(this).hasClass("normal")||$(this).hasClass("abnormal")){
-
-        }else if($(this).hasClass("reserveTd")){//取消预定
+            $(this).smartMenu(checkEmptyMenuData, {name: "checkEmpty"});
+        }else {//取消预定
             $(this).smartMenu(reserveMenuData, {name: "reserve"});
         }
     });

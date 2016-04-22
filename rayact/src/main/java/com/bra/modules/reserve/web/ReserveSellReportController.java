@@ -132,6 +132,8 @@ public class ReserveSellReportController extends BaseController {
         }
         List<Map<String,Object>> rtn = reserveCardStatementsService.fieldIncome(form);
         request.setAttribute("rtn",rtn);
+        List<Map<String,Object>> ticket = reserveCardStatementsService.ticketIncome(form);
+        request.setAttribute("rtnTicket",ticket);
         return "/reserve/report/fieldIncome";
         //return JSONArray.toJSONString(rtn);
     }

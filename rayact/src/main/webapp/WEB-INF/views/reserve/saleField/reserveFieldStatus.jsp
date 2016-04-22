@@ -9,6 +9,17 @@
     <script type="text/javascript"
             src="${ctxStatic}/jquery/jquery-smartMenu-min.js"></script>
     <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';</script>
+    <style>
+        .table-chang td.normal {
+            background:#62ab00;
+        }
+        .table-chang td.abnormal {
+            background:#ff981d;
+        }
+        .table-chang td.fullFieldHasAbnormal {
+            background:#ff981d;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -102,5 +113,10 @@
 
     </div>
 </div>
+<%@include file="../include/modal.jsp" %>
+<!--end dialog-->
+<script>
+    document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field_status.js?t=" + Math.random() + "'><\/script>");
+</script>
 </body>
 </html>

@@ -126,4 +126,6 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return dao.commIncome(searchForm);
 	}
 
+	public List<Map<String,Object>> ticketIncome(SearchForm searchForm){ return dao.ticketIncome(searchForm);}
+
 }

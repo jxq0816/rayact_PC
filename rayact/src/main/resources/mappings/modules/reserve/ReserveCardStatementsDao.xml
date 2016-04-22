@@ -357,4 +357,18 @@
 		</if>
 		GROUP BY v.name
 	</select>
+
+	<select id="ticketIncome" resultType="java.util.Map" parameterType="SearchForm">
+		SELECT v.name,SUM(c.transaction_volume) AS price
+		FROM reserve_venue v
+		LEFT JOIN reserve_card_statements c ON v.id = c.venue_id
+		WHERE c.transaction_type = '9' AND c.del_flag = #{DEL_FLAG_NORMAL} AND v.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="startDate!=null and endDate !=null">
+			AND  datediff(c.update_date,#{startDate})>=0 and datediff(#{endDate},c.update_date)>=0
+		</if>
+		<if test="venueId!=null and venueId != ''">
+			AND v.id = #{venueId}
+		</if>
+		GROUP BY v.id
+	</select>
 </mapper>

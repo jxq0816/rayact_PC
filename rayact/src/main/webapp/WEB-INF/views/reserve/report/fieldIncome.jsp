@@ -35,6 +35,10 @@
             <td class="a"  ><fmt:formatNumber value="${aa.halfprice}" pattern="0.00" maxFractionDigits="2" type="number"></fmt:formatNumber></td>
         </tr>
     </c:forEach>
+    <c:forEach items="${rtnTicket}" var="t">
+        <td >次卡收入</td>
+        <td class="a" colspan="4"><fmt:formatNumber value="${t.price}" pattern="0.00" maxFractionDigits="2" type="number"></fmt:formatNumber></td>
+    </c:forEach>
 </table>
 <div style="text-align: center;font-size:40px;background-color: #ebedf1;margin: auto">总计：&nbsp;<b class="sum" style="font-size:80px;color: #b93434"></b></div>
 <script>
