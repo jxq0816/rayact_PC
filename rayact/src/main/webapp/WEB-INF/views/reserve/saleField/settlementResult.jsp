@@ -55,11 +55,11 @@
         </div>
         </table>
     </div>
-
-    <div class="row">
-        <div class="col-lg-10">
-        </div>
-        <div class="col-lg-2">
-            <input type="button" class="btn btn-primary" onclick="printSettlement()" value="打印小票"/>
-        </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
     </div>
+    <div class="col-lg-2">
+        <input type="button" class="btn btn-primary" onclick="printSettlement()" value="打印小票"/>
+    </div>
+</div>
