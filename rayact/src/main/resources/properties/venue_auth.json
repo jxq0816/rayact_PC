@@ -203,7 +203,7 @@
     "authorityList": [
       {
         "code": "reserveCardRechargeStatements",
-        "name": "充值记录",
+        "name": "储值卡充值记录",
         "href":"/reserve/reserveCardStatements/list?transactionType=1",
         "authorityList": []
       },

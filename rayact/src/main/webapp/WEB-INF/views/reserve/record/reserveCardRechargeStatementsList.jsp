@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
-    <title>充值记录</title>
+    <title>储值卡充值记录</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>充值记录</h3>
+                    <h3>储值卡充值记录</h3>
                 </div>
 
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
