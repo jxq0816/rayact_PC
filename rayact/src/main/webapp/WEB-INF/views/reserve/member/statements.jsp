@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
-    <title>会员管理</title>
+    <title>交易明细</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -19,11 +19,25 @@
                 <div class="content">
                     <div class="table-responsive">
                         <table>
+                            <tr>
+                                <th>姓名：${member.name}</th>
+                                <th>场馆：${member.reserveVenue.name}</th>
+                                <th>卡号：${member.cartno}</th>
+                                <th>会员卡类型：
+                                    <j:if test="${member.cartType==1}">
+                                        储值卡
+                                    </j:if>
+                                    <j:if test="${member.cartType==2}">
+                                        次卡
+                                    </j:if>
+                                </th>
+                                <th>手机号：${member.mobile}</th>
+                            </tr>
+                        </table>
+
+                        <table>
                             <thead>
                             <tr>
-                                <th>场馆</th>
-                                <th>姓名</th>
-                                <th>卡号</th>
                                 <th>充值金额</th>
                                 <th>消费类型</th>
                                 <th>商品名称</th>
@@ -37,15 +51,6 @@
                             <tbody>
                             <c:forEach items="${page.list}" var="statement">
                                 <tr>
-                                    <td>
-                                            ${statement.venue.name}
-                                    </td>
-                                    <td>
-                                            ${statement.reserveMember.name}
-                                    </td>
-                                    <td>
-                                            ${statement.reserveMember.cartno}
-                                    </td>
                                     <td>
                                         <j:if test="${statement.transactionType==1 or statement.transactionType==7}">
                                             ${statement.transactionVolume}

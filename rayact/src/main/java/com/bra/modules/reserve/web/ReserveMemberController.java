@@ -98,11 +98,11 @@ public class ReserveMemberController extends BaseController {
 	@RequestMapping(value = "statements")
 	public String statements(String memberId, HttpServletRequest request, HttpServletResponse response, Model model){
 		ReserveCardStatements query=new ReserveCardStatements();
-		ReserveMember member=new ReserveMember();
-		member.setId(memberId);
+		ReserveMember member=reserveMemberService.get(memberId);
 		query.setReserveMember(member);
 		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response),query);
 		model.addAttribute("page", page);
+		model.addAttribute("member", member);
 		return "reserve/member/statements";
 	}
 
