@@ -68,7 +68,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${memberList}" var="reserveMember">
+                            <c:forEach items="${page.list}" var="reserveMember">
                                 <tr>
                                     <td><a href="${ctx}/reserve/storedCardMember/form?id=${reserveMember.id}">
                                             ${reserveMember.name}
@@ -108,17 +108,17 @@
                             </tbody>
                         </table>
 
-                       <%-- <div class="row">
+                       <div class="row">
                             <div class="col-sm-12">
 
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
                 </div>
             </div>
