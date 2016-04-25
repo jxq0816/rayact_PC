@@ -17,10 +17,8 @@
                     <h3>会员列表</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/"
-                           method="post" class="breadcrumb form-search">
-                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-
+                           method="post">
+                <div class="breadcrumb form-search">
                     <div class="row">
                         <div class="col-sm-10 col-md-10 col-lg-10">
                             <table class="no-border">
@@ -50,7 +48,7 @@
                             </table>
                         </div>
                     </div>
-                </form:form>
+                </div>
                 <sys:message content="${message}"/>
                 <div class="content">
                     <div class="table-responsive">
@@ -111,6 +109,7 @@
 
                     </div>
                 </div>
+                </form:form>
             </div>
         </div>
     </div>
