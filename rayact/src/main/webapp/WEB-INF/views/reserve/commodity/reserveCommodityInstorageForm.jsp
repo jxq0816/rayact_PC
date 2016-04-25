@@ -77,25 +77,23 @@
                                    class="form-control  required"/>
                             <span class="help-inline"><font color="red">*</font> </span>
                         </td>
-                        <td>单箱金额：</td>
+                        <td>单箱成本金额：</td>
                         <td>
                             <input id="boxPrice" name="boxPrice" htmlEscape="false"
                                    class="form-control  required"/>
                             <span class="help-inline"><font color="red">*</font> </span>
                         </td>
                     </tr>
+                    <tr>
+                        <td>入库备注：</td>
+                        <td>
+                            <input  id="remarks" htmlEscape="false"
+                                   class="form-control  required"/>
+                            <span class="help-inline"><font color="red">*</font> </span>
+                        </td>
+                    </tr>
                 </table>
-
             </div>
-
         </form:form>
     </table>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.icheck').iCheck({
-            checkboxClass: 'icheckbox_square-blue checkbox',
-            radioClass: 'iradio_square-blue'
-        });
-    });
-</script>

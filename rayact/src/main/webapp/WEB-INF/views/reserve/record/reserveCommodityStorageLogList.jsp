@@ -68,6 +68,7 @@
                                     <th>入库单箱价格</th>
                                     <th>入库单价</th>
                                     <th>操作人</th>
+                                    <th>备注</th>
                                     <th>时间</th>
                                 </tr>
                                 </thead>
@@ -101,7 +102,9 @@
                                         <td>
                                                 ${reserveCommodityStorageLog.createBy.name}
                                         </td>
-
+                                        <td>
+                                                ${reserveCommodityStorageLog.remarks}
+                                        </td>
                                         <td>
                                             <fmt:formatDate value="${reserveCommodityStorageLog.createDate}"
                                                             pattern="yyyy-MM-dd HH:mm:ss"/>

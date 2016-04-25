@@ -25,7 +25,6 @@
         </div>
     </div>
 </div>
-</div>
 <!--取消订单-->
 <button class="btn btn-primary btn-flat md-trigger" id="cancelBtn" style="display: none" data-modal="cancel-primary">Basic Form
 </button>
@@ -107,7 +106,7 @@
 
 <!-- 赠品Modal -->
 <button id="giftBtn"  style="display: none" class="btn btn-primary btn-large" href="#giftDialogModal"  data-toggle="modal">预订</button>
-<div class="modal fade"  style="width:auto;" id="giftDialogModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade"  style="width:auto;" id="giftDialogModal" style="display: none"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -162,7 +161,7 @@
 </div>
 <%--多方式付款详情模态--%>
 <button id="multiplePaymentsBtn"  style="display: none" class="btn btn-primary btn-large" href="#multiplePaymentsDialogModal"  data-toggle="modal">多方式付款详情</button>
-<div class="modal fade" id="multiplePaymentsDialogModal" tabindex="-1" style="display: none;"  aria-labelledby="multiplePaymentsDialogModalLabel" aria-hidden="true">
+<div class="modal fade" id="multiplePaymentsDialogModal" style="display: none;"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" >
             <div class="modal-header">
@@ -216,7 +215,7 @@
 <%--结账模态--%>
 
 <button id="settlementResultBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementResultDialogModal"  data-toggle="modal">付款成功</button>
-<div class="modal fade" id="settlementResultDialogModal" tabindex="-1" style="display: none;"  aria-labelledby="settlementResultModalLabel" aria-hidden="true">
+<div class="modal fade" id="settlementResultDialogModal" style="display: none;"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" >
             <div class="modal-header">
@@ -240,12 +239,29 @@
         </div>
     </div>
 </div>
+<button id="inStorageDialogBtn"  style="display: none" class="btn btn-primary btn-large" href="#inStorageDialogModal"  data-toggle="modal">商品入库</button>
+<div class="modal fade" id="inStorageDialogModal" style="display: none;"  aria-hidden="true">
+    <div class="modal-dialog" style="width:80%">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h4 class="modal-title">商品入库</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="reserve_top_line">
 
-
-
-<%--
-<script>
-    $("#settlementDialogModal").draggable({
-        handle: ".modal-dialog"
-    });
-</script>--%>
+                </div>
+                <div class="modal-body form-horizontal" id="inStorageForm">
+                    <!--商品入库模态-->
+                    <!--end 商品入库模态-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeInStorageBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                    取消
+                </button>
+                <button type="button" id="saveInStorageBtn" class="btn btn-primary btn-flat">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

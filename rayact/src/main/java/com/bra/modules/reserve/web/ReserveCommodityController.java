@@ -108,7 +108,7 @@ public class ReserveCommodityController extends BaseController {
         return "reserve/commodity/reserveCommodityForm";
     }
 
-    @RequestMapping(value = "inStorageUrl")
+    @RequestMapping(value = "inStorageForm")
     @Token(save = true)
     public String inStorageUrl(ReserveCommodity commodity, Model model) {
         commodity = commodityService.get(commodity);
@@ -119,7 +119,7 @@ public class ReserveCommodityController extends BaseController {
     @RequestMapping(value = "inStorage")
     @ResponseBody
     @Token(remove = true)
-    public String inStorage(String id, Integer inRepertoryBoxNum,Double boxPrice) {
+    public String inStorage(String id, Integer inRepertoryBoxNum,Double boxPrice,String remarks) {
         ReserveCommodity commodity = new ReserveCommodity();
         commodity.setId(id);
         commodity=commodityService.get(commodity);
@@ -141,6 +141,7 @@ public class ReserveCommodityController extends BaseController {
         log.setNum(num);
         log.setAfterNum(repertoryNumAfter);
         log.setBeforeNum(repertoryNumBefore);
+        log.setRemarks(remarks);
         reserveCommodityStorageLogService.save(log);
         return "success";
     }
