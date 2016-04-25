@@ -101,7 +101,9 @@
                                         <a class="btn btn-danger btn-xs"
                                            href="${ctx}/reserve/commodity/delete?id=${commodity.id}"
                                            onclick="return confirmb('确认要删除该商品吗？', this.href)">删除</a>
-                                        <a class="btn btn-primary btn-xs instorageBtn" data-id="${commodity.id}">入库</a>
+                                        <j:if test="${userType==5 or userType==1}">
+                                            <a class="btn btn-primary btn-xs instorageBtn" data-id="${commodity.id}">入库</a>
+                                        </j:if>
                                     </td>
                                 </tr>
                             </c:forEach>

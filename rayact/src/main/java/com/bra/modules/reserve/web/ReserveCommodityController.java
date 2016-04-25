@@ -13,6 +13,7 @@ import com.bra.modules.reserve.service.ReserveCommodityService;
 import com.bra.modules.reserve.service.ReserveCommodityStorageLogService;
 import com.bra.modules.reserve.service.ReserveCommodityTypeService;
 import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,6 +79,8 @@ public class ReserveCommodityController extends BaseController {
     @RequestMapping(value = {"list", ""})
     public String list(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
+        String userType=AuthorityUtils.getUserType();
+        model.addAttribute("userType", userType);
         model.addAttribute("page", page);
         return "reserve/commodity/reserveCommodityList";
     }
