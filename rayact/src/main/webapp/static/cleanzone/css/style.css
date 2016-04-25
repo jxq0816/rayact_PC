@@ -2507,7 +2507,7 @@ table thead th {
 
 table tbody td {
     padding: 7px 8px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 table .primary-emphasis,
@@ -2599,6 +2599,7 @@ table thead th span {
 }
 
 table thead th {
+    font-size: 15px;
     vertical-align: bottom;
     border-bottom: 1px solid #DADADA;
     border-left: 1px solid #DADADA;
