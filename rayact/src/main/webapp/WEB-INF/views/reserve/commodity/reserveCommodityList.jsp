@@ -17,9 +17,8 @@
                     <h3>商品列表</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCommodity" action="${ctx}/reserve/commodity/list"
-                           method="post" class="breadcrumb form-search">
-                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+                           method="post">
+                   <div class="breadcrumb form-search">
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">
                             <table class="no-border">
@@ -44,7 +43,8 @@
                             </a>
                         </div>
                     </div>
-                </form:form>
+                   </div>
+
                 <div class="content">
                     <div class="table-responsive">
                         <table>
@@ -62,7 +62,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${list}" var="commodity">
+                            <c:forEach items="${page.list}" var="commodity">
                                 <tr>
                                     <td><a href="${ctx}/reserve/commodity/form?id=${commodity.id}">
                                             ${commodity.commodityId}
@@ -107,19 +107,20 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                       <%-- <div class="row">
+                       <div class="row">
                             <div class="col-sm-12">
 
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
                 </div>
+                </form:form>
             </div>
         </div>
     </div>
