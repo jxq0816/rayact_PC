@@ -21,42 +21,36 @@
                            method="post">
                     <div class="breadcrumb form-search">
                         <div class="row">
-                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <label class="col-sm-1 control-label"
+                                       style="height: 36px;line-height:36px;overflow: hidden;">场馆:</label>
+                                <div class="col-sm-2 ">
+                                    <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                value="${query.reserveVenue.id}"
+                                                items="${venues}" itemLabel="name" itemValue="id"
+                                                defaultLabel="----请选择-----"
+                                                defaultValue=""></sys:select>
+                                </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label"
-                                           style="height: 36px;line-height:36px;overflow: hidden;">场馆:</label>
-                                    <div class="col-sm-2 ">
-                                        <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                    value="${query.reserveVenue.id}"
-                                                    items="${venues}" itemLabel="name" itemValue="id"
-                                                    defaultLabel="----请选择-----"
-                                                    defaultValue=""></sys:select>
-                                    </div>
+                                <label class="col-sm-1 control-label"
+                                       style="height: 36px;line-height:36px;overflow: hidden;">时间:</label>
+                                <div class="col-sm-2 ">
+                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${query.startDate}"/>"
+                                           name="startDate" id="startDate" type="text"
+                                           maxlength="20"
+                                           class="input-medium form-control Wdate"
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label"
-                                           style="height: 36px;line-height:36px;overflow: hidden;">时间:</label>
-                                    <div class="col-sm-2 ">
-                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${query.startDate}"/>"
-                                               name="startDate" id="startDate" type="text"
-                                               maxlength="20"
-                                               class="input-medium form-control Wdate"
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </div>
-                                    <div class="col-sm-2 ">
-                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${query.endDate}"/>"
-                                               name="endDate" id="endDate" type="text"
-                                               maxlength="20"
-                                               class="input-medium form-control Wdate "
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </div>
-                                    <div class="col-sm-2 ">
-                                        <input id="btnSubmit" class="btn btn-primary" type="submit"
-                                               value="查询"/>
-                                    </div>
+                                <div class="col-sm-2 ">
+                                    <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${query.endDate}"/>"
+                                           name="endDate" id="endDate" type="text"
+                                           maxlength="20"
+                                           class="input-medium form-control Wdate "
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </div>
-                            </div>
+                                <div class="col-sm-2 ">
+                                    <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                           value="查询"/>
+                                </div>
                         </div>
                     </div>
                     <sys:message content="${message}"/>

@@ -26,10 +26,10 @@
                                     <tbody class="no-border-y">
                                     <tr>
                                         <td>
-                                            场馆:
+                                            场馆：
                                         </td>
                                         <td>
-                                            <select name="venue.id" class="select2">
+                                            <select name="venue.id" class="select2" style="width: 200px">
                                                 <option value="">---请选择---</option>
                                                 <c:forEach items="${venueList}" var="venue">
                                                     <option
@@ -38,10 +38,10 @@
                                                 </c:forEach>
                                             </select>
                                         </td>
-                                        <td>操作人</td>
+                                        <td>操作人：</td>
                                         <td>
-                                            <select name="user.id" class="select2">
-                                                <option value="">---请选择---</option>
+                                            <select name="user.id" class="select2" style="width: 200px">
+                                                <option value="">请选择</option>
                                                 <c:forEach items="${userList}" var="user">
                                                     <option
                                                             <j:if test="${user.id eq venueLog.user.id}">selected="selected"</j:if>

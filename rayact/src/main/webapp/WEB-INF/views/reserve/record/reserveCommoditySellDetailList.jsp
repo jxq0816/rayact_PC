@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>商品销售明细管理</title>
+    <title>商品销售记录</title>
     <meta name="decorator" content="main"/>
 </head>
 <body>
@@ -19,53 +19,44 @@
                 <form:form id="searchForm" modelAttribute="reserveCommoditySellDetail"
                            action="${ctx}/reserve/reserveCommoditySellDetail/findSellDetailList" method="post">
                     <div class="breadcrumb form-search">
-                        <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                        <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-
                         <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label" style="height: 36px;line-height:36px;overflow: hidden;">所属场馆:</label>
-                                    <div class="col-sm-2 ">
-                                        <sys:select cssClass="input-large"  name="reserveCommodity.reserveVenue.id"
-                                                    value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
-                                                    items="${venueList}" itemLabel="name" itemValue="id"
-                                                    defaultLabel="----请选择-----"
-                                                    defaultValue=""></sys:select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label">商品名称:</label>
-                                    <div class="col-sm-1">
-                                        <form:input path="reserveCommodity.name" htmlEscape="false"
-                                                    cssstyle="width:50px;"
-                                                    maxlength="30"
-                                                    class="form-control"/>
-                                    </div>
-                                </div>
+                            <label class="col-lg-1 control-label"
+                                   style="height: 36px;line-height:36px;overflow: hidden;">场馆：</label>
+                            <div class="col-lg-2 ">
+                                <sys:select cssClass="input-large" name="reserveCommodity.reserveVenue.id"
+                                            value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
+                                            items="${venueList}" itemLabel="name" itemValue="id"
+                                            defaultLabel="----请选择-----"
+                                            defaultValue=""></sys:select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-1 control-label">时间:</label>
-                                    <div class="col-sm-2">
-                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
-                                               name="startDate" id="startDate" type="text"
-                                               maxlength="20"
-                                               class="input-medium form-control Wdate "
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.endDate}"/>"
-                                               name="endDate" id="endDate" type="text"
-                                               maxlength="20"
-                                               class="input-medium form-control Wdate "
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input id="btnSubmit" class="btn btn-primary" type="submit"
-                                           value="查询"/><input id="btnExport" class="btn btn-primary"
-                                                              type="button" value="导出"/></td>
-                                </div>
+                            <label class="col-lg-1 control-label">商品：</label>
+                            <div class="col-lg-1">
+                                <form:input path="reserveCommodity.name" htmlEscape="false"
+                                            cssstyle="width:50px;"
+                                            maxlength="30"
+                                            class="form-control"/>
+                            </div>
+
+                            <label class="col-lg-1 control-label">时间：</label>
+                            <div class="col-lg-1">
+                                <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
+                                       name="startDate" id="startDate" type="text"
+                                       maxlength="20"
+                                       class="input-medium form-control Wdate "
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                            </div>
+                            <div class="col-lg-1">
+                                <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.endDate}"/>"
+                                       name="endDate" id="endDate" type="text"
+                                       maxlength="20"
+                                       class="input-medium form-control Wdate "
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                            </div>
+                            <div class="col-lg-2">
+                                <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                       value="查询"/><input id="btnExport" class="btn btn-primary"
+                                                          type="button" value="导出"/></td>
                             </div>
                         </div>
                     </div>
@@ -115,7 +106,6 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </form:form>
