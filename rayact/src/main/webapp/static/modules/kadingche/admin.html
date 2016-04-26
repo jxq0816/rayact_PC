@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>卡丁车</title>
+<SCRIPT LANGUAGE="JavaScript">
+    function show(){
+        var row1 = document.getElementById("row1").value;
+		var row2 = document.getElementById("row2").value;
+		var row3 = document.getElementById("row3").value;
+		var row4 = document.getElementById("row4").value;
+        location.href="kadingche.html?row1="+row1+"&row2="+row2+"&row3="+row3+"&row4="+row4;
+    }
+</SCRIPT>
+</head>
+<body>
+<div style="font-size:50px;text-align: center">卡丁车</div>
+<table style="font-size:50px;text-align: center">
+    <tr>
+        <td>第<input type="text" id="row1"></input>组 驾驶进行中</td>
+    </tr>
+    <tr>
+        <td>第<input type="text" id="row2"></input>组  戴头盔准备</td>
+    </tr>
+    <tr>
+        <td>第<input type="text" id="row3"></input>组  戴头盔准备</td>
+    </tr>
+    <tr>
+        <td>第<input type="text" id="row4"></input>组  排队等候中</td>
+    </tr>
+	<input type="button" value="OK" onclick="show()"/>
+</table>
+<body>
+</html>

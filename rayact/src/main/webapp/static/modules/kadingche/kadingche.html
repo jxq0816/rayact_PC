@@ -1,0 +1,126 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>卡丁车</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script src="js/jquery.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <style>
+		.img-style{
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			font-size:140px;
+			background-color:#0B87F7;	
+			height:22%;
+			overflow:hidden;
+		}
+		.img-style img{
+			 vertical-align:middle;
+			 margin-left:30%;
+			 margin-right:10%;
+		}
+		.text-style{
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			font-size:140px;
+			margin-left:5%;
+			margin-right:5%;
+			background-color:#0B87F7;	
+			height:22%;
+			overflow:hidden;
+		}
+		.row-margin{
+			margin-top:2%;
+		}
+		.back-color{
+			background-color:#0B87F7;
+		}
+   </style>
+</head>
+<body style="background-color:#191919;color:#FFF;">
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<span id="row0"  style="width:10%"></span>组</div>
+	<div class="col-lg-7 back-color">
+	
+			<div class="img-style">
+				<img src="ongoing.png"></img>
+			</div>
+			<div class="text-style">
+				驾驶进行中
+			</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<span id="row1"  style="width:10%"></span>组</div>
+	<div class="col-lg-7 back-color">
+		<div class="img-style">
+			<img class="imgStyle" src="helmet.png"></img>
+		</div>
+		<div class="text-style">
+			戴头盔准备
+		</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<span id="row2"  style="width:10%"></span>组</div>
+	<div class="col-lg-7 back-color">
+		<div class="img-style">
+			<img class="imgStyle" src="helmet.png"></img>
+		</div>
+		<div class="text-style">
+			戴头盔准备
+		</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<span id="row3"  style="width:10%"></span>组</div>
+	<div class="col-lg-7 back-color">
+		<div class="img-style">
+			<img class="imgStyle" src="waiting.png"></img>
+		</div>
+		<div class="text-style">
+			排队等待中
+		</div>
+	</div>
+</div>
+<div style="bottom:0px;right:0px;position: fixed">
+	<input type="button" class="btn btn-primary" value="更新" onclick="add()"/>
+</div>
+<body>
+<SCRIPT LANGUAGE="JavaScript">
+		var value = window.location.href;
+        var arr = value.substring(value.lastIndexOf('?') + 1,value.length).split('&');
+        for(var i = 0; i < arr.length; i++){
+			var val=arr[i].split('=')[1];
+			var id="row"+i;
+            var elem=document.getElementById(id);
+			elem.innerText = val;              
+        }
+		function add(){
+			var row0=document.getElementById("row0").innerHTML;
+			var row0Value=eval(row0)+1;
+			document.getElementById("row0").innerHTML=row0Value;
+
+			var row1=document.getElementById("row1").innerHTML;
+			var row1Value=eval(row1)+1;
+			document.getElementById("row1").innerHTML=row1Value;
+
+			var row2=document.getElementById("row2").innerHTML;
+			var row2Value=eval(row2)+1;
+			document.getElementById("row2").innerHTML=row2Value;
+
+			var row3=document.getElementById("row3").innerHTML;
+			var row3Value=eval(row3)+1;
+			document.getElementById("row3").innerHTML=row3Value;
+			
+		}
+		window.onload=function(){
+				document.getElementById("row0").innerHTML="1";
+				document.getElementById("row1").innerHTML="2";
+				document.getElementById("row2").innerHTML="3";
+				document.getElementById("row3").innerHTML="4";
+		}
+</SCRIPT>
+</html>
