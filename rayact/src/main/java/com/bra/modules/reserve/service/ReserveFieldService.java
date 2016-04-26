@@ -85,16 +85,19 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
 
     @Transactional(readOnly = false)
     public void save(ReserveField reserveField) {
-        //如果不分时令，将系统原有分时令的价格信息删除
+        //如果场地原来分时令，现在修改为不分时令，将系统原有分时令的价格信息删除
         if(StringUtils.isNoneEmpty(reserveField.getId())){
             if("0".equals(reserveField.getIsTimeInterval())){
                 ReserveFieldPriceSet set=new ReserveFieldPriceSet();
                 set.setReserveField(reserveField);
-                List<ReserveTimeInterval> timeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval());
-                for(ReserveTimeInterval i:timeIntervalList){
-                    for(ReserveFieldPriceSet j:reserveFieldPriceSetService.findList(set)){
-                        j.setReserveTimeInterval(i);
-                        reserveFieldPriceSetService.physicalDelete(j);//删除
+                ReserveField reserveFieldDB=dao.get(reserveField);
+                if("1".equals(reserveFieldDB.getIsTimeInterval())){
+                    List<ReserveTimeInterval> timeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval());
+                    for(ReserveTimeInterval i:timeIntervalList){
+                        for(ReserveFieldPriceSet j:reserveFieldPriceSetService.findList(set)){
+                            j.setReserveTimeInterval(i);
+                            reserveFieldPriceSetService.physicalDelete(j);//删除
+                        }
                     }
                 }
             }
