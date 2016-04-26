@@ -72,7 +72,20 @@
                                 class="help-inline">若不修改密码，请留空。</span></c:if>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">头像:</label>
 
+                    <div class="col-sm-4">
+                    <mechanism:upload id="financeSchoolPic" fdKey="userPic"
+                                      name="attMains1" exts=""
+                                      btnText="添加"
+                                      modelId="${user.id}"
+                                      showImg="true" resizeImg="true" resizeWidth="454"
+                                      resizeHeight="247"
+                                      imgWidth="120" imgHeight="80"
+                                      modelName="com.bra.modules.sys.entity.User" multi="false"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">场馆管理:</label>
 

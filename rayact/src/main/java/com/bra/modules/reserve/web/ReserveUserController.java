@@ -6,6 +6,7 @@ import com.bra.common.utils.MD5Util;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveUserService;
 import com.bra.modules.reserve.service.ReserveVenueService;
@@ -111,7 +112,7 @@ public class ReserveUserController extends BaseController {
 
     @RequestMapping(value = "save")
     @Token(remove = true)
-    public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+    public String save(User user, HttpServletRequest request, AttMainForm attMainForm, Model model, RedirectAttributes redirectAttributes) {
         if (Global.isDemoMode()) {
             addMessage(redirectAttributes, "演示模式，不允许操作！");
             return "redirect:" + adminPath + "/sys/user/list?repage";
@@ -131,6 +132,7 @@ public class ReserveUserController extends BaseController {
         }
         // 保存用户信息
         reserveUserService.saveUser(user);
+         reserveUserService.updateAttMain(user,attMainForm);
         // 清除当前用户缓存
         if (user.getLoginName().equals(UserUtils.getUser().getLoginName())) {
             UserUtils.clearCache();

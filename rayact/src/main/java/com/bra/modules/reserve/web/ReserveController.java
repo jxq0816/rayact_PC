@@ -326,7 +326,7 @@ public class ReserveController extends BaseController {
         //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
-
+        //申请优惠
         ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
         applycut.getSqlMap().put("dsf"," and c.id = '"+order.getId()+"' ");
         List<ReserveVenueApplyCut> cuts = reserveVenueApplyCutService.findList(applycut);
@@ -591,7 +591,7 @@ public class ReserveController extends BaseController {
             reserveVenueApplyCut.getSqlMap().put("dsf"," and a.apply_user_id = '"+userId+"' and a.done = '0' and a.is_new = '1' ");
             List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(reserveVenueApplyCut);
             if(list!=null&&list.size()>0){
-                rtn.put("hasNew","1");
+                rtn.put("hasNew",String.valueOf(list.size()));
                 return JSONObject.toJSONString(rtn);
             }else{
                 rtn.put("hasNew","0");
