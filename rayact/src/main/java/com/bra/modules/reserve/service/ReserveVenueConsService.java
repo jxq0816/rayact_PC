@@ -56,21 +56,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
     public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
         List<Map<String, Object>> list = dao.findOrderLog(venueLog);
-        for (Map<String, Object> i : list) {
-            String id = (String) i.get("checkout_id");
-            if (StringUtils.isNoneEmpty(id)) {
-                User author = reserveUserService.get(id);
-                if (author != null) {
-                    String name = author.getName();
-                    i.put("checkout_name", name);
-                }
-            }
-        }
-        List<Map<String, Object>> timeCardSaleLog = dao.findTimeCardSaleLog(venueLog);
-        for (Map<String, Object> i : timeCardSaleLog) {
-            i.put("discount_price", 0);
-        }
-        list.addAll(timeCardSaleLog);
         return list;
     }
 
