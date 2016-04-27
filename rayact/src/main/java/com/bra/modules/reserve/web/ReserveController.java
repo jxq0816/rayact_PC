@@ -702,4 +702,37 @@ public class ReserveController extends BaseController {
             return "fail";
         }
     }
+
+    //场地状态界面
+    @RequestMapping(value = "mobile/main")
+    public String mobileMain(Model model,HttpServletRequest request) throws ParseException {
+        String userId = request.getParameter("userId");
+        String venueId = request.getParameter("venueId");
+        String date = request.getParameter("date");
+        Date consDate = DateUtils.parseDate(date);
+        User user = systemService.getUser(userId);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String consDateFormat=format.format(consDate);//预订日期的格式化
+        model.addAttribute("consDateFormat", consDateFormat);
+        model.addAttribute("consDate", consDate);//预订日期回传
+        //默认场馆
+        ReserveVenue reserveVenue = reserveVenueService.get(venueId);
+        //上午场地价格
+        List<String> timesAM=new ArrayList<>();
+        timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
+        model.addAttribute("timesAM", timesAM);
+        List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesAM,user);
+        model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
+        //下午场地价格
+        List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
+        model.addAttribute("timesPM", timesPM);
+        List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesPM,user);
+        model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
+        //晚上场地价格
+        List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
+        model.addAttribute("timesEvening", timesEvening);
+        List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesEvening,user);
+        model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
+        return "reserve/saleField/reserveFieldStatusMobile";
+    }
 }
