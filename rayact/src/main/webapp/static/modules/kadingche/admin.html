@@ -2,32 +2,116 @@
 <head>
 <meta charset="UTF-8">
 <title>卡丁车</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+   <script src="js/jquery.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <style>
+		.img-style{
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			font-size:140px;
+			background-color:#0B87F7;	
+			height:22%;
+			overflow:hidden;
+		}
+		.img-style img{
+			 vertical-align:middle;
+			 margin-left:30%;
+			 margin-right:10%;
+		}
+		.text-style{
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			font-size:140px;
+			margin-left:5%;
+			margin-right:5%;
+			background-color:#0B87F7;	
+			height:22%;
+			overflow:hidden;
+		}
+		.row-margin{
+			margin-top:2%;
+		}
+		.back-color{
+			background-color:#0B87F7;
+		}
+   </style>
 <SCRIPT LANGUAGE="JavaScript">
     function show(){
         var row1 = document.getElementById("row1").value;
 		var row2 = document.getElementById("row2").value;
 		var row3 = document.getElementById("row3").value;
 		var row4 = document.getElementById("row4").value;
+		if(isNaN(row1)){
+			alert("请输入数字");
+			return;
+		}
+		if(isNaN(row2)){
+			alert("请输入数字");
+			return;
+		}
+		if(isNaN(row3)){
+			alert("请输入数字");
+			return;
+		}
+		if(isNaN(row4)){
+			alert("请输入数字");
+			return;
+		}
         location.href="kadingche.html?row1="+row1+"&row2="+row2+"&row3="+row3+"&row4="+row4;
     }
 </SCRIPT>
 </head>
-<body>
-<div style="font-size:50px;text-align: center">卡丁车</div>
-<table style="font-size:50px;text-align: center">
-    <tr>
-        <td>第<input type="text" id="row1"></input>组 驾驶进行中</td>
-    </tr>
-    <tr>
-        <td>第<input type="text" id="row2"></input>组  戴头盔准备</td>
-    </tr>
-    <tr>
-        <td>第<input type="text" id="row3"></input>组  戴头盔准备</td>
-    </tr>
-    <tr>
-        <td>第<input type="text" id="row4"></input>组  排队等候中</td>
-    </tr>
-	<input type="button" value="OK" onclick="show()"/>
-</table>
+<body style="background-color:#191919;color:#FFF;">
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<input type="text" id="row1"  style="width:30%"></span>组</div>
+	<div class="col-lg-7 back-color">
+	
+			<div class="img-style">
+				<img src="img/ongoing.png"></img>
+			</div>
+			<div class="text-style">
+				驾驶进行中
+			</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<input type="text" id="row2"  style="width:30%"></span>组</div>
+	<div class="col-lg-7 back-color">
+		<div class="img-style">
+			<img class="imgStyle" src="img/helmet.png"></img>
+		</div>
+		<div class="text-style">
+			戴头盔准备
+		</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<input type="text" id="row3"  style="width:30%"></span>组</div>
+	<div class="col-lg-7 back-color">
+		<div class="img-style">
+			<img class="imgStyle" src="img/helmet.png"></img>
+		</div>
+		<div class="text-style">
+			戴头盔准备
+		</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-lg-3 text-style">第<input type="text" id="row4"  style="width:30%"></span>组</div>
+	<div class="col-lg-7 back-color">
+		<div class="img-style">
+			<img class="imgStyle" src="img/waiting.png"></img>
+		</div>
+		<div class="text-style">
+			排队等待中
+		</div>
+	</div>
+</div>
+<div style="bottom:0px;right:0px;position: fixed">
+	<input type="button" class="btn btn-primary" value="保存" onclick="show()"/>
+</div>
 <body>
 </html>
