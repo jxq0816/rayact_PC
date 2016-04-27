@@ -16,7 +16,7 @@
                 <h3>商品列表</h3>
             </div>
             <form:form id="searchForm" modelAttribute="reserveCommodity"
-                       action="${ctx}/reserve/commodity/list"
+                       action="${ctx}/reserve/commodity/onShelfList"
                        method="post">
 
                 <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
@@ -93,6 +93,7 @@
                         </div>
                     </div>
                 </div>
+                    </form:form>
                 <%--end of left--%>
                 <%-- right start--%>
                 <div class="col-sm-6 col-md-6 col-lg-6">
@@ -114,7 +115,6 @@
                 </div>
                 <%--end of right--%>
             </div>
-            </form:form>
         </div>
     </div>
     <%-- end of row-fluid--%>
