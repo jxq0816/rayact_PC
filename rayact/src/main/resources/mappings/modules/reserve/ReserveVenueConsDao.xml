@@ -124,17 +124,20 @@
         order by c.name,f.name,p.name
     </select>
 
-    <select id="findOrderLog" resultType="java.util.Map">
+    <select id="findOrderLog" resultType="SaleVenueLog">
         select
         a.id,
-        a.venue_id,v.name,
-        a.user_name,a.cons_mobile,a.cons_date,a.update_date,
-        a.order_price,a.should_price,a.discount_price,a.cons_price,
-        a.pay_type,
-        a.create_by,
-        u.name as create_user,
-        a.checkout_id,
-        checkout.name as checkout_name,
+        a.venue_id as "venue.id",v.name as "venue.name",
+        a.user_name as "user.name",a.cons_mobile as "user.mobile",
+        a.cons_date as consDate,a.update_date "updateDate",
+        a.order_price as orderPrice,
+        a.should_price as shouldPrice,
+        a.discount_price as discountPrice,
+        a.cons_price as consPrice,
+        a.pay_type as payType,
+        a.create_by as "createBy.id",
+        u.name as "createBy.name",
+        checkout.name as checkoutName,
         p.name as projectName,
         i.start_time as startTime,
         i.end_time as endTime
@@ -154,16 +157,19 @@
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
         </if>
-        ${dsf}
+        ${sqlMap.dsf}
         UNION
         select a.id,
-        a.venue_id,v.name,
-        a.user_name,a.cons_mobile,a.update_date as cons_date,a.update_date,
-        a.collect_price as order_price,a.collect_price as should_price,0 as discount_price, a.collect_price as cons_price,
-        a.pay_type,
-        a.create_by,
-        u.name as create_user,
-        NULL as checkout_id,
+        a.venue_id as "venue.id",v.name as "venue.name",
+        a.user_name as "user.name",a.cons_mobile as "user.mobile",
+        a.update_date as consDate,a.update_date as updateDate,
+        a.collect_price as orderPrice,
+        a.collect_price as shouldPrice,
+        0 as discountPrice,
+        a.collect_price as consPrice,
+        a.pay_type as payType,
+        a.create_by as "createBy.id",
+        u.name as "createBy.name",
         NULL as checkout_name,
         p.name as projectName,
         DATE_FORMAT(a.update_date,'%H:%i') as startTime,
@@ -180,8 +186,8 @@
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
         </if>
-        ${dsf}
-        ORDER BY update_date DESC
+        ${sqlMap.dsf}
+        ORDER BY updateDate DESC
     </select>
 
     <select id="findTimeCardSaleLog" resultType="java.util.Map">

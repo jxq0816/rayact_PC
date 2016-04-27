@@ -54,8 +54,12 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Autowired
     private ReserveTutorOrderService reserveTutorOrderService;
 
-    public List<Map<String, Object>> findOrderLog(SaleVenueLog venueLog) {
-        List<Map<String, Object>> list = dao.findOrderLog(venueLog);
+    public List<SaleVenueLog> findOrderLog(SaleVenueLog venueLog) {
+        if (venueLog != null) {
+            if (venueLog.getSqlMap().get("dsf") == null)
+                venueLog.getSqlMap().put("dsf", AuthorityUtils.getDsf("a.venue_id"));
+        }
+        List<SaleVenueLog> list = dao.findOrderLog(venueLog);
         return list;
     }
 

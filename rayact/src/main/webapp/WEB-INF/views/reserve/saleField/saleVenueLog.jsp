@@ -97,27 +97,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${venueLogList}" var="order">
+                                <c:forEach items="${venueLogList}" var="log">
                                     <tr style="height: 30px;">
-                                        <td>${order.id}</td>
-                                        <td>${order.name}</td>
-                                        <td>${order.projectName}</td>
-                                        <td>${order.startTime}—${order.endTime}</td>
-                                        <td>${order.order_price}</td>
-                                        <td>${order.should_price}</td>
-                                        <td>${order.discount_price}</td>
-                                        <td>${order.cons_price}</td>
-                                        <td>${fns:getPayType(order.pay_type)}
-                                            <j:if test="${order.pay_type==8}">
-                                                    <a onclick="multiple_payments('${order.id}')">详情</a>
+                                        <td>${log.id}</td>
+                                        <td>${log.venue.name}</td>
+                                        <td>${log.projectName}</td>
+                                        <td>${log.startTime}—${log.endTime}</td>
+                                        <td>${log.orderPrice}</td>
+                                        <td>${log.shouldPrice}</td>
+                                        <td>${log.discountPrice}</td>
+                                        <td>${log.consPrice}</td>
+                                        <td>${fns:getPayType(log.payType)}
+                                            <j:if test="${log.payType==8}">
+                                                    <a onclick="multiple_payments('${log.id}')">详情</a>
                                             </j:if>
                                         </td>
-                                        <td>${order.user_name}</td>
-                                        <td>${order.create_user}</td>
-                                        <td>${order.checkout_name}</td>
-                                        <td><fmt:formatDate value="${order.cons_date}"
+                                        <td>${log.user.name}</td>
+                                        <td>${log.createBy.name}</td>
+                                        <td>${log.checkoutName}</td>
+                                        <td><fmt:formatDate value="${log.consDate}"
                                                             type="date"></fmt:formatDate></td>
-                                        <td><fmt:formatDate value="${order.update_date}"
+                                        <td><fmt:formatDate value="${log.consDate}"
                                                             type="both"></fmt:formatDate></td>
                                     </tr>
                                 </c:forEach>
