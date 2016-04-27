@@ -1,5 +1,6 @@
 package com.bra.modules.reserve.web;
 
+import com.bra.common.persistence.Page;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveUserService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -30,14 +32,14 @@ public class SaleVenueLogController extends BaseController {
     private ReserveVenueService reserveVenueService;
 
     @RequestMapping(value = "list")
-    public String list(Model model, SaleVenueLog venueLog) {
+    public String list(Model model, SaleVenueLog venueLog, HttpServletRequest request, HttpServletResponse response) {
 
         model.addAttribute("userList",reserveUserService.findList(new User()));
         ReserveVenue venue = new ReserveVenue();
         model.addAttribute("venueList",reserveVenueService.findList(venue));
         model.addAttribute("venueLog",venueLog);//参数返回
-        model.addAttribute("venueLogList", reserveVenueConsService.findOrderLog(venueLog));
-
+        Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<SaleVenueLog>(request, response), venueLog);
+        model.addAttribute("page", page);
         return "/reserve/saleField/saleVenueLog";
     }
 

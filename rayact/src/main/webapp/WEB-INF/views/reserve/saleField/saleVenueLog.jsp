@@ -97,7 +97,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${venueLogList}" var="log">
+                                <c:forEach items="${page.list}" var="log">
                                     <tr style="height: 30px;">
                                         <td>${log.id}</td>
                                         <td>${log.venue.name}</td>
@@ -121,10 +121,19 @@
                                                             type="both"></fmt:formatDate></td>
                                     </tr>
                                 </c:forEach>
-
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
 
+                            <div class="pull-right">
+                                <div class="dataTables_paginate paging_bs_normal">
+                                    <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </form>
