@@ -208,6 +208,12 @@
         "authorityList": []
       },
       {
+        "code": "timeCardRechargeStatements",
+        "name": "次卡充值记录",
+        "href":"/reserve/reserveCardStatements/list?transactionType=7",
+        "authorityList": []
+      },
+      {
         "code": "reserveCardRefundStatements",
         "name": "退费记录",
         "href":"/reserve/reserveCardStatements/list?transactionType=2",

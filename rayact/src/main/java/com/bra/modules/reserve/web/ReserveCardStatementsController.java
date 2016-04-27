@@ -68,27 +68,19 @@ public class ReserveCardStatementsController extends BaseController {
 	public String list(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response), reserveCardStatements);
 		model.addAttribute("page", page);
-		//求和
-		List<ReserveCardStatements> list = page.getList();
-		double sum=0;
-		for(ReserveCardStatements i:list){
-			sum+=i.getTransactionVolume();
-		}
-		model.addAttribute("sum",sum);
 
 		String type=reserveCardStatements.getTransactionType();
 		String rs=null;
 		if("1".equals(type)){
 			rs= "reserve/record/reserveCardRechargeStatementsList";
-		}
-		if("2".equals(type)){
+		}else if("2".equals(type)){
 			rs= "reserve/record/reserveCardRefundStatementsList";
-		}
-		if("3".equals(type)){
+		}else if("3".equals(type)){
 			rs= "reserve/record/reserveCardCancellationStatementsList";
-		}
-		if("4".equals(type)){
+		}else if("4".equals(type)){
 			rs= "reserve/record/reserveCardCancellationPenaltyStatementsList";
+		}else if("7".equals(type)){
+			rs= "reserve/record/timeCardRechargeStatementsList";
 		}
 		return rs;
 	}
