@@ -39,7 +39,9 @@ public class ReserveCommodityService extends CrudService<ReserveCommodityDao, Re
 	}
 	
 	public Page<ReserveCommodity> findPage(Page<ReserveCommodity> page, ReserveCommodity commodity) {
-		return super.findPage(page, commodity);
+		commodity.setPage(page);
+		page.setList(this.findList(commodity));
+		return page;
 	}
 	
 	@Transactional(readOnly = false)
