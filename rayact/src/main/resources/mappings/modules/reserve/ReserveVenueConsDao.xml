@@ -128,7 +128,7 @@
         select
         a.id,
         a.venue_id as "venue.id",v.name as "venue.name",
-        a.user_name as "user.name",a.cons_mobile as "user.mobile",
+        a.user_name as "member.name",a.cons_mobile as "member.mobile",
         a.cons_date as consDate,a.update_date "updateDate",
         a.order_price as orderPrice,
         a.should_price as shouldPrice,
@@ -151,8 +151,8 @@
         <if test="startDate != null and endDate != null">
             and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
-        <if test="user!=null and user.id!=null and user.id!=''">
-            and a.create_by = #{user.id}
+        <if test="createBy!=null and createBy.id!=null and createBy.id!=''">
+            and a.create_by = #{createBy.id}
         </if>
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
@@ -161,7 +161,7 @@
         UNION
         select a.id,
         a.venue_id as "venue.id",v.name as "venue.name",
-        a.user_name as "user.name",a.cons_mobile as "user.mobile",
+        a.user_name as "member.name",a.cons_mobile as "member.mobile",
         a.update_date as consDate,a.update_date as updateDate,
         a.collect_price as orderPrice,
         a.collect_price as shouldPrice,
@@ -180,8 +180,8 @@
         <if test="startDate != null and endDate != null">
             and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
-        <if test="user!=null and user.id!=null and user.id!=''">
-            and a.create_by = #{user.id}
+        <if test="createBy!=null and createBy.id!=null and createBy.id!=''">
+            and a.create_by = #{createBy.id}
         </if>
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}

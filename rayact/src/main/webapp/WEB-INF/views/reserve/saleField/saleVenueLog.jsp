@@ -40,12 +40,12 @@
                                         </td>
                                         <td>操作人：</td>
                                         <td>
-                                            <select name="user.id" class="select2" style="width: 200px">
+                                            <select name="createBy.id" class="select2" style="width: 200px">
                                                 <option value="">请选择</option>
-                                                <c:forEach items="${userList}" var="user">
+                                                <c:forEach items="${userList}" var="createBy">
                                                     <option
-                                                            <j:if test="${user.id eq venueLog.user.id}">selected="selected"</j:if>
-                                                            value="${user.id}">${user.name}</option>
+                                                            <j:if test="${createBy.id eq venueLog.createBy.id}">selected="selected"</j:if>
+                                                            value="${createBy.id}">${createBy.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </td>
@@ -112,7 +112,7 @@
                                                     <a onclick="multiple_payments('${log.id}')">详情</a>
                                             </j:if>
                                         </td>
-                                        <td>${log.user.name}</td>
+                                        <td>${log.member.name}</td>
                                         <td>${log.createBy.name}</td>
                                         <td>${log.checkoutName}</td>
                                         <td><fmt:formatDate value="${log.consDate}"

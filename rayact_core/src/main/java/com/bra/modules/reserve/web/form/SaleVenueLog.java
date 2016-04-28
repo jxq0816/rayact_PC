@@ -1,8 +1,8 @@
 package com.bra.modules.reserve.web.form;
 
 import com.bra.common.persistence.SaasEntity;
+import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.sys.entity.User;
 
 import java.util.Date;
 
@@ -35,7 +35,7 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
 
     private ReserveVenue venue;
 
-    private User user;
+    private ReserveMember member;
 
     @Override
     public String getId() {
@@ -127,14 +127,13 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
         this.consDate = consDate;
     }
 
-    public User getUser() {
-        return user;
+    public ReserveMember getMember() {
+        return member;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMember(ReserveMember member) {
+        this.member = member;
     }
-
 
     public ReserveVenue getVenue() {
         return venue;
