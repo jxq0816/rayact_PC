@@ -30,7 +30,7 @@
                                 <tr>
                                     <td>场馆:</td>
                                     <td>
-                                        <sys:select cssClass="input-large" name="reserveVenue.id"
+                                        <sys:select cssClass="input-large input-small" name="reserveVenue.id"
                                                     value="${venueProjectReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"

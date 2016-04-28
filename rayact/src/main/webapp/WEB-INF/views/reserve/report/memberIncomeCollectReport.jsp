@@ -23,7 +23,7 @@
                            action="${ctx}/reserve/reserveCardStatements/memberIncomeReport?alone=${alone}"
                            method="post" class="breadcrumb form-search">
                     <div class="row">
-                        <div class="col-sm-10 col-md-10 col-lg-10">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <td>场馆:</td>

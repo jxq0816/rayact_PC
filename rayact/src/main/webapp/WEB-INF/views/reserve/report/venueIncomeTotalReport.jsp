@@ -19,7 +19,7 @@
                 <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/totalIncomeReport"
                            method="post" class="breadcrumb form-search">
                     <div class="row">
-                        <div class="col-sm-7 col-md-7 col-lg-7">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>

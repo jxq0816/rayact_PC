@@ -18,46 +18,45 @@
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCommoditySellDetail"
                            action="${ctx}/reserve/reserveCommoditySellDetail/findSellDetailList" method="post">
-                    <div class="breadcrumb form-search">
-                        <div class="row">
-                            <label class="col-lg-1 control-label"
-                                   style="height: 36px;line-height:36px;overflow: hidden;">场馆：</label>
-                            <div class="col-lg-2 ">
-                                <sys:select cssClass="input-large" name="reserveCommodity.reserveVenue.id"
-                                            value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
-                                            items="${venueList}" itemLabel="name" itemValue="id"
-                                            defaultLabel="----请选择-----"
-                                            defaultValue=""></sys:select>
-                            </div>
 
-                            <label class="col-lg-1 control-label">商品：</label>
-                            <div class="col-lg-1">
-                                <form:input path="reserveCommodity.name" htmlEscape="false"
-                                            cssstyle="width:50px;"
-                                            maxlength="30"
-                                            class="form-control"/>
-                            </div>
+                    <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
+                        <div class="form-group col-lg-3 col-sm-4">
+                            <label class="control-label" for="venue">场馆：</label>
+                            <sys:select id="venue" cssClass="input-large" name="reserveCommodity.reserveVenue.id"
+                                        value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
+                                        items="${venueList}" itemLabel="name" itemValue="id"
+                                        defaultLabel="----请选择-----"
+                                        defaultValue=""></sys:select>
+                        </div>
 
-                            <label class="col-lg-1 control-label">时间：</label>
-                            <div class="col-lg-1">
+                        <div class="form-group col-lg-2 col-sm-2">
+
+                            <form:input path="reserveCommodity.name" htmlEscape="false"
+                                        maxlength="30"
+                                        placeholder="请输入商品名称"
+                                        class="form-control"/>
+                        </div>
+                        <div class="form-group col-lg-4 col-sm-3">
+                            <div class="col-lg-6 col-sm-6">
                                 <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
                                        name="startDate" id="startDate" type="text"
                                        maxlength="20"
                                        class="input-medium form-control Wdate "
                                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-6 col-sm-6">
                                 <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.endDate}"/>"
                                        name="endDate" id="endDate" type="text"
                                        maxlength="20"
                                        class="input-medium form-control Wdate "
                                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                             </div>
-                            <div class="col-lg-2">
-                                <input id="btnSubmit" class="btn btn-primary" type="submit"
-                                       value="查询"/><input id="btnExport" class="btn btn-primary"
-                                                          type="button" value="导出"/></td>
-                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-2 col-sm-3">
+                            <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                   value="查询"/><input id="btnExport" class="btn btn-primary"
+                                                      type="button" value="导出"/></td>
                         </div>
                     </div>
 

@@ -267,7 +267,7 @@ pre {
     border: 0;
     background-color: #fff;
    /* border-top: 4px solid #44b549;*/
-    background: url(../images/head.png) no-repeat;
+    background: url(../images/head.png) repeat-x ;
     color: #FFF;
     padding-left: 10px;
     padding-right: 25px;
