@@ -868,7 +868,7 @@ body.modal-open,
 }
 
 .cl-vnavigation .parent a {
-    background: url("../images/arrow.png") no-repeat scroll right 14px top 18px transparent;
+    background: url("../images/arrow.png") no-repeat scroll right 2% top 18px transparent;
 }
 
 .cl-vnavigation li a {

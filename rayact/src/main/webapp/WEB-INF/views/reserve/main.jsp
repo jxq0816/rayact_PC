@@ -23,7 +23,7 @@
                         <div class="col-lg-12 col-sm-12">
                             <c:forEach items="${auth.authorityList}" var="a">
                                 <a href="${ctx}${a.href}">
-                                    <div class="col-lg-2 col-sm-2" >
+                                    <div class="col-lg-2 col-sm-3" >
                                         <li class="list-group-item" style="text-align:center"><span style="color:#3c3e43;">${a.name}</span></li>
                                     </div>
                                 </a>
