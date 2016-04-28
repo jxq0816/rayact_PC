@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
-    <title>退款记录</title>
+    <title>退费记录</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -16,8 +16,6 @@
                 <div class="header">
                     <h3>退费记录</h3>
                 </div>
-
-
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
                            action="${ctx}/reserve/reserveCardStatements/list"
                            method="post">
@@ -103,27 +101,6 @@
                                 </tr>
                             </c:forEach>
                             </tbody>
-                            <tr>
-                                <td>
-                                    合计
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    ${sum}
-                                </td>
-                                <td>
-
-                                </td>
-
-                                <td>
-                                </td>
-
-                                <td>
-
-                                </td>
-
-                            </tr>
                         </table>
 
                         <div class="row">

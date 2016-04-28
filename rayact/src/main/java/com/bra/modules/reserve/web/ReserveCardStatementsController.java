@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,10 +76,8 @@ public class ReserveCardStatementsController extends BaseController {
 			rs= "reserve/record/reserveCardRechargeStatementsList";
 		}else if("2".equals(type)){
 			rs= "reserve/record/reserveCardRefundStatementsList";
-		}else if("3".equals(type)){
+		}else if("5".equals(type)){
 			rs= "reserve/record/reserveCardCancellationStatementsList";
-		}else if("4".equals(type)){
-			rs= "reserve/record/reserveCardCancellationPenaltyStatementsList";
 		}else if("7".equals(type)){
 			rs= "reserve/record/timeCardRechargeStatementsList";
 		}
@@ -106,15 +105,6 @@ public class ReserveCardStatementsController extends BaseController {
 				o[6] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
-			String[] o = new String[7];
-			o[0] = "合计";
-			o[1] = "";
-			o[2] = String.valueOf(sum);
-			o[3] = "";
-			o[4] = "";
-			o[5] = "";
-			o[6] = "";
-			contentList.add(o);
 			Date now = new Date();
 			ExcelInfo info = new ExcelInfo(response,"充值记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
@@ -134,19 +124,10 @@ public class ReserveCardStatementsController extends BaseController {
 				o[5] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
-			String[] o = new String[6];
-			o[0] = "合计";
-			o[1] = "";
-			o[2] = String.valueOf(sum);
-			o[3] = "";
-			o[4] = "";
-			o[5] = "";
-			contentList.add(o);
 			Date now = new Date();
 			ExcelInfo info = new ExcelInfo(response,"退费记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
-		sum=0;
 		if("3".equals(type)){
 			String[] titles = {"姓名","卡号","卡内余额","退还金额","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
@@ -162,20 +143,10 @@ public class ReserveCardStatementsController extends BaseController {
 				o[6] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
-			String[] o = new String[7];
-			o[0] = "合计";
-			o[1] = "";
-			o[2] = "";
-			o[3] = String.valueOf(sum);
-			o[4] = "";
-			o[5] = "";
-			o[6] = "";
-			contentList.add(o);
 			Date now = new Date();
 			ExcelInfo info = new ExcelInfo(response,"储值卡销户记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
-		sum=0;
 		if("4".equals(type)){
 			String[] titles = {"姓名","卡号","违约金","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
@@ -190,14 +161,7 @@ public class ReserveCardStatementsController extends BaseController {
 				o[5] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
-			String[] o = new String[6];
-			o[0] = "合计";
-			o[1] = "";
-			o[2] = String.valueOf(sum);
-			o[3] = "";
-			o[4] = "";
-			o[5] = "";
-			contentList.add(o);
+
 			Date now = new Date();
 			ExcelInfo info = new ExcelInfo(response,"储值卡销户违约金记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
@@ -350,6 +314,9 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveMemberService.save(reserveMember);//余额清空
 		reserveMemberService.delete(reserveMember);//销户
 		Double difference=remainder-realRefundVolume;//差额
+
+		DecimalFormat df=new DecimalFormat("0.00");
+		difference=new Double(df.format(difference).toString());
 
 		ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 		reserveCardStatements.setTransactionType("5");//销户退还用户的金额记录

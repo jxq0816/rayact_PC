@@ -68,6 +68,7 @@
                                     <th>卡号</th>
                                     <th>卡内余额</th>
                                     <th>退还金额</th>
+                                    <th>违约金</th>
                                     <th>电话</th>
                                     <th>操作人</th>
                                     <th>时间</th>
@@ -89,6 +90,9 @@
                                                 ${reserveCardStatements.transactionVolume}
                                         </td>
                                         <td>
+                                                ${reserveCardStatements.transactionVolume/4}
+                                        </td>
+                                        <td>
                                                 ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
 
                                         </td>
@@ -101,32 +105,8 @@
                                             <fmt:formatDate value="${reserveCardStatements.createDate}"
                                                             pattern="yyyy-MM-dd HH:mm:ss"/>
                                         </td>
-
                                     </tr>
                                 </c:forEach>
-                                <tr>
-                                    <td>
-                                        合计
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                            ${sum}
-                                    </td>
-                                    <td>
-
-                                    </td>
-
-                                    <td>
-                                    </td>
-
-                                    <td>
-
-                                    </td>
-
-                                </tr>
                                 </tbody>
                             </table>
 
