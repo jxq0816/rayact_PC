@@ -158,7 +158,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 	@RequestMapping(value = {"findSellDetailListExport", ""})
 	public void findSellDetailListExport(ReserveCommoditySellDetail reserveCommoditySellDetail, HttpServletResponse response)throws Exception {
 		List<ReserveCommoditySellDetail> list = reserveCommoditySellDetailService.findSellDetailList(reserveCommoditySellDetail);
-		String[] titles = {"商品名称","商品类型","购买数量","单价","合计","备注","售卖人","场馆","时间"};
+		String[] titles = {"商品名称","商品类型","购买数量","单价","合计","售卖人","场馆","时间","备注"};
 		List<String[]> contentList = new ArrayList<>();
 		for(ReserveCommoditySellDetail map :list){
 			String[] o = new String[9];
@@ -167,10 +167,10 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			o[2] = String.valueOf(map.getNum());
 			o[3] = String.valueOf(map.getPrice());
 			o[4] =  String.valueOf(map.getDetailSum());
-			o[5] =  String.valueOf(map.getRemarks());
-			o[6] =  map.getUpdateBy().getName();
-			o[7] =  map.getReserveCommodity().getReserveVenue().getName();
-			o[8] =  DateUtils.formatDate(map.getCreateDate(),"yyyy-MM-dd HH:mm:ss");
+			o[5] =  map.getUpdateBy().getName();
+			o[6] =  map.getReserveCommodity().getReserveVenue().getName();
+			o[7] =  DateUtils.formatDate(map.getCreateDate(),"yyyy-MM-dd HH:mm:ss");
+			o[8] =  String.valueOf(map.getRemarks());
 			contentList.add(o);
 		}
 		Date now = new Date();

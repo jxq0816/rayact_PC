@@ -117,27 +117,6 @@
 
                                 </tr>
                             </c:forEach>
-                            <tr>
-                                <td>
-                                    合计
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                        ${sum}
-                                </td>
-                                <td>
-
-                                </td>
-
-                                <td>
-                                </td>
-
-                                <td>
-
-                                </td>
-
-                            </tr>
                             </tbody>
                         </table>
 
