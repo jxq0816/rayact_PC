@@ -19,60 +19,54 @@
                 </div>
                 <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
                       method="post">
-                    <div class="breadcrumb form-search">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table class="no-border">
-                                    <tbody class="no-border-y">
-                                    <tr>
-                                        <td>
-                                            场馆：
-                                        </td>
-                                        <td>
-                                            <select name="venue.id" class="select2" style="width: 200px">
-                                                <option value="">---请选择---</option>
-                                                <c:forEach items="${venueList}" var="venue">
-                                                    <option
-                                                            <j:if test="${venue.id eq venueLog.venue.id}">selected="selected"</j:if>
-                                                            value="${venue.id}">${venue.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </td>
-                                        <td>操作人：</td>
-                                        <td>
-                                            <select name="createBy.id" class="select2" style="width: 200px">
-                                                <option value="">请选择</option>
-                                                <c:forEach items="${userList}" var="createBy">
-                                                    <option
-                                                            <j:if test="${createBy.id eq venueLog.createBy.id}">selected="selected"</j:if>
-                                                            value="${createBy.id}">${createBy.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </td>
-                                        <td>时间:</td>
-                                        <td><input name="startDate"
-                                                   value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>"
-                                                   type="text" id="startDate"
-                                                   maxlength="20"
-                                                   class="input-medium form-control Wdate "
-                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
-                                        /></td>
-                                        <td>
-                                            <input name="endDate"
-                                                   value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"
-                                                   type="text" id="endDate"
-                                                   maxlength="20"
-                                                   class="input-medium form-control Wdate "
-                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
-                                            />
-                                        </td>
-                                        <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-                                            <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                    <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
+                        <div class="form-group col-lg-3 col-sm-4">
+                            <label class="control-label" for="venue">场馆：</label>
+                            <select id="venue" name="venue.id" class="select2">
+                                <option value="">---请选择---</option>
+                                <c:forEach items="${venueList}" var="venue">
+                                    <option
+                                            <j:if test="${venue.id eq venueLog.venue.id}">selected="selected"</j:if>
+                                            value="${venue.id}">${venue.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-3 col-sm-4">
+                            <label class="control-label" for="createBy">操作人：</label>
+                            <select id="createBy" name="createBy.id" class="select2">
+                                <option value="">请选择</option>
+                                <c:forEach items="${userList}" var="createBy">
+                                    <option
+                                            <j:if test="${createBy.id eq venueLog.createBy.id}">selected="selected"</j:if>
+                                            value="${createBy.id}">${createBy.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-4 col-sm-3">
+                            <div class="col-lg-6 col-sm-6">
+                                <input name="startDate"
+                                       value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>"
+                                       type="text" id="startDate"
+                                       maxlength="20"
+                                       class="input-medium form-control Wdate "
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
+                                />
                             </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <input name="endDate"
+                                       value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"
+                                       type="text" id="endDate"
+                                       maxlength="20"
+                                       class="input-medium form-control Wdate "
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-2 col-sm-3">
+                            <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                            <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
                         </div>
                     </div>
                     <div class="content">
@@ -109,7 +103,7 @@
                                         <td>${log.consPrice}</td>
                                         <td>${fns:getPayType(log.payType)}
                                             <j:if test="${log.payType==8}">
-                                                    <a onclick="multiple_payments('${log.id}')">详情</a>
+                                                <a onclick="multiple_payments('${log.id}')">详情</a>
                                             </j:if>
                                         </td>
                                         <td>${log.member.name}</td>
