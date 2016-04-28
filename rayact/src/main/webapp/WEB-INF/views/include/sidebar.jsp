@@ -4,7 +4,7 @@
     <%--<div class="cl-toggle"><i class="fa fa-bars"></i></div>--%>
 
     <div class="cl-navblock">
-        <div style="position: fixed;width: 15%;background: #fff;box-sizing:border-box">
+        <div style="width: 100%;background: #fff;box-sizing:border-box">
             <div class="content">
                 <%-- <div class="side-user">
                      <div class="info">

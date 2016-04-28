@@ -59,7 +59,7 @@
 </head>
 
 <body style="overflow-y: scroll;">
-<div id="head-nav" class="navbar navbar-default navbar-fixed-top">
+<div id="head-nav" class="navbar navbar-default navbar-fixed-top" style="position: relative">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -91,7 +91,7 @@
         </div><!--/.nav-collapse -->
     </div>
 </div>
-<div id="cl-wrapper" class="fixed-menu">
+<div id="cl-wrapper" class="fixed-menu" style="margin-top: -35px">
     <!-- Bootstrap core JavaScript
       ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
