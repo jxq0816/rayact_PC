@@ -74,7 +74,7 @@
                                             ${commodity.price}&nbsp;元
                                     </td>
                                     <td>
-                                            ${commodity.repertoryNum}瓶
+                                            ${commodity.repertoryNum}
                                     </td>
                                     <td>
                                             1*${commodity.unit}
