@@ -85,13 +85,15 @@ public class ReserveFieldController extends BaseController {
     @Token(save = true)
     public String form(ReserveField reserveField, Model model) throws ParseException {
         //全场与半场之间的关系
-        ReserveFieldRelation reserveFieldRelation = new ReserveFieldRelation();
-        reserveFieldRelation.setChildField(reserveField);
-        List<ReserveFieldRelation> relations= reserveFieldRalationService.findList(reserveFieldRelation);//查询数据库是否已有父场地
-        if(relations!=null && relations.size()!=0){//已有父场地
-            reserveFieldRelation = relations.get(0);
-            if (reserveFieldRelation != null) {
-                reserveField.setReserveParentField(reserveFieldRelation.getParentField());//给子场地设置父场地
+        if(StringUtils.isNoneEmpty(reserveField.getId())){
+            ReserveFieldRelation reserveFieldRelation = new ReserveFieldRelation();
+            reserveFieldRelation.setChildField(reserveField);
+            List<ReserveFieldRelation> relations= reserveFieldRalationService.findList(reserveFieldRelation);//查询数据库是否已有父场地
+            if(relations!=null && relations.size()!=0){//已有父场地
+                reserveFieldRelation = relations.get(0);
+                if (reserveFieldRelation != null) {
+                    reserveField.setReserveParentField(reserveFieldRelation.getParentField());//给子场地设置父场地
+                }
             }
         }
         //场地列表

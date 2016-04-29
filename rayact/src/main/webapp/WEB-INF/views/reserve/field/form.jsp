@@ -70,18 +70,14 @@
                                                         defaultValue=""></sys:select>
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">父场地</label>
-                                        <div class="col-sm-6">
-                                                ${reserveField.reserveParentField.name}
-                                          <%--  <sys:select cssClass="input-large" name="reserveParentField.id"
-                                                        value="${reserveField.reserveParentField.id}"
-                                                        items="${fields}" itemLabel="name" itemValue="id"
-                                                        defaultLabel="如果该场地为半场,请选择所属全场"
-                                                        defaultValue=""></sys:select>--%>
+                                    <j:if test="${reserveField.reserveParentField==''}">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">父场地</label>
+                                            <div class="col-sm-6">
+                                                    ${reserveField.reserveParentField.name}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </j:if>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">是否分时令</label>
                                         <div class="col-sm-6">
