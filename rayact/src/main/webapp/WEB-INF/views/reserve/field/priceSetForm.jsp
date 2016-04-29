@@ -39,7 +39,7 @@
                                             <td><span id="weekTd" style="color: red">周一至周日</span></td>
 
 
-                                            <td>时间段:</td>
+                                            <%--<td>时间段:</td>
                                             <td>
                                                 <select id="startTime">
                                                     <c:forEach items="${times}" var="t">
@@ -52,7 +52,7 @@
                                                         <option value="${t}">${t}</option>
                                                     </c:forEach>
                                                 </select>
-                                            </td>
+                                            </td>--%>
                                             <td>市场价:</td>
                                             <td>
                                                 <input type="text" id="retail" class="number form-control"

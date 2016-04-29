@@ -19,3 +19,4 @@
 20160420:新增多方式付款表reserve_multiple_payment
 20160421:新增空场审核表reserve_venue_empty_check
 20160422:新增流水统计审核表reserve_check_detail
+20160429:reserve_card_statements 将transaction_volume的改为bigDecimal(65,2)
