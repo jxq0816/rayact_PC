@@ -82,7 +82,8 @@
                                                 ${reserveMember.reserveVenue.name}
                                         </td>
                                         <td>
-                                                ${reserveMember.remainder}
+                                            <fmt:formatNumber value="${reserveMember.remainder}"/>
+
                                         </td>
                                         <td>
                                             <a class="btn btn-primary btn-xs"

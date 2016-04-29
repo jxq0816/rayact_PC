@@ -30,7 +30,9 @@
             </tr>
             <tr>
                 <td>余额:</td>
-                <td>${reserveMember.remainder}</td>
+                <td>
+                    <fmt:formatNumber value="${reserveMember.remainder}"/>
+                </td>
 
                 <td>储值卡名称:</td>
                 <td>${reserveMember.storedcardSet.name}

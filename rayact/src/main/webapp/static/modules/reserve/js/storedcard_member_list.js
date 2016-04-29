@@ -124,13 +124,14 @@ $(document).ready(function () {
     $("#rechargeSaveBtn").on('click', function () {
         var rechargeVolume = $("#rechargeVolume").val();
         rechargeVolume= $.trim(rechargeVolume);
+        rechargeVolume=parseFloat(rechargeVolume);
 
         if (rechargeVolume == '') {
             formLoding("请输入充值金额");
             return;
         }
         if(isNaN(rechargeVolume)){
-            errorLoding(" 充值金额必须为数字！");
+            errorLoding(" 充值金额必须为合法数字！");
             return;
         }
         if(rechargeVolume<=0){

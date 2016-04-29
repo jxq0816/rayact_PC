@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>储值卡会员添加</title>
+    <title>储值卡会员编辑</title>
     <meta name="decorator" content="main"/>
 
 </head>
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>储值卡会员添加</h3>
+                    <h3>储值卡会员编辑</h3>
                 </div>
                 <div class="content">
                     <td class="tab-container">
@@ -72,7 +72,7 @@
                                 <tr>
                                     <td>余额:</td>
                                     <td>
-                                        <input type="text" value="${reserveMember.remainder}" name="remainder"
+                                        <input type="text" value="<fmt:formatNumber value="${reserveMember.remainder}" groupingUsed="false" />" name="remainder"
                                                class="form-control " maxlength="20"
                                                <j:if test="${!fns:isAdmin()}">readonly="readonly"</j:if>/>
                                     </td>
