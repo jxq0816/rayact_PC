@@ -203,9 +203,9 @@
 		FROM reserve_tutor_order o
 		LEFT JOIN reserve_venue_cons c	ON o.model_id = c.id
 		WHERE o.tutor_id = #{tutor.id} AND
-		o.del_flag = #{DEL_FLAG_NORMAL} and o.tenant_id = #{tenantId}
+		o.del_flag = #{DEL_FLAG_NORMAL} and o.tenant_id = #{tenantId} and c.reserve_type = '4'
 		<if test="startDate!=null and endDate !=null">
-			and datediff(o.update_date,#{startDate})>=0 and datediff(#{endDate},o.update_date)>=0
+			and datediff(c.cons_date,#{startDate})>=0 and datediff(#{endDate},c.cons_date)>=0
 		</if>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -219,9 +219,11 @@
 
 	<select id="getTutorOrderAll" resultType="java.util.Map">
 		SELECT o.tutor_id AS tutorId,t.name AS tutorName,sum(o.total_price) AS price,SUM(o.order_count)/2 AS minute
-		FROM reserve_tutor t LEFT JOIN reserve_tutor_order o ON o.tutor_id = t.id
+		FROM reserve_tutor t
+		LEFT JOIN reserve_tutor_order o ON o.tutor_id = t.id
+		LEFT JOIN reserve_venue_cons c	ON o.model_id = c.id
 		WHERE
-		o.del_flag = #{DEL_FLAG_NORMAL} and t.del_flag = #{DEL_FLAG_NORMAL} and o.tenant_id = #{tenantId}
+		o.del_flag = #{DEL_FLAG_NORMAL} and t.del_flag = #{DEL_FLAG_NORMAL} and o.tenant_id = #{tenantId} AND c.reserve_type = '4'
 		<if test="tutor != null and tutor.name !=''">
 			AND t.name LIKE
 			<if test="dbName == 'oracle'">'%'||#{tutor.name}||'%'</if>
@@ -229,7 +231,7 @@
 			<if test="dbName == 'mysql'">concat('%',#{tutor.name},'%')</if>
 		</if>
 		<if test="startDate!=null and endDate !=null">
-			and datediff(o.update_date,#{startDate})>=0 and datediff(#{endDate},o.update_date)>=0
+			and datediff(c.cons_date,#{startDate})>=0 and datediff(#{endDate},c.cons_date)>=0
 		</if>
 		GROUP BY o.tutor_id
 		<choose>

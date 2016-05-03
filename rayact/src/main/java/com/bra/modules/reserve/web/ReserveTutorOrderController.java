@@ -83,8 +83,8 @@ public class ReserveTutorOrderController extends BaseController {
 	public String orderDetail(HttpServletRequest request,HttpServletResponse response,Model model) {
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
-		Date start = new Date();
-		Date end = new Date();
+		Date start = null;
+		Date end = null;
 		if(!"".equals(startDate)&&!"".equals(endDate)){
 			start = DateUtils.parseDate(startDate);
 			end = DateUtils.parseDate(endDate);

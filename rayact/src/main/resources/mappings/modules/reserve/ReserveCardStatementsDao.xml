@@ -332,7 +332,7 @@
 				and datediff(i.cons_date,#{startDate})>=0 and datediff(#{endDate},i.cons_date)>=0
 			</if>
 			GROUP BY r.parent_field_id
-		) tmp ON f.id = tmp.field_id WHERE f.venue_id = #{venueId} GROUP BY f.id
+		) tmp ON f.id = tmp.field_id WHERE f.venue_id = #{venueId} GROUP BY f.id ORDER BY field_name
 	</select>
 
 	<select id="storeIncome" resultType="java.util.Map" parameterType="SearchForm">
