@@ -20,8 +20,6 @@
 
                 <form:form id="searchForm" modelAttribute="reserveFieldRelation" action="${ctx}/reserve/reserveFieldRelation/"
                            method="post" class="breadcrumb form-search">
-                  <%--  <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>--%>
 
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">

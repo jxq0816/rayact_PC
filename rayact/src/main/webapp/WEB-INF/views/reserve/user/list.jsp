@@ -90,7 +90,7 @@
 
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

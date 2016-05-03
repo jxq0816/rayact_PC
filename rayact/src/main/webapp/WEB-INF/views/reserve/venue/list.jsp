@@ -84,7 +84,7 @@
                                                     class="fa fa-pencil"></i>修改</a>
                                             <a class="btn btn-danger btn-xs"
                                                href="${ctx}/reserve/reserveVenue/delete?id=${reserveVenue.id}"
-                                               onclick="return confirmx('确认要删除该场馆吗？', this.href)"><i
+                                               onclick="return confirmb('确认要删除该场馆吗？', this.href)"><i
                                                     class="fa fa-times"></i>删除</a>
                                         </td>
                                 </tr>
@@ -98,7 +98,7 @@
 
                                 <div class="pull-right">
                                     <div class="dataTables_paginate paging_bs_normal">
-                                        <sys:javascript_page p="${page}"></sys:javascript_page>
+                                        <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
