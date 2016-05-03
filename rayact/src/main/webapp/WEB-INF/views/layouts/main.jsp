@@ -38,7 +38,7 @@
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/bootstrap.switch/bootstrap-switch.min.js"></script>
     <script type="text/javascript"
             src="${ctxStatic}/cleanzone/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-
+    <script src="${ctxStatic}/cleanzone/js/jquery.select2/select2.min.js" type="text/javascript"></script>
     <script src="${ctxStatic}/cleanzone/js/skycons/skycons.js" type="text/javascript"></script>
     <script src="${ctxStatic}/cleanzone/js/bootstrap.slider/js/bootstrap-slider.js" type="text/javascript"></script>
     <script src="${ctxStatic}/cleanzone/js/intro.js/intro.js" type="text/javascript"></script>

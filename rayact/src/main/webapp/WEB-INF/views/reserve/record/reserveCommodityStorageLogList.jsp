@@ -24,6 +24,7 @@
                         <div class="form-group col-lg-3 col-sm-5">
                             <label class="control-label" for="venue">场馆：</label>
                             <sys:select cssClass="input-large" name="reserveVenue.id" id="venue"
+                                        cssStyle="width:50%"
                                         value="${query.reserveVenue.id}"
                                         items="${venues}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"

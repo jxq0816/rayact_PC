@@ -17,27 +17,21 @@
                     <h3>场馆损益列表</h3>
 
                     <form:form id="searchForm" modelAttribute="reserveVenueBill"
-                               action="${ctx}/reserve/reserveVenueBill/" method="post" class="breadcrumb form-search">
-                        <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                        <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                <table class="no-border">
-                                    <tbody class="no-border-y">
-                                    <tr>
-                                        <td>场馆名称:</td>
-                                        <td>
-                                            <sys:select cssClass="input-xlarge" cssStyle="width:200px"
-                                                        name="reserveVenue.id"
-                                                        items="${venueList}"
-                                                        value="${venue}" itemLabel="name"
-                                                        itemValue="id"></sys:select>
-                                        </td>
-                                        <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                               action="${ctx}/reserve/reserveVenueBill/" method="post">
+                        <div class="row col-lg-12 col-sm-12 breadcrumb form-search"
+                             style="margin-left:0px; margin-right:0px;">
+                            <div class="form-group col-lg-3 col-sm-5">
+                                <label class="control-label" for="venue">场馆：</label>
+                                <sys:select cssClass="input-xlarge" cssStyle="width:50%"
+                                            id="venue"
+                                            name="reserveVenue.id"
+                                            items="${venueList}"
+                                            value="${venue}" itemLabel="name"
+                                            itemValue="id"></sys:select>
+                            </div>
+                            <div class="form-group col-lg-2 col-sm-2">
+                                <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                       value="查询"/>
                             </div>
                             <div class="pull-right">
                                 <a class="btn btn-success" href="${ctx}/reserve/reserveVenueBill/form">
@@ -117,7 +111,7 @@
 
                                     <div class="pull-right">
                                         <div class="dataTables_paginate paging_bs_normal">
-                                            <sys:javascript_page p="${page}"></sys:javascript_page>
+                                            <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -130,5 +124,6 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

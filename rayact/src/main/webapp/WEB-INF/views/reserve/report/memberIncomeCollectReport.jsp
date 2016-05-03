@@ -30,6 +30,7 @@
                                 <td>
 
                                     <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                cssStyle="width:50%"
                                                 value="${reserveMemberIntervalReport.reserveVenue.id}"
                                                 items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                 defaultLabel="----请选择-----"

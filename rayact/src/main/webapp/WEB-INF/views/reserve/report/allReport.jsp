@@ -37,6 +37,7 @@
                                     <td>场馆:</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="venue.id"
+                                                    cssStyle="width:80%"
                                                     value="${reserveCardStatements.venue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"

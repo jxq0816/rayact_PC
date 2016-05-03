@@ -26,6 +26,7 @@
                                     <td>场馆:</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                    cssStyle="width:100%"
                                                     value="${intervalTotalReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"

@@ -22,7 +22,7 @@
                     <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
                         <div class="form-group col-lg-3 col-sm-4">
                             <label class="control-label" for="venue">场馆：</label>
-                            <select id="venue" name="venue.id" class="select2">
+                            <select id="venue" name="venue.id" class="select2 " style="width: 50%">
                                 <option value="">---请选择---</option>
                                 <c:forEach items="${venueList}" var="venue">
                                     <option

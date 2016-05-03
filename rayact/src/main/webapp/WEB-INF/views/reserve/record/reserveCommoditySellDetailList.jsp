@@ -23,6 +23,7 @@
                         <div class="form-group col-lg-3 col-sm-4">
                             <label class="control-label" for="venue">场馆：</label>
                             <sys:select id="venue" cssClass="input-large" name="reserveCommodity.reserveVenue.id"
+                                        cssStyle="width:50%"
                                         value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
                                         items="${venueList}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"
