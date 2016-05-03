@@ -158,8 +158,11 @@ public class ReserveController extends BaseController {
         ReserveMember reserveMember = new ReserveMember();
         model.addAttribute("memberList", reserveMemberService.findList(reserveMember));
 
-        //教练
-        model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
+        //查询场地所对应项目的教练
+        ReserveTutor tutor=new ReserveTutor();
+        ReserveProject project=reserveField.getReserveProject();
+        tutor.setProject(project);
+        model.addAttribute("tutors", reserveTutorService.findList(tutor));
 
         if (StringUtils.isNotBlank(time)) {
             String[] timeStr = time.split("-");

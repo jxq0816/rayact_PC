@@ -19,7 +19,7 @@
 	</sql>
 	
 	<sql id="reserveTutorJoins">
-		left JOIN reserve_project as p on p.id=a.fk_project_id
+		INNER JOIN reserve_project as p on p.id=a.fk_project_id
 	</sql>
     
 	<select id="get" resultType="ReserveTutor">
@@ -38,10 +38,13 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 			<if test="name != null and name != ''">
-				AND a.name LIKE 
+				AND a.name LIKE
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="project != null and project.id != null and project.id != ''">
+				AND a.fk_project_id = #{project.id}
 			</if>
 		</where>
 		<choose>
