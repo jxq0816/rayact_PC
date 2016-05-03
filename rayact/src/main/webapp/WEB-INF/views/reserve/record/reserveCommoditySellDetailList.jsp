@@ -78,6 +78,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:set var="sum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="reserveCommoditySellDetail">
                                     <tr>
                                         <td>${reserveCommoditySellDetail.reserveCommodity.name}</td>
@@ -85,6 +86,7 @@
                                         <td>${reserveCommoditySellDetail.num}</td>
                                         <td>${reserveCommoditySellDetail.price}</td>
                                         <td>${reserveCommoditySellDetail.detailSum}</td>
+                                        <c:set var="sum" value="${sum+reserveCommoditySellDetail.detailSum}"></c:set>
                                         <td>${reserveCommoditySellDetail.updateBy.name}</td>
                                         <td>${reserveCommoditySellDetail.reserveCommodity.reserveVenue.name}</td>
                                         <td><fmt:formatDate value="${reserveCommoditySellDetail.createDate}"
@@ -92,6 +94,9 @@
                                         <td>${reserveCommoditySellDetail.remarks}</td>
                                     </tr>
                                 </c:forEach>
+                                <td colspan="4"> 以上数据合计</td>
+                                <td>${sum}</td>
+                                <td colspan="4"></td>
                                 </tbody>
                             </table>
                             <div class="row">
