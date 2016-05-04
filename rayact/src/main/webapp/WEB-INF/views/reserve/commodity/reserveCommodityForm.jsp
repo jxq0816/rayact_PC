@@ -30,16 +30,29 @@
                                     <tr>
                                         <td>商品编号：</td>
                                         <td>
-                                            <form:input id="commodityId" path="commodityId" htmlEscape="false"
-                                                        maxlength="19"
-                                                        class="form-control required" onblur="checkCommodityId()"/>
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <form:input id="commodityId" path="commodityId"
+                                                                maxlength="19"
+                                                                class="form-control required"
+                                                                onblur="checkCommodityId()"/>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td>商品名称：</td>
                                         <td>
-                                            <form:input path="name" htmlEscape="false" maxlength="30"
-                                                        class="form-control required"/>
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <form:input path="name" htmlEscape="false" maxlength="30"
+                                                                class="form-control required"/>
+                                                </div>
+                                                <div class="col-lg-1 text-center">
+                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -47,8 +60,8 @@
                                     <tr>
                                         <td>商品类型：</td>
                                         <td>
-                                            <sys:select cssClass="input-xlarge" name="commodityType.id"
-                                                        cssStyle="width:150px"
+                                            <sys:select cssClass="input-xlarge required" name="commodityType.id"
+                                                        cssStyle="width:80%"
                                                         items="${commodityTypeList}"
                                                         value="${commodity.commodityType.id}"
                                                         itemLabel="name"
@@ -56,10 +69,11 @@
                                                         defaultLabel="请选择商品类型"
                                                         defaultValue=""
                                             ></sys:select>
+                                            <span class="help-inline"><font color="red">*</font> </span>
                                         </td>
                                         <td>状态：</td>
                                         <td>
-                                            <form:select path="shelvesStatus" class="input-xlarge">
+                                            <form:select path="shelvesStatus" class="input-xlarge" cssStyle="width:80%">
                                                 <form:option value="1" label="上架"/>
                                                 <form:option value="0" label="下架"/>
                                             </form:select>
@@ -69,28 +83,46 @@
                                     <tr>
                                         <td>价格：</td>
                                         <td>
-                                            <form:input path="price" htmlEscape="false"
-                                                        class="form-control required"/>&nbsp;元
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <form:input path="price" htmlEscape="false" for="yuan"
+                                                                class="form-control required number"/>
+                                                </div>
+                                                <label id="yuan" class="control-label col-lg-1">元</label>
+                                                <div class="col-lg-1">
+                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                </div>
+                                            </div>
                                         </td>
 
                                         <td>库存数量：</td>
                                         <td>
-                                            <form:input path="repertoryNum" htmlEscape="false"
-                                                        class="form-control required"/>
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <form:input path="repertoryNum" htmlEscape="false"
+                                                                class="form-control required number"/>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>规格：</td>
                                         <td>
-                                            <form:input path="unit" htmlEscape="false"
-                                                        class="form-control"/>
+                                            <div class="form-group">
+                                                <label for="unit" class="control-label col-lg-2">1 &nbsp;<span class="glyphicon glyphicon-remove"></span></label>
+                                                <div class="col-lg-8">
+                                                    <form:input path="unit" htmlEscape="false" id="unit"
+                                                                class="form-control required number"/>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td>快速搜索：</td>
                                         <td>
-                                            <form:input path="quickSearch" htmlEscape="false"
+                                            <form:input path="quickSearch" htmlEscape="false" cssStyle="width: 80%"
                                                         class="form-control "/>
                                         </td>
                                     </tr>
@@ -99,19 +131,21 @@
                                         <td>备注：</td>
                                         <td>
                                             <form:textarea path="remarks" htmlEscape="false" rows="4"
+                                                           cssStyle="width: 100%"
                                                            maxlength="255"
                                                            class="input-xxlarge "/>
                                         </td>
                                         <td>所属场馆：</td>
                                         <td>
-                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
-                                                        cssStyle="width:150px"
+                                            <sys:select cssClass="input-xlarge required" name="reserveVenue.id"
+                                                        cssStyle="width:80%"
                                                         items="${venueList}"
                                                         value="${commodity.reserveVenue.id}"
                                                         itemLabel="name"
                                                         itemValue="id"
                                                         defaultLabel="请选择场馆"
                                             ></sys:select>
+                                            <span class="help-inline"><font color="red">*</font> </span>
                                         </td>
                                     </tr>
                                 </table>
