@@ -43,16 +43,18 @@
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
-                                    <td colspan="3">
+                                    <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
                                                name="startDate" id="startDate" type="text"
                                                maxlength="20"
-                                               class="form-control Wdate "
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                               class="input-medium form-control Wdate"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                                    </td>
+                                    <td>
+
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
                                                name="endDate" id="endDate" type="text"
                                                maxlength="20"
-                                               class="form-control Wdate "
+                                               class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit"

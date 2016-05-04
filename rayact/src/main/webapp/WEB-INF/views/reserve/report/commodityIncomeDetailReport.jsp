@@ -28,18 +28,19 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
-                                    <td>场馆:</td>
+                                    <td>场馆：</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                    cssStyle="width:80%"
+                                                    cssStyle="width:100%"
                                                     value="${reserveCommodityIntervalReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
-                                    <td>商品类型:</td>
+                                    <td>商品类型：</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="reserveCommodityType.id"
+                                                    cssStyle="width:100%"
                                                     value="${reserveCommodityIntervalReport.reserveCommodityType.id}"
                                                     items="${reserveCommodityTypeList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"

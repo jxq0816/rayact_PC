@@ -31,6 +31,7 @@
                                     <td>场馆:</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                    cssStyle="width:100%"
                                                     value="${venueProjectReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
@@ -40,6 +41,7 @@
                                     <td>
 
                                         <sys:select cssClass="input-large" name="reserveProject.id"
+                                                    cssStyle="width:100%"
                                                     value="${venueProjectReport.reserveProject.id}"
                                                     items="${reserveProjectList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
