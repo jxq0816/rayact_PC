@@ -11,6 +11,7 @@
         a.fk_reserve_venue_id AS "reserveVenue.id",
         v.name AS "reserveVenue.name",
         a.shelves_status AS "shelvesStatus",
+        a.unit_name AS "unitName",
         a.unit AS "unit",
         a.quick_search AS "quickSearch",
         a.create_by AS "createBy.id",
@@ -67,6 +68,9 @@
             <if test="quickSearch != null and quickSearch != ''">
                 AND ( a.quick_search like concat('%',#{quickSearch},'%')  or a.name like concat('%',#{quickSearch},'%') )
             </if>
+            <if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id != ''">
+                AND a.fk_reserve_venue_id=#{reserveVenue.id}
+            </if>
             <if test="shelvesStatus != null and shelvesStatus != ''">
                 AND a.shelves_status=#{shelvesStatus}
             </if>
@@ -112,6 +116,7 @@
         fk_reserve_venue_id,
         shelves_status,
         unit,
+        unit_name,
         quick_search,
         create_by,
         create_date,
@@ -130,6 +135,7 @@
         #{reserveVenue.id},
         #{shelvesStatus},
         #{unit},
+        #{unitName},
         #{quickSearch},
         #{createBy.id},
         #{createDate},
@@ -151,6 +157,7 @@
         fk_reserve_venue_id = #{reserveVenue.id},
         shelves_status = #{shelvesStatus},
         unit = #{unit},
+        unit_name = #{unitName},
         quick_search = #{quickSearch},
         update_by = #{updateBy.id},
         update_date = #{updateDate},

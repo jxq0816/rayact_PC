@@ -107,6 +107,18 @@ function settlement() {
 function paySubmit() {
     var data = $("#paySubmitForm").serializeArray();
     var payType = $('#payType input:radio:checked').val();
+    var bool=true;
+    $("[name$=detailSum]").each(function () {
+        var price=$(this).val();
+        if(isNaN(price)){
+            errorLoding(price+"不是数字，请修改之后再提交！");
+            bool=false;
+            return;
+        }
+    });
+    if(bool==false){
+        return;
+    }
     if(payType=='1'){
         var memberId=jQuery("#reserveMemberSelect").val();
         if(memberId=="" || memberId==null || memberId== undefined){

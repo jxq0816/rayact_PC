@@ -80,8 +80,11 @@ public class ReserveCommodityController extends BaseController {
     public String list(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
         String userType=AuthorityUtils.getUserType();
+        List<ReserveVenue> venues=venueService.findList(new ReserveVenue());
+        model.addAttribute("venues", venues);
         model.addAttribute("userType", userType);
         model.addAttribute("page", page);
+        model.addAttribute("query", commodity);
         return "reserve/commodity/reserveCommodityList";
     }
 

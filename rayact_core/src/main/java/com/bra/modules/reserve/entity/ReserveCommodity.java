@@ -22,7 +22,16 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 
 	private String shelvesStatus;		// 上架状态
 	private int unit; //规格
+	private String unitName; //单位名称 如 瓶
 	private String quickSearch;//快速搜索
+
+	public String getUnitName() {
+		return unitName;
+	}
+
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
 
 	public String getQuickSearch() {
 		return quickSearch;
@@ -30,6 +39,10 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 
 	public void setQuickSearch(String quickSearch) {
 		this.quickSearch = quickSearch;
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 	public int getUnit() {

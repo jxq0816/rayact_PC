@@ -160,9 +160,8 @@
                             <%-- 总统计 结束 --%>
                             <c:set var="totalSum" value="0"/>
                             <tr>
-                                <td>
-                                </td>
-                                <td>
+                                <td colspan="2">
+                                    合计
                                 </td>
                                 <j:if test="${'1' eq intervalTotalReport.queryType}">
                                     <td>

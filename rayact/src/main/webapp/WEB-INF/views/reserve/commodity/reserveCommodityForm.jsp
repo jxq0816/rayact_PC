@@ -37,8 +37,8 @@
                                                                 class="form-control required"
                                                                 onblur="checkCommodityId()"/>
                                                 </div>
-                                                <div class="col-lg-1">
-                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                <div class="col-lg-3">
+                                                    <span class="help-inline pull-right" ><font color="red">*</font> </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -49,8 +49,8 @@
                                                     <form:input path="name" htmlEscape="false" maxlength="30"
                                                                 class="form-control required"/>
                                                 </div>
-                                                <div class="col-lg-1 text-center">
-                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                <div class="col-lg-3">
+                                                    <span class="help-inline pull-right"><font color="red">*</font> </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -69,7 +69,7 @@
                                                         defaultLabel="请选择商品类型"
                                                         defaultValue=""
                                             ></sys:select>
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <span class="help-inline pull-right"><font color="red">*</font> </span>
                                         </td>
                                         <td>状态：</td>
                                         <td>
@@ -89,8 +89,8 @@
                                                                 class="form-control required number"/>
                                                 </div>
                                                 <label id="yuan" class="control-label col-lg-1">元</label>
-                                                <div class="col-lg-1">
-                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                <div class="col-lg-2">
+                                                    <span class="help-inline pull-right"><font color="red">*</font> </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -102,8 +102,8 @@
                                                     <form:input path="repertoryNum" htmlEscape="false"
                                                                 class="form-control required number"/>
                                                 </div>
-                                                <div class="col-lg-1">
-                                                    <span class="help-inline"><font color="red">*</font> </span>
+                                                <div class="col-lg-3">
+                                                    <span class="help-inline pull-right"><font color="red">*</font> </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -116,6 +116,9 @@
                                                 <div class="col-lg-9">
                                                     <form:input path="unit" htmlEscape="false" id="unit"
                                                                 class="form-control required number"/>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <span class="help-inline pull-right"><font color="red">*</font> </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -144,7 +147,13 @@
                                                         itemValue="id"
                                                         defaultLabel="请选择场馆"
                                             ></sys:select>
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <span class="help-inline pull-right"><font color="red">*</font> </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>单位：</td>
+                                        <td>
+                                            <form:input path="unitName" htmlEscape="false" class="form-control"/>
                                         </td>
                                     </tr>
                                 </table>

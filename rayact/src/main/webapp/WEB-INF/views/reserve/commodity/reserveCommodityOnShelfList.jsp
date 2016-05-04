@@ -119,30 +119,30 @@
     </div>
     <%-- end of row-fluid--%>
 </div>
-<button class="btn btn-primary btn-flat md-trigger" id="settlementDialogBtn" style="display: none"
-        data-modal="settlementDialog">
-    结算
-</button>
+<%--结账模态--%>
+<button id="settlementDialogBtn"  style="display: none" class="btn btn-primary btn-large" href="#settlementDialogModal"  data-toggle="modal">结算</button>
+<div class="modal fade" id="settlementDialogModal" style="display: none;">
+    <div class="modal-dialog " style="width: 1600px">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h4 class="modal-title" id="settlementModalLabel">结算</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="reserve_top_line">
 
-<div class="md-modal colored-header custom-width md-effect-12 warning" id="settlementDialog">
-    <div class="md-content">
-        <div class="modal-header">
-            <h5>结算</h5>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body form-horizontal " id="settlementForm">
-            <!--结算-->
-
-
-            <!--end 结算-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                取消
-            </button>
-            <button type="button" id="settlementSaveBtn" class="btn btn-primary btn-flat" onclick="paySubmit()">结算
-            </button>
+                </div>
+                <div class="modal-body form-horizontal" id="settlementForm">
+                    <!--结账模态-->
+                    <!--end 结账模态-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeSettlementBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
+                    取消
+                </button>
+                <button type="button" id="saveSettlementBtn" class="btn btn-primary btn-flat" onclick="paySubmit()">确定</button>
+            </div>
         </div>
     </div>
 </div>

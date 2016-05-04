@@ -48,7 +48,7 @@
                         <td>
                             支付方式:
                         </td>
-                        <td colspan="3">
+                        <td colspan="4">
                             <div class="btn-group" id="payType">
                                 <label class="radio-inline">
                                     <input type="radio" class="icheck" id="cash" value="2" checked="checked" name="payType"/>现金
@@ -68,7 +68,7 @@
                                     <input type="radio" class="icheck" id="alipay" value="5" name="payType"/>支付宝
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="icheck" id="other" value="6" name="payType"/>其它
+                                    <input type="radio" class="icheck" id="other" value="6" name="payType"/>优惠券
                                 </label>
                             </div>
                         </td>

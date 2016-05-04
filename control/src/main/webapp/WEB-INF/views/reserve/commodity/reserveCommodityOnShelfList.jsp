@@ -50,9 +50,7 @@
                             <th>价格</th>
                             <th>库存量</th>
                             <th>类别</th>
-                            <shiro:hasPermission name="reserve:commodity:edit">
-                                <th>操作</th>
-                            </shiro:hasPermission>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
