@@ -61,7 +61,7 @@
                                         <td>商品类型：</td>
                                         <td>
                                             <sys:select cssClass="input-xlarge required" name="commodityType.id"
-                                                        cssStyle="width:80%"
+                                                        cssStyle="width: 74%"
                                                         items="${commodityTypeList}"
                                                         value="${commodity.commodityType.id}"
                                                         itemLabel="name"
@@ -73,7 +73,7 @@
                                         </td>
                                         <td>状态：</td>
                                         <td>
-                                            <form:select path="shelvesStatus" class="input-xlarge" cssStyle="width:80%">
+                                            <form:select path="shelvesStatus" class="input-xlarge" cssStyle="width:73%">
                                                 <form:option value="1" label="上架"/>
                                                 <form:option value="0" label="下架"/>
                                             </form:select>
@@ -84,7 +84,7 @@
                                         <td>价格：</td>
                                         <td>
                                             <div class="row">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-9">
                                                     <form:input path="price" htmlEscape="false" for="yuan"
                                                                 class="form-control required number"/>
                                                 </div>
@@ -112,9 +112,8 @@
                                     <tr>
                                         <td>规格：</td>
                                         <td>
-                                            <div class="form-group">
-                                                <label for="unit" class="control-label col-lg-2">1 &nbsp;<span class="glyphicon glyphicon-remove"></span></label>
-                                                <div class="col-lg-8">
+                                            <div class="row">
+                                                <div class="col-lg-9">
                                                     <form:input path="unit" htmlEscape="false" id="unit"
                                                                 class="form-control required number"/>
                                                 </div>
@@ -122,7 +121,7 @@
                                         </td>
                                         <td>快速搜索：</td>
                                         <td>
-                                            <form:input path="quickSearch" htmlEscape="false" cssStyle="width: 80%"
+                                            <form:input path="quickSearch" htmlEscape="false" cssStyle="width: 73%"
                                                         class="form-control "/>
                                         </td>
                                     </tr>
@@ -138,7 +137,7 @@
                                         <td>所属场馆：</td>
                                         <td>
                                             <sys:select cssClass="input-xlarge required" name="reserveVenue.id"
-                                                        cssStyle="width:80%"
+                                                        cssStyle="width:73%"
                                                         items="${venueList}"
                                                         value="${commodity.reserveVenue.id}"
                                                         itemLabel="name"
