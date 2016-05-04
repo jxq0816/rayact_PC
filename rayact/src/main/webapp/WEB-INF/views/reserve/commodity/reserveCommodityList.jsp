@@ -60,7 +60,9 @@
                                     <th>类别</th>
                                     <th>场馆</th>
                                     <th>状态</th>
-                                    <th>操作</th>
+                                    <j:if test="${userType==5 or userType==1}">
+                                        <th>操作</th>
+                                    </j:if>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -97,17 +99,18 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-xs "
-                                               href="${ctx}/reserve/commodity/form?id=${commodity.id}">修改</a>
-                                            <a class="btn btn-danger btn-xs"
-                                               href="${ctx}/reserve/commodity/delete?id=${commodity.id}"
-                                               onclick="return confirmb('确认要删除该商品吗？', this.href)">删除</a>
-                                            <j:if test="${userType==5 or userType==1}">
+                                        <j:if test="${userType==5 or userType==1}">
+                                            <td>
+                                                <a class="btn btn-primary btn-xs "
+                                                   href="${ctx}/reserve/commodity/form?id=${commodity.id}">修改</a>
+                                                <a class="btn btn-danger btn-xs"
+                                                   href="${ctx}/reserve/commodity/delete?id=${commodity.id}"
+                                                   onclick="return confirmb('确认要删除该商品吗？', this.href)">删除</a>
+
                                                 <a class="btn btn-primary btn-xs instorageBtn"
                                                    data-id="${commodity.id}">入库</a>
-                                            </j:if>
-                                        </td>
+                                            </td>
+                                        </j:if>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

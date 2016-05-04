@@ -197,7 +197,7 @@
       },
       {
         "code": "tutorOrder",
-        "name": "教练订单",
+        "name": "教练收入统计",
         "href":"/reserve/reserveTutorOrder/orderAll",
         "authorityList": []
       }
