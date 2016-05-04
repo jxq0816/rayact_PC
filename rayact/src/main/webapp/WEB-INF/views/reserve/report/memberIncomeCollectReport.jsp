@@ -26,18 +26,17 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <table class="no-border">
                                 <tbody class="no-border-y">
-                                <td>场馆:</td>
+                                <td>场馆：</td>
                                 <td>
 
-                                    <sys:select cssClass="input-large" name="reserveVenue.id"
-                                                cssStyle="width:50%"
+                                    <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                cssStyle="width:80%"
                                                 value="${reserveMemberIntervalReport.reserveVenue.id}"
                                                 items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                 defaultLabel="----请选择-----"
                                                 defaultValue=""></sys:select>
                                 </td>
 
-                                <td>类型：</td>
                                 <td>
                                     <div class="btn-group" id="payType">
                                         <label class="radio-inline">

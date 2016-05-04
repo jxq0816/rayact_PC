@@ -23,7 +23,7 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
-                                    <td>场馆:</td>
+                                    <td>场馆：</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
                                                     cssStyle="width:100%"
@@ -32,7 +32,7 @@
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
-                                    <td>
+                                    <td >
                                         <label class="radio-inline">
                                             <input type="radio" class="icheck" value="0"
                                                    <j:if test="${'0' eq intervalTotalReport.queryType}">checked="checked"</j:if> name="queryType"/>流水

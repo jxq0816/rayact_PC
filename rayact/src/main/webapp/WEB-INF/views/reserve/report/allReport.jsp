@@ -34,7 +34,7 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
-                                    <td>场馆:</td>
+                                    <td>场馆：</td>
                                     <td>
                                         <sys:select cssClass="input-large" name="venue.id"
                                                     cssStyle="width:80%"
@@ -43,18 +43,16 @@
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select>
                                     </td>
-                                    <td>
+                                    <td colspan="3">
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.startDate}"/>"
                                                name="startDate" id="startDate" type="text"
                                                maxlength="20"
-                                               class="input-medium form-control Wdate "
+                                               class="form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                                    </td>
-                                    <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCardStatements.endDate}"/>"
                                                name="endDate" id="endDate" type="text"
                                                maxlength="20"
-                                               class="input-medium form-control Wdate "
+                                               class="form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit"

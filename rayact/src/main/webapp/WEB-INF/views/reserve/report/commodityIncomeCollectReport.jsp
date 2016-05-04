@@ -27,10 +27,11 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
-                                    <td>场馆:</td>
+                                    <td>场馆：</td>
                                     <td>
 
                                         <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                    cssStyle="width:100%"
                                                     value="${reserveCommodityIntervalReport.reserveVenue.id}"
                                                     items="${reserveVenueList}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
@@ -63,14 +64,14 @@
                                         </td>--%>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.startDate}"/>"
-                                               name="startDate" id="startDate" type="text" readonly="readonly"
+                                               name="startDate" id="startDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.endDate}"/>"
-                                               name="endDate" id="endDate" type="text" readonly="readonly"
+                                               name="endDate" id="endDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
