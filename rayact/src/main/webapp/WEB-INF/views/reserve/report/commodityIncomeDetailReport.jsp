@@ -70,14 +70,14 @@
                                         </td>--%>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.startDate}"/>"
-                                               name="startDate" id="startDate" type="text" readonly="readonly"
+                                               name="startDate" id="startDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                     </td>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.endDate}"/>"
-                                               name="endDate" id="endDate" type="text" readonly="readonly"
+                                               name="endDate" id="endDate" type="text"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
                                                onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
@@ -114,52 +114,6 @@
                             </thead>
                             <tbody>
                             <c:forEach items="${intervalReports}" var="intervalReport">
-                                <tr>
-                                    <td>
-                                        <fmt:formatDate value="${intervalReport.startDate}"
-                                                        timeStyle="date"></fmt:formatDate>~
-                                        <fmt:formatDate value="${intervalReport.endDate}"
-                                                        timeStyle="date"></fmt:formatDate>
-
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.reserveCommodityType.name}-${intervalReport.reserveCommodity.name}
-                                    </td>
-
-
-                                    <td>
-                                            ${intervalReport.storedCardBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.cashBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.bankCardBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.weiXinBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.aliPayBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.dueBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.otherBill}
-                                    </td>
-
-                                    <td>
-                                            ${intervalReport.bill}
-                                    </td>
-                                </tr>
                                 <c:forEach items="${intervalReport.dayReportList}" var="dayReport">
                                     <tr>
                                         <td>

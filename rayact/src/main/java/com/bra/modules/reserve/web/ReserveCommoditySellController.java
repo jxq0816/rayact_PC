@@ -64,10 +64,9 @@ public class ReserveCommoditySellController extends BaseController {
 
 	/*商品收入统计*/
 	@RequestMapping(value = {"commodityIncomeIntervalReport", ""})
-	public String reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport,String queryType,Model model){
-		if(StringUtils.isEmpty(queryType)){
-			queryType="1";
-		}
+	public String reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport,
+													   @RequestParam(required = false,defaultValue="1") String queryType
+			,Model model){
 		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
 		List<ReserveCommodityType> reserveCommodityTypeList=reserveCommodityTypeService.findList(new ReserveCommodityType());//商品类型列表
 		Date startDate=reserveCommodityIntervalReport.getStartDate();//开始时间
@@ -107,10 +106,8 @@ public class ReserveCommoditySellController extends BaseController {
 
 	/*商品收入统计导出*/
 	@RequestMapping(value = {"commodityIncomeIntervalReportExport", ""})
-	public void reserveCommodityIncomeIntervalReportExport(HttpServletResponse response,ReserveCommodityIntervalReport reserveCommodityIntervalReport, String queryType)throws Exception{
-		if(StringUtils.isEmpty(queryType)){
-			queryType="1";
-		}
+	public void reserveCommodityIncomeIntervalReportExport(HttpServletResponse response,ReserveCommodityIntervalReport reserveCommodityIntervalReport,
+														   @RequestParam(required = false,defaultValue="1") String queryType)throws Exception{
 		Date startDate=reserveCommodityIntervalReport.getStartDate();//开始时间
 		Date endDate=reserveCommodityIntervalReport.getEndDate();//结束时间
 		reserveCommodityIntervalReport.setReserveCommodityType( reserveCommodityTypeService.get(reserveCommodityIntervalReport.getReserveCommodityType()));
@@ -156,18 +153,6 @@ public class ReserveCommoditySellController extends BaseController {
 			String[] titles = {"日期","商品","储值卡","现金收入","银行卡收入","微信收入","支付宝收入","欠账","其它","合计"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCommodityIntervalReport report :intervalReports){
-				String[] o = new String[10];
-				o[0] = DateUtils.formatDate(report.getStartDate())+"~"+DateUtils.formatDate(report.getEndDate());
-				o[1] = report.getReserveCommodityType().getName()+"~"+report.getReserveCommodity().getName();
-				o[2] = String.valueOf(report.getStoredCardBill());
-				o[3] = String.valueOf(report.getCashBill());
-				o[4] = String.valueOf(report.getBankCardBill());
-				o[5] = String.valueOf(report.getWeiXinBill());
-				o[6] = String.valueOf(report.getAliPayBill());
-				o[7] = String.valueOf(report.getDueBill());
-				o[8] = String.valueOf(report.getOtherBill());
-				o[9] = String.valueOf(report.getBill());
-				contentList.add(o);
 				for(ReserveCommodityDayReport day:report.getDayReportList()){
 					String[] dayin = new String[10];
 					dayin[0] = DateUtils.formatDate(day.getDay());
@@ -184,7 +169,11 @@ public class ReserveCommoditySellController extends BaseController {
 				}
 			}
 			Date now = new Date();
-			ExcelInfo info = new ExcelInfo(response,reserveCommodityIntervalReport.getReserveVenue().getName()+"商品收入明细"+ DateUtils.formatDate(now),titles,contentList);
+			String venueName=reserveCommodityIntervalReport.getReserveVenue().getName();
+			if(venueName==null){
+				venueName="";
+			}
+			ExcelInfo info = new ExcelInfo(response,venueName+"商品收入明细"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
 	}
