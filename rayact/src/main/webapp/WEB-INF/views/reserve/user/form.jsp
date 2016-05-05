@@ -22,6 +22,13 @@
                 <input type="hidden" name="token" value="${token}"/>
                 <sys:msg content="${message}"/>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">集团:</label>
+
+                    <div class="col-sm-4">
+                        <p class="form-control-static">${user.company.name}</p>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">工号:</label>
 
                     <div class="col-sm-4">
