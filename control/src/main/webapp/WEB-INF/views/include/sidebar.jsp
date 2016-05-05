@@ -5,11 +5,11 @@
     <div class="cl-navblock">
         <div class="menu-space">
             <div class="content">
-               <%-- <div class="side-user">
+              <div class="side-user">
                     <div class="info">
                         <a href="#">四得体育</a>
                     </div>
-                </div>--%>
+                </div>
                 <ul class="cl-vnavigation">
                     <c:forEach items="${fns:getAuthByUser(fns:getUser())}" var="auth">
                         <li><a href="#"><i class="fa fa-home"></i><span>${auth.name}</span></a>

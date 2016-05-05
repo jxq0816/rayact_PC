@@ -221,15 +221,8 @@
 					<li><a href="${ctx}/logout" title="退出登录">退出</a></li>
 					<li>&nbsp;</li>
 				</ul>
-				<%-- <c:if test="${cookie.theme.value eq 'cerulean'}">
-					<div id="user" style="position:absolute;top:0;right:0;"></div>
-					<div id="logo" style="background:url(${ctxStatic}/images/logo_bg.jpg) right repeat-x;width:100%;">
-						<div style="background:url(${ctxStatic}/images/logo.jpg) left no-repeat;width:100%;height:70px;"></div>
-					</div>
-					<script type="text/javascript">
-						$("#productName").hide();$("#user").html($("#userControl"));$("#header").prepend($("#user, #logo"));
-					</script>
-				</c:if> --%>
+
+				<%--头部菜单管理--%>
 				<div class="nav-collapse">
 					<ul id="menu" class="nav" style="*white-space:nowrap;float:none;">
 						<c:set var="firstMenu" value="true"/>
@@ -248,23 +241,15 @@
 								</c:if>
 								<c:set var="firstMenu" value="false"/>
 							</c:if>
-						</c:forEach><%--
-						<shiro:hasPermission name="cms:site:select">
-						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fnc:getSite(fnc:getCurrentSiteId()).name}<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<c:forEach items="${fnc:getSiteList()}" var="site"><li><a href="${ctx}/cms/site/select?id=${site.id}&flag=1">${site.name}</a></li></c:forEach>
-							</ul>
-						</li>
-						</shiro:hasPermission> --%>
+						</c:forEach>
 					</ul>
-				</div><!--/.nav-collapse -->
+				</div>
 			</div>
 	    </div>
 	    <div class="container-fluid">
 			<div id="content" class="row-fluid">
-				<div id="left"><%--
-					<iframe id="menuFrame" name="menuFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" height="650"></iframe> --%>
+				<div id="left">
+					<%--左侧导航栏--%>
 				</div>
 				<div id="openClose" class="close">&nbsp;</div>
 				<div id="right">
