@@ -63,7 +63,6 @@
             <script>
                 var tmpv = "${v.name}";
                 var length = allData.length;
-                console.log("00000000"+length);
                 var flag = false;
                 for(var j = 0 ; j <length ; j++){
                     console.log("1111111"+allData[j].venue_name);
