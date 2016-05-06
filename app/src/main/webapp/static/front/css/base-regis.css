@@ -1,0 +1,72 @@
+/*基础样式*/
+
+body, div, dl, dt, dd, ul, ol, li, table, thead, tbody, tfoot, tr, th, td, pre, form, fieldset, input, select, textarea, p, b, blockquote {
+    font-weight:400;
+    margin:0;
+    padding:0;
+}
+input[type="text"],input[type="text"]:focus,input[type="password"],input[type="password"]:focus,textarea,textarea:focus {
+	outline: none;
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin:0;
+	padding:0;
+}
+h1 {
+	font-size:18px;
+}
+h2 {
+	font-size:16px;
+}
+h3 {
+	font-size:14px;
+}
+h4 {
+	font-size:12px;
+}
+body{
+    background-color:#fff;
+    color:#252525;
+    font-family:Microsoft Yahei,Hiragino Sans GB,tahoma,simsum,sans-serif;
+    font-size:12px;
+    text-align:left;
+}
+ol,ul{
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+	margin:0;
+	padding:0;
+}
+a:link, a:visited {
+  color:#252525;
+  text-decoration: none;
+  outline: none;
+}
+a:active, a:hover {
+  color:#d60000;
+  text-decoration: underline;
+  outline: none; 
+}
+img, object { 
+    float:left;
+    border:0 none;  
+}
+br {
+	clear:both;
+}
+.clear{
+	clear:both;
+} 
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	display:inline-block;
+}  
+*html .clearfix {height:1%;}
