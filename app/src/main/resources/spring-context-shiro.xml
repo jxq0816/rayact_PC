@@ -30,8 +30,7 @@
 	
 	<!-- 安全认证过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" /><!-- 
-		<property name="loginUrl" value="${cas.server.url}?service=${cas.project.url}${adminPath}/cas" /> -->
+		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="${adminPath}/login" />
 		<property name="successUrl" value="${adminPath}?login" />
 		<property name="filters">
@@ -66,7 +65,6 @@
 		
 		<!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   -->
 		<property name="sessionValidationInterval" value="${session.sessionTimeoutClean}"/>
-<!--  		<property name="sessionValidationSchedulerEnabled" value="false"/> -->
  		<property name="sessionValidationSchedulerEnabled" value="true"/>
  		
 		<property name="sessionIdCookie" ref="sessionIdCookie"/>
@@ -79,11 +77,6 @@
 	    <constructor-arg name="name" value="jeesite.session.id"/>
 	</bean>
 
-	<!-- 自定义Session存储容器 -->
-<!-- 	<bean id="sessionDAO" class="com.bra.common.security.shiro.session.JedisSessionDAO"> -->
-<!-- 		<property name="sessionIdGenerator" ref="idGen" /> -->
-<!-- 		<property name="sessionKeyPrefix" value="${redis.keyPrefix}_session_" /> -->
-<!-- 	</bean> -->
 	<bean id="sessionDAO" class="com.bra.common.security.shiro.session.CacheSessionDAO">
 		<property name="sessionIdGenerator" ref="idGen" />
 		<property name="activeSessionsCacheName" value="activeSessionsCache" />
@@ -91,7 +84,6 @@
 	</bean>
 	
 	<!-- 定义授权缓存管理器 -->
-<!-- 	<bean id="shiroCacheManager" class="com.bra.common.security.shiro.cache.SessionCacheManager" /> -->
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManager" ref="cacheManager"/>
 	</bean>
