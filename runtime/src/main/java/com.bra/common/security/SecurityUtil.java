@@ -20,7 +20,6 @@ public class SecurityUtil {
             if (principal != null) {
                 return principal;
             }
-//			subject.logout();
         } catch (Exception e) {
 
         }
@@ -37,7 +36,6 @@ public class SecurityUtil {
             if (session != null) {
                 return session;
             }
-//			subject.logout();
         } catch (InvalidSessionException e) {
 
         }
