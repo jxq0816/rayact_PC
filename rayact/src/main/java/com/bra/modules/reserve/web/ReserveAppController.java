@@ -46,7 +46,6 @@ public class ReserveAppController extends BaseController {
                 i.setHaveHalfCourt(null);
                 for (TimePrice j : i.getTimePriceList()) {
                     j.setConsItem(null);
-                    j.setPrice(null);
                     j.setConsType(null);
                     j.setUserName(null);
                 }
