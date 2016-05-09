@@ -31,8 +31,6 @@ public class ReserveFieldPriceService {
     private ReserveFieldService reserveFieldService;
     @Autowired
     private ReserveFieldPriceSetDao reserveFieldPriceSetDao;
-    @Autowired
-    private ReserveFieldHolidayPriceSetDao reserveFieldHolidayPriceSetDao;
     //预定信息
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
@@ -149,12 +147,6 @@ public class ReserveFieldPriceService {
         ReserveVenueConsItem reserveVenueCons = new ReserveVenueConsItem();
         reserveVenueCons.setReserveVenue(new ReserveVenue(venueId));
         reserveVenueCons.setConsDate(date);
-        reserveVenueCons.setFrequency("all");//所有频率的数据
-        reserveVenueCons.setConsWeek(TimeUtils.getWeekOfDate(date));
-
-        ReserveVenueCons venueCons = new ReserveVenueCons();
-        venueCons.setReserveType("3");//排除已经取消的
-        reserveVenueCons.setConsData(venueCons);
         //查询所有预定的信息(作为本场地的预定标记)
         List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueCons);
         //查询已审核的信息
@@ -174,7 +166,8 @@ public class ReserveFieldPriceService {
         String weekType = TimeUtils.getWeekType(date);//获得当天属于周几
         reserveFieldPriceSet.setWeek(weekType);
         List<ReserveFieldPriceSet> reserveFieldPriceSetList = new ArrayList<ReserveFieldPriceSet>();
-        for (ReserveField i : fieldList) {//处理场地
+        //设置场地的时令
+        for (ReserveField i : fieldList) {
             reserveFieldPriceSet.setReserveField(i);
             if ("1".equals(i.getIsTimeInterval())) {//该场地分时令
                 Calendar cal = Calendar.getInstance();
@@ -187,7 +180,7 @@ public class ReserveFieldPriceService {
             reserveFieldPriceSet.setReserveTimeInterval(null);//将时令制空
             reserveFieldPriceSetList.addAll(list);
         }
-        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表
+        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
 
         return fieldPriceList;
     }
@@ -314,10 +307,10 @@ public class ReserveFieldPriceService {
             fieldPrice.setFieldName(fieldPriceSet.getReserveField().getName());//设置场地名称
             List<TimePrice> timePriceList = fieldPriceSet.getTimePriceList();//获取一个场地 时间和价格 组成的Jason
 
-            TimePrice timePrice;
+            List<TimePrice> priceStatusList=fieldPrice.getTimePriceList();
             //遍历所有时间
             for (String time : times) {
-                timePrice = new TimePrice();
+                TimePrice timePrice = new TimePrice();
                 timePrice.setTime(time);
                 //遍历时间价格组成的Jason
                 for (TimePrice tp : timePriceList) {
@@ -351,6 +344,7 @@ public class ReserveFieldPriceService {
                 ReserveFieldRelation relation = new ReserveFieldRelation();
                 relation.setParentField(field);
                 List<ReserveFieldRelation> list = relationService.findList(relation);
+                //全场 半场之间的关系
                 if (list == null || list.size() == 0) {
                     fieldPrice.setHaveHalfCourt("0");//没有半场
                     //没有半场，查找是否有全场
@@ -382,6 +376,7 @@ public class ReserveFieldPriceService {
                     }
                 } else {
                     fieldPrice.setHaveHalfCourt("1");//有半场，即是全场
+                    //左半场
                     if (list.size() >= 1) {
                         ReserveFieldRelation relationLeft = list.get(0);
                         ReserveField fieldLeft = relationLeft.getChildField();
@@ -401,6 +396,7 @@ public class ReserveFieldPriceService {
                             fieldPrice.setFieldPriceLeft(leftFieldPrice);//设置左半场
                         }
                     }
+                    //右半场
                     if (list.size() >= 2) {
                         ReserveFieldRelation relationRight = list.get(1);
                         ReserveField fieldRight = relationRight.getChildField();
@@ -420,10 +416,10 @@ public class ReserveFieldPriceService {
                             fieldPrice.setFieldPriceRight(rightFieldPrice);//设置右半场
                         }
                     }
-                }
-                fieldPrice.getTimePriceList().add(timePrice);
+                }//全场半场关系处理完毕
+                priceStatusList.add(timePrice);
             }
-            fieldPriceList.add(fieldPrice);
+            fieldPriceList.add(fieldPrice);//添加某个场地的所有价格和状态列表
         }
     }
 

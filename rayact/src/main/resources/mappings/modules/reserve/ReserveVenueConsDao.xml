@@ -45,7 +45,10 @@
         "payType",a.update_date AS "updateDate",
         a.remarks AS "remarks"
         from reserve_venue_cons a,reserve_venue v
-        where a.venue_id = v.id and a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        where a.venue_id = v.id and a.del_flag = #{DEL_FLAG_NORMAL}
+        <if test="tenantId != null and tenantId != ''">
+            and a.tenant_id = #{tenantId}
+        </if>
         <if test="reserveType != null and reserveType != ''">
             and a.reserve_type = #{reserveType}
         </if>
@@ -59,8 +62,11 @@
     <select id="findPriceGroupProject" resultType="java.util.Map">
         select sum(a.order_price )as orderPrice,d.name as projectName
         from reserve_venue_cons_item a,reserve_venue_cons b,reserve_field c,reserve_project d
-        where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id and a.tenant_id = #{tenantId}
-        and a.del_flag = '0' and a.tenant_id = #{tenantId}
+        where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id
+        and a.del_flag = '0'
+        <if test="tenantId != null and tenantId != ''">
+            and a.tenant_id = #{tenantId}
+        </if>
         and year(a.update_date)=year(CURDATE())
         <if test="reserveType != null and reserveType != ''">
             and b.reserve_type = #{reserveType}
@@ -80,7 +86,10 @@
         sum(case pay_Type when '6' then b.cons_price else 0 end) otherPrice
         from reserve_venue_cons_item a,reserve_venue_cons b,reserve_field c,reserve_project d
         where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id
-        and a.del_flag = '0' and a.tenant_id = #{tenantId} and b.reserve_type='4'
+        and a.del_flag = '0' and b.reserve_type='4'
+        <if test="tenantId != null and tenantId != ''">
+            and a.tenant_id = #{tenantId}
+        </if>
         <if test="sqlMap.search != null and sqlMap.search != '' and '1'.toString()==sqlMap.search">
             and date(b.cons_date)=date(CURDATE())
         </if>
@@ -147,7 +156,10 @@
         LEFT JOIN  reserve_user as u on a.create_by = u.id
         left JOIN  reserve_project as p ON a.project_id = p.id
         LEFT JOIN  reserve_user as checkout on a.checkout_id = checkout.id
-        where a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
+        where a.del_flag = '0' and a.reserve_type = '4'
+        <if test="tenantId != null and tenantId != ''">
+            and a.tenant_id = #{tenantId}
+        </if>
         <if test="startDate != null and endDate != null">
             and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
@@ -176,16 +188,17 @@
         DATE_FORMAT(a.update_date,'%H:%i') as endTime
         from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
         where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
-        and a.del_flag = '0' and a.tenant_id = #{tenantId}
+        and a.del_flag = '0'
+        <if test="tenantId != null and tenantId != ''">
+            and a.tenant_id = #{tenantId}
+        </if>
         <if test="startDate != null and endDate != null">
             and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
         <if test="createBy!=null and createBy.id!=null and createBy.id!=''">
             and a.create_by = #{createBy.id}
         </if>
-        <if test="venue!=null and venue.id!=null and venue.id!=''">
-            and a.venue_id = #{venue.id}
-        </if>
+
         ${sqlMap.dsf}
         ORDER BY updateDate DESC
     </select>
@@ -200,7 +213,10 @@
           p.name as projectName
           from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
           where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
-          and a.del_flag = '0' and a.tenant_id = #{tenantId}
+          and a.del_flag = '0'
+        <if test="tenantId != null and tenantId != ''">
+            and a.tenant_id = #{tenantId}
+        </if>
           <if test="startDate != null and endDate != null">
               and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
           </if>
@@ -238,7 +254,10 @@
             SELECT
             SUM(a.cons_price) AS "orderPrice",date_format(a.cons_date,'%Y-%m-%d') AS "updateDate"
             from reserve_venue_cons as a
-            WHERE a.del_flag = '0' and a.reserve_type = '4' and a.tenant_id = #{tenantId}
+            WHERE a.del_flag = '0' and a.reserve_type = '4'
+            <if test="tenantId != null and tenantId != ''">
+                and a.tenant_id = #{tenantId}
+            </if>
             <![CDATA[
             and Date(a.cons_date)=DATE(CURRENT_DATE())
             ]]>
@@ -251,7 +270,10 @@
             UNION
             select sum(a.collect_price) as "orderPrice",date_format(a.update_date,'%Y-%m-%d') AS "updateDate"
             from reserve_venue_order a
-            WHERE a.del_flag = '0' and a.tenant_id = #{tenantId}
+            WHERE a.del_flag = '0'
+            <if test="tenantId != null and tenantId != ''">
+                and a.tenant_id = #{tenantId}
+            </if>
             <![CDATA[
             and Date(a.update_date)=DATE(CURRENT_DATE())
             ]]>
@@ -279,7 +301,10 @@
         FROM reserve_venue_cons as a
         <include refid="reserveVenueConsDataJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="tenantId != null and tenantId != ''">
+                and a.tenant_id = #{tenantId}
+            </if>
             <if test="userName != null and userName != ''">
                 and a.user_name LIKE concat('%',#{userName},'%')
             </if>
@@ -309,7 +334,10 @@
         FROM reserve_venue_cons a
         <include refid="reserveVenueConsDataJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="tenantId != null and tenantId != ''">
+                and a.tenant_id = #{tenantId}
+            </if>
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">

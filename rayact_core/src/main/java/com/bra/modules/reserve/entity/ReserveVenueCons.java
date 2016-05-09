@@ -163,11 +163,6 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
         this.discountPrice = discountPrice;
     }
 
-    /**
-     *0:可预定,1:已预定,2:锁场
-     *
-     * @return
-     */
     public String getReserveType() {
         return reserveType;
     }

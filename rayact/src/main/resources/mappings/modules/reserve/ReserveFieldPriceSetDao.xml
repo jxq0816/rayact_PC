@@ -43,7 +43,10 @@
 		LEFT JOIN reserve_field f ON f.id = a.field_id
 		LEFT JOIN reserve_time_interval t on t.id =a.fk_reserve_time_interval_id
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
             <if test="week != null and week != ''">
                 and a.week = #{week}
             </if>
@@ -76,7 +79,10 @@
         FROM reserve_field_price_set a
         <include refid="reserveFieldPriceSetJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">

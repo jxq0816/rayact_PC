@@ -27,6 +27,7 @@
 				${adminPath}/reserve/reserveVenue/mobile/rv/list = anon
 				${adminPath}/reserve/reserveVenue/mobile/rv/detail = anon
 				${adminPath}/mobile/login = anon
+				${adminPath}/app/reserve/field/main=anon
 				/static/** = anon
 				/userfiles/** = anon
 				${adminPath}/cas = cas

@@ -52,15 +52,12 @@
         FROM reserve_venue_cons_item a
         <include refid="reserveVenueConsJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
             <if test="consDate != null and consDate != ''">
-                and (d.cons_date = #{consDate}
-               <!-- <if test="frequency!=null and frequency!=''">
-                    <![CDATA[
-                    or (a.frequency='3' and a.cons_week=#{consWeek} and a.start_date<=date(now()) and a.end_date>=date(now())) or (a.frequency='2' and a.start_date<=date(now()) and a.end_date>=date(now()))
-                    ]]>
-                </if>-->
-                )
+                and DATE(d.cons_date) = DATE (#{consDate})
             </if>
             <if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
                 and a.venue_id = #{reserveVenue.id}
@@ -83,7 +80,10 @@
         FROM reserve_venue_cons_item a
         <include refid="reserveVenueConsJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
             <if test="consDate != null and consDate != ''">
                 and Date(a.cons_date) =Date(#{consDate})
             </if>
@@ -116,7 +116,10 @@
         FROM reserve_venue_cons_item a
         <include refid="reserveVenueConsJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">
