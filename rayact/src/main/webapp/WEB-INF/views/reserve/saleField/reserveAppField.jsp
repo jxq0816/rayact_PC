@@ -3,11 +3,7 @@
 <html>
 <head>
     <title>场地预定</title>
-    <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
-    <link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery/smartMenu.css"/>
-    <script type="text/javascript"
-            src="${ctxStatic}/jquery/jquery-smartMenu-min.js"></script>
-    <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';</script>
+    <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css"/>
 </head>
 <body>
 <table class="table-chang">
@@ -15,27 +11,25 @@
     <%--时刻--%>
     <tr>
         <th>时间</th>
-        <c:forEach items="${times}" var="t">
-            <th style="background-color: #fff;">${t}</th>
+        <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
+            <th><span>${field.fieldName}</span></th>
         </c:forEach>
     </tr>
     <%--时刻--%>
     </thead>
     <tbody>
     <%-- 遍历所有全场的场地开始--%>
-    <c:forEach items="${venueFieldPriceList}" var="fullField" varStatus="status">
+    <c:forEach items="${times}" var="t">
         <tr>
-                <%-- 纵坐标：场地名称--%>
-            <th><span>${fullField.fieldName}</span></th>
-                <%-- 横坐标：时间--%>
-
-
-            <c:forEach items="${times}" var="t">
+                <%-- 纵坐标：时间--%>
+            <th><span>${t}</span></th>
+                <%-- 横坐标：场地名称--%>
+            <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <c:set var="status" value="0"/>
                 <c:set var="itemId" value="0"/>
 
                 <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
-                <c:forEach items="${fullField.timePriceList}" var="tp">
+                <c:forEach items="${field.timePriceList}" var="tp">
                     <%--场地jason的时间与横坐标的时间一致 --%>
                     <j:if test="${t eq tp.time}">
                         <%--设置单个场地 时间T 的状态--%>
@@ -60,13 +54,10 @@
                     <c:set var="midClass" value="reserveTd red"/>
                 </j:if>
                 <j:if test="${'00' eq status}">
-                    <c:set var="midClass" value="reserveTd normal"/>
+                    <c:set var="midClass" value="reserveTd access"/>
                 </j:if>
                 <j:if test="${'01' eq status}">
-                    <c:set var="midClass" value="reserveTd abnormal"/>
-                </j:if>
-                <j:if test="${'01' eq fullStatus}">
-                    <c:set var="midClass" value="fullFieldHasAbnormal"/>
+                    <c:set var="midClass" value="reserveTd access"/>
                 </j:if>
                 <%--设置全场的class end--%>
 
@@ -75,13 +66,11 @@
                 <%-- 如果有半场 显示为midClass--%>
                 <td style="color: #000;" status="${status}"
                     data-item="${itemId}"
-                    data-check="${checkId}"
                     class="${midClass}"
                     data-price="${price}"
-                    data-field="${fullField.fieldId}"
-                    data-isHalfCourt="0"
+                    data-field="${field.fieldId}"
                     data-time="${t}" title="${username}">
-                        ${username}
+                        ${price}
                 </td>
                 <%-- A场地 B时间 的状态展示 结束--%>
             </c:forEach>
@@ -92,4 +81,10 @@
     <%-- 遍历所有全场 场地结束--%>
     </tbody>
 </table>
+<script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
+<script>
+    document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_app_field.js?t=" + Math.random() + "'><\/script>");
+</script>
+
 </body>
+</html>
