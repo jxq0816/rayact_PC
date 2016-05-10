@@ -3,6 +3,7 @@ package com.bra.modules.reserve.service;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveCardStatementsDao;
+import com.bra.modules.reserve.entity.ReserveCommodity;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
@@ -124,6 +125,9 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 
 	public List<Map<String,Object>> commIncome(SearchForm searchForm) {
 		return dao.commIncome(searchForm);
+	}
+	public List<ReserveCommodity> commSell(SearchForm searchForm) {
+		return dao.commSell(searchForm);
 	}
 
 	public List<Map<String,Object>> ticketIncome(SearchForm searchForm){ return dao.ticketIncome(searchForm);}

@@ -2,6 +2,7 @@ package com.bra.modules.reserve.dao;
 
 import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
+import com.bra.modules.reserve.entity.ReserveCommodity;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.form.ReserveMemberDayReport;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
@@ -38,6 +39,8 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
      List<Map<String,Object>> storeIncome(SearchForm searchForm);
 
      List<Map<String,Object>> commIncome(SearchForm searchForm);
+
+     List<ReserveCommodity> commSell(SearchForm searchForm);
 
      List<Map<String,Object>> ticketIncome(SearchForm searchForm);
 

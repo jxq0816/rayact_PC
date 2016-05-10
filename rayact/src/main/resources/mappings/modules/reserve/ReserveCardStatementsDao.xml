@@ -358,6 +358,16 @@
 		GROUP BY v.name
 	</select>
 
+	<select id="commSell" resultType="ReserveCommodity" parameterType="SearchForm">
+		SELECT c.*
+		FROM reserve_commodity_sell_detail cd
+		LEFT JOIN reserve_commodity c ON c.id = cd.fk_reserve_commodity_id
+		WHERE
+		<if test="startDate!=null and endDate !=null">
+			datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
+		</if>
+	</select>
+
 	<select id="ticketIncome" resultType="java.util.Map" parameterType="SearchForm">
 		SELECT v.name,SUM(c.transaction_volume) AS price
 		FROM reserve_venue v
