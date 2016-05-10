@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.DateUtils;
@@ -366,7 +367,7 @@ public class ReserveVenueController extends BaseController {
             for(ReserveVenue v:vs){
                 Map<String,String> node = new HashMap<>();
                 node.put("venueId",v.getId());
-                node.put("venueName",v.getName());
+                node.put("venueName",getVenueImgUrl(v.getName()));
                 rtn.add(node);
             }
         }
@@ -383,5 +384,52 @@ public class ReserveVenueController extends BaseController {
         }else{
             return rootURL+"/static/images/basketball.png";
         }
+    }
+    private String getVenueImgUrl(String name){
+        if("四得公园体育场".equals(name)){
+            return rootURL+"/static/images/sd.png";
+        }else if("丽都".equals(name)){
+            return rootURL+"/static/images/ld.png";
+        }else if("中电体育馆".equals(name)){
+            return rootURL+"/static/images/zd.png";
+        }else return "";
+    }
+
+    @RequestMapping(value = {"mobile/rv/fieldAll", ""})
+    public @ResponseBody String fieldAll(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject rtn = new JSONObject();
+        String userId = request.getParameter("userId");
+        String tenantId = "";
+        ReserveVenue reserveVenue = new ReserveVenue();
+        User user = null;
+        if(userId!=null&&!userId.equals("")){
+            user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
+            tenantId = user.getCompany().getId();
+            reserveVenue.setTenantId(tenantId);
+        }
+        int sum = 0;//总场地数，只算半场和没有半场的全场
+        ReserveField field = new ReserveField();
+        field.setTenantId(tenantId);
+        field.setDelFlag("0");
+        List<ReserveField> fields = reserveFieldService.findList(field);
+        for(ReserveField f:fields){
+            ReserveFieldRelation r = new ReserveFieldRelation();
+            r.setParentField(f);
+            r.setTenantId(tenantId);
+            List<ReserveFieldRelation> rs = reserveFieldRelationService.findList(r);
+            if(rs==null||rs.size()<=0){
+                sum += 1;
+            }
+        }
+        //查询当前场地占用数
+        ReserveVenueConsItem item = new ReserveVenueConsItem();
+        item.setTenantId(tenantId);
+        int usedNum = reserveVenueConsItemService.getUsedVenueNum(item);
+        Map<String,String> venueNode = new HashMap();
+        rtn.put("userName",user.getName());
+        List<AttMain> attMains = new ArrayList();
+        rtn.put("usedNum",String.valueOf(usedNum));
+        rtn.put("sumNum",String.valueOf(sum));
+        return rtn.toJSONString();
     }
 }

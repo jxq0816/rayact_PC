@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.reserve.dao.ReserveVenueConsItemDao">
 
-    <sql id="reserveVenueConsColumns">
+	<sql id="reserveVenueConsColumns">
 		a.id AS "id",
 		a.venue_id AS "reserveVenue.id",
 		a.field_id AS "reserveField.id",
@@ -31,75 +31,75 @@
 		a.del_flag AS "delFlag"
 	</sql>
 
-    <sql id="reserveVenueConsJoins">
+	<sql id="reserveVenueConsJoins">
 		LEFT JOIN reserve_field f ON f.id = a.field_id
 		LEFT JOIN reserve_venue v ON v.id = a.venue_id
 		LEFT JOIN reserve_venue_cons d ON d.id = a.cons_data_id
 	</sql>
 
-    <select id="get" resultType="ReserveVenueConsItem">
-        SELECT
-        <include refid="reserveVenueConsColumns"/>
-        FROM reserve_venue_cons_item a
-        <include refid="reserveVenueConsJoins"/>
-        WHERE a.id = #{id}
-    </select>
+	<select id="get" resultType="ReserveVenueConsItem">
+		SELECT
+		<include refid="reserveVenueConsColumns"/>
+		FROM reserve_venue_cons_item a
+		<include refid="reserveVenueConsJoins"/>
+		WHERE a.id = #{id}
+	</select>
 
-    <!--根据日期查询预定的场地状态-->
-    <select id="findListByDate" resultType="ReserveVenueConsItem">
-        SELECT
-        <include refid="reserveVenueConsColumns"/>
-        FROM reserve_venue_cons_item a
-        <include refid="reserveVenueConsJoins"/>
-        <where>
-            a.del_flag = #{DEL_FLAG_NORMAL}
+	<!--根据日期查询预定的场地状态-->
+	<select id="findListByDate" resultType="ReserveVenueConsItem">
+		SELECT
+		<include refid="reserveVenueConsColumns"/>
+		FROM reserve_venue_cons_item a
+		<include refid="reserveVenueConsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="tenantId != null and tenantId != ''">
 				and a.tenant_id = #{tenantId}
 			</if>
-            <if test="consDate != null and consDate != ''">
-                and DATE(d.cons_date) = DATE (#{consDate})
-            </if>
-            <if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
-                and a.venue_id = #{reserveVenue.id}
-            </if>
-            <if test="consData != null and consData.id != null and consData.id !=''">
-                and a.cons_data_id = #{consData.id}
-            </if>
-            <if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
-                and d.reserve_type != #{consData.reserveType}
-            </if>
-        </where>
-        ORDER BY a.update_date DESC
-    </select>
+			<if test="consDate != null and consDate != ''">
+				and DATE(d.cons_date) = DATE (#{consDate})
+			</if>
+			<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
+				and a.venue_id = #{reserveVenue.id}
+			</if>
+			<if test="consData != null and consData.id != null and consData.id !=''">
+				and a.cons_data_id = #{consData.id}
+			</if>
+			<if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
+				and d.reserve_type != #{consData.reserveType}
+			</if>
+		</where>
+		ORDER BY a.update_date DESC
+	</select>
 
 
 
-    <select id="findList" resultType="ReserveVenueConsItem">
-        SELECT
-        <include refid="reserveVenueConsColumns"/>
-        FROM reserve_venue_cons_item a
-        <include refid="reserveVenueConsJoins"/>
-        <where>
-            a.del_flag = #{DEL_FLAG_NORMAL}
+	<select id="findList" resultType="ReserveVenueConsItem">
+		SELECT
+		<include refid="reserveVenueConsColumns"/>
+		FROM reserve_venue_cons_item a
+		<include refid="reserveVenueConsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="tenantId != null and tenantId != ''">
 				and a.tenant_id = #{tenantId}
 			</if>
-            <if test="consDate != null and consDate != ''">
-                and Date(a.cons_date) =Date(#{consDate})
-            </if>
-            <if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
-                and a.venue_id = #{reserveVenue.id}
-            </if>
+			<if test="consDate != null and consDate != ''">
+				and Date(a.cons_date) =Date(#{consDate})
+			</if>
+			<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
+				and a.venue_id = #{reserveVenue.id}
+			</if>
 			<if test="reserveField != null and reserveField.id != null and reserveField.id !=''">
 				and a.field_id = #{reserveField.id}
 			</if>
-            <if test="consData != null and consData.id != null and consData.id !=''">
-                and a.cons_data_id = #{consData.id}
-            </if>
-            <if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
-                and d.reserve_type = #{consData.reserveType}
-            </if>
-        </where>
+			<if test="consData != null and consData.id != null and consData.id !=''">
+				and a.cons_data_id = #{consData.id}
+			</if>
+			<if test="consData != null and consData.reserveType != null and consData.reserveType !=''">
+				and d.reserve_type = #{consData.reserveType}
+			</if>
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -108,30 +108,30 @@
 				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
-    </select>
+	</select>
 
-    <select id="findAllList" resultType="ReserveVenueConsItem">
-        SELECT
-        <include refid="reserveVenueConsColumns"/>
-        FROM reserve_venue_cons_item a
-        <include refid="reserveVenueConsJoins"/>
-        <where>
-            a.del_flag = #{DEL_FLAG_NORMAL}
+	<select id="findAllList" resultType="ReserveVenueConsItem">
+		SELECT
+		<include refid="reserveVenueConsColumns"/>
+		FROM reserve_venue_cons_item a
+		<include refid="reserveVenueConsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="tenantId != null and tenantId != ''">
 				and a.tenant_id = #{tenantId}
 			</if>
-        </where>
-        <choose>
-            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
-                ORDER BY ${page.orderBy}
-            </when>
-            <otherwise>
-                ORDER BY a.update_date DESC
-            </otherwise>
-        </choose>
-    </select>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
 
-    <insert id="insert">
+	<insert id="insert">
 		INSERT INTO reserve_venue_cons_item(
 			id,
 			start_date,
@@ -181,7 +181,7 @@
 		)
 	</insert>
 
-    <update id="update">
+	<update id="update">
 		UPDATE reserve_venue_cons_item SET
 		    start_date = #{startDate},
 		    end_date = #{endDate},
@@ -203,39 +203,42 @@
 		WHERE id = #{id}
 	</update>
 
-    <update id="delete">
+	<update id="delete">
 		UPDATE reserve_venue_cons_item SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-    <select id="findListBymobile" parameterType="ReserveVenueConsItem" resultType="ReserveVenueConsItem">
-        select
-        <include refid="reserveVenueConsColumns"/>
-        from reserve_venue_cons_item a
-        where a.del_flag = #{DEL_FLAG_NORMAL} and tenant_id = #{tenantId}
-        <if test="consMobile != null and consMobile != ''">
-            AND a.cons_mobile LIKE
-            <if test="dbName == 'mysql'">concat(#{consMobile},'%')</if>
-        </if>
+	<select id="findListBymobile" parameterType="ReserveVenueConsItem" resultType="ReserveVenueConsItem">
+		select
+		<include refid="reserveVenueConsColumns"/>
+		from reserve_venue_cons_item a
+		where a.del_flag = #{DEL_FLAG_NORMAL} and tenant_id = #{tenantId}
+		<if test="consMobile != null and consMobile != ''">
+			AND a.cons_mobile LIKE
+			<if test="dbName == 'mysql'">concat(#{consMobile},'%')</if>
+		</if>
 
-    </select>
-    <select id="findVenueConsByMoblie" parameterType="ReserveVenueConsItem" resultType="ReserveVenueConsItem">
-        SELECT
-        <include refid="reserveVenueConsColumns"/>
-        FROM reserve_venue_cons_item a
-        <include refid="reserveVenueConsJoins"/>
-        WHERE a.cons_mobile like concat('%',#{consMobile},'%') and tenant_id = #{tenantId}
-    </select>
+	</select>
+	<select id="findVenueConsByMoblie" parameterType="ReserveVenueConsItem" resultType="ReserveVenueConsItem">
+		SELECT
+		<include refid="reserveVenueConsColumns"/>
+		FROM reserve_venue_cons_item a
+		<include refid="reserveVenueConsJoins"/>
+		WHERE a.cons_mobile like concat('%',#{consMobile},'%') and tenant_id = #{tenantId}
+	</select>
 	<select id="getUsedVenueNum" parameterType="ReserveVenueConsItem" resultType="int">
 		SELECT COUNT( CASE WHEN tmp2.parent_field_id is NULL THEN tmp2.field_id END)+2*COUNT( CASE WHEN parent_field_id is not NULL  THEN tmp2.field_id END) FROM (
 		SELECT DISTINCT(tmp.field_id),r.parent_field_id FROM
 		(SELECT i.field_id
 		FROM reserve_venue_cons_item i
 		WHERE
-		i.del_flag = #{DEL_FLAG_NORMAL} AND
+		i.del_flag = #{DEL_FLAG_NORMAL} AND i.tenant_id = #{tenantId} AND
 		STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.end_time),'%Y-%m-%d %H:%i') &gt;= NOW()
 		AND STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.start_time),'%Y-%m-%d %H:%i') &lt;= NOW()
-		AND i.venue_id = #{reserveVenue.id}) tmp
+		<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
+			AND i.venue_id = #{reserveVenue.id}
+		</if>
+		) tmp
 		LEFT JOIN reserve_field_relation r on r.parent_field_id = tmp.field_id) tmp2
 	</select>
 	<select id="getUsedVenueNumByProject" parameterType="ReserveVenueConsItem" resultType="Map">

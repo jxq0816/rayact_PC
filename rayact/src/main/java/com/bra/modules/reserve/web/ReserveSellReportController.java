@@ -197,7 +197,7 @@ public class ReserveSellReportController extends BaseController {
             reserveCommodity.setTenantId(user.getCompany().getId());
         }
         reserveCommodity.getSqlMap().put("dsf"," and 1=1 ");
-        List<ReserveCommodity> cs = reserveCommodityService.findList(reserveCommodity);
+        List<ReserveCommodity> cs = reserveCardStatementsService.commSell(form);
         if(cs!=null){
             for(ReserveCommodity c:cs){
                 boolean hasIn = false;
