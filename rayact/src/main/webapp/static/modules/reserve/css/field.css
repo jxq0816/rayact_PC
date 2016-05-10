@@ -69,8 +69,8 @@
 .table-chang td.access{background: #69d448;}
 .table-chang td.over{background: #5fbfe9;}
 .table-chang td.red{background: #f00;}
-.table-chang td.unpayed{background: #5fbfe9;line-width:50%}
-.table-chang td div.unpayed{background: #5fbfe9;width:50%;}
+.table-chang td.unPayed{background: #5fbfe9;}
+.table-chang td div.unPayed{background: #5fbfe9;}
 .table-chang thead th{font-size: 10px;-webkit-text-size-adjust:none;min-width: 50px;}
 .table-chang thead span{/*transform:scale(0.9);*/}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}

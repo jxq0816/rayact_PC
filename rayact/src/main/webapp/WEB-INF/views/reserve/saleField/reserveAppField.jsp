@@ -26,8 +26,6 @@
                 <%-- 横坐标：场地名称--%>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <c:set var="status" value="0"/>
-                <c:set var="itemId" value="0"/>
-
                 <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
                 <c:forEach items="${field.timePriceList}" var="tp">
                     <%--场地jason的时间与横坐标的时间一致 --%>
@@ -35,9 +33,6 @@
                         <%--设置单个场地 时间T 的状态--%>
                         <c:set var="status" value="${tp.status}"/>
                         <c:set var="price" value="${tp.price}"/>
-                        <c:set var="username" value="${tp.userName}"/>
-                        <c:set var="itemId" value="${tp.consItem.id}"/>
-                        <c:set var="checkId" value="${tp.check.id}"/>
                         <%-- A场地 B时间 的状态 结束--%>
                     </j:if>
                 </c:forEach>
@@ -65,11 +60,11 @@
 
                 <%-- 如果有半场 显示为midClass--%>
                 <td style="color: #000;" status="${status}"
-                    data-item="${itemId}"
                     class="${midClass}"
                     data-price="${price}"
-                    data-field="${field.fieldId}"
-                    data-time="${t}" title="${username}">
+                    data-field-id="${field.fieldId}"
+                    data-field-name="${field.fieldName}"
+                    data-time="${t}">
                         ${price}
                 </td>
                 <%-- A场地 B时间 的状态展示 结束--%>
@@ -79,6 +74,20 @@
         <%-- 纵坐标：场地 结束--%>
     </c:forEach>
     <%-- 遍历所有全场 场地结束--%>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <%--时刻--%>
+    <tr>
+        <th>场地</th>
+        <th>时间</th>
+        <th>价格</th>
+    </tr>
+    <%--时刻--%>
+    </thead>
+    <tbody id="unPayed">
+
     </tbody>
 </table>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
