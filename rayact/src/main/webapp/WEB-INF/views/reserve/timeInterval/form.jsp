@@ -41,7 +41,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">开始月份：</label>
                                         <div class="col-sm-6">
-                                            <select class="form-control" name="startMonth">
+                                            <select class="input-large" style="width: 100%" name="startMonth">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">开始日期：</label>
                                         <div class="col-sm-6">
-                                                <select class="form-control" name="startDate">
+                                                <select class="input-large" style="width: 100%" name="startDate">
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -104,7 +104,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">结束月份：</label>
                                         <div class="col-sm-6">
-                                            <select class="form-control" name="endMonth">
+                                            <select class="input-large" style="width: 100%" name="endMonth">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -127,7 +127,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">结束日期：</label>
                                         <div class="col-sm-6">
-                                            <select class="form-control" name="endDate">
+                                            <select class="input-large" style="width: 100%" name="endDate">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
