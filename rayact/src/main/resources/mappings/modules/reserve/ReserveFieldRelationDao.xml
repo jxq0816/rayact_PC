@@ -35,7 +35,10 @@
 		FROM reserve_field_relation a
 		<include refid="reserveFieldRelationJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
 			<if test="parentField != null">
 				<if test="parentField.id != null and parentField.id != ''">
 					AND a.parent_field_id = #{parentField.id}
