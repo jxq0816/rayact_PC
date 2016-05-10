@@ -204,18 +204,19 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
      */
     @Transactional(readOnly = false)
     public void save(ReserveVenueCons reserveVenueCons) {
+        //获取会员
         ReserveMember consumer = reserveVenueCons.getMember();
         ReserveStoredcardMemberSet card = null;
+        //如果预订人是会员
         if (consumer != null) {
             consumer = storedCardMemberService.get(consumer);
             if (consumer != null) {
+                //获取折扣卡
                 card = consumer.getStoredcardSet();
             }
         }
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
         String frequency = reserveVenueCons.getFrequency();//频率
-
-
         reserveVenueCons.preInsert();
         if (StringUtils.isEmpty(reserveVenueCons.getConsMobile())) {
             reserveVenueCons.setConsMobile("000");
@@ -225,10 +226,10 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         Double sum = 0D;//订单价格
         Double filedSum = 0D;//场地应收
         Date consDate = reserveVenueCons.getConsDate();//预订日期
-        String consWeek = TimeUtils.getWeekOfDate(consDate);
+        String consWeek = TimeUtils.getWeekOfDate(consDate);//周次
         for (ReserveVenueConsItem item : itemList) {
             item.setConsDate(consDate);//预订时间
-            item.setConsData(reserveVenueCons);
+            item.setConsData(reserveVenueCons);//订单
             item.setConsWeek(consWeek);
             item.setHalfCourt(halfCourt);//设置半场
             item.setFrequency(frequency);//设置频率
