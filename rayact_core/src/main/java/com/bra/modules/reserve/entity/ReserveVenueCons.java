@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
-    public static final String RESERVATION = "1";//预定
+    public static final String RESERVATION = "1";//已预定
     public static final String MODEL_KEY = "field";
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private String consMobile;        // 预定人手机号
     private String userName;        // 预定人姓名
     private String consType;        // 预订的类型1：散客 2：会员
-    private String reserveType;    //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
+    private String reserveType;    //操作类型(1:已预定,2:锁场,4:已结算)
     private Date consDate;        // 预定日期(yyyy-MM-dd)
 
 

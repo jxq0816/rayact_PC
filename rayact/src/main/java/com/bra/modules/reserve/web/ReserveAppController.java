@@ -3,12 +3,19 @@ package com.bra.modules.reserve.web;
 import com.alibaba.fastjson.JSON;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.reserve.entity.ReserveField;
+import com.bra.modules.reserve.entity.ReserveVenueCons;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.TimePrice;
+import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveFieldPriceService;
+import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.utils.TimeUtils;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +23,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 场地预定管理
@@ -25,31 +33,75 @@ import java.util.List;
 @RequestMapping(value = "${adminPath}/app/reserve/field")
 public class ReserveAppController extends BaseController {
 
+    //场地价格service
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
+    //订单详情service
+    @Autowired
+    private ReserveVenueConsItemService reserveVenueConsItemService;
+    //订单service
+    @Autowired
+    private ReserveAppVenueConsService reserveAppVenueConsService;
 
     //场地状态界面
     @RequestMapping(value = "main")
-    @ResponseBody
-    public String main(Date consDate, String venueId) throws ParseException {
-        String rtn = null;
+    public String main(Date consDate, String venueId,Model model) throws ParseException {
         if (consDate == null) {
             consDate = new Date();
         }
+        List<String> times=new ArrayList<>();
+        times.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "00:30:00", 30));
         if (StringUtils.isNoneEmpty(venueId)) {
             //场地价格
-            List<String> times = new ArrayList<>();
-            times.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "00:30:00", 30));
             List<FieldPrice> venueFieldPriceList = reserveFieldPriceService.findByDate(venueId, "1", consDate, times);
             for (FieldPrice i : venueFieldPriceList) {
                 i.setHaveFullCourt(null);
                 i.setHaveHalfCourt(null);
+                FieldPrice full = i.getFieldPriceFull();//全场的状态
+                FieldPrice left = i.getFieldPriceLeft();
+                FieldPrice right = i.getFieldPriceRight();
                 for (TimePrice j : i.getTimePriceList()) {
                     j.setConsItem(null);
                     j.setConsType(null);
                     j.setUserName(null);
+                    String time=j.getTime();//当前场地的时间
+                    if("0".equals(j.getStatus())){
+                        if(StringUtils.isNoneEmpty(time)){
+                            if(full!=null){
+                                for (TimePrice k : full.getTimePriceList()) {
+                                    String fullTime=k.getTime();
+                                    if(time.endsWith(fullTime)&&"1".equals(k.getStatus())){
+                                        j.setStatus("1");//全场已占用，半场不可用
+                                        break;
+                                    }
+                                }
+                            }
+                            if(left!=null) {
+                                if ("0".equals(j.getStatus())) {
+                                    for (TimePrice k : left.getTimePriceList()) {
+                                        String leftTime = k.getTime();
+                                        if (time.endsWith(leftTime) && "1".equals(k.getStatus())) {
+                                            j.setStatus("1");//半场已占用，全场不可用
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            if(right!=null){
+                                if("0".equals(j.getStatus())) {
+                                    for (TimePrice k : right.getTimePriceList()) {
+                                        String rightTime = k.getTime();
+                                        if (time.endsWith(rightTime) && "1".equals(k.getStatus())) {
+                                            j.setStatus("1");//半场已占用，全场不可用
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }//该时间段的验证结束
+                    }//状态 更新结束
                 }
-                FieldPrice full = i.getFieldPriceFull();
+
                 if (full != null) {
                     full.setHaveFullCourt(null);
                     full.setHaveHalfCourt(null);
@@ -61,7 +113,6 @@ public class ReserveAppController extends BaseController {
                     }
                 }
 
-                FieldPrice left = i.getFieldPriceLeft();
                 if (left != null) {
                     left.setHaveFullCourt(null);
                     left.setHaveHalfCourt(null);
@@ -72,7 +123,7 @@ public class ReserveAppController extends BaseController {
                         k.setUserName(null);
                     }
                 }
-                FieldPrice right = i.getFieldPriceRight();
+
                 if (right != null) {
                     right.setHaveFullCourt(null);
                     right.setHaveHalfCourt(null);
@@ -84,8 +135,36 @@ public class ReserveAppController extends BaseController {
                     }
                 }
             }
-            rtn = JSON.toJSONString(venueFieldPriceList);
+            model.addAttribute("venueFieldPriceList", venueFieldPriceList);
+            model.addAttribute("times", times);
         }
-        return rtn;
+        return "reserve/saleField/reserveAppField";
+    }
+
+    @RequestMapping(value = "reservation")
+    @ResponseBody
+    public String reservation(ReserveVenueCons reserveVenueCons) {
+        boolean bool = true;//时间段是否可用
+        Date consDate = reserveVenueCons.getConsDate();
+        List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
+        for (ReserveVenueConsItem i : itemList) {//订单详情
+            String startTime = i.getStartTime();
+            String endTime = i.getEndTime();
+            ReserveField field = i.getReserveField();//场地
+            //遍历该日期区间 的场地是否有预订
+            bool = reserveVenueConsItemService.checkReserveTime(consDate, field, startTime, endTime);
+            if(bool==false){
+                break;//该时间段不能使用，跳出循环
+            }
+        }
+        Map<String, Boolean> map = Maps.newConcurrentMap();
+        if (bool==true) {
+            reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
+            reserveVenueCons.setConsDate(consDate);
+            reserveAppVenueConsService.save(reserveVenueCons);//保存预订信息
+        } else {
+            map.put("bool", bool);
+        }
+        return JSON.toJSONString(map);
     }
 }
