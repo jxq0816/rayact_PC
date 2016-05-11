@@ -15,7 +15,7 @@ $(document).ready(function () {
         if ($(this).hasClass("access")) {//预定
             $(this).removeClass("access");
             $(this).addClass("unPayed");
-            var s='<div id='+trId+'><tr><td>'+fieldName+'</td><td>'+time+'</td><td>'+price+'</td></tr></div>';
+            var s='<div id='+trId+' class="row" class="col-sm-2"> <div class="row">'+time+'</div><div class="row">'+fieldName+'</div></div>';
             $("#unPayed").append(s);
         }else{//取消预定
             $(this).removeClass("unPayed");

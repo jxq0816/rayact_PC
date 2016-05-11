@@ -64,6 +64,14 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         page.setList(list);
         return page;
     }
+    public List<SaleVenueLog> findOrderLogList(SaleVenueLog venueLog) {
+        if (venueLog != null) {
+            if (venueLog.getSqlMap().get("dsf") == null)
+                venueLog.getSqlMap().put("dsf", AuthorityUtils.getDsf("a.venue_id"));
+        }
+        List<SaleVenueLog> list = dao.findOrderLog(venueLog);
+        return list;
+    }
 
     public List<Map<String, Object>> findPriceGroupProject(ReserveVenueCons venueCons) {
         List<Map<String, Object>> list = dao.findPriceGroupProject(venueCons);

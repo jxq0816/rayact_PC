@@ -151,6 +151,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-test:4.2.2.RELEASE" />
           <element id="library" level="project" name="Maven: bitwalker:UserAgentUtils:1.13" />
           <element id="library" level="application" name="org.apache.poi:poi:3.13" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="rayact/web/Web" />

@@ -76,20 +76,10 @@
     <%-- 遍历所有全场 场地结束--%>
     </tbody>
 </table>
-<table>
-    <thead>
-    <%--时刻--%>
-    <tr>
-        <th>场地</th>
-        <th>时间</th>
-        <th>价格</th>
-    </tr>
-    <%--时刻--%>
-    </thead>
-    <tbody id="unPayed">
 
-    </tbody>
-</table>
+<div id="unPayed" class="row">
+
+</div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_app_field.js?t=" + Math.random() + "'><\/script>");

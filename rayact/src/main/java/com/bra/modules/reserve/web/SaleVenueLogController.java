@@ -51,8 +51,8 @@ public class SaleVenueLogController extends BaseController {
 
     @RequestMapping(value = "listExport")
     public void listExport(SaleVenueLog venueLog,  HttpServletRequest request,HttpServletResponse response)throws Exception {
-        Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<SaleVenueLog>(request, response), venueLog);
-        List<SaleVenueLog> sellLogs = page.getList();
+
+        List<SaleVenueLog> sellLogs = reserveVenueConsService.findOrderLogList(venueLog);
         String[] titles = {"订单编号","所属场馆","所属项目","时间区间","订单金额","应收金额","优惠金额","实收金额","支付类型","预定人","操作人","授权人","订单时间","操作时间"};
         List<String[]> contentList = new ArrayList<>();
         for(SaleVenueLog log :sellLogs){
