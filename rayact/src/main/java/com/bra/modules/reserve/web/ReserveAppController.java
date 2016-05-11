@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -137,7 +138,8 @@ public class ReserveAppController extends BaseController {
             }
             model.addAttribute("venueFieldPriceList", venueFieldPriceList);
             model.addAttribute("times", times);
-            model.addAttribute("consDate", consDate);
+            SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
+            model.addAttribute("consDate", fmt.format(consDate));
             model.addAttribute("consMobile", consMobile);
             model.addAttribute("userName", userName);
         }
@@ -165,9 +167,8 @@ public class ReserveAppController extends BaseController {
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
             reserveVenueCons.setConsDate(consDate);
             reserveAppVenueConsService.save(reserveVenueCons);//保存预订信息
-        } else {
-            map.put("bool", bool);
         }
+        map.put("bool", bool);
         return JSON.toJSONString(map);
     }
 }

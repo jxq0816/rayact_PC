@@ -6,9 +6,6 @@ $(document).ready(function () {
         var fieldName = $(this).attr("data-field-name");
         var price = $(this).attr("data-price");
         var time = $(this).attr("data-time");
-        var consDate=$(this).attr("data-consDate");
-        var consMobile=$(this).attr("data-consMobile");
-        var userName=$(this).attr("data-userName");
         var startTime=time.substring(0,5);
         var endTime=time.substring(6,12);
         var time1=time.substring(0,2);
@@ -26,9 +23,6 @@ $(document).ready(function () {
             $("#unPayed").append(s);
             var index = $("#order_form tr").length;
             var order_info='<tr><input name="venueConsList['+index+'].reserveField.id" value=\''+fieldId+'\' type="hidden">'
-                + '<input name="consDate" value="2016-05-11" type="hidden">'
-                + '<input name="consMobile" value=\''+consMobile+'\' type="hidden">'
-                + '<input name="userName" value=\''+userName+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].startTime" value=\''+startTime+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].endTime" value=\''+endTime+'\' type="hidden"></tr>';
             $("#orderForm").append(order_info);

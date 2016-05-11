@@ -23,24 +23,15 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao, ReserveVenueCons> {
 
-    @Autowired
-    private ReserveUserService reserveUserService;
-    @Autowired
-    private StoredCardMemberService storedCardMemberService;
+
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
     @Autowired
-    private ReserveTutorService reserveTutorService;
-    @Autowired
-    private ReserveCardStatementsService reserveCardStatementsService;
-    @Autowired
     private ReserveMemberService reserveMemberService;
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
-    @Autowired
-    private ReserveVenueApplyCutService reserveVenueApplyCutService;
     @Autowired
     private ReserveTutorOrderService reserveTutorOrderService;
 
@@ -61,10 +52,6 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
 
     public Page<ReserveVenueCons> findPage(Page<ReserveVenueCons> page, ReserveVenueCons reserveVenueCons) {
         return super.findPage(page, reserveVenueCons);
-    }
-
-    public List<ReserveVenueCons> findListOrder(ReserveVenueCons venueCons) {
-        return dao.findListOrder(venueCons);
     }
 
 
@@ -97,7 +84,6 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         String frequency = reserveVenueCons.getFrequency();//频率
 
         reserveVenueCons.preInsert();
-        dao.insert(reserveVenueCons);//保存订单
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
         Double sum = 0D;//订单价格
         Double filedSum = 0D;//场地应收
@@ -133,7 +119,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         }
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
-        dao.update(reserveVenueCons);//订单价格更改
+        super.save(reserveVenueCons);//订单价格更改
     }
 
     @Transactional(readOnly = false)

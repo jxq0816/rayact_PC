@@ -85,6 +85,9 @@
 </div>
 
 <form id="orderForm">
+    <input name="consDate" value="${consDate}" type="hidden">
+    <input name="consMobile" value="012" type="hidden">
+    <input name="userName" value="${userName}" type="hidden">
     <a class="btn btn-success" onclick="orderSubmit()">提交</a>
 </form>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>

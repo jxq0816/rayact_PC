@@ -5,6 +5,7 @@ import com.bra.modules.sys.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -28,9 +29,8 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private String userName;        // 预定人姓名
     private String consType;        // 预订的类型1：散客 2：会员
     private String reserveType;    //操作类型(1:已预定,2:锁场,4:已结算)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date consDate;        // 预定日期(yyyy-MM-dd)
-
-
     private Double cosOrderPrice;//预定时单据金额??????????
 
     private Double discountPrice;//通过关系（经理以上领导）优惠价格
