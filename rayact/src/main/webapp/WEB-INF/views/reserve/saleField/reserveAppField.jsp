@@ -65,6 +65,9 @@
                     data-price="${price}"
                     data-field-id="${field.fieldId}"
                     data-field-name="${field.fieldName}"
+                    data-consDate="${consDate}"
+                    data-consMobile="${consMobile}"
+                    data-userName="${userName}"
                     data-time="${t}">
                         ${price}
                 </td>
@@ -80,7 +83,12 @@
 
 <div id="unPayed" class="row" style="margin: 1%">
 </div>
+
+<form id="orderForm">
+    <a class="btn btn-success" onclick="orderSubmit()">提交</a>
+</form>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="${ctxStatic}/common/jeesite.js"></script>
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_app_field.js?t=" + Math.random() + "'><\/script>");
 </script>

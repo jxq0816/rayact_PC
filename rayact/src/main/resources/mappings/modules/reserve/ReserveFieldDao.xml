@@ -55,6 +55,11 @@
 					AND venue_id = #{reserveVenue.id}
 				</if>
 			</if>
+			<if test="reserveProject != null">
+				<if test="reserveProject.id !=null and reserveProject.id != ''">
+					AND project_id = #{reserveProject.id}
+				</if>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

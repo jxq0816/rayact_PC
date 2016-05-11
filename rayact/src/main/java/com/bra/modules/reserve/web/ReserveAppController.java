@@ -8,8 +8,8 @@ import com.bra.modules.reserve.entity.ReserveVenueCons;
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.TimePrice;
+import com.bra.modules.reserve.service.ReserveAppFieldPriceService;
 import com.bra.modules.reserve.service.ReserveAppVenueConsService;
-import com.bra.modules.reserve.service.ReserveFieldPriceService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.google.common.collect.Maps;
@@ -35,7 +35,7 @@ public class ReserveAppController extends BaseController {
 
     //场地价格service
     @Autowired
-    private ReserveFieldPriceService reserveFieldPriceService;
+    private ReserveAppFieldPriceService reserveAppFieldPriceService;
     //订单详情service
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
@@ -45,7 +45,7 @@ public class ReserveAppController extends BaseController {
 
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Date consDate, String venueId,Model model) throws ParseException {
+    public String main(Date consDate, String venueId,String projectId,String consMobile,String userName,Model model) throws ParseException {
         if (consDate == null) {
             consDate = new Date();
         }
@@ -53,7 +53,7 @@ public class ReserveAppController extends BaseController {
         times.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "00:30:00", 30));
         if (StringUtils.isNoneEmpty(venueId)) {
             //场地价格
-            List<FieldPrice> venueFieldPriceList = reserveFieldPriceService.findByDate(venueId, "1", consDate, times);
+            List<FieldPrice> venueFieldPriceList = reserveAppFieldPriceService.findByDate(venueId,projectId, "1", consDate, times);
             for (FieldPrice i : venueFieldPriceList) {
                 i.setHaveFullCourt(null);
                 i.setHaveHalfCourt(null);
@@ -137,6 +137,9 @@ public class ReserveAppController extends BaseController {
             }
             model.addAttribute("venueFieldPriceList", venueFieldPriceList);
             model.addAttribute("times", times);
+            model.addAttribute("consDate", consDate);
+            model.addAttribute("consMobile", consMobile);
+            model.addAttribute("userName", userName);
         }
         return "reserve/saleField/reserveAppField";
     }
