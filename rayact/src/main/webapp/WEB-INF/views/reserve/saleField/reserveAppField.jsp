@@ -4,6 +4,7 @@
 <head>
     <title>场地预定</title>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css"/>
+    <link href="${ctxStatic}/cleanzone/js/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
 <table class="table-chang">
@@ -77,8 +78,7 @@
     </tbody>
 </table>
 
-<div id="unPayed" class="row">
-
+<div id="unPayed" class="row" style="margin: 1%">
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script>
