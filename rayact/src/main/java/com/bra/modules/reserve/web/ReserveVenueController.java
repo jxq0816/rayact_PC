@@ -271,6 +271,7 @@ public class ReserveVenueController extends BaseController {
                 //查询当前场地占用数
                 ReserveVenueConsItem item = new ReserveVenueConsItem();
                 item.setReserveVenue(v);
+                item.setTenantId(tenantId);
                 int usedNum = reserveVenueConsItemService.getUsedVenueNum(item);
                 int freeNum = sum -usedNum;
                 float rate = (sum!=0)?usedNum*1.0f/sum:0;
