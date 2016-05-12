@@ -90,7 +90,7 @@
     <input name="consMobile" value="${consMobile}" type="hidden">
     <input name="userName" value="${userName}" type="hidden">
     <input name="reserveVenue.id" value="${venueId}" type="hidden">
-    <span id="reserve_submit"><a class="btn btn-success" onclick="orderSubmit()">提交</a></span>
+    <span id="reserve_submit" style="display: none"><a class="btn btn-success" onclick="orderSubmit()">提交</a></span>
 </form>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="${ctxStatic}/common/jeesite.js"></script>

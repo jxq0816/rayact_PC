@@ -15,14 +15,22 @@ $(document).ready(function () {
         var timeId=time1+time2+time3+time4;
         var tr_id=fieldId+timeId;
         var order_item_id=tr_id+'item';
+
         if ($(this).hasClass("access")) {//预定
+            var index = $("#orderForm div").length;
+            if(index>=0){
+                $("#reserve_submit").show();
+            }
+            if(index>=4){
+                alert("您选择的场地太多啦，请分两次下单结算哦。");
+                return;
+            }
             $(this).removeClass("access");
             $(this).addClass("unPayed");
             var s='<div id='+tr_id+' class="col-sm-2" style="margin:1%;border: 1px solid #009ff0;border-radius:5px;-moz-border-radius: 5px;-webkit-border-radius: 5px;-o-border-radius: 5px;"> ' +
                 '<div class="row text-center" style="background-color:#009ff0;">'+time+'</div>' +
                 '<div class="row text-center">'+fieldName+'</div></div>';
             $("#unPayed").append(s);
-            var index = $("#orderForm div").length;
             var order_info='<div id='+order_item_id+'><input name="venueConsList['+index+'].reserveField.id" value=\''+fieldId+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].startTime" value=\''+startTime+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].endTime" value=\''+endTime+'\' type="hidden"></div>';
@@ -33,6 +41,10 @@ $(document).ready(function () {
             $(this).addClass("access");
             $("#"+tr_id).remove();
             $("#"+order_item_id).remove();
+            var index = $("#orderForm div").length;
+            if(index<=0){
+                $("#reserve_submit").hide();
+            }
         }
     });
 });
