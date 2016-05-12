@@ -15,6 +15,9 @@ $(document).ready(function () {
         var timeId=time1+time2+time3+time4;
         var tr_id=fieldId+timeId;
         var order_item_id=tr_id+'item';
+        if($(this).hasClass("unavailable")){
+            return;
+        }
 
         if ($(this).hasClass("access")) {//预定
             var index = $("#orderForm div").length;

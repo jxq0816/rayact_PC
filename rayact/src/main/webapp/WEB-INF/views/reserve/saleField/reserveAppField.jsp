@@ -45,7 +45,7 @@
                         <c:set var="midClass" value="reserveTd access"/>
                     </j:if>
                     <j:if test="${'1' eq status}">
-                        <c:set var="midClass" value="reserveTd"/>
+                        <c:set var="midClass" value="reserveTd unavailable"/>
                     </j:if>
                     <j:if test="${'4' eq status}">
                         <c:set var="midClass" value="reserveTd red"/>
