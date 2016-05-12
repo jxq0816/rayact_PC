@@ -21,7 +21,7 @@ $(document).ready(function () {
             if(index>=0){
                 $("#reserve_submit").show();
             }
-            if(index>=4){
+            if(index>=8){
                 alert("您选择的场地太多啦，请分两次下单结算哦。");
                 return;
             }
