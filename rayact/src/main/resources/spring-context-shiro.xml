@@ -30,6 +30,7 @@
 				${adminPath}/mobile/login = anon
 				${adminPath}/app/reserve/field/main=anon
 				${adminPath}/app/reserve/field/reservation=anon
+				${adminPath}/app/reserve/reserveVenue/list=anon
 				/static/** = anon
 				/userfiles/** = anon
 				${adminPath}/cas = cas

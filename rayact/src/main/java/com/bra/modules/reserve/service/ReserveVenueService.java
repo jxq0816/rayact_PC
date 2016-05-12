@@ -28,16 +28,6 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     @Autowired
     private ReserveVenueDao dao;
 
-    @Autowired
-    private ReserveFieldService reserveFieldService;
-
-    @Autowired
-    private ReserveCardStatementsService reserveCardStatementsService;
-
-    @Autowired
-    private ReserveCommoditySellService reserveCommoditySellService;
-
-
     public ReserveVenue get(String id) {
         ReserveVenue reserveVenue = super.get(id);
         return reserveVenue;

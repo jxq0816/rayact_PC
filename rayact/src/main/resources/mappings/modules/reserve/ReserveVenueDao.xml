@@ -39,7 +39,10 @@
         FROM reserve_venue a
         <include refid="reserveVenueJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="tenantId != null and tenantId != ''">
+                and a.tenant_id = #{tenantId}
+            </if>
             <if test="name != null and name != ''">
                 AND a.name LIKE
                 <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
