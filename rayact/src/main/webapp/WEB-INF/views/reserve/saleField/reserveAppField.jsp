@@ -68,7 +68,8 @@
                     data-consDate="${consDate}"
                     data-consMobile="${consMobile}"
                     data-userName="${userName}"
-                    data-time="${t}">
+                    data-time="${t}"
+                >
                         ${price}
                 </td>
                 <%-- A场地 B时间 的状态展示 结束--%>
@@ -86,9 +87,10 @@
 
 <form id="orderForm">
     <input name="consDate" value="${consDate}" type="hidden">
-    <input name="consMobile" value="012" type="hidden">
+    <input name="consMobile" value="${consMobile}" type="hidden">
     <input name="userName" value="${userName}" type="hidden">
-    <a class="btn btn-success" onclick="orderSubmit()">提交</a>
+    <input name="reserveVenue.id" value="${venueId}" type="hidden">
+    <span id="reserve_submit"><a class="btn btn-success" onclick="orderSubmit()">提交</a></span>
 </form>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="${ctxStatic}/common/jeesite.js"></script>

@@ -1,6 +1,5 @@
 package com.bra.modules.reserve.web;
 
-import com.alibaba.fastjson.JSON;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveField;
@@ -21,10 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 场地预定管理
@@ -142,13 +138,14 @@ public class ReserveAppController extends BaseController {
             model.addAttribute("consDate", fmt.format(consDate));
             model.addAttribute("consMobile", consMobile);
             model.addAttribute("userName", userName);
+            model.addAttribute("venueId", venueId);
         }
         return "reserve/saleField/reserveAppField";
     }
 
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public String reservation(ReserveVenueCons reserveVenueCons) {
+    public Map<String, Boolean> reservation(ReserveVenueCons reserveVenueCons) {
         boolean bool = true;//时间段是否可用
         Date consDate = reserveVenueCons.getConsDate();
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
@@ -169,6 +166,6 @@ public class ReserveAppController extends BaseController {
             reserveAppVenueConsService.save(reserveVenueCons);//保存预订信息
         }
         map.put("bool", bool);
-        return JSON.toJSONString(map);
+        return map;
     }
 }

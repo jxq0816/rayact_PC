@@ -27,6 +27,8 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
     @Autowired
+    private ReserveVenueConsDao reserveVenueConsDao;
+    @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
     @Autowired
     private ReserveMemberService reserveMemberService;
@@ -91,6 +93,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         String consWeek = TimeUtils.getWeekOfDate(consDate);//周次
         for (ReserveVenueConsItem item : itemList) {
             item.setConsDate(consDate);//预订时间
+            item.setReserveVenue(reserveVenueCons.getReserveVenue());//订单详情保存场馆
             item.setConsData(reserveVenueCons);//订单
             item.setConsWeek(consWeek);//设置周次
             item.setHalfCourt(halfCourt);//设置半场
@@ -119,7 +122,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         }
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
-        super.save(reserveVenueCons);//订单价格更改
+        reserveVenueConsDao.insert(reserveVenueCons);//订单价格更改
     }
 
     @Transactional(readOnly = false)
