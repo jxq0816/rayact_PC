@@ -2,6 +2,10 @@ package com.bra.modules.mechanism.web;
 
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.upload.FileModel;
+import com.bra.common.upload.FileRepository;
+import com.bra.common.upload.StoreType;
+import com.bra.common.upload.UploadUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.mechanism.entity.AttMain;
@@ -13,10 +17,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 文档管理Controller
@@ -26,6 +40,9 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = "${adminPath}/mechanism/attMain")
 public class AttMainController extends BaseController {
+	@Autowired
+	private FileRepository fileRepository;
+
 
 	@Autowired
 	private AttMainService attMainService;
@@ -76,4 +93,61 @@ public class AttMainController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/mechanism/attMain/?repage";
 	}
 
+	@RequestMapping(value = {"uploadApi", ""} )
+	@ResponseBody
+	public Map<String, Object> uploadApi(HttpServletRequest req,
+										 HttpServletResponse resp) throws IOException {
+		final String size = req.getParameter(TokenController.FILE_SIZE_FIELD);
+		final String fileName = req.getParameter(TokenController.FILE_NAME_FIELD);
+		final String token = generateToken(fileName,size);
+		Map<String, Object> json = new HashMap<>();
+		FileModel fileModel = new FileModel();
+		boolean success = true;
+		String destPath = Global.getBaseDir();
+		String tmp = destPath + "resources/www";
+		File f = new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + token +"."+fileName.split("\\.")[1]);
+		//解析器解析request的上下文
+		CommonsMultipartResolver multipartResolver =
+				new CommonsMultipartResolver(req.getSession().getServletContext());
+		//先判断request中是否包涵multipart类型的数据，
+		if(multipartResolver.isMultipart(req)){
+			//再将request中的数据转化成multipart类型的数据
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
+			Iterator iter = multiRequest.getFileNames();
+			while(iter.hasNext()){
+				MultipartFile file = multiRequest.getFile((String)iter.next());
+				if(file != null){
+					//写文件到本地
+					file.transferTo(f);
+				}
+			}
+		}
+		File dst = fileRepository.getFile(token, fileName);
+		fileModel.setStoreType(StoreType.SYSTEM);
+		fileModel.setToken(token);
+		fileModel.setFilePath(dst.getAbsolutePath());
+		AttMain attMain = new AttMain(fileModel);
+		attMain = attMainService.saveAttMain(attMain);
+		fileModel.setAttId(attMain.getId());
+		if (success) {
+			json.put("imagePath", com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId());
+		}
+		return json;
+	}
+
+	private String generateToken(String name, String size) throws IOException {
+		if (name == null || size == null)
+			return "";
+		int code = name.hashCode();
+		try {
+			String token = (code > 0 ? "A" : "B") + Math.abs(code) + "_"
+					+ size.trim();
+			/** TODO: store your token, here just create a file */
+			fileRepository.storeToken(token);
+
+			return token;
+		} catch (Exception e) {
+			throw new IOException(e);
+		}
+	}
 }

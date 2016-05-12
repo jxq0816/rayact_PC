@@ -3,6 +3,7 @@
  */
 package com.bra.modules.sys.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.config.Global;
 import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
@@ -27,9 +28,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +46,6 @@ public class LoginController extends BaseController {
 
     @Autowired
     private SessionDAO sessionDAO;
-
     /**
      * 管理登录
      */
@@ -53,12 +55,10 @@ public class LoginController extends BaseController {
         if (logger.isDebugEnabled()) {
             logger.debug("login, active session size: {}", sessionDAO.getActiveSessions(false).size());
         }
-
         // 如果已登录，再次访问主页，则退出原账号。
         if (Global.TRUE.equals(Global.getConfig("notAllowRefreshIndex"))) {
             CookieUtils.setCookie(response, "LOGINED", "false");
         }
-
         // 如果已经登录，则跳转到管理首页
         if (principal != null && !principal.isMobileLogin()) {
             return "redirect:" + adminPath;
@@ -72,12 +72,10 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
     public String loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
         Principal principal = SecurityUtil.getPrincipal();
-
         // 如果已经登录，则跳转到管理首页
         if (principal != null) {
             return "redirect:" + adminPath;
         }
-
         String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
         boolean rememberMe = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);
         boolean mobile = WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_MOBILE_PARAM);
@@ -204,4 +202,25 @@ public class LoginController extends BaseController {
         }
         return loginFailNum >= 3;
     }
+
+    /**
+     * 登出
+     */
+    @RequestMapping(value = "${adminPath}/api/logout")
+    @ResponseBody
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        UserUtils.getSubject().logout();
+        JSONObject j = new JSONObject();
+        j.put("status","success");
+        try {
+            response.reset();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().print(j.toJSONString());
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
 }

@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/runtime/pom.xml" />
         <option value="$PROJECT_DIR$/rayact_core/pom.xml" />
         <option value="$PROJECT_DIR$/app/pom.xml" />
+        <option value="$PROJECT_DIR$/app_runtime/pom.xml" />
       </list>
     </option>
   </component>
