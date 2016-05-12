@@ -101,7 +101,14 @@
     	ou.id AS "office.primaryPerson.id",
     	ou.name AS "office.primaryPerson.name",
     	ou2.id AS "office.deputyPerson.id",
-    	ou2.name AS "office.deputyPerson.name"<!-- ,
+    	ou2.name AS "office.deputyPerson.name",
+		a.qq,
+		a.qq_name,
+		a.weixin,
+		a.weixin_name,
+		a.area,
+		a.sex
+		<!-- ,
         r.id AS "roleList.id",
         r.office_id AS "roleList.office.id",
         r.name AS "roleList.name",
@@ -109,6 +116,33 @@
         r.role_type AS "roleList.roleType",
         r.data_scope AS "roleList.dataScope" -->
     </sql>
+	<sql id="userApiColumns">
+		a.id,
+		a.login_name,
+		a.password,
+		a.no,
+		a.name,
+		a.email,
+		a.phone,
+		a.mobile,
+		a.user_type,
+		a.login_ip,
+		a.login_date,
+		a.remarks,
+		a.login_flag,
+		a.photo,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag,
+		a.area,
+		a.sex,
+		a.qq_name,
+		a.weixin_name,
+		a.qq_image,
+		a.weixin_image
+	</sql>
     
     <sql id="userJoins">
 		LEFT JOIN sys_office c ON c.id = a.company_id
@@ -143,6 +177,73 @@
 		<include refid="userJoins"/><!-- 
 		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
 		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<!-- 根据qq查询用户 -->
+	<select id="getByQq" resultType="User" parameterType="User">
+		SELECT
+		<include refid="userApiColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+		FROM sys_user a
+		WHERE a.qq = #{qq} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<!-- 根据微信号查询用户 -->
+	<select id="getByWeixin" resultType="User" parameterType="User">
+		SELECT
+		<include refid="userApiColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+		FROM sys_user a
+		WHERE a.weixin = #{weixin} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<!-- 根据微信号查询用户 -->
+	<select id="getByMobile" resultType="User" parameterType="User">
+		SELECT
+		<include refid="userApiColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+		FROM sys_user a
+		WHERE (a.mobile = #{mobile} OR a.login_name = #{mobile}) AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+	<!-- 分页查询用户信息 -->
+	<select id="findListApi" resultType="User">
+		SELECT
+		<include refid="userApiColumns"/>
+		FROM sys_user a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="loginName != null and loginName != ''">
+			AND a.login_name like
+			<if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+			<if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{loginName}, '%')</if>
+		</if>
+		<if test="name != null and name != ''">
+			AND a.name like
+			<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+			<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
+		</if>
+		<if test="password != null and password != ''">
+			AND a.password = #{password}
+		</if>
+		<if test="weixin != null and weixin != ''">
+			AND a.weixin = #{weixin}
+		</if>
+		<if test="qq != null and qq != ''">
+			AND a.qq = #{qq}
+		</if>
+		<if test="moblie != null and mobile != ''">
+			AND (a.mobile = #{mobile} OR a.login_name = #{mobile})
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.name
+			</otherwise>
+		</choose>
 	</select>
 	
 	<!-- 分页查询用户信息 -->
@@ -244,7 +345,16 @@
 			remarks, 
 			login_flag, 
 			photo, 
-			del_flag
+			del_flag,
+			qq,
+			weixin,
+			area,
+			age,
+			sex,
+			qq_name,
+			weixin_name,
+			qq_image,
+			weixin_image
 		) VALUES (
 			#{id}, 
 			#{company.id}, 
@@ -264,7 +374,16 @@
 			#{remarks}, 
 			#{loginFlag}, 
 			#{photo}, 
-			#{delFlag}
+			#{delFlag},
+			#{qq},
+			#{weixin},
+			#{area},
+			#{age},
+			#{sex},
+			#{qqName},
+			#{weixinName},
+			#{qqImage},
+			#{weixinImage}
 		)
 	</insert>
 	
@@ -285,7 +404,16 @@
 			update_date = #{updateDate}, 
 			remarks = #{remarks},
 			login_flag = #{loginFlag},
-			photo = #{photo}
+			photo = #{photo},
+			qq = #{qq},
+			weixin = #{weixin},
+			area = #{area},
+			age = #{age},
+			sex = #{sex},
+			qq_name = #{qqName},
+			weixin_name = #{weixinName},
+			qq_image = #{qqImage},
+			weixin_image = #{weixinImage}
 		WHERE id = #{id}
 	</update>
 	

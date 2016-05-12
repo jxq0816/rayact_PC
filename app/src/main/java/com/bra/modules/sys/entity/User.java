@@ -26,6 +26,16 @@ import java.util.List;
 public class User extends DataEntity<User> implements BaseUser{
 
     private static final long serialVersionUID = 1L;
+
+    private String qqImage;
+    private String weixinImage;
+    private String qqName;
+    private String weixinName;
+    private String qq;
+    private String weixin;
+    private int age;
+    private String sex;
+    private  String area;
     private Office company;    // 归属公司
     private Office office;    // 归属部门
     private String loginName;// 登录名
@@ -303,4 +313,78 @@ public class User extends DataEntity<User> implements BaseUser{
     public String toString() {
         return id;
     }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getArea() {
+        return area;
+    }
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getQqName() {
+        return qqName;
+    }
+
+    public void setQqName(String qqName) {
+        this.qqName = qqName;
+    }
+
+    public String getWeixinName() {
+        return weixinName;
+    }
+
+    public void setWeixinName(String weixinName) {
+        this.weixinName = weixinName;
+    }
+
+    public String getQqImage() {
+        return qqImage;
+    }
+
+    public void setQqImage(String qqImage) {
+        this.qqImage = qqImage;
+    }
+
+    public String getWeixinImage() {
+        return weixinImage;
+    }
+
+    public void setWeixinImage(String weixinImage) {
+        this.weixinImage = weixinImage;
+    }
+
+
+
 }

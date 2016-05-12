@@ -67,12 +67,21 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 
         // 校验用户名密码
         User user = getSystemService().getUserByLoginName(token.getUsername());
+        String loginType = token.getLoginType();
+        if(StringUtils.isNotBlank(loginType)){
+            if("qq".equals(loginType)){
+                user = getSystemService().getUserByQq(token.getUsername());
+            }else if("weixin".equals(loginType)){
+                user = getSystemService().getUserByWeixin(token.getUsername());
+            }
+        }
         if (user != null) {
             if (Global.NO.equals(user.getLoginFlag())) {
                 throw new AuthenticationException("msg:该已帐号禁止登录.");
             }
+            //byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
             return new SimpleAuthenticationInfo(new Principal(user.getId(), user.getLoginName(),
-                    user.getName(), user.getOffice().getId(), token.isMobileLogin()),
+                    user.getName(), user.getOffice()==null?"":user.getOffice().getId(), token.isMobileLogin(),token.getLoginType()),
                     user.getPassword(), getName());
         } else {
             return null;
@@ -177,7 +186,31 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
     @PostConstruct
     public void initCredentialsMatcher() {
         CustomCredentialsMatcher matcher = new CustomCredentialsMatcher();
+        //matcher.setHashIterations(SystemService.HASH_INTERATIONS);
         setCredentialsMatcher(matcher);
+    }
+
+//	/**
+//	 * 清空用户关联权限认证，待下次使用时重新加载
+//	 */
+//	public void clearCachedAuthorizationInfo(Principal principal) {
+//		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
+//		clearCachedAuthorizationInfo(principals);
+//	}
+
+    /**
+     * 清空所有关联认证
+     *
+     * @Deprecated 不需要清空，授权缓存保存到session中
+     */
+    @Deprecated
+    public void clearAllCachedAuthorizationInfo() {
+//		Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+//		if (cache != null) {
+//			for (Object key : cache.keys()) {
+//				cache.remove(key);
+//			}
+//		}
     }
 
     /**

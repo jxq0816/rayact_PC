@@ -52,12 +52,12 @@ public class StreamController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> execute(HttpServletRequest req,
-                                       HttpServletResponse resp, ModelMap model) {
+                                       HttpServletResponse resp, ModelMap model) throws IOException {
         doOptions(req, resp);
-        final String token = req.getParameter(TokenController.TOKEN_FIELD);
+        //final String token = req.getParameter(TokenController.TOKEN_FIELD);
         final String size = req.getParameter(TokenController.FILE_SIZE_FIELD);
         final String fileName = req.getParameter(TokenController.FILE_NAME_FIELD);
-
+        final String token = generateToken(fileName,size);
         Map<String, Object> json = new HashMap<>();
         AttMain attMain = attMainService.convertAttMainbyToken(token);
         if (attMain != null) {
@@ -95,16 +95,14 @@ public class StreamController {
     public Map<String, Object> upload(HttpServletRequest req,
                                       HttpServletResponse resp, ModelMap model) throws IOException {
         doOptions(req, resp);
-        final String token = req.getParameter(TokenController.TOKEN_FIELD);
-        String fileName = req.getParameter(TokenController.FILE_NAME_FIELD);
+        final String size = req.getParameter(TokenController.FILE_SIZE_FIELD);
+        final String fileName = req.getParameter(TokenController.FILE_NAME_FIELD);
+        final String token = generateToken(fileName,size);
         String resizeImg = req.getParameter("resizeImg");
         String resizeWidth = req.getParameter("resizeWidth");
         String resizeHeight = req.getParameter("resizeHeight");
         String imgCheck = req.getParameter("imgCheck");
-        //fileName = new String(fileName.getBytes("iso-8859-1"),"UTF-8");
         Map<String, Object> json = new HashMap<>();
-
-
         Range range = fileRepository.parseRange(req);
         FileModel fileModel = new FileModel();
         OutputStream out = null;
@@ -200,5 +198,21 @@ public class StreamController {
         resp.setHeader("Access-Control-Allow-Headers", "Content-Range,Content-Type");
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    }
+
+    private String generateToken(String name, String size) throws IOException {
+        if (name == null || size == null)
+            return "";
+        int code = name.hashCode();
+        try {
+            String token = (code > 0 ? "A" : "B") + Math.abs(code) + "_"
+                    + size.trim();
+            /** TODO: store your token, here just create a file */
+            fileRepository.storeToken(token);
+
+            return token;
+        } catch (Exception e) {
+            throw new IOException(e);
+        }
     }
 }

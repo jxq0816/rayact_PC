@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="app" />
+        <module name="app_runtime" />
         <module name="control" />
         <module name="rayact_core" />
         <module name="runtime" />
@@ -37,6 +38,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="app" target="1.8" />
+      <module name="app_runtime" target="1.8" />
       <module name="control" target="1.8" />
       <module name="rayact" target="1.8" />
       <module name="rayact_core" target="1.8" />

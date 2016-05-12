@@ -19,7 +19,7 @@ public interface UserDao extends CrudDao<User> {
 	
 	/**
 	 * 根据登录名称查询用户
-	 * @param loginName
+	 * @param user
 	 * @return
 	 */
 	public User getByLoginName(User user);
@@ -71,5 +71,32 @@ public interface UserDao extends CrudDao<User> {
 	 * @return
 	 */
 	public int updateUserInfo(User user);
+
+	/**
+	 * 通过QQ获取用户
+	 * @param user
+	 * @return
+     */
+	public User getByQq(User user);
+
+	/**
+	 * 通过微信获取用户
+	 * @param user
+	 * @return
+     */
+	public User getByWeixin(User user);
+	/**
+	 * 通过手机号获取用户
+	 * @param user
+	 * @return
+	 */
+	public User getByMobile(User user);
+
+	/**
+	 *
+	 * @param user
+	 * @return
+	 */
+	public List<User> findListApi(User user);
 
 }

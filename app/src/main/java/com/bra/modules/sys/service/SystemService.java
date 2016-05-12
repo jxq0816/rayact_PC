@@ -8,7 +8,6 @@ import com.bra.common.persistence.Page;
 import com.bra.common.security.Digests;
 import com.bra.common.security.shiro.session.SessionDAO;
 import com.bra.common.service.BaseService;
-import com.bra.common.service.ServiceException;
 import com.bra.common.utils.CacheUtils;
 import com.bra.common.utils.Encodes;
 import com.bra.common.utils.MD5Util;
@@ -87,6 +86,36 @@ public class SystemService extends BaseService implements InitializingBean {
 	public User getUserByLoginName(String loginName) {
 		return UserUtils.getByLoginName(loginName);
 	}
+	/**
+	 * 根据QQ获取用户
+	 * @param qq
+	 * @return
+	 */
+	public User getUserByQq(String qq) {
+		User user = new User();
+		user.setQq(qq);
+		return userDao.getByQq(user);
+	}
+	/**
+	 * 根据微信获取用户
+	 * @param weixin
+	 * @return
+	 */
+	public User getUserByWeixin(String weixin) {
+		User user = new User();
+		user.setWeixin(weixin);
+		return userDao.getByQq(user);
+	}
+	/**
+	 * 根据微信获取用户
+	 * @param mobile
+	 * @return
+	 */
+	public User getUserByMobile(String mobile) {
+		User user = new User();
+		user.setMobile(mobile);
+		return userDao.getByMobile(user);
+	}
 	
 	public Page<User> findUser(Page<User> page, User user) {
 		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
@@ -112,7 +141,7 @@ public class SystemService extends BaseService implements InitializingBean {
 
 	/**
 	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）
-	 * @param user
+	 * @param officeId
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -144,12 +173,12 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		if (StringUtils.isNotBlank(user.getId())){
 			// 更新用户与角色关联
-			userDao.deleteUserRole(user);
-			if (user.getRoleList() != null && user.getRoleList().size() > 0){
-				userDao.insertUserRole(user);
-			}else{
-				throw new ServiceException(user.getLoginName() + "没有设置角色！");
-			}
+//			userDao.deleteUserRole(user);
+//			if (user.getRoleList() != null && user.getRoleList().size() > 0){
+//				userDao.insertUserRole(user);
+//			}else{
+//				throw new ServiceException(user.getLoginName() + "没有设置角色！");
+//			}
 			// 将当前用户同步到Activiti
 			saveActivitiUser(user);
 			// 清除用户缓存
@@ -534,6 +563,10 @@ public class SystemService extends BaseService implements InitializingBean {
 			String userId = user.getLoginName();//ObjectUtils.toString(user.getId());
 			identityService.deleteUser(userId);
 		}
+	}
+
+	public List<User> findListApi(User user){
+		return userDao.findListApi(user);
 	}
 	
 	///////////////// Synchronized to the Activiti end //////////////////

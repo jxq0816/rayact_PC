@@ -3,6 +3,7 @@
  */
 package com.bra.modules.sys.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.MD5Util;
@@ -19,14 +20,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -122,6 +121,7 @@ public class UserController extends BaseController {
 		// 清除当前用户缓存
 		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
 			UserUtils.clearCache();
+			//UserUtils.getCacheMap().clear();
 		}
 		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
 		return "redirect:" + adminPath + "/sys/user/list?repage";
@@ -245,4 +245,170 @@ public class UserController extends BaseController {
 		}
 		return mapList;
 	}
+
+	/**
+	 * 更改个人资料
+	 */
+	@RequestMapping(value = "api/updateInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateInfo(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject rtn = new JSONObject();
+		try{
+			boolean flag = true;
+			String photo = request.getParameter("photo");
+			String name = request.getParameter("name");
+			String sex = request.getParameter("sex");
+			String area = request.getParameter("area");
+			String phone = request.getParameter("phone");
+			String qq = request.getParameter("qq");
+			String weixin = request.getParameter("weixin");
+			String oldPassword = request.getParameter("oldPassword");
+			String newPassword = request.getParameter("newPassword");
+			String qqName = request.getParameter("qqName");
+			String weixinName = request.getParameter("weixinName");
+			User user = UserUtils.getUser();
+			if(user!=null){
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(photo)){
+					user.setPhoto(photo);
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(sex)){
+					user.setSex(sex);
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(qq)){
+					User tmp = systemService.getUserByQq(qq);
+					User now = UserUtils.getUser();
+					if(tmp!=null&&now.getId().equals(tmp.getId())){
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","已经绑定");
+					}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","该QQ号已经注册");
+					}else{
+						user.setQq(qq);
+						user.setQqName(qqName);
+					}
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(area)){
+					user.setArea(area);
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(phone)){
+					User tmp = systemService.getUserByMobile(phone);
+					User now = UserUtils.getUser();
+					if(tmp!=null&&now.getId().equals(tmp.getId())){
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","已经绑定");
+					}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","该手机号已经注册");
+					}else{
+						user.setMobile(phone);
+						user.setLoginName(phone);
+					}
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(weixin)){
+					User tmp = systemService.getUserByWeixin(weixin);
+					User now = UserUtils.getUser();
+					if(tmp!=null&&now.getId().equals(tmp.getId())){
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","已经绑定");
+					}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","该微信号已经注册");
+					}else{
+						user.setWeixin(weixin);
+						user.setWeixinName(weixinName);
+					}
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(name)){
+					user.setName(name);
+				}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(oldPassword)&&!com.bra.modules.sys.utils.StringUtils.isNull(newPassword)){
+					User tmp = new User();
+					tmp.setLoginName(UserUtils.getUser().getLoginName());
+					tmp.setPassword(com.bra.modules.sys.utils.StringUtils.entryptPassword(oldPassword));
+					List<User> users = systemService.findListApi(tmp);
+					if(users!=null&&users.size()>0){
+						user.setPassword(newPassword);
+					}else{
+						flag = false;
+						rtn.put("status","fail");
+						rtn.put("msg","原密码输入有误");
+					}
+				}
+			}
+			if(flag){
+				systemService.saveUser(user);
+				rtn.put("status","success");
+				rtn.put("msg","操作成功");
+			}
+		}catch(Exception e){
+			rtn.put("status","fail");
+			rtn.put("msg","操作失败");
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(rtn.toJSONString());
+			return null;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * 获取用户信息
+	 */
+	@RequestMapping(value = "api/getUserInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public String getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject rtn = new JSONObject();
+		User user = UserUtils.getUser();
+		rtn.put("userImage",user.getPhoto()==null?"":user.getPhoto());
+		rtn.put("name",user.getName()==null?"":user.getName());
+		rtn.put("sex",user.getSex()==null?"":user.getSex());
+		rtn.put("area",user.getArea()==null?"":user.getArea());
+		rtn.put("phone",user.getMobile()==null?"":user.getMobile());
+		rtn.put("qqName",user.getQqName()==null?"":user.getQqName());
+		rtn.put("weixinName",user.getWeixinName()==null?"":user.getWeixinName());
+		rtn.put("qq",user.getQq()==null?"":user.getQq());
+		rtn.put("weixin",user.getWeixin()==null?"":user.getWeixin());
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(rtn.toJSONString());
+			return null;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+    
+//	@InitBinder
+//	public void initBinder(WebDataBinder b) {
+//		b.registerCustomEditor(List.class, "roleList", new PropertyEditorSupport(){
+//			@Autowired
+//			private SystemService systemService;
+//			@Override
+//			public void setAsText(String text) throws IllegalArgumentException {
+//				String[] ids = StringUtils.split(text, ",");
+//				List<Role> roles = new ArrayList<Role>();
+//				for (String id : ids) {
+//					Role role = systemService.getRole(Long.valueOf(id));
+//					roles.add(role);
+//				}
+//				setValue(roles);
+//			}
+//			@Override
+//			public String getAsText() {
+//				return Collections3.extractToString((List) getValue(), "id", ",");
+//			}
+//		});
+//	}
 }
