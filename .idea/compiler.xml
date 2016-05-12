@@ -23,17 +23,17 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="app" />
-        <module name="app_runtime" />
         <module name="control" />
+        <module name="rayact" />
         <module name="rayact_core" />
         <module name="runtime" />
       </profile>
-      <profile default="false" name="Annotation profile for rayact" enabled="true">
+      <profile default="false" name="Annotation profile for app_runtime" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="rayact" />
+        <module name="app_runtime" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
