@@ -60,6 +60,27 @@
             </otherwise>
         </choose>
     </select>
+    <select id="findListForApp" parameterType="ReserveVenue" resultType="Map">
+        SELECT
+        a.id AS "id",
+        a.name AS "name",
+        a.address AS "address",
+        a.address_x AS "addressX",
+        a.address_y AS "addressY",
+        a.more_service AS "moreService"
+        FROM reserve_venue a
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="name != null and name != ''">
+                AND a.name LIKE concat('%',#{name},'%')
+            </if>
+        </where>
+        <choose>
+            <otherwise>
+                ORDER BY a.update_date ASC
+            </otherwise>
+        </choose>
+    </select>
 
     <select id="findVenueProjectList" resultType="ReserveVenueProjectIntervalReport">
         select DISTINCT

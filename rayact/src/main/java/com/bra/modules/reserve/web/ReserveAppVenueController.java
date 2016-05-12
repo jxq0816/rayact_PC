@@ -1,17 +1,16 @@
 package com.bra.modules.reserve.web;
 
-import com.alibaba.fastjson.JSON;
-import com.bra.common.persistence.Page;
+import com.alibaba.fastjson.JSONArray;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 场馆管理Controller
@@ -26,9 +25,9 @@ public class ReserveAppVenueController extends BaseController {
     private ReserveVenueService reserveVenueService;
 
     @RequestMapping(value = {"list", ""})
-    public String list(ReserveVenue reserveVenue, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<ReserveVenue> page = reserveVenueService.findPage(new Page<>(request, response), reserveVenue);
-        model.addAttribute("page", page);
-        return JSON.toJSONString(page);
+    @ResponseBody
+    public String list(ReserveVenue reserveVenue) {
+        List<Map> list = reserveVenueService.findListForApp( reserveVenue);
+        return  JSONArray.toJSONString(list);
     }
 }

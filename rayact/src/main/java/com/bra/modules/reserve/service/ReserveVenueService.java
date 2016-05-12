@@ -40,6 +40,9 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         }
         return super.findList(reserveVenue);
     }
+    public List<Map> findListForApp(ReserveVenue reserveVenue) {
+        return dao.findListForApp(reserveVenue);
+    }
 
     public Page<ReserveVenue> findPage(Page<ReserveVenue> page, ReserveVenue reserveVenue) {
         return super.findPage(page, reserveVenue);

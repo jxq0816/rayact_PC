@@ -12,6 +12,7 @@ import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 场馆管理DAO接口
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @MyBatisDao
 public interface ReserveVenueDao extends CrudDao<ReserveVenue> {
+    List<Map> findListForApp(ReserveVenue reserveVenue);
     /*总收入统计*/
     List<ReserveVenueTotalIntervalReport> totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport);
     /*查询 场馆下的项目*/
