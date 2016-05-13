@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 场地预定管理
@@ -30,7 +33,7 @@ import java.util.*;
 @RequestMapping(value = "${adminPath}/app/reserve/field")
 public class ReserveAppController extends BaseController {
 
-    //场地价格service
+    //APP场地价格service
     @Autowired
     private ReserveAppFieldPriceService reserveAppFieldPriceService;
     //订单详情service
@@ -167,5 +170,27 @@ public class ReserveAppController extends BaseController {
         }
         map.put("bool", bool);
         return map;
+    }
+    /**
+     * 结算订单
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "saveSettlement")
+    @ResponseBody
+    public String saveSettlement(String orderId, String payType,
+                                 Double consPrice,
+                                 Double memberCardInput,
+                                 Double bankCardInput,
+                                 Double weiXinInput,
+                                 Double aliPayInput,
+                                 Double couponInput) {
+        ReserveVenueCons venueCons = reserveAppVenueConsService.saveSettlement(orderId,payType,consPrice,
+                memberCardInput,bankCardInput,weiXinInput,aliPayInput,couponInput);
+        if(venueCons==null){
+            return "false";
+        }
+        return "true";
     }
 }

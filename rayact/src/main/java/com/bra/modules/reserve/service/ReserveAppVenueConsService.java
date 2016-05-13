@@ -5,6 +5,7 @@ import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
 import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.event.venue.VenueCheckoutEvent;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,4 +131,39 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         super.delete(reserveVenueCons);
     }
 
+    /**
+     * 结账
+     * id:订单编号
+     * payType:支付类型
+     * consPrice：实收金额
+     * @param
+     */
+    @Transactional(readOnly = false)
+    public ReserveVenueCons saveSettlement(String orderId, String payType, Double consPrice,
+                                           Double memberCardInput,
+                                           Double bankCardInput,
+                                           Double weiXinInput,
+                                           Double aliPayInput,
+                                           Double couponInput) {
+
+        ReserveVenueCons reserveVenueCons = this.get(orderId);
+        reserveVenueCons.setPayType(payType);
+        reserveVenueCons.setMemberCardInput(memberCardInput);
+        reserveVenueCons.setBankCardInput(bankCardInput);
+        reserveVenueCons.setWeiXinInput(weiXinInput);
+        reserveVenueCons.setAliPayInput(aliPayInput);
+        reserveVenueCons.setCouponInput(couponInput);
+        reserveVenueCons.setConsPrice(consPrice);//结算价格
+        //reserveType:1:已预定,未付款;payType:1:会员卡;
+        if ("1".equals(reserveVenueCons.getReserveType())) {
+            reserveVenueCons.setReserveType("4");//已结账
+            reserveVenueCons.preUpdate();
+            dao.update(reserveVenueCons);
+            //会员扣款;结算教练(事件通知)
+            VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
+            applicationContext.publishEvent(venueCheckoutEvent);
+            return reserveVenueCons;
+        }
+        return null;
+    }
 }
