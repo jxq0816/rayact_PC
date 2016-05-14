@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="venue"></jsp:param>
 </jsp:include>
-<div class="cl-mcont" id="pcont">
+<div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
