@@ -81,6 +81,18 @@
             </otherwise>
         </choose>
     </select>
+    <select id="findImgPathList" parameterType="ReserveVenue" resultType="Map">
+        SELECT
+        m.fd_file_path AS "imgPath"
+        FROM reserve_venue a
+        LEFT JOIN mechanism_att_main m ON m.fd_model_id=a.id
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
 
     <select id="findVenueProjectList" resultType="ReserveVenueProjectIntervalReport">
         select DISTINCT
