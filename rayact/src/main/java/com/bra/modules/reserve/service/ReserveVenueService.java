@@ -18,7 +18,7 @@ import java.util.*;
 /**
  * 场馆管理Service
  *
- * @author 肖斌
+ * @author jiangxingqi
  * @version 2015-12-29
  */
 @Service

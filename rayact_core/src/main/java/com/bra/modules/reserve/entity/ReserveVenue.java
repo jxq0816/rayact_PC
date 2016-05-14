@@ -1,9 +1,6 @@
 package com.bra.modules.reserve.entity;
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.common.utils.JsonUtils;
-import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.entity.json.VenueMoreService;
 import com.bra.modules.sys.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
@@ -118,32 +115,12 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
         this.addressY = addressY;
     }
 
-    public String getMoreService() {
-        if (moreServiceBean != null) {
-            moreService = JsonUtils.writeObjectToJson(moreServiceBean);
-        }
-        return moreService;
-    }
-
     public void setMoreService(String moreService) {
         this.moreService = moreService;
     }
 
-    private VenueMoreService moreServiceBean;
-
-    public VenueMoreService getMoreServiceBean() {
-        return moreServiceBean;
-    }
-
-    public void setMoreServiceBean(VenueMoreService moreServiceBean) {
-        this.moreServiceBean = moreServiceBean;
-    }
-
-    public VenueMoreService getVenueMoreService() {
-        if (StringUtils.isNotBlank(moreService)) {
-            return JsonUtils.readObjectByJson(moreService, VenueMoreService.class);
-        }
-        return new VenueMoreService();
+    public String getMoreService() {
+        return moreService;
     }
 
     @Override
