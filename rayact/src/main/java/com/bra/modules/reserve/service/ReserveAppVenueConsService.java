@@ -41,13 +41,15 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
 
     public ReserveVenueCons get(String id) {
         ReserveVenueCons reserveVenueCons=super.get(id);
-        //教练订单
-        List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(reserveVenueCons.getId(), ReserveVenueCons.MODEL_KEY);
-        reserveVenueCons.setTutorOrderList(tutorOrderList);
-        //订单详情
-        ReserveVenueConsItem item=new ReserveVenueConsItem();
-        item.setConsData(reserveVenueCons);
-        reserveVenueCons.setVenueConsList(reserveVenueConsItemService.findList(item));
+        if(reserveVenueCons!=null){
+            //教练订单
+            List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(reserveVenueCons.getId(), ReserveVenueCons.MODEL_KEY);
+            reserveVenueCons.setTutorOrderList(tutorOrderList);
+            //订单详情
+            ReserveVenueConsItem item=new ReserveVenueConsItem();
+            item.setConsData(reserveVenueCons);
+            reserveVenueCons.setVenueConsList(reserveVenueConsItemService.findList(item));
+        }
         return reserveVenueCons;
     }
 
@@ -139,14 +141,12 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
      * @param
      */
     @Transactional(readOnly = false)
-    public ReserveVenueCons saveSettlement(String orderId, String payType, Double consPrice,
+    public boolean saveSettlement(ReserveVenueCons reserveVenueCons, String payType, Double consPrice,
                                            Double memberCardInput,
                                            Double bankCardInput,
                                            Double weiXinInput,
                                            Double aliPayInput,
                                            Double couponInput) {
-
-        ReserveVenueCons reserveVenueCons = this.get(orderId);
         reserveVenueCons.setPayType(payType);
         reserveVenueCons.setMemberCardInput(memberCardInput);
         reserveVenueCons.setBankCardInput(bankCardInput);
@@ -162,8 +162,8 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             //会员扣款;结算教练(事件通知)
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);
-            return reserveVenueCons;
+            return true;
         }
-        return null;
+        return false;//已结算，不可重复结算
     }
 }

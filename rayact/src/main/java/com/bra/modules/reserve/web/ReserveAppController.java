@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 场地预定管理
@@ -179,18 +176,29 @@ public class ReserveAppController extends BaseController {
      */
     @RequestMapping(value = "saveSettlement")
     @ResponseBody
-    public String saveSettlement(String orderId, String payType,
+    public Map saveSettlement(String orderId, String payType,
                                  Double consPrice,
                                  Double memberCardInput,
                                  Double bankCardInput,
                                  Double weiXinInput,
                                  Double aliPayInput,
                                  Double couponInput) {
-        ReserveVenueCons venueCons = reserveAppVenueConsService.saveSettlement(orderId,payType,consPrice,
-                memberCardInput,bankCardInput,weiXinInput,aliPayInput,couponInput);
-        if(venueCons==null){
-            return "false";
+        Map map=new HashMap<>();
+        ReserveVenueCons reserveVenueCons = reserveAppVenueConsService.get(orderId);
+        if(reserveVenueCons==null){
+            map.put("result",0);
+            map.put("msg","该订单不存在");
+        }else{
+            Boolean bool = reserveAppVenueConsService.saveSettlement(reserveVenueCons,payType,consPrice,
+                    memberCardInput,bankCardInput,weiXinInput,aliPayInput,couponInput);
+            if(bool){
+                map.put("result",1);
+                map.put("msg","订单结算成功");
+            }else{
+                map.put("result",2);
+                map.put("msg","订单已结算，不可重复结算");
+            }
         }
-        return "true";
+        return map;
     }
 }

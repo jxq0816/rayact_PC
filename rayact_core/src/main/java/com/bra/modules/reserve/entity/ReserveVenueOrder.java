@@ -26,7 +26,7 @@ public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
 	private Double orderPrice;		// 场次票单价
 	private Integer collectCount;		// 商品数量
 	private Double collectPrice;		// 实收金额
-	private String payType;		// 支付类型(1:会员卡,2:现金,3:银行卡,4:微信,5:支付宝,6:其它)
+	private String payType;		// 支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款)
 	
 	public ReserveVenueOrder() {
 		super();
