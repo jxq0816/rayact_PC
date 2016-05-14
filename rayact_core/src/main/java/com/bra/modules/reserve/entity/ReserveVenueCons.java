@@ -40,7 +40,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     private String halfCourt;//是否半场(1:是)
     private User checkOutUser;
-    private String payType;//预定金额支付类型(1:会员卡;2:现金;3:银行卡;4:微信;5:支付宝;6:其它)
+    private String payType;////支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款)
 
     /*多方式付款*/
     private Double memberCardInput;

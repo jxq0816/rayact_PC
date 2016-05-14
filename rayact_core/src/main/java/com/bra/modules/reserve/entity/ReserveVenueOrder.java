@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 
 /**
- * 场地订单Entity
- * @author 肖斌
+ * 场地人次票订单Entity
+ * @author jiangxingqi
  * @version 2016-01-19
  */
 public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
