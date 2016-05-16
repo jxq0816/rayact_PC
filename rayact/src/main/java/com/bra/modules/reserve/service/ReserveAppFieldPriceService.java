@@ -72,12 +72,10 @@ public class ReserveAppFieldPriceService {
         ReserveVenueConsItem reserveVenueConsItem = new ReserveVenueConsItem();
         reserveVenueConsItem.setReserveVenue(venue);
         reserveVenueConsItem.setConsDate(date);
-        //查询所有预定的信息(作为本场地的预定标记)
-        List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueConsItem);
+
         //查询价格
         ReserveFieldPriceSet reserveFieldPriceSet = new ReserveFieldPriceSet();
         reserveFieldPriceSet.setReserveVenue(new ReserveVenue(venueId));
-        setWeek(reserveFieldPriceSet, date);
         //会员类型(1:散客,2:会员)
         if (StringUtils.isNotBlank(consType)) {
             reserveFieldPriceSet.setConsType(consType);
@@ -99,6 +97,8 @@ public class ReserveAppFieldPriceService {
             reserveFieldPriceSet.setReserveTimeInterval(null);//将时令制空
             reserveFieldPriceSetList.addAll(list);
         }
+        //查询所有预定的信息(作为本场地的预定标记)
+        List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueConsItem);
         buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
 
         return fieldPriceList;
@@ -163,33 +163,24 @@ public class ReserveAppFieldPriceService {
                 //查询时间time是否已经预定
                 ReserveVenueConsItem item = hasReserve(venueConsList, fieldPriceSet, time);
                 if (item != null) {//已经预定
-                    timePrice.setConsItem(item);//设置订单
-                    timePrice.setConsType(item.getConsData().getConsType());//预定人的类型
-                    timePrice.setUserName(item.getConsData().getUserName());//预订人
                     timePrice.setStatus(item.getConsData().getReserveType());//订单状态
                 } else {
                     timePrice.setStatus("0");//没有预订
                 }
-                //查询该场地是否有半场
+                //查询该场地是否有半场,有半场必然是全场
                 ReserveFieldRelation relation = new ReserveFieldRelation();
                 relation.setParentField(field);
                 List<ReserveFieldRelation> list = relationService.findList(relation);
                 //全场 半场之间的关系
-                if (list == null || list.size() == 0) {
-                    fieldPrice.setHaveHalfCourt("0");//没有半场
-                    //没有半场，查找是否有全场
+                if (list == null || list.size() == 0) { //没有半场，查找是否有全场
                     ReserveFieldRelation r = new ReserveFieldRelation();
                     r.setChildField(field);
                     List<ReserveFieldRelation> fullRelationList = relationService.findList(r);
-                    if (fullRelationList == null || fullRelationList.size() == 0) {
-                        fieldPrice.setHaveFullCourt("0");//没有全场
-                    } else {
-                        fieldPrice.setHaveFullCourt("0");//有全场
+                    if (fullRelationList != null && fullRelationList.size() != 0) {
+                        //有全场
                         for (ReserveFieldRelation i : fullRelationList) {
                             ReserveField parentFiled = i.getParentField();
-                            parentFiled = reserveFieldService.get(parentFiled);//获取全场的详细信息
                             String fieldParentId = parentFiled.getId();
-                            String fieldParentName = parentFiled.getName();
                             ReserveFieldPriceSet fullFieldSet = new ReserveFieldPriceSet();
                             fullFieldSet.setReserveField(parentFiled);
                             List<ReserveFieldPriceSet> parentList = reserveFieldPriceSetDao.findList(fullFieldSet);
@@ -197,15 +188,11 @@ public class ReserveAppFieldPriceService {
                                 ReserveFieldPriceSet j = parentList.get(0);//这里会有6个时间价格的设置，只需要取一个，目的是获取时间段，然后根据时间段和场地，来查询是否可预订
                                 List<TimePrice> fullTimePriceList = j.getTimePriceList();//获取全场 时间和价格 组成的Jason
                                 FieldPrice fullFieldPrice = buildFieldPrice(fullTimePriceList, venueConsList, fullFieldSet, times);// 查询全场的 时间 价格 状态
-                                fullFieldPrice.setFieldId(fieldParentId);//设置场地编号
-                                fullFieldPrice.setFieldName(fieldParentName);//设置场地名称
-                                fullFieldPrice.setHaveHalfCourt("0");//无半场
                                 fieldPrice.setFieldPriceFull(fullFieldPrice);//设置全场
                             }
                         }
                     }
                 } else {
-                    fieldPrice.setHaveHalfCourt("1");//有半场，即是全场
                     //左半场
                     if (list.size() >= 1) {
                         ReserveFieldRelation relationLeft = list.get(0);
@@ -221,8 +208,6 @@ public class ReserveAppFieldPriceService {
                             List<TimePrice> leftTimePriceList = leftFieldSet.getTimePriceList();//获取左侧半场 时间和价格 组成的Jason
                             FieldPrice leftFieldPrice = buildFieldPrice(leftTimePriceList, venueConsList, leftFieldSet, times);// 查询半场的 时间 价格 状态
                             leftFieldPrice.setFieldId(fieldLeftId);//设置场地编号
-                            leftFieldPrice.setFieldName(fieldLeftName);//设置场地名称
-                            leftFieldPrice.setHaveHalfCourt("0");//无半场
                             fieldPrice.setFieldPriceLeft(leftFieldPrice);//设置左半场
                         }
                     }
@@ -241,8 +226,6 @@ public class ReserveAppFieldPriceService {
                             List<TimePrice> rightTimePriceList = rightFieldSet.getTimePriceList();//获取右侧半场 时间和价格 组成的Jason
                             FieldPrice rightFieldPrice = buildFieldPrice(rightTimePriceList, venueConsList, rightFieldSet, times);// 查询半场的 时间 价格 状态
                             rightFieldPrice.setFieldId(fieldRightId);//设置场地编号
-                            rightFieldPrice.setFieldName(fieldRightName);//设置场地名称
-                            rightFieldPrice.setHaveHalfCourt("0");//无半场
                             fieldPrice.setFieldPriceRight(rightFieldPrice);//设置右半场
                         }
                     }
@@ -255,35 +238,32 @@ public class ReserveAppFieldPriceService {
     /*
     查询半场的 时间 价格 状态
      */
-    private FieldPrice buildFieldPrice(List<TimePrice> LeftTimePriceList, List<ReserveVenueConsItem> venueConsList, ReserveFieldPriceSet setLeft, List<String> times) {
+    private FieldPrice buildFieldPrice(List<TimePrice> timePriceList, List<ReserveVenueConsItem> venueConsList, ReserveFieldPriceSet setLeft, List<String> times) {
 
-        FieldPrice leftFieldPrice = new FieldPrice();
+        FieldPrice fieldPrice = new FieldPrice();
         for (String i : times) {
-            TimePrice LeftTimePrice = new TimePrice();
-            LeftTimePrice.setTime(i);
-            //遍历左半场 时间价格组成的Jason
-            for (TimePrice j : LeftTimePriceList) {
+            TimePrice timePrice = new TimePrice();
+            timePrice.setTime(i);
+            //遍历半场 时间价格组成的Jason
+            for (TimePrice j : timePriceList) {
                 String t = j.getTime();
                 Double price = j.getPrice();
                 String hour = i.substring(0, 2);
                 t = t.substring(0, 2);
                 if (hour.equals(t)) {
-                    LeftTimePrice.setPrice(price);
+                    timePrice.setPrice(price);
                     break;
                 }
             }
             //查询左半场在时间i是否已经预定
             ReserveVenueConsItem cons = hasReserve(venueConsList, setLeft, i);
             if (cons != null) {//已经预定
-                LeftTimePrice.setConsItem(cons);
-                LeftTimePrice.setConsType(cons.getConsData().getConsType());
-                LeftTimePrice.setUserName(cons.getConsData().getUserName());
-                LeftTimePrice.setStatus(cons.getConsData().getReserveType());
+                timePrice.setStatus(cons.getConsData().getReserveType());
             } else {
-                LeftTimePrice.setStatus("0");
+                timePrice.setStatus("0");
             }
-            leftFieldPrice.getTimePriceList().add(LeftTimePrice);
+            fieldPrice.getTimePriceList().add(timePrice);
         }
-        return leftFieldPrice;
+        return fieldPrice;
     }
 }

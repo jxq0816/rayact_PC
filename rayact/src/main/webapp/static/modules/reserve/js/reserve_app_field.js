@@ -56,6 +56,7 @@ $(document).ready(function () {
 function filedSelect(){
     var reserveVenueCons = $("#orderForm").serializeArray();
     var rtn=JSON.stringify(reserveVenueCons);
+    orderSubmit(reserveVenueCons);
     return rtn;
 
 }
