@@ -51,18 +51,22 @@ $(document).ready(function () {
         }
     });
 });
-function orderSubmit(){
+function filedSelect(){
     var reserveVenueCons = $("#orderForm").serializeArray();
+    return reserveVenueCons;
+
+}
+function orderSubmit(reserveVenueCons){
     jQuery.postItems({
-        url: ctx+'/app/reserve/field/reservation',
-        data: reserveVenueCons,
-        success: function (result) {
-            if(result.bool){
-                alert("预订成功");
-            }else{
-                alert("预订失败");
-            }
-            location.reload();
-        }
-    });
+         url: ctx+'/app/reserve/field/reservation',
+         data: reserveVenueCons,
+         success: function (result) {
+         if(result.bool){
+             alert("预订成功");
+         }else{
+             alert("预订失败");
+         }
+         location.reload();
+         }
+     });
 }

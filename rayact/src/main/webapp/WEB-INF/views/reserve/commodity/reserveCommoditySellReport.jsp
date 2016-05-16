@@ -9,6 +9,7 @@
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="commoditySell"></jsp:param>
 </jsp:include>
+<div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
@@ -82,5 +83,6 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
