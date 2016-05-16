@@ -42,7 +42,7 @@ public class ReserveAppController extends BaseController {
 
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Date consDate, String venueId,String projectId,String consMobile,String userName,Model model) throws ParseException {
+    public String main(Date consDate, String venueId,String projectId,Model model) throws ParseException {
         if (consDate == null) {
             consDate = new Date();
         }
@@ -136,8 +136,6 @@ public class ReserveAppController extends BaseController {
             model.addAttribute("times", times);
             SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
             model.addAttribute("consDate", fmt.format(consDate));
-            model.addAttribute("consMobile", consMobile);
-            model.addAttribute("userName", userName);
             model.addAttribute("venueId", venueId);
         }
         return "reserve/saleField/reserveAppField";
