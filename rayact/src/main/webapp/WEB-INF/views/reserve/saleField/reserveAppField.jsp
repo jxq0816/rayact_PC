@@ -68,7 +68,6 @@
                         data-field-name="${field.fieldName}"
                         data-consDate="${consDate}"
                         data-consMobile="${consMobile}"
-                        data-userName="${userName}"
                         data-time="${t}"
                     >
                         ¥ ${price}
@@ -89,10 +88,8 @@
     </div>
     <form id="orderForm">
         <input name="consDate" value="${consDate}" type="hidden">
-        <input name="consMobile" value="${consMobile}" type="hidden">
-        <input name="userName" value="${userName}" type="hidden">
         <input name="reserveVenue.id" value="${venueId}" type="hidden">
-        <span id="reserve_submit" style="display: none;"><a class="btn btn-success col-sm-10" style="height: 80px;width:100%;font-size: 50px;line-height: 80px;" onclick="filedSelect()">提交</a></span>
+       <span id="reserve_submit" style="display: none;"><a class="btn btn-success col-sm-10" style="height: 80px;width:100%;font-size: 50px;line-height: 80px;" onclick="filedSelect()">提交</a></span>
     </form>
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>

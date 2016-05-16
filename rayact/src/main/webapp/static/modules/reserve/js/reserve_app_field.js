@@ -35,6 +35,8 @@ $(document).ready(function () {
                 '<div class="row text-center" style="height:50px;font-size:20px;line-height: 50px">'+fieldName+'</div></div>';
             $("#unPayed").append(s);
             var order_info='<div id='+order_item_id+'><input name="venueConsList['+index+'].reserveField.id" value=\''+fieldId+'\' type="hidden">'
+                + '<input name="venueConsList['+index+'].reserveField.name" value=\''+fieldName+'\' type="hidden">'
+                + '<input name="venueConsList['+index+'].orderPrice" value=\''+price+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].startTime" value=\''+startTime+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].endTime" value=\''+endTime+'\' type="hidden"></div>';
             $("#orderForm").append(order_info);
@@ -53,7 +55,8 @@ $(document).ready(function () {
 });
 function filedSelect(){
     var reserveVenueCons = $("#orderForm").serializeArray();
-    return reserveVenueCons;
+    var rtn=JSON.stringify(reserveVenueCons);
+    return rtn;
 
 }
 function orderSubmit(reserveVenueCons){
