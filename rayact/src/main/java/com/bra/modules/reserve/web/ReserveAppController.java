@@ -58,9 +58,7 @@ public class ReserveAppController extends BaseController {
                 FieldPrice left = i.getFieldPriceLeft();
                 FieldPrice right = i.getFieldPriceRight();
                 for (TimePrice j : i.getTimePriceList()) {
-                    j.setConsItem(null);
-                    j.setConsType(null);
-                    j.setUserName(null);
+
                     String time=j.getTime();//当前场地的时间
                     if("0".equals(j.getStatus())){
                         if(StringUtils.isNoneEmpty(time)){
@@ -97,39 +95,6 @@ public class ReserveAppController extends BaseController {
                             }
                         }//该时间段的验证结束
                     }//状态 更新结束
-                }
-
-                if (full != null) {
-                    full.setHaveFullCourt(null);
-                    full.setHaveHalfCourt(null);
-                    for (TimePrice k : full.getTimePriceList()) {
-                        k.setConsItem(null);
-                        k.setPrice(null);
-                        k.setConsType(null);
-                        k.setUserName(null);
-                    }
-                }
-
-                if (left != null) {
-                    left.setHaveFullCourt(null);
-                    left.setHaveHalfCourt(null);
-                    for (TimePrice k : left.getTimePriceList()) {
-                        k.setConsItem(null);
-                        k.setPrice(null);
-                        k.setConsType(null);
-                        k.setUserName(null);
-                    }
-                }
-
-                if (right != null) {
-                    right.setHaveFullCourt(null);
-                    right.setHaveHalfCourt(null);
-                    for (TimePrice k : right.getTimePriceList()) {
-                        k.setConsItem(null);
-                        k.setPrice(null);
-                        k.setConsType(null);
-                        k.setUserName(null);
-                    }
                 }
             }
             model.addAttribute("venueFieldPriceList", venueFieldPriceList);

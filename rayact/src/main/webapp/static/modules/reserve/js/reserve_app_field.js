@@ -1,7 +1,7 @@
 //保存数据
 $(document).ready(function () {
     //-------预定---------
-    $(".reserveTd").on('mouseup', function () {
+    $(".reserveTd").on('mousedown', function () {
         var fieldId = $(this).attr("data-field-id");
         var fieldName = $(this).attr("data-field-name");
         var price = $(this).attr("data-price");
