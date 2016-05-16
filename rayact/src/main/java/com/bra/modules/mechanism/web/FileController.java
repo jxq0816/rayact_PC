@@ -204,10 +204,13 @@ public class FileController {
         response.setHeader("Cache-Control", "no-store");
 
         AttMain attMain = attMainService.get(id);
+        if(attMain==null){
+            return;//数据库中不存在该记录
+        }
         response.setContentType("image/jpeg");
         File file = new File(attMain.getFdFilePath());
         if (!file.exists()) {
-            return;
+            return;//服务器不存在该文件
         }
         OutputStream out;
         try {
