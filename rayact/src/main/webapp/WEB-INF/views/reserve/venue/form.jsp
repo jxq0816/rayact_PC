@@ -38,7 +38,7 @@
                                             <label for="name" class="col-sm-3 control-label">场馆名称</label>
 
                                             <div class="col-sm-6">
-                                                <form:input path="name" htmlEscape="false" maxlength="30"
+                                                <form:input id="name" path="name" htmlEscape="false" maxlength="30"
                                                             class="form-control"/>
                                             </div>
                                         </div>

@@ -28,6 +28,7 @@ public class ReserveAppVenueController extends BaseController {
     @ResponseBody
     public String list(ReserveVenue reserveVenue) {
         List<Map> list = reserveVenueService.findListForApp( reserveVenue);
-        return  JSONArray.toJSONString(list);
+        String json=JSONArray.toJSONString(list);
+        return json;
     }
 }

@@ -83,7 +83,7 @@
     </select>
     <select id="findImgPathList" parameterType="ReserveVenue" resultType="Map">
         SELECT
-        m.fd_file_path AS "imgPath"
+        m.id AS "imgId"
         FROM reserve_venue a
         LEFT JOIN mechanism_att_main m ON m.fd_model_id=a.id
         <where>
