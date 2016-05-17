@@ -53,10 +53,15 @@ $(document).ready(function () {
         }
     });
 });
-function filedSelect(){
-    var reserveVenueCons = $("#orderForm").serializeArray();
-    var rtn=JSON.stringify(reserveVenueCons);
-    orderSubmit(reserveVenueCons);
+function filedSelectJason(){
+    var reserveVenueConsJSON = $("#orderForm").serializeJSON();
+    var rtn=JSON.stringify(reserveVenueConsJSON);
+    return rtn;
+}
+function filedSelectArray(){
+    var reserveVenueConsArray = $("#orderForm").serializeArray();
+    var rtn=JSON.stringify(reserveVenueConsArray);
+    orderSubmit(reserveVenueConsArray);
     return rtn;
 
 }
