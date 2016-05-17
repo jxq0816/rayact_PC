@@ -7,6 +7,9 @@ import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveProject;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 项目管理DAO接口
  * @author xiaobin
@@ -14,5 +17,5 @@ import com.bra.modules.reserve.entity.ReserveProject;
  */
 @MyBatisDao
 public interface ReserveProjectDao extends CrudDao<ReserveProject> {
-	
+    List<Map> findListForApp(ReserveProject reserveProject);
 }

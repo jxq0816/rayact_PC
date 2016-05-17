@@ -53,6 +53,28 @@
         </choose>
     </select>
 
+    <select id="findListForApp" parameterType="ReserveProject" resultType="Map">
+        SELECT
+        a.id AS "projectId",
+        a.name AS "projectName"
+        FROM reserve_project a
+        <include refid="reserveProjectJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="name != null and name != ''">
+                AND a.name LIKE concat('%',#{name},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
     <select id="findAllList" resultType="ReserveProject">
         SELECT
         <include refid="reserveProjectColumns"/>

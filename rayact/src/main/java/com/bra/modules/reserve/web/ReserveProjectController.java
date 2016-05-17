@@ -1,5 +1,6 @@
 package com.bra.modules.reserve.web;
 
+import com.alibaba.fastjson.JSON;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -13,10 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 项目管理Controller
@@ -47,6 +51,13 @@ public class ReserveProjectController extends BaseController {
 		Page<ReserveProject> page = reserveProjectService.findPage(new Page<ReserveProject>(request, response), reserveProject); 
 		model.addAttribute("page", page);
 		return "reserve/project/reserveProjectList";
+	}
+	@RequestMapping(value = {"app/list", ""})
+	@ResponseBody
+	public String appList(ReserveProject reserveProject) {
+		List<Map> list = reserveProjectService.findListForApp(reserveProject);
+		String projectList= JSON.toJSONString(list);
+		return projectList;
 	}
 
 	@RequestMapping(value = "form")

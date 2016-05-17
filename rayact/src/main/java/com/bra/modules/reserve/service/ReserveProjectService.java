@@ -1,14 +1,14 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveProjectDao;
+import com.bra.modules.reserve.entity.ReserveProject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveProject;
-import com.bra.modules.reserve.dao.ReserveProjectDao;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 项目管理Service
@@ -25,6 +25,10 @@ public class ReserveProjectService extends CrudService<ReserveProjectDao, Reserv
 	
 	public List<ReserveProject> findList(ReserveProject reserveProject) {
 		return super.findList(reserveProject);
+	}
+
+	public List<Map> findListForApp(ReserveProject reserveProject) {
+		return dao.findListForApp(reserveProject);
 	}
 	
 	public Page<ReserveProject> findPage(Page<ReserveProject> page, ReserveProject reserveProject) {
