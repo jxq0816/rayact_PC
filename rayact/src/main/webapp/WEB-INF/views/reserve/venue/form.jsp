@@ -106,11 +106,25 @@
                                 <div class="tab-pane" id="messages">
                                     <table class="table table-bordered">
                                         <tr>
+                                            <td>城市：</td>
+                                            <td>
+                                                    <form:input  path="cityName" htmlEscape="false" cssClass="form-control" cssStyle="width: 30%"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>区：</td>
+                                            <td>
+                                                <form:input  path="districtName" htmlEscape="false" cssClass="form-control" cssStyle="width: 30%"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>地址：</td>
                                             <td>
                                                 <div class="col-sm-6">
                                                     <form:input id="map_keyword" path="address" htmlEscape="false"
                                                                 maxlength="200" cssClass="form-control"/>
+                                                </div>
+                                                <div class="col-sm-2">
                                                     <input type="button" value="搜索" onclick="localsearch('全国');"
                                                            class="btn btn-primary">
                                                 </div>
