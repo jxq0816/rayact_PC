@@ -60,11 +60,16 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     public List<Map> findImgList(ReserveVenue reserveVenue) {
-
-        String venueId = reserveVenue.getId();
-        ReserveVenue venue = new ReserveVenue();
-        venue.setId(venueId);
-        List<Map> imgList = dao.findImgPathList(venue);
+        List<Map> imgIdList = dao.findImgPathList(reserveVenue);
+        List<Map> imgList=new ArrayList<>();
+        for(Map img:imgIdList){
+            String imgId=(String)img.get("imgId");
+            String pre="http://192.168.1.173:8080/rayact/mechanism/file/image/";
+            String url=pre+imgId;
+            Map map=new HashMap<>();
+            map.put("imgUrl", url);
+            imgList.add(map);
+        }
         return imgList;
     }
 

@@ -32,6 +32,7 @@
 				${adminPath}/app/reserve/field/reservation=anon
 				${adminPath}/app/reserve/reserveVenue/list=anon
 				${adminPath}/app/reserve/field/saveSettlement=anon
+				${adminPath}/app/reserve/reserveVenue/imgList=anon
 				/static/** = anon
 				/userfiles/** = anon
 				${adminPath}/cas = cas

@@ -95,7 +95,7 @@
         SELECT
         m.id AS "imgId"
         FROM reserve_venue a
-        LEFT JOIN mechanism_att_main m ON m.fd_model_id=a.id
+        LEFT JOIN mechanism_att_main m ON (m.fd_model_id=a.id and m.del_flag='0')
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL}
             <if test="id != null and id != ''">
