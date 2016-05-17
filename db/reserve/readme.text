@@ -21,4 +21,7 @@
 20160422:新增流水统计审核表reserve_check_detail
 20160429:reserve_card_statements 将transaction_volume的改为bigDecimal(65,2)
 20160504:reserve_commodity商品表 添加字段商品单位unit_name varchar(10)
-20160512:reserve_venue_cons订单表 修改字段cons_mobile为varchar(20)
+20160512:reserve_venue_cons订单表 修改字段cons_mobile varchar(20)
+20160517:reserve_venue 场馆表 添加字段district_name varchar(10);
+20160517:reserve_venue 场馆表 添加字段city_name varchar(10);
+20160517:reserve_venue 场馆表 添加字段evaluate_score double;

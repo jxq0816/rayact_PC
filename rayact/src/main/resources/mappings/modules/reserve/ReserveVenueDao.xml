@@ -62,12 +62,16 @@
     </select>
     <select id="findListForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
-        a.id AS "id",
-        a.name AS "name",
+        a.id AS "venueId",
+        a.name AS "venueName",
         a.address AS "address",
         a.address_x AS "addressX",
         a.address_y AS "addressY",
-        a.more_service AS "moreService"
+        a.more_service AS "moreService",
+        a.district_name AS "districtName",
+        a.city_name AS "cityName",
+        a.evaluate_score AS "evaluateScore",
+        a.ave_price AS "avePrice"
         FROM reserve_venue a
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL}
