@@ -78,6 +78,12 @@
             <if test="name != null and name != ''">
                 AND a.name LIKE concat('%',#{name},'%')
             </if>
+            <if test="cityName != null and cityName != ''">
+                AND a.city_name LIKE concat('%',#{cityName},'%')
+            </if>
+            <if test="districtName != null and districtName != ''">
+                AND a.district_name LIKE concat('%',#{districtName},'%')
+            </if>
         </where>
         <choose>
             <otherwise>

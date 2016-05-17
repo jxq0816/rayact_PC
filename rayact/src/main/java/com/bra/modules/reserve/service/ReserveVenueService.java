@@ -12,8 +12,6 @@ import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.*;
 
@@ -53,7 +51,6 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             if(imgList!=null){
                 Map img=imgList.get(0);
                 String imgId=(String)img.get("imgId");
-                WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
                 String pre="http://192.168.1.173:8080/rayact/mechanism/file/image/";
                 String url=pre+imgId;
                 venueMap.put("imgUrl", url);
