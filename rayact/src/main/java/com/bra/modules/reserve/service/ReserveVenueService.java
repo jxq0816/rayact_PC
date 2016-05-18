@@ -65,10 +65,12 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                 List<Map> imgList = dao.findImgPathList(venue);
                 if(imgList!=null){
                     Map img=imgList.get(0);
-                    String imgId=(String)img.get("imgId");
-                    String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
-                    String url=pre+imgId;
-                    venueMap.put("imgUrl", url);
+                    if(img!=null){
+                        String imgId=(String)img.get("imgId");
+                        String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
+                        String url=pre+imgId;
+                        venueMap.put("imgUrl", url);
+                    }
                 }
             }
             venueListRS=venueList;
