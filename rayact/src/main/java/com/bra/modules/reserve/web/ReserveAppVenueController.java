@@ -26,7 +26,7 @@ public class ReserveAppVenueController extends BaseController {
 
     @RequestMapping(value = {"list", ""})
     @ResponseBody
-    public String list(ReserveVenue reserveVenue) {
+    public String list(ReserveVenue reserveVenue,String projectId) {
         List<Map> list = reserveVenueService.findListForApp( reserveVenue);
         String json=JSONArray.toJSONString(list);
         return json;

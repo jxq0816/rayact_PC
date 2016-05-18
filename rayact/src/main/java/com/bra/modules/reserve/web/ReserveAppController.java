@@ -106,6 +106,13 @@ public class ReserveAppController extends BaseController {
         return "reserve/saleField/reserveAppField";
     }
 
+   /* @RequestMapping(value = "trans")
+    @ResponseBody
+    public String trans(ReserveVenueCons reserveVenueCons) {
+        JSONArray jsonArray = JSONArray.fromObject(reserveVenueCons);
+        return jsonArray.toString();
+    }*/
+
     @RequestMapping(value = "reservation")
     @ResponseBody
     public Map<String, Boolean> reservation(ReserveVenueCons reserveVenueCons) {

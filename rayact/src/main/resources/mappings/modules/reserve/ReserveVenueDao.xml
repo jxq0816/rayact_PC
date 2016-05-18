@@ -62,6 +62,26 @@
             </otherwise>
         </choose>
     </select>
+    <select id="findPojectListOfVenueForApp" parameterType="ReserveVenue" resultType="Map">
+        SELECT
+        DISTINCT
+        a.id AS "venueId",
+        c.id AS "projectId"
+        FROM reserve_venue a
+        LEFT JOIN reserve_field b on b.venue_id=a.id
+        LEFT JOIN reserve_project c on c.id=b.project_id
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+        </where>
+        <choose>
+            <otherwise>
+                ORDER BY a.update_date ASC
+            </otherwise>
+        </choose>
+    </select>
     <select id="findListForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
         a.id AS "venueId",

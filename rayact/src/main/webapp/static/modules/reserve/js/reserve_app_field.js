@@ -54,8 +54,15 @@ $(document).ready(function () {
     });
 });
 function filedSelectJason(){
-    var reserveVenueConsJSON = $("#orderForm").serializeJSON();
-    var rtn=JSON.stringify(reserveVenueConsJSON);
+    var reserveVenueCons = $("#orderForm").serializeJSON();
+   /* jQuery.postItems({
+        url: ctx + '/app/reserve/field/trans',
+        data: reserveVenueCons,
+        success: function (result) {
+
+        }
+    });*/
+    var rtn=JSON.stringify(reserveVenueCons);
     return rtn;
 }
 function filedSelectArray(){

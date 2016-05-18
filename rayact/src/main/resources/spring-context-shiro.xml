@@ -29,6 +29,7 @@
 				${adminPath}/reserve/reserveVenue/mobile/rv/fieldAll = anon
 				${adminPath}/mobile/login = anon
 				${adminPath}/app/reserve/field/main=anon
+				${adminPath}/app/reserve/field/trans=anon
 				${adminPath}/app/reserve/field/reservation=anon
 				${adminPath}/app/reserve/reserveVenue/list=anon
 				${adminPath}/app/reserve/field/saveSettlement=anon
