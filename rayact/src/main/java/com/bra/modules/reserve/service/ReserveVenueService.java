@@ -9,6 +9,7 @@ import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
+import com.bra.modules.server.ServerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +52,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             if(imgList!=null){
                 Map img=imgList.get(0);
                 String imgId=(String)img.get("imgId");
-                String pre="http://192.168.1.173:8080/rayact/mechanism/file/image/";
+                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
                 String url=pre+imgId;
                 venueMap.put("imgUrl", url);
             }
@@ -64,7 +65,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         List<Map> imgList=new ArrayList<>();
         for(Map img:imgIdList){
             String imgId=(String)img.get("imgId");
-            String pre="http://192.168.1.173:8080/rayact/mechanism/file/image/";
+            String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
             String url=pre+imgId;
             Map map=new HashMap<>();
             map.put("imgUrl", url);
