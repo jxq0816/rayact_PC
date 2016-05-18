@@ -53,16 +53,29 @@ $(document).ready(function () {
         }
     });
 });
-function filedSelectJason(){
-    var reserveVenueCons = $("#orderForm").serializeJSON();
-   /* jQuery.postItems({
-        url: ctx + '/app/reserve/field/trans',
-        data: reserveVenueCons,
-        success: function (result) {
-
+function filedSelectJson(){
+    var a = {};
+    var reserveVenueCons = $("#orderForm").serializeArray();
+    var numreg = /\[[0-9]*\]\./;
+    var index = 0;
+    var attnum = 5;
+    var tmp = 0 ;
+    $.each(reserveVenueCons,function(n,v){
+        var name = v.name;
+        var names = name.split(numreg);
+        if(names.length > 1){//数组属性
+            if(!a[names[0]]) a[names[0]]= [];
+            if(!a[names[0]][index]) a[names[0]][index]= {};
+            a[names[0]][index][names[1]] = v.value;
+            tmp++;
+            if((tmp)%attnum==0){
+                index++;
+            }
+        }else{//普通属性
+            a[v.name] = v.value;
         }
-    });*/
-    var rtn=JSON.stringify(reserveVenueCons);
+    });
+    var rtn=JSON.stringify(a);
     return rtn;
 }
 function filedSelectArray(){
