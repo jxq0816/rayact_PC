@@ -31,6 +31,13 @@ public class ReserveAppVenueController extends BaseController {
         String json=JSONArray.toJSONString(list);
         return json;
     }
+    @RequestMapping(value = {"detail", ""})
+    @ResponseBody
+    public String get(ReserveVenue reserveVenue) {
+        Map venue = reserveVenueService.getForApp( reserveVenue);
+        String json=JSONArray.toJSONString(venue);
+        return json;
+    }
     @RequestMapping(value = {"imgList", ""})
     @ResponseBody
     public String imgList(ReserveVenue reserveVenue) {

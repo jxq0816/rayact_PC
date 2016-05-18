@@ -21,6 +21,8 @@ import java.util.Map;
  */
 @MyBatisDao
 public interface ReserveVenueDao extends CrudDao<ReserveVenue> {
+    //场馆详情
+    Map getForApp(ReserveVenue reserveVenue);
     /*场馆图片查询*/
     List<Map> findImgPathList(ReserveVenue reserveVenue);
     /*场馆基本信息查询*/

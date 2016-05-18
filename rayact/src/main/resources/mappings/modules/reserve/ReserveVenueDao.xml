@@ -35,6 +35,18 @@
         WHERE a.id = #{id}
     </select>
 
+    <select id="getForApp" parameterType="ReserveVenue" resultType="Map">
+        SELECT
+        a.id AS "venueId",
+        a.name AS "venueName",
+        a.address AS "address",
+        a.remarks AS "remarks",
+        a.tel AS "tel"
+        FROM reserve_venue a
+        <include refid="reserveVenueJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
     <select id="findList" resultType="ReserveVenue">
         SELECT
         <include refid="reserveVenueColumns"/>
