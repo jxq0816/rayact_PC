@@ -64,9 +64,11 @@ function filedSelectJson(){
         var name = v.name;
         var names = name.split(numreg);
         if(names.length > 1){//数组属性
-            if(!a[names[0]]) a[names[0]]= [];
-            if(!a[names[0]][index]) a[names[0]][index]= {};
-            a[names[0]][index][names[1]] = v.value;
+            if(!a[names[0]])//如果a[]没有属性names[0]
+                a[names[0]]= []; //新建
+            if(!a[names[0]][index]) //如果a[names[0]]没有属性index
+                a[names[0]][index]= {};//新建
+            a[names[0]][index][names[1]] = v.value;//设置value
             tmp++;
             if((tmp)%attnum==0){
                 index++;
