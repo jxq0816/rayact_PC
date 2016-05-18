@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.List;
+
 /**
  * 场馆管理Entity
  *
@@ -24,46 +26,29 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
     private String districtName;//区
     private double evaluateScore;//评分
     private double avePrice;//平均消费
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
-    public double getEvaluateScore() {
-        return evaluateScore;
-    }
-
-    public void setEvaluateScore(double evaluateScore) {
-        this.evaluateScore = evaluateScore;
-    }
-
-    public double getAvePrice() {
-        return avePrice;
-    }
-
-    public void setAvePrice(double avePrice) {
-        this.avePrice = avePrice;
-    }
-
     private User chargeUser;        // 负责人
-
     private String tel;//电话
-    private String moreService;//场馆服务
-
+    private String moreService;//场馆标签
     private String startTime;        // 营业开始时间
     private String endTime;        // 营业结束时间
+    private String projectId;//项目编号 仅仅用于查询
+    private List<ReserveProject> projectList;//项目列表
+
+    public List<ReserveProject> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<ReserveProject> projectList) {
+        this.projectList = projectList;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
 
     public ReserveVenue() {
         super();
@@ -163,5 +148,37 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
     @Override
     public String getModelName() {
         return "ReserveVenue";
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public double getEvaluateScore() {
+        return evaluateScore;
+    }
+
+    public void setEvaluateScore(double evaluateScore) {
+        this.evaluateScore = evaluateScore;
+    }
+
+    public double getAvePrice() {
+        return avePrice;
+    }
+
+    public void setAvePrice(double avePrice) {
+        this.avePrice = avePrice;
     }
 }

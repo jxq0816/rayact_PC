@@ -2,6 +2,7 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.reserve.dao.ReserveVenueDao;
 import com.bra.modules.reserve.entity.ReserveField;
@@ -43,21 +44,36 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     public List<Map> findListForApp(ReserveVenue reserveVenue) {
-        List<Map> venueList = dao.findListForApp(reserveVenue);
-        for (Map venueMap : venueList) {
-            String venueId = (String) venueMap.get("venueId");
-            ReserveVenue venue = new ReserveVenue();
-            venue.setId(venueId);
-            List<Map> imgList = dao.findImgPathList(venue);
-            if(imgList!=null){
-                Map img=imgList.get(0);
-                String imgId=(String)img.get("imgId");
-                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
-                String url=pre+imgId;
-                venueMap.put("imgUrl", url);
+        List<Map> venueList = dao.findListForApp(reserveVenue);//获得所有场馆的信息
+        List<Map> venueListRS = new ArrayList<>();//结果
+        if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//项目筛选
+            List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);
+            for(Map venue:venueList){
+                String venueId=(String)venue.get("venueId");
+                for(Map project:projectList){
+                    String x=(String)project.get("venueId");
+                    if(venueId.equals(x)){
+                        venueListRS.add(venue);
+                    }
+                }
             }
+        }else{
+            for (Map venueMap : venueList) {
+                String venueId = (String) venueMap.get("venueId");
+                ReserveVenue venue = new ReserveVenue();
+                venue.setId(venueId);
+                List<Map> imgList = dao.findImgPathList(venue);
+                if(imgList!=null){
+                    Map img=imgList.get(0);
+                    String imgId=(String)img.get("imgId");
+                    String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
+                    String url=pre+imgId;
+                    venueMap.put("imgUrl", url);
+                }
+            }
+            venueListRS=venueList;
         }
-        return venueList;
+        return venueListRS;
     }
 
     public List<Map> findImgList(ReserveVenue reserveVenue) {

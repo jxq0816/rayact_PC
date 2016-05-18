@@ -75,6 +75,9 @@
             <if test="id != null and id != ''">
                 AND a.id = #{id}
             </if>
+            <if test="projectId != null and projectId != ''">
+                AND c.id = #{projectId}
+            </if>
         </where>
         <choose>
             <otherwise>
