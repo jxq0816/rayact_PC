@@ -52,12 +52,25 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         List<Map> venueListRS = new ArrayList<>();//结果
         if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//项目筛选
             List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);
-            for(Map venue:venueList){
-                String venueId=(String)venue.get("venueId");
+            for(Map venueMap:venueList){
+                String venueId=(String)venueMap.get("venueId");
                 for(Map project:projectList){
                     String x=(String)project.get("venueId");
                     if(venueId.equals(x)){
-                        venueListRS.add(venue);
+                        //加载图片
+                        ReserveVenue query = new ReserveVenue();
+                        query.setId(venueId);
+                        List<Map> imgList = dao.findImgPathList(query);
+                        if(imgList!=null){
+                            Map img=imgList.get(0);
+                            if(img!=null){
+                                String imgId=(String)img.get("imgId");
+                                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
+                                String url=pre+imgId;
+                                venueMap.put("imgUrl", url);
+                            }
+                        }
+                        venueListRS.add(venueMap);
                     }
                 }
             }
