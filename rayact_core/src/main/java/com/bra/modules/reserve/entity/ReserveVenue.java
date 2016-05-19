@@ -20,8 +20,10 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
     private String name;        // 场馆名称
     private String available;        // 是否启用
     private String address;        // 地址
+    private Double longitude;//经度
+    private Double latitude;//维度
     private String addressX;//地理位置X
-    private String addressY;//地理位置Y'
+    private String addressY;//地理位置Y
     private String cityName;//城市
     private String districtName;//区
     private double evaluateScore;//评分
@@ -181,4 +183,21 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
     public void setAvePrice(double avePrice) {
         this.avePrice = avePrice;
     }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
 }

@@ -11,6 +11,7 @@ import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.form.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.server.ServerConfig;
+import com.bra.modules.util.BaiduAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,15 +50,18 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         return super.findList(reserveVenue);
     }
 
-    public List<Map> findListForApp(ReserveVenue reserveVenue) {
+    public List<Map> findListForApp(ReserveVenue reserveVenue) {//查询参数中没有id
         List<Map> venueList = dao.findListForApp(reserveVenue);//获得所有场馆的信息
+
+
+
         List<Map> venueListRS = new ArrayList<>();//结果
-        if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//项目筛选
-            List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);
-            for(Map venueMap:venueList){
-                String venueId=(String)venueMap.get("venueId");
-                for(Map project:projectList){
-                    String x=(String)project.get("venueId");
+        if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//有项目筛选条件
+            List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);//有项目筛选条件
+            for(Map venueMap:venueList){//遍历所有的场馆
+                String venueId=(String)venueMap.get("venueId");//场馆的编号
+                for(Map projectMap:projectList){//拥有用户所选择项目的场馆
+                    String x=(String)projectMap.get("venueId");
                     if(venueId.equals(x)){
                         //加载图片
                         ReserveVenue query = new ReserveVenue();
@@ -72,15 +76,28 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                                 venueMap.put("imgUrl", url);
                             }
                         }
+                        //加载图片 结束
+                       /*计算距离*/
+                        Double longitude=reserveVenue.getLongitude();//用户的经度
+                        Double latitude=reserveVenue.getLatitude();//用户的维度
+                        if(longitude!=null && latitude !=null){
+                            double addressX=(double)venueMap.get("addressX");//用户的经度
+                            double addressY=(double)venueMap.get("addressY");//用户的维度
+                            double distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
+                            venueMap.put("distance",distance);
+                        }
+                        /*计算距离 结束*/
                         venueListRS.add(venueMap);
                     }
                 }
             }
         }else{
             for (Map venueMap : venueList) {
+
                 String venueId = (String) venueMap.get("venueId");
                 ReserveVenue venue = new ReserveVenue();
                 venue.setId(venueId);
+                /*加载图片*/
                 List<Map> imgList = dao.findImgPathList(venue);
                 if(imgList!=null){
                     Map img=imgList.get(0);
@@ -91,6 +108,17 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                         venueMap.put("imgUrl", url);
                     }
                 }
+                /*加载图片 结束*/
+                /*计算距离*/
+                Double longitude=reserveVenue.getLongitude();//用户的经度
+                Double latitude=reserveVenue.getLatitude();//用户的维度
+                if(longitude!=null && latitude !=null){
+                    double addressX=(double)venueMap.get("addressX");//用户的经度
+                    double addressY=(double)venueMap.get("addressY");//用户的维度
+                    double distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
+                    venueMap.put("distance",distance);
+                }
+                /*计算距离 结束*/
             }
             venueListRS=venueList;
         }
