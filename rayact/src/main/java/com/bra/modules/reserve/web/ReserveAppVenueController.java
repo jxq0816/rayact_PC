@@ -33,7 +33,8 @@ public class ReserveAppVenueController extends BaseController {
     }
     @RequestMapping(value = {"detail", ""})
     @ResponseBody
-    public String get(ReserveVenue reserveVenue) {
+    public String get(String venueId) {
+        ReserveVenue reserveVenue=new ReserveVenue(venueId);
         Map venue = reserveVenueService.getForApp( reserveVenue);
         String json=JSONArray.toJSONString(venue);
         return json;

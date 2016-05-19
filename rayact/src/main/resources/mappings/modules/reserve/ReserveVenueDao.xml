@@ -77,7 +77,6 @@
     <select id="findPojectListOfVenueForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
         DISTINCT
-        a.id AS "venueId",
         c.id AS "projectId"
         FROM reserve_venue a
         LEFT JOIN reserve_field b on b.venue_id=a.id

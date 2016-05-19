@@ -36,6 +36,8 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
     public  Map getForApp(ReserveVenue reserveVenue){
         Map venue = dao.getForApp(reserveVenue);//获得所有场馆的信息
+        List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);
+        venue.put("projectList",projectList);
         return venue;
     }
 
