@@ -78,7 +78,8 @@
         SELECT
         DISTINCT
         c.id AS "projectId",
-        c.name AS "projectName"
+        c.name AS "projectName",
+        a.id AS "venueId"
         FROM reserve_venue a
         LEFT JOIN reserve_field b on b.venue_id=a.id
         LEFT JOIN reserve_project c on c.id=b.project_id
