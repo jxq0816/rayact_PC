@@ -5,17 +5,31 @@ package com.bra.modules.util;
  */
 
 import javax.jws.WebService;
+import java.text.DecimalFormat;
 
 @WebService
 public class BaiduAPI {
-    private final static double PI = 3.14159265358979323; // 圆周率
-    private final static double R = 6371229; // 地球的半径
-    public static double getDistance(double longt1, double lat1, double longt2,double lat2) {
-        double x, y, distance;
-        x = (longt2 - longt1) * PI * R
-                * Math.cos(((lat1 + lat2) / 2) * PI / 180) / 180;
-        y = (lat2 - lat1) * PI * R / 180;
-        distance = Math.hypot(x, y);
-        return distance;
+    /**
+     * 计算两点之间距离
+     * @param
+     * @param
+     * @return 米
+     */
+    public static String getDistance(Double longitude,Double latitude,Double addressX, Double addressY){
+        double lon1 = (Math.PI/180)*longitude;
+        double lon2 = (Math.PI/180)*addressX;//经度
+
+        double lat1 = (Math.PI/180)*latitude;
+        double lat2 = (Math.PI/180)*addressY;//维度
+
+        //地球半径
+        double R = 6371;
+
+        //两点间距离 km，如果想要米的话，结果*1000就可以了
+        double d =  Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*R;
+        d=d*1000;
+        DecimalFormat df=new DecimalFormat("0.00");
+        return  df.format(d);
     }
 }
+

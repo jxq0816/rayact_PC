@@ -133,13 +133,13 @@
                                         <tr>
                                             <td>地图位置：</td>
                                             <td>
-                                                X轴:
+                                                经度:
                                                 <input name="addressX" id="map_x"
                                                        onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')"
                                                        readonly="readonly" value="${reserveVenue.addressX}"
                                                        class="com_info_text" style="float:none">
                                                 &nbsp;&nbsp;
-                                                Y轴:
+                                                维度:
                                                 <input name="addressY" id="map_y"
                                                        onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')"
                                                        readonly="readonly" value="${reserveVenue.addressY}"

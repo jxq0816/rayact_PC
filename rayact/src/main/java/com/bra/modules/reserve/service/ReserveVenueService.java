@@ -80,10 +80,12 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                         if(longitude!=null && latitude !=null){
                             double addressX=(double)venueMap.get("addressX");//用户的经度
                             double addressY=(double)venueMap.get("addressY");//用户的维度
-                            double distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
+                            String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
                             venueMap.put("distance",distance);
                         }
                         /*计算距离 结束*/
+                        venueMap.remove("addressX");
+                        venueMap.remove("addressY");
                         venueListRS.add(venueMap);
                     }
                 }
@@ -112,10 +114,13 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                 if(longitude!=null && latitude !=null){
                     double addressX=(double)venueMap.get("addressX");//用户的经度
                     double addressY=(double)venueMap.get("addressY");//用户的维度
-                    double distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
+                    String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
                     venueMap.put("distance",distance);
+
                 }
                 /*计算距离 结束*/
+                venueMap.remove("addressX");
+                venueMap.remove("addressY");
             }
             venueListRS=venueList;
         }
