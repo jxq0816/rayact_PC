@@ -52,9 +52,6 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
     public List<Map> findListForApp(ReserveVenue reserveVenue) {//查询参数中没有id
         List<Map> venueList = dao.findListForApp(reserveVenue);//获得所有场馆的信息
-
-
-
         List<Map> venueListRS = new ArrayList<>();//结果
         if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//有项目筛选条件
             List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);//有项目筛选条件

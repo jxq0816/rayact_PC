@@ -22,8 +22,8 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
     private String address;        // 地址
     private Double longitude;//经度
     private Double latitude;//维度
-    private String addressX;//地理位置X
-    private String addressY;//地理位置Y
+    private Double addressX;//地理位置X
+    private Double addressY;//地理位置Y
     private String cityName;//城市
     private String districtName;//区
     private double evaluateScore;//评分
@@ -123,19 +123,19 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
         this.tel = tel;
     }
 
-    public String getAddressX() {
+    public Double getAddressX() {
         return addressX;
     }
 
-    public void setAddressX(String addressX) {
+    public void setAddressX(Double addressX) {
         this.addressX = addressX;
     }
 
-    public String getAddressY() {
+    public Double getAddressY() {
         return addressY;
     }
 
-    public void setAddressY(String addressY) {
+    public void setAddressY(Double addressY) {
         this.addressY = addressY;
     }
 
