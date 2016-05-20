@@ -41,7 +41,8 @@ public class ReserveAppVenueController extends BaseController {
     }
     @RequestMapping(value = {"imgList", ""})
     @ResponseBody
-    public String imgList(ReserveVenue reserveVenue) {
+    public String imgList(String venueId) {
+        ReserveVenue reserveVenue=new ReserveVenue(venueId);
         List<Map> list = reserveVenueService.findImgList( reserveVenue);
         String json=JSONArray.toJSONString(list);
         return json;

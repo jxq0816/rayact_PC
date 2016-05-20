@@ -38,6 +38,9 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     public  Map getForApp(ReserveVenue reserveVenue){
         Map venue = dao.getForApp(reserveVenue);//获得所有场馆的信息
         List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);
+        List<Map> imgList=findImgList(reserveVenue);
+        int imgCnt=imgList.size();
+        venue.put("imgCnt",imgCnt);
         venue.put("projectList",projectList);
         return venue;
     }
@@ -51,6 +54,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     public List<Map> findListForApp(ReserveVenue reserveVenue) {//查询参数中没有id
+
         List<Map> venueList = dao.findListForApp(reserveVenue);//获得所有场馆的信息
         List<Map> venueListRS = new ArrayList<>();//结果
         if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//有项目筛选条件
@@ -61,72 +65,56 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                     String x=(String)projectMap.get("venueId");
                     if(venueId.equals(x)){
                         //加载图片
-                        ReserveVenue query = new ReserveVenue();
-                        query.setId(venueId);
-                        List<Map> imgList = dao.findImgPathList(query);
-                        if(imgList!=null){
-                            Map img=imgList.get(0);
-                            if(img!=null){
-                                String imgId=(String)img.get("imgId");
-                                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
-                                String url=pre+imgId;
-                                venueMap.put("imgUrl", url);
-                            }
-                        }
-                        //加载图片 结束
+                        venueMap=this.loadImg(venueId,venueMap);
                        /*计算距离*/
-                        Double longitude=reserveVenue.getLongitude();//用户的经度
-                        Double latitude=reserveVenue.getLatitude();//用户的维度
-                        if(longitude!=null && latitude !=null){
-                            double addressX=(double)venueMap.get("addressX");//用户的经度
-                            double addressY=(double)venueMap.get("addressY");//用户的维度
-                            String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
-                            venueMap.put("distance",distance);
-                        }
-                        /*计算距离 结束*/
-                        venueMap.remove("addressX");
-                        venueMap.remove("addressY");
+                        venueMap=this.loadDistance(reserveVenue,venueMap);
                         venueListRS.add(venueMap);
                     }
                 }
             }
         }else{
             for (Map venueMap : venueList) {
-
                 String venueId = (String) venueMap.get("venueId");
-                ReserveVenue venue = new ReserveVenue();
-                venue.setId(venueId);
                 /*加载图片*/
-                List<Map> imgList = dao.findImgPathList(venue);
-                if(imgList!=null){
-                    Map img=imgList.get(0);
-                    if(img!=null){
-                        String imgId=(String)img.get("imgId");
-                        String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
-                        String url=pre+imgId;
-                        venueMap.put("imgUrl", url);
-                    }
-                }
-                /*加载图片 结束*/
+                venueMap=this.loadImg(venueId,venueMap);
                 /*计算距离*/
-                Double longitude=reserveVenue.getLongitude();//用户的经度
-                Double latitude=reserveVenue.getLatitude();//用户的维度
-                if(longitude!=null && latitude !=null){
-                    double addressX=(double)venueMap.get("addressX");//用户的经度
-                    double addressY=(double)venueMap.get("addressY");//用户的维度
-                    String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
-                    venueMap.put("distance",distance);
-
-                }
-                /*计算距离 结束*/
-                venueMap.remove("addressX");
-                venueMap.remove("addressY");
+                venueMap=this.loadDistance(reserveVenue,venueMap);
+                venueListRS.add(venueMap);
             }
-            venueListRS=venueList;
         }
         return venueListRS;
     }
-
+    public Map loadDistance(ReserveVenue reserveVenue,Map venueMap){
+        Double longitude=reserveVenue.getLongitude();//用户的经度
+        Double latitude=reserveVenue.getLatitude();//用户的维度
+        if(longitude!=null && latitude !=null){
+            double addressX=(double)venueMap.get("addressX");//用户的经度
+            double addressY=(double)venueMap.get("addressY");//用户的维度
+            String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
+            venueMap.put("distance",distance);
+            venueMap.remove("addressX");
+            venueMap.remove("addressY");
+        }
+        return venueMap;
+    }
+    //首页 加载图片
+    public Map loadImg(String venueId,Map venueMap){
+        ReserveVenue venue = new ReserveVenue();
+        venue.setId(venueId);
+        /*加载图片*/
+        List<Map> imgList = dao.findImgPathList(venue);
+        if(imgList!=null){
+            Map img=imgList.get(0);
+            if(img!=null){
+                String imgId=(String)img.get("imgId");
+                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
+                String url=pre+imgId;
+                venueMap.put("imgUrl", url);
+            }
+        }
+        return venueMap;
+    }
+    //更多图片
     public List<Map> findImgList(ReserveVenue reserveVenue) {
         List<Map> imgIdList = dao.findImgPathList(reserveVenue);
         List<Map> imgList=new ArrayList<>();
