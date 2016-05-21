@@ -51,7 +51,7 @@
                 </div>
                 <%-- 周几，日期--%>
                 <div class="row">
-                    <div class="col-lg-7">
+                    <div class="col-lg-9">
                         <div class="tab-tit">
                             <ul>
                                 <div id="timeSlotDiv">
@@ -65,16 +65,14 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-3">
                         <div class="tab-time">
                             <form:form id="searchForm"
                                        action="${ctx}/reserve/field/main"
                                        method="post">
                                 <div class="row">
+                                    <input name="venueId" type="hidden" value="${reserveVenue.id}"/>
                                     <div class="col-lg-4">
-                                        <input name="venueId" type="hidden" value="${reserveVenue.id}"/>
-                                    </div>
-                                    <div class="col-lg-2">
                                         <label for="consDate" class="control-label">预订日期:</label>
                                     </div>
                                     <div class="col-lg-4">

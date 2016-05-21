@@ -73,26 +73,33 @@ public class ReserveController extends BaseController {
     @Autowired
     private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
 
-
-    //场地状态界面
+    /**
+     * 场地预订 界面
+     * @param t 超链接选择的日期
+     * @param consDate 日期控件选择的日期
+     * @param venueId 场馆编号
+     * @param model
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping(value = "main")
     public String main(Long t,Date consDate,String venueId, Model model) throws ParseException {
-        Calendar yesterday = Calendar.getInstance();
-        //如果预订日期是通过下拉选择的
-        if(t==null&&consDate!=null){
-            yesterday.setTime(consDate);
-        }else{
-            consDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得今天的日期
-        }
-        yesterday.add(Calendar.DAY_OF_MONTH,-1);//获得预订日期的上一天
-        Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(yesterday.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得昨天的日期
-        //获取可预定时间段:一周
-        Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 8);
-        model.addAttribute("timeSlot", timeSlot);
+        Calendar ago = Calendar.getInstance();
         //如果是通过超链接 点击选择的时间
         if (t != null) {
             consDate = new Date(t);
         }
+        //如果请求参数没有日期
+        if(t==null&&consDate==null){
+            consDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得今天的日期
+        }
+        ago.setTime(consDate);
+        ago.add(Calendar.DAY_OF_MONTH,-3);//获得预订日期的上一天
+        Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(ago.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得前3天的日期
+        //获取可预定时间段:一周
+        Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
+        model.addAttribute("timeSlot", timeSlot);
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String consDateFormat=format.format(consDate);//预订日期的格式化
         model.addAttribute("consDateFormat", consDateFormat);
