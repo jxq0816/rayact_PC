@@ -65,7 +65,7 @@
     <hr/>
     <div class="row" id="payTypeDIV">
         <label for="memberCardRadio" class="col-lg-2">支付方式:</label>
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <label class="radio-inline">
                 <input type="radio" class="icheck" id="memberCardRadio"
                        <j:if test="${'1' eq order.consType}">disabled="disabled"</j:if> value="1"
@@ -82,13 +82,16 @@
                 <input type="radio" class="icheck" value="4" name="payType"/>微信
             </label>
             <label class="radio-inline">
+                <input type="radio" class="icheck" value="9" name="payType"/>微信（个人）
+            </label>
+            <label class="radio-inline">
                 <input type="radio" class="icheck" value="5" name="payType"/>支付宝
             </label>
             <label class="radio-inline">
-                <input type="radio" class="icheck" value="6" name="payType"/>优惠券
+                <input type="radio" class="icheck" value="10" name="payType"/>支付宝（个人）
             </label>
             <label class="radio-inline">
-                <input type="radio" class="icheck" value="7" name="payType"/>打白条
+                <input type="radio" class="icheck" value="6" name="payType"/>优惠券
             </label>
             <label class="radio-inline">
                 <input type="radio" class="icheck"  value="8" id="multiplePayRadio" name="payType"/>多方式付款
