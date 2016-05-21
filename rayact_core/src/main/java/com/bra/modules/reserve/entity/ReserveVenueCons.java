@@ -47,9 +47,12 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private Double cashInput;
     private Double bankCardInput;
     private Double weiXinInput;
+    private Double weiXinPersonalInput;
     private Double aliPayInput;
+    private Double aliPayPersonalInput;
     private Double couponInput;
-    private Double owningInput;
+    /*private Double owningInput;*/
+
 
     private List<ReserveVenueConsItem> venueConsList = Lists.newArrayList();//预订详情
     private List<ReserveTutorOrder> tutorOrderList;//教练预订列表
@@ -269,13 +272,30 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
         this.couponInput = couponInput;
     }
 
-    public Double getOwningInput() {
+    public Double getWeiXinPersonalInput() {
+        return weiXinPersonalInput;
+    }
+
+    public void setWeiXinPersonalInput(Double weiXinPersonalInput) {
+        this.weiXinPersonalInput = weiXinPersonalInput;
+    }
+
+    public Double getAliPayPersonalInput() {
+        return aliPayPersonalInput;
+    }
+
+    public void setAliPayPersonalInput(Double aliPayPersonalInput) {
+        this.aliPayPersonalInput = aliPayPersonalInput;
+    }
+
+   /* public Double getOwningInput() {
         return owningInput;
+
     }
 
     public void setOwningInput(Double owningInput) {
         this.owningInput = owningInput;
-    }
+    }*/
 
     //-------------以下和数据库无关字段-----------------
 

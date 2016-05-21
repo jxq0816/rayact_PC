@@ -379,13 +379,15 @@ public class ReserveController extends BaseController {
                                  Double cashInput,
                                  Double bankCardInput,
                                  Double weiXinInput,
+                                 Double weiXinPersonalInput,
                                  Double aliPayInput,
+                                 Double aliPayPersonalInput,
                                  Double couponInput,
-                                 Double owningInput,
+                              /*   Double owningInput,*/
                                  Model model) {
 
         ReserveVenueCons venueCons = reserveVenueConsService.saveSettlement(id,payType,authUserId,discountPrice,consPrice,
-                memberCardInput,cashInput,bankCardInput,weiXinInput,aliPayInput,couponInput,owningInput);
+                memberCardInput,cashInput,bankCardInput,weiXinInput,weiXinPersonalInput,aliPayInput,aliPayPersonalInput,couponInput/*,owningInput*/);
         model.addAttribute("venueCons",venueCons);
         return "reserve/saleField/settlementResult";
     }

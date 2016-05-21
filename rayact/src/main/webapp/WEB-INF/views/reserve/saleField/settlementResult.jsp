@@ -4,7 +4,7 @@
 <table class="no-border">
     <tbody class="no-border-y">
     <tr>
-        <td style="border-bottom:0;">姓名：${venueCons.member.name}</td>
+        <td style="border-bottom:0;">姓名：${venueCons.userName}</td>
     </tr>
     <tr>
         <td style="border-bottom:0;">场馆：${venueCons.reserveVenue.name}</td>

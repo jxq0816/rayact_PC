@@ -26,7 +26,7 @@
                 <tr>
                     <td>
                             ${order.userName}(<j:ifelse
-                            test="${'1' eq cos.consType}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
+                            test="${member==null}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
                     </td>
                     <td>
                             ${item.reserveField.name}
@@ -101,7 +101,7 @@
     <hr/>
     <div class="row" id="multiplePay" style="display: none;">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-1">
             </div>
             <label for="memberCardInput"  class="col-lg-1">会员卡:</label>
             <div class="col-lg-1">
@@ -120,22 +120,30 @@
             <div class="col-lg-1">
                 <input id="weiXinInput" value="0" type="text" class="form-control"/>
             </div>
+            <label for="weiXinPersonalInput" class="col-lg-1">微信(个人):</label>
+            <div class="col-lg-1">
+                <input id="weiXinPersonalInput" value="0" type="text" class="form-control"/>
+            </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-1">
             </div>
             <label for="aliPayInput" class="col-lg-1">支付宝:</label>
             <div class="col-lg-1">
                 <input id="aliPayInput" type="text" class="form-control" value="0"/>
             </div>
+            <label for="aliPayPersonalInput" class="col-lg-1">支付宝（个人）:</label>
+            <div class="col-lg-1">
+                <input id="aliPayPersonalInput" type="text" class="form-control" value="0"/>
+            </div>
             <label for="couponInput" class="col-lg-1">优惠券:</label>
             <div class="col-lg-1">
                 <input id="couponInput" type="text" class="form-control" value="0"/>
             </div>
-            <label for="owningInput" class="col-lg-1">打白条:</label>
+           <%-- <label for="owningInput" class="col-lg-1">打白条:</label>
             <div class="col-lg-1">
                 <input id="owningInput" type="text" class="form-control" value="0"/>
-            </div>
+            </div>--%>
         </div>
     </div>
     <j:if test="${!empty giftList}">

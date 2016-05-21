@@ -371,18 +371,22 @@ $(document).ready(function () {
         var cashInput=0;
         var bankCardInput=0;
         var weiXinInput=0;
+        var weiXinPersonalInput=0;
         var aliPayInput=0;
+        var aliPayPersonalInput=0;
         var couponInput=0;
-        var owningInput=0;
+     /*   var owningInput=0;*/
         if(payType=='8'){
             memberCardInput=eval($("#memberCardInput").val());
             cashInput=eval($("#cashInput").val());
             bankCardInput=eval($("#bankCardInput").val()) ;
+            weiXinPersonalInput=eval($("#weiXinPersonalInput").val()) ;
             weiXinInput=eval($("#weiXinInput").val()) ;
             aliPayInput=eval($("#aliPayInput").val()) ;
+            aliPayPersonalInput=eval($("#aliPayPersonalInput").val()) ;
             couponInput=eval($("#couponInput").val()) ;
-            owningInput=eval($("#owningInput").val()) ;
-            var sum=eval(memberCardInput+cashInput+bankCardInput+weiXinInput+aliPayInput+couponInput+owningInput);
+         /*   owningInput=eval($("#owningInput").val()) ;*/
+            var sum=eval(memberCardInput+cashInput+bankCardInput+weiXinInput+weiXinPersonalInput+aliPayInput+aliPayPersonalInput+couponInput);
             if(sum!=consPrice){
                 errorLoding("多方式付款的总和不等于实收");
                 return;
@@ -401,9 +405,11 @@ $(document).ready(function () {
                 cashInput:cashInput,
                 bankCardInput:bankCardInput,
                 weiXinInput:weiXinInput,
+                weiXinPersonalInput:weiXinPersonalInput,
                 aliPayInput:aliPayInput,
-                couponInput:couponInput,
-                owningInput:owningInput
+                aliPayPersonalInput:aliPayPersonalInput,
+                couponInput:couponInput
+              /*  owningInput:owningInput*/
             },
             success: function (values) {
                      $("#closeSettlementBtn").click();

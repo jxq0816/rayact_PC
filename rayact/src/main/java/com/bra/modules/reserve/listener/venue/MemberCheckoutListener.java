@@ -71,9 +71,11 @@ public class MemberCheckoutListener{
             Double cashInput=venueCons.getCashInput();
             Double bankCardInput=venueCons.getBankCardInput();
             Double weiXinInput=venueCons.getWeiXinInput();
+            Double weiXinPersonalInput=venueCons.getWeiXinPersonalInput();
             Double aliPayInput=venueCons.getAliPayInput();
+            Double aliPayPersonalInput=venueCons.getAliPayPersonalInput();
             Double couponInput=venueCons.getCouponInput();
-            Double owningInput=venueCons.getOwningInput();
+           /* Double owningInput=venueCons.getOwningInput();*/
             String orderId=venueCons.getId();
             if(memberCardInput!=null && memberCardInput!=0){
                 statements.setPayType("1");
@@ -122,8 +124,21 @@ public class MemberCheckoutListener{
                 //记录多方式付款
                 ReserveMultiplePayment payment=new ReserveMultiplePayment();
                 payment.setOrderId(orderId);
-                payment.setPaymentAmount(bankCardInput);
+                payment.setPaymentAmount(weiXinInput);
                 payment.setPayType("4");
+                payment.setRemarks(venueCons.getMember().getName()+"，于"+venueCons.getConsDate()+"微信支付"+weiXinInput);
+                reserveMultiplePaymentService.save(payment);
+            }
+            if(weiXinPersonalInput!=null && weiXinPersonalInput!=0){
+                statements.setPayType("9");
+                statements.setTransactionVolume(weiXinPersonalInput);
+                statements.setId(null);
+                reserveCardStatementsService.save(statements);
+                //记录多方式付款
+                ReserveMultiplePayment payment=new ReserveMultiplePayment();
+                payment.setOrderId(orderId);
+                payment.setPaymentAmount(weiXinPersonalInput);
+                payment.setPayType("9");
                 payment.setRemarks(venueCons.getMember().getName()+"，于"+venueCons.getConsDate()+"微信支付"+weiXinInput);
                 reserveMultiplePaymentService.save(payment);
             }
@@ -140,6 +155,19 @@ public class MemberCheckoutListener{
                 payment.setRemarks(venueCons.getMember().getName()+"，于"+venueCons.getConsDate()+"支付宝支付"+aliPayInput);
                 reserveMultiplePaymentService.save(payment);
             }
+            if(aliPayPersonalInput!=null && aliPayPersonalInput!=0){
+                statements.setPayType("10");
+                statements.setTransactionVolume(aliPayInput);
+                statements.setId(null);
+                reserveCardStatementsService.save(statements);
+                //记录多方式付款
+                ReserveMultiplePayment payment=new ReserveMultiplePayment();
+                payment.setOrderId(orderId);
+                payment.setPaymentAmount(aliPayPersonalInput);
+                payment.setPayType("10");
+                payment.setRemarks(venueCons.getMember().getName()+"，于"+venueCons.getConsDate()+"支付宝支付"+aliPayInput);
+                reserveMultiplePaymentService.save(payment);
+            }
             if(couponInput!=null && couponInput!=0){
                 statements.setPayType("6");
                 statements.setTransactionVolume(couponInput);
@@ -153,7 +181,7 @@ public class MemberCheckoutListener{
                 payment.setRemarks(venueCons.getMember().getName()+"，于"+venueCons.getConsDate()+"优惠券支付"+couponInput);
                 reserveMultiplePaymentService.save(payment);
             }
-            if(owningInput!=null && owningInput!=0){
+           /* if(owningInput!=null && owningInput!=0){
                 statements.setPayType("7");
                 statements.setTransactionVolume(owningInput);
                 statements.setId(null);
@@ -165,7 +193,7 @@ public class MemberCheckoutListener{
                 payment.setPayType("7");
                 payment.setRemarks(venueCons.getMember().getName()+"，于"+venueCons.getConsDate()+"打白条"+owningInput);
                 reserveMultiplePaymentService.save(payment);
-            }
+            }*/
         }else{
             statements.setPayType(payType);
             statements.setTransactionVolume(venueCons.getConsPrice());
