@@ -331,7 +331,7 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "settlementForm")
     @Token(save = true)
     public String settlementForm(String itemId, Model model) {
-        //操作类型(1:已预定,2:锁场,3:已取消,4:已结算)
+        //操作类型(1:已预定,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
         //申请优惠
@@ -352,6 +352,7 @@ public class ReserveController extends BaseController {
         search.setConsData(consItem.getConsData());
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
+        //有变更权限的高管
         User user=new User();
         user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：高管；4：收银；5：财务)
         List<User> authUserList=userService.findList(user);
