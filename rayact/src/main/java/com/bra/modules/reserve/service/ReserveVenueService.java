@@ -43,7 +43,8 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         }
         List<Map> imgList=findImgList(reserveVenue);
         int imgCnt=imgList.size();
-        venue.put("imgCnt",imgCnt);
+        String cnt=Integer.toString(imgCnt);
+        venue.put("imgCnt",cnt);
         venue.put("projectList",projectList);
         return venue;
     }
