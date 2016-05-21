@@ -334,6 +334,7 @@ public class ReserveController extends BaseController {
         //操作类型(1:已预定,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
+        ReserveMember member=reserveMemberService.get(order.getMember().getId());
         //申请优惠
         ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
         applycut.getSqlMap().put("dsf"," and c.id = '"+order.getId()+"' ");
@@ -358,6 +359,7 @@ public class ReserveController extends BaseController {
         List<User> authUserList=userService.findList(user);
         model.addAttribute("authUserList", authUserList);
         model.addAttribute("order", order);
+        model.addAttribute("member", member);
         //赠品
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(order.getId(), ReserveVenueCons.MODEL_KEY)));
         return "reserve/saleField/settlementForm";

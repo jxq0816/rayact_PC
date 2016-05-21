@@ -174,6 +174,11 @@
             <input type="text" readonly="readonly" id="consPrice" value="${order.consPrice}"
                    class="form-control required number" name="orderPrice"/>
         </div>
+        <label for="shouldPrice" class="col-lg-2">会员当前余额:</label>
+        <div class="col-lg-2">
+            <input readonly="readonly" value="${member.remainder}" type="text"
+                 class="form-control"/>
+        </div>
     </div>
     <hr/>
     <div class="row" id="changePrice" style="display: none">

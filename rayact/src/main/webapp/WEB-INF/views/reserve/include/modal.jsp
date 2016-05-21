@@ -245,7 +245,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">付款成功</h4>
-                <button type="button" class="close" data-dismiss="modal"><span
+                <button type="button" class="close" data-dismiss="modal" onclick="location.reload();"><span
                         aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">

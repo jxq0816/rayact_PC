@@ -34,5 +34,8 @@
         <td class="no-border">优惠：${venueCons.discountPrice}</td>
         <td class="no-border">实收：${venueCons.consPrice}</td>
     </tr>
+    <tr>
+        <td class="no-border">会员余额：${venueCons.member.remainder}</td>
+    </tr>
     </tbody>
 </table>
