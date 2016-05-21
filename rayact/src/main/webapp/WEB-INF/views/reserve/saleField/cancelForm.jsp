@@ -10,6 +10,8 @@
                 <td>${cos.userName}
                     <input type="hidden" name="itemId" value="${item.id}"/>
                 </td>
+            </tr>
+            <tr>
                 <td>时间:</td>
                 <td>
                     <div class="row">
@@ -18,7 +20,7 @@
                                 <c:forEach items="${times}" var="t">
                                     <option
                                             <j:if test="${t eq startTime}">selected="selected"</j:if>
-                                            value="${t}">${t}</option>
+                                            value="${t}"></option>
                                 </c:forEach>
                             </select>
                         </div>
