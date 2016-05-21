@@ -103,6 +103,8 @@
         a.id AS "venueId",
         a.name AS "venueName",
         a.address AS "address",
+        a.address_x AS "addressX",
+        a.address_y AS "addressY",
         a.more_service AS "moreService",
         a.evaluate_score AS "evaluateScore",
         a.ave_price AS "avePrice"
