@@ -71,7 +71,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>入库箱数：</td>
+                        <td>入库数量：</td>
                         <td>
                             <input id="inRepertoryBoxNum" name="inRepertoryBoxNum" htmlEscape="false"
                                    class="form-control  required"/>
