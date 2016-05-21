@@ -84,6 +84,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                 /*计算距离*/
                 venueMap=this.loadDistance(reserveVenue,venueMap);
                 venueListRS.add(venueMap);
+
             }
         }
         return venueListRS;
@@ -96,9 +97,9 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             double addressY=(double)venueMap.get("addressY");//用户的维度
             String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
             venueMap.put("distance",distance);
-            venueMap.remove("addressX");
-            venueMap.remove("addressY");
         }
+        venueMap.remove("addressX");
+        venueMap.remove("addressY");
         return venueMap;
     }
     //首页 加载图片
