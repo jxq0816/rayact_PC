@@ -106,9 +106,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("consDate", consDate);//预订日期回传
 
         //获得所有场馆信息
-        ReserveVenue venue = new ReserveVenue();
-        venue.getSqlMap().put("dsf", AuthorityUtils.getVenueIdSql("a.id"));
-        List<ReserveVenue> reserveVenueList = reserveVenueService.findList(venue);
+        List<ReserveVenue> reserveVenueList = reserveVenueService.findList(new ReserveVenue());
         model.addAttribute("reserveVenueList", reserveVenueList);
         //默认场馆的场地
         if (!Collections3.isEmpty(reserveVenueList)) {
