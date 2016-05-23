@@ -11,7 +11,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${page.list}" var="payment">
+            <c:forEach items="${list}" var="payment">
                 <tr>
                     <td class="text-center">${fns:getPayType(payment.payType)}</td>
                     <td class="text-center">${payment.paymentAmount}元</td>
@@ -19,17 +19,5 @@
             </c:forEach>
             </tbody>
         </table>
-
-        <div class="row">
-            <div class="col-sm-12">
-
-                <div class="pull-right">
-                    <div class="dataTables_paginate paging_bs_normal">
-                        <sys:javascript_page p="${page}"></sys:javascript_page>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
     </div>
 </div>

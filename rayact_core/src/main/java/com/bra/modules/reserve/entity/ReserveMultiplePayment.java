@@ -14,7 +14,7 @@ public class ReserveMultiplePayment extends SaasEntity<ReserveMultiplePayment> {
 	
 	private static final long serialVersionUID = 1L;
 	private String orderId;		// 订单编号
-	private String payType;		//支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款)
+	private String payType;		//支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款;9:微信个人，10：支付宝（个人）)
 	private Double paymentAmount;		// payment_amount
 	
 	public ReserveMultiplePayment() {
