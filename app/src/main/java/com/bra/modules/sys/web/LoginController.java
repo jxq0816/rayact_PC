@@ -73,7 +73,7 @@ public class LoginController extends BaseController {
     public String loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
         Principal principal = SecurityUtil.getPrincipal();
         // 如果已经登录，则跳转到管理首页
-        if (principal != null) {
+        if (principal != null&&!principal.isMobileLogin()) {
             return "redirect:" + adminPath;
         }
         String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
@@ -200,7 +200,7 @@ public class LoginController extends BaseController {
         if (clean) {
             loginFailMap.remove(useruame);
         }
-        return loginFailNum >= 3;
+        return loginFailNum >= 30;
     }
 
     /**

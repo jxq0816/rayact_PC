@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.ActivityDao">
+    
+	<sql id="activityColumns">
+		a.id AS "id",
+		a.subject AS "subject",
+		a.fk_manager_id AS "fkManagerId",
+		a.fk_manager_name AS "fkManagerName",
+		c.id AS "category.id",
+		c.name AS "category.name",
+		a.start_date AS "startDate",
+		a.end_date AS "endDate",
+		a.content AS "content",
+		a.url AS "url",
+		a.is_avaliable AS "isAvaliable",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy.id",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="activityJoins">
+		LEFT JOIN cms_category c ON c.id = a.fk_cate_id
+	</sql>
+    
+	<select id="get" resultType="Activity">
+		SELECT 
+			<include refid="activityColumns"/>
+		FROM activity a
+		<include refid="activityJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Activity">
+		SELECT 
+			<include refid="activityColumns"/>
+		FROM activity a
+		<include refid="activityJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Activity">
+		SELECT 
+			<include refid="activityColumns"/>
+		FROM activity a
+		<include refid="activityJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO activity(
+			id,
+			subject,
+			fk_manager_id,
+			fk_manager_name,
+			fk_cate_id,
+			start_date,
+			end_date,
+			content,
+			url,
+			is_avaliable,
+			create_date,
+			create_by,
+			update_date,
+			update_by,
+			del_flag
+		) VALUES (
+			#{id},
+			#{subject},
+			#{fkManagerId},
+			#{fkManagerName},
+			#{category.id},
+			#{startDate},
+			#{endDate},
+			#{content},
+			#{url},
+			#{isAvaliable},
+			#{createDate},
+			#{createBy.id},
+			#{updateDate},
+			#{updateBy.id},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE activity SET 	
+			subject = #{subject},
+			fk_manager_id = #{fkManagerId},
+			fk_manager_name = #{fkManagerName},
+			fk_cate_id = #{category.id},
+			start_date = #{startDate},
+			end_date = #{endDate},
+			content = #{content},
+			url = #{url},
+			is_avaliable = #{isAvaliable},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE activity SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

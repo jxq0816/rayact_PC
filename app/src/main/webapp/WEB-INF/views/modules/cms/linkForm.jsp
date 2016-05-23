@@ -4,6 +4,7 @@
 <head>
 	<title>链接管理</title>
 	<meta name="decorator" content="default"/>
+	<%@include file="/WEB-INF/views/include/upload.jsp" %>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#name").focus();
@@ -41,8 +42,8 @@
 		<div class="control-group">
 			<label class="control-label">归属栏目:</label>
 			<div class="controls">
-                <sys:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
-					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>
+				<sys:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
+								title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -59,8 +60,7 @@
 		<div class="control-group">
 			<label class="control-label">链接图片:</label>
 			<div class="controls">
-				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="image" type="images" uploadPath="/cms/link" selectMultiple="false"/>
+				<mechanism:upload id="image" name="attMains1" imgWidth="50" imgHeight="50" exts="" showImg="true" modelId="${link.id}" fdKey="linkPic" modelName="com.bra.modules.cms.entity.Link" multi="false"></mechanism:upload>
 			</div>
 		</div>
 		<div class="control-group">

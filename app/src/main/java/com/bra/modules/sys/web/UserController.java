@@ -249,7 +249,7 @@ public class UserController extends BaseController {
 	/**
 	 * 更改个人资料
 	 */
-	@RequestMapping(value = "api/updateInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "api/updateInfo")
 	@ResponseBody
 	public String updateInfo(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject rtn = new JSONObject();
@@ -328,18 +328,8 @@ public class UserController extends BaseController {
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(name)){
 					user.setName(name);
 				}
-				if(!com.bra.modules.sys.utils.StringUtils.isNull(oldPassword)&&!com.bra.modules.sys.utils.StringUtils.isNull(newPassword)){
-					User tmp = new User();
-					tmp.setLoginName(UserUtils.getUser().getLoginName());
-					tmp.setPassword(com.bra.modules.sys.utils.StringUtils.entryptPassword(oldPassword));
-					List<User> users = systemService.findListApi(tmp);
-					if(users!=null&&users.size()>0){
-						user.setPassword(newPassword);
-					}else{
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","原密码输入有误");
-					}
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(newPassword)){
+					user.setPassword(com.bra.modules.sys.utils.StringUtils.entryptPassword(newPassword));
 				}
 			}
 			if(flag){
@@ -365,7 +355,7 @@ public class UserController extends BaseController {
 	/**
 	 * 获取用户信息
 	 */
-	@RequestMapping(value = "api/getUserInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "api/getUserInfo")
 	@ResponseBody
 	public String getUserInfo(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject rtn = new JSONObject();

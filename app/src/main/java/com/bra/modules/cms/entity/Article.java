@@ -37,6 +37,7 @@ public class Article extends DataEntity<Article> {
 	private String posid;	// 推荐位，多选（1：首页焦点图；2：栏目页文章推荐；）
     private String customContentView;	// 自定义内容视图
    	private String viewConfig;	// 视图参数
+	private String copyfrom;//资讯来源
 
 	private ArticleData articleData;	//文章副表
 	
@@ -67,7 +68,17 @@ public class Article extends DataEntity<Article> {
 		//super.prePersist();
 		articleData.setId(this.id);
 	}
-	
+
+
+	public String getCopyfrom() {
+		return copyfrom;
+	}
+
+	public void setCopyfrom(String copyfrom) {
+		this.copyfrom = copyfrom;
+	}
+
+
 	public Category getCategory() {
 		return category;
 	}

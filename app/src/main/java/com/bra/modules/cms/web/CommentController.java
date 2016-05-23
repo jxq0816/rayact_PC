@@ -3,9 +3,12 @@
  */
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.cms.entity.Attitude;
 import com.bra.modules.cms.entity.Comment;
 import com.bra.modules.cms.service.CommentService;
 import com.bra.modules.sys.utils.DictUtils;
@@ -21,7 +24,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 评论Controller
@@ -43,7 +49,14 @@ public class CommentController extends BaseController {
 			return new Comment();
 		}
 	}
-	
+
+	@RequiresPermissions("user")
+	@RequestMapping(value = "form")
+	public String form(Attitude attitude, Model model) {
+		model.addAttribute("attitude", attitude);
+		return "modules/cms/attitudeForm";
+	}
+
 	@RequiresPermissions("cms:comment:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -74,6 +87,81 @@ public class CommentController extends BaseController {
 		commentService.delete(comment, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"评论成功");
 		return "redirect:" + adminPath + "/cms/comment/?repage&delFlag=2";
+	}
+
+	@RequestMapping(value = "app/list")
+	public void listApp(Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Map<String,String>> rtn = commentService.findListMap(new Page<Comment>(request, response), comment);
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(rtn));
+
+		} catch (IOException e) {
+
+		}
+	}
+
+	@RequestMapping(value = "app/save")
+	public void saveApp(Comment comment, RedirectAttributes redirectAttributes,HttpServletResponse response) {
+		JSONObject j = new JSONObject();
+		try {
+			if (beanValidator(redirectAttributes, comment)) {
+				if (comment.getAuditUser() == null) {
+					comment.setAuditUser(UserUtils.getUser());
+					comment.setAuditDate(new Date());
+				}
+				comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
+				commentService.save(comment);
+				addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
+						+ "评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()), 50) + "'成功");
+				j.put("status","success");
+				j.put("msg",comment.getId());
+			}
+		}catch (Exception e){
+			j.put("status","failed");
+			j.put("msg",e.getMessage());
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+
+		} catch (IOException g) {
+
+		}
+
+	}
+
+	@RequestMapping(value = "app/delete")
+	public String deleteApp(HttpServletRequest request,HttpServletResponse response) {
+		JSONObject j = new JSONObject();
+		try {
+			String id = request.getParameter("id");
+			Comment d = commentService.get(id);
+			if(d.getAuditUser().getId().equals(UserUtils.getUser().getId())){
+				commentService.delete(d);
+				j.put("status","success");
+				j.put("msg",id);
+			}else{
+				throw new Exception("非本人评论不可删除");
+			}
+		}catch (Exception e){
+			j.put("status","failed");
+			j.put("msg",e.getMessage());
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+			return null;
+		} catch (IOException g) {
+			return null;
+		}
+
 	}
 
 }

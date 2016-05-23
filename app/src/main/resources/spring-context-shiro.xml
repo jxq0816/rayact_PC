@@ -14,11 +14,17 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/cms/comment/app/list = anon
+				${adminPath}/cms/attitude/app/num = anon
+				/f/ = anon
+				${adminPath}/cms/article/app/getList = anon
+				${adminPath}/cms/link/app/getList = anon
 				/static/** = anon
 				/userfiles/** = anon
 				${adminPath}/cas = cas
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
+				${adminPath}/api/createSimple = anon
 				${adminPath}/** = user
 				/act/rest/service/editor/** = perms[act:model:edit]
 				/act/rest/service/model/** = perms[act:model:edit]

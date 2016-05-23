@@ -8,6 +8,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.cms.entity.Link;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 链接DAO接口
@@ -27,4 +28,6 @@ public interface LinkDao extends CrudDao<Link> {
 //		return update("update Link set weight=0 where weight > 0 and weightDate < current_timestamp()");
 //	}
 //	public List<Link> fjindListByEntity();
+
+	public List<Map<String,String>> findListMap(Link link);
 }

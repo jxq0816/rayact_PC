@@ -7,7 +7,7 @@ import com.bra.common.utils.MD5Util;
  */
 public class StringUtils {
 
-    public static String ATTPATH = "http://192.168.8.68:8080/app/mechanism/file/image/";
+    public static String ATTPATH = "http://192.168.1.177:8080/app/mechanism/file/image/";
 
     public static boolean isNull(String word){
         if(word != null)

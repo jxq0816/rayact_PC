@@ -20,14 +20,13 @@ public class Comment extends DataEntity<Comment> {
 	private static final long serialVersionUID = 1L;
 	private Category category;// 分类编号
 	private String contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
+	private String contentModel;//内容类名
 	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
 	private String content; // 评论内容
 	private String name; 	// 评论姓名
 	private String ip; 		// 评论IP
-	private Date createDate;// 评论时间
 	private User auditUser; // 审核人
 	private Date auditDate;	// 审核时间
-	private String delFlag;	// 删除标记删除标记（0：正常；1：删除；2：审核）
 	public Comment() {
 		super();
 		this.delFlag = DEL_FLAG_AUDIT;
@@ -42,10 +41,17 @@ public class Comment extends DataEntity<Comment> {
 		this();
 		this.category = category;
 	}
-	
 
 
-	@NotNull
+	public String getContentModel() {
+		return contentModel;
+	}
+
+	public void setContentModel(String contentModel) {
+		this.contentModel = contentModel;
+	}
+
+
 	public Category getCategory() {
 		return category;
 	}
@@ -112,24 +118,6 @@ public class Comment extends DataEntity<Comment> {
 
 	public void setIp(String ip) {
 		this.ip = ip;
-	}
-
-	@NotNull
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	@Length(min=1, max=1)
-	public String getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
 	}
 
 }

@@ -9,13 +9,16 @@ import com.bra.common.utils.CacheUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.cms.dao.LinkDao;
 import com.bra.modules.cms.entity.Link;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 链接Service
@@ -25,6 +28,14 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class LinkService extends CrudService<LinkDao, Link> {
+	@Autowired
+	private LinkDao linkDao;
+
+	@Transactional(readOnly = false)
+	public void save(Link link, AttMainForm attMainForm) {
+		super.save(link);
+		updateAttMain(link, attMainForm);
+	}
 
 	@Transactional(readOnly = false)
 	public Page<Link> findPage(Page<Link> page, Link link, boolean isDataScopeFilter) {
@@ -61,5 +72,20 @@ public class LinkService extends CrudService<LinkDao, Link> {
 		}
 		return list;
 	}
+
+	public List<Map<String,String>> findListMap(Link link){
+		List<Map<String,String>> list =  linkDao.findListMap(link);
+		for(Map<String,String> node:list){
+			String attId = node.get("attId");
+			if(StringUtils.isNotBlank(attId)){
+				node.put("attUrl",com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
+			}else{
+				node.put("attUrl","");
+			}
+			node.remove("attId");
+		}
+		return list;
+	}
+
 
 }

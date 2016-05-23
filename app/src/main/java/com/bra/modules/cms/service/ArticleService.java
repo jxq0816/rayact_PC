@@ -23,9 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 文章Service
@@ -38,6 +36,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
     @Autowired
     private ArticleDataDao articleDataDao;
+    @Autowired
+    private ArticleDao articleDao;
     @Autowired
     private CategoryDao categoryDao;
 
@@ -194,6 +194,24 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         //dao.keywordsHighlight(query, page.getList(), 130, "description","articleData.content");
 
         return page;
+    }
+
+    public List<Map<String,Object>> findListMap(Page page,Article article){
+        if(page.getPageSize()==0)
+            page.setPageSize(10);
+        page.setPageNo((page.getPageNo()-1)*page.getPageSize());
+        article.setPage(page);
+        List<Map<String,Object>> list =  articleDao.findListMap(article);
+        for(Map<String,Object> node:list){
+            String attId = String.valueOf(node.get("attId"));
+            if(StringUtils.isNotBlank(attId)){
+                node.put("attUrl",com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
+            }else{
+                node.put("attUrl","");
+            }
+            node.remove("attId");
+        }
+        return list;
     }
 
 }

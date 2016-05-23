@@ -9,6 +9,7 @@ import com.bra.modules.cms.entity.Article;
 import com.bra.modules.cms.entity.Category;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章DAO接口
@@ -34,5 +35,6 @@ public interface ArticleDao extends CrudDao<Article> {
 //	{
 //		return update("update Article set weight=0 where weight > 0 and weightDate < current_timestamp()");
 //	}
+	public List<Map<String,Object>> findListMap(Article article);
 	
 }

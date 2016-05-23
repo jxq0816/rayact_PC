@@ -4,19 +4,23 @@
     
 	<sql id="cmsCommentDaoColumns">
 		a.id AS "id",
-		a.category_id AS "category.id",
 		a.content_id AS "contentId",
+		a.content_model AS "contentModel",
 		a.title AS "title",
 		a.content AS "content",
-		a.name AS "name",
+		u.name AS "name",
 		a.ip AS "ip",
-		a.create_date AS "createDate",
 		a.audit_user_id AS "auditUser.id",
 		a.audit_date AS "auditDate",
-		a.del_flag AS "delFlag"
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.del_flag AS "delFlag",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate"
 	</sql>
 	
 	<sql id="cmsCommentDaoJoins">
+		LEFT JOIN sys_user u ON u.id = a.audit_user_id
 	</sql>
     
 	<select id="get" resultType="Comment">
@@ -40,7 +44,53 @@
 					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
 			</if>
+			<if test="contentId != null and contentId != ''">
+				AND a.content_id = #{contentId}
+			</if>
+			<if test="contentModel != null and contentModel != ''">
+				AND a.content_model = #{contentModel}
+			</if>
 		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findListMap" resultType="Map">
+		SELECT
+		a.id AS "id",
+		a.content_id AS "contentId",
+		CASE WHEN a.content_model is NULL THEN "" ELSE a.content_model  END AS "contentModel",
+		CASE WHEN a.content is NULL THEN "" ELSE a.content  END  AS "content",
+		CASE WHEN u.name is NULL THEN "" ELSE u.name  END AS "name",
+		CASE WHEN u.photo is NULL THEN "" ELSE u.photo  END AS "photo",
+		CASE WHEN u.photo is NULL THEN "" ELSE date_format(a.create_date,'%Y-%m-%d %T')  END AS "createDate",
+		SUM(CASE WHEN att.`status` = '1' THEN 1 ELSE 0 END) AS "goodNum",
+		SUM(CASE WHEN att.`status` = '0' THEN 1 ELSE 0 END) AS "badNum"
+		FROM cms_comment a
+		LEFT JOIN attitude att ON a.id = att.model_id
+		<include refid="cmsCommentDaoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="title != null and title != ''">
+				AND a.title LIKE
+				<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
+			</if>
+			<if test="contentId != null and contentId != ''">
+				AND a.content_id = #{contentId}
+			</if>
+			<if test="contentModel != null and contentModel != ''">
+				AND a.content_model = #{contentModel}
+			</if>
+		</where>
+		GROUP BY a.id
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -74,6 +124,7 @@
 			id,
 			category_id,
 			content_id,
+			content_model,
 			title,
 			content,
 			name,
@@ -86,6 +137,7 @@
 			#{id},
 			#{category.id},
 			#{contentId},
+			#{contentModel},
 			#{title},
 			#{content},
 			#{name},
@@ -98,10 +150,10 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE cms_comment SET 	
-			
+		UPDATE cms_comment SET
 			category_id = #{category.id},
 			content_id = #{contentId},
+			content_model = #{contentModel},
 			title = #{title},
 			content = #{content},
 			name = #{name},

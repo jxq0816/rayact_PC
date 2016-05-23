@@ -3,6 +3,7 @@
  */
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.bra.common.mapper.JsonMapper;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -27,7 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章Controller
@@ -146,5 +149,20 @@ public class ArticleController extends BaseController {
         List<String> tplList = fileTplService.getNameListByPrefix(siteService.get(Site.getCurrentSiteId()).getSolutionPath());
         tplList = TplUtils.tplTrim(tplList, Article.DEFAULT_TEMPLATE, "");
         return tplList;
+    }
+    @ResponseBody
+    @RequestMapping(value = "app/getList")
+    public String getArticleList(Article article,HttpServletRequest request,HttpServletResponse response){
+        Page<Article> page = new Page<Article>(request, response);
+        List<Map<String,Object>> rtn = articleService.findListMap(page, article);
+        try {
+            response.reset();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().print(JSONArray.toJSONString(rtn));
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

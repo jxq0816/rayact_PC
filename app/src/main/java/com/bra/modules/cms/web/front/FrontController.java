@@ -3,6 +3,8 @@
  */
 package com.bra.modules.cms.web.front;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.servlet.ValidateCodeServlet;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 网站Controller
@@ -30,9 +34,12 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "${frontPath}")
 public class FrontController extends BaseController{
-	
+	@Autowired
+	private ApplyService applyService;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private ActivityService activityService;
 	@Autowired
 	private ArticleDataService articleDataService;
 	@Autowired
@@ -244,14 +251,74 @@ public class FrontController extends BaseController{
             CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
             Site site = siteService.get(category.getSite().getId());
             model.addAttribute("site", site);
-//			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article);
+//			return "modules/cms/front/themes/"+category.getSite().getTheme()+"/"+getTpl(article)
             return "modules/cms/front/themes/"+site.getTheme()+"/"+getTpl(article);
+		}
+		if ("activity".equals(category.getModule())){
+			// 获取文章内容
+			Activity activity = activityService.get(contentId);
+			if (activity==null || !Article.DEL_FLAG_NORMAL.equals(activity.getDelFlag())){
+				return "error/404";
+			}
+			// 将数据传递到视图
+			model.addAttribute("category", categoryService.get(activity.getCategory().getId()));
+			model.addAttribute("activity", activity);
+			CmsUtils.addViewConfigAttribute(model, activity.getCategory());
+			Site site = siteService.get(category.getSite().getId());
+			return "modules/cms/front/themes/"+site.getTheme()+"/frontViewActivity";
+		}
+		if ("apply".equals(category.getModule())){
+			// 获取文章内容
+			Apply apply = applyService.get(contentId);
+			if (apply==null || !Article.DEL_FLAG_NORMAL.equals(apply.getDelFlag())){
+				return "error/404";
+			}
+			// 将数据传递到视图
+			model.addAttribute("apply", apply);
+			return "modules/cms/front/themes/basic/frontViewApply";
 		}
 		return "error/404";
 	}
-	
+
 	/**
-	 * 内容评论
+	 * 显示内容
+	 */
+	@RequestMapping(value = "app/view-{categoryId}-{contentId}${urlSuffix}")
+	public String appView(@PathVariable String categoryId, @PathVariable String contentId, Model model) {
+		Category category = categoryService.get(categoryId);
+		if ("article".equals(category.getModule())){
+			// 获取文章内容
+			Article article = articleService.get(contentId);
+			if (article==null || !Article.DEL_FLAG_NORMAL.equals(article.getDelFlag())){
+				return "error/404";
+			}
+			// 文章阅读次数+1
+			articleService.updateHitsAddOne(contentId);
+			if(article.getCopyfrom()!=null){
+				if("扣子体育".equals(article.getCopyfrom())){
+					model.addAttribute("copyfrom", "独家");
+				}else{
+					model.addAttribute("copyfrom",article.getCopyfrom());
+				}
+			}
+			article.setArticleData(articleDataService.get(article.getId()));
+			model.addAttribute("article", article);
+			CmsUtils.addViewConfigAttribute(model, article.getCategory());
+			CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
+			Site site = siteService.get(category.getSite().getId());
+			Comment c = new Comment();
+			c.setContentId(article.getId());
+			c.setDelFlag(Comment.DEL_FLAG_NORMAL);
+			List<Comment> list = commentService.findList(c);
+			if(list!=null){
+				model.addAttribute("comment",list.size());
+			}
+			return "modules/cms/frontViewArticle";
+		}
+		return "error/404";
+	}
+	/**
+	 * 获取内容评论
 	 */
 	@RequestMapping(value = "comment", method=RequestMethod.GET)
 	public String comment(String theme, Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -264,6 +331,25 @@ public class FrontController extends BaseController{
 		model.addAttribute("page", page);
 		model.addAttribute("comment", comment);
 		return "modules/cms/front/themes/"+theme+"/frontComment";
+	}
+
+	/**
+	 * app获取内容评论
+	 */
+	@RequestMapping(value = "app/comment")
+	@ResponseBody
+	public String commentJson(Comment comment, HttpServletRequest request, HttpServletResponse response) {
+		Page<Comment> page = new Page<Comment>(request, response);
+		List<Map<String,String>> rtn = commentService.findListMap(page, comment);
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(rtn));
+			return null;
+		} catch (IOException e) {
+			return null;
+		}
 	}
 	
 	/**
@@ -292,6 +378,29 @@ public class FrontController extends BaseController{
 		}else{
 			return "{result:2, message:'验证码不能为空。'}";
 		}
+	}
+
+	/**
+	 * app内容评论保存
+	 */
+	@ResponseBody
+	@RequestMapping(value = "app/comment", method=RequestMethod.POST)
+	public String appCommentSave(Comment comment,@RequestParam(required=false) String replyId, HttpServletRequest request) {
+		if (StringUtils.isNotBlank(replyId)){
+			Comment replyComment = commentService.get(replyId);
+			if (replyComment != null){
+				comment.setContent("<div class=\"reply\">"+replyComment.getName()+":<br/>"
+						+replyComment.getContent()+"</div>"+comment.getContent());
+			}
+		}
+		comment.setIp(request.getRemoteAddr());
+		comment.setCreateDate(new Date());
+		comment.setDelFlag(Comment.DEL_FLAG_AUDIT);
+		commentService.save(comment);
+		JSONObject j = new JSONObject();
+		j.put("status","success");
+		j.put("msg","评论成功");
+		return j.toJSONString();
 	}
 	
 	/**

@@ -149,4 +149,15 @@
 			<if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,GETDATE()))</if>
 			<if test="dbName == 'mysql'">CURDATE()</if>
 	</update>
+
+	<select id="findListMap" resultType="Map">
+		SELECT
+		a.title AS title,
+		a.href AS href,
+		m.id AS attId
+		FROM cms_link a
+		LEFT JOIN mechanism_att_main m on a.id = m.fd_model_id
+		LEFT JOIN cms_category c on c.id = a.category_id
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND c.name = '首页轮播'
+	</select>
 </mapper>

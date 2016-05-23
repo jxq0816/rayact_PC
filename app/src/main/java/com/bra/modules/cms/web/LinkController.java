@@ -3,6 +3,7 @@
  */
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.bra.common.mapper.JsonMapper;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -12,6 +13,7 @@ import com.bra.modules.cms.entity.Link;
 import com.bra.modules.cms.entity.Site;
 import com.bra.modules.cms.service.CategoryService;
 import com.bra.modules.cms.service.LinkService;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 链接Controller
@@ -79,11 +83,11 @@ public class LinkController extends BaseController {
 
 	@RequiresPermissions("cms:link:edit")
 	@RequestMapping(value = "save")
-	public String save(Link link, Model model, RedirectAttributes redirectAttributes) {
+	public String save(Link link, AttMainForm attMainForm, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, link)){
 			return form(link, model);
 		}
-		linkService.save(link);
+		linkService.save(link,attMainForm);
 		addMessage(redirectAttributes, "保存链接'" + StringUtils.abbr(link.getTitle(),50) + "'成功");
 		return "redirect:" + adminPath + "/cms/link/?repage&category.id="+link.getCategory().getId();
 	}
@@ -115,5 +119,20 @@ public class LinkController extends BaseController {
 	public String findByIds(String ids) {
 		List<Object[]> list = linkService.findByIds(ids);
 		return JsonMapper.nonDefaultMapper().toJson(list);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "app/getList")
+	public String getLinkList(Link link, HttpServletRequest request, HttpServletResponse response){
+		List<Map<String,String>> rtn = linkService.findListMap(link);
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(rtn));
+			return null;
+		} catch (IOException e) {
+			return null;
+		}
 	}
 }

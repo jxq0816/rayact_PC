@@ -7,6 +7,9 @@ import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.cms.entity.Comment;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 评论DAO接口
  *
@@ -14,5 +17,5 @@ import com.bra.modules.cms.entity.Comment;
  */
 @MyBatisDao
 public interface CommentDao extends CrudDao<Comment> {
-
+    public List<Map<String,String>> findListMap(Comment comment);
 }
