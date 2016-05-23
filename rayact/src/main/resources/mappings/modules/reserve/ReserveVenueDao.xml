@@ -278,7 +278,9 @@
         sum(if(s.pay_type=2,s.transaction_volume,0)) AS "cashBill",
         sum(if(s.pay_type=3,s.transaction_volume,0)) AS "bankCardBill",
         sum(if(s.pay_type=4,s.transaction_volume,0)) AS "weiXinBill",
-        sum(if(s.pay_type=5,s.transaction_volume,0)) AS "aliPayBill"
+        sum(if(s.pay_type=9,s.transaction_volume,0)) AS "personalWeiXinBill",
+        sum(if(s.pay_type=5,s.transaction_volume,0)) AS "aliPayBill",
+        sum(if(s.pay_type=10,s.transaction_volume,0)) AS "personalAliPayBill"
 		FROM reserve_venue v
 		inner JOIN reserve_card_statements s on (s.venue_id = v.id and
             (
