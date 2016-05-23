@@ -224,6 +224,7 @@
 		FROM reserve_tutor t
 		LEFT JOIN reserve_tutor_order o ON o.tutor_id = t.id
 		LEFT JOIN reserve_venue_cons c	ON o.model_id = c.id
+		LEFT JOIN reserve_project p on p.id = t.fk_project_id
 		WHERE
 		o.del_flag = #{DEL_FLAG_NORMAL} and t.del_flag = #{DEL_FLAG_NORMAL} and o.tenant_id = #{tenantId} AND c.reserve_type = '4'
 		<if test="tutor != null and tutor.name !=''">
@@ -231,6 +232,9 @@
 			<if test="dbName == 'oracle'">'%'||#{tutor.name}||'%'</if>
 			<if test="dbName == 'mssql'">'%'+#{tutor.name}+'%'</if>
 			<if test="dbName == 'mysql'">concat('%',#{tutor.name},'%')</if>
+		</if>
+		<if test="tutor!=null and tutor.project !=null and tutor.project.id !=''">
+			and p.id= #{tutor.project.id}
 		</if>
 		<if test="startDate!=null and endDate !=null">
 			and datediff(c.cons_date,#{startDate})>=0 and datediff(#{endDate},c.cons_date)>=0

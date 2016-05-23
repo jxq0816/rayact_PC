@@ -29,6 +29,15 @@
                                     <td><form:input path="tutor.name" cssStyle="width:100px;" htmlEscape="false"
                                                     maxlength="30"
                                                     class="form-control"/></td>
+                                    <td>项目：</td>
+                                    <td>
+                                        <sys:select cssClass="input-large" name="tutor.project.id" id="project"
+                                                    cssStyle="width:100%"
+                                                    value="${query.tutor.project.id}"
+                                                    items="${reserveProjectList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="请选择"
+                                                    defaultValue=""></sys:select>
+                                    </td>
                                     <td>开始日期：</td>
                                     <td><input
                                             value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveTutorOrder.startDate}"/>"
