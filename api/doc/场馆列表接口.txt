@@ -11,7 +11,6 @@ districtName：区名称 String
 	venueName:场馆名称 String
 	avePrice：人均消费 double
 	evaluateScore:评分 double
-		more_service:标签String
-		(各标签之间以英文逗号分隔,如:美女如云,免费停车)
+	more_service:标签String (各标签之间以英文逗号分隔,如:美女如云,免费停车)
 	imgUrl：场馆图片访问路径 String
-	distance:距离 千米
+	distance:距离(以千米为单位) String

@@ -12,7 +12,7 @@ projectList:场馆有哪些体育项目
 	projectName：项目名称 String
 	projectId：项目编号 String
 }
-imgCnt:图片个数
+imgCnt:图片个数 String
 latitude:经度 double
 longitude：维度 double
 
