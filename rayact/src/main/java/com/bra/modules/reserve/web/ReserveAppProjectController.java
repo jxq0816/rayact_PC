@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.service.ReserveProjectService;
@@ -36,7 +37,7 @@ public class ReserveAppProjectController extends BaseController {
 		map.put("projectName","全部");
 		list.add(map);
 		list.addAll(reserveProjectService.findListForApp(reserveProject));
-		String projectList= JSON.toJSONString(list);
+		String projectList= JSON.toJSONString(list, SerializerFeature.WriteMapNullValue);
 		return projectList;
 	}
 }

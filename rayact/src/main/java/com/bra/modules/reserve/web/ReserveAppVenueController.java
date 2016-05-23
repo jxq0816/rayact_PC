@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveVenueService;
@@ -28,7 +29,7 @@ public class ReserveAppVenueController extends BaseController {
     @ResponseBody
     public String list(ReserveVenue reserveVenue) {
         List<Map> list = reserveVenueService.findListForApp( reserveVenue);
-        String json=JSONArray.toJSONString(list);
+        String json=JSONArray.toJSONString(list, SerializerFeature.WriteMapNullValue);
         return json;
     }
     @RequestMapping(value = {"detail", ""})
@@ -36,7 +37,7 @@ public class ReserveAppVenueController extends BaseController {
     public String get(String venueId) {
         ReserveVenue reserveVenue=new ReserveVenue(venueId);
         Map venue = reserveVenueService.getForApp( reserveVenue);
-        String json=JSONArray.toJSONString(venue);
+        String json=JSONArray.toJSONString(venue,SerializerFeature.WriteMapNullValue);
         return json;
     }
     @RequestMapping(value = {"imgList", ""})
@@ -44,7 +45,7 @@ public class ReserveAppVenueController extends BaseController {
     public String imgList(String venueId) {
         ReserveVenue reserveVenue=new ReserveVenue(venueId);
         List<Map> list = reserveVenueService.findImgList( reserveVenue);
-        String json=JSONArray.toJSONString(list);
+        String json=JSONArray.toJSONString(list,SerializerFeature.WriteMapNullValue);
         return json;
     }
 }
