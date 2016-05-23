@@ -143,7 +143,7 @@ public class ReserveVenueController extends BaseController {
             endDate=new Date();//默认当天
             venueProjectReport.setEndDate(endDate);
         }
-        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport);//场馆区间报表
+        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport,queryType);//场馆 项目 区间报表
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         model.addAttribute("incomeReport",incomeReport);//收入统计
@@ -162,7 +162,9 @@ public class ReserveVenueController extends BaseController {
     }
 
     @RequestMapping(value = "reportExport")
-    public void reportExport(HttpServletResponse response,ReserveVenueProjectIntervalReport venueProjectReport, String queryType)throws Exception {
+    public void reportExport(HttpServletResponse response,ReserveVenueProjectIntervalReport venueProjectReport,
+                             @RequestParam(required=false,defaultValue="1",value="queryType") String queryType
+    )throws Exception {
         Date startDate=venueProjectReport.getStartDate();
         Date endDate=venueProjectReport.getEndDate();
         venueProjectReport.setReserveVenue(reserveVenueService.get(venueProjectReport.getReserveVenue()));
@@ -177,7 +179,7 @@ public class ReserveVenueController extends BaseController {
         if(StringUtils.isEmpty(queryType)){
             queryType="1";
         }
-        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport);//场馆区间报表
+        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport,queryType);//场馆区间报表
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         if("1".equals(queryType)){

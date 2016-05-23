@@ -205,7 +205,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     //场馆收入统计
-    public ReserveVenueIncomeIntervalReport reserveVenueIncomeIntervalReport(ReserveVenueProjectIntervalReport venueProjectReport) {
+    public ReserveVenueIncomeIntervalReport reserveVenueIncomeIntervalReport(ReserveVenueProjectIntervalReport venueProjectReport,String queryType) {
         Double billSum = 0.0;
         Double storedCardSum = 0.0;
         Double cashSum = 0.0;
@@ -274,10 +274,13 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             dueSum += due;
         }
         /*明细 开始*/
-        for (ReserveVenueProjectIntervalReport i : venueProjectList) {//场馆 项目遍历
-            List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//场馆 项目 场地 收入统计
-            i.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
+        if("2".equals(queryType)){
+            for (ReserveVenueProjectIntervalReport i : venueProjectList) {//场馆 项目遍历
+                List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//场馆 项目 场地 收入统计
+                i.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
+            }
         }
+
         /*明细 结束*/
         //场地 项目 总合计设置
         ReserveVenueIncomeIntervalReport venueReport = new ReserveVenueIncomeIntervalReport();
