@@ -51,17 +51,6 @@
                                             </label>
                                         </div>
                                     </td>
-
-                                        <%--<td>
-                                            <div class="tab-tit-first">
-                                                <ul>
-                                                    <li id="today"><a href="javascript:queryToday()">当天</a></li>
-                                                    <li id="month"><a href="javascript:queryMonth()">当月</a></li>
-                                                    <li id="year"><a href="javascript:queryYear()">当年</a></li>
-                                                    <li id="self"><a href="javascript:querySelf()">自定义</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>--%>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.startDate}"/>"
                                                name="startDate" id="startDate" type="text"
