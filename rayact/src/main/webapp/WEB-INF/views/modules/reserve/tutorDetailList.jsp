@@ -27,28 +27,31 @@
 						<table>
 							<thead>
 							<tr>
+								<th>时期</th>
 								<th>客户姓名</th>
+								<th>授课时段</th>
 								<th>授课场地</th>
 								<th>授课时长</th>
-								<th>授课时间</th>
-								<th>总价</th>
+								<th>教练费</th>
 							</tr>
 							</thead>
 							<tbody>
 							<c:forEach items="${page.list}" var="order">
 								<tr>
 									<td>
+											${order.date}
+									</td>
+									<td>
 											${order.name}
+									</td>
+									<td>
+											${order.startTime}-${order.endTime}
 									</td>
 									<td>
 											${order.fieldName}
 									</td>
 									<td>
 											${order.minute}分钟
-									</td>
-									<td>
-											${order.date}
-
 									</td>
 									<td>
 											${order.price}元

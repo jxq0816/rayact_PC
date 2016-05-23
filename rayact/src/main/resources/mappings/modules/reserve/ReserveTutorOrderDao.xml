@@ -199,7 +199,13 @@
 	</update>
 
 	<select id="getTutorDetail" resultType="java.util.Map">
-		SELECT c.user_name AS  name,f.name AS fieldName,o.order_count*30 AS minute,o.total_price AS price,concat(date_format(c.cons_date,'%Y-%m-%d'),':',i.start_time,'-',i.end_time) AS date
+		SELECT c.user_name AS  name,
+		f.name AS fieldName,
+		o.order_count*30 AS minute,
+		o.total_price AS price,
+		date_format(c.cons_date,'%Y-%m-%d') AS date,
+		i.start_time AS "startTime",
+		i.end_time AS "endTime"
 		FROM reserve_tutor_order o
 		LEFT JOIN reserve_venue_cons c	ON o.model_id = c.id
 		LEFT JOIN reserve_venue_cons_item i ON c.id = i.cons_data_id
