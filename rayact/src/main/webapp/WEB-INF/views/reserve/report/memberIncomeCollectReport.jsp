@@ -77,6 +77,7 @@
                         <table>
                             <thead>
                             <tr>
+                                <th>场馆</th>
                                 <th>储值卡收入</th>
                                 <th>现金收入</th>
                                 <th>银行卡收入</th>
@@ -90,6 +91,10 @@
                             <tbody>
                             <c:forEach items="${collectReport}" var="report">
                                 <tr>
+                                    <td>
+                                            ${report.reserveVenue.name}
+                                    </td>
+
                                     <td>
                                             ${report.storedCardBill}
                                     </td>
