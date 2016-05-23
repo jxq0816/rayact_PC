@@ -306,6 +306,7 @@
     <select id="reserveVenueProjectBlockIntervalReport"
             resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport">
         SELECT
+        DISTINCT
         e.id AS "reserveVenue.id",
         e.name AS "reserveVenue.name",
         d.id AS "reserveProject.id",
@@ -361,12 +362,12 @@
         end
         ) AS "fieldBillDue"
         from
-        reserve_venue_cons as b
-        LEFT JOIN reserve_multiple_payment as p on p.order_id=b.id
-        LEFT JOIN reserve_venue_cons_item as a on a.cons_data_id=b.id
+        reserve_venue_cons_item as a
+        LEFT JOIN reserve_venue_cons as b on a.cons_data_id=b.id
         LEFT JOIN reserve_field as c on a.field_id=c.id
-        LEFT JOIN reserve_project as d on c.project_id=d.id
         LEFT JOIN reserve_venue as e on a.venue_id=e.id
+        LEFT JOIN reserve_project as d on c.project_id=d.id
+        LEFT JOIN reserve_multiple_payment as p on p.order_id=b.id
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL}
             and a.tenant_id = #{tenantId} and b.reserve_type='4'
