@@ -43,7 +43,9 @@
         a.name AS "venueName",
         a.address AS "address",
         a.remarks AS "remarks",
-        a.tel AS "tel"
+        a.tel AS "tel",
+        a.address_x AS "longitude",
+        a.address_y AS "latitude"
         FROM reserve_venue a
         <include refid="reserveVenueJoins"/>
         WHERE a.id = #{id}

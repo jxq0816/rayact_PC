@@ -1,0 +1,18 @@
+http://192.168.1.182:8080/rayact/a/app/reserve/reserveVenue/detail?venueId=NgVva19Q5FAokk5RZcv
+一、请求参数
+venueId:场馆编号 String
+二、返回结果
+venueId：场馆编号 String
+venueName:场馆名称 String
+address:地址 String
+tel：电话 String
+remarks:场馆描述
+projectList:场馆有哪些体育项目
+{
+	projectName：项目名称 String
+	projectId：项目编号 String
+}
+imgCnt:图片个数
+latitude:经度 double
+longitude：维度 double
+
