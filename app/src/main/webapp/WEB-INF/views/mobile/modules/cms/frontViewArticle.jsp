@@ -15,7 +15,6 @@
 			}
 		});
 		function page(n,s){
-			alert();
 			$.get("${ctx}/mobile/comment",{theme: '${site.theme}', 'category.id': '${category.id}',
 				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
 			},function(data){
