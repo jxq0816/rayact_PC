@@ -1,11 +1,10 @@
-³¡µØÔ¤¶©H5 ½çÃæ ½Ó¿Ú
- http://192.168.8.133:8080/rayact/a/app/reserve/field/main?venueId=lL2ZU7tcadSMiCRxyyY&consDate=2016-05-09&projectId=1&consMobile=13011662131&userName=ÕÅÈı
-Ò»¡¢	ÇëÇó²ÎÊı:
-venueId :³¡¹İ±àºÅ
-projectId:ÏîÄ¿±àºÅ
-consDate :ÈÕÆÚ
-consMobile:Ô¤¶©ÈËÊÖ»úºÅ
-userName:Ô¤¶©ÈËĞÕÃû
-¶ş¡¢	·µ»Ø²ÎÊı:
-H5½çÃæ ×î¶àÑ¡Ôñ4¸öĞ¡Ê±
-
+åœºåœ°é¢„è®¢H5 ç•Œé¢ æ¥å£
+ http://192.168.8.133:8080/rayact/a/app/reserve/field/main?venueId=lL2ZU7tcadSMiCRxyyY&consDate=2016-05-09&projectId=1&consMobile=13011662131&userName=å¼ ä¸‰
+ä¸€ã€	è¯·æ±‚å‚æ•°:
+venueId :åœºé¦†ç¼–å·
+projectId:é¡¹ç›®ç¼–å·
+consDate :æ—¥æœŸ
+consMobile:é¢„è®¢äººæ‰‹æœºå·
+userName:é¢„è®¢äººå§“å
+äºŒã€	è¿”å›å‚æ•°:
+H5ç•Œé¢ æœ€å¤šé€‰æ‹©4ä¸ªå°æ—¶
