@@ -31,8 +31,10 @@
 								<th>客户姓名</th>
 								<th>授课时段</th>
 								<th>授课场地</th>
-								<th>授课时长</th>
+								<th>授课时长/小时</th>
+								<c:set var="time" value="0"></c:set>
 								<th>教练费</th>
+								<c:set var="price" value="0"></c:set>
 							</tr>
 							</thead>
 							<tbody>
@@ -51,14 +53,26 @@
 											${order.fieldName}
 									</td>
 									<td>
-											${order.minute}分钟
+											${order.hour}
+											<c:set var="time" value="${time+order.hour}"></c:set>
 									</td>
 									<td>
 											${order.price}元
+												 <c:set var="price" value="${price+order.price}"></c:set>
 									</td>
 								</tr>
 							</c:forEach>
-
+							<tr>
+								<td colspan="4">
+									合计
+								</td>
+								<td>
+									${time}
+								</td>
+								<td>
+									${price}
+								</td>
+							</tr>
 							</tbody>
 						</table>
 						<div class="row">

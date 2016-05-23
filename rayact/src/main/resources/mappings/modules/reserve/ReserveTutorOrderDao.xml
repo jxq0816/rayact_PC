@@ -201,7 +201,7 @@
 	<select id="getTutorDetail" resultType="java.util.Map">
 		SELECT c.user_name AS  name,
 		f.name AS fieldName,
-		o.order_count*30 AS minute,
+		o.order_count/2 AS hour,
 		o.total_price AS price,
 		date_format(c.cons_date,'%Y-%m-%d') AS date,
 		i.start_time AS "startTime",
