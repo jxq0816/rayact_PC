@@ -65,10 +65,13 @@
                                     <input type="radio" class="icheck" id="weixin" value="4" name="payType"/>微信
                                 </label>
                                 <label class="radio-inline">
+                                    <input type="radio" class="icheck" id="" value="9" name="payType"/>微信（个人）
+                                </label>
+                                <label class="radio-inline">
                                     <input type="radio" class="icheck" id="alipay" value="5" name="payType"/>支付宝
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" class="icheck" id="other" value="6" name="payType"/>优惠券
+                                    <input type="radio" class="icheck" value="10" name="payType"/>支付宝（个人）
                                 </label>
                             </div>
                         </td>

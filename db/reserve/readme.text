@@ -25,3 +25,7 @@
 20160517:reserve_venue 场馆表 添加字段district_name varchar(10);
 20160517:reserve_venue 场馆表 添加字段city_name varchar(10);
 20160517:reserve_venue 场馆表 添加字段evaluate_score double;
+20160523:reserve_commodity_sell 商品销售表 修改支付方式字段pay_type varchar(2);
+20160523:reserve_multiple_payment 商品销售表 修改支付方式字段pay_type varchar(2);
+20160523:reserve_venue_cons 场地订单表 修改支付方式字段pay_type varchar(2);
+20160523:reserve_card_statements 交易流水表 修改支付方式字段pay_type varchar(2);

@@ -132,7 +132,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			reserveCardStatementsService.save(reserveCardStatements);
 
 		}
-		if("1".equals(payType)){// 1代表会员
+		if("1".equals(payType)){// 1代表会员,变更会员余额
 			reserveMemberService.save(reserveMember);
 		}
 		return sellId;
