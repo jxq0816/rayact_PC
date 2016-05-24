@@ -6,3 +6,6 @@ projectId:项目编号 String
 consDate :日期 Date
 二、返回参数
 H5界面 最多选择4个小时
+
+通过js的函数 filedSelectJson() 可以获取的预订数据
+通过js的函数 filedSelectArray（）可以获得付款成功后需要返回给后台的预订数据
