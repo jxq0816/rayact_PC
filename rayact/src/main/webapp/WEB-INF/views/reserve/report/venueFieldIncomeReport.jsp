@@ -18,7 +18,7 @@
                 <div class="header">
                     <h3>场地收入统计</h3>
                 </div>
-                <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/report"
+                <form:form id="searchForm" modelAttribute="reserveVenue" action="${ctx}/reserve/reserveVenue/fieldReport"
                            method="post" class="breadcrumb form-search">
                     <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
                     <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -93,7 +93,9 @@
                                 <th>现金</th>
                                 <th>银行卡</th>
                                 <th>微信</th>
+                                <th>微信(个人)</th>
                                 <th>支付宝</th>
+                                <th>支付宝（个人）</th>
                                 <th>优惠券</th>
                                 <th>欠账</th>
                                 <th>合计</th>
@@ -111,26 +113,35 @@
                                             ${report.reserveProject.name}
                                     </td>
                                     <td>
-                                            ${report.fieldBillStoredCard}
+                                            ${report.storedCardBill}
                                     </td>
                                     <td>
-                                            ${report.fieldBillCash}
+                                            ${report.cashBill}
                                     </td>
                                     <td>
-                                            ${report.fieldBillBankCard}
+                                            ${report.bankCardBill}
                                     </td>
 
                                     <td>
-                                            ${report.fieldBillWeiXin}
+                                            ${report.weiXinBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.personalWeiXinBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.aliPayBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.personalAliPayBill}
                                     </td>
                                     <td>
-                                            ${report.fieldBillAliPay}
+                                            ${report.otherBill}
                                     </td>
                                     <td>
-                                            ${report.fieldBillOther}
-                                    </td>
-                                    <td>
-                                            ${report.fieldBillDue}
+                                            ${report.dueBill}
                                     </td>
                                     <td>
                                             ${report.bill}
@@ -157,7 +168,13 @@
                                     ${incomeReport.weiXinBill}
                                 </td>
                                 <td>
+                                    ${incomeReport.personalWeiXinBill}
+                                </td>
+                                <td>
                                     ${incomeReport.aliPayBill}
+                                </td>
+                                <td>
+                                    ${incomeReport.personalAliPayBill}
                                 </td>
                                 <td>
                                     ${incomeReport.otherBill}
