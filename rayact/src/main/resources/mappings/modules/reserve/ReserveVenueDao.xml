@@ -36,7 +36,7 @@
         <include refid="reserveVenueJoins"/>
         WHERE a.id = #{id}
     </select>
-
+    <!--app获得场馆详情-->
     <select id="getForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
         a.id AS "venueId",
@@ -78,6 +78,7 @@
             </otherwise>
         </choose>
     </select>
+    <!--app获得某场馆的项目列表-->
     <select id="findPojectListOfVenueForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
         DISTINCT
@@ -102,6 +103,7 @@
             </otherwise>
         </choose>
     </select>
+    <!--app获得场馆列表-->
     <select id="findListForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
         a.id AS "venueId",
@@ -131,6 +133,7 @@
             </otherwise>
         </choose>
     </select>
+    <!--app获得某场馆图片列表-->
     <select id="findImgPathList" parameterType="ReserveVenue" resultType="Map">
         SELECT
         m.id AS "imgId"
@@ -144,6 +147,7 @@
         </where>
     </select>
 
+    <!--pc获得场馆有哪些项目-->
     <select id="findVenueProjectList" resultType="ReserveVenueProjectIntervalReport">
         select DISTINCT
         #{startDate} AS "startDate",
@@ -170,24 +174,8 @@
         </where>
     </select>
 
-    <select id="findAllList" resultType="ReserveVenue">
-        SELECT
-        <include refid="reserveVenueColumns"/>
-        FROM reserve_venue a
-        <include refid="reserveVenueJoins"/>
-        <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-        </where>
-        <choose>
-            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
-                ORDER BY ${page.orderBy}
-            </when>
-            <otherwise>
-                ORDER BY a.update_date DESC
-            </otherwise>
-        </choose>
-    </select>
 
+    <!--pc场馆项目场地日报表-->
     <select id="dayReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldDayReport">
         SELECT
         <if test="reserveVenue !=null ">
@@ -255,7 +243,7 @@
         </if>
         ORDER BY day ASC
     </select>
-
+    <!--pc场馆总收入-->
     <select id="totalIncomeReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport">
         SELECT
 		v.id as "reserveVenue.id",
@@ -443,6 +431,7 @@
         </where>
         GROUP BY p.id,v.id
     </select>
+    <!--场馆 项目 场地 区间收入-->
 
     <select id="reserveVenueProjectFieldIntervalReport"
             resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalReport">
@@ -497,6 +486,23 @@
         </if>
     </select>
 
+    <select id="findAllList" resultType="ReserveVenue">
+        SELECT
+        <include refid="reserveVenueColumns"/>
+        FROM reserve_venue a
+        <include refid="reserveVenueJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
 
     <insert id="insert">
 		INSERT INTO reserve_venue(
