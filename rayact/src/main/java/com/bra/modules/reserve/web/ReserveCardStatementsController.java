@@ -187,14 +187,13 @@ public class ReserveCardStatementsController extends BaseController {
 
 	/*会员收入统计:对应*/
 	@RequestMapping(value = {"memberIncomeReport", ""})
-	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport, String queryType, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport,
+									   @RequestParam(value="queryType", defaultValue="1") String queryType,
+									   HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());
 		reserveMemberIntervalReport.setReserveVenue(reserveVenueService.get(reserveMemberIntervalReport.getReserveVenue()));//场馆信息完善
 
-		if(StringUtils.isEmpty(queryType)){
-			queryType="1";
-		}
 		if(reserveMemberIntervalReport.getStartDate()==null){
 			reserveMemberIntervalReport.setStartDate(new Date());
 		}
@@ -202,7 +201,7 @@ public class ReserveCardStatementsController extends BaseController {
 			reserveMemberIntervalReport.setEndDate(new Date());
 		}
 		model.addAttribute("reserveVenueList", reserveVenueList);
-		//交易类型 (1：充值，2：退费，3：商品消费)
+		//1：汇总 2：明细
 		if("1".equals(queryType)){
 			List<ReserveMemberIntervalReport> collectReport=reserveCardStatementsService.memberIncomeCollectReport(reserveMemberIntervalReport);
 			model.addAttribute("collectReport", collectReport);

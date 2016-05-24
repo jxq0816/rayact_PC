@@ -7,6 +7,7 @@ import com.bra.modules.reserve.entity.*;
 import java.util.Date;
 
 /**
+
  * 商品收入统计Entity
  *
  * @author jiangxingqi
@@ -26,7 +27,11 @@ public class ReserveMemberDayReport extends SaasEntity<ReserveMemberDayReport> {
 
     private Double  weiXinBill;//微信
 
+    private Double  personalWeiXinBill;//(个人)微信
+
     private Double  aliPayBill;//支付宝
+
+    private Double  personalAliPayBill;//（个人）支付宝
 
     private Double  dueBill;// 欠账
 
@@ -137,5 +142,19 @@ public class ReserveMemberDayReport extends SaasEntity<ReserveMemberDayReport> {
     }
 
 
+    public Double getPersonalWeiXinBill() {
+        return personalWeiXinBill;
+    }
 
+    public void setPersonalWeiXinBill(Double personalWeiXinBill) {
+        this.personalWeiXinBill = personalWeiXinBill;
+    }
+
+    public Double getPersonalAliPayBill() {
+        return personalAliPayBill;
+    }
+
+    public void setPersonalAliPayBill(Double personalAliPayBill) {
+        this.personalAliPayBill = personalAliPayBill;
+    }
 }

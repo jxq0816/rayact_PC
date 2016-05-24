@@ -44,9 +44,9 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 
 	public List<ReserveMemberIntervalReport> memberIncomeIntervalReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
 
-		List<ReserveMemberIntervalReport> intervalReports=dao.memberIncomeIntervalReport(reserveMemberIntervalReport);
+		List<ReserveMemberIntervalReport> intervalReports=dao.memberIncomeIntervalReport(reserveMemberIntervalReport);//场馆区间收入
 		for(ReserveMemberIntervalReport intervalReport:intervalReports){
-			List<ReserveMemberDayReport> list=this.memberIncomeDayReport(intervalReport);
+			List<ReserveMemberDayReport> list=this.memberIncomeDayReport(intervalReport);//场馆日收入
 			intervalReport.setDayReports(list);
 		}
 		return intervalReports;
