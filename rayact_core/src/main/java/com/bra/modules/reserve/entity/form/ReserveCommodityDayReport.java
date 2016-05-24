@@ -2,10 +2,11 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.ReserveCommodity;
+import com.bra.modules.reserve.entity.ReserveCommodityType;
+import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 商品收入统计Entity
@@ -27,7 +28,27 @@ public class ReserveCommodityDayReport extends SaasEntity<ReserveCommodityDayRep
 
     private Double  weiXinBill;//微信
 
+    private Double  personalWeiXinBill;//（个人）微信
+
     private Double  aliPayBill;//支付宝
+
+    private Double  personalAliPayBill;//（个人）支付宝
+
+    public Double getPersonalAliPayBill() {
+        return personalAliPayBill;
+    }
+
+    public void setPersonalAliPayBill(Double personalAliPayBill) {
+        this.personalAliPayBill = personalAliPayBill;
+    }
+
+    public Double getPersonalWeiXinBill() {
+        return personalWeiXinBill;
+    }
+
+    public void setPersonalWeiXinBill(Double personalWeiXinBill) {
+        this.personalWeiXinBill = personalWeiXinBill;
+    }
 
     private Double  dueBill;// 欠账
 

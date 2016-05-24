@@ -86,7 +86,9 @@
                                 <th>现金</th>
                                 <th>银行卡</th>
                                 <th>微信</th>
+                                <th>（个人）微信</th>
                                 <th>支付宝</th>
+                                <th>（个人）支付宝</th>
                                 <th>欠账</th>
                                 <th>其它</th>
                                 <th>合计</th>
@@ -115,7 +117,15 @@
                                     </td>
 
                                     <td>
+                                            ${incomeCollectReport.personalWeiXinBill}
+                                    </td>
+
+                                    <td>
                                             ${incomeCollectReport.aliPayBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.personalAliPayBill}
                                     </td>
 
                                     <td>
