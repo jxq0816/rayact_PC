@@ -78,7 +78,13 @@
                         <input type="radio" class="icheck" id="weixin" value="4" name="payType"/>微信
                     </label>
                     <label class="radio-inline">
+                        <input type="radio" class="icheck" id="personalWeixin" value="9" name="payType"/>微信（个人）
+                    </label>
+                    <label class="radio-inline">
                         <input type="radio" class="icheck" id="alipay" value="5" name="payType"/>支付宝
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" id="personalAlipay" value="10" name="payType"/>支付宝（个人）
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="icheck" id="other" value="6" name="payType"/>其它
