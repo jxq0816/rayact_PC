@@ -80,9 +80,9 @@
 	<select id="findCount" resultType="Long">
 		SELECT 
 			count(1)
-		FROM OA_NOTIFY a
+		FROM oa_notify a
 		<if test="isSelf">
-			JOIN OA_NOTIFY_RECORD r ON r.oa_notify_id = a.id AND r.user_id = #{currentUser.id}
+			JOIN oa_notify_record r ON r.oa_notify_id = a.id AND r.user_id = #{currentUser.id}
 				<if test="readFlag != null and readFlag != ''">
 					AND r.read_flag = #{readFlag}
 				</if>
