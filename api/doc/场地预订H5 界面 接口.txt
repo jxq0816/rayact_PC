@@ -8,4 +8,4 @@ consDate :日期 Date
 H5界面 最多选择4个小时
 
 通过js的函数 filedSelectJson(isAndroid) 可以获取的预订数据
-isAndroid 标识手机来源，1：代表Android 0：代表IOC
+isAndroid 标识手机来源，1：代表Android 0：代表IOS
