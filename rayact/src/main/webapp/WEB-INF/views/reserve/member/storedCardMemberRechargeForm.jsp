@@ -62,7 +62,13 @@
                             <input type="radio" class="icheck" value="4" name="payType"/>微信
                         </label>
                         <label class="radio-inline">
+                            <input type="radio" class="icheck" value="9" name="payType"/>微信（个人）
+                        </label>
+                        <label class="radio-inline">
                             <input type="radio" class="icheck" value="5" name="payType"/>支付宝
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="10" name="payType"/>支付宝（个人）
                         </label>
                         <label class="radio-inline">
                             <input type="radio" class="icheck" value="6" name="payType"/>其它
