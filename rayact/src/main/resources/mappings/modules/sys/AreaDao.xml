@@ -60,7 +60,7 @@
 		<where>
 			  a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="type !=null and type!=''">
-				and a.type=3
+				and a.type=#{type}
 			</if>
 			<if test="parent !=null and parent.id!=''">
 				and a.parent_id= #{parent.id}
