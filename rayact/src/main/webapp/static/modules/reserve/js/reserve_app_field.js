@@ -53,7 +53,7 @@ $(document).ready(function () {
         }
     });
 });
-function filedSelectJson(){
+function filedSelectJson(isAndroid){
     var a = {};
     var reserveVenueCons = $("#orderForm").serializeArray();
     var numreg = /\[[0-9]*\]\./;
@@ -78,7 +78,13 @@ function filedSelectJson(){
         }
     });
     var rtn=JSON.stringify(a);
+    if(isAndroid=='1'){
+        callAndroid(rtn);
+    }
     return rtn;
+}
+function callAndroid(rtn){
+    myObj.JsCallAndroid(rtn);
 }
 function filedSelectArray(){
     var reserveVenueConsArray = $("#orderForm").serializeArray();
