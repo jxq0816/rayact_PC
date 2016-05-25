@@ -46,6 +46,7 @@ public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenuePr
 
     private ReserveProject reserveProject;//项目
 
+
     private List<ReserveVenueProjectFieldIntervalReport> fieldIntervalReports;//场地报表
 
     private Date startDate;//开始日期
@@ -75,10 +76,6 @@ public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenuePr
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-
-
-
 
     public ReserveField getReserveField() {
         return reserveField;
@@ -185,4 +182,5 @@ public class ReserveVenueProjectIntervalReport extends SaasEntity<ReserveVenuePr
     public void setDueBill(Double dueBill) {
         this.dueBill = dueBill;
     }
+
 }

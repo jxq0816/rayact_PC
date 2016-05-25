@@ -24,7 +24,7 @@ import java.util.*;
 
 /**
  * 场地预定管理
- * Created by xiaobin on 16/1/5.
+ * Created by jiangxingqi on 16/1/5.
  */
 @Controller
 @RequestMapping(value = "${adminPath}/app/reserve/field")

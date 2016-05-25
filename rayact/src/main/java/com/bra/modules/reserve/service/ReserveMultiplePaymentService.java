@@ -4,6 +4,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveMultiplePaymentDao;
 import com.bra.modules.reserve.entity.ReserveMultiplePayment;
+import com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalReport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,10 @@ public class ReserveMultiplePaymentService extends CrudService<ReserveMultiplePa
 	
 	public List<ReserveMultiplePayment> findList(ReserveMultiplePayment reserveMultiplePayment) {
 		return super.findList(reserveMultiplePayment);
+	}
+
+	public ReserveVenueProjectFieldIntervalReport reserveFieldMultiplePaymentReport(ReserveVenueProjectFieldIntervalReport report){
+		return dao.reserveFieldMultiplePaymentReport(report);
 	}
 	
 	public Page<ReserveMultiplePayment> findPage(Page<ReserveMultiplePayment> page, ReserveMultiplePayment reserveMultiplePayment) {

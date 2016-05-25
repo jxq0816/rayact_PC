@@ -7,7 +7,6 @@ import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 场馆 项目 场地 收入统计Entity
@@ -39,26 +38,17 @@ public class ReserveVenueProjectFieldIntervalReport extends SaasEntity<ReserveVe
 
     private Double  dueBill;// 欠账
 
+    private Double  multiplePaymentBill;// 多方式付款
+
     private ReserveField reserveField;//场地
 
     private ReserveVenue reserveVenue;//场馆
 
     private ReserveProject reserveProject;//项目
 
-    private List<ReserveVenueProjectFieldDayReport> dayReports;//日报表
-
     private Date startDate;//开始日期
 
     private Date endDate;//结束日期
-
-
-    public List<ReserveVenueProjectFieldDayReport> getDayReports() {
-        return dayReports;
-    }
-
-    public void setDayReports(List<ReserveVenueProjectFieldDayReport> dayReports) {
-        this.dayReports = dayReports;
-    }
 
     public Date getStartDate() {
         return startDate;
@@ -179,5 +169,13 @@ public class ReserveVenueProjectFieldIntervalReport extends SaasEntity<ReserveVe
 
     public void setDueBill(Double dueBill) {
         this.dueBill = dueBill;
+    }
+
+    public Double getMultiplePaymentBill() {
+        return multiplePaymentBill;
+    }
+
+    public void setMultiplePaymentBill(Double multiplePaymentBill) {
+        this.multiplePaymentBill = multiplePaymentBill;
     }
 }

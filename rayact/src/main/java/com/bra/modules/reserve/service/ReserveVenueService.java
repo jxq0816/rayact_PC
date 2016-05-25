@@ -30,6 +30,8 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
     @Autowired
     private ReserveVenueDao dao;
+    @Autowired
+    private ReserveMultiplePaymentService reserveMultiplePaymentService;
 
     public ReserveVenue get(String id) {
         ReserveVenue reserveVenue = super.get(id);
@@ -291,7 +293,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         /*明细 开始*/
         if("2".equals(queryType)){
             for (ReserveVenueProjectIntervalReport i : venueProjectList) {//场馆 项目遍历
-                List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//场馆 项目 场地 收入统计
+                List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//查询A场馆B项目下的场地 收入统计明细
                 i.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
             }
         }
@@ -314,14 +316,29 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     /**
-     * 场馆 项目 场地 收入统计
+     * 查询A场馆B项目下的场地 收入统计明细
      */
     public List<ReserveVenueProjectFieldIntervalReport> reserveVenueProjectFieldIntervalReport(ReserveVenueProjectIntervalReport projectIntervalReport) {
         if (projectIntervalReport != null) {
             if (projectIntervalReport.getSqlMap().get("dsf") == null)
                 projectIntervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("s.venue_id"));
         }
+        ///查询A场馆B项目下的场地 收入统计明细 该方法只能获得单方式付款的收入
         List<ReserveVenueProjectFieldIntervalReport> filedReports = dao.reserveVenueProjectFieldIntervalReport(projectIntervalReport);
+        ///查询A场馆B项目下的场地 收入统计明细 该方法累加多方式付款的收入
+        for(ReserveVenueProjectFieldIntervalReport i: filedReports){
+            //如果该场地存在多方式付款
+            if(i.getMultiplePaymentBill()!=0.0){
+                ReserveVenueProjectFieldIntervalReport multiple=reserveMultiplePaymentService.reserveFieldMultiplePaymentReport(i);
+                i.setStoredCardBill(i.getStoredCardBill()+multiple.getStoredCardBill());
+                i.setCashBill(i.getCashBill()+multiple.getCashBill());
+                i.setBankCardBill(i.getBankCardBill()+multiple.getBankCardBill());
+                i.setWeiXinBill(i.getWeiXinBill()+multiple.getWeiXinBill());
+                i.setPersonalWeiXinBill(i.getPersonalWeiXinBill()+multiple.getPersonalWeiXinBill());
+                i.setAliPayBill(i.getAliPayBill()+multiple.getAliPayBill());
+                i.setPersonalAliPayBill(i.getPersonalAliPayBill()+multiple.getPersonalAliPayBill());
+            }
+        }
         return filedReports;
     }
 

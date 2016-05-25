@@ -303,7 +303,12 @@
         e.name AS "reserveVenue.name",
         d.id AS "reserveProject.id",
         d.name AS "reserveProject.name",
-        sum(b.cons_price) AS "bill",
+        sum(
+        case
+        WHEN b.pay_type!=8 then b.cons_price
+        WHEN p.pay_type!=8 then p.payment_amount
+        end
+        ) AS "bill",
         sum(
         case
         WHEN b.pay_type=1 then b.cons_price
@@ -453,7 +458,8 @@
         sum(if(pay_type=5,b.cons_price,0)) AS "aliPayBill",
         sum(if(pay_type=10,b.cons_price,0)) AS "personalAliPayBill",
         sum(if(pay_type=6,b.cons_price,0)) AS "otherBill",
-        sum(if(pay_type=7,b.cons_price,0)) AS "dueBill"
+        sum(if(pay_type=7,b.cons_price,0)) AS "dueBill",
+        sum(if(pay_type=8,b.cons_price,0)) AS "multiplePaymentBill"
         from reserve_venue_cons_item as a,reserve_venue_cons as b,reserve_field as c,reserve_project as d,reserve_venue as e
         <where>
             a.cons_data_id=b.id and a.field_id=c.id and c.project_id=d.id and a.del_flag = #{DEL_FLAG_NORMAL} and
