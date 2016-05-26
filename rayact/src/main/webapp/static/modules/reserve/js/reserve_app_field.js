@@ -90,7 +90,7 @@ function orderSubmit(reserveJson){
          data:{
              reserveJson:reserveJson,
              username:"jiangson",
-             phoneNum:"123"
+             phone:"123"
          },
          success: function (result) {
              if(result.bool){
