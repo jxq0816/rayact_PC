@@ -116,7 +116,7 @@ public class ReserveAppController extends BaseController {
 
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public Map<String, Boolean> reservation(String reserveJson,String username,String phoneNum) {
+    public Map<String, Boolean> reservation(String reserveJson,String username,String phone) {
         System.out.println(reserveJson);
         JSONObject jasonObject = JSONObject.fromObject(reserveJson);
         Map m = (Map)jasonObject;

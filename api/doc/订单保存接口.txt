@@ -1,0 +1,10 @@
+城市 接口
+ http://192.168.1.182:8080/rayact/a/app/reserve/field/reservation
+一、请求参数
+reserveJson : 预订数据 String
+username: 预订人的姓名 String
+phone：手机号 String
+二、返回参数
+bool:预订是否成功 boolean
+true:预订成功
+false:预订失败
