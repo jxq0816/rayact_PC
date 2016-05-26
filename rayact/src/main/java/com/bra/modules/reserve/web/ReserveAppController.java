@@ -12,6 +12,7 @@ import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.google.common.collect.Maps;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,7 +116,11 @@ public class ReserveAppController extends BaseController {
 
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public Map<String, Boolean> reservation(ReserveVenueCons reserveVenueCons) {
+    public Map<String, Boolean> reservation(String reserveJson,String username,String phoneNum) {
+        System.out.println(reserveJson);
+        JSONObject jasonObject = JSONObject.fromObject(reserveJson);
+        Map m = (Map)jasonObject;
+        ReserveVenueCons reserveVenueCons=null;
         boolean bool = true;//时间段是否可用
         Date consDate = reserveVenueCons.getConsDate();
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
@@ -170,5 +175,10 @@ public class ReserveAppController extends BaseController {
             }
         }
         return map;
+    }
+    public static void main(String args[]){
+        String reserveJson="{\"consDate\":\"2016-05-26\",\"reserveVenue.id\":\"lL2ZU7tcadSMiCRxyyY\",\"venueConsList\":[{\"reserveField.id\":\"9pkwvQImMhz9wZl4fso\",\"reserveField.name\":\"网球1号场\",\"orderPrice\":\"90.0\",\"startTime\":\"23:30\",\"endTime\":\"00:00\"},{\"reserveField.id\":\"fgR23dUaV9a5T08bfCP\",\"reserveField.name\":\"网球2号场\",\"orderPrice\":\"90.0\",\"startTime\":\"23:30\",\"endTime\":\"00:00\"}]}";
+        JSONObject jasonObject = JSONObject.fromObject(reserveJson);
+        Map m = (Map)jasonObject;
     }
 }

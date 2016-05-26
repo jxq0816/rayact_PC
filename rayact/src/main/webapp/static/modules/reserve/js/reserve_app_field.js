@@ -79,31 +79,26 @@ function filedSelectJson(isAndroid){
     });
     var rtn=JSON.stringify(a);
     if(isAndroid=='1'){
-        callAndroid(rtn);
+        myObj.JsCallAndroid(rtn);//给Android 传输预订数据
     }
+    orderSubmit(rtn);
     return rtn;
 }
-function callAndroid(rtn){
-    myObj.JsCallAndroid(rtn);
-}
-function filedSelectArray(){
-    var reserveVenueConsArray = $("#orderForm").serializeArray();
-    var rtn=JSON.stringify(reserveVenueConsArray);
-    orderSubmit(reserveVenueConsArray);
-    return rtn;
-
-}
-function orderSubmit(reserveVenueCons){
+function orderSubmit(reserveJson){
     jQuery.postItems({
          url: ctx+'/app/reserve/field/reservation',
-         data: reserveVenueCons,
+         data:{
+             reserveJson:reserveJson,
+             username:"jiangson",
+             phoneNum:"123"
+         },
          success: function (result) {
-         if(result.bool){
-             alert("预订成功");
-         }else{
-             alert("预订失败");
-         }
-         location.reload();
+             if(result.bool){
+                 alert("预订成功");
+             }else{
+                 alert("预订失败");
+             }
+            location.reload();
          }
      });
 }
