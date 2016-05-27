@@ -8,3 +8,4 @@ phone：手机号 String
 bool:预订是否成功 boolean
 true:预订成功
 false:预订失败
+orderId: 订单编号 String

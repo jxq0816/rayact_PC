@@ -93,11 +93,7 @@ function orderSubmit(reserveJson){
              phone:"123"
          },
          success: function (result) {
-             if(result.bool){
-                 alert("预订成功");
-             }else{
-                 alert("预订失败");
-             }
+            alert(result.bool);
             location.reload();
          }
      });

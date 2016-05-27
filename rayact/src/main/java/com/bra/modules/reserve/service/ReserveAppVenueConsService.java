@@ -66,7 +66,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
      * @param reserveVenueCons
      */
     @Transactional(readOnly = false)
-    public void save(ReserveVenueCons reserveVenueCons) {
+    public String saveOrder(ReserveVenueCons reserveVenueCons) {
         //获取会员
         String mobile=reserveVenueCons.getConsMobile();//预订人手机号
         ReserveMember appMember=new ReserveMember();
@@ -88,7 +88,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
         String frequency = reserveVenueCons.getFrequency();//频率
 
-        reserveVenueCons.preInsert();
+        reserveVenueCons.preInsert();//生成主键
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
         Double sum = 0D;//订单价格
         Double filedSum = 0D;//场地应收
@@ -126,6 +126,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
         reserveVenueConsDao.insert(reserveVenueCons);//订单价格更改
+        return reserveVenueCons.getId();
     }
 
     @Transactional(readOnly = false)
