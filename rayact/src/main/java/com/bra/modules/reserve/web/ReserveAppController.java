@@ -191,6 +191,8 @@ public class ReserveAppController extends BaseController {
         String orderId=null;
         if (bool==true) {
             ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
+            reserveVenueCons.setUserName(username);
+            reserveVenueCons.setConsMobile(phone);
             String reserveVenueId=(String)object.get("reserveVenueId");
             ReserveVenue venue=new ReserveVenue(reserveVenueId);
             reserveVenueCons.setReserveVenue(venue);
