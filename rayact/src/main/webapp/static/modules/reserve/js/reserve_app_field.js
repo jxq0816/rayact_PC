@@ -34,8 +34,8 @@ $(document).ready(function () {
                 '<div class="row text-center" style="height:50px;background-color:#009ff0;font-size:20px;color:#fff;line-height: 50px">'+time+'</div>' +
                 '<div class="row text-center" style="height:50px;font-size:20px;line-height: 50px">'+fieldName+'</div></div>';
             $("#unPayed").append(s);
-            var order_info='<div id='+order_item_id+'><input name="venueConsList['+index+'].reserveField.id" value=\''+fieldId+'\' type="hidden">'
-                + '<input name="venueConsList['+index+'].reserveField.name" value=\''+fieldName+'\' type="hidden">'
+            var order_info='<div id='+order_item_id+'><input name="venueConsList['+index+'].reserveFieldId" value=\''+fieldId+'\' type="hidden">'
+                + '<input name="venueConsList['+index+'].reserveFieldName" value=\''+fieldName+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].orderPrice" value=\''+price+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].startTime" value=\''+startTime+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].endTime" value=\''+endTime+'\' type="hidden"></div>';

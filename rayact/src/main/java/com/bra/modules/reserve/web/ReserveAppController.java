@@ -161,9 +161,9 @@ public class ReserveAppController extends BaseController {
         for(Map i:list){
             ReserveVenueConsItem item=new ReserveVenueConsItem();
             ReserveField field=new ReserveField();
-            String filedId=(String) i.get("reserveField.id");
+            String filedId=(String) i.get("reserveFieldId");
             field.setId(filedId);
-            String filedName=(String) i.get("reserveField.name");
+            String filedName=(String) i.get("reserveFieldName");
             field.setName(filedName);
             item.setReserveField(field);
 
@@ -191,7 +191,7 @@ public class ReserveAppController extends BaseController {
         String orderId=null;
         if (bool==true) {
             ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
-            String reserveVenueId=(String)object.get("reserveVenue.id");
+            String reserveVenueId=(String)object.get("reserveVenueId");
             ReserveVenue venue=new ReserveVenue(reserveVenueId);
             reserveVenueCons.setReserveVenue(venue);
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
