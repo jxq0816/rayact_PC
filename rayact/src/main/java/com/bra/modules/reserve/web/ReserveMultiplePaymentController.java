@@ -1,7 +1,6 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveMultiplePayment;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 多方式付款Controller
@@ -44,8 +44,8 @@ public class ReserveMultiplePaymentController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMultiplePayment reserveMultiplePayment,String orderId, HttpServletRequest request, HttpServletResponse response, Model model) {
 		reserveMultiplePayment.setOrderId(orderId);
-		Page<ReserveMultiplePayment> page = reserveMultiplePaymentService.findPage(new Page<ReserveMultiplePayment>(request, response), reserveMultiplePayment);
-		model.addAttribute("page", page);
+		List<ReserveMultiplePayment> list = reserveMultiplePaymentService.findList(reserveMultiplePayment);
+		model.addAttribute("list", list);
 		return "reserve/saleField/multiplePaymentList";
 	}
 

@@ -3,15 +3,15 @@
  */
 package com.bra.modules.sys.service;
 
-import java.util.List;
-
+import com.bra.common.service.TreeService;
+import com.bra.modules.sys.dao.AreaDao;
 import com.bra.modules.sys.entity.Area;
 import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.service.TreeService;
-import com.bra.modules.sys.dao.AreaDao;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 区域Service
@@ -24,6 +24,10 @@ public class AreaService extends TreeService<AreaDao, Area> {
 
 	public List<Area> findAll(){
 		return UserUtils.getAreaList();
+	}
+
+	public List<Map> findListForAPP(Area area){
+		return dao.findListForAPP(area);
 	}
 
 	@Transactional(readOnly = false)

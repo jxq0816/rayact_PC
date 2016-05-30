@@ -53,7 +53,9 @@
 		sum(if(pay_type=2,d.detail_sum,0)) AS "cashBill",
 		sum(if(pay_type=3,d.detail_sum,0)) AS "bankCardBill",
 		sum(if(pay_type=4,d.detail_sum,0)) AS "weiXinBill",
+		sum(if(pay_type=9,d.detail_sum,0)) AS "personalWeiXinBill",
 		sum(if(pay_type=5,d.detail_sum,0)) AS "aliPayBill",
+		sum(if(pay_type=10,d.detail_sum,0)) AS "personalAliPayBill",
 		sum(if(pay_type=6,d.detail_sum,0)) AS "otherBill",
 		sum(if(pay_type=7,d.detail_sum,0)) AS "dueBill"
 		from reserve_commodity_sell_detail as d
@@ -88,7 +90,9 @@
 		sum(if(pay_type=2,a.detail_sum,0)) AS "cashBill",
 		sum(if(pay_type=3,a.detail_sum,0)) AS "bankCardBill",
 		sum(if(pay_type=4,a.detail_sum,0)) AS "weiXinBill",
+		sum(if(pay_type=9,a.detail_sum,0)) AS "personalWeiXinBill",
 		sum(if(pay_type=5,a.detail_sum,0)) AS "aliPayBill",
+		sum(if(pay_type=10,a.detail_sum,0)) AS "personalAliPayBill",
 		sum(if(pay_type=6,a.detail_sum,0)) AS "otherBill",
 		sum(if(pay_type=7,a.detail_sum,0)) AS "dueBill",
 		#{day} AS "day"
@@ -130,7 +134,9 @@
 		sum(if(pay_type=2,a.detail_sum,0)) AS "cashBill",
 		sum(if(pay_type=3,a.detail_sum,0)) AS "bankCardBill",
 		sum(if(pay_type=4,a.detail_sum,0)) AS "weiXinBill",
+		sum(if(pay_type=9,a.detail_sum,0)) AS "personalWeiXinBill",
 		sum(if(pay_type=5,a.detail_sum,0)) AS "aliPayBill",
+		sum(if(pay_type=10,a.detail_sum,0)) AS "personalAliPayBill",
 		sum(if(pay_type=6,a.detail_sum,0)) AS "otherBill",
 		sum(if(pay_type=7,a.detail_sum,0)) AS "dueBill",
 		#{startDate} AS "startDate",

@@ -100,8 +100,20 @@
                                             </div>
                                         </div>
                                     </div>
-
-
+                                    <div class="row">
+                                            <div class="form-group">
+                                                <label for="avePrice">人均消费</label>
+                                                <input name="avePrice" type="text" id="avePrice"
+                                                       class="form-control" style="width:200px"
+                                                       value="${reserveVenue.avePrice}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="evaluate_score">评分</label>
+                                                <input name="evaluateScore" type="text" id="evaluate_score"
+                                                       class="form-control" style="width:200px" readonly="readonly"
+                                                       value="${reserveVenue.evaluateScore}"/>
+                                            </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane" id="messages">
                                     <table class="table table-bordered">

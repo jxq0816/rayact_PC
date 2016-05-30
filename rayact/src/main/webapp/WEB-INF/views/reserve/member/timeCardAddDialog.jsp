@@ -2,7 +2,7 @@
 <!-- 次卡冲次数Modal -->
 <button id="timeCardAddDialogButton"  style="display: none" class="btn btn-primary btn-large" href="#timeCardAddDialog"  data-toggle="modal">预订</button>
 <div class="modal fade"  style="width:auto;" id="timeCardAddDialog" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">次卡充值</h4>

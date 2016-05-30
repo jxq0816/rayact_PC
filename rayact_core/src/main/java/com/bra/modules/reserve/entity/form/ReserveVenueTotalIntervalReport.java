@@ -34,9 +34,13 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     private Double  weiXinBill;//微信
 
+    private Double  personalWeiXinBill;//微信
+
+    private Double  personalAliPayBill;//支付宝个人
+
     private Double  aliPayBill;//支付宝
 
-    private Double  otherBill;// 其它
+    private Double  otherBill;// 优惠券
 
     private Double  dueBill;// 欠账
 
@@ -155,6 +159,22 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     public void setQueryType(String queryType) {
         this.queryType = queryType;
+    }
+
+    public Double getPersonalWeiXinBill() {
+        return personalWeiXinBill;
+    }
+
+    public void setPersonalWeiXinBill(Double personalWeiXinBill) {
+        this.personalWeiXinBill = personalWeiXinBill;
+    }
+
+    public Double getPersonalAliPayBill() {
+        return personalAliPayBill;
+    }
+
+    public void setPersonalAliPayBill(Double personalAliPayBill) {
+        this.personalAliPayBill = personalAliPayBill;
     }
 
 }

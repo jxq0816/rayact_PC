@@ -177,12 +177,13 @@ public class UserUtils {
      * @return
      */
     public static List<Area> getAreaList() {
+        /*CacheUtils.remove(CACHE_AREA_LIST);
         @SuppressWarnings("unchecked")
         List<Area> areaList = (List<Area>) getCache(CACHE_AREA_LIST);
-        if (areaList == null) {
-            areaList = areaDao.findAllList(new Area());
+        if (areaList == null) {*/
+        List<Area> areaList = areaDao.findAllList(new Area());
             putCache(CACHE_AREA_LIST, areaList);
-        }
+      /*  }*/
         return areaList;
     }
 

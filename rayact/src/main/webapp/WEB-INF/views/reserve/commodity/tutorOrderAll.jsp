@@ -29,6 +29,15 @@
                                     <td><form:input path="tutor.name" cssStyle="width:100px;" htmlEscape="false"
                                                     maxlength="30"
                                                     class="form-control"/></td>
+                                    <td>项目：</td>
+                                    <td>
+                                        <sys:select cssClass="input-large" name="tutor.project.id" id="project"
+                                                    cssStyle="width:100%"
+                                                    value="${query.tutor.project.id}"
+                                                    items="${reserveProjectList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="请选择"
+                                                    defaultValue=""></sys:select>
+                                    </td>
                                     <td>开始日期：</td>
                                     <td><input
                                             value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveTutorOrder.startDate}"/>"
@@ -58,12 +67,14 @@
                             <thead>
                             <tr>
                                 <th>教练姓名</th>
-                                <th>收入</th>
-                                <th>时间</th>
+                                <th>授课时长/小时</th>
+                                <th>教练费/元</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <c:set var="time" value="0"></c:set>
+                            <c:set var="price" value="0"></c:set>
                             <c:forEach items="${page.list}" var="reserveTutorOrder">
                                 <tr>
                                     <td>
@@ -71,12 +82,13 @@
                                                 ${reserveTutorOrder.tutorName}
                                         </a></td>
                                     <td>
-                                            ${reserveTutorOrder.price}
-
+                                        <fmt:formatNumber value="${reserveTutorOrder.minute}" pattern="0.0"
+                                                          maxFractionDigits="2" type="number"/>
+                                        <c:set var="time" value="${time+reserveTutorOrder.minute}"></c:set>
                                     </td>
                                     <td>
-                                        <fmt:formatNumber value="${reserveTutorOrder.minute}" pattern="0.0"
-                                                          maxFractionDigits="2" type="number"/>小时
+                                            ${reserveTutorOrder.price}
+                                        <c:set var="price" value="${price+reserveTutorOrder.price}"></c:set>
                                     </td>
                                     <td>
                                         <a class="btn btn-primary btn-xs"
@@ -85,6 +97,15 @@
                                     </td>
                                 </tr>
                             </c:forEach>
+                            <tr>
+                                <td>合计</td>
+                                <td>
+                                    <fmt:formatNumber value="${time}" pattern="0.0"
+                                                      maxFractionDigits="2" type="number"/>
+                                </td>
+                                <td>${price}</td>
+                                <td></td>
+                            </tr>
                             </tbody>
                         </table>
 

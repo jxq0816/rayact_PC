@@ -1,0 +1,11 @@
+场地预订H5 界面 接口
+ http://192.168.8.133:8080/rayact/a/app/reserve/field/main?venueId=lL2ZU7tcadSMiCRxyyY&consDate=2016-05-09&projectId=1
+一、请求参数
+venueId :场馆编号 String
+projectId:项目编号 String
+consDate :日期 Date
+二、返回参数
+H5界面 最多选择4个小时
+
+通过js的函数 filedSelectJson(isAndroid) 可以获取的预订数据
+isAndroid 标识手机来源，1：代表Android 0：代表IOS

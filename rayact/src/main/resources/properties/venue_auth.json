@@ -168,7 +168,7 @@
       {
         "code": "venueIncomeReport",
         "name": "场地收入统计",
-        "href":"/reserve/reserveVenue/report",
+        "href":"/reserve/reserveVenue/fieldReport",
         "authorityList": []
       },
       {

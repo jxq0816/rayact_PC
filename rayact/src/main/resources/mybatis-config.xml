@@ -4,6 +4,9 @@
 
 	<!-- 全局参数 -->
 	<settings>
+		<!-- 参数值为空时，依然返回null。 -->
+		<setting name="callSettersOnNulls" value="true"/>
+
 		<!-- 使全局的映射器启用或禁用缓存。 -->
 		<setting name="cacheEnabled" value="true"/>
 		

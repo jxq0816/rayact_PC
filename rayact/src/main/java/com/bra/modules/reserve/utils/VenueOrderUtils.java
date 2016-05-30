@@ -31,6 +31,10 @@ public class VenueOrderUtils {
             return "打白条";
         }else if ("8".equals(payType)) {
             return "多方式付款";
+        }else if ("9".equals(payType)) {
+            return "微信（个人）";
+        }else if ("10".equals(payType)) {
+            return "支付宝（个人）";
         }
         return "";
     }

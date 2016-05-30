@@ -77,19 +77,26 @@
                         <table>
                             <thead>
                             <tr>
+                                <th>场馆</th>
                                 <th>储值卡收入</th>
                                 <th>现金收入</th>
                                 <th>银行卡收入</th>
                                 <th>微信收入</th>
+                                <th>（个人）微信收入</th>
                                 <th>支付宝收入</th>
+                                <th>（个人）支付宝收入</th>
                                 <th>欠账</th>
-                                <th>其它</th>
+                                <th>优惠券</th>
                                 <th>合计</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${collectReport}" var="report">
                                 <tr>
+                                    <td>
+                                            ${report.reserveVenue.name}
+                                    </td>
+
                                     <td>
                                             ${report.storedCardBill}
                                     </td>
@@ -107,7 +114,15 @@
                                     </td>
 
                                     <td>
+                                            ${report.personalWeiXinBill}
+                                    </td>
+
+                                    <td>
                                             ${report.aliPayBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.personalAliPayBill}
                                     </td>
 
                                     <td>

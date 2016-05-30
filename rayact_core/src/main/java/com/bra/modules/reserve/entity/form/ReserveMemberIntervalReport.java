@@ -30,7 +30,12 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
 
     private Double  weiXinBill;//微信
 
+    private Double  personalWeiXinBill;//(个人)微信
+
     private Double  aliPayBill;//支付宝
+
+    private Double  personalAliPayBill;//（个人）支付宝
+
 
     private Double  dueBill;// 欠账
 
@@ -47,7 +52,6 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
     private Date startDate;//开始日期
 
     private Date endDate;//结束日期
-
 
     public List<ReserveMemberDayReport> getDayReports() {
         return dayReports;
@@ -164,4 +168,21 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public Double getPersonalWeiXinBill() {
+        return personalWeiXinBill;
+    }
+
+    public void setPersonalWeiXinBill(Double personalWeiXinBill) {
+        this.personalWeiXinBill = personalWeiXinBill;
+    }
+
+    public Double getPersonalAliPayBill() {
+        return personalAliPayBill;
+    }
+
+    public void setPersonalAliPayBill(Double personalAliPayBill) {
+        this.personalAliPayBill = personalAliPayBill;
+    }
+
 }

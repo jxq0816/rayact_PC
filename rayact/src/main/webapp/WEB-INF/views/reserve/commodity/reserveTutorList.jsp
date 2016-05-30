@@ -20,19 +20,25 @@
                            method="post">
                     <div class="breadcrumb form-search">
                         <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                <table class="no-border">
-                                    <tbody class="no-border-y">
-                                    <tr>
-                                        <td>姓名：</td>
-                                        <td><form:input path="name" htmlEscape="false"
-                                                        maxlength="30"
-                                                        class="form-control"/></td>
-                                        <td><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                                   value="查询"/></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <div class="form-group col-lg-3 col-sm-5">
+                                    <label class="control-label" for="project">项目：</label>
+                                    <sys:select cssClass="input-large" name="project.id" id="project"
+                                                cssStyle="width:50%"
+                                                value="${query.project.id}"
+                                                items="${reserveProjectList}" itemLabel="name" itemValue="id"
+                                                defaultLabel="----请选择-----"
+                                                defaultValue=""></sys:select>
+                                </div>
+                                <div class="form-group col-lg-3 col-sm-5">
+                                    <form:input path="name" htmlEscape="false" id="tutorName" cssStyle="width: 100%"
+                                                placeholder="请输入教练名称"
+                                                class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                           value="查询"/>
+                                </div>
                             </div>
                             <div class="pull-right">
                                 <a class="btn btn-success" href="${ctx}/reserve/reserveTutor/form">

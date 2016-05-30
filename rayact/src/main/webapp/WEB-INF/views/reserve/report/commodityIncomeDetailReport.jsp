@@ -107,7 +107,9 @@
                                 <th>现金收入</th>
                                 <th>银行卡收入</th>
                                 <th>微信收入</th>
+                                <th>（个人）微信收入</th>
                                 <th>支付宝收入</th>
+                                <th>（个人）支付宝收入</th>
                                 <th>欠账</th>
                                 <th>其它</th>
                                 <th>合计</th>
@@ -143,7 +145,15 @@
                                         </td>
 
                                         <td>
+                                                ${dayReport.personalWeiXinBill}
+                                        </td>
+
+                                        <td>
                                                 ${dayReport.aliPayBill}
+                                        </td>
+
+                                        <td>
+                                                ${dayReport.personalAliPayBill}
                                         </td>
 
                                         <td>

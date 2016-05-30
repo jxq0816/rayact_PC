@@ -1,0 +1,6 @@
+http://192.168.1.182:8080/rayact/a/app/reserve/reserveVenue/imgList?venueId=hiJ4Ey49PXOQipwkfpq
+一、请求参数
+venueId :场馆编号 String
+二、返回结果
+imgUrl：图片的url String
+

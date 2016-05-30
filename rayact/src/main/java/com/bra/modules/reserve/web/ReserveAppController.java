@@ -1,8 +1,11 @@
 package com.bra.modules.reserve.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveField;
+import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.entity.ReserveVenueCons;
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.FieldPrice;
@@ -11,20 +14,20 @@ import com.bra.modules.reserve.service.ReserveAppFieldPriceService;
 import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.utils.TimeUtils;
-import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * 场地预定管理
- * Created by xiaobin on 16/1/5.
+ * Created by jiangxingqi on 16/1/5.
  */
 @Controller
 @RequestMapping(value = "${adminPath}/app/reserve/field")
@@ -106,38 +109,7 @@ public class ReserveAppController extends BaseController {
         return "reserve/saleField/reserveAppField";
     }
 
-   /* @RequestMapping(value = "trans")
-    @ResponseBody
-    public String trans(ReserveVenueCons reserveVenueCons) {
-        JSONArray jsonArray = JSONArray.fromObject(reserveVenueCons);
-        return jsonArray.toString();
-    }*/
 
-    @RequestMapping(value = "reservation")
-    @ResponseBody
-    public Map<String, Boolean> reservation(ReserveVenueCons reserveVenueCons) {
-        boolean bool = true;//时间段是否可用
-        Date consDate = reserveVenueCons.getConsDate();
-        List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
-        for (ReserveVenueConsItem i : itemList) {//订单详情
-            String startTime = i.getStartTime();
-            String endTime = i.getEndTime();
-            ReserveField field = i.getReserveField();//场地
-            //遍历该日期区间 的场地是否有预订
-            bool = reserveVenueConsItemService.checkReserveTime(consDate, field, startTime, endTime);
-            if(bool==false){
-                break;//该时间段不能使用，跳出循环
-            }
-        }
-        Map<String, Boolean> map = Maps.newConcurrentMap();
-        if (bool==true) {
-            reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
-            reserveVenueCons.setConsDate(consDate);
-            reserveAppVenueConsService.save(reserveVenueCons);//保存预订信息
-        }
-        map.put("bool", bool);
-        return map;
-    }
     /**
      * 结算订单
      *
@@ -169,6 +141,69 @@ public class ReserveAppController extends BaseController {
                 map.put("msg","订单已结算，不可重复结算");
             }
         }
+        return map;
+    }
+    @RequestMapping(value = "reservation")
+    @ResponseBody
+    public Map reservation(String reserveJson,String username,String phone) {
+        String reserve=reserveJson.replaceAll("&quot;","\"");
+        JSONObject object=JSON.parseObject(reserve);
+        String date = (String)object.get("consDate");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date consDate = null;
+        try {
+            consDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<Map> list= (List<Map>) object.get("venueConsList");
+         List<ReserveVenueConsItem> items=new ArrayList<>();
+        for(Map i:list){
+            ReserveVenueConsItem item=new ReserveVenueConsItem();
+            ReserveField field=new ReserveField();
+            String filedId=(String) i.get("reserveFieldId");
+            field.setId(filedId);
+            String filedName=(String) i.get("reserveFieldName");
+            field.setName(filedName);
+            item.setReserveField(field);
+
+            String price=(String)i.get("orderPrice");
+            Double orderPrice=Double.valueOf(price);
+            item.setOrderPrice(orderPrice);
+
+            String startTime=(String)i.get("startTime");
+            item.setStartTime(startTime);
+            String endTime=(String)i.get("endTime");
+            item.setEndTime(endTime);
+            items.add(item);
+        }
+        boolean bool = true;//时间段是否可用
+        for (ReserveVenueConsItem i : items) {//订单详情
+            String startTime = i.getStartTime();
+            String endTime = i.getEndTime();
+            ReserveField field = i.getReserveField();//场地
+            //遍历该日期区间 的场地是否有预订
+            bool = reserveVenueConsItemService.checkReserveTime(consDate, field, startTime, endTime);
+            if(bool==false){
+                break;//该时间段不能使用，跳出循环
+            }
+        }
+        String orderId=null;
+        if (bool==true) {
+            ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
+            reserveVenueCons.setUserName(username);
+            reserveVenueCons.setConsMobile(phone);
+            String reserveVenueId=(String)object.get("reserveVenueId");
+            ReserveVenue venue=new ReserveVenue(reserveVenueId);
+            reserveVenueCons.setReserveVenue(venue);
+            reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
+            reserveVenueCons.setConsDate(consDate);
+            reserveVenueCons.setVenueConsList(items);
+            orderId=reserveAppVenueConsService.saveOrder(reserveVenueCons);//保存预订信息
+        }
+        Map map=new HashMap<>();
+        map.put("orderId", orderId);
+        map.put("bool", bool);
         return map;
     }
 }

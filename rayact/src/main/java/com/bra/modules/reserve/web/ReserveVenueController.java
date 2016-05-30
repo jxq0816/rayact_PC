@@ -130,7 +130,7 @@ public class ReserveVenueController extends BaseController {
         return "reserve/report/venueIncomeTotalReport";
     }
 
-    @RequestMapping(value = "report")
+    @RequestMapping(value = "fieldReport")
     public String report(ReserveVenueProjectIntervalReport venueProjectReport, @RequestParam(required=false,defaultValue="1",value="queryType") String queryType, Model model) {
         Date startDate=venueProjectReport.getStartDate();
         Date endDate=venueProjectReport.getEndDate();
@@ -143,26 +143,28 @@ public class ReserveVenueController extends BaseController {
             endDate=new Date();//默认当天
             venueProjectReport.setEndDate(endDate);
         }
-        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport);//场馆区间报表
+        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport,queryType);//场馆 项目 区间报表
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         model.addAttribute("incomeReport",incomeReport);//收入统计
         model.addAttribute("venueProjectReport",venueProjectReport);//查询参数回传
         List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());//场馆列表
         model.addAttribute("reserveVenueList",reserveVenueList);//场馆列表
-        List<ReserveProject> reserveProjectList=reserveProjectService.findList(new ReserveProject());
+        List<ReserveProject> reserveProjectList=reserveProjectService.findList(new ReserveProject());//项目列表
         model.addAttribute("reserveProjectList",reserveProjectList);//收入统计
         if("1".equals(queryType)){
-            return "reserve/report/venueIncomeReport";
+            return "reserve/report/venueFieldIncomeReport";
         }else{
             List<ReserveVenueProjectIntervalReport> venueProjectDividedReports = reserveVenueService.reserveVenueProjectDividedIntervalReport(venueProjectReport);//场馆 项目 散客 收入统计
             model.addAttribute("venueProjectDividedReports",venueProjectDividedReports);//查询参数回传
-            return "reserve/report/venueIncomeDetailReport";
+            return "reserve/report/venueFieldIncomeDetailReport";
         }
     }
 
     @RequestMapping(value = "reportExport")
-    public void reportExport(HttpServletResponse response,ReserveVenueProjectIntervalReport venueProjectReport, String queryType)throws Exception {
+    public void reportExport(HttpServletResponse response,ReserveVenueProjectIntervalReport venueProjectReport,
+                             @RequestParam(required=false,defaultValue="1",value="queryType") String queryType
+    )throws Exception {
         Date startDate=venueProjectReport.getStartDate();
         Date endDate=venueProjectReport.getEndDate();
         venueProjectReport.setReserveVenue(reserveVenueService.get(venueProjectReport.getReserveVenue()));
@@ -177,7 +179,7 @@ public class ReserveVenueController extends BaseController {
         if(StringUtils.isEmpty(queryType)){
             queryType="1";
         }
-        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport);//场馆区间报表
+        ReserveVenueIncomeIntervalReport incomeReport=reserveVenueService.reserveVenueIncomeIntervalReport(venueProjectReport,queryType);//场馆区间报表
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         if("1".equals(queryType)){
@@ -187,13 +189,13 @@ public class ReserveVenueController extends BaseController {
                 String[] o = new String[10];
                 o[0] = report.getReserveVenue().getName();
                 o[1] = report.getReserveProject().getName();
-                o[2] = String.valueOf(report.getFieldBillStoredCard());
-                o[3] = String.valueOf(report.getFieldBillCash());
-                o[4] = String.valueOf(report.getFieldBillBankCard());
-                o[5] = String.valueOf(report.getFieldBillWeiXin());
-                o[6] = String.valueOf(report.getFieldBillAliPay());
-                o[7] = String.valueOf(report.getFieldBillDue());
-                o[8] = String.valueOf(report.getFieldBillOther());
+                o[2] = String.valueOf(report.getStoredCardBill());
+                o[3] = String.valueOf(report.getCashBill());
+                o[4] = String.valueOf(report.getBankCardBill());
+                o[5] = String.valueOf(report.getWeiXinBill());
+                o[6] = String.valueOf(report.getAliPayBill());
+                o[7] = String.valueOf(report.getDueBill());
+                o[8] = String.valueOf(report.getOtherBill());
                 o[9] = String.valueOf(report.getBill());
                 contentList.add(o);
             }
@@ -221,13 +223,13 @@ public class ReserveVenueController extends BaseController {
                     o[0] = field.getReserveVenue().getName();
                     o[1] = field.getReserveProject().getName();
                     o[2] = field.getReserveField().getName();
-                    o[3] = String.valueOf(field.getFieldBillStoredCard());
-                    o[4] = String.valueOf(field.getFieldBillCash());
-                    o[5] = String.valueOf(field.getFieldBillBankCard());
-                    o[6] = String.valueOf(field.getFieldBillWeiXin());
-                    o[7] = String.valueOf(field.getFieldBillAliPay());
-                    o[8] = String.valueOf(field.getFieldBillDue());
-                    o[9] = String.valueOf(field.getFieldBillOther());
+                    o[3] = String.valueOf(field.getStoredCardBill());
+                    o[4] = String.valueOf(field.getCashBill());
+                    o[5] = String.valueOf(field.getBankCardBill());
+                    o[6] = String.valueOf(field.getWeiXinBill());
+                    o[7] = String.valueOf(field.getAliPayBill());
+                    o[8] = String.valueOf(field.getDueBill());
+                    o[9] = String.valueOf(field.getOtherBill());
                     o[10] = String.valueOf(field.getBill());
                     contentList.add(o);
                 }

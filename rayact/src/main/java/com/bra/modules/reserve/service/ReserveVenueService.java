@@ -30,6 +30,8 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
 
     @Autowired
     private ReserveVenueDao dao;
+    @Autowired
+    private ReserveMultiplePaymentService reserveMultiplePaymentService;
 
     public ReserveVenue get(String id) {
         ReserveVenue reserveVenue = super.get(id);
@@ -204,80 +206,98 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         return venueProjectDividedReports;
     }
 
-    //场馆收入统计
-    public ReserveVenueIncomeIntervalReport reserveVenueIncomeIntervalReport(ReserveVenueProjectIntervalReport venueProjectReport) {
+    //场地收入统计
+    public ReserveVenueIncomeIntervalReport reserveVenueIncomeIntervalReport(ReserveVenueProjectIntervalReport venueProjectReport,String queryType) {
+        /*最下面的总合计*/
         Double billSum = 0.0;
         Double storedCardSum = 0.0;
         Double cashSum = 0.0;
         Double bankCardSum = 0.0;
         Double weiXinSum = 0.0;
+        Double personalWeiXinSum = 0.0;
         Double aliPaySum = 0.0;
+        Double personalAliPaySum = 0.0;
         Double otherSum = 0.0;
         Double dueSum = 0.0;
         List<ReserveVenueProjectIntervalReport> venueProjectList = dao.findVenueProjectList(venueProjectReport);//查询场馆下的所有场地
 
         List<ReserveVenueProjectIntervalReport> venueProjectBlockReports = dao.reserveVenueProjectBlockIntervalReport(venueProjectReport);//场馆 项目 包场 收入统计
         List<ReserveVenueProjectIntervalReport> venueProjectDividedReports = dao.reserveVenueProjectDividedIntervalReport(venueProjectReport);//场馆 项目 散客 收入统计
-        for (ReserveVenueProjectIntervalReport i : venueProjectList) {// 遍历 场馆和项目
+        for (ReserveVenueProjectIntervalReport i : venueProjectList) {// 遍历 场馆和项目 并求和 这次遍历主要是为了求汇总界面的数据
             ReserveProject project = i.getReserveProject();
             ReserveVenue venue = i.getReserveVenue();
+             /*场地项目 收入合计*/
             Double bill = 0.0;
             Double storedCard = 0.0;
             Double cash = 0.0;
             Double bankCard = 0.0;
             Double weiXin = 0.0;
+            Double personalWeiXin = 0.0;
             Double aliPay = 0.0;
+            Double personalAliPay = 0.0;
             Double other = 0.0;
             Double due = 0.0;
             //将包场收入加入
             for (ReserveVenueProjectIntervalReport j : venueProjectBlockReports) {
                 if (j.getReserveProject().getId().equals(project.getId()) && j.getReserveVenue().getId().equals(venue.getId())) {
                     bill += j.getBill();
-                    storedCard += j.getFieldBillStoredCard();
-                    cash += j.getFieldBillCash();
-                    bankCard += j.getFieldBillBankCard();
-                    weiXin += j.getFieldBillWeiXin();
-                    aliPay += j.getFieldBillAliPay();
-                    other += j.getFieldBillOther();
-                    due += j.getFieldBillDue();
+                    storedCard += j.getStoredCardBill();
+                    cash += j.getCashBill();
+                    bankCard += j.getBankCardBill();
+                    weiXin += j.getWeiXinBill();
+                    personalWeiXin+=j.getPersonalWeiXinBill();
+                    aliPay += j.getAliPayBill();
+                    personalAliPay+=j.getPersonalAliPayBill();
+                    other += j.getOtherBill();
+                    due += j.getDueBill();
                 }
             }
             //将散客收入加入
             for (ReserveVenueProjectIntervalReport k : venueProjectDividedReports) {
                 if (k.getReserveProject().getId().equals(project.getId()) && k.getReserveVenue().getId().equals(venue.getId())) {
                     bill += k.getBill();
-                    storedCard += k.getFieldBillStoredCard();
-                    cash += k.getFieldBillCash();
-                    bankCard += k.getFieldBillBankCard();
-                    weiXin += k.getFieldBillWeiXin();
-                    aliPay += k.getFieldBillAliPay();
-                    other += k.getFieldBillOther();
-                    due += k.getFieldBillDue();
+                    storedCard += k.getStoredCardBill();
+                    cash += k.getCashBill();
+                    bankCard += k.getBankCardBill();
+                    weiXin += k.getWeiXinBill();
+                    personalWeiXin+=k.getPersonalWeiXinBill();
+                    personalAliPay+=k.getPersonalAliPayBill();
+                    aliPay += k.getAliPayBill();
+                    other += k.getOtherBill();
+                    due += k.getDueBill();
                 }
             }
-            i.setFieldBillStoredCard(storedCard);
+             /*场地项目 收入合计 保存*/
+            i.setStoredCardBill(storedCard);
             i.setBill(bill);
-            i.setFieldBillCash(cash);
-            i.setFieldBillBankCard(bankCard);
-            i.setFieldBillWeiXin(weiXin);
-            i.setFieldBillAliPay(aliPay);
-            i.setFieldBillOther(other);
-            i.setFieldBillDue(due);
-            //场地 项目总合计 计算
+            i.setCashBill(cash);
+            i.setBankCardBill(bankCard);
+            i.setWeiXinBill(weiXin);
+            i.setPersonalWeiXinBill(personalWeiXin);
+            i.setAliPayBill(aliPay);
+            i.setPersonalAliPayBill(personalAliPay);
+            i.setOtherBill(other);
+            i.setDueBill(due);
+            //最下面的总合计 计算
             billSum += bill;
             storedCardSum += storedCard;
             cashSum += cash;
             bankCardSum += bankCard;
             weiXinSum += weiXin;
+            personalWeiXinSum+=personalWeiXin;
             aliPaySum += aliPay;
+            personalAliPaySum+=personalAliPay;
             otherSum += other;
             dueSum += due;
         }
         /*明细 开始*/
-        for (ReserveVenueProjectIntervalReport i : venueProjectList) {//场馆 项目遍历
-            List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//场馆 项目 场地 收入统计
-            i.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
+        if("2".equals(queryType)){
+            for (ReserveVenueProjectIntervalReport i : venueProjectList) {//场馆 项目遍历
+                List<ReserveVenueProjectFieldIntervalReport> fieldReports = this.reserveVenueProjectFieldIntervalReport(i);//查询A场馆B项目下的场地 收入统计明细
+                i.setFieldIntervalReports(fieldReports);//场馆 项目 再精确到几号场地
+            }
         }
+
         /*明细 结束*/
         //场地 项目 总合计设置
         ReserveVenueIncomeIntervalReport venueReport = new ReserveVenueIncomeIntervalReport();
@@ -286,7 +306,9 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         venueReport.setCashBill(cashSum);
         venueReport.setBankCardBill(bankCardSum);
         venueReport.setWeiXinBill(weiXinSum);
+        venueReport.setPersonalWeiXinBill(personalWeiXinSum);
         venueReport.setAliPayBill(aliPaySum);
+        venueReport.setPersonalAliPayBill(personalAliPaySum);
         venueReport.setOtherBill(otherSum);
         venueReport.setDueBill(dueSum);
         venueReport.setProjectIntervalReports(venueProjectList);//设置场馆项目的统计
@@ -294,14 +316,29 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     /**
-     * 场馆 项目 场地 收入统计
+     * 查询A场馆B项目下的场地 收入统计明细
      */
     public List<ReserveVenueProjectFieldIntervalReport> reserveVenueProjectFieldIntervalReport(ReserveVenueProjectIntervalReport projectIntervalReport) {
         if (projectIntervalReport != null) {
             if (projectIntervalReport.getSqlMap().get("dsf") == null)
                 projectIntervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("s.venue_id"));
         }
+        ///查询A场馆B项目下的场地 收入统计明细 该方法只能获得单方式付款的收入
         List<ReserveVenueProjectFieldIntervalReport> filedReports = dao.reserveVenueProjectFieldIntervalReport(projectIntervalReport);
+        ///查询A场馆B项目下的场地 收入统计明细 该方法累加多方式付款的收入
+        for(ReserveVenueProjectFieldIntervalReport i: filedReports){
+            //如果该场地存在多方式付款
+            if(i.getMultiplePaymentBill()!=0.0){
+                ReserveVenueProjectFieldIntervalReport multiple=reserveMultiplePaymentService.reserveFieldMultiplePaymentReport(i);
+                i.setStoredCardBill(i.getStoredCardBill()+multiple.getStoredCardBill());
+                i.setCashBill(i.getCashBill()+multiple.getCashBill());
+                i.setBankCardBill(i.getBankCardBill()+multiple.getBankCardBill());
+                i.setWeiXinBill(i.getWeiXinBill()+multiple.getWeiXinBill());
+                i.setPersonalWeiXinBill(i.getPersonalWeiXinBill()+multiple.getPersonalWeiXinBill());
+                i.setAliPayBill(i.getAliPayBill()+multiple.getAliPayBill());
+                i.setPersonalAliPayBill(i.getPersonalAliPayBill()+multiple.getPersonalAliPayBill());
+            }
+        }
         return filedReports;
     }
 

@@ -34,8 +34,8 @@ $(document).ready(function () {
                 '<div class="row text-center" style="height:50px;background-color:#009ff0;font-size:20px;color:#fff;line-height: 50px">'+time+'</div>' +
                 '<div class="row text-center" style="height:50px;font-size:20px;line-height: 50px">'+fieldName+'</div></div>';
             $("#unPayed").append(s);
-            var order_info='<div id='+order_item_id+'><input name="venueConsList['+index+'].reserveField.id" value=\''+fieldId+'\' type="hidden">'
-                + '<input name="venueConsList['+index+'].reserveField.name" value=\''+fieldName+'\' type="hidden">'
+            var order_info='<div id='+order_item_id+'><input name="venueConsList['+index+'].reserveFieldId" value=\''+fieldId+'\' type="hidden">'
+                + '<input name="venueConsList['+index+'].reserveFieldName" value=\''+fieldName+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].orderPrice" value=\''+price+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].startTime" value=\''+startTime+'\' type="hidden">'
                 + '<input name="venueConsList['+index+'].endTime" value=\''+endTime+'\' type="hidden"></div>';
@@ -53,7 +53,7 @@ $(document).ready(function () {
         }
     });
 });
-function filedSelectJson(){
+function filedSelectJson(isAndroid){
     var a = {};
     var reserveVenueCons = $("#orderForm").serializeArray();
     var numreg = /\[[0-9]*\]\./;
@@ -78,26 +78,23 @@ function filedSelectJson(){
         }
     });
     var rtn=JSON.stringify(a);
+    if(isAndroid=='1'){
+        myObj.JsCallAndroid(rtn);//给Android 传输预订数据
+    }
+    orderSubmit(rtn);
     return rtn;
 }
-function filedSelectArray(){
-    var reserveVenueConsArray = $("#orderForm").serializeArray();
-    var rtn=JSON.stringify(reserveVenueConsArray);
-    orderSubmit(reserveVenueConsArray);
-    return rtn;
-
-}
-function orderSubmit(reserveVenueCons){
+function orderSubmit(reserveJson){
     jQuery.postItems({
          url: ctx+'/app/reserve/field/reservation',
-         data: reserveVenueCons,
+         data:{
+             reserveJson:reserveJson,
+             username:"jiangson",
+             phone:"123"
+         },
          success: function (result) {
-         if(result.bool){
-             alert("预订成功");
-         }else{
-             alert("预订失败");
-         }
-         location.reload();
+            alert(result.bool);
+            location.reload();
          }
      });
 }

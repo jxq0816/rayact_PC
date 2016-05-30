@@ -2,9 +2,6 @@ package com.bra.modules.reserve.entity.form;
 
 
 import com.bra.common.persistence.SaasEntity;
-import com.bra.modules.reserve.entity.ReserveField;
-import com.bra.modules.reserve.entity.ReserveProject;
-import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
 import java.util.List;
@@ -29,7 +26,11 @@ public class ReserveVenueIncomeIntervalReport extends SaasEntity<ReserveVenueInc
 
     private Double  weiXinBill;//微信
 
+    private Double  personalWeiXinBill;//个人微信
+
     private Double  aliPayBill;//支付宝
+
+    private Double  personalAliPayBill;//个人微信
 
     private Double  dueBill;// 欠账
 
@@ -130,5 +131,19 @@ public class ReserveVenueIncomeIntervalReport extends SaasEntity<ReserveVenueInc
         this.projectIntervalReports = projectIntervalReports;
     }
 
+    public Double getPersonalWeiXinBill() {
+        return personalWeiXinBill;
+    }
 
+    public void setPersonalWeiXinBill(Double personalWeiXinBill) {
+        this.personalWeiXinBill = personalWeiXinBill;
+    }
+
+    public Double getPersonalAliPayBill() {
+        return personalAliPayBill;
+    }
+
+    public void setPersonalAliPayBill(Double personalAliPayBill) {
+        this.personalAliPayBill = personalAliPayBill;
+    }
 }

@@ -51,17 +51,6 @@
                                             </label>
                                         </div>
                                     </td>
-
-                                        <%--<td>
-                                            <div class="tab-tit-first">
-                                                <ul>
-                                                    <li id="today"><a href="javascript:queryToday()">当天</a></li>
-                                                    <li id="month"><a href="javascript:queryMonth()">当月</a></li>
-                                                    <li id="year"><a href="javascript:queryYear()">当年</a></li>
-                                                    <li id="self"><a href="javascript:querySelf()">自定义</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>--%>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.startDate}"/>"
                                                name="startDate" id="startDate" type="text"
@@ -97,7 +86,9 @@
                                 <th>现金</th>
                                 <th>银行卡</th>
                                 <th>微信</th>
+                                <th>（个人）微信</th>
                                 <th>支付宝</th>
+                                <th>（个人）支付宝</th>
                                 <th>欠账</th>
                                 <th>其它</th>
                                 <th>合计</th>
@@ -126,7 +117,15 @@
                                     </td>
 
                                     <td>
+                                            ${incomeCollectReport.personalWeiXinBill}
+                                    </td>
+
+                                    <td>
                                             ${incomeCollectReport.aliPayBill}
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.personalAliPayBill}
                                     </td>
 
                                     <td>

@@ -27,35 +27,52 @@
 						<table>
 							<thead>
 							<tr>
+								<th>时期</th>
 								<th>客户姓名</th>
+								<th>授课时段</th>
 								<th>授课场地</th>
-								<th>授课时长</th>
-								<th>授课时间</th>
-								<th>总价</th>
+								<th>授课时长/小时</th>
+								<c:set var="time" value="0"></c:set>
+								<th>教练费</th>
+								<c:set var="price" value="0"></c:set>
 							</tr>
 							</thead>
 							<tbody>
 							<c:forEach items="${page.list}" var="order">
 								<tr>
 									<td>
+											${order.date}
+									</td>
+									<td>
 											${order.name}
+									</td>
+									<td>
+											${order.startTime}-${order.endTime}
 									</td>
 									<td>
 											${order.fieldName}
 									</td>
 									<td>
-											${order.minute}分钟
-									</td>
-									<td>
-											${order.date}
-
+											${order.hour}
+											<c:set var="time" value="${time+order.hour}"></c:set>
 									</td>
 									<td>
 											${order.price}元
+												 <c:set var="price" value="${price+order.price}"></c:set>
 									</td>
 								</tr>
 							</c:forEach>
-
+							<tr>
+								<td colspan="4">
+									合计
+								</td>
+								<td>
+									${time}
+								</td>
+								<td>
+									${price}
+								</td>
+							</tr>
 							</tbody>
 						</table>
 						<div class="row">

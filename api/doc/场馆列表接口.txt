@@ -1,0 +1,16 @@
+场馆列表 接口
+http://192.168.1.182:8080/rayact/a/app/reserve/reserveVenue/list
+请求参数:
+cityName：城市名称 String
+districtName：区名称 String
+	projectId:项目编号 String
+	longitude:经度 double
+	latitude:维度 double
+返回参数:
+	venueId:场馆编号 String
+	venueName:场馆名称 String
+	avePrice：人均消费 double
+	evaluateScore:评分 double
+	more_service:标签String (各标签之间以英文逗号分隔,如:美女如云,免费停车)
+	imgUrl：场馆图片访问路径 String
+	distance:距离(以千米为单位) String

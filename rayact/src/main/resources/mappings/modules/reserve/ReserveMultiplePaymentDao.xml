@@ -5,6 +5,7 @@
 	<sql id="reserveMultiplePaymentColumns">
 		a.id AS "id",
 		a.order_id AS "orderId",
+		a.fk_reserve_field_id AS "field.id",
 		a.pay_type AS "payType",
 		a.payment_amount AS "paymentAmount",
 		a.create_by AS "createBy.id",
@@ -47,6 +48,33 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="reserveFieldMultiplePaymentReport"
+			resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalReport">
+		SELECT
+		b.id AS "reserveField.id",
+		b.name AS "reserveField.name",
+		sum(payment_amount) AS "bill",
+		sum(if(pay_type=1,payment_amount,0)) AS "storedCardBill",
+		sum(if(pay_type=2,payment_amount,0)) AS "cashBill",
+		sum(if(pay_type=3,payment_amount,0)) AS "bankCardBill",
+		sum(if(pay_type=4,payment_amount,0)) AS "weiXinBill",
+		sum(if(pay_type=9,payment_amount,0)) AS "personalWeiXinBill",
+		sum(if(pay_type=5,payment_amount,0)) AS "aliPayBill",
+		sum(if(pay_type=10,payment_amount,0)) AS "personalAliPayBill",
+		sum(if(pay_type=6,payment_amount,0)) AS "otherBill",
+		sum(if(pay_type=7,payment_amount,0)) AS "dueBill"
+		from reserve_multiple_payment as a
+		LEFT JOIN reserve_field as b ON b.id=a.fk_reserve_field_id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and
+			a.tenant_id = #{tenantId}
+			<if test="startDate !=null and endDate !=null">
+				and (Date(a.create_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
+			</if>
+		</where>
+		GROUP BY b.id
+	</select>
 	
 	<select id="findAllList" resultType="ReserveMultiplePayment">
 		SELECT 
@@ -70,6 +98,7 @@
 		INSERT INTO reserve_multiple_payment(
 			id,
 			order_id,
+			fk_reserve_field_id,
 			pay_type,
 			payment_amount,
 			create_by,
@@ -82,6 +111,7 @@
 		) VALUES (
 			#{id},
 			#{orderId},
+			#{field.id},
 			#{payType},
 			#{paymentAmount},
 			#{createBy.id},
@@ -97,6 +127,7 @@
 	<update id="update">
 		UPDATE reserve_multiple_payment SET 	
 			order_id = #{orderId},
+		  	fk_reserve_field_id = #{field.id},
 			pay_type = #{payType},
 			payment_amount = #{paymentAmount},
 			update_by = #{updateBy.id},

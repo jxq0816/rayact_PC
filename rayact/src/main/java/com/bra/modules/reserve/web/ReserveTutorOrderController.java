@@ -6,8 +6,10 @@ import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
+import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveTutor;
 import com.bra.modules.reserve.entity.ReserveTutorOrder;
+import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveTutorOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,9 @@ public class ReserveTutorOrderController extends BaseController {
 
 	@Autowired
 	private ReserveTutorOrderService reserveTutorOrderService;
+
+	@Autowired
+	private ReserveProjectService projectService;
 	
 	@ModelAttribute
 	public ReserveTutorOrder get(@RequestParam(required=false) String id) {
@@ -114,6 +119,9 @@ public class ReserveTutorOrderController extends BaseController {
 		reserveTutorOrder.setPage(page);
 		List<Map<String,Object>> list = reserveTutorOrderService.getTutorOrderAll(reserveTutorOrder);
 		page.setList(list);
+		List<ReserveProject> reserveProjectList=projectService.findList(new ReserveProject());
+		model.addAttribute("reserveProjectList", reserveProjectList);
+		model.addAttribute("query", reserveTutorOrder);
 		model.addAttribute("page", page);
 		return "reserve/commodity/tutorOrderAll";
 	}

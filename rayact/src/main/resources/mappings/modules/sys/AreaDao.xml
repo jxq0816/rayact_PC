@@ -51,6 +51,23 @@
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		ORDER BY a.code
 	</select>
+
+	<select id="findListForAPP" resultType="Map">
+		SELECT
+		a.id,
+		a.name
+		FROM sys_area a
+		<where>
+			  a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="type !=null and type!=''">
+				and a.type=#{type}
+			</if>
+			<if test="parent !=null and parent.id!=''">
+				and a.parent_id= #{parent.id}
+			</if>
+		</where>
+		ORDER BY a.code
+	</select>
 	
 	<select id="findByParentIdsLike" resultType="Area">
 		SELECT
