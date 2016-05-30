@@ -5,11 +5,11 @@ import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.cms.entity.Activity;
 import com.bra.modules.cms.entity.Apply;
 import com.bra.modules.cms.service.ActivityService;
 import com.bra.modules.cms.service.ApplyService;
 import com.bra.modules.sys.utils.UserUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.URLDecoder;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 活动报名Controller
@@ -60,6 +61,9 @@ public class ApplyController extends BaseController {
 	@RequiresPermissions("cms:apply:view")
 	@RequestMapping(value = "form")
 	public String form(Apply apply, Model model)throws Exception {
+		Activity a = new Activity();
+		List<Activity> activitys = activityService.findList(a);
+		model.addAttribute("activitys",activitys);
 		model.addAttribute("apply", apply);
 		return "modules/cms/applyForm";
 	}
@@ -71,18 +75,18 @@ public class ApplyController extends BaseController {
 			return form(apply, model);
 		}
 		apply.setUser(UserUtils.getUser());
-		String data = StringEscapeUtils.unescapeHtml4(
-				URLDecoder.decode(apply.getData(),"UTF-8"));
-		JSONObject j = new JSONObject();
-		String[] o = data.split("&");
-		for(String tt:o){
-			String[] kk = tt.split("=");
-			if(kk.length>1)
-				j.put(kk[0],kk[1]);
-			else
-				j.put(kk[0],"");
-		}
-		apply.setData(j.toJSONString());
+//		String data = StringEscapeUtils.unescapeHtml4(
+//				URLDecoder.decode(apply.getData(),"UTF-8"));
+//		JSONObject j = new JSONObject();
+//		String[] o = data.split("&");
+//		for(String tt:o){
+//			String[] kk = tt.split("=");
+//			if(kk.length>1)
+//				j.put(kk[0],kk[1]);
+//			else
+//				j.put(kk[0],"");
+//		}
+//		apply.setData(j.toJSONString());
 		applyService.save(apply);
 		addMessage(redirectAttributes, "保存活动报名成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/apply/?repage";
@@ -122,6 +126,27 @@ public class ApplyController extends BaseController {
 //		Date now = new Date();
 //		ExcelInfo info = new ExcelInfo(response,ac.getSubject()+"报名记录"+ DateUtils.formatDate(now),titles,contentList);
 		//info.export();
+	}
+
+	@RequestMapping(value = "app/save")
+	public void saveApp(Apply apply, Model model,HttpServletResponse response)throws Exception {
+		JSONObject j = new JSONObject();
+		if (!beanValidator(model, apply)){
+			j.put("status","failed");
+			j.put("msg","数据有问题");
+		}
+		apply.setUser(UserUtils.getUser());
+		applyService.save(apply);
+		j.put("status","success");
+		j.put("msg","保存成功");
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException g) {
+
+		}
 	}
 
 }

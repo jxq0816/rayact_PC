@@ -56,5 +56,7 @@ public interface CategoryDao extends TreeDao<Category> {
 //			"' and u.delFlag='" + User.DEL_FLAG_NORMAL + "' and u.id=?1 or (c.user.id=?1 and c.delFlag='" + Category.DEL_FLAG_NORMAL +
 //			"') order by c.site.id, c.sort")
 //	public List<Category> findByUserId(Long userId);
+
+	public List<Map<String,String>> getCate(Category cate);
 	
 }

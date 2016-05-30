@@ -88,7 +88,7 @@ public class Activity extends DataEntity<Activity> {
 	
 	@Length(min=0, max=1, message="is_avaliable长度必须介于 0 和 1 之间")
 	public String getIsAvaliable() {
-		return isAvaliable;
+		return this.isAvaliable;
 	}
 
 	public void setIsAvaliable(String isAvaliable) {

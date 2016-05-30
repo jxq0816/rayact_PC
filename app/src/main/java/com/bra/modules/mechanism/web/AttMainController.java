@@ -99,6 +99,7 @@ public class AttMainController extends BaseController {
 	public Map<String, Object> uploadApi(HttpServletRequest req,
 										 HttpServletResponse resp) throws IOException {
 		String file = req.getParameter("file");
+		String modelName = req.getParameter("modelName");
 		byte[] image = Base64.decode(file);
 		Map<String, Object> json = new HashMap<>();
 		FileModel fileModel = new FileModel();
@@ -119,15 +120,24 @@ public class AttMainController extends BaseController {
 		fileModel.setStoreType(StoreType.SYSTEM);
 		fileModel.setToken(new Date().toString());
 		fileModel.setFilePath(f.getAbsolutePath());
+		fileModel.setContentType("pic");
 		AttMain attMain = new AttMain(fileModel);
+		User user = UserUtils.getUser();
+		if("user".equals(modelName)){
+			attMain.setFdModelId(user.getId());
+			attMain.setFdModelName(modelName);
+		}else if("postMain".equals(modelName)){
+			attMain.setFdModelName(modelName);
+		}
 		attMain = attMainService.saveAttMain(attMain);
 		fileModel.setAttId(attMain.getId());
 		if (success) {
 			json.put("status", "success");
 			json.put("imagePath", com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId());
-			User user = UserUtils.getUser();
-			user.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId());
-			systemService.saveUser(user);
+			if("user".equals(modelName)) {
+				user.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId());
+				systemService.saveUser(user);
+			}
 		}else{
 			json.put("status", "fail");
 			json.put("imagePath", "");

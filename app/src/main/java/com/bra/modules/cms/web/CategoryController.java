@@ -3,6 +3,8 @@
  */
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
@@ -13,6 +15,7 @@ import com.bra.modules.cms.service.CategoryService;
 import com.bra.modules.cms.service.FileTplService;
 import com.bra.modules.cms.service.SiteService;
 import com.bra.modules.cms.utils.TplUtils;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -87,7 +92,7 @@ public class CategoryController extends BaseController {
 	
 	@RequiresPermissions("cms:category:edit")
 	@RequestMapping(value = "save")
-	public String save(Category category, Model model, RedirectAttributes redirectAttributes) {
+	public String save(Category category, AttMainForm attMainForm, Model model, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + adminPath + "/cms/category/";
@@ -95,7 +100,7 @@ public class CategoryController extends BaseController {
 		if (!beanValidator(model, category)){
 			return form(category, model);
 		}
-		categoryService.save(category);
+		categoryService.save(category,attMainForm);
 		addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
 		return "redirect:" + adminPath + "/cms/category/";
 	}
@@ -159,4 +164,33 @@ public class CategoryController extends BaseController {
    		tplList = TplUtils.tplTrim(tplList, prefix, "");
    		return tplList;
    	}
+
+
+	@RequestMapping(value = "app/cateList")
+	public void treeData(HttpServletRequest request, HttpServletResponse response) {
+		String parentId = request.getParameter("parentId");
+		String module = request.getParameter("module");
+		String owner = request.getParameter("owner");
+		Category cate = new Category();
+		if(StringUtils.isNotBlank(parentId)){
+			Category parent = new Category();
+			parent.setId(parentId);
+			cate.setParent(parent);
+		}
+		if(StringUtils.isNotBlank(module)){
+			cate.setModule(module);
+		}
+		if(StringUtils.isNotBlank(owner)){
+			cate.setTarget(owner);
+		}
+		List<Map<String,Object>> rtn = categoryService.getCate(cate);
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
+		} catch (IOException e) {
+		}
+	}
+
 }

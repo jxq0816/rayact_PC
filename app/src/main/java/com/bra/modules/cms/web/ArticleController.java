@@ -4,6 +4,7 @@
 package com.bra.modules.cms.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.mapper.JsonMapper;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -150,19 +151,16 @@ public class ArticleController extends BaseController {
         tplList = TplUtils.tplTrim(tplList, Article.DEFAULT_TEMPLATE, "");
         return tplList;
     }
-    @ResponseBody
     @RequestMapping(value = "app/getList")
-    public String getArticleList(Article article,HttpServletRequest request,HttpServletResponse response){
+    public void getArticleList(Article article,HttpServletRequest request,HttpServletResponse response){
         Page<Article> page = new Page<Article>(request, response);
         List<Map<String,Object>> rtn = articleService.findListMap(page, article);
         try {
             response.reset();
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
-            response.getWriter().print(JSONArray.toJSONString(rtn));
-            return null;
+            response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
         } catch (IOException e) {
-            return null;
         }
     }
 }

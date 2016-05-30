@@ -250,8 +250,7 @@ public class UserController extends BaseController {
 	 * 更改个人资料
 	 */
 	@RequestMapping(value = "api/updateInfo")
-	@ResponseBody
-	public String updateInfo(HttpServletRequest request, HttpServletResponse response) {
+	public void updateInfo(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject rtn = new JSONObject();
 		try{
 			boolean flag = true;
@@ -346,9 +345,7 @@ public class UserController extends BaseController {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(rtn.toJSONString());
-			return null;
 		} catch (IOException e) {
-			return null;
 		}
 	}
 
@@ -356,8 +353,7 @@ public class UserController extends BaseController {
 	 * 获取用户信息
 	 */
 	@RequestMapping(value = "api/getUserInfo")
-	@ResponseBody
-	public String getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+	public void getUserInfo(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject rtn = new JSONObject();
 		User user = UserUtils.getUser();
 		rtn.put("userImage",user.getPhoto()==null?"":user.getPhoto());
@@ -374,9 +370,7 @@ public class UserController extends BaseController {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(rtn.toJSONString());
-			return null;
 		} catch (IOException e) {
-			return null;
 		}
 	}
     

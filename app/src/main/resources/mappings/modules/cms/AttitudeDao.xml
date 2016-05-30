@@ -7,11 +7,11 @@
 		a.model_id AS "modelId",
 		a.model_name AS "modelName",
 		a.status AS "status",
+		u.name AS "createBy.name",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.del_flag AS "delFlag",
 		a.update_by AS "updateBy.id",
-		u.name AS "createBy.name",
 		a.update_date AS "updateDate"
 	</sql>
 	
@@ -34,6 +34,15 @@
 		<include refid="attitudeJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="modelId != null and modelId != ''">
+				AND a.model_id = #{modelId}
+			</if>
+			<if test="modelName != null and modelName != ''">
+				AND a.model_name = #{modelName}
+			</if>
+			<if test="createBy != null and createBy.id != null">
+				AND a.create_by = #{createBy.id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

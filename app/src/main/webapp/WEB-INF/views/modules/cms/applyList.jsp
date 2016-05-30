@@ -33,19 +33,39 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>remarks</th>
-				<th>update_date</th>
+				<th>活动</th>
+				<th>报名人</th>
+				<th>电话</th>
+				<th>年龄</th>
+				<th>性别</th>
+				<th>申请人</th>
+				<th>时间</th>
 				<shiro:hasPermission name="cms:apply:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="apply">
 			<tr>
+				<td><a href="${ctx}/cms/activity/form?id=${apply.activity.id}">
+					${apply.activity.subject}
+				</a></td>
 				<td><a href="${ctx}/cms/apply/form?id=${apply.id}">
-					${apply.remarks}
+						${apply.name}
 				</a></td>
 				<td>
-					<fmt:formatDate value="${apply.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+						${apply.phone}
+				</td>
+				<td>
+						${apply.age}
+				</td>
+				<td>
+						${apply.sex}
+				</td>
+				<td>
+						${apply.user.name}
+				</td>
+				<td>
+					<fmt:formatDate value="${apply.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="cms:apply:edit"><td>
     				<a href="${ctx}/cms/apply/form?id=${apply.id}">修改</a>

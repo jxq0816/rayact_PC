@@ -10,6 +10,7 @@ import com.bra.modules.cms.dao.CategoryDao;
 import com.bra.modules.cms.entity.Category;
 import com.bra.modules.cms.entity.Site;
 import com.bra.modules.cms.utils.CmsUtils;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.sys.entity.Office;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.UserUtils;
@@ -17,11 +18,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 栏目Service
@@ -31,6 +32,8 @@ import java.util.Set;
 @Service
 @Transactional(readOnly = true)
 public class CategoryService extends TreeService<CategoryDao, Category> {
+	@Autowired
+	private CategoryDao categoryDao;
 
 	public static final String CACHE_CATEGORY_LIST = "categoryList";
 	
@@ -129,7 +132,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	}
 	
 	@Transactional(readOnly = false)
-	public void save(Category category) {
+	public void save(Category category,AttMainForm attMainForm) {
 		category.setSite(new Site(Site.getCurrentSiteId()));
 		if (StringUtils.isNotBlank(category.getViewConfig())){
             category.setViewConfig(StringEscapeUtils.unescapeHtml4(category.getViewConfig()));
@@ -137,6 +140,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		super.save(category);
 		UserUtils.removeCache(CACHE_CATEGORY_LIST);
 		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
+		updateAttMain(category, attMainForm);
 	}
 	
 	@Transactional(readOnly = false)
@@ -174,5 +178,24 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		}
 		return list;
 	}
-	
+
+	public List<Map<String,Object>> getCate(Category cate){
+		List<Map<String,String>> rtn =  categoryDao.getCate(cate);
+		List<Map<String,Object>> real = new ArrayList<>();
+		Map<String,Object> tmp = new HashMap<>();
+		tmp.put("id","");
+		tmp.put("name","全部");
+		tmp.put("attURL","");
+		tmp.put("isFocus",0);
+		real.add(tmp);
+		if(rtn!=null){
+			for(Map node:rtn){
+				String attId = String.valueOf(node.get("attId"));
+				node.put("attURL", com.bra.modules.sys.utils.StringUtils.ATTPATH+attId);
+				node.remove("attId");
+				real.add(node);
+			}
+		}
+		return real;
+	}
 }

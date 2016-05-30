@@ -34,36 +34,52 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">user_id：</label>
+			<label class="control-label">活动：</label>
+			<div class="controls">
+				<form:select path="activity.id" class="input-mini">
+					<form:options items="${activitys}" itemLabel="subject" itemValue="id" htmlEscape="false" />
+				</form:select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">报名人：</label>
+			<div class="controls">
+				<form:input path="name" htmlEscape="false" maxlength="19" class="input-mini "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">电话：</label>
+			<div class="controls">
+				<form:input path="phone" htmlEscape="false" rows="4" maxlength="11" class="input-mini"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">年龄：</label>
+			<div class="controls">
+				<form:input path="age" htmlEscape="false" rows="4" maxlength="11" class="input-mini"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">性别：</label>
+			<div class="controls">
+				<form:select path="sex">
+					<form:option value="1" label="男"></form:option>
+					<form:option value="0" label="女"></form:option>
+					<form:option value="2" label="保密"></form:option>
+				</form:select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">申请人：</label>
 			<div class="controls">
 				<sys:treeselect id="user" name="user.id" value="${apply.user.id}" labelName="user.name" labelValue="${apply.user.name}"
-					title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+								title="用户" url="/sys/office/treeData?type=3" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">activity_id：</label>
+			<label class="control-label">备注:</label>
 			<div class="controls">
-				<form:input path="activityId" htmlEscape="false" maxlength="19" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">remarks：</label>
-			<div class="controls">
-				<table>
-					<tr>
-						<c:forEach items="${titles}" var="title">
-							<th>${title}</th>
-						</c:forEach>
-					</tr>
-					<c:forEach items="contentList" var="content">
-						<tr>
-							<c:forEach items="${content}" var="a">
-								<td>${a}</td>
-							</c:forEach>
-						</tr>
-					</c:forEach>
-				</table>
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="1000" class="input-xxlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xxlarge"/>
 			</div>
 		</div>
 		<div class="form-actions">

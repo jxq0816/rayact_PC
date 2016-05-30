@@ -6,7 +6,10 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Attitude;
+import com.bra.modules.cms.entity.Comment;
 import com.bra.modules.cms.service.AttitudeService;
+import com.bra.modules.cms.service.CommentService;
+import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 点赞Controller
@@ -32,6 +35,8 @@ public class AttitudeController extends BaseController {
 
 	@Autowired
 	private AttitudeService attitudeService;
+	@Autowired
+	private CommentService commentService;
 	
 	@ModelAttribute
 	public Attitude get(@RequestParam(required=false) String id) {
@@ -80,26 +85,19 @@ public class AttitudeController extends BaseController {
 	}
 
 	@RequestMapping(value = "app/num")
-	@ResponseBody
-	public String count(Attitude attitude, HttpServletResponse response)throws Exception {
+	public void count(Attitude attitude, HttpServletResponse response)throws Exception {
 		try {
 			response.reset();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(attitudeService.getCount(attitude));
-			return null;
 		} catch (IOException e) {
-			return null;
 		}
 	}
 
 	@RequestMapping(value = "app/save")
-	public String saveApp(Attitude attitude, Model model, RedirectAttributes redirectAttributes,HttpServletResponse response) {
-		if (!beanValidator(model, attitude)){
-			return form(attitude, model);
-		}
+	public void saveApp(Attitude attitude,HttpServletResponse response) {
 		attitudeService.save(attitude);
-		addMessage(redirectAttributes, "保存点赞成功");
 		JSONObject j = new JSONObject();
 		j.put("status","success");
 		j.put("msg",attitude.getId());
@@ -108,28 +106,33 @@ public class AttitudeController extends BaseController {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(j.toJSONString());
-			return null;
 		} catch (IOException e) {
-			return null;
 		}
 	}
 
 	@RequestMapping(value = "app/delete")
-	public String deleteApp(HttpServletRequest request,HttpServletResponse response) {
-		String id = request.getParameter("id");
-		Attitude del = attitudeService.get(id);
-		attitudeService.delete(del);
+	public void deleteApp(HttpServletRequest request,HttpServletResponse response) {
+		String id = request.getParameter("modelId");
+		Comment comment = commentService.get(id);
+		Attitude attitude  = new Attitude();
+		attitude.setModelId(comment.getId());
+		attitude.setModelName("comment");
+		attitude.setCreateBy(UserUtils.getUser());
+		List<Attitude> list =  attitudeService.findList(attitude);
+		if(list!=null){
+			for(Attitude node:list){
+				attitudeService.delete(node);
+			}
+		}
 		JSONObject j = new JSONObject();
 		j.put("status","success");
-		j.put("msg",del.getId());
+		j.put("msg","删除成功");
 		try {
 			response.reset();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(j.toJSONString());
-			return null;
 		} catch (IOException e) {
-			return null;
 		}
 	}
 

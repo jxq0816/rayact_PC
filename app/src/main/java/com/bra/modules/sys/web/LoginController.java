@@ -28,7 +28,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -207,8 +206,7 @@ public class LoginController extends BaseController {
      * 登出
      */
     @RequestMapping(value = "${adminPath}/api/logout")
-    @ResponseBody
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
         UserUtils.getSubject().logout();
         JSONObject j = new JSONObject();
         j.put("status","success");
@@ -217,9 +215,7 @@ public class LoginController extends BaseController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(j.toJSONString());
-            return null;
         } catch (IOException e) {
-            return null;
         }
     }
 

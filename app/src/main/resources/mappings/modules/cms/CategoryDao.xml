@@ -299,4 +299,28 @@
 			order by cp.sort, cp.id, c.sort, c.id
 		</where>		
 	</select>
+
+	<select id="getCate" resultType="Map">
+		SELECT
+		c.id AS id,
+		c.name AS name,
+		att.id AS attId,
+		SUM(CASE WHEN f.create_by = #{currentUser.id} THEN 1 ELSE 0 END) AS isFocus
+		FROM cms_category c
+		LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id
+		LEFT JOIN focus f ON f.model_id = c.id
+		WHERE
+		c.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="module != null and module!='' ">
+			AND c.module = #{module}
+		</if>
+		<if test="parent != null and parent.id != '' ">
+		    AND c.parent_id = #{parent.id}
+		</if>
+		<if test="target != null and target == 'mine'">
+			AND f.create_by = #{currentUser.id}
+		</if>
+		GROUP BY c.id
+	</select>
+
 </mapper>

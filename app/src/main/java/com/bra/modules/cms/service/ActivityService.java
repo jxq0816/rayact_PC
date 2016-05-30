@@ -6,10 +6,12 @@ import com.bra.modules.cms.dao.ActivityDao;
 import com.bra.modules.cms.entity.Activity;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 活动Service
@@ -19,6 +21,8 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class ActivityService extends CrudService<ActivityDao, Activity> {
+	@Autowired
+	private ActivityDao activityDao;
 
 	public Activity get(String id) {
 		return super.get(id);
@@ -50,6 +54,9 @@ public class ActivityService extends CrudService<ActivityDao, Activity> {
 		}
 		super.save(activity);
 		updateAttMain(activity, attMainForm);
+	}
+	public List<Map<String,String>> findListMap(Page page,Activity activity){
+		return activityDao.findListMap(activity);
 	}
 	
 }

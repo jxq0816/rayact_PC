@@ -5,6 +5,7 @@ package com.bra.modules.cms.web.front;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.servlet.ValidateCodeServlet;
@@ -337,18 +338,15 @@ public class FrontController extends BaseController{
 	 * app获取内容评论
 	 */
 	@RequestMapping(value = "app/comment")
-	@ResponseBody
-	public String commentJson(Comment comment, HttpServletRequest request, HttpServletResponse response) {
+	public void commentJson(Comment comment, HttpServletRequest request, HttpServletResponse response) {
 		Page<Comment> page = new Page<Comment>(request, response);
 		List<Map<String,String>> rtn = commentService.findListMap(page, comment);
 		try {
 			response.reset();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(JSONArray.toJSONString(rtn));
-			return null;
+			response.getWriter().print(JSONArray.toJSONString(rtn,SerializerFeature.WriteMapNullValue));
 		} catch (IOException e) {
-			return null;
 		}
 	}
 	
