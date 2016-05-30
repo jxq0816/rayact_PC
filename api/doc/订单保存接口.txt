@@ -1,4 +1,4 @@
-城市 接口
+订单保存接口
  http://192.168.1.182:8080/rayact/a/app/reserve/field/reservation
 一、请求参数
 reserveJson : 预订数据 String， 也就是js传递到手机端的Json数据，再原文返回就可以了
