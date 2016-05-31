@@ -41,7 +41,7 @@
     <!--订单详情for 手机端-->
     <select id="detail" parameterType="Map" resultType="Map">
         SELECT
-        v.name AS "venueName",
+        v.name AS "venueName"
         FROM reserve_venue_cons as a
         <include refid="reserveVenueConsDataJoins"/>
         WHERE a.id = #{orderId}
@@ -50,6 +50,7 @@
     <!--订单列表for 手机端-->
     <select id="orderList" parameterType="Map" resultType="Map">
         SELECT
+        a.id AS "orderId",
         v.name AS "venueName",
         a.order_price AS "orderPrice"
         FROM reserve_venue_cons as a
