@@ -215,14 +215,14 @@ public class ReserveAppController extends BaseController {
         return map;
     }
 
-    @RequestMapping(value = "detail")
+    @RequestMapping(value = "orderDetail")
     @ResponseBody
     /**
      *订单详情
      * @param orderId
      * @return
      */
-    public String detail(String orderId) {
+    public String orderDetail(String orderId) {
         Map order = reserveAppVenueConsService.detail(orderId);
         return JSON.toJSONString(order);
     }
@@ -237,5 +237,25 @@ public class ReserveAppController extends BaseController {
     public String orderList(String reserveType,String phone) {
         List<Map> orderList = reserveAppVenueConsService.orderList(reserveType,phone);
         return JSON.toJSONString(orderList);
+    }
+    @RequestMapping(value = "cancelOrder")
+    @ResponseBody
+    /**
+     *订单详情
+     * @param orderId
+     * @return
+     */
+    public Map cancelOrder(String orderId) {
+        ReserveVenueCons venueCons = reserveAppVenueConsService.get(orderId);
+        Map map=new HashMap<>();
+        if(venueCons!=null){
+            reserveAppVenueConsService.cancelOrder(venueCons);
+            map.put("bool",true);
+            map.put("msg","订单取消成功");
+        }else{
+            map.put("bool",false);
+            map.put("msg","该订单不存在");
+        }
+        return map;
     }
 }

@@ -193,4 +193,21 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         }
         return false;//已结算，不可重复结算
     }
+
+    /**
+     * 取消预定
+     *
+     * @param venueCons 订单
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public void cancelOrder(ReserveVenueCons venueCons) {
+        dao.delete(venueCons);//删除订单
+        ReserveVenueConsItem item=new ReserveVenueConsItem();
+        item.setConsData(venueCons);
+        List<ReserveVenueConsItem> itemList = reserveVenueConsItemDao.findList(item);
+        for(ReserveVenueConsItem i:itemList){
+            reserveVenueConsItemDao.delete(i);//删除订单明细
+        }
+    }
 }
