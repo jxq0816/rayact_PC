@@ -74,6 +74,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             String startTime=null;
             for(Map j:itemList){
                 String start=(String) j.get("startTime");
+                start=TimeUtils.earlyMorningFormat(start);
                 if(startTime==null){
                     startTime=start;
                 }else if(start.compareTo(startTime)<0){
