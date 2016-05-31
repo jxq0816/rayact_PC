@@ -1,7 +1,8 @@
 订单保存接口
  http://192.168.1.182:8080/rayact/a/app/reserve/field/reservation
 一、请求参数
-reserveJson : 预订数据 String， 也就是js传递到手机端的Json数据，再原文返回就可以了
+1、reserveJson : 预订数据 String， 也就是js传递到手机端的Json数据，再原文返回就可以了
+reserveJson的格式如下
 {
 "consDate":"2016-05-26",
 "reserveVenueId":"lL2ZU7tcadSMiCRxyyY",
@@ -10,8 +11,8 @@ reserveJson : 预订数据 String， 也就是js传递到手机端的Json数据�
     {"reserveFieldId":"fgR23dUaV9a5T08bfCP","reserveFieldName":"网球2号场","orderPrice":"90.0","startTime":"23:30","endTime":"00:00"}
     ]
 }
-username: 预订人的姓名 String
-phone：手机号 String
+2、username: 预订人的姓名 String
+3、phone：手机号 String
 二、返回参数
 bool:预订是否成功 boolean
 {
