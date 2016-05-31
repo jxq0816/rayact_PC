@@ -248,13 +248,21 @@ public class ReserveAppController extends BaseController {
     public Map cancelOrder(String orderId) {
         ReserveVenueCons venueCons = reserveAppVenueConsService.get(orderId);
         Map map=new HashMap<>();
+        if(venueCons==null){
+            map.put("rs",0);
+            map.put("msg","该订单不存在");
+            return map;
+        }
+        String reserveType=venueCons.getReserveType();
+        if("4".equals(reserveType)){
+            map.put("rs",4);
+            map.put("msg","该订单已结算，不可取消");
+            return map;
+        }
         if(venueCons!=null){
             reserveAppVenueConsService.cancelOrder(venueCons);
-            map.put("bool",true);
+            map.put("rs",1);
             map.put("msg","订单取消成功");
-        }else{
-            map.put("bool",false);
-            map.put("msg","该订单不存在");
         }
         return map;
     }
