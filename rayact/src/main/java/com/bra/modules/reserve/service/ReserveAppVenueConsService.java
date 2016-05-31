@@ -40,6 +40,11 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
 
+    /**
+     * 订单详情
+     * @param orderId 订单编号
+     * @return
+     */
     public Map detail(String orderId) {
         Map map=new HashMap<>();
         map.put("orderId",orderId);
@@ -47,6 +52,19 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         List<Map> itemList=reserveVenueConsItemDao.orderItemList(map);
         order.put("itemList",itemList);
         return order;
+    }
+
+    /**
+     * 订单列表
+     * @param reserveType 订单状态
+     * @return
+     */
+    public  List<Map>  orderList(String reserveType,String phone) {
+        Map map=new HashMap<>();
+        map.put("reserveType",reserveType);
+        map.put("phone",phone);
+        List<Map> orderList=reserveVenueConsDao.orderList(map);
+        return orderList;
     }
 
     /**

@@ -214,11 +214,28 @@ public class ReserveAppController extends BaseController {
         map.put("bool", bool);
         return map;
     }
-    //订单详情
+
     @RequestMapping(value = "detail")
     @ResponseBody
+    /**
+     *订单详情
+     * @param orderId
+     * @return
+     */
     public String detail(String orderId) {
         Map order = reserveAppVenueConsService.detail(orderId);
         return JSON.toJSONString(order);
+    }
+
+    @RequestMapping(value = "orderList")
+    @ResponseBody
+    /**
+     *订单详情
+     * @param orderId
+     * @return
+     */
+    public String orderList(String reserveType,String phone) {
+        List<Map> orderList = reserveAppVenueConsService.orderList(reserveType,phone);
+        return JSON.toJSONString(orderList);
     }
 }
