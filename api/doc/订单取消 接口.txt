@@ -1,1 +1,1 @@
-http://192.168.1.182:8080/rayact/a/app/reserve/field/cancelOrder请求参数:1、String orderId:订单编号返回结果:{"result":0,"msg":"该订单不存在"}{"result":1,"msg":"订单取消成功"}{"result":4,"msg":"该订单已结算，不可取消"}
+http://192.168.1.182:8080/rayact/a/app/reserve/field/cancelOrder请求参数:1、String orderId:订单编号返回结果:{"rs":0,"msg":"该订单不存在"}{"rs":1,"msg":"订单取消成功"}{"rs":4,"msg":"该订单已结算，不可取消"}
