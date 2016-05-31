@@ -1,0 +1,16 @@
+订单详情接口
+http://192.168.1.182:8080/rayact/a/app/reserve/field/detail
+一、请求参数
+1、orderId : 订单编号 String
+二、返回参数
+1、venueName:场馆名称 String
+2、orderPrice:订单金额 double
+3、startTime:开始时间 String
+4、itemList:订单详情 object
+{
+    filedName:场地名称
+    consPrice:订单详情金额
+    startTime:开始时间
+    endTime:结束时间
+}
+

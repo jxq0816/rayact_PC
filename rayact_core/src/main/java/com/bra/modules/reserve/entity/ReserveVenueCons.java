@@ -28,7 +28,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private String consMobile;        // 预定人手机号
     private String userName;        // 预定人姓名
     private String consType;        // 预订的类型1：散客 2：会员
-    private String reserveType;    //操作类型(1:已预定,2:锁场,4:已结算)
+    private String reserveType;    //操作类型(1:已预定,4:已结算)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date consDate;        // 预定日期(yyyy-MM-dd)
     private Double cosOrderPrice;//预定时单据金额??????????

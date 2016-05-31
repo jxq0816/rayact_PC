@@ -47,7 +47,7 @@
 
 	<select id="orderItemList" parameterType="Map" resultType="Map">
 		SELECT
-		a.cons_price AS "consPrice",
+		a.order_price AS "orderPrice",
 		a.start_time AS "startTime",
 		a.end_time AS "endTime",
 		c.name AS "filedName"
