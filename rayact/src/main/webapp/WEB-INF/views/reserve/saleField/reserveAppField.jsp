@@ -89,7 +89,7 @@
     <form id="orderForm">
         <input name="consDate" value="${consDate}" type="hidden">
         <input name="reserveVenueId" value="${venueId}" type="hidden">
-       <span id="reserve_submit"><a class="btn btn-success col-sm-10" style="height: 80px;width:100%;font-size: 50px;line-height: 80px;" onclick="filedSelectJson()">提交</a></span>
+       <%--<span id="reserve_submit"><a class="btn btn-success col-sm-10" style="height: 80px;width:100%;font-size: 50px;line-height: 80px;" onclick="filedSelectJson()">提交</a></span>--%>
     </form>
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>

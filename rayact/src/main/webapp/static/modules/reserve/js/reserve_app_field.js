@@ -81,7 +81,7 @@ function filedSelectJson(isAndroid){
     if(isAndroid=='1'){
         myObj.JsCallAndroid(rtn);//给Android 传输预订数据
     }
-    orderSubmit(rtn);
+   /* orderSubmit(rtn);*/
     return rtn;
 }
 function orderSubmit(reserveJson){
