@@ -72,6 +72,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:set var="sum" value="0"></c:set>
+                                <c:set var="num" value="0"></c:set>
+                                <c:set var="boxNum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="reserveCommodityStorageLog">
                                     <tr>
                                         <td>
@@ -82,9 +85,11 @@
                                         </td>
                                         <td>
                                                 ${reserveCommodityStorageLog.boxNum}
+                                                    <c:set var="boxNum" value="${num+reserveCommodityStorageLog.boxNum}"></c:set>
                                         </td>
                                         <td>
                                                 ${reserveCommodityStorageLog.num}
+                                            <c:set var="num" value="${num+reserveCommodityStorageLog.num}"></c:set>
                                         </td>
                                         <td>
                                                 ${reserveCommodityStorageLog.beforeNum}
@@ -110,6 +115,9 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
+                                <td colspan="2"> 以上数据合计</td>
+                                <td>${boxNum}</td>
+                                <td>${num}</td>
                                 </tbody>
                             </table>
 
