@@ -53,4 +53,6 @@ public interface ReserveVenueConsDao extends CrudDao<ReserveVenueCons> {
     List<Map<String,Object>> sellOfChart(ReserveVenueCons venueCons);
 
     BigDecimal sellMonthOfChart(ReserveVenueCons venueCons);
+
+    Map detail(String id);
 }

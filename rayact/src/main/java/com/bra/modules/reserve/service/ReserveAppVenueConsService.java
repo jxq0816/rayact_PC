@@ -1,10 +1,12 @@
 package com.bra.modules.reserve.service;
 
-import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
-import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
+import com.bra.modules.reserve.entity.ReserveVenueCons;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.event.venue.VenueCheckoutEvent;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 场地预定主表Service
@@ -35,30 +38,13 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
     private ReserveMemberService reserveMemberService;
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
-    @Autowired
-    private ReserveTutorOrderService reserveTutorOrderService;
 
 
-    public ReserveVenueCons get(String id) {
-        ReserveVenueCons reserveVenueCons=super.get(id);
-        if(reserveVenueCons!=null){
-            //教练订单
-            List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(reserveVenueCons.getId(), ReserveVenueCons.MODEL_KEY);
-            reserveVenueCons.setTutorOrderList(tutorOrderList);
-            //订单详情
-            ReserveVenueConsItem item=new ReserveVenueConsItem();
-            item.setConsData(reserveVenueCons);
-            reserveVenueCons.setVenueConsList(reserveVenueConsItemService.findList(item));
-        }
-        return reserveVenueCons;
+
+    public Map detail(String orderId) {
+        Map order=reserveVenueConsDao.detail(orderId);
+        return order;
     }
-
-
-
-    public Page<ReserveVenueCons> findPage(Page<ReserveVenueCons> page, ReserveVenueCons reserveVenueCons) {
-        return super.findPage(page, reserveVenueCons);
-    }
-
 
     /**
      * 存储预定单据

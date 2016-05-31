@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.modules.reserve.entity.ReserveField;
-import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.entity.ReserveVenueCons;
-import com.bra.modules.reserve.entity.ReserveVenueConsItem;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.TimePrice;
 import com.bra.modules.reserve.service.ReserveAppFieldPriceService;
@@ -216,5 +213,12 @@ public class ReserveAppController extends BaseController {
         map.put("orderId", orderId);
         map.put("bool", bool);
         return map;
+    }
+    //订单详情
+    @RequestMapping(value = "detail")
+    @ResponseBody
+    public String detail(String orderId) {
+        Map order = reserveAppVenueConsService.detail(orderId);
+        return JSON.toJSONString(order);
     }
 }

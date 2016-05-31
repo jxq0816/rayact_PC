@@ -39,6 +39,17 @@
         WHERE a.id = #{id}
     </select>
 
+    <select id="detail" parameterType="String" resultType="Map">
+        SELECT
+        a.id AS "id",
+        v.name AS "reserveVenue.name",
+        a.cons_mobile AS "phone",
+        a.user_name AS "username"
+        FROM reserve_venue_cons as a
+        <include refid="reserveVenueConsDataJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
     <!--订单-->
     <select id="findListOrder" resultType="ReserveVenueCons">
         select a.id AS "id",v.name AS "reserveVenue.name",a.order_price AS "orderPrice",a.pay_type AS
