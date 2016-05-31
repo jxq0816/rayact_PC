@@ -27,4 +27,5 @@ public interface ReserveVenueConsItemDao extends CrudDao<ReserveVenueConsItem> {
     int getUsedVenueNum(ReserveVenueConsItem reserveVenueCons);
     List<Map<String,Object>> getUsedVenueNumByProject(ReserveVenueConsItem reserveVenueCons);
 
+    List<Map> orderItemList(Map map);
 }

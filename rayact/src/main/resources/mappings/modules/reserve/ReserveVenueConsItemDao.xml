@@ -45,6 +45,18 @@
 		WHERE a.id = #{id}
 	</select>
 
+	<select id="orderItemList" parameterType="Map" resultType="Map">
+		SELECT
+		a.cons_price AS "consPrice",
+		a.start_time AS "startTime",
+		a.end_time AS "endTime",
+		c.name AS "filedName"
+		FROM reserve_venue_cons_item as a
+		LEFT JOIN reserve_venue_cons as b on a.cons_data_id=b.id
+		LEFT JOIN reserve_field as c on a.field_id=c.id
+		WHERE b.id = #{orderId}
+	</select>
+
 	<!--根据日期查询预定的场地状态-->
 	<select id="findListByDate" resultType="ReserveVenueConsItem">
 		SELECT

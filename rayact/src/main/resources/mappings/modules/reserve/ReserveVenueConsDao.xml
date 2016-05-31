@@ -38,16 +38,15 @@
         <include refid="reserveVenueConsDataJoins"/>
         WHERE a.id = #{id}
     </select>
-
-    <select id="detail" parameterType="String" resultType="Map">
+    <!--订单详情for 手机端-->
+    <select id="detail" parameterType="Map" resultType="Map">
         SELECT
-        a.id AS "id",
         v.name AS "reserveVenue.name",
         a.cons_mobile AS "phone",
         a.user_name AS "username"
         FROM reserve_venue_cons as a
         <include refid="reserveVenueConsDataJoins"/>
-        WHERE a.id = #{id}
+        WHERE a.id = #{orderId}
     </select>
 
     <!--订单-->

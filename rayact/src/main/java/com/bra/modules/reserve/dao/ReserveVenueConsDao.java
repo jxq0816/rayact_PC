@@ -54,5 +54,5 @@ public interface ReserveVenueConsDao extends CrudDao<ReserveVenueCons> {
 
     BigDecimal sellMonthOfChart(ReserveVenueCons venueCons);
 
-    Map detail(String id);
+    Map detail(Map map);
 }

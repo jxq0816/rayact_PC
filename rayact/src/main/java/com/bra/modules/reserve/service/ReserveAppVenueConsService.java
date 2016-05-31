@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +40,12 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
 
-
-
     public Map detail(String orderId) {
-        Map order=reserveVenueConsDao.detail(orderId);
+        Map map=new HashMap<>();
+        map.put("orderId",orderId);
+        Map order=reserveVenueConsDao.detail(map);
+        List<Map> itemList=reserveVenueConsItemDao.orderItemList(map);
+        order.put("itemList",itemList);
         return order;
     }
 
