@@ -97,8 +97,9 @@
                                         <td>${reserveCommoditySellDetail.remarks}</td>
                                     </tr>
                                 </c:forEach>
-                                <td colspan="3"> 以上数据合计</td>
+                                <td colspan="2"> 以上数据合计</td>
                                 <td>${num}</td>
+                                <td></td>
                                 <td>${sum}</td>
                                 <td colspan="4"></td>
                                 </tbody>
