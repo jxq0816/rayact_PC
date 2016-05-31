@@ -66,6 +66,7 @@
                                     <th>入库后库存量</th>
                                     <th>入库单箱价格</th>
                                     <th>入库单价</th>
+                                    <th>入库金额</th>
                                     <th>操作人</th>
                                     <th>备注</th>
                                     <th>时间</th>
@@ -104,6 +105,10 @@
                                                 ${reserveCommodityStorageLog.price}
                                         </td>
                                         <td>
+                                                ${reserveCommodityStorageLog.boxPrice*reserveCommodityStorageLog.boxNum}
+                                                <c:set var="sum" value="${sum+reserveCommodityStorageLog.boxPrice*reserveCommodityStorageLog.boxNum}"></c:set>
+                                        </td>
+                                        <td>
                                                 ${reserveCommodityStorageLog.createBy.name}
                                         </td>
                                         <td>
@@ -118,6 +123,9 @@
                                 <td colspan="2"> 以上数据合计</td>
                                 <td>${boxNum}</td>
                                 <td>${num}</td>
+                                <td colspan="4"></td>
+                                <td>${sum}</td>
+                                <td colspan="3"></td>
                                 </tbody>
                             </table>
 
