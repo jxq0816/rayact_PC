@@ -49,8 +49,10 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         Map map=new HashMap<>();
         map.put("orderId",orderId);
         Map order=reserveVenueConsDao.detail(map);
-        List<Map> itemList=reserveVenueConsItemDao.orderItemList(map);
-        order.put("itemList",itemList);
+        if(order!=null){
+            List<Map> itemList=reserveVenueConsItemDao.orderItemList(map);
+            order.put("itemList",itemList);
+        }
         return order;
     }
 
