@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.PostMainDao">
+    
+	<sql id="postMainColumns">
+		a.id AS "id",
+		a.subject AS "subject",
+		a.content AS "content",
+		a.fk_group_id AS "group.id",
+		c.name AS "group.name",
+		a.post_num AS "postNum",
+		a.order_num AS "orderNum",
+		a.del_flag AS "delFlag",
+		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
+		u.photo AS "createBy.photo",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy.id",
+		a.remarks AS "remarks"
+	</sql>
+	
+	<sql id="postMainJoins">
+		LEFT JOIN sys_user u ON u.id = a.create_by
+		LEFT JOIN cms_category c ON c.id = a.fk_group_id
+	</sql>
+    
+	<select id="get" resultType="PostMain">
+		SELECT 
+			<include refid="postMainColumns"/>
+		FROM post_main a
+		<include refid="postMainJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PostMain">
+		SELECT 
+			<include refid="postMainColumns"/>
+		FROM post_main a
+		<include refid="postMainJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PostMain">
+		SELECT 
+			<include refid="postMainColumns"/>
+		FROM post_main a
+		<include refid="postMainJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO post_main(
+			id,
+			subject,
+			content,
+			fk_group_id,
+			post_num,
+			order_num,
+			del_flag,
+			create_by,
+			create_date,
+			update_date,
+			update_by
+		) VALUES (
+			#{id},
+			#{subject},
+			#{content},
+			#{group.id},
+			#{postNum},
+			#{orderNum},
+			#{delFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateDate},
+			#{updateBy.id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE post_main SET 	
+			subject = #{subject},
+			content = #{content},
+			fk_group_id = #{group.id},
+			post_num = #{postNum},
+			order_num = #{orderNum},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE post_main SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<select id="getPostMainList" resultType="Map">
+		SELECT
+		 pm.id AS postId,
+		 pm.subject AS postName,
+		 cc.name AS groupName,
+		 cc.id AS groupId,
+		 pm.create_by AS creatorId,
+		 u.name AS creatorName,
+		 u.photo AS creatorPhoto,
+		 pm.post_num AS postNum
+		FROM post_main pm
+		LEFT JOIN cms_category cc ON cc.id = pm.fk_group_id
+		LEFT JOIN sys_user u ON u.id = pm.create_by
+		WHERE
+		pm.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="group!=null and group.id !=null">
+			AND (cc.parent_ids like CONCAT('%',#{group.id},'%') OR cc.id = #{group.id})
+		</if>
+
+	</select>
+	
+</mapper>

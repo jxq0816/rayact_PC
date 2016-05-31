@@ -70,8 +70,10 @@
 		CASE WHEN u.name is NULL THEN "" ELSE u.name  END AS "name",
 		CASE WHEN u.photo is NULL THEN "" ELSE u.photo  END AS "photo",
 		CASE WHEN u.photo is NULL THEN "" ELSE date_format(a.create_date,'%Y-%m-%d %T')  END AS "createDate",
-		SUM(CASE WHEN att.`status` = '1' THEN 1 ELSE 0 END) AS "goodNum",
-		SUM(CASE WHEN att.`status` = '0' THEN 1 ELSE 0 END) AS "badNum"
+		SUM(CASE WHEN att.`status` = '1' AND att.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS "goodNum",
+		SUM(CASE WHEN att.`status` = '0' AND att.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS "badNum",
+		CASE WHEN a.audit_user_id = #{currentUser.id} THEN "1" ELSE "0" END AS "hasComment",
+		SUM(CASE WHEN att.create_by = #{currentUser.id} AND att.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS "hasAttitude"
 		FROM cms_comment a
 		LEFT JOIN attitude att ON a.id = att.model_id
 		<include refid="cmsCommentDaoJoins"/>

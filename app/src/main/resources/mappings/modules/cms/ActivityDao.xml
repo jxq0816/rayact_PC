@@ -126,5 +126,23 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+	<select id="findListMap" resultType="Map">
+		SELECT
+		a.`subject` AS  subject,
+		a.id AS id,
+		a.url AS url,
+		date_format(a.start_date,'%Y-%m-%d %T') AS startDate,
+		date_format(a.end_date,'%Y-%m-%d %T') AS endDate,
+		a.fk_manager_name AS managerName,
+		a.is_avaliable AS isAvaliable,
+		m.id AS attId
+		FROM activity a
+		LEFT JOIN mechanism_att_main m ON m.fd_model_id = a.id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		ORDER BY a.create_date DESC
+	</select>
 	
 </mapper>

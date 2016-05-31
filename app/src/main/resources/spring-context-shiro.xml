@@ -14,6 +14,16 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/api/logout = anon
+				${adminPath}/cms/teamMember/app/list = anon
+				${adminPath}/cms/team/app/list = anon
+				${adminPath}/cms/post/app/list = anon
+				${adminPath}/cms/post/app/ptp = anon
+				${adminPath}/cms/postMain/app/list = anon
+				${adminPath}/cms/postMain/app/view = anon
+				${adminPath}/cms/postMain/app/list = anon
+				${adminPath}/cms/category/app/cateList = anon
+				${adminPath}/cms/activity/app/list = anon
 				${adminPath}/cms/comment/app/list = anon
 				${adminPath}/cms/attitude/app/num = anon
 				/f/ = anon
@@ -64,6 +74,7 @@
 	
 	<!-- 自定义会话管理配置 -->
 	<bean id="sessionManager" class="com.bra.common.security.shiro.session.SessionManager">
+		<property name ="sessionListeners" ref="mySessionListener"/>
 		<property name="sessionDAO" ref="sessionDAO"/>
 		
 		<!-- 会话超时时间，单位：毫秒  -->
@@ -72,11 +83,11 @@
 		<!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   -->
 		<property name="sessionValidationInterval" value="${session.sessionTimeoutClean}"/>
  		<property name="sessionValidationSchedulerEnabled" value="true"/>
- 		
 		<property name="sessionIdCookie" ref="sessionIdCookie"/>
 		<property name="sessionIdCookieEnabled" value="true"/>
 	</bean>
-	
+	<bean id="mySessionListener" class="com.bra.modules.sys.listener.OnlineUserListener">
+	</bean>
 	<!-- 指定本系统SESSIONID, 默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
 		当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失! -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">

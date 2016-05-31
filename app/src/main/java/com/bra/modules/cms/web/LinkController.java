@@ -4,6 +4,7 @@
 package com.bra.modules.cms.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.mapper.JsonMapper;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -121,18 +122,15 @@ public class LinkController extends BaseController {
 		return JsonMapper.nonDefaultMapper().toJson(list);
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "app/getList")
-	public String getLinkList(Link link, HttpServletRequest request, HttpServletResponse response){
+	public void getLinkList(Link link, HttpServletRequest request, HttpServletResponse response){
 		List<Map<String,String>> rtn = linkService.findListMap(link);
 		try {
 			response.reset();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(JSONArray.toJSONString(rtn));
-			return null;
+			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
 		} catch (IOException e) {
-			return null;
 		}
 	}
 }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.MessageDao">
+    
+	<sql id="messageColumns">
+		a.id AS "id",
+		a.subject AS "subject",
+		a.target_name AS "targetName",
+		a.target_id AS "targetId",
+		a.content AS "content",
+		a.url AS "url",
+		a.send_id AS "sendId",
+		a.send_name AS "sendName",
+		a.create_date AS "createDate",
+		a.del_flag AS "delFlag",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="messageJoins">
+	</sql>
+    
+	<select id="get" resultType="Message">
+		SELECT 
+			<include refid="messageColumns"/>
+		FROM message a
+		<include refid="messageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Message">
+		SELECT 
+			<include refid="messageColumns"/>
+		FROM message a
+		<include refid="messageJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Message">
+		SELECT 
+			<include refid="messageColumns"/>
+		FROM message a
+		<include refid="messageJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO message(
+			id,
+			subject,
+			target_name,
+			target_id,
+			content,
+			url,
+			send_id,
+			send_name,
+			create_date,
+			del_flag,
+			create_by,
+			update_by,
+			update_date
+		) VALUES (
+			#{id},
+			#{subject},
+			#{targetName},
+			#{targetId},
+			#{content},
+			#{url},
+			#{sendId},
+			#{sendName},
+			#{createDate},
+			#{delFlag},
+			#{createBy.id},
+			#{updateBy.id},
+			#{updateDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE message SET 	
+			subject = #{subject},
+			target_name = #{targetName},
+			target_id = #{targetId},
+			content = #{content},
+			url = #{url},
+			send_id = #{sendId},
+			send_name = #{sendName},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE message SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

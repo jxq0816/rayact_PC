@@ -5,12 +5,12 @@
 	<sql id="applyColumns">
 		a.id AS "id",
 		a.user_id AS "user.id",
-		a.activity_id AS "activityId",
+		a.activity_id AS "activity.id",
+		t.subject AS "activity.subject",
 		a.name AS "name",
 		a.age AS "age",
 		a.sex AS "sex",
 		a.phone AS "phone",
-		a.data AS "data",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -22,6 +22,7 @@
 	
 	<sql id="applyJoins">
 		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+		LEFT JOIN activity t ON t.id = a.activity_id
 	</sql>
     
 	<select id="get" resultType="Apply">
@@ -73,7 +74,6 @@
 			id,
 			user_id,
 			activity_id,
-			data,
 			name,
 			sex,
 			age,
@@ -87,8 +87,7 @@
 		) VALUES (
 			#{id},
 			#{user.id},
-			#{activityId},
-			#{data},
+			#{activity.id},
 			#{name},
 			#{sex},
 			#{age},
@@ -105,8 +104,7 @@
 	<update id="update">
 		UPDATE apply SET 	
 			user_id = #{user.id},
-			activity_id = #{activityId},
-			data = #{data},
+			activity_id = #{activity.id},
 			name = #{name},
 			age = #{age},
 			sex = #{sex},

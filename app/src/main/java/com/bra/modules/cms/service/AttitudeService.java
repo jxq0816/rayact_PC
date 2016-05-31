@@ -1,6 +1,7 @@
 package com.bra.modules.cms.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.cms.dao.AttitudeDao;
@@ -45,7 +46,7 @@ public class AttitudeService extends CrudService<AttitudeDao, Attitude> {
 	}
 
 	public String getCount(Attitude attitude){
-		return JSONArray.toJSONString(attitudeDao.getCount(attitude));
+		return JSONArray.toJSONString(attitudeDao.getCount(attitude),SerializerFeature.WriteMapNullValue);
 	}
 	
 }

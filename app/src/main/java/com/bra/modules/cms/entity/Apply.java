@@ -1,9 +1,7 @@
 package com.bra.modules.cms.entity;
 
-import com.bra.modules.sys.entity.User;
-import org.hibernate.validator.constraints.Length;
-
 import com.bra.common.persistence.DataEntity;
+import com.bra.modules.sys.entity.User;
 
 /**
  * 活动报名Entity
@@ -14,8 +12,7 @@ public class Apply extends DataEntity<Apply> {
 	
 	private static final long serialVersionUID = 1L;
 	private User user;		// user_id
-	private String activityId;		// activity_id
-	private String data;
+	private Activity activity;		// activity_id
 	private String name;
 	private String sex;
 	private int age;
@@ -35,23 +32,6 @@ public class Apply extends DataEntity<Apply> {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-	
-	@Length(min=0, max=19, message="activity_id长度必须介于 0 和 19 之间")
-	public String getActivityId() {
-		return activityId;
-	}
-
-	public void setActivityId(String activityId) {
-		this.activityId = activityId;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
 	}
 
 
@@ -86,6 +66,17 @@ public class Apply extends DataEntity<Apply> {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+
+	public Activity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
+
+
 
 
 

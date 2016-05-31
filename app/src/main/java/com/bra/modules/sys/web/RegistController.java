@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +26,7 @@ public class RegistController extends BaseController {
      * 快速注册
      */
     @RequestMapping(value = "${adminPath}/api/createSimple", method = RequestMethod.POST)
-    @ResponseBody
-    public String createSimple(HttpServletRequest request, HttpServletResponse response) {
+    public void createSimple(HttpServletRequest request, HttpServletResponse response) {
         JSONObject rtn = new JSONObject();
         try{
             String phone = request.getParameter("username");
@@ -76,9 +74,7 @@ public class RegistController extends BaseController {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(rtn.toJSONString());
-            return null;
         } catch (IOException e) {
-            return null;
         }
     }
 }

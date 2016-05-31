@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.PostDao">
+    
+	<sql id="postColumns">
+		a.id AS "id",
+		a.content AS "content",
+		a.post_id AS "postId",
+		a.main_id AS "postMain.id",
+		pm.subject AS "postMain.subject",
+		a.del_flag AS "delFlag",
+		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
+		u.photo AS "createBy.photo",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks"
+	</sql>
+	
+	<sql id="postJoins">
+		LEFT JOIN sys_user u ON u.id = a.create_by
+		LEFT JOIN post_main pm ON a.main_id = pm.id
+	</sql>
+    
+	<select id="get" resultType="Post">
+		SELECT 
+			<include refid="postColumns"/>
+		FROM post a
+		<include refid="postJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Post">
+		SELECT 
+			<include refid="postColumns"/>
+		FROM post a
+		<include refid="postJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="postMain != null and postMain.id != null">
+				AND a.main_id = #{postMain.id}
+			</if>
+			<choose>
+				<when test="postId != null and postId != ''">
+					AND a.post_id = #{postId}
+				</when>
+				<otherwise>
+					AND a.post_id is NULL
+				</otherwise>
+			</choose>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Post">
+		SELECT 
+			<include refid="postColumns"/>
+		FROM post a
+		<include refid="postJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO post(
+			id,
+			content,
+			post_id,
+			main_id,
+			del_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks
+		) VALUES (
+			#{id},
+			#{content},
+			#{postId},
+			#{postMain.id},
+			#{delFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE post SET 	
+			content = #{content},
+			post_id = #{postId},
+			main_id = #{postMain.id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE post SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<select id="findMapList" resultType="Map">
+		SELECT
+			a.id AS "id",
+			a.content AS "content",
+			a.post_id AS "postId",
+			a.main_id AS "postMainId",
+			a.create_by AS "createById",
+			u.name AS "createByName",
+			u.photo AS "createByPhoto",
+			a.create_date AS "createDate",
+			a.remarks AS "remarks"
+		FROM post a
+		<include refid="postJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="postMain != null and postMain.id != null">
+				AND a.main_id = #{postMain.id}
+			</if>
+			<choose>
+				<when test="postId != null and postId != ''">
+					AND a.post_id = #{postId}
+				</when>
+				<otherwise>
+					AND a.post_id is NULL
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY a.create_date DESC
+	</select>
+	
+</mapper>

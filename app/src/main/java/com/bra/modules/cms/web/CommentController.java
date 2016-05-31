@@ -5,12 +5,14 @@ package com.bra.modules.cms.web;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Attitude;
 import com.bra.modules.cms.entity.Comment;
 import com.bra.modules.cms.service.CommentService;
+import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.DictUtils;
 import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -91,12 +93,20 @@ public class CommentController extends BaseController {
 
 	@RequestMapping(value = "app/list")
 	public void listApp(Comment comment, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User user = UserUtils.getUser();
+		if(user!=null&&user.getId()!=null){
+			comment.setCurrentUser(user);
+		}else{
+			user = new User();
+			user.setId("*******");
+			comment.setCurrentUser(user);
+		}
 		List<Map<String,String>> rtn = commentService.findListMap(new Page<Comment>(request, response), comment);
 		try {
 			response.reset();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(JSONArray.toJSONString(rtn));
+			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
 
 		} catch (IOException e) {
 

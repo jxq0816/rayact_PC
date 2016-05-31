@@ -4,6 +4,7 @@
 <head>
 	<title>栏目管理</title>
 	<meta name="decorator" content="default"/>
+	<%@include file="/WEB-INF/views/include/upload.jsp" %>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#name").focus();
@@ -65,8 +66,7 @@
 		<div class="control-group">
 			<label class="control-label">缩略图:</label>
 			<div class="controls">
-				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<sys:ckfinder input="image" type="thumb" uploadPath="/cms/category"/>
+				<mechanism:upload id="image" name="attMains1" imgWidth="50" imgHeight="50" exts="" showImg="true" modelId="${category.id}" fdKey="catepic" modelName="com.bra.modules.cms.entity.Category" multi="false"></mechanism:upload>
 			</div>
 		</div>
 		<div class="control-group">

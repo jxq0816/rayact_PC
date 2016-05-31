@@ -1,7 +1,10 @@
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Activity;
@@ -18,6 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 活动Controller
@@ -75,6 +82,35 @@ public class ActivityController extends BaseController {
 		activityService.delete(activity);
 		addMessage(redirectAttributes, "删除活动成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/activity/?repage";
+	}
+
+	@RequestMapping(value = "app/list")
+	public void listApp(Activity activity, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Map<String,String>> rtn = activityService.findListMap(new Page<Activity>(request, response), activity);
+		if(rtn!=null){
+			for(Map<String,String> node:rtn){
+				String attId = node.get("attId");
+				String startDate = node.get("startDate");
+				Date start = DateUtils.parseDate(startDate);
+				String endDate = node.get("endDate");
+				Date end = DateUtils.parseDate(endDate);
+				node.put("attURL", com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
+				node.remove("attId");
+				Date now = new Date();
+				if(now.equals(start)||now.equals(end)||(now.after(start)&&now.before(end))){
+					node.put("isAvaliable","1");
+				}else{
+					node.put("isAvaliable","0");
+				}
+			}
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
+		} catch (IOException e) {
+		}
 	}
 
 }
