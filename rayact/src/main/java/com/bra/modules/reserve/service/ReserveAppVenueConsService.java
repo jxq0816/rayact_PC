@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.service;
 
 import com.bra.common.service.CrudService;
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
 import com.bra.modules.reserve.entity.ReserveMember;
@@ -181,12 +182,23 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         reserveVenueCons.setAliPayInput(aliPayInput);
         reserveVenueCons.setCouponInput(couponInput);
         reserveVenueCons.setConsPrice(consPrice);//结算价格
+
         //reserveType:1:已预定,未付款;payType:1:会员卡;
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");//已结账
             reserveVenueCons.preUpdate();
             dao.update(reserveVenueCons);
             //会员扣款;结算教练(事件通知)
+            String phone=reserveVenueCons.getConsMobile();
+            if(StringUtils.isNoneEmpty(phone)){
+                ReserveMember member=new ReserveMember();
+                member.setMobile(phone);
+                List<ReserveMember> list = reserveMemberService.findExactList(member);
+                for(ReserveMember i: list){
+                    member=i;
+                }
+                reserveVenueCons.setMember(member);
+            }
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);
             return true;
