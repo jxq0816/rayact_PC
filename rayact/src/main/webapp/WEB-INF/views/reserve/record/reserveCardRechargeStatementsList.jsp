@@ -79,6 +79,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:set var="sum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="reserveCardStatements">
                                     <tr>
                                         <td>
@@ -92,6 +93,8 @@
                                         </td>
                                         <td>
                                                 ${reserveCardStatements.transactionVolume}
+                                            <c:set var="sum"
+                                                   value="${sum+reserveCardStatements.transactionVolume}"></c:set>
                                         </td>
                                         <td>
                                                 ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
@@ -110,9 +113,13 @@
                                             <fmt:formatDate value="${reserveCardStatements.createDate}"
                                                             pattern="yyyy-MM-dd HH:mm:ss"/>
                                         </td>
-
                                     </tr>
                                 </c:forEach>
+                                <td colspan="3">
+                                    合计
+                                </td>
+                                <td>${sum}</td>
+                                <td colspan="4"></td>
                                 </tbody>
                             </table>
 
