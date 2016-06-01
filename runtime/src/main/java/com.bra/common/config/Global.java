@@ -9,7 +9,10 @@ import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -75,7 +78,7 @@ public class Global {
 
 	/**
 	 * 获取配置
-	 * @see ${fns:getConfig('adminPath')}
+	 * @see {fns:getConfig('adminPath')}
 	 */
 	public static String getConfig(String key) {
 		String value = map.get(key);
@@ -140,7 +143,7 @@ public class Global {
 
 	/**
 	 * 页面获取常量
-	 * @see ${fns:getConst('YES')}
+	 * @see {fns:getConst('YES')}
 	 */
 	public static Object getConst(String field) {
 		try {
@@ -210,7 +213,9 @@ public class Global {
 	 * @return
 	 */
 	public static String getBaseDir() {
-		String dir = getConfig("userfiles.basedir");
+		HttpServletRequest request =  ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		String file = request.getRealPath("");
+		String dir = file+getConfig("userfiles.basedir");
 		Assert.hasText(dir, "配置文件里没有配置userfiles.basedir属性");
 		return dir;
 	}

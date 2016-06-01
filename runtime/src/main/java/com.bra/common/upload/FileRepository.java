@@ -273,10 +273,7 @@ public class FileRepository implements ServletContextAware {
         if (key == null || key.isEmpty())
             return null;
         String ext = FilenameUtils.getExtension(fileName);
-
-        String destPath = Global.getBaseDir();
-        String file = destPath + UPLOAD_PATH;
-
+        String file = Global.getBaseDir();
         File f = new File(file + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + key + "." + ext);
         if (!f.getParentFile().exists())
             f.getParentFile().mkdirs();
