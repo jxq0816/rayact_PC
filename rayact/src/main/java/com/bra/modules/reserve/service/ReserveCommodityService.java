@@ -2,6 +2,8 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
+import com.bra.common.utils.IdGen;
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveCommodityDao;
 import com.bra.modules.reserve.entity.ReserveCommodity;
 import com.bra.modules.reserve.utils.AuthorityUtils;
@@ -46,6 +48,9 @@ public class ReserveCommodityService extends CrudService<ReserveCommodityDao, Re
 	
 	@Transactional(readOnly = false)
 	public void save(ReserveCommodity commodity) {
+		if(StringUtils.isEmpty(commodity.getCommodityId())){
+			commodity.setCommodityId(IdGen.uuid());
+		}
 		super.save(commodity);
 	}
 	

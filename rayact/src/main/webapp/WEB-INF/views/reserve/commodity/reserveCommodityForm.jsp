@@ -32,13 +32,10 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col-lg-9">
-                                                    <form:input id="commodityId" path="commodityId"
+                                                    <form:input id="commodityId" path="commodityId" readonly="true"
                                                                 maxlength="19"
-                                                                class="form-control required"
-                                                                onblur="checkCommodityId()"/>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <span class="help-inline pull-right" ><font color="red">*</font> </span>
+                                                                class="form-control" placeholder="商品编号由系统自动生成，新增商品时无需输入"
+                                                    />
                                                 </div>
                                             </div>
                                         </td>
