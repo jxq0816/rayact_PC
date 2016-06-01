@@ -20,44 +20,44 @@
                 <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
                       method="post">
                     <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
-                        <div class="form-group col-lg-3 col-sm-4">
+                        <div class="form-group col-lg-3 col-sm-3">
                             <label class="control-label" for="venue">场馆：</label>
                             <select id="venue" name="venue.id" class="select2 " style="width: 50%">
                                 <option value="">---请选择---</option>
                                 <c:forEach items="${venueList}" var="venue">
                                     <option
-                                            <j:if test="${venue.id eq venueLog.venue.id}">selected="selected"</j:if>
+                                            <j:if test="${venue.id eq query.venue.id}">selected="selected"</j:if>
                                             value="${venue.id}">${venue.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
-                        <div class="form-group col-lg-3 col-sm-5">
+                        <div class="form-group col-lg-3 col-sm-3">
                             <label class="control-label" for="project">项目：</label>
                             <sys:select cssClass="input-large" name="project.id" id="project"
                                         cssStyle="width:50%"
-                                        value="${project.id}"
+                                        value="${query.project.id}"
                                         items="${projectList}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
                         </div>
 
-                        <div class="form-group col-lg-3 col-sm-4">
+                        <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="createBy">操作人：</label>
                             <select id="createBy" name="createBy.id" class="select2">
                                 <option value="">请选择</option>
                                 <c:forEach items="${userList}" var="createBy">
                                     <option
-                                            <j:if test="${createBy.id eq venueLog.createBy.id}">selected="selected"</j:if>
+                                            <j:if test="${createBy.id eq query.createBy.id}">selected="selected"</j:if>
                                             value="${createBy.id}">${createBy.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
 
-                        <div class="form-group col-lg-4 col-sm-3">
+                        <div class="form-group col-lg-2 col-sm-3">
                             <div class="col-lg-6 col-sm-6">
                                 <input name="startDate"
-                                       value="<fmt:formatDate value="${venueLog.startDate}" pattern="yyyy-MM-dd"/>"
+                                       value="<fmt:formatDate value="${query.startDate}" pattern="yyyy-MM-dd"/>"
                                        type="text" id="startDate"
                                        maxlength="20"
                                        class="input-medium form-control Wdate "
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-lg-6 col-sm-6">
                                 <input name="endDate"
-                                       value="<fmt:formatDate value="${venueLog.endDate}" pattern="yyyy-MM-dd"/>"
+                                       value="<fmt:formatDate value="${query.endDate}" pattern="yyyy-MM-dd"/>"
                                        type="text" id="endDate"
                                        maxlength="20"
                                        class="input-medium form-control Wdate "

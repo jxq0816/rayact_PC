@@ -223,6 +223,12 @@
         <if test="startDate != null and endDate != null">
             and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
+        <if test="venue!=null and venue.id!=null and venue.id!=''">
+            and a.venue_id = #{venue.id}
+        </if>
+        <if test="project!=null and project.id!=null and project.id!=''">
+            and p.id = #{project.id}
+        </if>
         <if test="createBy!=null and createBy.id!=null and createBy.id!=''">
             and a.create_by = #{createBy.id}
         </if>

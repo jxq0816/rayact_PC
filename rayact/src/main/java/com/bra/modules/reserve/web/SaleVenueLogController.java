@@ -49,7 +49,7 @@ public class SaleVenueLogController extends BaseController {
         model.addAttribute("venueList",reserveVenueService.findList(venue));
         List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
         model.addAttribute("projectList",projectList);
-        model.addAttribute("venueLog",venueLog);//参数返回
+        model.addAttribute("query",venueLog);//参数返回
         Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<SaleVenueLog>(request, response), venueLog);
         model.addAttribute("page", page);
         return "/reserve/saleField/saleVenueLog";
