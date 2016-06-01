@@ -101,6 +101,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:set var="orderPriceSum" value="0"></c:set>
+                                <c:set var="shouldPriceSum" value="0"></c:set>
+                                <c:set var="discountPriceSum" value="0"></c:set>
+                                <c:set var="consPriceSum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="log">
                                     <tr style="height: 30px;">
                                         <td>${log.id}</td>
@@ -108,9 +112,13 @@
                                         <td>${log.project.name}</td>
                                         <td>${log.startTime}—${log.endTime}</td>
                                         <td>${log.orderPrice}</td>
+                                        <c:set var="orderPriceSum" value="${orderPriceSum+log.orderPrice}"></c:set>
                                         <td>${log.shouldPrice}</td>
+                                        <c:set var="shouldPriceSum" value="${shouldPriceSum+log.shouldPrice}"></c:set>
                                         <td>${log.discountPrice}</td>
+                                        <c:set var="discountPriceSum" value="${discountPriceSum+log.discountPrice}"></c:set>
                                         <td>${log.consPrice}</td>
+                                        <c:set var="consPriceSum" value="${consPriceSum+log.consPrice}"></c:set>
                                         <td>${fns:getPayType(log.payType)}
                                             <j:if test="${log.payType==8}">
                                                 <a onclick="multiple_payments('${log.id}')">详情</a>
@@ -125,6 +133,22 @@
                                                             type="both"></fmt:formatDate></td>
                                     </tr>
                                 </c:forEach>
+                                <tr style="height: 30px;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>${orderPriceSum}</td>
+                                    <td>${shouldPriceSum}</td>
+                                    <td>${discountPriceSum}</td>
+                                    <td>${consPriceSum}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
