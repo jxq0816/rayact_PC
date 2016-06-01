@@ -213,9 +213,7 @@ public class FileRepository implements ServletContextAware {
     public void deleteToken(String key) {
         if (key == null || key.isEmpty())
             return;
-        String destPath = Global.getBaseDir();
-        String file = destPath + UPLOAD_PATH;
-
+        String file = Global.getBaseDir();
         File f = new File(file + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + key);
         if (f.exists())
             f.delete();
