@@ -36,7 +36,7 @@
         <include refid="reserveVenueConsDataColumns"/>
         FROM reserve_venue_cons as a
         <include refid="reserveVenueConsDataJoins"/>
-        WHERE a.id = #{id} and a.del_flag = #{DEL_FLAG_NORMAL}
+        WHERE a.id = #{id}
     </select>
     <!--订单详情for 手机端-->
     <select id="detail" parameterType="Map" resultType="Map">
