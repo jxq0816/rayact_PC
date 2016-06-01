@@ -32,6 +32,16 @@
                             </select>
                         </div>
 
+                        <div class="form-group col-lg-3 col-sm-5">
+                            <label class="control-label" for="project">项目：</label>
+                            <sys:select cssClass="input-large" name="project.id" id="project"
+                                        cssStyle="width:50%"
+                                        value="${project.id}"
+                                        items="${projectList}" itemLabel="name" itemValue="id"
+                                        defaultLabel="----请选择-----"
+                                        defaultValue=""></sys:select>
+                        </div>
+
                         <div class="form-group col-lg-3 col-sm-4">
                             <label class="control-label" for="createBy">操作人：</label>
                             <select id="createBy" name="createBy.id" class="select2">
@@ -95,7 +105,7 @@
                                     <tr style="height: 30px;">
                                         <td>${log.id}</td>
                                         <td>${log.venue.name}</td>
-                                        <td>${log.projectName}</td>
+                                        <td>${log.project.name}</td>
                                         <td>${log.startTime}—${log.endTime}</td>
                                         <td>${log.orderPrice}</td>
                                         <td>${log.shouldPrice}</td>

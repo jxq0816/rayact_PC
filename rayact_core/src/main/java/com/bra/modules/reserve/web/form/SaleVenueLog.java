@@ -2,6 +2,7 @@ package com.bra.modules.reserve.web.form;
 
 import com.bra.common.persistence.SaasEntity;
 import com.bra.modules.reserve.entity.ReserveMember;
+import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
 
 import java.util.Date;
@@ -25,8 +26,6 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
 
     private String checkoutName;
 
-    private String projectName;
-
     private String startTime;
 
     private String endTime;
@@ -34,6 +33,16 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
     private Date consDate;
 
     private ReserveVenue venue;
+
+    private ReserveProject project;
+
+    public ReserveProject getProject() {
+        return project;
+    }
+
+    public void setProject(ReserveProject project) {
+        this.project = project;
+    }
 
     private ReserveMember member;
 
@@ -93,14 +102,6 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
 
     public void setCheckoutName(String checkoutName) {
         this.checkoutName = checkoutName;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
     }
 
     public String getStartTime() {

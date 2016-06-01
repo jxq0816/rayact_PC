@@ -172,7 +172,7 @@
         a.create_by as "createBy.id",
         u.name as "createBy.name",
         checkout.name as checkoutName,
-        p.name as projectName,
+        p.name as "project.name",
         i.start_time as startTime,
         i.end_time as endTime
         from reserve_venue_cons as a
@@ -193,6 +193,9 @@
         </if>
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
+        </if>
+        <if test="project!=null and project.id!=null and project.id!=''">
+            and a.project_id = #{project.id}
         </if>
         ${sqlMap.dsf}
         UNION

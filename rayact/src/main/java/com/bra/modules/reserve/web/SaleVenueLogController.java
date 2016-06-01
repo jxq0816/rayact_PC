@@ -3,7 +3,9 @@ package com.bra.modules.reserve.web;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.DateUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveUserService;
 import com.bra.modules.reserve.service.ReserveVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueService;
@@ -36,6 +38,8 @@ public class SaleVenueLogController extends BaseController {
     private ReserveUserService reserveUserService;
     @Autowired
     private ReserveVenueService reserveVenueService;
+    @Autowired
+    private ReserveProjectService reserveProjectService;
 
     @RequestMapping(value = "list")
     public String list(Model model, SaleVenueLog venueLog, HttpServletRequest request, HttpServletResponse response) {
@@ -43,6 +47,8 @@ public class SaleVenueLogController extends BaseController {
         model.addAttribute("userList",reserveUserService.findList(new User()));
         ReserveVenue venue = new ReserveVenue();
         model.addAttribute("venueList",reserveVenueService.findList(venue));
+        List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
+        model.addAttribute("projectList",projectList);
         model.addAttribute("venueLog",venueLog);//参数返回
         Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<SaleVenueLog>(request, response), venueLog);
         model.addAttribute("page", page);
@@ -59,7 +65,7 @@ public class SaleVenueLogController extends BaseController {
             String[] o = new String[14];
             o[0] = log.getId();
             o[1] = log.getVenue().getName();
-            o[2] = log.getProjectName();
+            o[2] = log.getProject().getName();
             o[3] = log.getStartTime()+"-"+log.getEndTime();
             o[4] = String.valueOf(log.getOrderPrice());
             o[5] = String.valueOf(log.getShouldPrice());
