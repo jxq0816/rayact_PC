@@ -47,7 +47,7 @@
     "authorityList": [
       {
         "code": "member",
-        "name": "会员列表",
+        "name": "会员统计列表",
         "href":"/reserve/reserveMember/list",
         "authorityList": []
       },

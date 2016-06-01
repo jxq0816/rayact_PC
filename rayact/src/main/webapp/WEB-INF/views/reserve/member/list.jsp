@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
-    <title>会员管理</title>
+    <title>会员统计列表</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>会员列表</h3>
+                    <h3>会员统计列表</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/"
                            method="post">
@@ -24,6 +24,14 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
+                                    <td>场馆：</td>
+                                    <td> <sys:select cssClass="input-large" name="reserveVenue.id" id="venue"
+                                                    cssStyle="width:100%"
+                                                    value="${query.reserveVenue.id}"
+                                                    items="${venueList}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select>
+                                    </td>
                                     <td>姓名：</td>
                                     <td><form:input path="name" cssStyle="width:100px;" htmlEscape="false" maxlength="30"
                                                     class="form-control"/></td>
@@ -55,11 +63,13 @@
                         <table>
                             <thead>
                             <tr>
+                                <th>场馆</th>
                                 <th>姓名</th>
                                 <th>手机号</th>
                                 <th>性别</th>
                                 <th>卡号</th>
                                 <th>卡号类型</th>
+                                <th>余额</th>
                                 <th>备注</th>
                                 <th>操作</th>
                             </tr>
@@ -67,6 +77,9 @@
                             <tbody>
                             <c:forEach items="${page.list}" var="reserveMember">
                                 <tr>
+                                    <td>
+                                            ${reserveMember.reserveVenue.name}
+                                    </td>
                                     <td><a href="${ctx}/reserve/reserveMember/form?id=${reserveMember.id}">
                                             ${reserveMember.name}
                                     </a></td>
@@ -82,6 +95,9 @@
                                     </td>
                                     <td>
                                             ${fns:getDictLabel(reserveMember.cartType, 'cart_type', '')}
+                                    </td>
+                                    <td>
+                                            ${reserveMember.remainder}
                                     </td>
                                     <td>
                                             ${reserveMember.remarks}

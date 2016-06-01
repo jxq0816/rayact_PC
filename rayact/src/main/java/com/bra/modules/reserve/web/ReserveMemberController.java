@@ -57,6 +57,9 @@ public class ReserveMemberController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember);
+		List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+		model.addAttribute("venueList", venueList);
+		model.addAttribute("query", reserveMember);
 		model.addAttribute("page", page);
 		return "reserve/member/list";
 	}

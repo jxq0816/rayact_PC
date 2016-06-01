@@ -133,6 +133,9 @@
 			<if test="cartType != null and cartType != ''">
 				AND a.cart_type =#{cartType}
 			</if>
+			<if test="reserveVenue != null and reserveVenue.id !=null and reserveVenue.id != ''">
+				AND a.fk_reserve_venue_id =#{reserveVenue.id}
+			</if>
 			${sqlMap.sql}
 		</where>
 		<choose>
