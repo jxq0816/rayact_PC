@@ -189,10 +189,12 @@
 					concat('%',#{reserveMember.name},'%')) or (m.mobile like concat('%',#{reserveMember.name},'%')) )
 				</if>
 			</if>
+			<if test="venue!=null and venue.id!=null and venue.id!=''">
+				and a.venue_id = #{venue.id}
+			</if>
 			<if test="transactionType!=null and transactionType!=''">
 				and a.transaction_type = #{transactionType}
 			</if>
-
 			<if test="startDate!=null and endDate !=null">
 				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
 			</if>

@@ -69,7 +69,8 @@ public class ReserveCardStatementsController extends BaseController {
 	public String list(ReserveCardStatements reserveCardStatements, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response), reserveCardStatements);
 		model.addAttribute("page", page);
-
+		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());
+		model.addAttribute("reserveVenueList", reserveVenueList);
 		String type=reserveCardStatements.getTransactionType();
 		String rs=null;
 		if("1".equals(type)){
@@ -81,6 +82,7 @@ public class ReserveCardStatementsController extends BaseController {
 		}else if("7".equals(type)){
 			rs= "reserve/record/timeCardRechargeStatementsList";
 		}
+		model.addAttribute("query", reserveCardStatements);
 		return rs;
 	}
 
