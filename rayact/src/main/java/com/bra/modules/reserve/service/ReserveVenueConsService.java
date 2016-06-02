@@ -2,7 +2,6 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
-import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
 import com.bra.modules.reserve.entity.*;
@@ -230,9 +229,9 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
         String frequency = reserveVenueCons.getFrequency();//频率
         reserveVenueCons.preInsert();
-        if (StringUtils.isEmpty(reserveVenueCons.getConsMobile())) {
+      /*  if (StringUtils.isEmpty(reserveVenueCons.getConsMobile())) {
             reserveVenueCons.setConsMobile("000");
-        }
+        }*/
         dao.insert(reserveVenueCons);//保存订单
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
         Double sum = 0D;//订单价格
@@ -258,7 +257,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                     price = price * rate * 0.01;
                 }
             }
-            item.setOrderPrice(price);//订单明细 场地应收
             filedSum+=price;
             //教练费不打折
             ReserveTutor tutor = reserveVenueCons.getTutor();
@@ -271,8 +269,9 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 List<String> timeIntervalList = TimeUtils.getTimeSpacListValue(startTime, endTime, 30);
                 halfHourNum = timeIntervalList.size();
                 double tutorConsume = halfHourNum * hourPrice / 2;
-                price += tutorConsume;//订单价格增加教练费
+                price += tutorConsume;//订单明细价格增加教练费
             }
+            item.setOrderPrice(filedSum);//订单明细的场地费用
             item.setConsPrice(price);//订单明细 应收金额=场地应收+教练费
             item.preInsert();
             reserveVenueConsItemDao.insert(item);//保存预订信息
