@@ -59,26 +59,26 @@ public class SaleVenueLogController extends BaseController {
     public void listExport(SaleVenueLog venueLog,  HttpServletRequest request,HttpServletResponse response)throws Exception {
 
         List<SaleVenueLog> sellLogs = reserveVenueConsService.findOrderLogList(venueLog);
-        String[] titles = {"订单编号","所属场馆","所属项目","时间区间","订单金额","应收金额","优惠金额","实收金额","支付类型","预定人","操作人","授权人","订单时间","操作时间"};
+        String[] titles = {"所属场馆","所属项目","时间区间","订单金额","应收金额","优惠金额","实收金额","支付类型","预定人","操作人","授权人","订单时间","操作时间"};
         List<String[]> contentList = new ArrayList<>();
         for(SaleVenueLog log :sellLogs){
             String[] o = new String[14];
-            o[0] = log.getId();
-            o[1] = log.getVenue().getName();
-            o[2] = log.getProject().getName();
-            o[3] = log.getStartTime()+"-"+log.getEndTime();
-            o[4] = String.valueOf(log.getOrderPrice());
-            o[5] = String.valueOf(log.getShouldPrice());
-            o[6] = String.valueOf(log.getDiscountPrice());
-            o[7] = String.valueOf(log.getConsPrice());
-            o[8] = log.getPayType();
-            o[9] = log.getMember().getName();
-            o[10] = log.getCreateBy().getName();
-            o[11] = log.getCheckoutName();
+         /*   o[0] = log.getId();*/
+            o[0] = log.getVenue().getName();
+            o[1] = log.getProject().getName();
+            o[2] = log.getStartTime()+"-"+log.getEndTime();
+            o[3] = String.valueOf(log.getOrderPrice());
+            o[4] = String.valueOf(log.getShouldPrice());
+            o[5] = String.valueOf(log.getDiscountPrice());
+            o[6] = String.valueOf(log.getConsPrice());
+            o[7] = log.getPayType();
+            o[8] = log.getMember().getName();
+            o[9] = log.getCreateBy().getName();
+            o[10] = log.getCheckoutName();
             SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-            o[12] = String.valueOf(format.format(log.getConsDate()));
+            o[11] = String.valueOf(format.format(log.getConsDate()));
             SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            o[13] =String.valueOf(myFmt.format(log.getUpdateDate()));
+            o[12] =String.valueOf(myFmt.format(log.getUpdateDate()));
             contentList.add(o);
         }
         Date now = new Date();

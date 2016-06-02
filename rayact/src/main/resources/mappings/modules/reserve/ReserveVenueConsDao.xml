@@ -176,11 +176,11 @@
         i.start_time as startTime,
         i.end_time as endTime
         from reserve_venue_cons as a
-        LEFT JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
-        LEFT JOIN  reserve_venue as v ON a.venue_id = v.id
-        LEFT JOIN  reserve_user as u on a.create_by = u.id
-        left JOIN  reserve_project as p ON a.project_id = p.id
-        LEFT JOIN  reserve_user as checkout on a.checkout_id = checkout.id
+        INNER JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
+        INNER JOIN  reserve_venue as v ON a.venue_id = v.id
+        INNER JOIN  reserve_user as u on a.create_by = u.id
+        INNER JOIN  reserve_project as p ON a.project_id = p.id
+        INNER JOIN  reserve_user as checkout on a.checkout_id = checkout.id
         where a.del_flag = '0' and a.reserve_type = '4'
         <if test="tenantId != null and tenantId != ''">
             and a.tenant_id = #{tenantId}
