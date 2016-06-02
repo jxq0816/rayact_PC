@@ -38,7 +38,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      List<Map<String,Object>> storeIncome(SearchForm searchForm);
 
-     List<Map<String,Object>> commIncome(SearchForm searchForm);
+     List<Map<String,Object>> commIncome(Map searchForm);
 
      List<ReserveCommodity> commSell(SearchForm searchForm);
 

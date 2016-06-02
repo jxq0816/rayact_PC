@@ -246,7 +246,7 @@ public class ReserveSellReportController extends BaseController {
                 node.put("commId", c.getId());
                 node.put("commName", c.getName());
                 //查询该用户管理的所有场馆 售卖的某件商品的销量
-                List<Map<String, Object>> tmp = reserveCardStatementsService.commIncome(form);
+                List<Map<String, Object>> tmp = reserveCardStatementsService.commIncome(node);
                 node.put("data", JSONArray.toJSONString(tmp));
                 rtn.add(node);
             }

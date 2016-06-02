@@ -128,11 +128,7 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	 * @param searchForm
 	 * @return
 	 */
-	public List<Map<String,Object>> commIncome(SearchForm searchForm) {
-		if (searchForm != null) {
-			if (searchForm.getSqlMap().get("dsf") == null)
-				searchForm.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
-		}
+	public List<Map<String,Object>> commIncome(Map searchForm) {
 		return dao.commIncome(searchForm);
 	}
 	public List<ReserveCommodity> commSell(SearchForm searchForm) {
