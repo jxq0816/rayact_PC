@@ -106,7 +106,7 @@ public class ReserveTutorOrderController extends BaseController {
 		List<Map<String,Object>> list = reserveTutorOrderService.getTutorDetail(order);
 		page.setList(list);
 		model.addAttribute("page", page);
-		return "modules/reserve/tutorDetailList";
+		return "reserve/report/tutorDetailList";
 	}
 
 	@RequestMapping(value = "orderAll")
@@ -123,7 +123,7 @@ public class ReserveTutorOrderController extends BaseController {
 		model.addAttribute("reserveProjectList", reserveProjectList);
 		model.addAttribute("query", reserveTutorOrder);
 		model.addAttribute("page", page);
-		return "reserve/commodity/tutorOrderAll";
+		return "reserve/report/tutorOrderAll";
 	}
 
 }
