@@ -239,19 +239,22 @@
 		WHERE a.cons_mobile like concat('%',#{consMobile},'%') and tenant_id = #{tenantId}
 	</select>
 	<select id="getUsedVenueNum" parameterType="ReserveVenueConsItem" resultType="int">
-		SELECT COUNT( CASE WHEN tmp2.parent_field_id is NULL THEN tmp2.field_id END)+2*COUNT( CASE WHEN parent_field_id is not NULL  THEN tmp2.field_id END) FROM (
-		SELECT DISTINCT(tmp.field_id),r.parent_field_id FROM
-		(SELECT i.field_id
-		FROM reserve_venue_cons_item i
-		WHERE
-		i.del_flag = #{DEL_FLAG_NORMAL} AND i.tenant_id = #{tenantId} AND
-		STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.end_time),'%Y-%m-%d %H:%i') &gt;= NOW()
-		AND STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.start_time),'%Y-%m-%d %H:%i') &lt;= NOW()
-		<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
-			AND i.venue_id = #{reserveVenue.id}
-		</if>
-		) tmp
-		LEFT JOIN reserve_field_relation r on r.parent_field_id = tmp.field_id) tmp2
+		SELECT COUNT( CASE WHEN tmp2.parent_field_id is NULL THEN tmp2.field_id END)+2*COUNT( CASE WHEN parent_field_id is not NULL  THEN tmp2.field_id END)
+		FROM (
+			SELECT DISTINCT(tmp.field_id),r.parent_field_id FROM
+			(
+				SELECT i.field_id
+				FROM reserve_venue_cons_item i
+				WHERE i.del_flag = #{DEL_FLAG_NORMAL} AND i.tenant_id = #{tenantId}
+				AND STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.end_time),'%Y-%m-%d %H:%i') &gt;= NOW()
+				AND STR_TO_DATE(CONCAT_WS(' ',i.cons_date,i.start_time),'%Y-%m-%d %H:%i') &lt;= NOW()
+				<if test="reserveVenue != null and reserveVenue.id != null and reserveVenue.id !=''">
+					AND i.venue_id = #{reserveVenue.id}
+				</if>
+				${sqlMap.dsf}
+			) tmp
+			LEFT JOIN reserve_field_relation r on r.parent_field_id = tmp.field_id
+		) tmp2
 	</select>
 	<select id="getUsedVenueNumByProject" parameterType="ReserveVenueConsItem" resultType="Map">
 		SELECT COUNT( CASE WHEN tmp2.parent_field_id is NULL THEN tmp2.field_id END)+2*COUNT( CASE WHEN parent_field_id is not NULL  THEN tmp2.field_id END) AS num,

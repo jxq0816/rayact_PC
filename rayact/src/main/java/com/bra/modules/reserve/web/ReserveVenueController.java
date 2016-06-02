@@ -437,6 +437,14 @@ public class ReserveVenueController extends BaseController {
         ReserveField field = new ReserveField();
         field.setTenantId(tenantId);
         field.setDelFlag("0");
+        //场馆权限过滤
+        if (field.getSqlMap().get("dsf") == null) {
+            ReserveRole reserveRole = new ReserveRole();
+            reserveRole.setUser(user);
+            List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+            String venues = AuthorityUtils.getVenueIds(venueIds, "v.id");
+            field.getSqlMap().put("dsf", venues);
+        }
         List<ReserveField> fields = reserveFieldService.findList(field);
         for(ReserveField f:fields){
             ReserveFieldRelation r = new ReserveFieldRelation();
@@ -450,6 +458,13 @@ public class ReserveVenueController extends BaseController {
         //查询当前场地占用数
         ReserveVenueConsItem item = new ReserveVenueConsItem();
         item.setTenantId(tenantId);
+        if (item.getSqlMap().get("dsf") == null) {
+            ReserveRole reserveRole = new ReserveRole();
+            reserveRole.setUser(user);
+            List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+            String venues = AuthorityUtils.getVenueIds(venueIds, "i.venue_id");
+            item.getSqlMap().put("dsf", venues);
+        }
         int usedNum = reserveVenueConsItemService.getUsedVenueNum(item);
         Map<String,String> venueNode = new HashMap();
         rtn.put("userName",user.getName());
