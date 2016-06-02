@@ -174,13 +174,16 @@
         checkout.name as checkoutName,
         p.name as "project.name",
         i.start_time as startTime,
-        i.end_time as endTime
+        i.end_time as endTime,
+        tutor.name as "tutorName"
         from reserve_venue_cons as a
         INNER JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
         INNER JOIN  reserve_venue as v ON a.venue_id = v.id
         INNER JOIN  reserve_user as u on a.create_by = u.id
         INNER JOIN  reserve_project as p ON a.project_id = p.id
-        INNER JOIN  reserve_user as checkout on a.checkout_id = checkout.id
+        LEFT JOIN  reserve_user as checkout on a.checkout_id = checkout.id
+        LEFT JOIN reserve_tutor_order as o on o.model_id=a.id
+        LEFT JOIN ( select t.name,ord.model_id from reserve_tutor_order as ord INNER JOIN reserve_tutor as t on ord.tutor_id=t.id ) as tutor  on tutor.model_id=a.id
         where a.del_flag = '0' and a.reserve_type = '4'
         <if test="tenantId != null and tenantId != ''">
             and a.tenant_id = #{tenantId}
@@ -213,10 +216,15 @@
         NULL as checkout_name,
         p.name as projectName,
         DATE_FORMAT(a.update_date,'%H:%i') as startTime,
-        DATE_FORMAT(a.update_date,'%H:%i') as endTime
-        from reserve_venue_order a,reserve_venue v,reserve_user u,reserve_venue_visitors_set s, reserve_project p
-        where a.venue_id = v.id and a.create_by = u.id and a.visitors_set_id=s.id and s.project_id=p.id
-        and a.del_flag = '0'
+        DATE_FORMAT(a.update_date,'%H:%i') as endTime,
+        tutor.name as "tutorName"
+        from reserve_venue_order a
+        INNER JOIN reserve_venue v ON a.venue_id = v.id
+        INNER JOIN reserve_user u ON a.create_by = u.id
+        INNER JOIN reserve_venue_visitors_set s ON a.visitors_set_id=s.id
+        INNER JOIN reserve_project p ON s.project_id=p.id
+        LEFT JOIN ( select t.name,ord.model_id from reserve_tutor_order as ord INNER JOIN reserve_tutor as t on ord.tutor_id=t.id ) as tutor  on tutor.model_id=a.id
+        where a.del_flag = '0'
         <if test="tenantId != null and tenantId != ''">
             and a.tenant_id = #{tenantId}
         </if>
@@ -232,7 +240,6 @@
         <if test="createBy!=null and createBy.id!=null and createBy.id!=''">
             and a.create_by = #{createBy.id}
         </if>
-
         ${sqlMap.dsf}
         ORDER BY updateDate DESC
     </select>

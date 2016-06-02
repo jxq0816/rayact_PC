@@ -96,6 +96,7 @@
                                     <th>预定人</th>
                                     <th>操作人</th>
                                     <th>授权人</th>
+                                      <th>教练</th>
                                     <th>订单时间</th>
                                     <th>操作时间</th>
                                 </tr>
@@ -127,6 +128,7 @@
                                         <td>${log.member.name}</td>
                                         <td>${log.createBy.name}</td>
                                         <td>${log.checkoutName}</td>
+                                           <td>${log.tutorName}</td>
                                         <td><fmt:formatDate value="${log.consDate}"
                                                             type="date"></fmt:formatDate></td>
                                         <td><fmt:formatDate value="${log.updateDate}"
