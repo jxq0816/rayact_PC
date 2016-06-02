@@ -251,6 +251,14 @@ public class ReserveVenueController extends BaseController {
             User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
             tenantId = user.getCompany().getId();
             reserveVenue.setTenantId(tenantId);
+            //场馆权限过滤
+            if (reserveVenue.getSqlMap().get("dsf") == null) {
+                ReserveRole reserveRole = new ReserveRole();
+                reserveRole.setUser(user);
+                List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+                String venues = AuthorityUtils.getVenueIds(venueIds, "a.id");
+                reserveVenue.getSqlMap().put("dsf", venues);
+            }
         }
         List<Map<String,String>> rtn = new ArrayList();
         List<ReserveVenue> list = reserveVenueService.findList(reserveVenue);
