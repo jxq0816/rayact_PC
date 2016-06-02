@@ -18,6 +18,7 @@ import com.bra.modules.reserve.entity.form.ReserveVenueProjectFieldIntervalRepor
 import com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport;
 import com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport;
 import com.bra.modules.reserve.service.*;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.CheckUtils;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.sys.entity.User;
@@ -54,7 +55,8 @@ public class ReserveVenueController extends BaseController {
     private ReserveFieldService reserveFieldService;
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
-
+    @Autowired
+    private ReserveRoleService reserveRoleService;
     @Autowired
     private ReserveProjectService reserveProjectService;
 
@@ -250,7 +252,6 @@ public class ReserveVenueController extends BaseController {
             tenantId = user.getCompany().getId();
             reserveVenue.setTenantId(tenantId);
         }
-        reserveVenue.getSqlMap().put("dsf"," and 1=1 ");
         List<Map<String,String>> rtn = new ArrayList();
         List<ReserveVenue> list = reserveVenueService.findList(reserveVenue);
         if(list!=null){
@@ -355,6 +356,11 @@ public class ReserveVenueController extends BaseController {
         return JSONArray.toJSONString(rtn);
     }
 
+    /**
+     * 场地列表
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "mobile/venueAll")
     public @ResponseBody String venueAll(HttpServletRequest request) {
         List<Map<String,String>> rtn = new ArrayList<>();
@@ -363,8 +369,15 @@ public class ReserveVenueController extends BaseController {
         if(userId!=null&&!userId.equals("")){
             User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
             reserveVenue.setTenantId(user.getCompany().getId());
+            //场馆权限过滤
+            if (reserveVenue.getSqlMap().get("dsf") == null) {
+                ReserveRole reserveRole = new ReserveRole();
+                reserveRole.setUser(user);
+                List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
+                String venues = AuthorityUtils.getVenueIds(venueIds, "a.id");
+                reserveVenue.getSqlMap().put("dsf", venues);
+            }
         }
-        reserveVenue.getSqlMap().put("dsf"," and 1=1 ");
         List<ReserveVenue> vs = reserveVenueService.findList(reserveVenue);
         if(vs!=null){
             for(ReserveVenue v:vs){
@@ -395,7 +408,9 @@ public class ReserveVenueController extends BaseController {
             return rootURL+"/static/images/ld.png";
         }else if("中电体育馆".equals(name)){
             return rootURL+"/static/images/zd.png";
-        }else return "";
+        }else if("798足球公园".equals(name)){
+            return rootURL+"/static/images/zd.png";
+        } return "";
     }
 
     @RequestMapping(value = {"mobile/rv/fieldAll", ""})
