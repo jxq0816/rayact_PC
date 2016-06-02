@@ -409,7 +409,7 @@ public class ReserveVenueController extends BaseController {
         }else if("中电体育馆".equals(name)){
             return rootURL+"/static/images/zd.png";
         }else if("798足球公园".equals(name)){
-            return rootURL+"/static/images/zd.png";
+            return rootURL+"/static/images/798.png";
         } return "";
     }
 
