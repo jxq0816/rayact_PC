@@ -286,7 +286,7 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-
+	<!--高管在手机端查看的总收入-->
 	<select id="allReport" resultType="java.util.Map">
 		SELECT
 		v.id as venue_id,
@@ -344,7 +344,7 @@
 			GROUP BY r.parent_field_id
 		) tmp ON f.id = tmp.field_id WHERE f.venue_id = #{venueId} GROUP BY f.id ORDER BY field_name
 	</select>
-
+	<!--APP高管查看商品收入-->
 	<select id="storeIncome" resultType="java.util.Map" parameterType="SearchForm">
 		SELECT m.name,s.transaction_volume,s.pay_type,date_format(s.create_date,'%Y-%c-%d %h:%i:%s') as storeTime
 		FROM reserve_card_statements s
@@ -356,26 +356,30 @@
 		and s.venue_id = #{venueId}
 	</select>
 
+	<!--APP高管查看某件商品的收入-->
 	<select id="commIncome" resultType="java.util.Map" parameterType="SearchForm">
 		SELECT v.name,sum(cd.num) as num,SUM(cd.detail_sum) as income
 		FROM reserve_venue v
-		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.name = #{venueId}
+		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.id = #{commId}
 		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
-		WHERE
+		WHERE 1=1
 		<if test="startDate!=null and endDate !=null">
-			datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
+			and datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>
-		GROUP BY v.name
+		${sqlMap.dsf}
+		GROUP BY v.id
 	</select>
-
+	<!--APP高管查询已售卖的商品列表-->
 	<select id="commSell" resultType="ReserveCommodity" parameterType="SearchForm">
 		SELECT c.*
-		FROM reserve_commodity_sell_detail cd
-		LEFT JOIN reserve_commodity c ON c.id = cd.fk_reserve_commodity_id
-		WHERE
+		FROM reserve_commodity as c
+		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
+		LEFT JOIN reserve_venue as v ON v.id=c.fk_reserve_venue_id
+		WHERE 1=1
 		<if test="startDate!=null and endDate !=null">
-			datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
+			and datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>
+		${sqlMap.dsf}
 	</select>
 
 	<select id="ticketIncome" resultType="java.util.Map" parameterType="SearchForm">

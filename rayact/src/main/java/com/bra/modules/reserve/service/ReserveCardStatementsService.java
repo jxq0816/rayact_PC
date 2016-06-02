@@ -3,14 +3,11 @@ package com.bra.modules.reserve.service;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveCardStatementsDao;
-import com.bra.modules.reserve.entity.ReserveCommodity;
-import com.bra.modules.reserve.entity.ReserveCardStatements;
-import com.bra.modules.reserve.entity.ReserveProject;
-import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
-import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.ReserveMemberDayReport;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import com.bra.modules.reserve.entity.form.SearchForm;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,7 +107,11 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	public List<Map<String,Object>> rechargeOfChart(ReserveCardStatements reserveCardStatements) {
 		return dao.rechargeOfChart(reserveCardStatements);
 	}
-
+	/**
+	 * APP 高管总收入
+	 * @param  reserveCardStatements
+	 * @return
+	 */
 	public List<Map<String,Object>> allReport(ReserveCardStatements reserveCardStatements) {
 		return dao.allReport(reserveCardStatements);
 	}
@@ -122,8 +123,16 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	public List<Map<String,Object>> storeIncome(SearchForm searchForm) {
 		return dao.storeIncome(searchForm);
 	}
-
+	/**
+	 * APP 高管 商品收入
+	 * @param searchForm
+	 * @return
+	 */
 	public List<Map<String,Object>> commIncome(SearchForm searchForm) {
+		if (searchForm != null) {
+			if (searchForm.getSqlMap().get("dsf") == null)
+				searchForm.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+		}
 		return dao.commIncome(searchForm);
 	}
 	public List<ReserveCommodity> commSell(SearchForm searchForm) {
