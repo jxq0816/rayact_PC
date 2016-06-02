@@ -43,7 +43,7 @@ public class SaleVenueLogController extends BaseController {
 
     @RequestMapping(value = "list")
     public String list(Model model, SaleVenueLog venueLog, HttpServletRequest request, HttpServletResponse response) {
-
+       /* request.setAttribute("sessionId",request.getSession().getId());*/
         model.addAttribute("userList",reserveUserService.findList(new User()));
         ReserveVenue venue = new ReserveVenue();
         model.addAttribute("venueList",reserveVenueService.findList(venue));
@@ -59,11 +59,10 @@ public class SaleVenueLogController extends BaseController {
     public void listExport(SaleVenueLog venueLog,  HttpServletRequest request,HttpServletResponse response)throws Exception {
 
         List<SaleVenueLog> sellLogs = reserveVenueConsService.findOrderLogList(venueLog);
-        String[] titles = {"所属场馆","所属项目","时间区间","订单金额","应收金额","优惠金额","实收金额","支付类型","预定人","操作人","授权人","订单时间","操作时间"};
+        String[] titles = {"所属场馆","所属项目","时间区间","订单金额","应收金额","优惠金额","实收金额","支付类型","预定人","操作人","授权人","教练","订单时间","操作时间"};
         List<String[]> contentList = new ArrayList<>();
         for(SaleVenueLog log :sellLogs){
             String[] o = new String[14];
-         /*   o[0] = log.getId();*/
             o[0] = log.getVenue().getName();
             o[1] = log.getProject().getName();
             o[2] = log.getStartTime()+"-"+log.getEndTime();
@@ -75,10 +74,11 @@ public class SaleVenueLogController extends BaseController {
             o[8] = log.getMember().getName();
             o[9] = log.getCreateBy().getName();
             o[10] = log.getCheckoutName();
+            o[11] = log.getTutorName();
             SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-            o[11] = String.valueOf(format.format(log.getConsDate()));
+            o[12] = String.valueOf(format.format(log.getConsDate()));
             SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            o[12] =String.valueOf(myFmt.format(log.getUpdateDate()));
+            o[13] =String.valueOf(myFmt.format(log.getUpdateDate()));
             contentList.add(o);
         }
         Date now = new Date();
