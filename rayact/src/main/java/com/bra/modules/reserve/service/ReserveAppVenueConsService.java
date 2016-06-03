@@ -198,7 +198,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
                 for(ReserveMember i: list){
                     member=i;
                 }
-                reserveVenueCons.setMember(member);
+                reserveVenueCons.setMember(member);//通过手机号，找到场馆的会员，最后在监听器中处理余额
             }
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);
