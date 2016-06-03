@@ -343,7 +343,10 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
 
     public List<ReserveVenueTotalIntervalReport> totalIncomeReport(ReserveVenueTotalIntervalReport intervalTotalReport) {
-
+        if (intervalTotalReport != null) {
+            if (intervalTotalReport.getSqlMap().get("dsf") == null)
+                intervalTotalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+        }
         List<ReserveVenueTotalIntervalReport> list = dao.totalIncomeReport(intervalTotalReport);
         return list;
     }

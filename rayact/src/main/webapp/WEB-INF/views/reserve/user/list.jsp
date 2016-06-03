@@ -64,7 +64,7 @@
                                             场馆管理员
                                         </c:if>
                                         <c:if test="${user.reserveRole.userType eq 3}">
-                                            场地管理员
+                                           高管
                                         </c:if>
                                         <c:if test="${user.reserveRole.userType eq 4}">
                                             收银
