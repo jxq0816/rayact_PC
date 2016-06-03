@@ -41,6 +41,7 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
     private String halfCourt;//是否半场(1:是)
     private User checkOutUser;
     private String payType;////支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款)
+    private String byPC;
 
     /*多方式付款*/
     private Double memberCardInput;
@@ -56,6 +57,14 @@ public class ReserveVenueCons extends SaasEntity<ReserveVenueCons> {
 
     private List<ReserveVenueConsItem> venueConsList = Lists.newArrayList();//预订详情
     private List<ReserveTutorOrder> tutorOrderList;//教练预订列表
+
+    public String getByPC() {
+        return byPC;
+    }
+
+    public void setByPC(String byPC) {
+        this.byPC = byPC;
+    }
 
     public List<ReserveTutorOrder> getTutorOrderList() {
         return tutorOrderList;

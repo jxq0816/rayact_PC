@@ -150,6 +150,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             reserveVenueConsItemDao.insert(item);//保存预订信息
             sum += price;
         }
+        reserveVenueCons.setByPC("0");//通过APP预订的
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
         reserveVenueConsDao.insert(reserveVenueCons);//订单价格更改

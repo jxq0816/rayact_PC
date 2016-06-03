@@ -12,7 +12,6 @@ import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.bra.modules.reserve.web.form.SaleVenueLog;
 import com.bra.modules.sys.entity.User;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -229,9 +228,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         String halfCourt = reserveVenueCons.getHalfCourt();//半场
         String frequency = reserveVenueCons.getFrequency();//频率
         reserveVenueCons.preInsert();
-      /*  if (StringUtils.isEmpty(reserveVenueCons.getConsMobile())) {
-            reserveVenueCons.setConsMobile("000");
-        }*/
+        reserveVenueCons.setByPC("1");
         dao.insert(reserveVenueCons);//保存订单
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//订单的所有明细
         Double sum = 0D;//订单价格
