@@ -30,7 +30,7 @@
                                 <tr>
                                     <td>卡号:</td>
                                     <td>
-                                        <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20"
+                                        <form:input id="cardNo" path="cartno" htmlEscape="false" maxlength="20"
                                                     class="form-control required"/>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </td>

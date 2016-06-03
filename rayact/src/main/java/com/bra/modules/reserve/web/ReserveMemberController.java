@@ -72,7 +72,51 @@ public class ReserveMemberController extends BaseController {
 		model.addAttribute("venueList", venueList);
 		return "reserve/member/form";
 	}
-
+	@RequestMapping(value = "checkBeforeSave")
+	@ResponseBody
+	public String check(String id,String cardNo,  String mobile, String sfz, HttpServletRequest request, HttpServletResponse response) {
+		String rs = null;
+		//验证卡号
+		if (StringUtils.isNoneEmpty(cardNo)) {
+			ReserveMember rm1 = new ReserveMember();
+			if (StringUtils.isNoneEmpty(id)) {//修改用户
+				rm1.setId(id);
+			}
+			rm1.setCartno(cardNo);
+			List<ReserveMember> list1 = reserveMemberService.findExactList(rm1);
+			if (list1.size() != 0) {
+				rs = "1";//卡号重复
+				return rs;
+			}
+		}
+		//验证手机号
+		if (StringUtils.isNoneEmpty(mobile)) {
+			ReserveMember rm2 = new ReserveMember();
+			if (StringUtils.isNoneEmpty(id)) {//修改用户
+				rm2.setId(id);
+			}
+			rm2.setMobile(mobile);
+			List<ReserveMember> list2 = reserveMemberService.findExactList(rm2);
+			if (list2.size() != 0) {
+				rs = "2";//手机号重复
+				return rs;
+			}
+		}
+		//验证身份证
+		if (StringUtils.isNoneEmpty(sfz)) {
+			ReserveMember rm3 = new ReserveMember();
+			if (StringUtils.isNoneEmpty(id)) {//修改用户
+				rm3.setId(id);
+			}
+			rm3.setSfz(sfz);
+			List<ReserveMember> list3 = reserveMemberService.findExactList(rm3);
+			if (list3.size() != 0) {
+				rs = "3";//身份证号重复
+				return rs;
+			}
+		}
+		return rs;
+	}
 	@RequestMapping(value = "save")
 	@Token(remove = true)
 	public String save(ReserveMember reserveMember, Model model, RedirectAttributes redirectAttributes) {

@@ -19,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,51 +58,7 @@ public class ReserveStoredCardMemberController extends BaseController {
         return entity;
     }
 
-    @RequestMapping(value = "check")
-    @ResponseBody
-    public String check(String id, String mobile, String sfz, HttpServletRequest request, HttpServletResponse response) {
-        String rs = null;
-        //验证卡号
-        /*if (StringUtils.isNoneEmpty(cardno)) {
-            ReserveMember rm1 = new ReserveMember();
-            if (StringUtils.isNoneEmpty(id)) {//修改用户
-                rm1.setId(id);
-            }
-            rm1.setCartno(cardno);
-            List<ReserveMember> list1 = reserveMemberService.findExactList(rm1);
-            if (list1.size() != 0) {
-                rs = "1";//卡号重复
-                return rs;
-            }
-        }*/
-        //验证手机号
-        if (StringUtils.isNoneEmpty(mobile)) {
-            ReserveMember rm2 = new ReserveMember();
-            if (StringUtils.isNoneEmpty(id)) {//修改用户
-                rm2.setId(id);
-            }
-            rm2.setMobile(mobile);
-            List<ReserveMember> list2 = reserveMemberService.findExactList(rm2);
-            if (list2.size() != 0) {
-                rs = "2";//手机号重复
-                return rs;
-            }
-        }
-        //验证身份证
-        if (StringUtils.isNoneEmpty(sfz)) {
-            ReserveMember rm3 = new ReserveMember();
-            if (StringUtils.isNoneEmpty(id)) {//修改用户
-                rm3.setId(id);
-            }
-            rm3.setSfz(sfz);
-            List<ReserveMember> list3 = reserveMemberService.findExactList(rm3);
-            if (list3.size() != 0) {
-                rs = "3";//身份证号重复
-                return rs;
-            }
-        }
-        return rs;
-    }
+
 
     @RequestMapping(value = "list")
     public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {

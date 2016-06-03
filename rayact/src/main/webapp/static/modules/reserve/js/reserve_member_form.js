@@ -4,6 +4,7 @@
 function checkForm() {
     var rs=true;
     var id = $("#id").val().trim();
+    var cardNo = $("#cardNo").val().trim();
     var mobile = $("#mobile").val().trim();
     var sfz = $("#sfz").val().trim();
     var name=$("#name").val().trim();
@@ -26,19 +27,18 @@ function checkForm() {
         return false;
     }
     jQuery.postItems({
-        url: ctx + '/reserve/storedCardMember/check',
+        url: ctx + '/reserve/reserveMember/checkBeforeSave',
         data: {
             id:id,
-        /*    cardno:cardno,*/
+            cardNo:cardNo,
             mobile:mobile,
             sfz:sfz
         },
         success: function (result) {
-           /* if(result=="1") {
+           if(result=="1") {
                 errorLoding("卡号重复");
                 rs=false;
-            }else */
-            if(result=="2"){
+            }else if(result=="2"){
                 errorLoding("手机号重复");
                 rs=false;
             }else if(result=="3"){
