@@ -81,21 +81,20 @@ $(document).ready(function () {
                         }
                         else {
                             formLoding('订单预定成功!');
-                            location.reload(true);
-                            /* $(".table-chang tbody td").each(function (index) {
-                             var $this = $(this);
-                             var fieldId = $this.attr("data-field");
-                             var time = $this.attr("data-time");
-                             $.each(values, function (index, item) {
-                             if (item.fieldId == fieldId && time == item.time) {
-                             /!*$this.removeClass("access");
-                             $this.attr("status", "1");
-                             $this.attr("data-item", item.itemId);
-                             $this.text(userName);*!/
-                             location.reload(true);
-                             }
-                             });
-                             });*/
+                            $(".table-chang tbody td").each(function (index) {
+                                var $this = $(this);
+                                var fieldId = $this.attr("data-field");
+                                var time = $this.attr("data-time");
+                                $.each(values, function (index, item) {
+                                    if (item.fieldId == fieldId && time == item.time) {
+                                        $this.removeClass("access");
+                                        $this.attr("status", "1");
+                                        $this.attr("data-item", item.itemId);
+                                        $this.text(userName);
+                                       /* location.reload(true);*/
+                                    }
+                                });
+                            });
                         }
                     });
                 }
@@ -165,6 +164,7 @@ $(document).ready(function () {
             }
         });
     }
+
     //空场审核
     function checkEmpty(t) {
         var fieldId = $(t).attr("data-field");
@@ -236,7 +236,7 @@ $(document).ready(function () {
     $("#saveApplyCutBtn").on('click', function () {
         var data = $("#applyCutFormBean").serializeArray();
         var applyer = $("#userId").val();
-        if(!applyer){
+        if (!applyer) {
             formLoding('请选择通知人!');
             return;
         }
@@ -335,12 +335,13 @@ $(document).ready(function () {
             }
         });
     }
+
     //确认结账
     $("#saveSettlementBtn").on('click', function () {
 
         var shouldPrice = $("#shouldPrice").val();
         var discountPrice = $("#discountPrice").val();
-        if(isNaN(discountPrice)){
+        if (isNaN(discountPrice)) {
             errorLoding("优惠金额必须为数字！");
             return;
         }
@@ -349,74 +350,74 @@ $(document).ready(function () {
             return;
         }
         /* 以上为数据验证*/
-        var consPrice=shouldPrice-discountPrice;
-        if(isNaN(consPrice)){
+        var consPrice = shouldPrice - discountPrice;
+        if (isNaN(consPrice)) {
             errorLoding("结算金额必须为数字！");
             return;
         }
-        if(eval(consPrice) < 0){
+        if (eval(consPrice) < 0) {
             errorLoding("结账金额不能小于0！");
             return;
         }
-        var authUserId=$("#authUser").val();
-        var id=$("#id").val();
-        var token=$("#token").val();
+        var authUserId = $("#authUser").val();
+        var id = $("#id").val();
+        var token = $("#token").val();
         var payType = $("#payTypeDIV input:radio:checked").val();
-        if(payType=="" || payType==null || payType==undefined){
+        if (payType == "" || payType == null || payType == undefined) {
             errorLoding("请选择支付类型！");
             return;
         }
         /*  var data = $("#settlementFormBean").serializeArray();*/
-        var memberCardInput=0;
-        var cashInput=0;
-        var bankCardInput=0;
-        var weiXinInput=0;
-        var weiXinPersonalInput=0;
-        var aliPayInput=0;
-        var aliPayPersonalInput=0;
-        var couponInput=0;
-     /*   var owningInput=0;*/
-        if(payType=='8'){
-            memberCardInput=eval($("#memberCardInput").val());
-            cashInput=eval($("#cashInput").val());
-            bankCardInput=eval($("#bankCardInput").val()) ;
-            weiXinPersonalInput=eval($("#weiXinPersonalInput").val()) ;
-            weiXinInput=eval($("#weiXinInput").val()) ;
-            aliPayInput=eval($("#aliPayInput").val()) ;
-            aliPayPersonalInput=eval($("#aliPayPersonalInput").val()) ;
-            couponInput=eval($("#couponInput").val()) ;
-         /*   owningInput=eval($("#owningInput").val()) ;*/
-            var sum=eval(memberCardInput+cashInput+bankCardInput+weiXinInput+weiXinPersonalInput+aliPayInput+aliPayPersonalInput+couponInput);
-            if(sum!=consPrice){
+        var memberCardInput = 0;
+        var cashInput = 0;
+        var bankCardInput = 0;
+        var weiXinInput = 0;
+        var weiXinPersonalInput = 0;
+        var aliPayInput = 0;
+        var aliPayPersonalInput = 0;
+        var couponInput = 0;
+        /*   var owningInput=0;*/
+        if (payType == '8') {
+            memberCardInput = eval($("#memberCardInput").val());
+            cashInput = eval($("#cashInput").val());
+            bankCardInput = eval($("#bankCardInput").val());
+            weiXinPersonalInput = eval($("#weiXinPersonalInput").val());
+            weiXinInput = eval($("#weiXinInput").val());
+            aliPayInput = eval($("#aliPayInput").val());
+            aliPayPersonalInput = eval($("#aliPayPersonalInput").val());
+            couponInput = eval($("#couponInput").val());
+            /*   owningInput=eval($("#owningInput").val()) ;*/
+            var sum = eval(memberCardInput + cashInput + bankCardInput + weiXinInput + weiXinPersonalInput + aliPayInput + aliPayPersonalInput + couponInput);
+            if (sum != consPrice) {
                 errorLoding("多方式付款的总和不等于实收");
                 return;
             }
         }
         $.postItems({
-            url: ctx + '/reserve/field/saveSettlement?random='+Math.random(),
+            url: ctx + '/reserve/field/saveSettlement?random=' + Math.random(),
             data: {
-                token:token,
-                id:id,
-                payType:payType,
-                authUserId:authUserId,
-                discountPrice:discountPrice,
-                consPrice:consPrice,
-                memberCardInput:memberCardInput,
-                cashInput:cashInput,
-                bankCardInput:bankCardInput,
-                weiXinInput:weiXinInput,
-                weiXinPersonalInput:weiXinPersonalInput,
-                aliPayInput:aliPayInput,
-                aliPayPersonalInput:aliPayPersonalInput,
-                couponInput:couponInput
-              /*  owningInput:owningInput*/
+                token: token,
+                id: id,
+                payType: payType,
+                authUserId: authUserId,
+                discountPrice: discountPrice,
+                consPrice: consPrice,
+                memberCardInput: memberCardInput,
+                cashInput: cashInput,
+                bankCardInput: bankCardInput,
+                weiXinInput: weiXinInput,
+                weiXinPersonalInput: weiXinPersonalInput,
+                aliPayInput: aliPayInput,
+                aliPayPersonalInput: aliPayPersonalInput,
+                couponInput: couponInput
+                /*  owningInput:owningInput*/
             },
             success: function (values) {
-                     $("#closeSettlementBtn").click();
-                    $("#settlementResultForm").html(values);
-                    $("#settlementResultBtn").click();
-                    formLoding('保存结账单据成功!');
-                   /* location.reload();*/
+                $("#closeSettlementBtn").click();
+                $("#settlementResultForm").html(values);
+                $("#settlementResultBtn").click();
+                formLoding('保存结账单据成功!');
+                /* location.reload();*/
             }
         });
     });
@@ -437,7 +438,6 @@ $(document).ready(function () {
     });
 
 
-
     var accessMenuData = [[{
         text: "预定",
         func: function () {
@@ -454,7 +454,7 @@ $(document).ready(function () {
         func: function () {
             applycut($(this));
         }
-    }],[{
+    }], [{
         text: "预定详情",
         func: function () {
             details($(this));
@@ -484,18 +484,18 @@ $(document).ready(function () {
             $(this).smartMenu(accessMenuData, {name: "access"});
         } else if ($(this).hasClass("red")) {//已经结账
             $(this).smartMenu(checkoutMenuData, {name: "checkout"});
-        }else if($(this).hasClass("normal")||$(this).hasClass("abnormal")){
+        } else if ($(this).hasClass("normal") || $(this).hasClass("abnormal")) {
 
-        }else if($(this).hasClass("reserveTd")){//取消预定
+        } else if ($(this).hasClass("reserveTd")) {//取消预定
             $(this).smartMenu(reserveMenuData, {name: "reserve"});
         }
     });
 });
 //修改价格的连接
 function changePrice() {
-    if(document.getElementById('changePrice').style.display == "none"){
+    if (document.getElementById('changePrice').style.display == "none") {
         $("#changePrice").show();
-    }else{
+    } else {
         $("#changePrice").hide();
     }
 
@@ -503,7 +503,7 @@ function changePrice() {
 //修改结算价格
 function editPrice() {
     var discountPrice = $("#discountPrice").val();
-    if(isNaN(discountPrice)){
+    if (isNaN(discountPrice)) {
         errorLoding("优惠金额必须为数字！");
         return;
     }
@@ -517,11 +517,11 @@ function editPrice() {
     $("#consPrice").val(consPrice);
 }
 function checkAuthorization() {
-    var userId=$("#authUser").val();
+    var userId = $("#authUser").val();
     var authPassword = $("#authPassword").val();
     jQuery.postItems({
         url: ctx + '/reserve/field/checkUserAuth',
-        data: {userId:userId,authPassword: authPassword},
+        data: {userId: userId, authPassword: authPassword},
         success: function (result) {
             if (result != null && result.id != null) {
                 successLoding("授权码正确!");
