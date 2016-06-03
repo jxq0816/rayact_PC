@@ -132,6 +132,7 @@ public class ReserveFieldPriceService {
      *
      * @param venueId 场馆Id
      * @param date    时间
+     * @param consType 会员类型(1:散客,2:会员)
      * @return
      */
     public List<FieldPrice> findByDate(String venueId, String consType, Date date, List<String> times) {
