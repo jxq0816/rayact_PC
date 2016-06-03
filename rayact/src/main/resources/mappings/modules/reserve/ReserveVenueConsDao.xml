@@ -188,7 +188,7 @@
             and a.tenant_id = #{tenantId}
         </if>
         <if test="startDate != null and endDate != null">
-            and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
+            and (Date(a.cons_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
         <if test="createBy!=null and createBy.id!=null and createBy.id!=''">
             and a.create_by = #{createBy.id}
