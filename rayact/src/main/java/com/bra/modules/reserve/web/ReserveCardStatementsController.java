@@ -13,7 +13,6 @@ import com.bra.modules.reserve.entity.form.ReserveMemberDayReport;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
-import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +48,6 @@ public class ReserveCardStatementsController extends BaseController {
 
 	@Autowired
 	private ReserveVenueService reserveVenueService;
-
-	@Autowired
-	private ReserveProjectService reserveProjectService;
 
 	@ModelAttribute
 	public ReserveCardStatements get(@RequestParam(required=false) String id) {
@@ -277,7 +273,7 @@ public class ReserveCardStatementsController extends BaseController {
 	@RequestMapping(value = "recharge")
 	@ResponseBody
 	@Token(remove = true)
-	public String recharge(Double rechargeVolume,String id,String payType,RedirectAttributes redirectAttributes) {
+	public String recharge(Double rechargeVolume,String id,String payType,String remarks,RedirectAttributes redirectAttributes) {
 
 		ReserveMember reserveMember=reserveMemberService.get(id);
 		Double remainder=rechargeVolume+reserveMember.getRemainder();
@@ -292,7 +288,7 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 		reserveCardStatements.setTransactionVolume(rechargeVolume);
 		reserveCardStatements.setPayType(payType);
-
+		reserveCardStatements.setRemarks(remarks);
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}

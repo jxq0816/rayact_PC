@@ -128,33 +128,40 @@
         </div>
     </div>
 </div>
-
-<button class="btn btn-primary btn-flat md-trigger" id="rechargeDialogBtn" style="display: none"
-        data-modal="rechargeDialog">
-    充值
+<button id="rechargeDialogBtn" style="display: none" class="btn btn-primary btn-large"
+        href="#rechargeDialog" data-toggle="modal">付款成功
 </button>
+<div class="modal fade" id="rechargeDialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">充值</h4>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="reserve_top_line">
 
-<div class="md-modal colored-header custom-width md-effect-12 warning" id="rechargeDialog">
-    <div class="md-content">
-        <div class="modal-header">
-            <h5>充值</h5>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body form-horizontal " id="rechargeForm">
-            <!--充值-->
-
-
-            <!--end 充值-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                取消
-            </button>
-            <button type="button" id="rechargeSaveBtn" class="btn btn-primary btn-flat">保存</button>
+                </div>
+                <div class="modal-body form-horizontal" id="rechargeForm">
+                    <!--付款成功模态-->
+                    <!--end 付款成功模态-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-default btn-flat md-close"
+                        data-dismiss="modal">
+                    取消
+                </button>
+                <button type="button" id="rechargeSaveBtn"
+                        class="btn btn-primary btn-flat">
+                    确定
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
 
 <button class="btn btn-primary btn-flat md-trigger" id="cancellationDialogBtn" style="display: none"
         data-modal="cancellationDialog">

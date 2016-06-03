@@ -125,7 +125,7 @@ $(document).ready(function () {
         var rechargeVolume = $("#rechargeVolume").val();
         rechargeVolume= $.trim(rechargeVolume);
         rechargeVolume=parseFloat(rechargeVolume);
-
+        var remarks=$("#remarks").val().trim();
         if (rechargeVolume == '') {
             formLoding("请输入充值金额");
             return;
@@ -154,7 +154,8 @@ $(document).ready(function () {
                 id: id,
                 token: token,
                 rechargeVolume: rechargeVolume,
-                payType:payType
+                payType:payType,
+                remarks:remarks
             },
             success: function (result) {
                 if (result == "success") {
