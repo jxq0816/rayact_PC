@@ -15,7 +15,8 @@
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
-		a.remarks AS "remarks"
+		a.remarks AS "remarks",
+		a.ptp_id AS "ptpId"
 	</sql>
 	
 	<sql id="postJoins">
@@ -89,7 +90,8 @@
 			create_date,
 			update_by,
 			update_date,
-			remarks
+			remarks,
+			ptp_id
 		) VALUES (
 			#{id},
 			#{content},
@@ -100,7 +102,8 @@
 			#{createDate},
 			#{updateBy.id},
 			#{updateDate},
-			#{remarks}
+			#{remarks},
+			#{ptpId}
 		)
 	</insert>
 	
@@ -111,7 +114,8 @@
 			main_id = #{postMain.id},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			ptp_id = #{ptpId}
 		WHERE id = #{id}
 	</update>
 	

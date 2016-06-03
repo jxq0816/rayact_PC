@@ -3,7 +3,9 @@
  */
 package com.bra.modules.sys.web;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.MD5Util;
@@ -355,7 +357,13 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "api/getUserInfo")
 	public void getUserInfo(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject rtn = new JSONObject();
-		User user = UserUtils.getUser();
+		String userId = request.getParameter("userId");
+		User user = null;
+		if(StringUtils.isNotBlank(userId)){
+			user = UserUtils.get(userId);
+		}else{
+			user = UserUtils.getUser();
+		}
 		rtn.put("userImage",user.getPhoto()==null?"":user.getPhoto());
 		rtn.put("name",user.getName()==null?"":user.getName());
 		rtn.put("sex",user.getSex()==null?"":user.getSex());
@@ -373,7 +381,37 @@ public class UserController extends BaseController {
 		} catch (IOException e) {
 		}
 	}
-    
+
+	/**
+	 * 用户列表
+	 */
+	@RequestMapping(value = "app/userList")
+	public void getUserList(HttpServletRequest request, HttpServletResponse response) {
+		String userId = request.getParameter("userId");
+		User user = null;
+		if(StringUtils.isNotBlank(userId)){
+			user = UserUtils.get(userId);
+		}else{
+			user = UserUtils.getUser();
+		}
+		String mode = request.getParameter("mode");
+		if("iFocus".equals(mode)){
+			user.getSqlMap().put("additionJ"," f.model_id = u.id ");
+			user.getSqlMap().put("additionW"," and f.create_by = '"+user.getId()+"'");
+		}else if("focusI".equals(mode)){
+			user.getSqlMap().put("additionJ"," f.create_by = u.id ");
+			user.getSqlMap().put("additionW"," and f.model_id = '"+user.getId()+"'");
+		}
+		List<Map<String,String>> list = systemService.getUserList(user);
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(list, SerializerFeature.WriteMapNullValue));
+		} catch (IOException e) {
+		}
+	}
+
 //	@InitBinder
 //	public void initBinder(WebDataBinder b) {
 //		b.registerCustomEditor(List.class, "roleList", new PropertyEditorSupport(){

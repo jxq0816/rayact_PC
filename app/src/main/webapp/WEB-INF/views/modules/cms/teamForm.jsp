@@ -50,7 +50,7 @@
 			<label class="control-label">所属圈子：</label>
 			<div class="controls">
 				<sys:treeselect id="group" name="group.id" value="${team.group.id}" labelName="group.name" labelValue="${team.group.name}"
-								title="栏目" url="/cms/category/treeData" module="group" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
+								title="栏目" url="/cms/category/treeData" module="group" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="false" cssClass="required"/>&nbsp;
 			</div>
 		</div>
 		<div class="control-group">

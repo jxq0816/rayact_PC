@@ -2,39 +2,48 @@
 <%@ include file="/WEB-INF/views/modules/cms/front/include/taglib.jsp"%>
 <html>
 <head>
-	<title>${article.title} - ${category.name}</title>
-	<meta name="decorator" content="cms_default_${site.theme}"/>
-	<meta name="description" content="${article.description} ${category.description}" />
-	<meta name="keywords" content="${article.keywords} ${category.keywords}" />
+	<title>${article.title}</title>
 	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			if ("${category.allowComment}"=="1" && "${article.articleData.allowComment}"=="1"){
-				$("#comment").show();
-				page(1);
-			}
-		});
-		function page(n,s){
-			$.get("${ctx}/mobile/comment",{theme: '${site.theme}', 'category.id': '${category.id}',
-				contentId: '${article.id}', title: '${article.title}', pageNo: n, pageSize: s, date: new Date().getTime()
-			},function(data){
-				$("#comment").html(data);
-			});
+	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<link href="${ctxStatic}/jquery-mobile/list.css" type="text/css" rel="stylesheet" />
+	<link href="${ctxStatic}/bootstrap/2.3.1/css_default/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<style>
+		.round {
+			width:100px; height:100px;
+			-moz-border-radius: 50px;      /* Gecko browsers */
+			-webkit-border-radius: 50px;   /* Webkit browsers */
+			border-radius:50px;            /* W3C syntax */
 		}
-	</script>
+		.row{
+			margin-left: 5px;
+		}
+	</style>
 </head>
 <body>
-	<div class="row">
-	   <div class="span10">
-	     <div class="row">
-	       <div class="span10">
-			<h3 style="color:#555555;font-size:20px;text-align:left;margin:10px 0;">${article.title}</h3>
-			   <div style="border-bottom:1px solid #ddd;padding:10px;margin:5px 0;">${article.user.name} &nbsp; <fmt:formatDate value="${article.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/> &nbsp; ${comment}评论   &nbsp;${copyfrom}</div>
-			<c:if test="${not empty article.description}"><div>摘要：${article.description}</div></c:if>
-			<div>${article.articleData.content}</div>
-  	       </div>
-  	     </div>
-  	  </div>
-   </div>
+<div class="row" style="margin-left: 10px;">
+	<div style="color:#555555;font-size:30px;text-align:left;margin:5px 0;font-weight: 300">${article.title}</div>
+	<div style="border-bottom:1px solid #ddd;padding:10px;margin:5px 0;"><span style="color: #f0860c">${article.user.name}</span> &nbsp; <fmt:formatDate value="${article.createDate}" pattern="MM-dd HH:mm"/></div>
+	<c:if test="${not empty article.description}"><div style="color: #555555;font-size:20px ">摘要：<span style="color: #8C8C8C;font-size: 15px">${article.description}</span></div></c:if>
+	<div style="width: 100%">${article.articleData.content}</div>
+</div>
+<div class="row">
+	<div class="head">评论</div>
+	<div class="list">
+		<c:forEach items="${comments}" var="comment">
+			<div class="item" style="margin-top: 20px">
+				<div class="img" style="display: inline-block;"><img src="${comment.createBy.photo}" class="round" width="100px" height="100px"></div>
+				<div style="display: inline-block;position:relative;top: 10px;width: 80%">
+					<span class="name" name="${comment.createBy.id}" style="display: inline-block;color: #f0860c;font-size: 30px">${comment.createBy.name}:</span>
+				</div>
+				<div>
+					<span class="content" style="color:#555555;display: inline-block;font-size: 25px;margin-left: 100px;">${comment.content}<br><fmt:formatDate value="${comment.createDate}" pattern="MM-dd HH:mm"/></span>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+	<div class="row" style="padding: 10px;align:center;">
+		<div onclick="jumpToApp()" style="margin:10px;height:50px;width:100%;background-image:url(${ctxStatic}/images/more2x.png);background-repeat:no-repeat;background-position:center;" ></div>
+	</div>
+</div>
 </body>
 </html>

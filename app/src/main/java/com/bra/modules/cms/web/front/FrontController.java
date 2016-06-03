@@ -310,9 +310,12 @@ public class FrontController extends BaseController{
 			Comment c = new Comment();
 			c.setContentId(article.getId());
 			c.setDelFlag(Comment.DEL_FLAG_NORMAL);
-			List<Comment> list = commentService.findList(c);
-			if(list!=null){
-				model.addAttribute("comment",list.size());
+			Page<Comment> page = new Page();
+			page.setPageNo(1);
+			page.setPageSize(4);
+			Page<Comment> pages = commentService.findPage(page,c);
+			if(page!=null){
+				model.addAttribute("comments",pages.getList());
 			}
 			return "modules/cms/frontViewArticle";
 		}

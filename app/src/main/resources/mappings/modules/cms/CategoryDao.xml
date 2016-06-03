@@ -317,8 +317,8 @@
 		<if test="parent != null and parent.id != '' ">
 		    AND c.parent_id = #{parent.id}
 		</if>
-		<if test="target != null and target == 'mine'">
-			AND f.create_by = #{currentUser.id}
+		<if test="sqlMap != null and sqlMap.addition != ''">
+			${sqlMap.addition}
 		</if>
 		GROUP BY c.id
 	</select>

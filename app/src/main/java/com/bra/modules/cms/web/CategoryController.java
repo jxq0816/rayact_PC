@@ -4,8 +4,12 @@
 package com.bra.modules.cms.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
+import com.bra.common.upload.FileModel;
+import com.bra.common.upload.StoreType;
+import com.bra.common.upload.UploadUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Article;
@@ -13,13 +17,18 @@ import com.bra.modules.cms.entity.Category;
 import com.bra.modules.cms.entity.Site;
 import com.bra.modules.cms.service.CategoryService;
 import com.bra.modules.cms.service.FileTplService;
+import com.bra.modules.cms.service.FocusService;
 import com.bra.modules.cms.service.SiteService;
 import com.bra.modules.cms.utils.TplUtils;
+import com.bra.modules.mechanism.entity.AttMain;
+import com.bra.modules.mechanism.service.AttMainService;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.codec.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +40,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +55,10 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/cms/category")
 public class CategoryController extends BaseController {
-
+	@Autowired
+	private FocusService focusService;
+	@Autowired
+	private AttMainService attMainService;
 	@Autowired
 	private CategoryService categoryService;
     @Autowired
@@ -170,7 +185,8 @@ public class CategoryController extends BaseController {
 	public void treeData(HttpServletRequest request, HttpServletResponse response) {
 		String parentId = request.getParameter("parentId");
 		String module = request.getParameter("module");
-		String owner = request.getParameter("owner");
+		String mode = request.getParameter("mode");
+		String userId = request.getParameter("userId");
 		Category cate = new Category();
 		if(StringUtils.isNotBlank(parentId)){
 			Category parent = new Category();
@@ -180,8 +196,18 @@ public class CategoryController extends BaseController {
 		if(StringUtils.isNotBlank(module)){
 			cate.setModule(module);
 		}
-		if(StringUtils.isNotBlank(owner)){
-			cate.setTarget(owner);
+		if("create".equals(mode)){
+			if(StringUtils.isNotBlank(userId)){
+				cate.getSqlMap().put("addition","and c.create_by = '"+userId+"' ");
+			}else{
+				cate.getSqlMap().put("addition","and c.create_by = '"+UserUtils.getUser().getId()+"' ");
+			}
+		}else if("focus".equals(mode)){
+			if(StringUtils.isNotBlank(userId)){
+				cate.getSqlMap().put("addition"," and f.create_by = '"+ userId +"' ");
+			}else{
+				cate.getSqlMap().put("addition"," and f.create_by = '"+ UserUtils.getUser().getId() +"' ");
+			}
 		}
 		List<Map<String,Object>> rtn = categoryService.getCate(cate);
 		try {
@@ -189,6 +215,48 @@ public class CategoryController extends BaseController {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
+		} catch (IOException e) {
+		}
+	}
+
+	@RequestMapping(value = "app/save")
+	public void saveApp(Category category,HttpServletRequest request,HttpServletResponse response)throws Exception {
+		String file = request.getParameter("files");
+		String modelName = request.getParameter("modelName");
+		byte[] image = Base64.decode(file);
+		FileModel fileModel = new FileModel();
+		String destPath = Global.getBaseDir();
+		String tmp = destPath + "resources/www";
+		File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
+		if (!f.getParentFile().exists())
+			f.getParentFile().mkdirs();
+		if (!f.exists())
+			f.createNewFile();
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(image);
+		fos.close();
+		fileModel.setStoreType(StoreType.SYSTEM);
+		fileModel.setToken(new Date().toString());
+		fileModel.setFilePath(f.getAbsolutePath());
+		fileModel.setContentType("pic");
+		AttMain attMain = new AttMain(fileModel);
+		if("user".equals(modelName)){
+			attMain.setFdModelName(modelName);
+		}else if("postMain".equals(modelName)){
+			attMain.setFdModelName(modelName);
+		}
+		attMain = attMainService.saveAttMain(attMain);
+		fileModel.setAttId(attMain.getId());
+		category.setImage(com.bra.modules.sys.utils.StringUtils.ATTPATH + attMain.getId());
+		categoryService.save(category);
+		JSONObject j = new JSONObject();
+		j.put("status","success");
+		j.put("msg","圈子新建成功");
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
 		} catch (IOException e) {
 		}
 	}

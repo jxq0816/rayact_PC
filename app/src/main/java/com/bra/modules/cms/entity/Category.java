@@ -27,7 +27,7 @@ public class Category extends TreeEntity<Category> {
 	private Office office;	// 归属部门
 //	private Category parent;// 父级菜单
 //	private String parentIds;// 所有父级编号
-	private String module; 	// 栏目模型（article：文章；picture：图片；download：下载；link：链接；special：专题）
+	private String module; 	// 栏目模型（article：文章；picture：图片；download：下载；link：链接；special：专题；圈子:group）
 //	private String name; 	// 栏目名称
 	private String image; 	// 栏目图片
 	private String href; 	// 链接

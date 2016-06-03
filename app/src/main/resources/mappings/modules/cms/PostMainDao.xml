@@ -124,7 +124,10 @@
 		 pm.create_by AS creatorId,
 		 u.name AS creatorName,
 		 u.photo AS creatorPhoto,
-		 pm.post_num AS postNum
+		 pm.post_num AS postNum,
+		 pm.remarks AS postImg,
+		 pm.content AS postContent,
+		 date_format(pm.create_date,"%Y-%m-%d %T") AS createDate
 		FROM post_main pm
 		LEFT JOIN cms_category cc ON cc.id = pm.fk_group_id
 		LEFT JOIN sys_user u ON u.id = pm.create_by
@@ -133,6 +136,17 @@
 		<if test="group!=null and group.id !=null">
 			AND (cc.parent_ids like CONCAT('%',#{group.id},'%') OR cc.id = #{group.id})
 		</if>
+		<if test="sqlMap!=null and sqlMap.addition!=null">
+			${sqlMap.addition}
+		</if>
+		<choose>
+			<when test="page != null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy} DESC
+			</when>
+			<otherwise>
+				ORDER BY pm.update_date DESC
+			</otherwise>
+		</choose>
 
 	</select>
 	

@@ -219,4 +219,20 @@ public class LoginController extends BaseController {
         }
     }
 
+    /**
+     *
+     */
+    @RequestMapping(value = "${adminPath}/api/getSession")
+    public void getSession(HttpServletRequest request, HttpServletResponse response) {
+        UserUtils.getSubject().logout();
+        JSONObject j = new JSONObject();
+        j.put("sessionId",request.getSession().getId());
+        try {
+            response.reset();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().print(j.toJSONString());
+        } catch (IOException e) {
+        }
+    }
 }
