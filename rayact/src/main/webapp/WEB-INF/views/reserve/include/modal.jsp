@@ -117,7 +117,7 @@
 
 <!-- 赠品Modal -->
 <button id="giftBtn" style="display: none" class="btn btn-primary btn-large" href="#giftDialogModal"
-        data-toggle="modal">预订
+        data-toggle="modal">赠品
 </button>
 <div class="modal fade" style="width:auto;" id="giftDialogModal" style="display: none" aria-hidden="true">
     <div class="modal-dialog modal-lg">

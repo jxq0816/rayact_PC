@@ -295,9 +295,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     @Transactional(readOnly = false)
     public List<ReserveVenueConsItem> cancelReserve(String itemId, String
             tutorOrderId) {
-        List<ReserveVenueConsItem> consItemList = Lists.newArrayList();
         ReserveVenueConsItem item = reserveVenueConsItemDao.get(itemId);
-        ReserveVenueCons venueCons = dao.get(item.getConsData().getId());
+        ReserveVenueCons venueCons = this.get(item.getConsData().getId());
         dao.delete(venueCons);//删除订单
         reserveVenueConsItemDao.delete(item);//删除订单明细
         ReserveVenueApplyCut cut = new ReserveVenueApplyCut();//删除优惠申请
@@ -310,7 +309,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             }
         }
         applicationContext.publishEvent(new VenueCancelEvent(venueCons, tutorOrderId));
-        return consItemList;
+        List<ReserveVenueConsItem> itemList = venueCons.getVenueConsList();//查询预订的订单详情
+        return itemList;
     }
 
     @Transactional(readOnly = false)

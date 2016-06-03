@@ -123,6 +123,32 @@ $(document).ready(function () {
             }
         });
     }
+    //取消预定保存
+    $("#saveCancelBtn").on('click', function () {
+        var data = $("#cancelFormBean").serializeArray();
+        $.postItems({
+            url: ctx + '/reserve/field/cancelReservation',
+            data: data,
+            success: function (values) {
+                if (values) {
+                    $("#closeCancelBtn").click();
+                    formLoding('取消预定成功!');
+                    $(".table-chang tbody td").each(function (index) {
+                        var $this = $(this);
+                        var fieldId = $this.attr("data-field");
+                        var time = $this.attr("data-time");
+                        $.each(values, function (index, item) {
+                            if (item.fieldId == fieldId && time == item.time) {
+                                $this.addClass("access");
+                                $this.attr("status", "0");
+                                $this.text("");
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    });
 
 
     //赠品
@@ -422,20 +448,7 @@ $(document).ready(function () {
         });
     });
 
-    //取消预定
-    $("#saveCancelBtn").on('click', function () {
-        var data = $("#cancelFormBean").serializeArray();
-        $.postItems({
-            url: ctx + '/reserve/field/cancelReservation',
-            data: data,
-            success: function (values) {
-                if (values) {
-                    formLoding('取消预定成功!');
-                    location.reload();
-                }
-            }
-        });
-    });
+
 
 
     var accessMenuData = [[{
