@@ -45,6 +45,7 @@
                                 <th>消费金额</th>
                                 <th>会员余额</th>
                                 <th>操作员</th>
+                                <th>备注</th>
                                 <th>操作时间</th>
                             </tr>
                             </thead>
@@ -92,6 +93,9 @@
                                     </td>
                                     <td>
                                             ${statement.updateBy.name}
+                                    </td>
+                                    <td>
+                                            ${statement.remarks}
                                     </td>
                                     <td>
                                         <fmt:formatDate value="${statement.updateDate}"
