@@ -171,6 +171,7 @@
                     and p.id=#{reserveProject.id}
                 </if>
             </if>
+            ${sqlMap.dsf}
         </where>
     </select>
 
@@ -299,8 +300,8 @@
             resultType="com.bra.modules.reserve.entity.form.ReserveVenueProjectIntervalReport">
         SELECT
         DISTINCT
-        e.id AS "reserveVenue.id",
-        e.name AS "reserveVenue.name",
+        v.id AS "reserveVenue.id",
+        v.name AS "reserveVenue.name",
         d.id AS "reserveProject.id",
         d.name AS "reserveProject.name",
         sum(
@@ -376,7 +377,7 @@
         reserve_venue_cons_item as a
         LEFT JOIN reserve_venue_cons as b on a.cons_data_id=b.id
         LEFT JOIN reserve_field as c on a.field_id=c.id
-        LEFT JOIN reserve_venue as e on a.venue_id=e.id
+        LEFT JOIN reserve_venue as v on a.venue_id=v.id
         LEFT JOIN reserve_project as d on c.project_id=d.id
         LEFT JOIN reserve_multiple_payment as p on p.order_id=b.id
         <where>
@@ -395,8 +396,9 @@
             <if test="startDate !=null and endDate !=null">
                 and (Date(b.cons_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
+            ${sqlMap.dsf}
         </where>
-        GROUP BY d.id,e.id
+        GROUP BY d.id,v.id
     </select>
     <!--场次散客收入-->
     <select id="reserveVenueProjectDividedIntervalReport"
@@ -433,6 +435,7 @@
             <if test="startDate !=null and endDate !=null">
                 and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
+            ${sqlMap.dsf}
         </where>
         GROUP BY p.id,v.id
     </select>

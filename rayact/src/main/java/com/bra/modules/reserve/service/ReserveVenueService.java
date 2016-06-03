@@ -219,6 +219,10 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         Double personalAliPaySum = 0.0;
         Double otherSum = 0.0;
         Double dueSum = 0.0;
+        if (venueProjectReport != null) {
+            if (venueProjectReport.getSqlMap().get("dsf") == null)
+                venueProjectReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+        }
         List<ReserveVenueProjectIntervalReport> venueProjectList = dao.findVenueProjectList(venueProjectReport);//查询场馆下的所有场地
 
         List<ReserveVenueProjectIntervalReport> venueProjectBlockReports = dao.reserveVenueProjectBlockIntervalReport(venueProjectReport);//场馆 项目 包场 收入统计
