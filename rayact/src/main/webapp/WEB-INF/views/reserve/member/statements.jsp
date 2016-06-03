@@ -40,8 +40,7 @@
                             <tr>
                                 <th>充值金额</th>
                                 <th>消费类型</th>
-                                <th>商品名称</th>
-                                <th>数量/半小时</th>
+                                <th>半小时</th>
                                 <th>消费金额</th>
                                 <th>会员余额</th>
                                 <th>操作员</th>
@@ -76,9 +75,6 @@
                                         <j:if test="${statement.transactionType==9}">
                                             场次票售卖
                                         </j:if>
-                                    </td>
-                                    <td>
-                                            ${statement.reserveCommodity.name}
                                     </td>
                                     <td>
                                             ${statement.transactionNum}

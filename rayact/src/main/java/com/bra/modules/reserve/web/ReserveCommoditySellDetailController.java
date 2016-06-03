@@ -111,6 +111,16 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			commodity.setRepertoryNum(repertoryNum);
 			reserveCommodityService.save(commodity);
 			reserveCommoditySellDetailService.save(sellDetail);
+			ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+			reserveCardStatements.setReserveCommodity(commodity);
+			reserveCardStatements.setVenue(commodity.getReserveVenue());
+			reserveCardStatements.setReserveMember(reserveMember);
+			reserveCardStatements.setTransactionType("3");//3代表商品消费
+			reserveCardStatements.setTransactionNum(num);//交易量
+			reserveCardStatements.setPayType(payType);
+			reserveCardStatements.setRemarks("商品消费");
+			reserveCardStatements.setTransactionVolume(sellDetail.getDetailSum());//消费额
+			reserveCardStatementsService.save(reserveCardStatements);
 		}
 		if("1".equals(payType)){// 1代表会员,变更会员余额
 			reserveMember.setRemainder(reserveMember.getRemainder()-total);
@@ -118,7 +128,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 			reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 			reserveCardStatements.setReserveMember(reserveMember);//记录购买人，同时记录余额
-			reserveCardStatements.setTransactionType("3");//3代表商品消费
+			reserveCardStatements.setTransactionType("33");//33代表商品消费汇总
 			reserveCardStatements.setPayType(payType);
 			reserveCardStatements.setRemarks(remarks);
 			reserveCardStatements.setTransactionVolume(total);//消费额
