@@ -4,12 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.entity.ReserveField;
+import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.ReserveVenueCons;
+import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.TimePrice;
 import com.bra.modules.reserve.service.ReserveAppFieldPriceService;
 import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
+import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +34,8 @@ import java.util.*;
 @RequestMapping(value = "${adminPath}/app/reserve/field")
 public class ReserveAppController extends BaseController {
 
+    @Autowired
+    private ReserveVenueService reserveVenueService;
     //APP场地价格service
     @Autowired
     private ReserveAppFieldPriceService reserveAppFieldPriceService;
@@ -47,7 +53,16 @@ public class ReserveAppController extends BaseController {
             consDate = new Date();
         }
         List<String> times=new ArrayList<>();
-        times.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "00:30:00", 30));
+        ReserveVenue venue=reserveVenueService.get(venueId);
+        String startTime=venue.getStartTime();
+        String endTime=venue.getEndTime();
+        if(StringUtils.isEmpty(startTime)){
+            startTime="06:00:00";
+        }
+        if(StringUtils.isEmpty(endTime)){
+            endTime="00:30:00";
+        }
+        times.addAll(TimeUtils.getTimeSpacListValue(startTime, endTime, 30));
         if (StringUtils.isNoneEmpty(venueId)) {
             //场地价格
             List<FieldPrice> venueFieldPriceList = reserveAppFieldPriceService.findByDate(venueId,projectId, "1", consDate, times);
