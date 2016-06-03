@@ -36,11 +36,18 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	}
 
 	public List<ReserveMemberIntervalReport> memberIncomeCollectReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
+		if (reserveMemberIntervalReport != null) {
+			if (reserveMemberIntervalReport.getSqlMap().get("dsf") == null)
+				reserveMemberIntervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+		}
 		return dao.memberIncomeCollectReport(reserveMemberIntervalReport);
 	}
 
 	public List<ReserveMemberIntervalReport> memberIncomeIntervalReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
-
+		if (reserveMemberIntervalReport != null) {
+			if (reserveMemberIntervalReport.getSqlMap().get("dsf") == null)
+				reserveMemberIntervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+		}
 		List<ReserveMemberIntervalReport> intervalReports=dao.memberIncomeIntervalReport(reserveMemberIntervalReport);//场馆区间收入
 		for(ReserveMemberIntervalReport intervalReport:intervalReports){
 			List<ReserveMemberDayReport> list=this.memberIncomeDayReport(intervalReport);//场馆日收入
@@ -52,7 +59,10 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 	public List<ReserveMemberDayReport> memberIncomeDayReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
 		List<ReserveMemberDayReport> list=new ArrayList<>();
 		ReserveMemberDayReport reserveMemberDayReport=new ReserveMemberDayReport();
-
+		if (reserveMemberDayReport != null) {
+			if (reserveMemberDayReport.getSqlMap().get("dsf") == null)
+				reserveMemberDayReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+		}
 		ReserveVenue venue=reserveMemberIntervalReport.getReserveVenue();
 		reserveMemberDayReport.setReserveVenue(venue);//场馆
 		ReserveProject project=reserveMemberIntervalReport.getReserveProject();

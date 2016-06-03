@@ -4,7 +4,7 @@
 <head>
     <meta name="decorator" content="main"/>
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/field.css?id=7862256"/>
-    <title>会员收入统计</title>
+    <title>会员充值统计</title>
 </head>
 <body>
 <c:if test="${param.alone != 'true'}">
@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>会员收入统计</h3>
+                    <h3>会员充值统计</h3>
                 </div>
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
                            action="${ctx}/reserve/reserveCardStatements/memberIncomeReport?alone=${alone}"

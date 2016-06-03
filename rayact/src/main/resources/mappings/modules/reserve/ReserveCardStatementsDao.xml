@@ -92,6 +92,7 @@
 			<if test="reserveVenue!=null">
 					and v.id=#{reserveVenue.id}
 			</if>
+			${sqlMap.dsf}
 		</where>
 		GROUP BY v.id
 	</select>
@@ -123,6 +124,7 @@
 			<if test="day!=null">
 				and datediff(a.update_date,#{day})=0
 			</if>
+			${sqlMap.dsf}
 		</where>
 		<if test="reserveVenue!=null">
 			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
@@ -163,6 +165,7 @@
 			<if test="startDate!=null and endDate !=null">
 				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
 			</if>
+			${sqlMap.dsf}
 		</where>
 		<if test="reserveVenue!=null">
 			<if test="reserveVenue.id!=null and reserveVenue.id!=''">
