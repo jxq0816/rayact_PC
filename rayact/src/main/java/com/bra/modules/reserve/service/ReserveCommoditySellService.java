@@ -8,6 +8,7 @@ import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.ReserveCommodityDayReport;
 import com.bra.modules.reserve.entity.form.ReserveCommodityIntervalReport;
 import com.bra.modules.reserve.entity.form.ReserveCommoditySellReport;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,10 +79,18 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 	}
 
 	public List<ReserveCommodityIntervalReport> commodityIncomeCollectReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport) {
+		if (reserveCommodityIntervalReport != null) {
+			if (reserveCommodityIntervalReport.getSqlMap().get("dsf") == null)
+				reserveCommodityIntervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
+		}
 		List<ReserveCommodityIntervalReport> list = dao.commodityIncomeCollectReport(reserveCommodityIntervalReport);
 		return list;
 	}
 	public List<ReserveCommodityIntervalReport> reserveCommodityIncomeIntervalReport(ReserveCommodityIntervalReport reserveCommodityIntervalReport){
+		if (reserveCommodityIntervalReport != null) {
+			if (reserveCommodityIntervalReport.getSqlMap().get("dsf") == null)
+				reserveCommodityIntervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("d.id"));
+		}
 		List<ReserveCommodityIntervalReport> intervalReports=dao.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
 
 		for(ReserveCommodityIntervalReport intervalReport:intervalReports){
@@ -92,6 +101,11 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 	}
 
 	public List<ReserveCommodityDayReport> reserveCommodityIncomeDayReport(ReserveCommodityIntervalReport intervalReport){
+		if (intervalReport != null) {
+			if (intervalReport.getSqlMap().get("dsf") == null)
+				intervalReport.getSqlMap().put("dsf", AuthorityUtils.getDsf("d.id"));
+		}
+
 		List<ReserveCommodityDayReport> list=new ArrayList<>();
 
 		ReserveCommodityDayReport reserveCommodityDayReport=new ReserveCommodityDayReport();
