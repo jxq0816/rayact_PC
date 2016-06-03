@@ -133,7 +133,7 @@
         </choose>
     </select>
 
-    <insert id="insert">
+    <insert id="insert" flushCache="true">
 		INSERT INTO reserve_commodity_sell_detail(
 			id,
 			fk_reserve_member_id,
@@ -167,7 +167,7 @@
 		)
 	</insert>
 
-    <update id="update">
+    <update id="update" flushCache="true">
 		UPDATE reserve_commodity_sell_detail SET
 		 	fk_reserve_member_id = #{reserveMember.id}
 			fk_reserve_commodity_id = #{reserveCommodity.id},

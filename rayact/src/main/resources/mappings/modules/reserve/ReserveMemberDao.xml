@@ -65,7 +65,7 @@
 		where a.tenant_id = #{tenantId}
 	</select>
 
-	<select id="findExactList" resultType="ReserveMember">
+	<select id="findExactList" resultType="ReserveMember" flushCache="true" useCache="false">
 		SELECT
 		<include refid="reserveMemberColumns"/>
 		FROM reserve_member a
@@ -102,7 +102,7 @@
 		</choose>
 	</select>
 
-	<select id="findList" resultType="ReserveMember">
+	<select id="findList" resultType="ReserveMember" flushCache="true" useCache="false">
 		SELECT 
 			<include refid="reserveMemberColumns"/>
 		FROM reserve_member a

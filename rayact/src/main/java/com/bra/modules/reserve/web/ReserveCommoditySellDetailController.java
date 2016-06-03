@@ -90,50 +90,39 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		reserveCommoditySell.setGiftFlag("0");
 		reserveCommoditySell.setPayType(payType);
 		ReserveMember reserveMember=sellDetailList.getReserveStoredCardMember();
-
+		if(reserveMember!=null){
+			reserveMember=reserveMemberService.get(reserveMember);
+		}
 		reserveCommoditySell.setReserveMember(reserveMember);
 		reserveCommoditySellService.save(reserveCommoditySell);
 
 		String sellId=reserveCommoditySell.getId();
-		double remainderLog=0.0;
-		if("1".equals(payType)){// 1代表会员
-			if(reserveMember!=null){
-				reserveMember=reserveMemberService.get(reserveMember);
-				remainderLog=reserveMember.getRemainder();
-			}
-		}
+		String remarks="";
 		//销售明细表
 		for(ReserveCommoditySellDetail sellDetail:sellDetailList.getReserveCommoditySellDetailList() ){
 			Integer num=sellDetail.getNum();
-			Double detailSum=sellDetail.getDetailSum();
 			ReserveCommodity commodity=sellDetail.getReserveCommodity();//买的啥
 			sellDetail.setReserveMember(reserveMember);//谁买的
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			commodity=reserveCommodityService.get(commodity);
 			int repertoryNum=commodity.getRepertoryNum();
 			repertoryNum-=num;//商品出库
+			remarks+=commodity.getName()+" "+num+"个;";
 			commodity.setRepertoryNum(repertoryNum);
 			reserveCommodityService.save(commodity);
 			reserveCommoditySellDetailService.save(sellDetail);
-			//销售记录
-			if(reserveMember!=null){
-				remainderLog-=detailSum;
-				reserveMember.setRemainder(remainderLog);//日志保存交易后的余额
-			}
-			ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
-			reserveCardStatements.setReserveCommodity(commodity);
-			reserveCardStatements.setVenue(commodity.getReserveVenue());
-			reserveCardStatements.setReserveMember(reserveMember);
-			reserveCardStatements.setTransactionType("3");//3代表商品消费
-			reserveCardStatements.setTransactionNum(num);//交易量
-			reserveCardStatements.setPayType(payType);
-			reserveCardStatements.setRemarks("商品消费");
-			reserveCardStatements.setTransactionVolume(detailSum);//消费额
-			reserveCardStatementsService.save(reserveCardStatements);
-
 		}
 		if("1".equals(payType)){// 1代表会员,变更会员余额
+			reserveMember.setRemainder(reserveMember.getRemainder()-total);
 			reserveMemberService.save(reserveMember);
+			ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+			reserveCardStatements.setVenue(reserveMember.getReserveVenue());
+			reserveCardStatements.setReserveMember(reserveMember);//记录购买人，同时记录余额
+			reserveCardStatements.setTransactionType("3");//3代表商品消费
+			reserveCardStatements.setPayType(payType);
+			reserveCardStatements.setRemarks(remarks);
+			reserveCardStatements.setTransactionVolume(total);//消费额
+			reserveCardStatementsService.save(reserveCardStatements);
 		}
 		return sellId;
 	}
