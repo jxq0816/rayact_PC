@@ -91,7 +91,7 @@ $(document).ready(function () {
                                         $this.attr("status", "1");
                                         $this.attr("data-item", item.itemId);
                                         $this.text(userName);
-                                       /* location.reload(true);*/
+                                        /* location.reload(true);*/
                                     }
                                 });
                             });
@@ -123,6 +123,7 @@ $(document).ready(function () {
             }
         });
     }
+
     //取消预定保存
     $("#saveCancelBtn").on('click', function () {
         var data = $("#cancelFormBean").serializeArray();
@@ -439,16 +440,29 @@ $(document).ready(function () {
                 /*  owningInput:owningInput*/
             },
             success: function (values) {
+                if(values){
+                    var fieldList=values.mapList;
+                    var orderId=values.orderId;
+                    if (fieldList) {
+                        $(".table-chang tbody td").each(function (index) {
+                            var $this = $(this);
+                            var fieldId = $this.attr("data-field");
+                            var time = $this.attr("data-time");
+                            $.each(fieldList, function (index, item) {
+                                if (item.fieldId == fieldId && time == item.time) {
+                                    $this.addClass("red");
+                                    $this.attr("status", "0");
+                                }
+                            });
+                        });
+                    }
+                    settlementResult(orderId);
+                }
                 $("#closeSettlementBtn").click();
-                $("#settlementResultForm").html(values);
-                $("#settlementResultBtn").click();
                 formLoding('保存结账单据成功!');
-                /* location.reload();*/
             }
         });
     });
-
-
 
 
     var accessMenuData = [[{
@@ -541,6 +555,18 @@ function checkAuthorization() {
                 $("#discountPriceDiv").show();
             } else {
                 errorLoding("授权码不正确!");
+            }
+        }
+    });
+}
+function settlementResult(orderId) {
+    jQuery.postItems({
+        url: ctx + '/reserve/field/settlementResult',
+        data: {orderId: orderId},
+        success: function (result) {
+            if (result) {
+                $("#settlementResultForm").html(result);
+                $("#settlementResultBtn").click();
             }
         }
     });

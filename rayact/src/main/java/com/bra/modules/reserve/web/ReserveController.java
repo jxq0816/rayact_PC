@@ -372,7 +372,8 @@ public class ReserveController extends BaseController {
      */
     @RequestMapping(value = "saveSettlement")
     @Token(remove = true)
-    public String saveSettlement(String id, String payType, String authUserId,
+    @ResponseBody
+    public Map saveSettlement(String id, String payType, String authUserId,
                                  @RequestParam(required=false,defaultValue="0") Double discountPrice,
                                  Double consPrice,
                                  Double memberCardInput,
@@ -388,6 +389,22 @@ public class ReserveController extends BaseController {
 
         ReserveVenueCons venueCons = reserveVenueConsService.saveSettlement(id,payType,authUserId,discountPrice,consPrice,
                 memberCardInput,cashInput,bankCardInput,weiXinInput,weiXinPersonalInput,aliPayInput,aliPayPersonalInput,couponInput/*,owningInput*/);
+        List<Map<String, String>> mapList=getReserveMap(venueCons.getVenueConsList());
+        Map map=new HashMap<>();
+        map.put("mapList",mapList);
+        map.put("orderId",venueCons.getId());
+        return map;
+    }
+
+    /**
+     * 结算订单 结果展示
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "settlementResult")
+    public String saveSettlement(String orderId, Model model) {
+        ReserveVenueCons venueCons = reserveVenueConsService.get(orderId);
         model.addAttribute("venueCons",venueCons);
         return "reserve/saleField/settlementResult";
     }
@@ -404,9 +421,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("cos", cons);
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
-      /*  List<String> times = TimeUtils.getTimeSpacList("09:00:00", "23:00:00", TimeUtils.BENCHMARK);*/
         model.addAttribute("tutorOrderList", reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY));
-      /*  model.addAttribute("times", times);*/
         //赠品
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
         return "reserve/saleField/details";
