@@ -315,8 +315,8 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	<!--高管在手机端查看的总收入-->
-	<select id="allReport" resultType="java.util.Map">
+	<!--高管在手机端查看的总收入 PC 场馆收益统计-->
+	<select id="venueIncomeReport" resultType="java.util.Map">
 		SELECT
 		v.id as venue_id,
 		v.name as venue_name,
@@ -330,7 +330,7 @@
 		FROM reserve_venue v
 		LEFT JOIN reserve_card_statements s on s.venue_id = v.id
 		<if test="startDate!=null and endDate !=null">
-			and datediff(s.update_date,#{startDate})>=0 and datediff(#{endDate},s.update_date)>=0
+			and datediff(s.create_date,#{startDate})>=0 and datediff(#{endDate},s.create_date)>=0
 		</if>
 		where 1=1 and v.tenant_id = #{tenantId}
 		${sqlMap.dsf}

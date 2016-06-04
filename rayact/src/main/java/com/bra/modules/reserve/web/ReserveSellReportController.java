@@ -58,19 +58,18 @@ public class ReserveSellReportController extends BaseController {
             c2.set(Calendar.MINUTE, 0);
             reserveCardStatements.setStartDate(c2.getTime());
         }
-        List<Map<String, Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
+        List<Map<String, Object>> rtn = reserveCardStatementsService.venueIncomeReport(reserveCardStatements);
         ReserveVenue v = new ReserveVenue();
         List<ReserveVenue> list = reserveVenueService.findList(v);
         model.addAttribute("rtn", rtn);
         model.addAttribute("reserveVenueList", list);
         model.addAttribute("reserveCardStatements", reserveCardStatements);
-        return "/reserve/report/allReport";
+        return "reserve/report/venueIncomeReport";
     }
 
     @RequestMapping(value = "listChart")
-    public
     @ResponseBody
-    Map listChart(ReserveCardStatements reserveCardStatements) {
+    public Map listChart(ReserveCardStatements reserveCardStatements) {
         if (reserveCardStatements.getSqlMap().get("dsf") == null)
             reserveCardStatements.getSqlMap().put("dsf", AuthorityUtils.getDsf("v.id"));
         if (reserveCardStatements.getStartDate() == null || reserveCardStatements.getEndDate() == null) {
@@ -81,7 +80,7 @@ public class ReserveSellReportController extends BaseController {
             c2.set(Calendar.MINUTE, 0);
             reserveCardStatements.setStartDate(c2.getTime());
         }
-        List<Map<String, Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
+        List<Map<String, Object>> rtn = reserveCardStatementsService.venueIncomeReport(reserveCardStatements);
         ReserveVenue v = new ReserveVenue();
         List<ReserveVenue> list = reserveVenueService.findList(v);
         Map data = new HashMap<>();
@@ -125,7 +124,7 @@ public class ReserveSellReportController extends BaseController {
             c2.set(Calendar.MINUTE, 0);
             reserveCardStatements.setStartDate(c2.getTime());
         }
-        List<Map<String, Object>> rtn = reserveCardStatementsService.allReport(reserveCardStatements);
+        List<Map<String, Object>> rtn = reserveCardStatementsService.venueIncomeReport(reserveCardStatements);
         request.setAttribute("rtn", rtn);
         request.setAttribute("jsonRtn", JSONArray.toJSONString(rtn));
         //return JSONArray.toJSONString(rtn);
@@ -267,7 +266,7 @@ public class ReserveSellReportController extends BaseController {
             reserveCardStatements.setStartDate(c2.getTime());
         }
         //查询该用户管理的所有场馆 售卖的所有商品 合计
-        List<Map<String, Object>> all = reserveCardStatementsService.allReport(reserveCardStatements);
+        List<Map<String, Object>> all = reserveCardStatementsService.venueIncomeReport(reserveCardStatements);
         request.setAttribute("all", JSONArray.toJSONString(all));
         request.setAttribute("vs", vs);
         request.setAttribute("rtn", rtn);

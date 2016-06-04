@@ -30,7 +30,7 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      List<Map<String,Object>> rechargeOfChart(ReserveCardStatements reserveCardStatements);
 
-     List<Map<String,Object>> allReport(ReserveCardStatements reserveCardStatements);
+     List<Map<String,Object>> venueIncomeReport(ReserveCardStatements reserveCardStatements);
 
      List<ReserveMemberDayReport> memberIncomeDayReport(ReserveMemberDayReport reserveMemberDayReport);
 

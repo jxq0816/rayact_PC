@@ -131,12 +131,12 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		return dao.rechargeOfChart(reserveCardStatements);
 	}
 	/**
-	 * APP 高管总收入
+	 * APP 高管总收入 同时也是场馆收益统计
 	 * @param  reserveCardStatements
 	 * @return
 	 */
-	public List<Map<String,Object>> allReport(ReserveCardStatements reserveCardStatements) {
-		return dao.allReport(reserveCardStatements);
+	public List<Map<String,Object>> venueIncomeReport(ReserveCardStatements reserveCardStatements) {
+		return dao.venueIncomeReport(reserveCardStatements);
 	}
 
 	public List<Map<String,Object>> fieldIncome(SearchForm searchForm) {
