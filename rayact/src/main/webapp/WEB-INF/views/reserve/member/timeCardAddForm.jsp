@@ -87,7 +87,7 @@
                         <input type="radio" class="icheck" id="personalAlipay" value="10" name="payType"/>支付宝（个人）
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" class="icheck" id="other" value="6" name="payType"/>其它
+                        <input type="radio" class="icheck" id="other" value="6" name="payType"/>优惠券
                     </label>
                 </div>
             </div>
