@@ -4,7 +4,9 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.cms.dao.TeamDao;
 import com.bra.modules.cms.entity.Team;
+import com.bra.modules.mechanism.entity.AttMain;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.sys.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,15 @@ public class TeamService extends CrudService<TeamDao, Team> {
 	
 	@Transactional(readOnly = false)
 	public void save(Team team, AttMainForm attMainForm) {
+		if(attMainForm!=null){
+			List<AttMain> list = attMainForm.getAttMains1();
+			if(list!=null&&list.size()>0){
+				for(AttMain att:list){
+					if(att.getId()!=null)
+						team.setPhoto(StringUtils.ATTPATH + list.get(0).getId());
+				}
+			}
+		}
 		super.save(team);
 		updateAttMain(team,attMainForm);
 	}
@@ -46,7 +57,7 @@ public class TeamService extends CrudService<TeamDao, Team> {
 		super.delete(team);
 	}
 
-	public List<Map<String,String>> findListMap(Team team){
+	public List<Map<String,String>> findListMap(Page<Team> page,Team team){
 		return teamDao.findListMap(team);
 	}
 	

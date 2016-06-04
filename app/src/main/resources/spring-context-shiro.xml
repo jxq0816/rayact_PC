@@ -14,7 +14,10 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/cms/cmsCollection/app/list = anon
+				${adminPath}/cms/cmsCollection/app/save = anon
 				${adminPath}/api/logout = anon
+				${adminPath}/api/getSession = anon
 				${adminPath}/cms/teamMember/app/list = anon
 				${adminPath}/cms/team/app/list = anon
 				${adminPath}/cms/post/app/list = anon

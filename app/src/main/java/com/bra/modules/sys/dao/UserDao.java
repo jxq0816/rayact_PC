@@ -8,6 +8,7 @@ import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.sys.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户DAO接口
@@ -98,5 +99,11 @@ public interface UserDao extends CrudDao<User> {
 	 * @return
 	 */
 	public List<User> findListApi(User user);
+
+	/**
+	 *
+	 * @return
+     */
+	public List<Map<String,String>> getUserList(User user);
 
 }

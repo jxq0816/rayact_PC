@@ -49,7 +49,8 @@ public class PostMainService extends CrudService<PostMainDao, PostMain> {
 		super.delete(postMain);
 	}
 
-	public List<Map<String,String>> getPostMainList(PostMain postMain){
+	public List<Map<String,String>> getPostMainList(Page<PostMain> page,PostMain postMain){
+		postMain.setPage(page);
 		return postMainDao.getPostMainList(postMain);
 	}
 	

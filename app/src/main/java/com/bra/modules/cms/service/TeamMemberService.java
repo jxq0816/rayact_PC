@@ -3,6 +3,7 @@ package com.bra.modules.cms.service;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.cms.dao.TeamMemberDao;
+import com.bra.modules.cms.entity.Team;
 import com.bra.modules.cms.entity.TeamMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class TeamMemberService extends CrudService<TeamMemberDao, TeamMember> {
+	@Autowired
+	private TeamService teamService;
 	@Autowired
 	private TeamMemberDao teamMemberDao;
 
@@ -37,11 +40,21 @@ public class TeamMemberService extends CrudService<TeamMemberDao, TeamMember> {
 	@Transactional(readOnly = false)
 	public void save(TeamMember teamMember) {
 		super.save(teamMember);
+		Team t = teamService.get(teamMember.getTeam().getId());
+		t.setMemberIds(t.getMemberIds()+","+teamMember.getMemberId());
+		t.setPersonNum(t.getPersonNum()+1);
+		teamService.save(t);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(TeamMember teamMember) {
 		super.delete(teamMember);
+		Team t = teamService.get(teamMember.getTeam().getId());
+		String ids = t.getMemberIds();
+		ids = ids.replaceAll(teamMember.getMemberId()+",","");
+		t.setMemberIds(ids);
+		t.setPersonNum(t.getPersonNum()-1);
+		teamService.save(t);
 	}
 
 	public List<Map<String,String>> findListMap(TeamMember teamMember){

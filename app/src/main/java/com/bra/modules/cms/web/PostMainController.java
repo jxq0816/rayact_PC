@@ -151,8 +151,17 @@ public class PostMainController extends BaseController {
 	}
 
 	@RequestMapping(value = "app/list")
-	public void listApp(PostMain postMain, HttpServletResponse response) {
-		List<Map<String,String>> rtn = 	postMainService.getPostMainList(postMain);
+	public void listApp(PostMain postMain,  HttpServletRequest request,HttpServletResponse response) {
+		String mode = request.getParameter("mode");
+		String userId = request.getParameter("userId");
+		if("create".equals(mode)){
+			if(StringUtils.isNotBlank(userId)){
+				postMain.getSqlMap().put("addition"," and pm.create_by = '"+ userId +"' ");
+			}else{
+				postMain.getSqlMap().put("addition"," and pm.create_by = '"+ UserUtils.getUser().getId()+"' ");
+			}
+		}
+		List<Map<String,String>> rtn = 	postMainService.getPostMainList(new Page<PostMain>(request, response),postMain);
 		try {
 			response.reset();
 			response.setContentType("application/json");

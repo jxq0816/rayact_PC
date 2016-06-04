@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -182,20 +183,26 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	public List<Map<String,Object>> getCate(Category cate){
 		List<Map<String,String>> rtn =  categoryDao.getCate(cate);
 		List<Map<String,Object>> real = new ArrayList<>();
-		Map<String,Object> tmp = new HashMap<>();
-		tmp.put("id","");
-		tmp.put("name","全部");
-		tmp.put("attURL","");
-		tmp.put("isFocus",0);
-		real.add(tmp);
 		if(rtn!=null){
 			for(Map node:rtn){
 				String attId = String.valueOf(node.get("attId"));
-				node.put("attURL", com.bra.modules.sys.utils.StringUtils.ATTPATH+attId);
+				node.put("attURL", com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
 				node.remove("attId");
 				real.add(node);
 			}
 		}
 		return real;
+	}
+
+	public void saveApp(Category category, HttpServletResponse response){
+		if (category.getParent()==null||category.getParent().getId()==null){
+			category.setParent(new Category("1"));
+		}
+		Category parent = get(category.getParent().getId());
+		category.setParent(parent);
+		if (category.getOffice()==null||category.getOffice().getId()==null){
+			category.setOffice(parent.getOffice());
+		}
+
 	}
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.CmsCollectionDao">
+    
+	<sql id="cmsCollectionColumns">
+		a.id AS "id",
+		a.model_id AS "modelId",
+		a.model_name AS "modelName",
+		a.url AS "url",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.remarks AS "remarks"
+	</sql>
+	
+	<sql id="cmsCollectionJoins">
+	</sql>
+    
+	<select id="get" resultType="CmsCollection">
+		SELECT 
+			<include refid="cmsCollectionColumns"/>
+		FROM collection a
+		<include refid="cmsCollectionJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CmsCollection">
+		SELECT 
+			<include refid="cmsCollectionColumns"/>
+		FROM collection a
+		<include refid="cmsCollectionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CmsCollection">
+		SELECT 
+			<include refid="cmsCollectionColumns"/>
+		FROM collection a
+		<include refid="cmsCollectionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO collection(
+			id,
+			model_id,
+			model_name,
+			url,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			remarks
+		) VALUES (
+			#{id},
+			#{modelId},
+			#{modelName},
+			#{url},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{remarks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE collection SET 	
+			model_id = #{modelId},
+			model_name = #{modelName},
+			url = #{url},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE collection SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<select id="findMapList" resultType="Map">
+		SELECT
+		a.id AS "id",
+		a.model_id AS "modelId",
+		date_format(a.create_date,'%Y-%m-%d %T') AS "createDate"
+		<if test="sqlMap!=null and sqlMap.additionS != null">
+		${sqlMap.additionS}
+		</if>
+		FROM collection a
+		<if test="sqlMap!=null and sqlMap.additionJ != null">
+			${sqlMap.additionJ}
+		</if>
+		WHERE a.model_name = #{modelName} AND a.create_by = #{createBy.id} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+</mapper>

@@ -6,6 +6,7 @@
 		a.id AS "id",
 		a.photo AS "photo",
 		a.name AS "name",
+		a.member_ids AS "memberIds",
 		a.person_num AS "personNum",
 		a.group_id AS "group.id",
 		c.name AS "group.name",
@@ -93,7 +94,8 @@
 			update_by,
 			update_date,
 			del_flag,
-			remarks
+			remarks,
+			member_ids
 		) VALUES (
 			#{id},
 			#{photo},
@@ -109,7 +111,8 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{delFlag},
-			#{remarks}
+			#{remarks},
+			#{memberIds}
 		)
 	</insert>
 	
@@ -125,7 +128,8 @@
 			captain = #{captain},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			member_ids = #{memberIds}
 		WHERE id = #{id}
 	</update>
 	
@@ -138,7 +142,7 @@
 
 	<select id="findListMap" resultType="Map">
 		SELECT
-		a.id AS "id",
+		a.id AS "teamId",
 		a.photo AS "photo",
 		a.name AS "name",
 		a.person_num AS "personNum",
@@ -149,10 +153,13 @@
 		a.position_y AS "positionY",
 		a.create_by AS "createById",
 		u.name AS "createByName",
-		a.create_date AS "createDate",
-		a.remarks AS "remarks"
+		date_format(a.create_date,'%Y-%m-%d %T') AS "createDate",
+		a.remarks AS "remarks",
+		SUM(CASE WHEN f.create_by = #{currentUser.id} AND f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS "hasFocus",
+		sum(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END ) AS "focusNum"
 		FROM team a
 		<include refid="teamJoins"/>
+		LEFT JOIN focus f ON f.model_id = a.id
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="name != null and name != ''">
@@ -164,13 +171,15 @@
 			<if test="group!=null and group.id != null">
 				AND a.group_id = #{group.id}
 			</if>
+			${sqlMap.addition}
 		</where>
+		GROUP BY a.id
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
+				ORDER BY ${page.orderBy} DESC
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date DESC
 			</otherwise>
 		</choose>
 	</select>

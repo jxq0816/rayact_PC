@@ -21,7 +21,7 @@ public class Comment extends DataEntity<Comment> {
 	private Category category;// 分类编号
 	private String contentId;	// 归属分类内容的编号（Article.id、Photo.id、Download.id）
 	private String contentModel;//内容类名
-	private String title;	// 归属分类内容的标题（Article.title、Photo.title、Download.title）
+	private String title;	//（Article.title、Photo.title、Download.title）
 	private String content; // 评论内容
 	private String name; 	// 评论姓名
 	private String ip; 		// 评论IP

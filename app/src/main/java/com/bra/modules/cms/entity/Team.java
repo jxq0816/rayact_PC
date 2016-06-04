@@ -3,8 +3,6 @@ package com.bra.modules.cms.entity;
 import com.bra.common.persistence.DataEntity;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.List;
-
 /**
  * 战队Entity
  * @author ddt
@@ -15,13 +13,13 @@ public class Team extends DataEntity<Team> {
 	private static final long serialVersionUID = 1L;
 	private String photo;		// photo
 	private String name;		// name
-	private String personNum;		// person_num
+	private int personNum;		// person_num
 	private String position;		// position
 	private String positionX;		// position_x
 	private String positionY;		// position_y
 	private TeamMember captain;		// captain
 	private Category group;
-	private List<TeamMember> members;
+	private String memberIds;
 	
 	public Team() {
 		super();
@@ -48,15 +46,7 @@ public class Team extends DataEntity<Team> {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Length(min=0, max=11, message="person_num长度必须介于 0 和 11 之间")
-	public String getPersonNum() {
-		return personNum;
-	}
 
-	public void setPersonNum(String personNum) {
-		this.personNum = personNum;
-	}
 	
 	@Length(min=0, max=255, message="position长度必须介于 0 和 255 之间")
 	public String getPosition() {
@@ -95,13 +85,16 @@ public class Team extends DataEntity<Team> {
 	}
 
 
-	public List<TeamMember> getMembers() {
-		return members;
+
+	public String getMemberIds() {
+		return memberIds;
 	}
 
-	public void setMembers(List<TeamMember> members) {
-		this.members = members;
+	public void setMemberIds(String memberIds) {
+		this.memberIds = memberIds;
 	}
+
+
 
 
 	public Category getGroup() {
@@ -110,6 +103,15 @@ public class Team extends DataEntity<Team> {
 
 	public void setGroup(Category group) {
 		this.group = group;
+	}
+
+
+	public int getPersonNum() {
+		return personNum;
+	}
+
+	public void setPersonNum(int personNum) {
+		this.personNum = personNum;
 	}
 
 

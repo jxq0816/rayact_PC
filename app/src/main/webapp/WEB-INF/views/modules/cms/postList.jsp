@@ -37,21 +37,21 @@
 				<th>内容</th>
 				<th>所属帖子</th>
 				<th>回复跟帖</th>
+				<th>回复跟帖的回复</th>
+				<th>回帖时间</th>
 				<shiro:hasPermission name="cms:post:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="post">
 			<tr>
-				<td>${createBy.name}</td>
-				<td>${content}</td>
-				<td>${post}</td>
-				<td></td>
-				<td><a href="${ctx}/cms/post/form?id=${post.id}">
-					<fmt:formatDate value="${post.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</a></td>
+				<td>${post.createBy.name}</td>
+				<td>${post.content}</td>
+				<td>${post.postMain.subject}</td>
+				<td>${post.postId}</td>
+				<td>${post.ptpId}</td>
 				<td>
-					${post.remarks}
+					<fmt:formatDate value="${post.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="cms:post:edit"><td>
     				<a href="${ctx}/cms/post/form?id=${post.id}">修改</a>

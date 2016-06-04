@@ -13,6 +13,7 @@ public class Post extends DataEntity<Post> {
 	private static final long serialVersionUID = 1L;
 	private String content;		// content
 	private String postId;		// post_id
+    private String ptpId;
 	private PostMain postMain;
 	public Post() {
 		super();
@@ -46,6 +47,15 @@ public class Post extends DataEntity<Post> {
 
 	public void setPostMain(PostMain postMain) {
 		this.postMain = postMain;
+	}
+
+
+	public String getPtpId() {
+		return ptpId;
+	}
+
+	public void setPtpId(String ptpId) {
+		this.ptpId = ptpId;
 	}
 
 

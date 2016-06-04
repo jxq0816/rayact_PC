@@ -8,6 +8,8 @@ import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Post;
+import com.bra.modules.cms.entity.PostMain;
+import com.bra.modules.cms.service.PostMainService;
 import com.bra.modules.cms.service.PostService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class PostController extends BaseController {
 
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private PostMainService postMainService;
 	
 	@ModelAttribute
 	public Post get(@RequestParam(required=false) String id) {
@@ -62,6 +66,9 @@ public class PostController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Post post, Model model) {
 		model.addAttribute("post", post);
+		PostMain pm = new PostMain();
+		List<PostMain> pms = postMainService.findList(pm);
+		model.addAttribute("pms", pms);
 		return "modules/cms/postForm";
 	}
 

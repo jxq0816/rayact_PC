@@ -31,10 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
@@ -567,6 +564,10 @@ public class SystemService extends BaseService implements InitializingBean {
 
 	public List<User> findListApi(User user){
 		return userDao.findListApi(user);
+	}
+
+	public List<Map<String,String>> getUserList(User user){
+		return userDao.getUserList(user);
 	}
 	
 	///////////////// Synchronized to the Activiti end //////////////////
