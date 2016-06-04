@@ -64,6 +64,13 @@
     </div>
     <hr/>
     <div class="row" id="payTypeDIV">
+        <label for="memberCardRadio" class="col-lg-2">预订人备注信息:</label>
+        <div class="col-lg-10">
+            ${member.remarks}
+        </div>
+    </div>
+    <hr/>
+    <div class="row" id="payTypeDIV">
         <label for="memberCardRadio" class="col-lg-2">支付方式:</label>
         <div class="col-lg-10">
             <label class="radio-inline">
