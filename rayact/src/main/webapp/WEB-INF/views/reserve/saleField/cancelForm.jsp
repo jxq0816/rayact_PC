@@ -6,13 +6,13 @@
         <table class="no-border">
             <tbody class="no-border-y">
             <tr>
-                <td>预定人:</td>
+                <td>预定人</td>
                 <td>${cos.userName}
                     <input type="hidden" name="itemId" value="${item.id}"/>
                 </td>
             </tr>
             <tr>
-                <td>时间:</td>
+                <td>时间</td>
                 <td>
                     ${startTime}  至 ${endTime}
                 </td>

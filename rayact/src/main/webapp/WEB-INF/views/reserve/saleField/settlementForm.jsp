@@ -63,8 +63,8 @@
         </table>
     </div>
     <hr/>
-    <div class="row" id="payTypeDIV">
-        <label for="memberCardRadio" class="col-lg-2">预订人备注信息:</label>
+    <div class="row">
+        <label class="col-lg-2">预订人备注信息:</label>
         <div class="col-lg-10">
             ${member.remarks}
         </div>
@@ -105,8 +105,9 @@
             </label>
         </div>
     </div>
-    <hr/>
+
     <div class="row" id="multiplePay" style="display: none;">
+        <hr/>
         <div class="row">
             <div class="col-lg-1">
             </div>
@@ -167,41 +168,41 @@
             </table>
         </div>
     </j:if>
-    <hr/>
     <div class="row">
-        <label for="shouldPrice" class="col-lg-2">应收:</label>
-        <div class="col-lg-2">
+        <hr/>
+        <label for="shouldPrice" class="col-lg-2 col-sm-2">应收:</label>
+        <div class="col-lg-2 col-sm-2">
             <input readonly="readonly" value="${order.shouldPrice}" type="text"
                    id="shouldPrice" class="form-control"
                    name="shouldPrice"/>
         </div>
-        <div class="col-lg-4" id="discountPriceDiv" style="display:none">
+        <div class="col-lg-4 col-sm-4" id="discountPriceDiv" style="display:none">
             <div class="row">
-                <label class="col-lg-6" for="discountPrice">会员优惠:</label>
-                <div class="col-lg-6">
+                <label class="col-lg-6 col-sm-6" for="discountPrice">会员优惠:</label>
+                <div class="col-lg-6 col-sm-6">
                     <input type="text" id="discountPrice" value="${order.discountPrice}" onkeyup="editPrice()"
                            onafterpaste="editPrice()"
                            class="form-control " name="discountPrice"/>
                 </div>
             </div>
         </div>
-        <label for="consPrice" class="col-lg-2">实收: <a style="cursor: hand" id="editOrderPrice">
+        <label for="consPrice" class="col-lg-2 col-sm-2">实收: <a style="cursor: hand" id="editOrderPrice">
             <li class="fa fa-edit" onclick="changePrice()"></li>
         </a></label>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-sm-2">
             <input type="text" readonly="readonly" id="consPrice" value="${order.consPrice}"
                    class="form-control required number" name="orderPrice"/>
         </div>
         <label for="shouldPrice" class="col-lg-2">会员当前余额:</label>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-sm-2">
             <input readonly="readonly" value="${member.remainder}" type="text"
                  class="form-control"/>
         </div>
     </div>
-    <hr/>
     <div class="row" id="changePrice" style="display: none">
-        <label for="authUser" class="col-lg-2">授权人:</label>
-        <div class="col-lg-2">
+        <hr/>
+        <label for="authUser" class="col-lg-2 col-sm-2">授权人:</label>
+        <div class="col-lg-2 col-sm-2">
             <sys:select id="authUser" cssClass="form-control" name=""
                         defaultLabel="请选择"
                         defaultValue=""
@@ -211,8 +212,8 @@
                         itemValue="id"
             ></sys:select>
         </div>
-        <label for="authPassword" class="col-lg-2">授权码:</label>
-        <div class="col-lg-2">
+        <label for="authPassword" class="col-lg-2 col-sm-2">授权码:</label>
+        <div class="col-lg-2 col-sm-2">
             <input id="authPassword" type="password" class="form-control"/>
         </div>
         <label>
