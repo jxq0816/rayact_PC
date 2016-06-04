@@ -147,7 +147,7 @@ public class ReserveMemberController extends BaseController {
 		ReserveCardStatements query=new ReserveCardStatements();
 		ReserveMember member=reserveMemberService.get(memberId);
 		query.setReserveMember(member);
-		Page<ReserveCardStatements> page = reserveCardStatementsService.findPage(new Page<ReserveCardStatements>(request, response),query);
+		Page<ReserveCardStatements> page = reserveCardStatementsService.findPersonalStatementsPage(new Page<ReserveCardStatements>(request, response),query);
 		model.addAttribute("page", page);
 		model.addAttribute("member", member);
 		return "reserve/member/statements";

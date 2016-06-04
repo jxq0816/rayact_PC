@@ -214,6 +214,32 @@
 		</choose>
 	</select>
 
+	<select id="findPersonalStatements" resultType="ReserveCardStatements">
+		SELECT
+		<include refid="reserveCardStatementsColumns"/>
+		FROM reserve_card_statements a
+		<include refid="reserveCardStatementsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND transaction_type !='3'
+			<if test="reserveMember!=null">
+				<if test="reserveMember.id !=null and reserveMember.id !=''">
+					and a.fk_reserve_member_id=#{reserveMember.id}
+				</if>
+			</if>
+			<if test="startDate!=null and endDate !=null">
+				and datediff(a.update_date,#{startDate})>=0 and datediff(#{endDate},a.update_date)>=0
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
 	<select id="findAllList" resultType="ReserveCardStatements">
 		SELECT
 		<include refid="reserveCardStatementsColumns"/>

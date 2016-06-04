@@ -44,4 +44,6 @@ public interface ReserveCardStatementsDao extends CrudDao<ReserveCardStatements>
 
      List<Map<String,Object>> ticketIncome(SearchForm searchForm);
 
+     List<ReserveCardStatements> findPersonalStatements(ReserveCardStatements searchForm);
+
 }

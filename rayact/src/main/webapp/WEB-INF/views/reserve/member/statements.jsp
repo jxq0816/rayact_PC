@@ -58,13 +58,16 @@
                                     </td>
                                     <td>
                                         <j:if test="${statement.transactionType==1}">
-                                            充值
+                                            储值卡充值
                                         </j:if>
                                         <j:if test="${statement.transactionType==2}">
                                             退费
                                         </j:if>
-                                        <j:if test="${statement.transactionType==3}">
+                                        <j:if test="${statement.transactionType==33}">
                                             商品
+                                        </j:if>
+                                        <j:if test="${statement.transactionType==4}">
+                                            超级管理员修改余额
                                         </j:if>
                                         <j:if test="${statement.transactionType==7}">
                                            次卡充值
