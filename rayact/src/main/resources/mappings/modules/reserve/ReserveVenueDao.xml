@@ -244,14 +244,15 @@
         </if>
         ORDER BY day ASC
     </select>
-    <!--pc场馆总收入-->
+    <!--pc总收入统计 流水-->
     <select id="totalIncomeReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport">
         SELECT
 		v.id as "reserveVenue.id",
 		v.name as "reserveVenue.name",
 		case s.transaction_type
         <if test="queryType !=null and '0'.toString()==queryType">
-            when 1 then "充值"
+            when 1 then "储值卡充值"
+            when 7 then "次卡充值"
         </if>
 			when 3 then "商品"
 			when 8 then "场地售卖"
@@ -274,8 +275,9 @@
 		inner JOIN reserve_card_statements s on (s.venue_id = v.id and
             (
                 s.transaction_type='3'
+               /* 交易类型 (1：储值卡充值，2：退费，3：商品消费,33:商品消费合计，该方式仅仅用于个人消费明细 4:超级管理员修改余额 5：销户退还用户的金额 6：销户违约金;7:次卡充值,8:场地售卖，9：场次票售卖，10：教练收入)*/
                 <if test="queryType !=null and '0'.toString()==queryType">
-                    or s.transaction_type='1'
+                    or s.transaction_type='1' or s.transaction_type='7'
                 </if>
                 or s.transaction_type='8' or s.transaction_type='9' or s.transaction_type='10'
             )
@@ -288,7 +290,7 @@
                 </if>
             </if>
             <if test="startDate !=null and endDate !=null">
-                and (Date(s.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
+                and (Date(s.create_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
             ${sqlMap.dsf}
         </where>
