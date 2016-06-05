@@ -52,7 +52,9 @@
                                             maxlength="20"
                                             class="input-medium form-control Wdate "
                                             onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/></td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -82,9 +84,9 @@
                                                 ${reserveTutorOrder.tutorName}
                                         </a></td>
                                     <td>
-                                        <fmt:formatNumber value="${reserveTutorOrder.minute}" pattern="0.0"
+                                        <fmt:formatNumber value="${reserveTutorOrder.time}" pattern="0.0"
                                                           maxFractionDigits="2" type="number"/>
-                                        <c:set var="time" value="${time+reserveTutorOrder.minute}"></c:set>
+                                        <c:set var="time" value="${time+reserveTutorOrder.time}"></c:set>
                                     </td>
                                     <td>
                                             ${reserveTutorOrder.price}
@@ -133,6 +135,13 @@
             checkboxClass: 'icheckbox_square-blue checkbox',
             radioClass: 'iradio_square-blue'
         });
+    });
+</script>
+<script type="text/javascript">
+    $("#btnExport").click(function(){
+        $("#searchForm").attr("action","${ctx}/reserve/reserveTutorOrder/orderAllExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action","${ctx}/reserve/reserveTutorOrder/orderAll");
     });
 </script>
 </body>

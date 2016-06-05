@@ -226,7 +226,7 @@
 	</select>
 
 	<select id="getTutorOrderAll" resultType="java.util.Map">
-		SELECT o.tutor_id AS tutorId,t.name AS tutorName,sum(o.total_price) AS price,SUM(o.order_count)/2 AS minute
+		SELECT o.tutor_id AS tutorId,t.name AS tutorName,sum(o.total_price) AS price,SUM(o.order_count)/2 AS time
 		FROM reserve_tutor t
 		LEFT JOIN reserve_tutor_order o ON o.tutor_id = t.id
 		LEFT JOIN reserve_venue_cons c	ON o.model_id = c.id
