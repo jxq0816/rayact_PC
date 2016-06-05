@@ -11,6 +11,7 @@ import com.bra.modules.reserve.entity.ReserveTutor;
 import com.bra.modules.reserve.entity.ReserveTutorOrder;
 import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveTutorOrderService;
+import com.bra.modules.reserve.utils.ExcelInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +126,29 @@ public class ReserveTutorOrderController extends BaseController {
 		model.addAttribute("query", reserveTutorOrder);
 		model.addAttribute("page", page);
 		return "reserve/report/tutorOrderAll";
+	}
+	@RequestMapping(value = "orderAllExport")
+	public void listOpenRateExport(ReserveTutorOrder reserveTutorOrder,HttpServletRequest request,HttpServletResponse response)throws Exception{
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		request.setAttribute("startDate",startDate);
+		request.setAttribute("endDate",endDate);
+		Page page = new Page<ReserveTutorOrder>(request, response);
+		reserveTutorOrder.setPage(page);
+		List<Map<String,Object>> list = reserveTutorOrderService.getTutorOrderAll(reserveTutorOrder);
+
+		String[] titles = {"教练姓名","授课时长/小时","教练费/元"};
+		List<String[]> contentList = new ArrayList<>();
+		for(Map<String,Object> map :list){
+			String[] o = new String[3];
+			o[0] = map.get("tutorName")!=null?String.valueOf( map.get("tutorName")):"";
+			o[1] = map.get("time")!=null?String.valueOf(map.get("time")):"";
+			o[2] = map.get("price")!=null?String.valueOf( map.get("price")):"";
+			contentList.add(o);
+		}
+		Date now = new Date();
+		ExcelInfo info = new ExcelInfo(response,"教练收入报表"+DateUtils.formatDate(now),titles,contentList);
+		info.export();
 	}
 
 }
