@@ -5,8 +5,10 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveCommodityStorageLog;
+import com.bra.modules.reserve.entity.ReserveCommoditySupplier;
 import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCommodityStorageLogService;
+import com.bra.modules.reserve.service.ReserveCommoditySupplierService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 /**
@@ -33,7 +36,8 @@ public class ReserveCommodityStorageLogController extends BaseController {
 	private ReserveCommodityStorageLogService reserveCommodityStorageLogService;
 	@Autowired
 	private ReserveVenueService reserveVenueService;
-	
+	@Autowired
+	private ReserveCommoditySupplierService reserveCommoditySupplierService;
 	@ModelAttribute
 	public ReserveCommodityStorageLog get(@RequestParam(required=false) String id) {
 		ReserveCommodityStorageLog entity = null;
@@ -48,7 +52,9 @@ public class ReserveCommodityStorageLogController extends BaseController {
 	
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveCommodityStorageLog reserveCommodityStorageLog, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveCommodityStorageLog> page = reserveCommodityStorageLogService.findPage(new Page<ReserveCommodityStorageLog>(request, response), reserveCommodityStorageLog); 
+		Page<ReserveCommodityStorageLog> page = reserveCommodityStorageLogService.findPage(new Page<ReserveCommodityStorageLog>(request, response), reserveCommodityStorageLog);
+		List<ReserveCommoditySupplier> reserveCommoditySupplierList=reserveCommoditySupplierService.findList(new ReserveCommoditySupplier());
+		model.addAttribute("reserveCommoditySupplierList", reserveCommoditySupplierList);
 		model.addAttribute("page", page);
 		model.addAttribute("query", reserveCommodityStorageLog);
 		model.addAttribute("venues", reserveVenueService.findList(new ReserveVenue()));

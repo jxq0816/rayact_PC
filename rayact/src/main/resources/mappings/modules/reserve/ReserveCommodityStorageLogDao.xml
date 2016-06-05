@@ -15,6 +15,7 @@
 		a.box_price AS "boxPrice",
 		a.price AS "price",
 		a.fk_reserve_commodity_supplier_id AS "reserveCommoditySupplier.id",
+		s.name AS "reserveCommoditySupplier.name",
 		a.create_by AS "createBy.id",
 		u.name AS "createBy.name",
 		a.create_date AS "createDate",
@@ -53,6 +54,11 @@
 			<if test="reserveVenue != null">
 				<if test="reserveVenue.id !=null and reserveVenue.id != ''">
 					AND a.fk_reserve_venue_id = #{reserveVenue.id}
+				</if>
+			</if>
+			<if test="reserveCommoditySupplier != null">
+				<if test="reserveCommoditySupplier.id !=null and reserveCommoditySupplier.id != ''">
+					AND a.fk_reserve_commodity_supplier_id = #{reserveCommoditySupplier.id}
 				</if>
 			</if>
 		</where>

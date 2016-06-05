@@ -30,6 +30,15 @@
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
                         </div>
+                        <div class="form-group col-lg-3 col-sm-5">
+                            <label class="control-label" for="venue">供应商：</label>
+                            <sys:select cssClass="input-large" name="reserveCommoditySupplier.id" id="venue"
+                                        cssStyle="width:50%"
+                                        value="${query.reserveCommoditySupplier.id}"
+                                        items="${reserveCommoditySupplierList}" itemLabel="name" itemValue="id"
+                                        defaultLabel="----请选择-----"
+                                        defaultValue=""></sys:select>
+                        </div>
 
                         <div class="form-group col-lg-4 col-sm-6">
                             <div class="col-lg-6 col-sm-6 ">
@@ -69,6 +78,7 @@
                                     <th>入库金额</th>
                                     <th>操作人</th>
                                     <th>备注</th>
+                                    <th>供应商</th>
                                     <th>时间</th>
                                 </tr>
                                 </thead>
@@ -115,6 +125,9 @@
                                                 ${reserveCommodityStorageLog.remarks}
                                         </td>
                                         <td>
+                                                ${reserveCommodityStorageLog.reserveCommoditySupplier.name}
+                                        </td>
+                                        <td>
                                             <fmt:formatDate value="${reserveCommodityStorageLog.createDate}"
                                                             pattern="yyyy-MM-dd HH:mm:ss"/>
                                         </td>
@@ -125,7 +138,7 @@
                                 <td>${num}</td>
                                 <td colspan="4"></td>
                                 <td>${sum}</td>
-                                <td colspan="3"></td>
+                                <td colspan="4"></td>
                                 </tbody>
                             </table>
 
