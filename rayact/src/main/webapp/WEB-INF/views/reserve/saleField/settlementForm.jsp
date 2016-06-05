@@ -180,7 +180,7 @@
             <div class="row">
                 <label class="col-lg-6 col-sm-6" for="discountPrice">会员优惠:</label>
                 <div class="col-lg-6 col-sm-6">
-                    <input type="text" id="discountPrice" value="${order.discountPrice}" onkeyup="editPrice()"
+                    <input type="text" id="discountPrice" value="${order.discountPrice}" onblur="editPrice()"
                            onafterpaste="editPrice()"
                            class="form-control " name="discountPrice"/>
                 </div>
