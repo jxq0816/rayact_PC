@@ -94,18 +94,24 @@ public class ReserveCardStatementsController extends BaseController {
 		String type=reserveCardStatements.getTransactionType();
 		//"储值卡充值记录"
 		if("1".equals(type)){
-			String[] titles = {"姓名","卡号","金额","电话","支付方式","操作人","时间"};
+			String[] titles = {"场馆","姓名","卡号","金额","电话","支付方式","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCardStatements report :list){
 				sum+=report.getTransactionVolume();
-				String[] o = new String[7];
-				o[0] = report.getReserveMember().getName();
-				o[1] = report.getReserveMember().getCartno();
-				o[2] = String.valueOf(report.getTransactionVolume());
-				o[3] = String.valueOf(report.getReserveMember().getMobile());
-				o[4] = String.valueOf(getPayType(report.getPayType()));
-				o[5] = String.valueOf(report.getCreateBy().getName());
-				o[6] = DateUtils.formatDate(report.getCreateDate());
+				String[] o = new String[8];
+				ReserveVenue venue = report.getVenue();
+				if(venue!=null){
+					o[0] = report.getVenue().getName();
+				}else {
+					o[0] = "";
+				}
+				o[1] = report.getReserveMember().getName();
+				o[2] = report.getReserveMember().getCartno();
+				o[3] = String.valueOf(report.getTransactionVolume());
+				o[4] = String.valueOf(report.getReserveMember().getMobile());
+				o[5] = String.valueOf(getPayType(report.getPayType()));
+				o[6] = String.valueOf(report.getCreateBy().getName());
+				o[7] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
 			Date now = new Date();
