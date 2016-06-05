@@ -14,6 +14,7 @@
 		a.after_num AS "afterNum",
 		a.box_price AS "boxPrice",
 		a.price AS "price",
+		a.fk_reserve_commodity_supplier_id AS "reserveCommoditySupplier.id",
 		a.create_by AS "createBy.id",
 		u.name AS "createBy.name",
 		a.create_date AS "createDate",
@@ -27,7 +28,8 @@
 	<sql id="reserveCommodityStorageLogJoins">
 		LEFT JOIN reserve_commodity as commodity on a.fk_reserve_commodity_id=commodity.id
 		LEFT JOIN reserve_venue as venue on a.fk_reserve_venue_id=venue.id
-		LEFT JOIN  reserve_user as u on u.id=a.create_by
+		LEFT JOIN reserve_user as u on u.id=a.create_by
+		LEFT JOIN reserve_commodity_supplier as s on s.id=a.fk_reserve_commodity_supplier_id
 	</sql>
     
 	<select id="get" resultType="ReserveCommodityStorageLog">
@@ -93,6 +95,7 @@
 			after_num,
 			box_price,
 			price,
+			fk_reserve_commodity_supplier_id,
 			create_by,
 			create_date,
 			update_by,
@@ -110,6 +113,7 @@
 			#{afterNum},
 			#{boxPrice},
 			#{price},
+			#{reserveCommoditySupplier.id},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -130,6 +134,7 @@
 			after_num = #{afterNum},
 			box_price = #{boxPrice},
 			price = #{price},
+			fk_reserve_commodity_supplier_id =#{reserveCommoditySupplier.id},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},

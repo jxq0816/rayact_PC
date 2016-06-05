@@ -5,14 +5,8 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
-import com.bra.modules.reserve.entity.ReserveCommodity;
-import com.bra.modules.reserve.entity.ReserveCommodityStorageLog;
-import com.bra.modules.reserve.entity.ReserveCommodityType;
-import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.service.ReserveCommodityService;
-import com.bra.modules.reserve.service.ReserveCommodityStorageLogService;
-import com.bra.modules.reserve.service.ReserveCommodityTypeService;
-import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.entity.*;
+import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +40,9 @@ public class ReserveCommodityController extends BaseController {
 
     @Autowired
     private ReserveCommodityTypeService reserveCommodityTypeService;
+
+    @Autowired
+    private ReserveCommoditySupplierService reserveCommoditySupplierService;
 
     @Autowired
     private ReserveCommodityStorageLogService reserveCommodityStorageLogService;
@@ -115,14 +112,16 @@ public class ReserveCommodityController extends BaseController {
     @Token(save = true)
     public String inStorageUrl(ReserveCommodity commodity, Model model) {
         commodity = commodityService.get(commodity);
+        List<ReserveCommoditySupplier> reserveCommoditySupplierList=reserveCommoditySupplierService.findList(new ReserveCommoditySupplier());
         model.addAttribute("commodity", commodity);
+        model.addAttribute("reserveCommoditySupplierList", reserveCommoditySupplierList);
         return "reserve/commodity/reserveCommodityInstorageForm";
     }
 
     @RequestMapping(value = "inStorage")
     @ResponseBody
     @Token(remove = true)
-    public String inStorage(String id, Integer inRepertoryBoxNum,Double boxPrice,String remarks) {
+    public String inStorage(String id, Integer inRepertoryBoxNum,Double boxPrice,String supplierId,String remarks) {
         ReserveCommodity commodity = new ReserveCommodity();
         commodity.setId(id);
         commodity=commodityService.get(commodity);
@@ -133,6 +132,8 @@ public class ReserveCommodityController extends BaseController {
         commodityService.save(commodity);
 
         ReserveCommodityStorageLog log=new ReserveCommodityStorageLog();
+        ReserveCommoditySupplier reserveCommoditySupplier =new ReserveCommoditySupplier(supplierId);
+        log.setReserveCommoditySupplier(reserveCommoditySupplier);
         log.setReserveCommodity(commodity);
         log.setReserveVenue(commodity.getReserveVenue());
         log.setBoxNum(inRepertoryBoxNum);

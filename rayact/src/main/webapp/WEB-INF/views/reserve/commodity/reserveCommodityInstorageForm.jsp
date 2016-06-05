@@ -91,6 +91,15 @@
                                    class="form-control  required"/>
                             <span class="help-inline"><font color="red">*</font> </span>
                         </td>
+                        <td>供应商：</td>
+                        <td>
+                            <sys:select id="supplierId" cssClass="form-control required" name="reserveCommoditySupplier.id"
+                                        value="${commodity.reserveCommoditySupplier.id}"
+                                        items="${reserveCommoditySupplierList}" itemLabel="name" itemValue="id"
+                                        defaultLabel="请选择"
+                                        defaultValue=""></sys:select>
+                            <span class="help-inline"><font color="red">*</font> </span>
+                        </td>
                     </tr>
                 </table>
             </div>

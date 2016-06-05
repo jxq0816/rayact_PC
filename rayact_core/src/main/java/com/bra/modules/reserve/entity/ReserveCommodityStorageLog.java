@@ -1,7 +1,6 @@
 package com.bra.modules.reserve.entity;
 
 import com.bra.common.persistence.SaasEntity;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -16,6 +15,7 @@ public class ReserveCommodityStorageLog extends SaasEntity<ReserveCommodityStora
 	private static final long serialVersionUID = 1L;
 	private ReserveVenue reserveVenue;        // 所属场馆
 	private ReserveCommodity reserveCommodity;        // 入库商品
+	private ReserveCommoditySupplier reserveCommoditySupplier;        // 供应商
 	private Integer boxNum;        // 入库箱数
 	private Integer num;        // 入库瓶数
 	private Integer beforeNum;        // 入库前多少瓶
@@ -101,13 +101,13 @@ public class ReserveCommodityStorageLog extends SaasEntity<ReserveCommodityStora
 		this.price = price;
 	}
 
-	@Length(min = 0, max = 19, message = "tenant_id长度必须介于 0 和 19 之间")
-	public String getTenantId() {
-		return tenantId;
+
+	public ReserveCommoditySupplier getReserveCommoditySupplier() {
+		return reserveCommoditySupplier;
 	}
 
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
+	public void setReserveCommoditySupplier(ReserveCommoditySupplier reserveCommoditySupplier) {
+		this.reserveCommoditySupplier = reserveCommoditySupplier;
 	}
 
 	//---------------------------------------------------------

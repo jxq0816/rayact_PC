@@ -19,7 +19,7 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 
 	private ReserveCommodityType commodityType;		// 商品类别
 	private ReserveVenue reserveVenue;//场馆
-
+	private ReserveCommoditySupplier reserveCommoditySupplier;//供应商
 	private String shelvesStatus;		// 上架状态
 	private int unit; //规格
 	private String unitName; //单位名称 如 瓶
@@ -113,6 +113,14 @@ public class ReserveCommodity extends SaasEntity<ReserveCommodity> {
 
 	public void setReserveVenue(ReserveVenue reserveVenue) {
 		this.reserveVenue = reserveVenue;
+	}
+
+	public ReserveCommoditySupplier getReserveCommoditySupplier() {
+		return reserveCommoditySupplier;
+	}
+
+	public void setReserveCommoditySupplier(ReserveCommoditySupplier reserveCommoditySupplier) {
+		this.reserveCommoditySupplier = reserveCommoditySupplier;
 	}
 	
 }

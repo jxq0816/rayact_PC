@@ -25,7 +25,9 @@ $(document).ready(function () {
         var token=$("#token").val();
         var inRepertoryBoxNum=$("#inRepertoryBoxNum").val();
         var boxPrice=$("#boxPrice").val();
+        var supplierId=$("#supplierId").val();
         var remarks=$("#remarks").val();
+
         if(inRepertoryBoxNum==null || inRepertoryBoxNum==undefined || inRepertoryBoxNum=='') {
             errorLoding('请输入箱数!');
             return;
@@ -40,6 +42,10 @@ $(document).ready(function () {
             errorLoding('单箱价格必须为数字!');
             return;
         }
+        if(!supplierId){
+            errorLoding('请选择供应商!');
+            return;
+        }
         jQuery.postItems({
             url: ctx+'/reserve/commodity/inStorage',
             data: {
@@ -47,6 +53,7 @@ $(document).ready(function () {
                 token: token,
                 inRepertoryBoxNum:inRepertoryBoxNum,
                 boxPrice:boxPrice,
+                supplierId:supplierId,
                 remarks:remarks
             },
             success: function (result) {
