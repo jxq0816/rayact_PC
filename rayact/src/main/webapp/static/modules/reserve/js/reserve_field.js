@@ -541,7 +541,7 @@ function editPrice() {
         errorLoding("优惠金额不能大于应收金额！");
         return;
     }
-    $("#consPrice").val(consPrice);
+    $("#consPrice").attr("value",consPrice);
 }
 function checkAuthorization() {
     var userId = $("#authUser").val();
