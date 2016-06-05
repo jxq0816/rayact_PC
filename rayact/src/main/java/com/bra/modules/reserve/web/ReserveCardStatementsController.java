@@ -70,12 +70,16 @@ public class ReserveCardStatementsController extends BaseController {
 		String type=reserveCardStatements.getTransactionType();
 		String rs=null;
 		if("1".equals(type)){
+			//储值卡充值
 			rs= "reserve/record/reserveCardRechargeStatementsList";
 		}else if("2".equals(type)){
+			//会员退费
 			rs= "reserve/record/reserveCardRefundStatementsList";
 		}else if("5".equals(type)){
+			//储值卡销户记录
 			rs= "reserve/record/reserveCardCancellationStatementsList";
 		}else if("7".equals(type)){
+			//次卡充值记录
 			rs= "reserve/record/timeCardRechargeStatementsList";
 		}
 		model.addAttribute("query", reserveCardStatements);
@@ -109,17 +113,18 @@ public class ReserveCardStatementsController extends BaseController {
 		}
 		sum=0;
 		if("2".equals(type)){
-			String[] titles = {"姓名","卡号","金额","电话","操作人","时间"};
+			String[] titles = {"场馆","姓名","卡号","金额","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCardStatements report :list){
 				sum+=report.getTransactionVolume();
-				String[] o = new String[6];
-				o[0] = report.getReserveMember().getName();
-				o[1] = report.getReserveMember().getCartno();
-				o[2] = String.valueOf(report.getTransactionVolume());
-				o[3] = String.valueOf(report.getReserveMember().getMobile());
-				o[4] = String.valueOf(report.getCreateBy().getName());
-				o[5] = DateUtils.formatDate(report.getCreateDate());
+				String[] o = new String[7];
+				o[0] = report.getVenue().getName();
+				o[1] = report.getReserveMember().getName();
+				o[2] = report.getReserveMember().getCartno();
+				o[3] = String.valueOf(report.getTransactionVolume());
+				o[4] = String.valueOf(report.getReserveMember().getMobile());
+				o[5] = String.valueOf(report.getCreateBy().getName());
+				o[6] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
 			Date now = new Date();

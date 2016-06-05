@@ -227,7 +227,7 @@
       },
       {
         "code": "reserveCardRefundStatements",
-        "name": "退费记录",
+        "name": "会员退费记录",
         "href":"/reserve/reserveCardStatements/list?transactionType=2",
         "authorityList": []
       },

@@ -55,7 +55,6 @@
                                 <div class="col-lg-2">
                                     <input id="btnSubmit" class="btn btn-primary" type="submit"
                                            value="查询"/>
-
                                     <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
                                 </div>
                             </div>
@@ -120,11 +119,13 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                <td colspan="3">
-                                    合计
-                                </td>
-                                <td>${sum}</td>
-                                <td colspan="4"></td>
+                                <tr>
+                                    <td colspan="3">
+                                        合计
+                                    </td>
+                                    <td>${sum}</td>
+                                    <td colspan="4"></td>
+                                </tr>
                                 </tbody>
                             </table>
 
@@ -141,11 +142,16 @@
                             </div>
                         </div>
                     </div>
+                    <%-- end of content--%>
                 </form:form>
             </div>
+            <%--end of block-flat--%>
         </div>
+        <%-- end of col-md-12--%>
     </div>
+    <%-- end of row--%>
 </div>
+<%-- end of container--%>
 <script type="text/javascript">
     $("#btnExport").click(function () {
         $("#searchForm").attr("action", "${ctx}/reserve/reserveCardStatements/listExport");
