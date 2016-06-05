@@ -92,6 +92,7 @@ public class ReserveCardStatementsController extends BaseController {
 		List<ReserveCardStatements> list = reserveCardStatementsService.findList(reserveCardStatements);
 		double sum=0;
 		String type=reserveCardStatements.getTransactionType();
+		//"储值卡充值记录"
 		if("1".equals(type)){
 			String[] titles = {"姓名","卡号","金额","电话","支付方式","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
@@ -112,6 +113,7 @@ public class ReserveCardStatementsController extends BaseController {
 			info.export();
 		}
 		sum=0;
+		/*会员退费记录*/
 		if("2".equals(type)){
 			String[] titles = {"场馆","姓名","卡号","金额","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
@@ -131,44 +133,29 @@ public class ReserveCardStatementsController extends BaseController {
 			ExcelInfo info = new ExcelInfo(response,"退费记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
-		if("3".equals(type)){
-			String[] titles = {"姓名","卡号","卡内余额","退还金额","电话","操作人","时间"};
+		/*储值卡销户记录*/
+		if("5".equals(type)){
+			String[] titles = {"场馆","姓名","卡号","卡内余额","退还金额","违约金","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCardStatements report :list){
 				sum+=report.getTransactionVolume();
-				String[] o = new String[7];
-				o[0] = report.getReserveMember().getName();
-				o[1] = report.getReserveMember().getCartno();
-				o[2] = String.valueOf(report.getTransactionVolume()/0.8);
-				o[3] = String.valueOf(report.getTransactionVolume());
-				o[4] = String.valueOf(report.getReserveMember().getMobile());
-				o[5] = String.valueOf(report.getCreateBy().getName());
-				o[6] = DateUtils.formatDate(report.getCreateDate());
+				String[] o = new String[9];
+				o[0] = report.getVenue().getName();
+				o[1] = report.getReserveMember().getName();
+				o[2] = report.getReserveMember().getCartno();
+				o[3] = String.valueOf(report.getTransactionVolume()/0.8);
+				o[4] = String.valueOf(report.getTransactionVolume());
+				o[5] = String.valueOf(report.getTransactionVolume()/4);
+				o[6] = String.valueOf(report.getReserveMember().getMobile());
+				o[7] = String.valueOf(report.getCreateBy().getName());
+				o[8] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
 			}
 			Date now = new Date();
 			ExcelInfo info = new ExcelInfo(response,"储值卡销户记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
-		if("4".equals(type)){
-			String[] titles = {"姓名","卡号","违约金","电话","操作人","时间"};
-			List<String[]> contentList = new ArrayList<>();
-			for(ReserveCardStatements report :list){
-				sum+=report.getTransactionVolume();
-				String[] o = new String[6];
-				o[0] = report.getReserveMember().getName();
-				o[1] = report.getReserveMember().getCartno();
-				o[2] = String.valueOf(report.getTransactionVolume());
-				o[3] = String.valueOf(report.getReserveMember().getMobile());
-				o[4] = String.valueOf(report.getCreateBy().getName());
-				o[5] = DateUtils.formatDate(report.getCreateDate());
-				contentList.add(o);
-			}
 
-			Date now = new Date();
-			ExcelInfo info = new ExcelInfo(response,"储值卡销户违约金记录"+ DateUtils.formatDate(now),titles,contentList);
-			info.export();
-		}
 	}
 
 	private String getPayType(String typeCode){
@@ -181,7 +168,7 @@ public class ReserveCardStatementsController extends BaseController {
 		}else if("5".equals(typeCode)){
 			return "支付宝";
 		}else if("6".equals(typeCode)){
-			return "其他";
+			return "优惠券";
 		}else{
 			return "";
 		}
