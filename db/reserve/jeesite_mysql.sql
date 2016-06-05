@@ -779,6 +779,21 @@ CREATE TABLE `reserve_check_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `reserve_commodity_supplier`;
+CREATE TABLE `reserve_commodity_supplier` (
+  `id` varchar(19) NOT NULL,
+  `name` varchar(19) DEFAULT NULL COMMENT '供应商名称',
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 

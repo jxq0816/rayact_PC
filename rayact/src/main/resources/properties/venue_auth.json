@@ -130,6 +130,12 @@
         "authorityList": []
       },
       {
+        "code": "commoditySupplier",
+        "name": "供应商管理",
+        "href":"/reserve/reserveCommoditySupplier/list",
+        "authorityList": []
+      },
+      {
         "code": "tutor",
         "name": "教练管理",
         "href":"/reserve/reserveTutor/list",
