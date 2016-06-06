@@ -33,4 +33,8 @@
 20160603:reserve_venue_cons订单表 添加by_pc char(1); alter table  reserve_venue_cons add by_pc char(1);
 20160605:reserve_commodity_supplier 供应商表
 20160605:reserve_commodity_storage_log 入库记录表 新增供应商字段 alter table reserve_commodity_storage_log add fk_reserve_commodity_supplier_id VARCHAR(19);
+20160606:reserve_venue_order 场次票订单表 新增字段：开始时间 结束时间 场地外键 场馆外键
+alter table reserve_venue_order add start_time VARCHAR(5);
+alter table reserve_venue_order add end_time VARCHAR(5);
+alter table reserve_venue_order add fk_reserve_field_id VARCHAR(19);
 

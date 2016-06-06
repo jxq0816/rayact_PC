@@ -17,6 +17,7 @@ public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
 	
 	private static final long serialVersionUID = 1L;
 	private ReserveVenue reserveVenue;		// 场馆ID
+	private ReserveField reserveField;		// 场地ID
 	private ReserveVenueVisitorsSet visitorsSet;		// 所属人次票
 	private ReserveMember member;		// 会员ID
 	private String consMobile;		// 订单人手机号
@@ -27,7 +28,25 @@ public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
 	private Integer collectCount;		// 商品数量
 	private Double collectPrice;		// 实收金额
 	private String payType;		// 支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款)
-	
+	private String startTime;
+	private String endTime;
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
 	public ReserveVenueOrder() {
 		super();
 	}
@@ -128,6 +147,14 @@ public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
 		this.collectCount = collectCount;
 	}
 
+	public ReserveField getReserveField() {
+		return reserveField;
+	}
+
+	public void setReserveField(ReserveField reserveField) {
+		this.reserveField = reserveField;
+	}
+
 	//----------------和数据库无关---------------------------
 
 	private ReserveTutor tutor;
@@ -139,4 +166,6 @@ public class ReserveVenueOrder extends SaasEntity<ReserveVenueOrder> {
 	public void setTutor(ReserveTutor tutor) {
 		this.tutor = tutor;
 	}
+
+
 }

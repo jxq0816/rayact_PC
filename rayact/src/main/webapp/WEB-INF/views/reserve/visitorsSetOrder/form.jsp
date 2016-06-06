@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label for="fieldId" class="col-lg-2 control-label">场地：</label>
                             <div class="col-lg-10">
-                                <select style="width: 100%" id="fieldId" class="select2" name="fieldId">
+                                <select style="width: 100%" id="fieldId" class="select2" name="reserveField.id">
                                     <option value="">--请输入选择--</option>
                                     <c:forEach items="${fieldList}" var="field">
                                         <option value="${field.id}">${field.name}</option>
@@ -90,31 +90,59 @@
                         <div class="row">
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">教练：</label>
-                                <div class="col-lg-10">
+                                <div class="col-lg-4">
                                     <select id="tutorId" name="tutor.id" class="select2">
-                                        <option value="">如果使用了教练,请选择</option>
+                                        <option value="">请选择</option>
                                         <c:forEach items="${tutors}" var="t">
                                             <option data-price="${t.price}"
                                                     value="${t.id}">${t.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="orderTotal" class="col-lg-2 control-label">应付：</label>
-                                <div class="col-lg-10">
-                                    <span id="orderTotal">${visitorsSet.price}</span>
+                                <label for="orderDate" class="control-label col-lg-2">日期:</label>
+                                <div class="col-lg-4">
+                                    <input value="" id="orderDate" name="orderDate" type="text"
+                                           class="input-small form-control Wdate"
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group">
+                                <label for="orderTotal" class="col-lg-2 control-label">应付：</label>
+                                <div class="col-lg-4">
+                                    <input type="text" id="orderTotal" readonly="readonly"
+                                           value="${visitorsSet.price}"
+                                           class="form-control" name="orderPrice"/>
+                                </div>
                                 <label class="col-lg-2 control-label">实付：</label>
-                                <div class="col-lg-10">
+                                <div class="col-lg-4">
                                     <input type="text" id="collectPrice" class="form-control"
                                            value="${visitorsSet.price}" name="collectPrice"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="startTime" class="col-sm-2 control-label">时间:</label>
+                                <div class="col-sm-4">
+                                    <select id="startTime" class="select2" name="startTime">
+                                        <c:forEach items="${times}" var="t">
+                                            <option
+                                                    <j:if test="${t eq startTime}">selected="selected"</j:if>
+                                                    value="${t}">${t}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <label for="endTime" class="col-lg-2 control-label" style="text-align: center">至</label>
+                                <div class="col-sm-4">
+                                    <select id="endTime" class="select2"  name="endTime">
+                                        <c:forEach items="${times}" var="t">
+                                            <option
+                                                    <j:if test="${t eq endTime}">selected="selected"</j:if>
+                                                    value="${t}">${t}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                         </div>

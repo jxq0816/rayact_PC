@@ -48,7 +48,6 @@ $(document).ready(function () {
         $(".memberSelect").show();
         $("input[name='payType'][value='1']").iCheck('check');
         $("input[name='payType'][value='1']").iCheck('enable');
-        /* $("#order").hide();//隐藏订单金额*/
     });
 
     $("#nMember").on('ifChecked', function () {
@@ -60,9 +59,6 @@ $(document).ready(function () {
         $("#s2id_memberId").find(".select2-chosen").html("--请选择--");
         $("#userName").attr("value", "");
         $("#consMobile").attr("value", "");
-        /* $("#order").show();//显示订单金额*/
-//            $("input[name='payType'][value='2']").attr('checked','checked');
-        // alert($("input[name='payType'][value='2']").val());
         $("input[name='payType'][value='2']").iCheck('check');
         $("input[name='payType'][value='1']").iCheck('disable');
     });

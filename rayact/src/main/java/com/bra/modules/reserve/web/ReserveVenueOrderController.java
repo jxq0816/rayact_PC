@@ -6,6 +6,7 @@ import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
+import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,8 @@ public class ReserveVenueOrderController extends BaseController {
     @Autowired
     private ReserveFieldService reserveFieldService;
     @Autowired
+    private ReserveVenueService reserveVenueService;
+    @Autowired
     private ReserveTutorService reserveTutorService;
     @Autowired
     private ReserveMemberService reserveMemberService;
@@ -61,7 +64,7 @@ public class ReserveVenueOrderController extends BaseController {
     @Token(save = true)
     public String form(String vsId,String venueId, Model model) {
         ReserveVenueVisitorsSet set = reserveVenueVisitorsSetService.get(vsId);
-        ReserveVenue venue=new ReserveVenue(venueId);
+        ReserveVenue venue=reserveVenueService.get(venueId);
         ReserveField field=new ReserveField();
         field.setReserveVenue(venue);
         List<ReserveField> fieldList=reserveFieldService.findList(field);
@@ -76,6 +79,9 @@ public class ReserveVenueOrderController extends BaseController {
         ReserveMember member=new ReserveMember();
         member.setReserveVenue(venue);
         model.addAttribute("memberList", reserveMemberService.findList(member));
+        //获取预定开始时间
+        List<String> times = TimeUtils.getTimeSpacList(venue.getStartTime(), venue.getEndTime(), TimeUtils.BENCHMARK);
+        model.addAttribute("times", times);
         return "reserve/visitorsSetOrder/form";
     }
     //确认购买 表单
@@ -88,7 +94,7 @@ public class ReserveVenueOrderController extends BaseController {
     //确认购买
     @RequestMapping(value = "save")
     @ResponseBody
-    @Token(remove = true)
+   /* @Token(remove = true)*/
     public String save(ReserveVenueOrder reserveVenueOrder, Model model, RedirectAttributes redirectAttributes) {
 
         ReserveTimecardMemberSet memberTimecarSet=null;
