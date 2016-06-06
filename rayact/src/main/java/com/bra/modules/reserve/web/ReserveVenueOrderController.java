@@ -32,6 +32,8 @@ public class ReserveVenueOrderController extends BaseController {
     @Autowired
     private ReserveVenueVisitorsSetService reserveVenueVisitorsSetService;
     @Autowired
+    private ReserveFieldService reserveFieldService;
+    @Autowired
     private ReserveTutorService reserveTutorService;
     @Autowired
     private ReserveMemberService reserveMemberService;
@@ -57,8 +59,13 @@ public class ReserveVenueOrderController extends BaseController {
     //人次票 付款界面
     @RequestMapping(value = "form")
     @Token(save = true)
-    public String form(String vsId, Model model) {
+    public String form(String vsId,String venueId, Model model) {
         ReserveVenueVisitorsSet set = reserveVenueVisitorsSetService.get(vsId);
+        ReserveVenue venue=new ReserveVenue(venueId);
+        ReserveField field=new ReserveField();
+        field.setReserveVenue(venue);
+        List<ReserveField> fieldList=reserveFieldService.findList(field);
+        model.addAttribute("fieldList",fieldList);
         model.addAttribute("visitorsSet",set);
         //教练
         model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
@@ -76,7 +83,7 @@ public class ReserveVenueOrderController extends BaseController {
     //确认购买
     @RequestMapping(value = "save")
     @ResponseBody
-  /*  @Token(remove = true)*/
+    @Token(remove = true)
     public String save(ReserveVenueOrder reserveVenueOrder, Model model, RedirectAttributes redirectAttributes) {
 
         ReserveTimecardMemberSet memberTimecarSet=null;

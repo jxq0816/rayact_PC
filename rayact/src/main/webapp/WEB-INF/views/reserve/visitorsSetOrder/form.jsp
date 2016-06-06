@@ -4,247 +4,166 @@
     <input type="hidden" name="token" value="${token}"/>
     <input type="hidden" name="visitorsSet.id" value="${visitorsSet.id}"/>
     <input type="hidden" name="reserveVenue.id" value="${visitorsSet.reserveVenue.id}"/>
-
     <div class="content">
         <div class="row">
             <!--用户信息-->
-            <div class="col-lg-12 pull-left cl-mcont">
-                <div class="block-flat">
-                    <div class="content">
-                        <!--用户信息;商品信息及数量-->
-                        <table class="no-border">
-                            <tbody class="no-border-y">
-                            <tr>
-                                <td colspan="4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="isMember" class="icheck" value="2" checked="checked"
-                                               name="orderType"/>会员
-                                    </label>
-                                </td>
-                                <td colspan="4"><label class="radio-inline">
-                                    <input type="radio" id="nMember" class="icheck" value="1" name="orderType"/>非会员
-                                </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="memberSelect">手机号或姓名:</td>
-                                <td class="memberSelect">
-                                    <select style="width: 80px;" id="memberId" class="select2" name="member.id">
-                                        <option value="">--请输入选择--</option>
-                                        <c:forEach items="${memberList}" var="m">
-                                            <option value="${m.id}">${m.mobile}-${m.name}</option>
+            <div class="col-lg-12 pull-left">
+                <div class="col-lg-6 reserve_mid_line">
+                    <!--用户信息;商品信息及数量-->
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="memberType" class="col-lg-2 control-label">顾客类型：</label>
+                            <div class="radio-inline"  id="memberType">
+                                <input type="radio" id="isMember" class="icheck" value="2" checked="checked" name="orderType"/>会员
+                            </div>
+                            <div class="radio-inline">
+                                <input type="radio" id="nMember" class="icheck" value="1" name="orderType"/>散客
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="field" class="col-lg-2 control-label">场地：</label>
+                            <div class="col-lg-10">
+                                <sys:select cssClass="input-large" name="field.id" id="field"
+                                            cssStyle="width:100%"
+                                            value="${query.venue.id}"
+                                            items="${fieldList}" itemLabel="name" itemValue="id"
+                                            defaultLabel="----请选择-----"
+                                            defaultValue=""></sys:select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="memberSelect col-lg-2 control-label" for="memberId">会员列表：</label>
+                            <div class="col-lg-10 memberSelect">
+                                <select style="width: 100%" id="memberId" class="select2" name="member.id">
+                                    <option value="">--请输入选择--</option>
+                                    <c:forEach items="${memberList}" var="m">
+                                        <option value="${m.id}">${m.mobile}-${m.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="memberSelect col-lg-2 control-label">姓名：</label>
+                            <div class="col-lg-10"><input readonly="readonly" id="userName" name="userName"
+                                                          type="text"
+                                                          class="form-control"/></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">手机：</label>
+                            <div class="col-lg-10"><input readonly="readonly" id="consMobile" name="consMobile"
+                                                          type="text"
+                                                          class="form-control"/></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">人数：</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control number" name="collectCount"
+                                       id="collectCount"
+                                       value="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <!--应收金额-->
+                    <div class="row col-sm-12 col-md-12 col-lg-12" style="margin-left:10px ">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">票价：</label>
+                                <div class="col-lg-10">
+                                    <input type="text" id="orderPrice" readonly="readonly"
+                                           value="${visitorsSet.price}"
+                                           class="form-control" name="orderPrice"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">教练：</label>
+                                <div class="col-lg-10">
+                                    <select id="tutorId" name="tutor.id" class="select2">
+                                        <option value="">如果使用了教练,请选择</option>
+                                        <c:forEach items="${tutors}" var="t">
+                                            <option data-price="${t.price}"
+                                                    value="${t.id}">${t.name}</option>
                                         </c:forEach>
                                     </select>
-                                </td>
-                                <td>姓名:</td>
-                                <td class="text-right"><input readonly="readonly" id="userName" name="userName"
-                                                              type="text"
-                                                              class="form-control"/></td>
-
-                                <td>手机:</td>
-                                <td class="text-right"><input readonly="readonly" id="consMobile" name="consMobile"
-                                                              type="text"
-                                                              class="form-control"/></td>
-                                <td>人数:</td>
-                                <td>
-                                    <input type="text" class="form-control number" name="collectCount" id="collectCount"
-                                           value="1"/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="orderTotal" class="col-lg-2 control-label">应付：</label>
+                                <div class="col-lg-10">
+                                    <span id="orderTotal">${visitorsSet.price}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">实付：</label>
+                                <div class="col-lg-10">
+                                    <input type="text" id="collectPrice" class="form-control"
+                                           value="${visitorsSet.price}" name="collectPrice"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">备注：</label>
+                                <div class="col-lg-10">
+                                    <textarea id="remarks" class="form-control" name="remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+            </div>
+            <!--支付方式-->
+            <div class="row col-sm-12 col-md-12 col-lg-12">
+                <div class="pull-left col-lg-2">
+                    <label class="control-label">支付方式：</label>
+                </div>
+                <div class="col-sm-10 col-md-10 col-lg-10">
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck"
+                               checked="checked" value="1"
+                               name="payType"/>储值卡
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="2"
+                               name="payType"/>现金
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="3" name="payType"/>银行卡
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="4" name="payType"/>微信
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="5" name="payType"/>支付宝
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="9" name="payType"/>（个人）微信
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="10" name="payType"/>（个人）支付宝
+                    </label>
                 </div>
             </div>
-
-            <div id="order" style="display:none">
-                <!--应收金额-->
-                <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
-                    <div class="block-flat">
-                        <div class="header">
-                            <h5 class="visible-lg">应收金额</h5>
-                        </div>
-                        <div class="content">
-                            <table class="no-border">
-                                <tbody class="no-border-y">
-                                <tr>
-                                    <td>订单金额:</td>
-                                    <td><input type="text" id="orderPrice" readonly="readonly"
-                                               value="${visitorsSet.price}"
-                                               class="form-control" name="orderPrice"/></td>
-                                </tr>
-                                <tr>
-                                    <td>教练</td>
-                                    <td>
-                                        <select id="tutorId" name="tutor.id" class="select2">
-                                            <option value="">如果使用了教练,请选择</option>
-                                            <c:forEach items="${tutors}" var="t">
-                                                <option data-price="${t.price}" value="${t.id}">${t.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>合计:</td>
-                                    <td>
-                                        <span id="orderTotal">${visitorsSet.price}</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!--支付方式-->
-                <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
-                    <div class="block-flat">
-                        <div class="header">
-                            <h5 class="visible-lg">支付方式</h5>
-                        </div>
-                        <div class="content">
-                            <table class="no-border">
-                                <tbody class="no-border-y">
-                                <tr>
-                                    <td>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="icheck"
-                                                   checked="checked" value="1"
-                                                   name="payType"/>会员卡
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="icheck" value="2"
-                                                   name="payType"/>现金
-                                        </label>
-                                        <br/>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="icheck" value="3" name="payType"/>银行卡
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="icheck" value="4" name="payType"/>微信
-                                        </label><br/>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="icheck" value="5" name="payType"/>支付宝
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" class="icheck" value="6" name="payType"/>优惠券
-                                        </label>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!--实收金额-->
-                <div class="col-sm-6 col-md-6 col-lg-4 cl-mcont">
-                    <div class="block-flat">
-                        <div class="header">
-                            <h5 class="visible-lg">实收金额</h5>
-                        </div>
-                        <div class="content">
-                            <table class="no-border">
-                                <tbody class="no-border-y">
-                                <tr>
-                                    <td>支付金额:</td>
-                                    <td><input type="text" id="collectPrice" class="form-control"
-                                               value="${visitorsSet.price}" name="collectPrice"/></td>
-                                </tr>
-                                <tr>
-                                    <td>备注:</td>
-                                    <td>
-                                        <textarea id="remarks" class="form-control" name="remarks"></textarea>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </form>
 <script src="${ctxStatic}/cleanzone/js/jquery.select2/select2.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#isMember").on('ifChecked', function () {
-            $("#consPrice").attr("readonly", "readonly");
-            $("#userName").attr("readonly", "readonly");
-            $("#consMobile").attr("readonly", "readonly");
-            $(".memberSelect").show();
-            $("input[name='payType'][value='1']").iCheck('check');
-            $("input[name='payType'][value='1']").iCheck('enable');
-            $("#order").hide();//隐藏订单金额
-        });
-
-        $("#nMember").on('ifChecked', function () {
-            $("#consPrice").removeAttr("readonly");
-            $("#userName").removeAttr("readonly");
-            $("#consMobile").removeAttr("readonly");
-            $(".memberSelect").hide();
-            $("#memberId").val("");
-            $("#s2id_memberId").find(".select2-chosen").html("--请选择--");
-            $("#userName").attr("value", "");
-            $("#consMobile").attr("value", "");
-            $("#order").show();//显示订单金额
-//            $("input[name='payType'][value='2']").attr('checked','checked');
-            // alert($("input[name='payType'][value='2']").val());
-            $("input[name='payType'][value='2']").iCheck('check');
-            $("input[name='payType'][value='1']").iCheck('disable');
-        });
-
-        $("#memberId").on('change', function () {
-            var mid = $(this).attr("value");
-            var text = $(this).find("option:selected").text();
-            var mobile = text.split('-')[0];
-            var username = text.split('-')[1];
-            $("#userName").attr("value", username);
-            $("#consMobile").attr("value", mobile);
-        });
-
-        jQuery.addPrice = function (price, orderPrice, count) {
-            if (price == '' || price == undefined) {
-                price = 0;
-            }
-            if (orderPrice == '' || orderPrice == undefined) {
-                orderPrice = 0;
-            }
-            if (count == '' || count == undefined) {
-                count = 1;
-            }
-            var orderTotal = price * count + orderPrice * count;
-            $("#orderTotal").text(orderTotal);
-            $("#collectPrice").attr("value", orderTotal);
-        };
-
-        //教练
-        $("#tutorId").on('change', function () {
-            var price = $(this).find("option:selected").attr("data-price");
-            var orderPrice = $("#orderPrice").val();
-            var count = $("#collectCount").val();
-            $.addPrice(price, orderPrice, count);
-        });
-
-        //数量改变事件
-        $("#collectCount").on('keyup', function () {
-            var t = $(this);
-            var r = /^[0-9]*[1-9][0-9]*$/
-            var value = t.val();
-            if (value == '') {
-                value = 1;
-            }
-            if (r.test(value) == false) {
-                $("#collectCount").val("1");
-            } else {
-                var price = $("#tutorId").find("option:selected").attr("data-price");
-                var orderPrice = $("#orderPrice").val();
-                $.addPrice(price, orderPrice, value);
-            }
-        });
-
-    });
-</script>
+<script src="${ctxStatic}/modules/reserve/js/time_ticket_sell.js" type="text/javascript"></script>
