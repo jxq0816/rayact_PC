@@ -68,9 +68,14 @@ public class ReserveVenueOrderController extends BaseController {
         model.addAttribute("fieldList",fieldList);
         model.addAttribute("visitorsSet",set);
         //教练
-        model.addAttribute("tutors", reserveTutorService.findList(new ReserveTutor()));
+        ReserveTutor tutor = new ReserveTutor();
+        ReserveProject project=set.getProject();
+        tutor.setProject(project);
+        model.addAttribute("tutors", reserveTutorService.findList(tutor));
         //会员
-        model.addAttribute("memberList", reserveMemberService.findList(new ReserveMember()));
+        ReserveMember member=new ReserveMember();
+        member.setReserveVenue(venue);
+        model.addAttribute("memberList", reserveMemberService.findList(member));
         return "reserve/visitorsSetOrder/form";
     }
     //确认购买 表单

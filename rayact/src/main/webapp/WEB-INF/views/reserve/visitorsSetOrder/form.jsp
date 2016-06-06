@@ -23,14 +23,14 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label for="field" class="col-lg-2 control-label">场地：</label>
+                            <label for="fieldId" class="col-lg-2 control-label">场地：</label>
                             <div class="col-lg-10">
-                                <sys:select cssClass="input-large" name="field.id" id="field"
-                                            cssStyle="width:100%"
-                                            value="${query.venue.id}"
-                                            items="${fieldList}" itemLabel="name" itemValue="id"
-                                            defaultLabel="----请选择-----"
-                                            defaultValue=""></sys:select>
+                                <select style="width: 100%" id="fieldId" class="select2" name="fieldId">
+                                    <option value="">--请输入选择--</option>
+                                    <c:forEach items="${fieldList}" var="field">
+                                        <option value="${field.id}">${field.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                     </div>
