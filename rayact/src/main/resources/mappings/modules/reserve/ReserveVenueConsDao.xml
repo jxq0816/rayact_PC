@@ -215,8 +215,8 @@
         u.name as "createBy.name",
         NULL as checkout_name,
         p.name as projectName,
-        DATE_FORMAT(a.update_date,'%H:%i') as startTime,
-        DATE_FORMAT(a.update_date,'%H:%i') as endTime,
+        a.start_time as startTime,
+        a.end_time as endTime,
         tutor.name as "tutorName"
         from reserve_venue_order a
         INNER JOIN reserve_venue v ON a.venue_id = v.id
