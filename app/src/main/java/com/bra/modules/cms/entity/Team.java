@@ -20,6 +20,7 @@ public class Team extends DataEntity<Team> {
 	private TeamMember captain;		// captain
 	private Category group;
 	private String memberIds;
+	private String type;//1为自创，2为募集
 	
 	public Team() {
 		super();
@@ -112,6 +113,15 @@ public class Team extends DataEntity<Team> {
 
 	public void setPersonNum(int personNum) {
 		this.personNum = personNum;
+	}
+
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 

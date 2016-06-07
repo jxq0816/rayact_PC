@@ -111,7 +111,14 @@ public class SystemService extends BaseService implements InitializingBean {
 	public User getUserByMobile(String mobile) {
 		User user = new User();
 		user.setMobile(mobile);
-		return userDao.getByMobile(user);
+		user.setPhone(mobile);
+		user.setLoginName(mobile);
+		List<Map<String,String>> list = userDao.getByMobile(user);
+		if(list!=null&&list.size()>0){
+			return null;
+		}else{
+			return null;
+		}
 	}
 	
 	public Page<User> findUser(Page<User> page, User user) {

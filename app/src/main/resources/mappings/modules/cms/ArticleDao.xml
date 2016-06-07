@@ -249,17 +249,17 @@
 	</select>
 
 	<select id="findListMap" resultType="Map">
-		SELECT
-		a.id AS id,
-		a.title AS title,
-		CASE WHEN a.description is NULL THEN "" ELSE a.description  END AS dep,
-		CASE WHEN m.id is NULL THEN "" ELSE m.id  END AS attId,
-		count(c.id) AS commentNum,
-		CASE WHEN a.category_id is NULL THEN "" ELSE a.category_id  END AS categoryId
-		FROM cms_article a
-		LEFT JOIN mechanism_att_main m on a.id = m.fd_model_id
-		LEFT JOIN cms_comment c ON c.content_id = a.id
-		GROUP BY a.id
-		ORDER BY commentNum DESC
+			SELECT
+			a.id AS id,
+			a.title AS title,
+			CASE WHEN a.description is NULL THEN "" ELSE a.description  END AS dep,
+			CASE WHEN m.id is NULL THEN "" ELSE m.id  END AS attId,
+			count(c.id) AS commentNum,
+			CASE WHEN a.category_id is NULL THEN "" ELSE a.category_id  END AS categoryId
+			FROM cms_article a
+			LEFT JOIN mechanism_att_main m on a.id = m.fd_model_id
+			LEFT JOIN cms_comment c ON c.content_id = a.id
+			GROUP BY a.id
+			ORDER BY commentNum DESC
 	</select>
 </mapper>

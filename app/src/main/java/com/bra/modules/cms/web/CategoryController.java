@@ -77,9 +77,10 @@ public class CategoryController extends BaseController {
 
 	@RequiresPermissions("cms:category:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Model model) {
+	public String list(HttpServletRequest request,Category category,Model model) {
+		String module = request.getParameter("module");
 		List<Category> list = Lists.newArrayList();
-		List<Category> sourcelist = categoryService.findByUser(true, null);
+		List<Category> sourcelist = categoryService.findByUser(true,module);
 		Category.sortList(list, sourcelist, "1");
         model.addAttribute("list", list);
 		return "modules/cms/categoryList";

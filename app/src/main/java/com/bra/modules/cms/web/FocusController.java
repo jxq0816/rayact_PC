@@ -7,6 +7,7 @@ import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Focus;
 import com.bra.modules.cms.service.FocusService;
+import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 关注Controller
@@ -79,18 +81,30 @@ public class FocusController extends BaseController {
 	}
 
 	@RequestMapping(value = "app/save")
-	public void saveApp(Focus focus, Model model, RedirectAttributes redirectAttributes,HttpServletResponse response) {
+	public void saveApp(Focus focus,HttpServletResponse response) {
 		JSONObject j = new JSONObject();
-		if (!beanValidator(model, focus)){
-			j.put("status","failed");
-			j.put("msg","校验出错");
-		}
-		if(focus!=null&&focus.getFan()==null){
+		if(focus!=null && focus.getFan()==null){
 			focus.setFan(focus.getCreateBy());
 		}
-		focusService.save(focus);
-		j.put("status","success");
-		j.put("msg","关注成功");
+		focus.setCreateBy(UserUtils.getUser());
+		List<Focus> list=  focusService.findListUn(focus);
+		if(list!=null&&list.size()>0){
+			for(Focus fo:list){
+				fo.setDelFlag(focus.getDelFlag());
+				focusService.updateFocus(fo);
+			}
+			if("1".equals(focus.getDelFlag())){
+				j.put("status","success");
+				j.put("msg","取消关注成功");
+			}else {
+				j.put("status","success");
+				j.put("msg","关注成功");
+			}
+		}else {
+			focusService.save(focus);
+			j.put("status","success");
+			j.put("msg","关注成功");
+		}
 		try {
 			response.reset();
 			response.setContentType("application/json");

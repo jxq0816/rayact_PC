@@ -91,7 +91,7 @@ public interface UserDao extends CrudDao<User> {
 	 * @param user
 	 * @return
 	 */
-	public User getByMobile(User user);
+	public List<Map<String,String>> getByMobile(User user);
 
 	/**
 	 *

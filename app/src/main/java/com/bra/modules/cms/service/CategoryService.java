@@ -8,6 +8,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.TreeService;
 import com.bra.modules.cms.dao.CategoryDao;
 import com.bra.modules.cms.entity.Category;
+import com.bra.modules.cms.entity.PostMain;
 import com.bra.modules.cms.entity.Site;
 import com.bra.modules.cms.utils.CmsUtils;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
@@ -23,7 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 栏目Service
@@ -33,6 +37,8 @@ import java.util.*;
 @Service
 @Transactional(readOnly = true)
 public class CategoryService extends TreeService<CategoryDao, Category> {
+	@Autowired
+	private PostMainService postMainService;
 	@Autowired
 	private CategoryDao categoryDao;
 
@@ -138,7 +144,15 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		if (StringUtils.isNotBlank(category.getViewConfig())){
             category.setViewConfig(StringEscapeUtils.unescapeHtml4(category.getViewConfig()));
         }
+		boolean isNew = category.getIsNewRecord();
 		super.save(category);
+		if(isNew && "group".equals(category.getModule())){
+			PostMain pm = new PostMain();
+			pm.setGroup(category);
+			pm.setSubject("你知道么？又有一个圈子建立了！");
+			pm.setContent("用户 "+UserUtils.getUser().getName()+" 建立了一个新的圈子："+category.getName()+" ，欢迎大家前来关注发帖。圈子有你更精彩！");
+			postMainService.save(pm);
+		}
 		UserUtils.removeCache(CACHE_CATEGORY_LIST);
 		CmsUtils.removeCache("mainNavList_"+category.getSite().getId());
 		updateAttMain(category, attMainForm);
@@ -185,9 +199,25 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		List<Map<String,Object>> real = new ArrayList<>();
 		if(rtn!=null){
 			for(Map node:rtn){
-				String attId = String.valueOf(node.get("attId"));
-				node.put("attURL", com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
-				node.remove("attId");
+				if("null".equals(String.valueOf(node.get("attURL")))||com.bra.modules.sys.utils.StringUtils.isNull(String.valueOf(node.get("attURL")))){
+					String attId = String.valueOf(node.get("attId"));
+					if(com.bra.modules.sys.utils.StringUtils.isNull(attId)||"null".equals(attId)){
+						node.put("attURL", null);
+					}else{
+						node.put("attURL", com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
+					}
+					node.remove("attId");
+				}else{
+					node.remove("attId");
+				}
+				String attbgId = String.valueOf(node.get("attbgId"));
+				if(!"null".equals(attbgId)&&!com.bra.modules.sys.utils.StringUtils.isNull(attbgId)){
+					node.put("attbgURL", com.bra.modules.sys.utils.StringUtils.ATTPATH + attbgId);
+					node.remove("attbgId");
+				}else{
+					node.put("attbgURL", null);
+					node.remove("attbgId");
+				}
 				real.add(node);
 			}
 		}

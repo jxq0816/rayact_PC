@@ -27,10 +27,10 @@
 <div class="row">
 	<style>
 		.round {
-			width:100px; height:100px;
-			-moz-border-radius: 50px;      /* Gecko browsers */
-			-webkit-border-radius: 50px;   /* Webkit browsers */
-			border-radius:50px;            /* W3C syntax */
+			width:120px; height:120px;
+			-moz-border-radius: 60px;      /* Gecko browsers */
+			-webkit-border-radius: 60px;   /* Webkit browsers */
+			border-radius:60px;            /* W3C syntax */
 		}
 		.row{
 			margin-left: 5px;
@@ -38,9 +38,11 @@
 	</style>
 	<div class="row">
 		<div style="margin:5px 0;display: inline-block"><img class="round" src="${postMain.createBy.photo}" name="${postMain.createBy.id}" onclick="jumpToInfo(this)"></div>
-		<div style="color:#555555;font-size:40px;text-align:center;margin:10px 30px;display: inline-block">${postMain.subject}</div>
-		<div style="margin-bottom:20px"><span style="color:#f0860c">${postMain.createBy.name}</span><span style="color: #8C8C8C;margin-left: 20px"><fmt:formatDate value="${postMain.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span> </div>
-		<div>${postMain.content}</div>
+		<div style="color:#555555;font-size:50px;text-align:center;margin:10px 30px;display: inline-block">${postMain.subject}</div>
+		<div style="margin-bottom:20px"><span style="color:#f0860c;font-size: 20px">${postMain.createBy.name}</span>
+			<span style="color: #8C8C8C;margin-left: 20px;font-size: 10px"><fmt:formatDate value="${postMain.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+			<span style="color:#f0860c;margin-left: 20px;font-size: 10px" name="${postMain.group.id}">${postMain.group.name}</span></div>
+		<div style="font-size: 30px">${postMain.content}</div>
 		<c:forEach items="${imgs}" var="url">
 			<img src="${url}"/>
 		</c:forEach>
@@ -52,9 +54,9 @@
 		<div class="row" style="margin:0 5px;padding-bottom: 10px;border-bottom: 1px solid #C8C8C8;">
 			<div class="row" style="display: block;">
 				<div style="display: inline-block"><img src="${post.createBy.photo}" class="round" name="${post.createBy.id}" onclick="jumpToInfo(this)"></div>
-				<div style="display: inline-block;position: relative;bottom: -10px"><span style="color: #f0860c">${post.createBy.name}</span><br><span style="color:#8C8C8C"> 第${status.index + 1}楼 &nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${post.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span></div>
+				<div style="display: inline-block;position: relative;bottom: -10px"><span style="color: #f0860c;font-size: 25px">${post.createBy.name}</span><br><span style="color:#8C8C8C"> 第${status.index + 1}楼 &nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${post.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span></div>
 				<img src="${ctxStatic}/images/btn-huifu-h@2x.png" height="30px" width="60px" style="float: right;display: inline-block;"/>
-				<div style="margin-left:110px">${post.content}</div>
+				<div style="margin-left:110px;font-size: 25px">${post.content}</div>
 			</div>
 			<div  name="${post.id}" class="ptp"  style="margin-left:110px">
 
@@ -81,7 +83,7 @@
 				var vo = eval(data);
 				if (vo&&vo.length>0){
 					for(var i = 0 ; i < vo.length ; i++){
-						$dom.append("<div><div style='color:#f0860c;margin-top:10px;font-size: 20px;display: inline-block'>"+vo[i].pname+":</div><div style='font-size: 20px;display: inline-block'>"+vo[i].content+"</div></div>");
+						$dom.append("<div><div style='color:#f0860c;margin-top:10px;font-size: 30px;display: inline-block'>"+vo[i].pname+":</div><div style='font-size: 30px;display: inline-block'>"+vo[i].content+"</div></div>");
 					}
 				}
 			});

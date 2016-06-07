@@ -11,6 +11,8 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.MD5Util;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.cms.entity.Focus;
+import com.bra.modules.cms.service.FocusService;
 import com.bra.modules.sys.entity.Office;
 import com.bra.modules.sys.entity.Role;
 import com.bra.modules.sys.entity.User;
@@ -22,7 +24,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +44,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/sys/user")
 public class UserController extends BaseController {
-
+	@Autowired
+	private FocusService focusService;
 	@Autowired
 	private SystemService systemService;
 	
@@ -359,8 +365,17 @@ public class UserController extends BaseController {
 		JSONObject rtn = new JSONObject();
 		String userId = request.getParameter("userId");
 		User user = null;
+		String hasFocus = "0";
 		if(StringUtils.isNotBlank(userId)){
 			user = UserUtils.get(userId);
+			Focus f = new Focus();
+			f.setModelName("user");
+			f.setModelId(userId);
+			f.setCreateBy(UserUtils.getUser());
+			List l = focusService.findList(f);
+			if(l != null && l.size()>0){
+				hasFocus = "1";
+			}
 		}else{
 			user = UserUtils.getUser();
 		}
@@ -373,6 +388,7 @@ public class UserController extends BaseController {
 		rtn.put("weixinName",user.getWeixinName()==null?"":user.getWeixinName());
 		rtn.put("qq",user.getQq()==null?"":user.getQq());
 		rtn.put("weixin",user.getWeixin()==null?"":user.getWeixin());
+		rtn.put("hasFocus",hasFocus);
 		try {
 			response.reset();
 			response.setContentType("application/json");

@@ -174,7 +174,7 @@
 			<include refid="userColumns"/><!-- ,
 			ro.office_id AS "roleList.officeList.id" -->
 		FROM sys_user a
-		<include refid="userJoins"/><!-- 
+		<include refid="userJoins"/><!--
 		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
 		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
@@ -198,12 +198,11 @@
 	</select>
 
 	<!-- 根据微信号查询用户 -->
-	<select id="getByMobile" resultType="User" parameterType="User">
+	<select id="getByMobile" resultType="Map" parameterType="User">
 		SELECT
-		<include refid="userApiColumns"/><!-- ,
-			ro.office_id AS "roleList.officeList.id" -->
+		a.id AS id
 		FROM sys_user a
-		WHERE (a.mobile = #{mobile} OR a.login_name = #{mobile}) AND a.del_flag = #{DEL_FLAG_NORMAL}
+		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
 
 	<!-- 分页查询用户信息 -->
@@ -233,7 +232,7 @@
 		<if test="qq != null and qq != ''">
 			AND a.qq = #{qq}
 		</if>
-		<if test="moblie != null and mobile != ''">
+		<if test="mobile != null and mobile != ''">
 			AND (a.mobile = #{mobile} OR a.login_name = #{mobile})
 		</if>
 		<choose>

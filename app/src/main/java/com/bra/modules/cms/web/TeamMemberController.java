@@ -1,6 +1,7 @@
 package com.bra.modules.cms.web;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -94,7 +95,7 @@ public class TeamMemberController extends BaseController {
 			response.reset();
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(JSONArray.toJSONString(rtn));
+			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
 		} catch (IOException g) {
 
 		}

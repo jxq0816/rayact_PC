@@ -47,4 +47,11 @@ public class CmsCollectionService extends CrudService<CmsCollectionDao, CmsColle
 	public List<Map<String,String>> findMapList(CmsCollection cmsCollection){
 		return cmsCollectionDao.findMapList(cmsCollection);
 	}
+	public List<CmsCollection> findListUn(CmsCollection cmsCollection) {
+		return cmsCollectionDao.findListUn(cmsCollection);
+	}
+	@Transactional(readOnly = false)
+	public void updateCollection(CmsCollection cmsCollection){
+		cmsCollectionDao.updateCollection(cmsCollection);
+	}
 }

@@ -16,7 +16,11 @@
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
 		a.remarks AS "remarks",
-		a.phone AS "phone"
+		a.phone AS "phone",
+		a.height AS "height",
+		a.weight AS "weight",
+		a.age AS "age",
+		a.sport_age AS "sportAge"
 	</sql>
 
 	<sql id="teamMemberJoins">
@@ -87,7 +91,11 @@
 			update_date,
 			del_flag,
 			remarks,
-			phone
+			phone,
+			height,
+			weight,
+			age,
+			sport_age
 		) VALUES (
 			#{id},
 			#{name},
@@ -101,7 +109,11 @@
 			#{updateDate},
 			#{delFlag},
 			#{remarks},
-			#{phone}
+			#{phone},
+			#{height},
+			#{weight},
+			#{age},
+			#{sportAge}
 		)
 	</insert>
 	
@@ -115,7 +127,11 @@
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
-			phone = #{phone}
+			phone = #{phone},
+			height = #{height},
+			weight = #{weight},
+			age = #{age},
+			sport_age = #{sportAge}
 		WHERE id = #{id}
 	</update>
 	
@@ -130,12 +146,19 @@
 		a.id AS "id",
 		a.name AS "name",
 		a.role AS "role",
+		u.photo AS "photo",
 		a.team_id AS "teamId",
 		a.iscaptain AS "iscaptain",
 		a.remarks AS "remarks",
-		a.phone AS "phone"
+		a.phone AS "phone",
+		a.height AS "height",
+		a.weight AS "weight",
+		a.age AS "age",
+		a.sport_age AS "sportAge",
+		a.member_id AS "memberId"
 		FROM team_member a
 		<include refid="teamMemberJoins"/>
+		LEFT JOIN sys_user u on u.id = a.member_id
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="name != null and name != ''">
@@ -146,6 +169,9 @@
 			</if>
 			<if test="team!=null and team.id != null">
                AND a.team_id = #{team.id}
+			</if>
+			<if test="delFlag !=null and delFlag != ''">
+				AND a.del_flag = #{delFlag}
 			</if>
 		</where>
 		<choose>

@@ -47,6 +47,13 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">队伍类型：</label>
+			<div class="controls">
+				<sys:radio name="type" rowIndex="3" value="${team.type}" items="${fns:getDictList('team_type')}"
+						   itemLabel="label" itemValue="value"></sys:radio>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">所属圈子：</label>
 			<div class="controls">
 				<sys:treeselect id="group" name="group.id" value="${team.group.id}" labelName="group.name" labelValue="${team.group.name}"

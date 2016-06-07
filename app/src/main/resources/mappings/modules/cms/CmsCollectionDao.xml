@@ -33,6 +33,12 @@
 		<include refid="cmsCollectionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="modelId!=null and modelId != '' ">
+				AND a.model_id = #{modelId}
+			</if>
+			<if test="createBy!=null and createBy.id != null">
+				AND a.create_by = #{createBy.id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -118,6 +124,40 @@
 			${sqlMap.additionJ}
 		</if>
 		WHERE a.model_name = #{modelName} AND a.create_by = #{createBy.id} AND a.del_flag = #{DEL_FLAG_NORMAL}
+		GROUP BY a.id
 	</select>
+
+	<select id="findListUn" resultType="CmsCollection">
+		SELECT
+		<include refid="cmsCollectionColumns"/>
+		FROM collection a
+		<include refid="cmsCollectionJoins"/>
+		<where>
+			1=1
+			<if test="createBy!=null and createBy.id != null">
+				AND a.create_by = #{createBy.id}
+			</if>
+			<if test="modelId!=null and modelId != '' ">
+				AND a.model_id = #{modelId}
+			</if>
+			<if test="modelName!=null and modelName != '' ">
+				AND a.model_name = #{modelName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<update id="updateCollection">
+		UPDATE collection SET
+		del_flag = #{delFlag}
+		WHERE id = #{id}
+	</update>
 	
 </mapper>

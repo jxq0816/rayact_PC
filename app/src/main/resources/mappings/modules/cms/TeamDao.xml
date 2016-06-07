@@ -20,7 +20,8 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
-		a.remarks AS "remarks"
+		a.remarks AS "remarks",
+		a.type AS "type"
 	</sql>
 	
 	<sql id="teamJoins">
@@ -95,7 +96,8 @@
 			update_date,
 			del_flag,
 			remarks,
-			member_ids
+			member_ids,
+			type
 		) VALUES (
 			#{id},
 			#{photo},
@@ -112,7 +114,8 @@
 			#{updateDate},
 			#{delFlag},
 			#{remarks},
-			#{memberIds}
+			#{memberIds},
+			#{type}
 		)
 	</insert>
 	
@@ -129,7 +132,8 @@
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
-			member_ids = #{memberIds}
+			member_ids = #{memberIds},
+			type = #{type}
 		WHERE id = #{id}
 	</update>
 	
@@ -152,6 +156,8 @@
 		a.position_x AS "positionX",
 		a.position_y AS "positionY",
 		a.create_by AS "createById",
+		CASE WHEN locate(#{currentUser.id},a.member_ids)>0 THEN 1 ELSE 0 END AS "isMember",
+		CASE WHEN a.create_by = #{currentUser.id} THEN 1 ELSE 0 END AS "isCreate",
 		u.name AS "createByName",
 		date_format(a.create_date,'%Y-%m-%d %T') AS "createDate",
 		a.remarks AS "remarks",
@@ -170,6 +176,9 @@
 			</if>
 			<if test="group!=null and group.id != null">
 				AND a.group_id = #{group.id}
+			</if>
+			<if test="type!=null and type != ''">
+				AND a.type = #{type}
 			</if>
 			${sqlMap.addition}
 		</where>

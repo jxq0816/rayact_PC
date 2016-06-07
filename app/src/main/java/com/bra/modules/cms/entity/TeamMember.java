@@ -18,6 +18,10 @@ public class TeamMember extends DataEntity<TeamMember> {
 	private String phone;
 	private Team team;		// team_id
 	private String iscaptain;		// iscaptain
+	private int height;
+	private int weight;
+	private int age;
+	private String sportAge;
 	
 	public TeamMember() {
 		super();
@@ -79,6 +83,39 @@ public class TeamMember extends DataEntity<TeamMember> {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getSportAge() {
+		return sportAge;
+	}
+
+	public void setSportAge(String sportAge) {
+		this.sportAge = sportAge;
 	}
 
 

@@ -96,8 +96,11 @@ public class CmsCollectionController extends BaseController {
 			cmsCollection.setCreateBy(UserUtils.getUser());
 		}
 		if("postMain".equals(modelName)){
-			cmsCollection.getSqlMap().put("additionJ"," left join post_main pm on a.model_id = pm.id left join sys_user u on u.id = pm.create_by ");
-			cmsCollection.getSqlMap().put("additionS",",pm.subject as subject,pm.content as content,pm.remarks as photos,u.id as createId,u.name as createName,u.photo as createPhoto ");
+			cmsCollection.getSqlMap().put("additionJ"," left join post_main pm on a.model_id = pm.id left join sys_user u on u.id = pm.create_by left join post p on p.main_id = pm.id ");
+			cmsCollection.getSqlMap().put("additionS",",pm.fk_group_id as cateId,pm.subject as subject,pm.content as content,pm.remarks as photos,u.id as createId,u.name as createName,u.photo as createPhoto,count(p.id) as postNum  ");
+		}else if("article".equals(modelName)){
+			cmsCollection.getSqlMap().put("additionJ"," left join cms_article ar on a.model_id = ar.id left join sys_user u on u.id = ar.create_by left join cms_comment c on c.content_id = ar.id ");
+			cmsCollection.getSqlMap().put("additionS",",ar.category_id as cateId,ar.title as subject,ar.description as content,ar.image as photos,u.id as createId,u.name as createName,u.photo as createPhoto,count(c.id) as postNum ");
 		}
 		List<Map<String,String>> rtn = cmsCollectionService.findMapList(cmsCollection);
 		try {
@@ -111,10 +114,26 @@ public class CmsCollectionController extends BaseController {
 
 	@RequestMapping(value = "app/save")
 	public void saveApp(CmsCollection cmsCollection, HttpServletResponse response) {
-		cmsCollectionService.save(cmsCollection);
 		JSONObject j = new JSONObject();
-		j.put("status","success");
-		j.put("msg","收藏成功");
+		cmsCollection.setCreateBy(UserUtils.getUser());
+		List<CmsCollection> list=  cmsCollectionService.findListUn(cmsCollection);
+		if(list!=null&&list.size()>0){
+			for(CmsCollection co:list){
+				co.setDelFlag(cmsCollection.getDelFlag());
+				cmsCollectionService.updateCollection(co);
+			}
+			if("1".equals(cmsCollection.getDelFlag())){
+				j.put("status","success");
+				j.put("msg","取消收藏成功");
+			}else {
+				j.put("status","success");
+				j.put("msg","收藏成功");
+			}
+		}else {
+			cmsCollectionService.save(cmsCollection);
+			j.put("status","success");
+			j.put("msg","收藏成功");
+		}
 		try {
 			response.reset();
 			response.setContentType("application/json");

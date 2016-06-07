@@ -15,4 +15,6 @@ import java.util.Map;
 @MyBatisDao
 public interface CmsCollectionDao extends CrudDao<CmsCollection> {
 	public List<Map<String,String>> findMapList(CmsCollection cmsCollection);
+	public List<CmsCollection> findListUn(CmsCollection cmsCollection);
+	public void updateCollection(CmsCollection cmsCollection);
 }

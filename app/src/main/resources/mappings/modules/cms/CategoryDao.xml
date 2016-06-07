@@ -301,26 +301,41 @@
 	</select>
 
 	<select id="getCate" resultType="Map">
-		SELECT
-		c.id AS id,
-		c.name AS name,
-		att.id AS attId,
-		SUM(CASE WHEN f.create_by = #{currentUser.id} THEN 1 ELSE 0 END) AS isFocus
-		FROM cms_category c
-		LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id
-		LEFT JOIN focus f ON f.model_id = c.id
-		WHERE
-		c.del_flag = #{DEL_FLAG_NORMAL}
-		<if test="module != null and module!='' ">
-			AND c.module = #{module}
-		</if>
-		<if test="parent != null and parent.id != '' ">
-		    AND c.parent_id = #{parent.id}
-		</if>
-		<if test="sqlMap != null and sqlMap.addition != ''">
-			${sqlMap.addition}
-		</if>
-		GROUP BY c.id
+		select tmp.*,SUM(CASE WHEN pm.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS postNum
+		from (
+				SELECT
+				c.id AS id,
+				c.name AS name,
+		        c.description AS remarks,
+		        c.create_by AS createId,
+		        u.name AS createName,
+		        date_format(c.create_date,'%Y-%m-%d %T') AS createDate,
+				c.image AS attURL,
+				att.id AS attId,
+		        attbg.id AS attbgId,
+				SUM(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} AND f.create_by = #{currentUser.id} THEN 1 ELSE 0 END) AS isFocus,
+		        SUM(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS focusNum
+				FROM cms_category c
+		        LEFT JOIN sys_user u ON c.create_by = u.id
+				LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id AND att.fd_key = 'catepic'
+		        LEFT JOIN mechanism_att_main attbg ON attbg.fd_model_id = c.parent_id AND attbg.fd_key = 'catebg'
+				LEFT JOIN focus f ON f.model_id = c.id
+				WHERE
+				c.del_flag = #{DEL_FLAG_NORMAL}
+				<if test="module != null and module!='' ">
+					AND c.module = #{module}
+				</if>
+				<if test="parent != null and parent.id != '' ">
+					AND c.parent_id = #{parent.id}
+				</if>
+				<if test="sqlMap != null and sqlMap.addition != ''">
+					${sqlMap.addition}
+				</if>
+				GROUP BY c.id
+		) tmp
+		LEFT JOIN post_main pm on pm.fk_group_id = tmp.id
+		GROUP BY tmp.id
 	</select>
+
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
@@ -17,6 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 消息Controller
@@ -74,6 +79,18 @@ public class MessageController extends BaseController {
 		messageService.delete(message);
 		addMessage(redirectAttributes, "删除消息成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/message/?repage";
+	}
+
+	@RequestMapping(value = "app/list")
+	public void listApp(Message message, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Map<String,String>> rtn = messageService.findMapList(new Page<Message>(request, response), message);
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
+		} catch (IOException e) {
+		}
 	}
 
 }

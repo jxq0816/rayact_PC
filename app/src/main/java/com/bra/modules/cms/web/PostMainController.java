@@ -10,8 +10,10 @@ import com.bra.common.upload.StoreType;
 import com.bra.common.upload.UploadUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.cms.entity.Focus;
 import com.bra.modules.cms.entity.Post;
 import com.bra.modules.cms.entity.PostMain;
+import com.bra.modules.cms.service.FocusService;
 import com.bra.modules.cms.service.PostMainService;
 import com.bra.modules.cms.service.PostService;
 import com.bra.modules.mechanism.entity.AttMain;
@@ -45,6 +47,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/cms/postMain")
 public class PostMainController extends BaseController {
+	@Autowired
+	private FocusService focusService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -152,6 +156,7 @@ public class PostMainController extends BaseController {
 
 	@RequestMapping(value = "app/list")
 	public void listApp(PostMain postMain,  HttpServletRequest request,HttpServletResponse response) {
+		String keyword = request.getParameter("keyword");
 		String mode = request.getParameter("mode");
 		String userId = request.getParameter("userId");
 		if("create".equals(mode)){
@@ -160,6 +165,25 @@ public class PostMainController extends BaseController {
 			}else{
 				postMain.getSqlMap().put("addition"," and pm.create_by = '"+ UserUtils.getUser().getId()+"' ");
 			}
+		}else if("focus".equals(mode)){
+			Focus focus = new Focus();
+			focus.setModelName("user");
+			focus.setCreateBy(UserUtils.getUser());
+			List<Focus> list = focusService.findList(focus);
+			String in = "(";
+			if(list!=null&&list.size()>0){
+				for(Focus f:list){
+					in += "'"+f.getModelId()+"',";
+				}
+				in = in.substring(0,in.length()-1)+") ";
+				postMain.getSqlMap().put("addition"," and pm.create_by in "+ in );
+			}else{
+				postMain.getSqlMap().put("addition"," and 1 = 2 ");
+			}
+		}
+		if(StringUtils.isNotBlank(keyword)){
+			postMain.setContent(keyword);
+			postMain.setSubject(keyword);
 		}
 		List<Map<String,String>> rtn = 	postMainService.getPostMainList(new Page<PostMain>(request, response),postMain);
 		try {

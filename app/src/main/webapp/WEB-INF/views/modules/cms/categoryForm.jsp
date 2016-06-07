@@ -70,6 +70,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">背景:</label>
+			<div class="controls">
+				<mechanism:upload id="bg" name="attMains2" imgWidth="50" imgHeight="50" exts="" showImg="true" modelId="${category.id}" fdKey="catebg" modelName="com.bra.modules.cms.entity.Category" multi="false"></mechanism:upload>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">链接:</label>
 			<div class="controls">
 				<form:input path="href" htmlEscape="false" maxlength="200"/>

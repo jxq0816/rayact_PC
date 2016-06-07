@@ -18,7 +18,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/cms/category/">栏目列表</a></li>
+		<li class="active"><a href="${ctx}/cms/category/list">栏目列表</a></li>
 		<shiro:hasPermission name="cms:category:edit"><li><a href="${ctx}/cms/category/form">栏目添加</a></li></shiro:hasPermission>
 	</ul>
 	<sys:message content="${message}"/>

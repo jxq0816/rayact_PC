@@ -14,6 +14,7 @@ import com.bra.modules.cms.dao.CategoryDao;
 import com.bra.modules.cms.entity.Article;
 import com.bra.modules.cms.entity.ArticleData;
 import com.bra.modules.cms.entity.Category;
+import com.bra.modules.cms.entity.CmsCollection;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
@@ -23,7 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 文章Service
@@ -33,7 +37,8 @@ import java.util.*;
 @Service
 @Transactional(readOnly = true)
 public class ArticleService extends CrudService<ArticleDao, Article> {
-
+    @Autowired
+    private CmsCollectionService cmsCollectionService;
     @Autowired
     private ArticleDataDao articleDataDao;
     @Autowired
@@ -197,13 +202,19 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
     }
 
     public List<Map<String,Object>> findListMap(Page page,Article article){
-        if(page.getPageSize()==0)
-            page.setPageSize(10);
-        page.setPageNo((page.getPageNo()-1)*page.getPageSize());
-        article.setPage(page);
         List<Map<String,Object>> list =  articleDao.findListMap(article);
         for(Map<String,Object> node:list){
             String attId = String.valueOf(node.get("attId"));
+            String id = String.valueOf(node.get("id"));
+            CmsCollection cc = new CmsCollection();
+            cc.setModelId(id);
+            cc.setCreateBy(UserUtils.getUser());
+            List<CmsCollection> tmp = cmsCollectionService.findList(cc);
+            if(tmp!=null&&tmp.size()>0){
+                node.put("hasCollection",1);
+            }else{
+                node.put("hasCollection",0);
+            }
             if(StringUtils.isNotBlank(attId)){
                 node.put("attUrl",com.bra.modules.sys.utils.StringUtils.ATTPATH + attId);
             }else{

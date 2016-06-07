@@ -5,6 +5,9 @@ import com.bra.common.service.CrudService;
 import com.bra.modules.cms.dao.TeamMemberDao;
 import com.bra.modules.cms.entity.Team;
 import com.bra.modules.cms.entity.TeamMember;
+import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.service.SystemService;
+import com.bra.modules.sys.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,8 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class TeamMemberService extends CrudService<TeamMemberDao, TeamMember> {
+	@Autowired
+	private SystemService systemService;
 	@Autowired
 	private TeamService teamService;
 	@Autowired
@@ -39,9 +44,22 @@ public class TeamMemberService extends CrudService<TeamMemberDao, TeamMember> {
 	
 	@Transactional(readOnly = false)
 	public void save(TeamMember teamMember) {
+		String phone = teamMember.getPhone();
+		if(!StringUtils.isNull(phone)){
+			User user = new User();
+			user.setLoginName(phone);
+			List<User> users = systemService.findListApi(user);
+			if(users!=null && users.size()>0){
+				teamMember.setMemberId(users.get(0).getId());
+			}
+		}
 		super.save(teamMember);
 		Team t = teamService.get(teamMember.getTeam().getId());
-		t.setMemberIds(t.getMemberIds()+","+teamMember.getMemberId());
+		if(!StringUtils.isNull(teamMember.getMemberId())&&t.getPersonNum()>0){
+			t.setMemberIds(t.getMemberIds()+","+teamMember.getMemberId());
+		}else if(!StringUtils.isNull(teamMember.getMemberId())&&t.getPersonNum()<=0){
+			t.setMemberIds(teamMember.getMemberId());
+		}
 		t.setPersonNum(t.getPersonNum()+1);
 		teamService.save(t);
 	}

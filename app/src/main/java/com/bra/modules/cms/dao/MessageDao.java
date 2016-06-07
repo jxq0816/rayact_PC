@@ -4,6 +4,9 @@ import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.cms.entity.Message;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 消息DAO接口
  * @author ddt
@@ -11,5 +14,5 @@ import com.bra.modules.cms.entity.Message;
  */
 @MyBatisDao
 public interface MessageDao extends CrudDao<Message> {
-	
+    public List<Map<String,String>> findMapList(Message message);
 }
