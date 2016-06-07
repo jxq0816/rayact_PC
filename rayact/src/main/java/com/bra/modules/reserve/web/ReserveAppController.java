@@ -75,7 +75,17 @@ public class ReserveAppController extends BaseController {
                 for (TimePrice j : i.getTimePriceList()) {
 
                     String time=j.getTime();//当前场地的时间
-                    if("0".equals(j.getStatus())){
+                    String startTimeSub=time.substring(0,5);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String date=dateFormat.format(consDate);
+                    startTimeSub=date+" "+startTimeSub;//场地时间
+
+                    Date systemTime=new Date();
+                    SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String sysTime=myFmt.format(systemTime);//系统时间
+                    if(startTimeSub.compareTo(sysTime)<0){
+                        j.setStatus("1");
+                    }else if("0".equals(j.getStatus())){
                         if(StringUtils.isNoneEmpty(time)){
                             if(full!=null){
                                 for (TimePrice k : full.getTimePriceList()) {
