@@ -12,9 +12,9 @@
         <thead>
         <%--时刻--%>
         <tr>
-            <th>时间</th>
+            <th style="border:0px;background-color: #fff"></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
-                <th><span>${field.fieldName}</span></th>
+                <th style=""><span>${field.fieldName}</span></th>
             </c:forEach>
         </tr>
         <%--时刻--%>
@@ -67,6 +67,7 @@
                         <j:if test="${!('0' eq status)}">
                             <span style="color: #000">已预订</span>
                         </j:if>
+
                     </td>
                     <%-- A场地 B时间 的状态展示 结束--%>
                 </c:forEach>

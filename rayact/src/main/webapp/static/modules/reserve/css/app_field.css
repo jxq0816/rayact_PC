@@ -71,8 +71,9 @@
 .table-chang td.red{background: #C8C8C8;}
 .table-chang td.unPayed{background: #F0860C;}
 .table-chang td div.unPayed{background: #F0860C;}
-.table-chang thead th{width:30px;font-size: 20px;-webkit-text-size-adjust:none;min-width: 50px;height:50px;}
+.table-chang thead th{width:140px;height:70px;font-size: 24px;-webkit-text-size-adjust:none;min-width: 50px;border:0px;background-color: #fff}
 .table-chang thead span{ font-size:20px;}
+.table-chang tbody tr th {font-size:24px;border:0px;background-color: #fff}
 .table-chang tbody tr th span{font-size:20px;}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
 .my-order-right .date span{color: #fb924d;}
