@@ -62,9 +62,8 @@
 .table-left{overflow: scroll\9;}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
 .table-chang{width: 100%;overflow: hidden;float: left;border-collapse: separate;border-spacing:10px}
-.table-chang th{font-size:10px;font-weight: normal;text-align: center;background: #f3f3f3;border: 1px solid #cdcdcd;width:50px}
+.table-chang th{width: 140px;height: 70px;font-size:10px;font-weight: normal;text-align: center;background: #f3f3f3;border: 1px solid #cdcdcd;}
 .table-chang td{width: 140px;height: 70px;background: #dcdcdc;border: 1px solid #fff;text-align: center;color: #fff;font-size: 20px;padding:0px}
-.table-half  td{width: 15px;height: 30px;background: #dcdcdc;border: 1px solid #fff;color: #fff;font-size: 8px;}
 .table-chang td a{display: block;width: 100%;height: 100%;}
 .table-chang td.access{background: #A62A04;}
 .table-chang td.over{background: #5fbfe9;}
@@ -72,9 +71,9 @@
 .table-chang td.unPayed{background: #F0860C;}
 .table-chang td div.unPayed{background: #F0860C;}
 .table-chang thead th{width:140px;height:70px;font-size: 24px;-webkit-text-size-adjust:none;min-width: 50px;border:0px;background-color: #fff}
-.table-chang thead span{ font-size:20px;}
-.table-chang tbody tr th {font-size:24px;border:0px;background-color: #fff}
-.table-chang tbody tr th span{font-size:20px;}
+.table-chang thead span{ font-size:20px}
+.table-chang tbody tr .time_cell {font-size:24px;color:#000;border:0px;background-color: #fff; padding-bottom: 50px;}
+.table-chang tbody tr .time_cell span{font-size:24px;float: right}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
 .my-order-right .date span{color: #fb924d;}
 .my-order-right .changci{min-height: 70px;height:auto;_height:190px;border-bottom: 1px solid #ddd;margin-bottom: 10px;}

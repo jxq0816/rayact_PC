@@ -95,10 +95,18 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         Double longitude=reserveVenue.getLongitude();//用户的经度
         Double latitude=reserveVenue.getLatitude();//用户的维度
         if(longitude!=null && latitude !=null){
-            double addressX=(double)venueMap.get("addressX");//用户的经度
-            double addressY=(double)venueMap.get("addressY");//用户的维度
-            String distance=BaiduAPI.getDistance(longitude,latitude,addressX,addressY);
-            venueMap.put("distance",distance);
+            if(venueMap.get("addressX")!=null&&venueMap.get("addressY")!=null){
+                String addressX=venueMap.get("addressX").toString();
+                String addressY=venueMap.get("addressY").toString();
+                if(StringUtils.isNotEmpty(addressX)){
+                    double addX=Double.parseDouble(addressX);//用户的经度
+                    double addY=Double.parseDouble(addressY);//用户的维度
+                    String distance= BaiduAPI.getDistance(longitude,latitude,addX,addY);
+                    venueMap.put("distance",distance);
+                }else{
+                    venueMap.put("distance","0");
+                }
+            }
         }
         venueMap.remove("addressX");
         venueMap.remove("addressY");

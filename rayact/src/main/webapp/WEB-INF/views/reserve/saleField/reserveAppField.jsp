@@ -12,7 +12,7 @@
         <thead>
         <%--时刻--%>
         <tr>
-            <th style="border:0px;background-color: #fff"></th>
+            <th></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <th style=""><span>${field.fieldName}</span></th>
             </c:forEach>
@@ -24,7 +24,11 @@
         <c:forEach items="${times}" var="t">
             <tr>
                     <%-- 纵坐标：时间--%>
-                <th><span>${t}</span></th>
+                <td class="time_cell">
+                    <span>
+                        ${fn:substring(t, 0, 5)}
+                    </span>
+                </td>
                     <%-- 横坐标：场地名称--%>
                 <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                     <c:set var="status" value="0"/>
@@ -44,7 +48,7 @@
                     <j:if test="${'0' eq status}">
                         <c:set var="midClass" value="reserveTd access"/>
                     </j:if>
-                    <j:if test="${'1' eq status}">
+                    <j:if test="${!('0' eq status)}">
                         <c:set var="midClass" value="reserveTd unavailable"/>
                     </j:if>
                     <%--设置全场的class end--%>
@@ -80,8 +84,8 @@
     </table>
     <%----%>
 </div>
-<div class="row" style="margin: 5%" disabled="disabled">
-    <div id="unPayed" class="row" style="margin: 1%">
+<div class="row" disabled="none">
+    <div id="unPayed" class="row">
     </div>
     <form id="orderForm">
         <input name="consDate" value="${consDate}" type="hidden">
