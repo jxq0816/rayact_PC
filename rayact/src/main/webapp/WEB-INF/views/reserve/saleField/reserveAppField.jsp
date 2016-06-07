@@ -69,7 +69,7 @@
                             ¥ ${price}
                         </j:if>
                         <j:if test="${!('0' eq status)}">
-                            <span style="color: #000">已预订</span>
+                            <span>已预订</span>
                         </j:if>
 
                     </td>
@@ -84,7 +84,7 @@
     </table>
     <%----%>
 </div>
-<div class="row" disabled="none">
+<div class="row" style="display: none">
     <div id="unPayed" class="row">
     </div>
     <form id="orderForm">
