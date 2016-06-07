@@ -47,21 +47,12 @@
                     <j:if test="${'1' eq status}">
                         <c:set var="midClass" value="reserveTd unavailable"/>
                     </j:if>
-                    <j:if test="${'4' eq status}">
-                        <c:set var="midClass" value="reserveTd red"/>
-                    </j:if>
-                    <j:if test="${'00' eq status}">
-                        <c:set var="midClass" value="reserveTd access"/>
-                    </j:if>
-                    <j:if test="${'01' eq status}">
-                        <c:set var="midClass" value="reserveTd access"/>
-                    </j:if>
                     <%--设置全场的class end--%>
 
                     <%-- 场地 B时间 的状态展示--%>
 
                     <%-- 如果有半场 显示为midClass--%>
-                    <td style="color: #000;" status="${status}"
+                    <td status="${status}"
                         class="${midClass}"
                         data-price="${price}"
                         data-field-id="${field.fieldId}"
@@ -70,7 +61,12 @@
                         data-consMobile="${consMobile}"
                         data-time="${t}"
                     >
-                        ¥ ${price}
+                        <j:if test="${'0' eq status}">
+                            ¥ ${price}
+                        </j:if>
+                        <j:if test="${!('0' eq status)}">
+                            <span style="color: #000">已预订</span>
+                        </j:if>
                     </td>
                     <%-- A场地 B时间 的状态展示 结束--%>
                 </c:forEach>
@@ -83,7 +79,7 @@
     </table>
     <%----%>
 </div>
-<div class="row" style="margin: 5%">
+<div class="row" style="margin: 5%" disabled="disabled">
     <div id="unPayed" class="row" style="margin: 1%">
     </div>
     <form id="orderForm">

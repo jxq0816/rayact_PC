@@ -61,16 +61,16 @@
 .table-left{float: left;/*width: 800px;*/overflow-x: scroll;position: relative;}
 .table-left{overflow: scroll\9;}
 .my-order-right{width: 180px;float: right;overflow: hidden;font-size: 13px;/*margin-top: 70px;*/}
-.table-chang{width: 100%;overflow: hidden;float: left;}
+.table-chang{width: 100%;overflow: hidden;float: left;border-collapse: separate;border-spacing:10px}
 .table-chang th{font-size:10px;font-weight: normal;text-align: center;background: #f3f3f3;border: 1px solid #cdcdcd;width:50px}
-.table-chang td{width: 50px;height: 80px;background: #dcdcdc;border: 1px solid #fff;text-align: center;color: #fff;font-size: 20px;padding:0px}
+.table-chang td{width: 140px;height: 70px;background: #dcdcdc;border: 1px solid #fff;text-align: center;color: #fff;font-size: 20px;padding:0px}
 .table-half  td{width: 15px;height: 30px;background: #dcdcdc;border: 1px solid #fff;color: #fff;font-size: 8px;}
 .table-chang td a{display: block;width: 100%;height: 100%;}
-.table-chang td.access{background: #69d448;}
+.table-chang td.access{background: #A62A04;}
 .table-chang td.over{background: #5fbfe9;}
-.table-chang td.red{background: #f00;}
-.table-chang td.unPayed{background: #009ff0;}
-.table-chang td div.unPayed{background: #009ff0;}
+.table-chang td.red{background: #C8C8C8;}
+.table-chang td.unPayed{background: #F0860C;}
+.table-chang td div.unPayed{background: #F0860C;}
 .table-chang thead th{width:30px;font-size: 20px;-webkit-text-size-adjust:none;min-width: 50px;height:50px;}
 .table-chang thead span{ font-size:20px;}
 .table-chang tbody tr th span{font-size:20px;}
@@ -98,7 +98,7 @@
 .table-ul li{float: left;text-align: center;margin-left: 10px;height:25px;line-height:25px;background:#fff;width:80px;padding-top: 0px;}
 .table-ul li span{width: 40px;height: 22px;margin: 0 auto 5px; vertical-align:middle;display:inline-block;float:left;line-height:22px;}
 .orange{color: #f49538;}
-.red{color: #f00;}
+.settlement{color: #f00;}
 .grey-bg-color{background: #dcdcdc;}
 .green-bg-color{background: #53f06f;}
 .blue-bg-color{background: #5fbfe9;}
