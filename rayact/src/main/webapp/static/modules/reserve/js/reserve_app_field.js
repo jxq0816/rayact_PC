@@ -21,9 +21,9 @@ $(document).ready(function () {
 
         if ($(this).hasClass("access")) {//预定
             var index = $("#orderForm div").length;
-            if(index>=0){
+          /*  if(index>=0){
                 $("#reserve_submit").show();
-            }
+            }*/
             if(index>=8){
                 alert("您选择的场地太多啦，请分两次下单结算哦。");
                 return;
@@ -46,10 +46,10 @@ $(document).ready(function () {
             $(this).addClass("access");
             $("#"+tr_id).remove();
             $("#"+order_item_id).remove();
-            var index = $("#orderForm div").length;
+          /*  var index = $("#orderForm div").length;
             if(index<=0){
                 $("#reserve_submit").hide();
-            }
+            }*/
         }
     });
 });

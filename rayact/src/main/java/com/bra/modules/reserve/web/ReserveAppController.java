@@ -73,14 +73,23 @@ public class ReserveAppController extends BaseController {
                 FieldPrice left = i.getFieldPriceLeft();
                 FieldPrice right = i.getFieldPriceRight();
                 for (TimePrice j : i.getTimePriceList()) {
-
+                    Date systemTime=new Date();
                     String time=j.getTime();//当前场地的时间
                     String startTimeSub=time.substring(0,5);
+                    if("00:00".endsWith(startTimeSub)){
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(systemTime);
+                        int day = c.get(Calendar.DATE);
+                        c.set(Calendar.DATE, day - 1);
+                        systemTime=c.getTime();
+                    }
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     String date=dateFormat.format(consDate);
+                    startTimeSub=TimeUtils.earlyMorningFormat(startTimeSub);
                     startTimeSub=date+" "+startTimeSub;//场地时间
 
-                    Date systemTime=new Date();
+
+
                     SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String sysTime=myFmt.format(systemTime);//系统时间
                     if(startTimeSub.compareTo(sysTime)<0){
