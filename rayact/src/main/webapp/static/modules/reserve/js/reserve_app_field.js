@@ -1,6 +1,5 @@
 //保存数据
 $(document).ready(function () {
-    var Scroll = new iScroll('wrapper',{hScrollbar:false, vScrollbar:false});
     //-------预定---------
     $(".reserveTd").on('mousedown', function () {
         var fieldId = $(this).attr("data-field-id");

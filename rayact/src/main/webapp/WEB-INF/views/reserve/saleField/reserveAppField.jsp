@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
 <html>
 <head>
     <title>场地预定</title>
@@ -8,15 +9,15 @@
 </head>
 <body>
 <div id="wrapper" class="row">
-    <c:set var="width" value="${(fn:length(venueFieldPriceList)+1)*160}px"></c:set>
+    <c:set var="width" value="${(fn:length(venueFieldPriceList)+1)*60}px"></c:set>
     <DIV style="OVERFLOW-X: scroll;width:${width}" align=center>
         <table class="table-chang">
             <thead>
             <%--时刻--%>
             <tr>
-                <th></th>
+                <th class="time_cell"></th>
                 <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
-                    <th style=""><span>${field.fieldName}</span></th>
+                    <th class="field_cell"><span>${field.fieldName}</span></th>
                 </c:forEach>
             </tr>
             <%--时刻--%>
