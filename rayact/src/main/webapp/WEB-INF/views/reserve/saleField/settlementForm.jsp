@@ -101,7 +101,7 @@
                 <input type="radio" class="icheck" value="6" name="payType"/>优惠券
             </label>
             <label class="radio-inline">
-                <input type="radio" class="icheck"  value="8" id="multiplePayRadio" name="payType"/>多方式付款
+                <input type="radio" class="icheck" value="8" id="multiplePayRadio" name="payType"/>多方式付款
             </label>
         </div>
     </div>
@@ -111,18 +111,18 @@
         <div class="row">
             <div class="col-lg-1">
             </div>
-            <label for="memberCardInput"  class="col-lg-1">会员卡:</label>
+            <label for="memberCardInput" class="col-lg-1">会员卡:</label>
             <div class="col-lg-1">
                 <input id="memberCardInput" value="0" type="text" class="form-control"/>
             </div>
             <label for="cashInput" class="col-lg-1">现金:</label>
             <div class="col-lg-1">
-                <input  id="cashInput" value="0" type="text" class="form-control"/>
+                <input id="cashInput" value="0" type="text" class="form-control"/>
             </div>
 
             <label for="bankCardInput" class="col-lg-1">银行卡:</label>
             <div class="col-lg-1">
-                <input  id="bankCardInput" value="0" type="text" class="form-control"/>
+                <input id="bankCardInput" value="0" type="text" class="form-control"/>
             </div>
             <label for="weiXinInput" class="col-lg-1">微信:</label>
             <div class="col-lg-1">
@@ -148,24 +148,21 @@
             <div class="col-lg-1">
                 <input id="couponInput" type="text" class="form-control" value="0"/>
             </div>
-           <%-- <label for="owningInput" class="col-lg-1">打白条:</label>
-            <div class="col-lg-1">
-                <input id="owningInput" type="text" class="form-control" value="0"/>
-            </div>--%>
+            <%-- <label for="owningInput" class="col-lg-1">打白条:</label>
+             <div class="col-lg-1">
+                 <input id="owningInput" type="text" class="form-control" value="0"/>
+             </div>--%>
         </div>
     </div>
     <j:if test="${!empty giftList}">
         <hr/>
-        <div class="content">
-            赠品
-            <table>
+        <div class="row">
+            <label class="col-lg-1" for="gift">赠品:</label>
+            <div id="gift">
                 <c:forEach items="${giftList}" var="gift">
-                    <tr>
-                        <td>${gift.gift.name}</td>
-                        <td>${gift.num}</td>
-                    </tr>
+                    <div class="col-lg-1">${gift.gift.name} * ${gift.num}</div>
                 </c:forEach>
-            </table>
+            </div>
         </div>
     </j:if>
     <div class="row">
@@ -178,9 +175,10 @@
         </div>
         <div class="col-lg-4 col-sm-4" id="discountPriceDiv" style="display:none">
             <div class="row">
-                <label class="col-lg-3 col-sm-3" for="discountPrice">会员优惠:</label>
+                <label class="col-lg-3 col-sm-3" for="discountPrice">优惠:</label>
                 <div class="col-lg-6 col-sm-6">
-                    <input type="text" id="discountPrice"  placeholder="请输入优惠金额后，点击确认优惠" value="${order.discountPrice}" onblur="editPrice()"
+                    <input type="text" id="discountPrice" placeholder="请输入优惠金额后，点击确认优惠" value="${order.discountPrice}"
+                           onblur="editPrice()"
                            onafterpaste="editPrice()"
                            class="form-control " name="discountPrice"/>
                 </div>
@@ -199,7 +197,7 @@
         <label for="shouldPrice" class="col-lg-2">会员当前余额:</label>
         <div class="col-lg-1 col-sm-2">
             <input readonly="readonly" value="${member.remainder}" type="text"
-                 class="form-control"/>
+                   class="form-control"/>
         </div>
     </div>
     <div class="row" id="changePrice" style="display: none">
@@ -230,7 +228,7 @@
         $("#multiplePayRadio").on('ifChecked', function () {
             $("#multiplePay").show();
         });
-        $("#multiplePayRadio").on('ifUnchecked',function () {
+        $("#multiplePayRadio").on('ifUnchecked', function () {
             $("#multiplePay").hide();
         });
     })

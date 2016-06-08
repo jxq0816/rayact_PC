@@ -23,7 +23,7 @@ $(document).ready(function () {
         });
     }
 
-    //结账
+    //结账form
     function settlement(t) {
         var itemId = t.attr("data-item");
         jQuery.postItems({
@@ -144,13 +144,7 @@ $(document).ready(function () {
         func: function () {
             $(this).dblclick();
         }
-    }]/*, [{
-        text: "结账",
-        func: function () {
-            settlement($(this));
-        }
-    }]*/
-    ];
+    }]];
     var reserveMenuData = [[{
         text: "取消订单",
         func: function () {

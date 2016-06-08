@@ -368,16 +368,24 @@ $(document).ready(function () {
 
         var shouldPrice = $("#shouldPrice").val();
         var discountPrice = $("#discountPrice").val();
-        if (isNaN(discountPrice)) {
-            errorLoding("优惠金额必须为数字！");
-            return;
-        }
-        if (eval(discountPrice) > eval(shouldPrice)) {
-            errorLoding("优惠金额不能大于应收金额！");
-            return;
+        var consPrice = shouldPrice;
+        if(discountPrice){
+            if (isNaN(discountPrice)) {
+                errorLoding("优惠金额必须为数字！");
+                return;
+            }
+            if (eval(discountPrice) > eval(shouldPrice)) {
+                errorLoding("优惠金额不能大于应收金额！");
+                return;
+            }
+            consPrice=shouldPrice-discountPrice;
+            if(eval(shouldPrice)-eval(discountPrice)!=eval(consPrice)){
+                errorLoding("应收减去优惠不等于实收，请点击确认优惠！");
+                return;
+            }
         }
         /* 以上为数据验证*/
-        var consPrice = shouldPrice - discountPrice;
+
         if (isNaN(consPrice)) {
             errorLoding("结算金额必须为数字！");
             return;
@@ -386,6 +394,7 @@ $(document).ready(function () {
             errorLoding("结账金额不能小于0！");
             return;
         }
+
         var authUserId = $("#authUser").val();
         var id = $("#id").val();
         var token = $("#token").val();
