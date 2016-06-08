@@ -1,4 +1,4 @@
-.table-chang{margin-left:5px;overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
+.table-chang{overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
 .table-chang th{width: 60px;height: 30px;font-size:10px;font-weight: normal;text-align: center;background: #f3f3f3;}
 .table-chang td{width: 60px;height: 30px;background: #FFF;text-align: center;color: #fff;font-size: 10px;padding:0px}
 .table-chang td a{display: block;width: 100%;height: 100%;}
@@ -6,11 +6,11 @@
 .table-chang td.unavailable{background: #F0F0F0;color:#C8C8C8}
 .table-chang td.unPayed{background: #F0860C;}
 .table-chang td div.unPayed{background: #F0860C;}
-.table-chang thead th{font-size: 24px;-webkit-text-size-adjust:none;min-width: 50px;border:0px;background-color: #fff}
+.table-chang thead th{font-size: 24px;-webkit-text-size-adjust:none;border:0px;background-color: #fff}
 .table-chang thead span{ font-size:10px}
 .table-chang thead tr .field_cell{width:60px;height:30px;}
-.table-chang thead tr .time_cell{width:60px;height:30px;}
-.table-chang tbody tr .time_cell {width:60px;height:30px;font-size:24px;color:#000;border:0px;background-color: #fff; padding-bottom: 10px;}
+.table-chang thead tr .time_cell{width:30px;height:30px;}
+.table-chang tbody tr .time_cell {width:30px;height:30px;font-size:24px;color:#000;border:0px;background-color: #fff; padding-bottom: 10px;}
 .table-chang tbody tr .time_cell span{font-size:10px;float: right}
 .my-sel-place{overflow: hidden;margin-bottom: 10px;}
 .my-sel-place li{text-align: center;height: 25px;line-height: 25px;

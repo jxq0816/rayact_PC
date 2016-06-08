@@ -8,7 +8,7 @@
     <link href="${ctxStatic}/cleanzone/js/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
-<div id="wrapper" class="row">
+<div id="wrapper">
     <c:set var="width" value="${(fn:length(venueFieldPriceList)+1)*60}px"></c:set>
     <DIV style="OVERFLOW-X: scroll;width:${width}" align=center>
         <table class="table-chang">
