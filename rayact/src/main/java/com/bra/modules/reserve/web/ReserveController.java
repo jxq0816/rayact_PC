@@ -50,6 +50,8 @@ public class ReserveController extends BaseController {
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
     @Autowired
+    private ReserveFieldStatusService reserveFieldStatusService;
+    @Autowired
     private ReserveVenueConsService reserveVenueConsService;
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
@@ -75,33 +77,34 @@ public class ReserveController extends BaseController {
 
     /**
      * 场地预订 界面
-     * @param t 超链接选择的日期
+     *
+     * @param t        超链接选择的日期
      * @param consDate 日期控件选择的日期
-     * @param venueId 场馆编号
+     * @param venueId  场馆编号
      * @param model
      * @return
      * @throws ParseException
      */
     @RequestMapping(value = "main")
-    public String main(Long t,Date consDate,String venueId, Model model) throws ParseException {
+    public String main(Long t, Date consDate, String venueId, Model model) throws ParseException {
         Calendar ago = Calendar.getInstance();
         //如果是通过超链接 点击选择的时间
         if (t != null) {
             consDate = new Date(t);
         }
         //如果请求参数没有日期
-        if(t==null&&consDate==null){
+        if (t == null && consDate == null) {
             consDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得今天的日期
         }
         ago.setTime(consDate);
-        ago.add(Calendar.DAY_OF_MONTH,-3);//获得预订日期的上一天
+        ago.add(Calendar.DAY_OF_MONTH, -3);//获得预订日期的上一天
         Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(ago.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得前3天的日期
         //获取可预定时间段:一周
         Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
         model.addAttribute("timeSlot", timeSlot);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String consDateFormat=format.format(consDate);//预订日期的格式化
+        String consDateFormat = format.format(consDate);//预订日期的格式化
         model.addAttribute("consDateFormat", consDateFormat);
         model.addAttribute("consDate", consDate);//预订日期回传
 
@@ -121,7 +124,7 @@ public class ReserveController extends BaseController {
             ReserveField reserveField = new ReserveField();
             reserveField.setReserveVenue(reserveVenue);
             //上午场地价格
-            List<String> timesAM=new ArrayList<>();
+            List<String> timesAM = new ArrayList<>();
 
             timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
             model.addAttribute("timesAM", timesAM);
@@ -138,23 +141,81 @@ public class ReserveController extends BaseController {
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesEvening);
             model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         }
-        if ("5".equals(AuthorityUtils.getUserType())){
+        if ("5".equals(AuthorityUtils.getUserType())) {
             return "reserve/saleField/reserveFieldStatus";
         }
         return "reserve/saleField/reserveField";
     }
 
+    @RequestMapping(value = "status")
+    public String status(Long t, Date consDate, String venueId, Model model) throws ParseException {
+        Calendar ago = Calendar.getInstance();
+        //如果是通过超链接 点击选择的时间
+        if (t != null) {
+            consDate = new Date(t);
+        }
+        //如果请求参数没有日期
+        if (t == null && consDate == null) {
+            consDate = DateUtils.parseDate(DateFormatUtils.format(Calendar.getInstance().getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得今天的日期
+        }
+        ago.setTime(consDate);
+        ago.add(Calendar.DAY_OF_MONTH, -3);//获得预订日期的上一天
+        Date defaultDate = DateUtils.parseDate(DateFormatUtils.format(ago.getTime(), "yyyy-MM-dd"), "yyyy-MM-dd");//获得前3天的日期
+        //获取可预定时间段:一周
+        Map<String, Long> timeSlot = TimeUtils.getNextDaysMap(defaultDate, 7);
+        model.addAttribute("timeSlot", timeSlot);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String consDateFormat = format.format(consDate);//预订日期的格式化
+        model.addAttribute("consDateFormat", consDateFormat);
+        model.addAttribute("consDate", consDate);//预订日期回传
+
+        //获得所有场馆信息
+        List<ReserveVenue> reserveVenueList = reserveVenueService.findList(new ReserveVenue());
+        model.addAttribute("reserveVenueList", reserveVenueList);
+        //默认场馆的场地
+        if (!Collections3.isEmpty(reserveVenueList)) {
+            ReserveVenue reserveVenue;
+            if (StringUtils.isNoneBlank(venueId)) {
+                reserveVenue = reserveVenueService.get(venueId);
+            } else {
+                reserveVenue = reserveVenueList.get(0);
+            }
+            //默认场馆
+            model.addAttribute("reserveVenue", reserveVenue);
+            ReserveField reserveField = new ReserveField();
+            reserveField.setReserveVenue(reserveVenue);
+            //上午场地价格
+            List<String> timesAM = new ArrayList<>();
+
+            timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
+            model.addAttribute("timesAM", timesAM);
+            List<FieldPrice> venueFieldPriceListAM = reserveFieldStatusService.emptyCheck(reserveVenue.getId(), consDate, timesAM);
+            model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
+            //下午场地价格
+            List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
+            model.addAttribute("timesPM", timesPM);
+            List<FieldPrice> venueFieldPriceListPM = reserveFieldStatusService.emptyCheck(reserveVenue.getId(), consDate, timesPM);
+            model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
+            //晚上场地价格
+            List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
+            model.addAttribute("timesEvening", timesEvening);
+            List<FieldPrice> venueFieldPriceListEvening = reserveFieldStatusService.emptyCheck(reserveVenue.getId(), consDate, timesEvening);
+            model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
+        }
+        return "reserve/saleField/reserveFieldStatus";
+    }
     //预定表单
     @RequestMapping(value = "reserveForm")
     @Token(save = true)
     public String reserveForm(Model model, String fieldId, Long date, String time, String venueId) throws ParseException {
         ReserveField reserveField = reserveFieldService.get(fieldId);
         model.addAttribute("reserveField", reserveField);
-        String isHalfCourt=reserveFieldService.getFiledType(reserveField);
+        String isHalfCourt = reserveFieldService.getFiledType(reserveField);
         model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
 
         //获取预定开始时间
-        String start=time.substring(0,5)+":00";
+        String start = time.substring(0, 5) + ":00";
         List<String> times = TimeUtils.getTimeSpacList(start, "00:30:00", TimeUtils.BENCHMARK);
         String consDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("consDate", consDate);
@@ -164,8 +225,8 @@ public class ReserveController extends BaseController {
         model.addAttribute("memberList", reserveMemberService.findList(reserveMember));
 
         //查询场地所对应项目的教练
-        ReserveTutor tutor=new ReserveTutor();
-        ReserveProject project=reserveField.getReserveProject();
+        ReserveTutor tutor = new ReserveTutor();
+        ReserveProject project = reserveField.getReserveProject();
         tutor.setProject(project);
         model.addAttribute("tutors", reserveTutorService.findList(tutor));
 
@@ -207,8 +268,8 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "cancelReservation")
     @ResponseBody
     @Token(remove = true)
-    public List<Map<String, String>> cancelReservation(String itemId,String tutorOrderId) {
-        List<ReserveVenueConsItem> itemList = reserveVenueConsService.cancelReserve(itemId,tutorOrderId);
+    public List<Map<String, String>> cancelReservation(String itemId, String tutorOrderId) {
+        List<ReserveVenueConsItem> itemList = reserveVenueConsService.cancelReserve(itemId, tutorOrderId);
         return getReserveMap(itemList);
     }
 
@@ -242,61 +303,61 @@ public class ReserveController extends BaseController {
     @ResponseBody
     @Token(remove = true)
     public List<Map<String, String>> reservation(ReserveVenueCons reserveVenueCons) {
-        boolean bool=true;//时间段是否可用
-        String frequency=reserveVenueCons.getFrequency();//频率
-        Date consDate=reserveVenueCons.getConsDate();
+        boolean bool = true;//时间段是否可用
+        String frequency = reserveVenueCons.getFrequency();//频率
+        Date consDate = reserveVenueCons.getConsDate();
         List<ReserveVenueConsItem> itemList = reserveVenueCons.getVenueConsList();//查询预订的订单详情
-        for(ReserveVenueConsItem i:itemList){//订单详情
-            String startTime=i.getStartTime();
-            String endTime=i.getEndTime();
-            ReserveField field=i.getReserveField();//场地
+        for (ReserveVenueConsItem i : itemList) {//订单详情
+            String startTime = i.getStartTime();
+            String endTime = i.getEndTime();
+            ReserveField field = i.getReserveField();//场地
 
-            Date startDate=reserveVenueCons.getStartDate();//预订开始日期
-            Date endDate=reserveVenueCons.getEndDate();//预订结束日期
+            Date startDate = reserveVenueCons.getStartDate();//预订开始日期
+            Date endDate = reserveVenueCons.getEndDate();//预订结束日期
             //遍历该日期区间 的场地是否有预订
             //单次
-            if("1".equals(frequency)){
-                bool=reserveVenueConsItemService.checkReserveTime(consDate,field,startTime,endTime);
-            }else if("2".equals(frequency)){//每天
-                List<Date> list=TimeUtils.getIntervalDayList(startDate,endDate);
-                for(Date date:list){
-                    bool=reserveVenueConsItemService.checkReserveTime(date,field,startTime,endTime);
-                    if(bool==false){
+            if ("1".equals(frequency)) {
+                bool = reserveVenueConsItemService.checkReserveTime(consDate, field, startTime, endTime);
+            } else if ("2".equals(frequency)) {//每天
+                List<Date> list = TimeUtils.getIntervalDayList(startDate, endDate);
+                for (Date date : list) {
+                    bool = reserveVenueConsItemService.checkReserveTime(date, field, startTime, endTime);
+                    if (bool == false) {
                         break;
                     }
                 }
-            }else if("3".equals(frequency)){//每周
-                String week=TimeUtils.getWeekOfDate(consDate);
-                List<Date> list= TimeUtils.getIntervalWeekDayList(startDate,endDate,week);
-                for(Date date:list){
-                    bool=reserveVenueConsItemService.checkReserveTime(date,field,startTime,endTime);
-                    if(bool==false){
+            } else if ("3".equals(frequency)) {//每周
+                String week = TimeUtils.getWeekOfDate(consDate);
+                List<Date> list = TimeUtils.getIntervalWeekDayList(startDate, endDate, week);
+                for (Date date : list) {
+                    bool = reserveVenueConsItemService.checkReserveTime(date, field, startTime, endTime);
+                    if (bool == false) {
                         break;
                     }
                 }
             }
         }
         Map<String, String> map = Maps.newConcurrentMap();
-        List<Map<String, String>> list=new ArrayList<>();
-        if(bool){
+        List<Map<String, String>> list = new ArrayList<>();
+        if (bool) {
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//预定
-            Date startDate=reserveVenueCons.getStartDate();//预订开始日期
-            Date endDate=reserveVenueCons.getEndDate();//预订结束日期
-            if("1".equals(frequency)){
+            Date startDate = reserveVenueCons.getStartDate();//预订开始日期
+            Date endDate = reserveVenueCons.getEndDate();//预订结束日期
+            if ("1".equals(frequency)) {
                 reserveVenueCons.preInsert();
                 reserveVenueCons.setConsDate(consDate);
                 reserveVenueConsService.save(reserveVenueCons);//保存预订信息
-            }else if("2".equals(frequency)){//每天
-                List<Date> dayList=TimeUtils.getIntervalDayList(startDate,endDate);
-                for(Date d:dayList){
+            } else if ("2".equals(frequency)) {//每天
+                List<Date> dayList = TimeUtils.getIntervalDayList(startDate, endDate);
+                for (Date d : dayList) {
                     reserveVenueCons.preInsert();
                     reserveVenueCons.setConsDate(d);
                     reserveVenueConsService.save(reserveVenueCons);//保存预订信息
                 }
-            }else if("3".equals(frequency)){//每周
-                String week=TimeUtils.getWeekOfDate(consDate);
-                List<Date> weekDayList= TimeUtils.getIntervalWeekDayList(startDate,endDate,week);
-                for(Date date:weekDayList){
+            } else if ("3".equals(frequency)) {//每周
+                String week = TimeUtils.getWeekOfDate(consDate);
+                List<Date> weekDayList = TimeUtils.getIntervalWeekDayList(startDate, endDate, week);
+                for (Date date : weekDayList) {
                     reserveVenueCons.preInsert();
                     reserveVenueCons.setConsDate(date);
                     reserveVenueConsService.save(reserveVenueCons);//保存预订信息
@@ -311,12 +372,12 @@ public class ReserveController extends BaseController {
                     data.put("fieldId", item.getReserveField().getId());
                     data.put("time", time);
                     data.put("itemId", item.getId());
-                    data.put("bool","1");
+                    data.put("bool", "1");
                     list.add(data);
                 }
             }
-        }else{
-            map.put("bool","0");
+        } else {
+            map.put("bool", "0");
             list.add(map);
         }
         return list;
@@ -334,16 +395,16 @@ public class ReserveController extends BaseController {
         //操作类型(1:已预定,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
-        ReserveMember member=reserveMemberService.get(order.getMember().getId());
+        ReserveMember member = reserveMemberService.get(order.getMember().getId());
         //申请优惠
         ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
-        applycut.getSqlMap().put("dsf"," and c.id = '"+order.getId()+"' ");
+        applycut.getSqlMap().put("dsf", " and c.id = '" + order.getId() + "' ");
         List<ReserveVenueApplyCut> cuts = reserveVenueApplyCutService.findList(applycut);
-        if(cuts!=null&&cuts.size()>0){
+        if (cuts != null && cuts.size() > 0) {
             applycut = cuts.get(0);
             order.setDiscountPrice(applycut.getCutPrice());
         }
-        order.setConsPrice(order.getShouldPrice()-applycut.getCutPrice());
+        order.setConsPrice(order.getShouldPrice() - applycut.getCutPrice());
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(order.getId(), ReserveVenueCons.MODEL_KEY);
         if (!Collections3.isEmpty(tutorOrderList)) {
@@ -354,9 +415,9 @@ public class ReserveController extends BaseController {
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
         model.addAttribute("itemList", itemList);
         //有变更权限的高管
-        User user=new User();
+        User user = new User();
         user.setUserType("2");//用户类型(1:超级管理员；2:场馆管理员；3：高管；4：收银；5：财务)
-        List<User> authUserList=userService.findList(user);
+        List<User> authUserList = userService.findList(user);
         model.addAttribute("authUserList", authUserList);
         model.addAttribute("order", order);
         model.addAttribute("member", member);
@@ -364,6 +425,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(order.getId(), ReserveVenueCons.MODEL_KEY)));
         return "reserve/saleField/settlementForm";
     }
+
     /**
      * 结算订单
      *
@@ -374,25 +436,25 @@ public class ReserveController extends BaseController {
     @Token(remove = true)
     @ResponseBody
     public Map saveSettlement(String id, String payType, String authUserId,
-                                 @RequestParam(required=false,defaultValue="0") Double discountPrice,
-                                 Double consPrice,
-                                 Double memberCardInput,
-                                 Double cashInput,
-                                 Double bankCardInput,
-                                 Double weiXinInput,
-                                 Double weiXinPersonalInput,
-                                 Double aliPayInput,
-                                 Double aliPayPersonalInput,
-                                 Double couponInput,
+                              @RequestParam(required = false, defaultValue = "0") Double discountPrice,
+                              Double consPrice,
+                              Double memberCardInput,
+                              Double cashInput,
+                              Double bankCardInput,
+                              Double weiXinInput,
+                              Double weiXinPersonalInput,
+                              Double aliPayInput,
+                              Double aliPayPersonalInput,
+                              Double couponInput,
                               /*   Double owningInput,*/
-                                 Model model) {
+                              Model model) {
 
-        ReserveVenueCons venueCons = reserveVenueConsService.saveSettlement(id,payType,authUserId,discountPrice,consPrice,
-                memberCardInput,cashInput,bankCardInput,weiXinInput,weiXinPersonalInput,aliPayInput,aliPayPersonalInput,couponInput/*,owningInput*/);
-        List<Map<String, String>> mapList=getReserveMap(venueCons.getVenueConsList());
-        Map map=new HashMap<>();
-        map.put("mapList",mapList);
-        map.put("orderId",venueCons.getId());
+        ReserveVenueCons venueCons = reserveVenueConsService.saveSettlement(id, payType, authUserId, discountPrice, consPrice,
+                memberCardInput, cashInput, bankCardInput, weiXinInput, weiXinPersonalInput, aliPayInput, aliPayPersonalInput, couponInput/*,owningInput*/);
+        List<Map<String, String>> mapList = getReserveMap(venueCons.getVenueConsList());
+        Map map = new HashMap<>();
+        map.put("mapList", mapList);
+        map.put("orderId", venueCons.getId());
         return map;
     }
 
@@ -405,7 +467,7 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "settlementResult")
     public String saveSettlement(String orderId, Model model) {
         ReserveVenueCons venueCons = reserveVenueConsService.get(orderId);
-        model.addAttribute("venueCons",venueCons);
+        model.addAttribute("venueCons", venueCons);
         return "reserve/saleField/settlementResult";
     }
 
@@ -467,12 +529,12 @@ public class ReserveController extends BaseController {
     @Token(remove = true)
     public String saveGift(VenueGiftForm giftForm) {
         List<ReserveVenueGift> giftList = giftForm.getGiftList();
-        for(ReserveVenueGift gift:giftList){
-            int giftNum=gift.getNum();
-            ReserveCommodity commodity=gift.getGift();
-            commodity=reserveCommodityService.get(commodity);
-            int storeNum=commodity.getRepertoryNum();
-            if(giftNum>storeNum){
+        for (ReserveVenueGift gift : giftList) {
+            int giftNum = gift.getNum();
+            ReserveCommodity commodity = gift.getGift();
+            commodity = reserveCommodityService.get(commodity);
+            int storeNum = commodity.getRepertoryNum();
+            if (giftNum > storeNum) {
                 return "fail";
             }
         }
@@ -480,22 +542,23 @@ public class ReserveController extends BaseController {
         reserveVenueGiftService.saveVenueList(giftForm, ReserveVenueCons.MODEL_KEY);
         return "success";
     }
+
     //检测授权码
     @RequestMapping(value = "checkUserAuth")
     @ResponseBody
-    public User checkUserAuth(String userId,String authPassword) {
-        User user = systemService.checkUserAuth(userId,authPassword);
+    public User checkUserAuth(String userId, String authPassword) {
+        User user = systemService.checkUserAuth(userId, authPassword);
         return user;
     }
 
     @RequestMapping(value = "checkTime")
     @ResponseBody
-    public String checkTime(String startTime,String endTime) {
-        startTime=TimeUtils.earlyMorningFormat(startTime);
-        endTime=TimeUtils.earlyMorningFormat(endTime);
-        if(startTime.compareTo(endTime)<0) {
+    public String checkTime(String startTime, String endTime) {
+        startTime = TimeUtils.earlyMorningFormat(startTime);
+        endTime = TimeUtils.earlyMorningFormat(endTime);
+        if (startTime.compareTo(endTime) < 0) {
             return "1";
-        }else{
+        } else {
             return "0";
         }
     }
@@ -513,16 +576,16 @@ public class ReserveController extends BaseController {
         u.setUserType("3");
         List<User> list = userService.findList(u);
         model.addAttribute("cons", cons);
-        model.addAttribute("users",list);
+        model.addAttribute("users", list);
         ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
-        if(cons!=null&&cons.getId()!=null){
-            applycut.getSqlMap().put("dsf"," and c.id = '"+cons.getId()+"' ");
+        if (cons != null && cons.getId() != null) {
+            applycut.getSqlMap().put("dsf", " and c.id = '" + cons.getId() + "' ");
         }
         List<ReserveVenueApplyCut> cuts = reserveVenueApplyCutService.findList(applycut);
-        if(cuts!=null&&cuts.size()>0){
-            model.addAttribute("applyCut",cuts.get(0) );
+        if (cuts != null && cuts.size() > 0) {
+            model.addAttribute("applyCut", cuts.get(0));
             return "reserve/saleField/applyCutFormDone";
-        }else{
+        } else {
             return "reserve/saleField/applyCutForm";
         }
     }
@@ -532,7 +595,7 @@ public class ReserveController extends BaseController {
     @ResponseBody
     public String saveApplyCut(HttpServletRequest request) {
         String consId = request.getParameter("consId");
-        if(consId!=null&&!"".equals(consId)){
+        if (consId != null && !"".equals(consId)) {
             String userId = request.getParameter("userId");
             String remarks = request.getParameter("remarks");
             ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
@@ -558,43 +621,43 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "mobile/cutlist")
     @ResponseBody
     public String cutList(HttpServletRequest request) {
-        List<Map<String,String>> rtn = new ArrayList<>();
+        List<Map<String, String>> rtn = new ArrayList<>();
         String userId = request.getParameter("userId");
         String status = request.getParameter("status");
-        if(userId!=null&&!"".equals(userId)){
+        if (userId != null && !"".equals(userId)) {
             User user = systemService.getUser(userId);
             ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
             reserveVenueApplyCut.setTenantId(user.getCompany().getId());
-            reserveVenueApplyCut.getSqlMap().put("dsf"," and a.apply_user_id = '"+userId+"' and a.done = '"+status+"' ");
+            reserveVenueApplyCut.getSqlMap().put("dsf", " and a.apply_user_id = '" + userId + "' and a.done = '" + status + "' ");
             List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(reserveVenueApplyCut);
-            if(list!=null){
-                for(ReserveVenueApplyCut cut : list){
-                    Map<String,String> node = new HashMap<>();
-                    node.put("venueId",cut.getVenue().getId());
-                    node.put("venueName",reserveVenueService.get(cut.getVenue().getId()).getName());//null
+            if (list != null) {
+                for (ReserveVenueApplyCut cut : list) {
+                    Map<String, String> node = new HashMap<>();
+                    node.put("venueId", cut.getVenue().getId());
+                    node.put("venueName", reserveVenueService.get(cut.getVenue().getId()).getName());//null
                     String cid = cut.getCreateBy().getId();
-                    node.put("creator",systemService.getUser(cid).getName());//null
+                    node.put("creator", systemService.getUser(cid).getName());//null
                     String consId = cut.getCons().getId();
                     ReserveVenueCons reserveVenueCons = reserveVenueConsService.get(consId);
-                    node.put("orderId",consId);
-                    node.put("projectId",reserveVenueCons.getProject().getId());
-                    node.put("projectName",reserveProjectService.get(reserveVenueCons.getProject().getId()).getName());//null
+                    node.put("orderId", consId);
+                    node.put("projectId", reserveVenueCons.getProject().getId());
+                    node.put("projectName", reserveProjectService.get(reserveVenueCons.getProject().getId()).getName());//null
                     ReserveVenueConsItem item = new ReserveVenueConsItem();
                     item.setTenantId(user.getCompany().getId());
                     item.setConsData(reserveVenueCons);
                     List<ReserveVenueConsItem> items = reserveVenueConsItemService.findList(item);
-                    if(items!=null&&items.size()>0){
-                        node.put("timeArea",items.get(0).getStartTime()+"~"+items.get(0).getEndTime());
-                    }else{
-                        node.put("timeArea","");
+                    if (items != null && items.size() > 0) {
+                        node.put("timeArea", items.get(0).getStartTime() + "~" + items.get(0).getEndTime());
+                    } else {
+                        node.put("timeArea", "");
                     }
-                    node.put("memberName",reserveVenueCons.getUserName());
-                    node.put("orderDate",DateUtils.formatDate(reserveVenueCons.getConsDate()));
-                    node.put("orderPrice",String.valueOf(reserveVenueCons.getShouldPrice()));
-                    node.put("tel",reserveVenueCons.getConsMobile());
-                    node.put("remarks",cut.getRemarks());
-                    node.put("isNew",cut.getIsNew());
-                    node.put("creatorImg","0");
+                    node.put("memberName", reserveVenueCons.getUserName());
+                    node.put("orderDate", DateUtils.formatDate(reserveVenueCons.getConsDate()));
+                    node.put("orderPrice", String.valueOf(reserveVenueCons.getShouldPrice()));
+                    node.put("tel", reserveVenueCons.getConsMobile());
+                    node.put("remarks", cut.getRemarks());
+                    node.put("isNew", cut.getIsNew());
+                    node.put("creatorImg", "0");
                     rtn.add(node);
                     //请求后置为非新
                     cut.setIsNew("0");
@@ -610,24 +673,24 @@ public class ReserveController extends BaseController {
     @RequestMapping(value = "mobile/cutlist/hasNew")
     @ResponseBody
     public String hasNew(HttpServletRequest request) {
-        Map<String,String> rtn = new HashMap<>();
+        Map<String, String> rtn = new HashMap<>();
         String userId = request.getParameter("userId");
-        if(userId!=null&&!"".equals(userId)){
+        if (userId != null && !"".equals(userId)) {
             User user = systemService.getUser(userId);
             ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
             reserveVenueApplyCut.setTenantId(user.getCompany().getId());
-            reserveVenueApplyCut.getSqlMap().put("dsf"," and a.apply_user_id = '"+userId+"' and a.done = '0' and a.is_new = '1' ");
+            reserveVenueApplyCut.getSqlMap().put("dsf", " and a.apply_user_id = '" + userId + "' and a.done = '0' and a.is_new = '1' ");
             List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(reserveVenueApplyCut);
-            if(list!=null&&list.size()>0){
-                rtn.put("hasNew",String.valueOf(list.size()));
+            if (list != null && list.size() > 0) {
+                rtn.put("hasNew", String.valueOf(list.size()));
                 return JSONObject.toJSONString(rtn);
-            }else{
-                rtn.put("hasNew","0");
+            } else {
+                rtn.put("hasNew", "0");
                 return JSONObject.toJSONString(rtn);
             }
 
         }
-        rtn.put("hasNew","0");
+        rtn.put("hasNew", "0");
         return JSONObject.toJSONString(rtn);
     }
 
@@ -638,34 +701,34 @@ public class ReserveController extends BaseController {
         String userId = request.getParameter("userId");
         String orderId = request.getParameter("orderId");
         String cutPrice = request.getParameter("cutPrice");
-        if(orderId!=null&&!"".equals(orderId)){
+        if (orderId != null && !"".equals(orderId)) {
             ReserveVenueApplyCut reserveVenueApplyCut = new ReserveVenueApplyCut();
             User user = systemService.getUser(userId);
-            reserveVenueApplyCut.getSqlMap().put("dsf"," and a.cons_id = '"+orderId+"' ");
+            reserveVenueApplyCut.getSqlMap().put("dsf", " and a.cons_id = '" + orderId + "' ");
             reserveVenueApplyCut.setTenantId(user.getCompany().getId());
             List<ReserveVenueApplyCut> list = reserveVenueApplyCutService.findList(reserveVenueApplyCut);
-            if(list!=null&&list.size()>0){
+            if (list != null && list.size() > 0) {
                 ReserveVenueApplyCut cut = list.get(0);
-                if(cut.getApplyer().getId().equals(userId)){
+                if (cut.getApplyer().getId().equals(userId)) {
                     cut.setCutPrice(Double.valueOf(cutPrice));
                     cut.setDone("1");
                     reserveVenueApplyCutService.save(cut);
-                    Map<String,String> node = new HashMap<>();
-                    node.put("status","success");
+                    Map<String, String> node = new HashMap<>();
+                    node.put("status", "success");
                     return JSONObject.toJSONString(node);
-                }else{
-                    Map<String,String> node = new HashMap<>();
-                    node.put("status","fail");
+                } else {
+                    Map<String, String> node = new HashMap<>();
+                    node.put("status", "fail");
                     return JSONObject.toJSONString(node);
                 }
-            }else{
-                Map<String,String> node = new HashMap<>();
-                node.put("status","fail");
+            } else {
+                Map<String, String> node = new HashMap<>();
+                node.put("status", "fail");
                 return JSONObject.toJSONString(node);
             }
         }
-        Map<String,String> node = new HashMap<>();
-        node.put("status","fail");
+        Map<String, String> node = new HashMap<>();
+        node.put("status", "fail");
         return JSONObject.toJSONString(node);
     }
 
@@ -675,10 +738,10 @@ public class ReserveController extends BaseController {
     public String checkEmpty(Model model, String fieldId, Long date, String time, String venueId) throws ParseException {
         ReserveField reserveField = reserveFieldService.get(fieldId);
         model.addAttribute("reserveField", reserveField);
-        String isHalfCourt=reserveFieldService.getFiledType(reserveField);
+        String isHalfCourt = reserveFieldService.getFiledType(reserveField);
         model.addAttribute("isHalfCourt", isHalfCourt);//是否半场
         //获取预定开始时间
-        String start=time.substring(0,5)+":00";
+        String start = time.substring(0, 5) + ":00";
         List<String> times = TimeUtils.getTimeSpacList(start, "00:30:00", TimeUtils.BENCHMARK);
         String checkDate = DateUtils.formatDate(new Date(date), "yyyy-MM-dd");
         model.addAttribute("checkDate", checkDate);
@@ -695,14 +758,14 @@ public class ReserveController extends BaseController {
     //空场审核
     @RequestMapping(value = "checkEmptyUpdate")
     @Token(save = true)
-    public String checkEmptyUpdate(Model model,String checkId) throws ParseException {
+    public String checkEmptyUpdate(Model model, String checkId) throws ParseException {
         ReserveVenueEmptyCheck check = reserveVenueEmptyCheckService.get(checkId);
         ReserveField reserveField = reserveFieldService.get(check.getField().getId());
-        model.addAttribute("check",check);
+        model.addAttribute("check", check);
         model.addAttribute("reserveField", reserveField);
         model.addAttribute("isHalfCourt", check.getHalfCourt());//是否半场
         //获取预定开始时间
-        String start=check.getStartTime()+":00";
+        String start = check.getStartTime() + ":00";
         List<String> times = TimeUtils.getTimeSpacList(start, "00:30:00", TimeUtils.BENCHMARK);
         model.addAttribute("checkDate", DateUtils.formatDate(check.getCheckDate()));
         model.addAttribute("times", times);
@@ -722,44 +785,44 @@ public class ReserveController extends BaseController {
         String startTime = reserveVenueEmptyCheck.getStartTime();
         String endTime = reserveVenueEmptyCheck.getEndTime();
         ReserveField field = reserveVenueEmptyCheck.getField();//场地
-        bool = reserveVenueConsItemService.checkReserveTime(checkDate,field,startTime,endTime);
-        if(bool){
+        bool = reserveVenueConsItemService.checkReserveTime(checkDate, field, startTime, endTime);
+        if (bool) {
             reserveVenueEmptyCheckService.save(reserveVenueEmptyCheck);//保存预订信息
             return "success";
-        }else{
+        } else {
             return "fail";
         }
     }
 
     //场地状态界面
     @RequestMapping(value = "mobile/main")
-    public String mobileMain(Model model,HttpServletRequest request) throws ParseException {
+    public String mobileMain(Model model, HttpServletRequest request) throws ParseException {
         String userId = request.getParameter("userId");
         String venueId = request.getParameter("venueId");
         String date = request.getParameter("date");
         Date consDate = DateUtils.parseDate(date);
         User user = systemService.getUser(userId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String consDateFormat=format.format(consDate);//预订日期的格式化
+        String consDateFormat = format.format(consDate);//预订日期的格式化
         model.addAttribute("consDateFormat", consDateFormat);
         model.addAttribute("consDate", consDate);//预订日期回传
         //默认场馆
         ReserveVenue reserveVenue = reserveVenueService.get(venueId);
         //上午场地价格
-        List<String> timesAM=new ArrayList<>();
+        List<String> timesAM = new ArrayList<>();
         timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
         model.addAttribute("timesAM", timesAM);
-        List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesAM,user);
+        List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesAM, user);
         model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
         //下午场地价格
         List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
         model.addAttribute("timesPM", timesPM);
-        List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesPM,user);
+        List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesPM, user);
         model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
         //晚上场地价格
         List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
         model.addAttribute("timesEvening", timesEvening);
-        List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesEvening,user);
+        List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesEvening, user);
         model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         return "reserve/saleField/reserveFieldStatusMobile";
     }

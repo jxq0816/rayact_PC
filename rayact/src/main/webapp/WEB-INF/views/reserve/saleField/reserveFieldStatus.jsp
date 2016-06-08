@@ -23,7 +23,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="reserveField"></jsp:param>
+    <jsp:param name="action" value="reserveFieldStatus"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">

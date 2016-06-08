@@ -88,6 +88,12 @@
         "authorityList": []
       },
       {
+        "code": "reserveFieldStatus",
+        "name": "空场审核",
+        "href":"/reserve/field/status",
+        "authorityList": []
+      },
+      {
         "code": "vistorsSet",
         "name": "场次票售卖",
         "href":"/reserve/reserveVenueOrder/list",
