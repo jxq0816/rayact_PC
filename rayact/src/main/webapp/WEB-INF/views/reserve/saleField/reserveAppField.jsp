@@ -8,7 +8,8 @@
 </head>
 <body>
 <div id="wrapper" class="row">
-    <div class="scroll">
+    <c:set var="width" value="${(fn:length(venueFieldPriceList)+1)*160}px"></c:set>
+    <DIV style="OVERFLOW-X: scroll;width:${width}" align=center>
         <table class="table-chang">
             <thead>
             <%--时刻--%>
@@ -98,8 +99,6 @@
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="${ctxStatic}/common/jeesite.js"></script>
 <script type="text/javascript" src="${ctxStatic}/json/jquery.serializejson.js"></script>
-<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/swiper.min.js"></script>
-
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_app_field.js?t=" + Math.random() + "'><\/script>");
 </script>
