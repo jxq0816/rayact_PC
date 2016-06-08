@@ -10,7 +10,7 @@
 .table-chang thead span{ font-size:10px}
 .table-chang thead tr .field_cell{width:60px;height:30px;}
 .table-chang thead tr .time_cell{width:30px;height:30px;}
-.table-chang tbody tr .time_cell {width:30px;height:30px;font-size:24px;color:#000;border:0px;background-color: #fff; padding-bottom: 10px;}
+.table-chang tbody tr .time_cell {width:30px;height:30px;font-size:24px;color:#000;border:0px;background-color: #fff; padding-bottom: 15px;}
 .table-chang tbody tr .time_cell span{font-size:10px;float: right}
 .my-sel-place{overflow: hidden;margin-bottom: 10px;}
 .my-sel-place li{text-align: center;height: 25px;line-height: 25px;
