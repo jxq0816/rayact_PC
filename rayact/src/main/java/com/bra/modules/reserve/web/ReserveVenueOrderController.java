@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,6 +83,7 @@ public class ReserveVenueOrderController extends BaseController {
         //获取预定开始时间
         List<String> times = TimeUtils.getTimeSpacList(venue.getStartTime(), venue.getEndTime(), TimeUtils.BENCHMARK);
         model.addAttribute("times", times);
+        model.addAttribute("orderDate",new Date());
         return "reserve/visitorsSetOrder/form";
     }
     //确认购买 表单

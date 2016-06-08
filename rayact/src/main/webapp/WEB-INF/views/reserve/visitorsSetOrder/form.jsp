@@ -101,8 +101,9 @@
                                 </div>
                                 <label for="orderDate" class="control-label col-lg-2">日期:</label>
                                 <div class="col-lg-4">
-                                    <input value="" id="orderDate" name="orderDate" type="text"
+                                    <input id="orderDate" name="orderDate" type="text"
                                            class="input-small form-control Wdate"
+                                           value="<fmt:formatDate value="${orderDate}" type="date"/> "
                                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </div>
                             </div>
