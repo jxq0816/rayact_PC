@@ -6,7 +6,8 @@ import com.bra.modules.reserve.entity.ReserveVenueEmptyCheck;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Created by xiaobin on 16/1/8.
+ * 场地的时间价格
+ * Created by jiangxingqi on 16/1/8.
  */
 public class TimePrice {
 
