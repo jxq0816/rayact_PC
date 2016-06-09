@@ -18,6 +18,7 @@ import com.bra.modules.cms.service.PostMainService;
 import com.bra.modules.cms.service.PostService;
 import com.bra.modules.mechanism.entity.AttMain;
 import com.bra.modules.mechanism.service.AttMainService;
+import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -168,16 +169,21 @@ public class PostMainController extends BaseController {
 		}else if("focus".equals(mode)){
 			Focus focus = new Focus();
 			focus.setModelName("user");
-			focus.setCreateBy(UserUtils.getUser());
-			List<Focus> list = focusService.findList(focus);
-			String in = "(";
-			if(list!=null&&list.size()>0){
-				for(Focus f:list){
-					in += "'"+f.getModelId()+"',";
+			User u = UserUtils.getUser();
+			if(u!=null && StringUtils.isNotBlank(u.getId())){
+				focus.setCreateBy(u);
+				List<Focus> list = focusService.findList(focus);
+				String in = "(";
+				if(list!=null&&list.size()>0){
+					for(Focus f:list){
+						in += "'"+f.getModelId()+"',";
+					}
+					in = in.substring(0,in.length()-1)+") ";
+					postMain.getSqlMap().put("addition"," and pm.create_by in "+ in );
+				}else{
+					postMain.getSqlMap().put("addition"," and 1 = 2 ");
 				}
-				in = in.substring(0,in.length()-1)+") ";
-				postMain.getSqlMap().put("addition"," and pm.create_by in "+ in );
-			}else{
+			}else {
 				postMain.getSqlMap().put("addition"," and 1 = 2 ");
 			}
 		}

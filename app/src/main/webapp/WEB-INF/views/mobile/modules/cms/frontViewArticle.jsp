@@ -31,7 +31,7 @@
 	<div class="list">
 		<c:forEach items="${comments}" var="comment">
 			<div class="item" style="margin-top: 20px">
-				<div class="img" style="display: inline-block;"><img src="${comment.createBy.photo}" class="round" width="100px" height="100px"></div>
+				<div class="img" style="display: inline-block;"><img src="${comment.createBy.photo}" class="round" width="100px" height="100px" onclick="jumpToInfo(this)" name="${comment.createBy.id}"></div>
 				<div style="display: inline-block;position:relative;top: 10px;width: 80%">
 				<span class="name" name="${comment.createBy.id}" style="display: inline-block;color: #f0860c;font-size: 30px">${comment.createBy.name}:</span>
 				</div>
@@ -42,8 +42,17 @@
 		</c:forEach>
 	</div>
 	<div class="row" style="padding: 10px;align:center;">
-		<div onclick="jumpToApp()" style="margin:10px;height:50px;width:100%;background-image:url(${ctxStatic}/images/more2x.png);background-repeat:no-repeat;background-position:center;" ></div>
+		<div onclick="jumpToApp(this)" style="margin:10px;height:50px;width:100%;background-image:url(${ctxStatic}/images/more2x.png);background-repeat:no-repeat;background-position:center;" ></div>
 	</div>
 </div>
+<script>
+	function jumpToApp(){
+		iOSskipInfo();
+	}
+	function jumpToInfo(dom){
+		var id = $(dom).attr("name");
+		iOSPhotoskipInfo(id);
+	}
+</script>
 </body>
 </html>

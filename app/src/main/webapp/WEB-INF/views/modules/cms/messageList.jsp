@@ -40,15 +40,37 @@
 				<th>消息链接</th>
 				<th>消息来源ID</th>
 				<th>消息来源模块</th>
+				<th>发布时间</th>
 				<shiro:hasPermission name="cms:message:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="message">
 			<tr>
-				<td><a href="${ctx}/cms/message/form?id=${message.id}">
-					<fmt:formatDate value="${message.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</a></td>
+				<td>
+					${message.subject}
+				</td>
+				<td>
+					${message.targetId}
+				</td>
+				<td>
+						${message.targetName}
+				</td>
+				<td>
+						${message.content}
+				</td>
+				<td>
+						${message.url}
+				</td>
+				<td>
+						${message.sendId}
+				</td>
+				<td>
+						${message.sendName}
+				</td>
+				<td>
+					<fmt:formatDate value="${message.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
 				<shiro:hasPermission name="cms:message:edit"><td>
     				<a href="${ctx}/cms/message/form?id=${message.id}">修改</a>
 					<a href="${ctx}/cms/message/delete?id=${message.id}" onclick="return confirmx('确认要删除该消息吗？', this.href)">删除</a>

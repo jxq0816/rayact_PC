@@ -48,6 +48,9 @@
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
+			<if test="phone!=null and phone != ''">
+				AND a.phone = #{phone}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -160,7 +163,7 @@
 		<include refid="teamMemberJoins"/>
 		LEFT JOIN sys_user u on u.id = a.member_id
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			1 = 1
 			<if test="name != null and name != ''">
 				AND a.name LIKE
 				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -179,7 +182,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.isCaptain DESC
 			</otherwise>
 		</choose>
 	</select>

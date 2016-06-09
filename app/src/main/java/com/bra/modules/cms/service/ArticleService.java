@@ -7,6 +7,8 @@ import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.common.utils.CacheUtils;
+import com.bra.common.utils.Collections3;
+import com.bra.common.utils.MyBeanUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.cms.dao.ArticleDao;
 import com.bra.modules.cms.dao.ArticleDataDao;
@@ -15,7 +17,9 @@ import com.bra.modules.cms.entity.Article;
 import com.bra.modules.cms.entity.ArticleData;
 import com.bra.modules.cms.entity.Category;
 import com.bra.modules.cms.entity.CmsCollection;
+import com.bra.modules.mechanism.entity.AttMain;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -102,16 +106,32 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         }
 
         ArticleData articleData ;
+        String attId = "";
+        Map<String, Object> map = MyBeanUtils.describe(attMainForm);
+        for (String key : map.keySet()) {
+            if ("class".equals(key)) continue;
+            List<AttMain> attMains = (List<AttMain>) map.get(key);
+            if (Collections3.isEmpty(attMains)) continue;
+            for (AttMain attMain : attMains) {
+                if (StringUtils.isNotBlank(attMain.getId())) {
+                    attId = attMain.getId();
+                }
+            }
+        }
         if (StringUtils.isBlank(article.getId())) {
             article.preInsert();
             articleData = article.getArticleData();
             articleData.setId(article.getId());
+            if(StringUtils.isNotBlank(attId))
+                 article.setImage(com.bra.modules.sys.utils.StringUtils.ATTPATH+attId);
             dao.insert(article);
             articleDataDao.insert(articleData);
         } else {
             article.preUpdate();
             articleData = article.getArticleData();
             articleData.setId(article.getId());
+            if(StringUtils.isNotBlank(attId))
+                article.setImage(com.bra.modules.sys.utils.StringUtils.ATTPATH+attId);
             dao.update(article);
             articleDataDao.update(article.getArticleData());
         }
@@ -206,12 +226,17 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         for(Map<String,Object> node:list){
             String attId = String.valueOf(node.get("attId"));
             String id = String.valueOf(node.get("id"));
-            CmsCollection cc = new CmsCollection();
-            cc.setModelId(id);
-            cc.setCreateBy(UserUtils.getUser());
-            List<CmsCollection> tmp = cmsCollectionService.findList(cc);
-            if(tmp!=null&&tmp.size()>0){
-                node.put("hasCollection",1);
+            User user = UserUtils.getUser();
+            if(user!=null&&StringUtils.isNotBlank(user.getId())){
+                CmsCollection cc = new CmsCollection();
+                cc.setModelId(id);
+                cc.setCreateBy(UserUtils.getUser());
+                List<CmsCollection> tmp = cmsCollectionService.findList(cc);
+                if(tmp!=null&&tmp.size()>0){
+                    node.put("hasCollection",1);
+                }else{
+                    node.put("hasCollection",0);
+                }
             }else{
                 node.put("hasCollection",0);
             }

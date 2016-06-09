@@ -122,9 +122,10 @@
 		    a.id AS "id",
 			a.subject AS "subject",
 			a.content AS "content",
-			date_format(a.create_date,'%Y-%m-%d %T') AS "createDate",
+			date_format(a.create_date,'%Y-%m-%d %T') AS "createDate"
 		  FROM message a
 		  WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+
 	</select>
 	
 </mapper>

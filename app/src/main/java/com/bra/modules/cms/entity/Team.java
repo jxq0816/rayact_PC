@@ -14,6 +14,7 @@ public class Team extends DataEntity<Team> {
 	private String photo;		// photo
 	private String name;		// name
 	private int personNum;		// person_num
+	private int expectNum = 0;
 	private String position;		// position
 	private String positionX;		// position_x
 	private String positionY;		// position_y
@@ -122,6 +123,15 @@ public class Team extends DataEntity<Team> {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+
+	public int getExpectNum() {
+		return expectNum;
+	}
+
+	public void setExpectNum(int expectNum) {
+		this.expectNum = expectNum;
 	}
 
 
