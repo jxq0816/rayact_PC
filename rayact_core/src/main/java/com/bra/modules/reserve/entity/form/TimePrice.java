@@ -3,6 +3,7 @@ package com.bra.modules.reserve.entity.form;
 
 import com.bra.modules.reserve.entity.ReserveVenueConsItem;
 import com.bra.modules.reserve.entity.ReserveVenueEmptyCheck;
+import com.bra.modules.reserve.entity.ReserveVenueOrder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -18,6 +19,7 @@ public class TimePrice {
     private String endTime;
 
     private ReserveVenueConsItem consItem;
+    private ReserveVenueOrder ticket;
     private ReserveVenueEmptyCheck check;
 
     private String frequency;//频率(1:单次;2:每天;3:每周)
@@ -27,7 +29,7 @@ public class TimePrice {
     private String consType;
     private String userName;
 
-    private String status = "0";//0:可预定,1:已预定,2:锁场,3:已取消,4:已结算,00:审核正常，01：审核异常
+    private String status = "0";//0:可预定,1:已预定,2:锁场,3:已取消,4:已结算,00:审核正常，01：审核异常,11:场次票（仅用于空场审核）
 
     public String getTime() {
         return time;
@@ -135,5 +137,14 @@ public class TimePrice {
     public void setCheck(ReserveVenueEmptyCheck check) {
         this.check = check;
     }
+
+    public ReserveVenueOrder getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(ReserveVenueOrder ticket) {
+        this.ticket = ticket;
+    }
+
 
 }

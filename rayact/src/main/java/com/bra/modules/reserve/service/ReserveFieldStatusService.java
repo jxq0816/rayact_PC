@@ -1,7 +1,9 @@
 package com.bra.modules.reserve.service;
 
+import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveFieldPriceSetDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
+import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.TimePrice;
@@ -35,6 +37,8 @@ public class ReserveFieldStatusService {
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
     @Autowired
     private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
+    @Autowired
+    private ReserveVenueOrderDao reserveVenueOrderDao;
 
     /**
      * 根据场馆Id和时间获取场地不同时间段的价格,并查询当前时间是否已经通过空场审核
@@ -58,6 +62,12 @@ public class ReserveFieldStatusService {
         reserveVenueCons.setConsDate(date);
         List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueCons);
 
+        //查询场次票售卖状况
+        ReserveVenueOrder order = new ReserveVenueOrder();
+        order.setReserveVenue(new ReserveVenue(venueId));
+        order.setOrderDate(date);
+        List<ReserveVenueOrder> venueOrderList = reserveVenueOrderDao.findListOrder(order);
+
         //查询已审核的信息
         ReserveVenueEmptyCheck reserveVenueEmptyCheck = new ReserveVenueEmptyCheck();
         reserveVenueEmptyCheck.setVenue(new ReserveVenue(venueId));
@@ -66,7 +76,7 @@ public class ReserveFieldStatusService {
         //获取场地的时间价格
         List<ReserveFieldPriceSet> reserveFieldPriceSetList=this.fieldTimePriceList(fieldList,date,venue);
         //获得场地的状态
-        List<FieldPrice> fieldPriceList=fieldStatus(reserveFieldPriceSetList, venueConsList,emptyChecks, times);
+        List<FieldPrice> fieldPriceList=fieldStatus(reserveFieldPriceSetList, venueConsList,venueOrderList,emptyChecks, times);
         return fieldPriceList;
     }
     //获取场地的时间价格
@@ -118,6 +128,31 @@ public class ReserveFieldStatusService {
     }
 
     /**
+     *  查询该time时间点的场地 是否有场次票
+     * @param ticketList
+     * @param fieldPriceSet
+     * @param time
+     * @return
+     */
+    private ReserveVenueOrder  haveTicket(List<ReserveVenueOrder> ticketList,ReserveFieldPriceSet fieldPriceSet,String time){
+        for (ReserveVenueOrder  ticket: ticketList) {
+            if(ticket!=null&& StringUtils.isEmpty(ticket.getId())){
+                if (fieldPriceSet.getReserveField().getId().equals(ticket.getReserveField().getId())) {
+                    String startTime = ticket.getStartTime();
+                    String endTime = ticket.getEndTime();
+                    List<String> times = TimeUtils.getTimeSpacListValue(startTime + ":00", endTime + ":00", 30);
+                    for (String t : times) {
+                        if (time.equals(t)) {
+                            return ticket;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * 场地空场审核
      * @param checks 已经审核的
      * @param fieldPriceSet 时间价格设置
@@ -147,8 +182,7 @@ public class ReserveFieldStatusService {
      * @param times 时间表
      * @return
      */
-    private List<FieldPrice> fieldStatus(List<ReserveFieldPriceSet> reserveFieldPriceSetList,
-                                List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
+    private List<FieldPrice> fieldStatus(List<ReserveFieldPriceSet> reserveFieldPriceSetList, List<ReserveVenueConsItem> venueConsList,List<ReserveVenueOrder> venueOrderList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
         List<FieldPrice> fieldPriceList = Lists.newLinkedList();
         FieldPrice fieldPrice;
         //遍历场地的时间价格列表
@@ -175,6 +209,7 @@ public class ReserveFieldStatusService {
                         break;
                     }
                 }
+
                 //查询时间time是否已经预定
                 ReserveVenueConsItem item = hasReserve(venueConsList, fieldPriceSet, time);
                 if (item != null) {//已经预定
@@ -184,6 +219,12 @@ public class ReserveFieldStatusService {
                     timePrice.setStatus(item.getConsData().getReserveType());//订单状态
                 } else {
                     timePrice.setStatus("0");//没有预订
+                }
+                //查询时间time是否场次票
+                ReserveVenueOrder ticket=haveTicket(venueOrderList,fieldPriceSet,time);
+                if(ticket!=null){
+                    timePrice.setTicket(ticket);
+                    timePrice.setStatus("11");//场次票已经预订
                 }
                 //查询时间time是否已经通过空场审核
                 ReserveVenueEmptyCheck check = hasCheck(reserveVenueEmptyChecks, fieldPriceSet, time);
