@@ -37,7 +37,7 @@ public class ReserveFieldStatusService {
     private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
 
     /**
-     * 根据场馆Id和时间获取场地不同时间段的价格,并查询当前时间是否预定,并标记位已定
+     * 根据场馆Id和时间获取场地不同时间段的价格,并查询当前时间是否已经通过空场审核
      *
      * @param venueId 场馆Id
      * @param date    时间
@@ -56,22 +56,26 @@ public class ReserveFieldStatusService {
         ReserveVenueConsItem reserveVenueCons = new ReserveVenueConsItem();
         reserveVenueCons.setReserveVenue(new ReserveVenue(venueId));
         reserveVenueCons.setConsDate(date);
-        //查询所有预定的信息(作为本场地的预定标记)
         List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueCons);
+
         //查询已审核的信息
         ReserveVenueEmptyCheck reserveVenueEmptyCheck = new ReserveVenueEmptyCheck();
         reserveVenueEmptyCheck.setVenue(new ReserveVenue(venueId));
         reserveVenueEmptyCheck.setCheckDate(date);
         List<ReserveVenueEmptyCheck> emptyChecks = reserveVenueEmptyCheckService.findList(reserveVenueEmptyCheck);
-        //查询价格
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList=this.fieldTimePriceList(fieldList,date,venue);
+        List<FieldPrice> fieldPriceList=buildTimePrice(reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
+        return fieldPriceList;
+    }
+    //获取场地的时间价格
+    private  List<ReserveFieldPriceSet> fieldTimePriceList(List<ReserveField> fieldList,Date date,ReserveVenue venue){
+        //设置场地的价格的查询条件
         ReserveFieldPriceSet reserveFieldPriceSet = new ReserveFieldPriceSet();
-        reserveFieldPriceSet.setReserveVenue(new ReserveVenue(venueId));
-        //会员类型(1:散客,2:会员)
-        reserveFieldPriceSet.setConsType("1");
+        reserveFieldPriceSet.setReserveVenue(venue);
+        reserveFieldPriceSet.setConsType("1"); //会员类型(1:散客,2:会员)
         String weekType = TimeUtils.getWeekType(date);//获得当天属于周几
         reserveFieldPriceSet.setWeek(weekType);
-        List<ReserveFieldPriceSet> reserveFieldPriceSetList = new ArrayList<ReserveFieldPriceSet>();
-        //获取场地的时间价格
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList = new ArrayList<>();
         for (ReserveField i : fieldList) {
             reserveFieldPriceSet.setReserveField(i);
             //设置场地的时令
@@ -86,15 +90,13 @@ public class ReserveFieldStatusService {
             reserveFieldPriceSet.setReserveTimeInterval(null);//将时令制空
             reserveFieldPriceSetList.addAll(list);
         }
-        List<FieldPrice> fieldPriceList=buildTimePrice(reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
-        return fieldPriceList;
+        return reserveFieldPriceSetList;
     }
-
-
-
     /**
+     * 查询该time时间点的场地状态
      * @param items
-     * @param time  网格时间
+     * @param fieldPriceSet
+     * @param time
      * @return
      */
     private ReserveVenueConsItem hasReserve(List<ReserveVenueConsItem> items, ReserveFieldPriceSet fieldPriceSet, String time) {
@@ -115,9 +117,9 @@ public class ReserveFieldStatusService {
 
     /**
      * 场地空场审核
-     * @param checks
-     * @param fieldPriceSet
-     * @param time
+     * @param checks 已经审核的
+     * @param fieldPriceSet 时间价格设置
+     * @param time 时间点
      * @return
      */
     private ReserveVenueEmptyCheck hasCheck(List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet fieldPriceSet, String time) {
@@ -135,13 +137,13 @@ public class ReserveFieldStatusService {
         }
         return null;
     }
-
-    //获取场地的时间，价格，状态
-    /*
-        fieldPriceList:场地的时间价格列表
-        reserveFieldPriceSetList:场地价格设置
-        venueConsList：场馆订单
-        times：时间表
+    /**
+     *
+     * @param reserveFieldPriceSetList 场地的时间价格列表
+     * @param venueConsList 场馆订单
+     * @param reserveVenueEmptyChecks 空场审核
+     * @param times 时间表
+     * @return
      */
     private List<FieldPrice> buildTimePrice(List<ReserveFieldPriceSet> reserveFieldPriceSetList,
                                 List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
