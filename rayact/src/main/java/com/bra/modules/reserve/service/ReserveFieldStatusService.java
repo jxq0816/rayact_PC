@@ -34,8 +34,6 @@ public class ReserveFieldStatusService {
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
     @Autowired
-    private ReserveFieldRelationService relationService;
-    @Autowired
     private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
 
 
@@ -129,6 +127,14 @@ public class ReserveFieldStatusService {
         }
         return null;
     }
+
+    /**
+     * 场地空场审核
+     * @param checks
+     * @param fieldPriceSet
+     * @param time
+     * @return
+     */
     private ReserveVenueEmptyCheck hasCheck(List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet fieldPriceSet, String time) {
         for (ReserveVenueEmptyCheck check : checks) {
             if (fieldPriceSet.getReserveField().getId().equals(check.getField().getId())) {
