@@ -36,19 +36,6 @@ public class ReserveFieldStatusService {
     @Autowired
     private ReserveVenueEmptyCheckService reserveVenueEmptyCheckService;
 
-
-
-    private void setWeek(ReserveFieldPriceSet reserveFieldPriceSet, Date date) {
-        String week = TimeUtils.getWeekOfDate(date);
-        if ("周六".equals(week)) {//2
-            reserveFieldPriceSet.setWeek("2");
-        } else if ("周日".equals(week)) {//3
-            reserveFieldPriceSet.setWeek("3");
-        } else {//1
-            reserveFieldPriceSet.setWeek("1");
-        }
-    }
-
     /**
      * 根据场馆Id和时间获取场地不同时间段的价格,并查询当前时间是否预定,并标记位已定
      *
@@ -57,7 +44,7 @@ public class ReserveFieldStatusService {
      * @return
      */
     public List<FieldPrice> emptyCheck(String venueId,Date date, List<String> times) {
-        List<FieldPrice> fieldPriceList = Lists.newLinkedList();
+
         //查询场馆中所有场地
         ReserveField field = new ReserveField();
         ReserveVenue venue = new ReserveVenue();
@@ -79,29 +66,27 @@ public class ReserveFieldStatusService {
         //查询价格
         ReserveFieldPriceSet reserveFieldPriceSet = new ReserveFieldPriceSet();
         reserveFieldPriceSet.setReserveVenue(new ReserveVenue(venueId));
-
-        setWeek(reserveFieldPriceSet, date);
         //会员类型(1:散客,2:会员)
         reserveFieldPriceSet.setConsType("1");
         String weekType = TimeUtils.getWeekType(date);//获得当天属于周几
         reserveFieldPriceSet.setWeek(weekType);
         List<ReserveFieldPriceSet> reserveFieldPriceSetList = new ArrayList<ReserveFieldPriceSet>();
-        //设置场地的时令
+        //获取场地的时间价格
         for (ReserveField i : fieldList) {
             reserveFieldPriceSet.setReserveField(i);
+            //设置场地的时令
             if ("1".equals(i.getIsTimeInterval())) {//该场地分时令
                 Calendar cal = Calendar.getInstance();
                 int day = cal.get(Calendar.DATE);
                 int month = cal.get(Calendar.MONTH) + 1;
                 ReserveTimeInterval reserveTimeInterval = reserveTimeIntervalService.findTimeInterval(month, day);//查询系统时间属于哪个时令
-                reserveFieldPriceSet.setReserveTimeInterval(reserveTimeInterval);
+                reserveFieldPriceSet.setReserveTimeInterval(reserveTimeInterval);//设置时令
             }
             List<ReserveFieldPriceSet> list = reserveFieldPriceSetDao.findList(reserveFieldPriceSet);
             reserveFieldPriceSet.setReserveTimeInterval(null);//将时令制空
             reserveFieldPriceSetList.addAll(list);
         }
-        buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
-
+        List<FieldPrice> fieldPriceList=buildTimePrice(reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
         return fieldPriceList;
     }
 
@@ -158,14 +143,13 @@ public class ReserveFieldStatusService {
         venueConsList：场馆订单
         times：时间表
      */
-    private void buildTimePrice(List<FieldPrice> fieldPriceList, List<ReserveFieldPriceSet> reserveFieldPriceSetList,
+    private List<FieldPrice> buildTimePrice(List<ReserveFieldPriceSet> reserveFieldPriceSetList,
                                 List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
-
+        List<FieldPrice> fieldPriceList = Lists.newLinkedList();
         FieldPrice fieldPrice;
         //遍历场地的时间价格列表
         for (ReserveFieldPriceSet fieldPriceSet : reserveFieldPriceSetList) {
             fieldPrice = new FieldPrice();
-            ReserveField field = fieldPriceSet.getReserveField();//获取场地
             fieldPrice.setVenueId(fieldPriceSet.getReserveVenue().getId());//设置场馆编号
             fieldPrice.setFieldId(fieldPriceSet.getReserveField().getId());//设置场地编号
             fieldPrice.setFieldName(fieldPriceSet.getReserveField().getName());//设置场地名称
@@ -208,5 +192,6 @@ public class ReserveFieldStatusService {
             }
             fieldPriceList.add(fieldPrice);//添加某个场地的所有价格和状态列表
         }
+        return fieldPriceList;
     }
 }
