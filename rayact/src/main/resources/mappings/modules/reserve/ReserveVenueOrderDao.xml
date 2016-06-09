@@ -62,6 +62,15 @@
             <if test="sqlMap.startDate != null and sqlMap.endDate != null">
                 and (a.update_date BETWEEN #{sqlMap.startDate} AND #{sqlMap.endDate})
             </if>
+			<if test="orderDate != null">
+				and (DATE (a.order_date)= Date(#{orderDate}))
+			</if>
+			<if test="reserveVenue != null">
+				and a.venue_id= #{reserveVenue.id}
+			</if>
+			<if test="reserveField != null">
+				and a.fk_reserve_field_id= #{reserveField.id}
+			</if>
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">

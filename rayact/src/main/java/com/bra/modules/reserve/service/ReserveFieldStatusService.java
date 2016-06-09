@@ -66,7 +66,7 @@ public class ReserveFieldStatusService {
         ReserveVenueOrder order = new ReserveVenueOrder();
         order.setReserveVenue(new ReserveVenue(venueId));
         order.setOrderDate(date);
-        List<ReserveVenueOrder> venueOrderList = reserveVenueOrderDao.findListOrder(order);
+        List<ReserveVenueOrder> venueOrderList = reserveVenueOrderDao.findList(order);
 
         //查询已审核的信息
         ReserveVenueEmptyCheck reserveVenueEmptyCheck = new ReserveVenueEmptyCheck();
@@ -136,7 +136,7 @@ public class ReserveFieldStatusService {
      */
     private ReserveVenueOrder  haveTicket(List<ReserveVenueOrder> ticketList,ReserveFieldPriceSet fieldPriceSet,String time){
         for (ReserveVenueOrder  ticket: ticketList) {
-            if(ticket!=null&& StringUtils.isEmpty(ticket.getId())){
+            if(ticket!=null&& StringUtils.isNoneEmpty(ticket.getId())){
                 if (fieldPriceSet.getReserveField().getId().equals(ticket.getReserveField().getId())) {
                     String startTime = ticket.getStartTime();
                     String endTime = ticket.getEndTime();

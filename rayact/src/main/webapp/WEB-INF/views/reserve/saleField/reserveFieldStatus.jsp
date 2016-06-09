@@ -25,7 +25,7 @@
                             <%-- 场馆--%>
                             <c:forEach items="${reserveVenueList}" var="venue" varStatus="status">
                                 <li <j:if test="${venue.id eq reserveVenue.id}">class="on"</j:if>><a
-                                        href="${ctx}/reserve/field/main?venueId=${venue.id}&t=${consDate.time}">${venue.name}</a>
+                                        href="${ctx}/reserve/field/status?venueId=${venue.id}&t=${consDate.time}">${venue.name}</a>
                                 </li>
                             </c:forEach>
                         </div>
@@ -35,9 +35,11 @@
                         <li style="margin-left: 0px;"><span class="green-bg-color"></span>可预订</li>
                         <%-- <li><span class="blue-bg-color"></span>已选场次</li>--%>
                         <li><span class="grey-bg-color"></span>已占用</li>
+                        <li><span class="ticketOccupation"></span>场次票占用</li>
                         <li><span class="red-bg-color"></span>已付款</li>
                         <li><span class="normal"></span>空场审核通过</li>
                         <li><span class="fullFieldHasAbnormal"></span>空场审核未通过</li>
+
                     </ul>
                 </div>
                 <%-- 周几，日期--%>
@@ -49,7 +51,7 @@
                                     <c:forEach items="${timeSlot}" var="slot" varStatus="status">
                                         <li
                                                 <j:if test="${consDate.time eq slot.value}">class="on"</j:if> >
-                                            <a href="${ctx}/reserve/field/main?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a>
+                                            <a href="${ctx}/reserve/field/status?venueId=${reserveVenue.id}&t=${slot.value}">${slot.key}</a>
                                         </li>
                                     </c:forEach>
                                 </div>
@@ -59,7 +61,7 @@
                     <div class="col-lg-5">
                         <div class="tab-time">
                             <form:form id="searchForm"
-                                       action="${ctx}/reserve/field/main"
+                                       action="${ctx}/reserve/field/status"
                                        method="post">
                                 <div class="row">
                                     <div class="col-lg-4">
