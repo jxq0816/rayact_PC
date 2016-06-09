@@ -63,8 +63,10 @@ public class ReserveFieldStatusService {
         reserveVenueEmptyCheck.setVenue(new ReserveVenue(venueId));
         reserveVenueEmptyCheck.setCheckDate(date);
         List<ReserveVenueEmptyCheck> emptyChecks = reserveVenueEmptyCheckService.findList(reserveVenueEmptyCheck);
+        //获取场地的时间价格
         List<ReserveFieldPriceSet> reserveFieldPriceSetList=this.fieldTimePriceList(fieldList,date,venue);
-        List<FieldPrice> fieldPriceList=buildTimePrice(reserveFieldPriceSetList, venueConsList,emptyChecks, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
+        //获得场地的状态
+        List<FieldPrice> fieldPriceList=buildTimePrice(reserveFieldPriceSetList, venueConsList,emptyChecks, times);
         return fieldPriceList;
     }
     //获取场地的时间价格
