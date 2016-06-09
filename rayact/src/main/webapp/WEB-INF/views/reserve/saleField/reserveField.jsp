@@ -9,17 +9,6 @@
     <script type="text/javascript"
             src="${ctxStatic}/jquery/jquery-smartMenu-min.js"></script>
     <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';</script>
-    <style>
-        .table-chang td.normal {
-            background:#62ab00;
-        }
-        .table-chang td.abnormal {
-            background:#ff981d;
-        }
-        .table-chang td.fullFieldHasAbnormal {
-            background:#ff981d;
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">

@@ -9,17 +9,6 @@
     <script type="text/javascript"
             src="${ctxStatic}/jquery/jquery-smartMenu-min.js"></script>
     <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';</script>
-    <style>
-        .table-chang td.normal {
-            background:#62ab00;
-        }
-        .table-chang td.abnormal {
-            background:#ff981d;
-        }
-        .table-chang td.fullFieldHasAbnormal {
-            background:#ff981d;
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -47,6 +36,8 @@
                         <%-- <li><span class="blue-bg-color"></span>已选场次</li>--%>
                         <li><span class="grey-bg-color"></span>已占用</li>
                         <li><span class="red-bg-color"></span>已付款</li>
+                        <li><span class="normal"></span>空场审核通过</li>
+                        <li><span class="fullFieldHasAbnormal"></span>空场审核未通过</li>
                     </ul>
                 </div>
                 <%-- 周几，日期--%>
