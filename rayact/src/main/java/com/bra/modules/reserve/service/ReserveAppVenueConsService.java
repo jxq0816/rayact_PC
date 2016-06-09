@@ -59,7 +59,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
 
     /**
      * 订单列表
-     * @param reserveType 订单状态
+     * @param reserveType 订单状态 1:已预订 4：已结算
      * @return
      */
     public  List<Map>  orderList(String reserveType,String phone) {

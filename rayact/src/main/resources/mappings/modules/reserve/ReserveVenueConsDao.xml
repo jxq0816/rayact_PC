@@ -352,6 +352,9 @@
             <if test="reserveType != null and reserveType != ''">
                 and a.reserve_type = #{reserveType}
             </if>
+            <if test="byPC != null and byPC != ''">
+                and a.by_pc = #{byPC}
+            </if>
             ${sqlMap.dsf}
             <if test="sqlMap.startDate != null and sqlMap.endDate != null">
                 and (Date(a.update_date) BETWEEN DATE (#{sqlMap.startDate}) AND DATE(#{sqlMap.endDate}))

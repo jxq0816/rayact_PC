@@ -30,9 +30,6 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, ReserveVenueCons> {
-
-    @Autowired
-    private ReserveUserService reserveUserService;
     @Autowired
     private StoredCardMemberService storedCardMemberService;
     @Autowired
@@ -41,10 +38,6 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     private ReserveFieldPriceService reserveFieldPriceService;
     @Autowired
     private ReserveTutorService reserveTutorService;
-    @Autowired
-    private ReserveCardStatementsService reserveCardStatementsService;
-    @Autowired
-    private ReserveMemberService reserveMemberService;
     @Autowired
     private ReserveVenueConsItemService reserveVenueConsItemService;
     @Autowired
