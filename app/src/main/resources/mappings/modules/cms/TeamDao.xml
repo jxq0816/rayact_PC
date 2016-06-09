@@ -21,7 +21,8 @@
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
 		a.remarks AS "remarks",
-		a.type AS "type"
+		a.type AS "type",
+		a.expect_num AS "expectNum"
 	</sql>
 	
 	<sql id="teamJoins">
@@ -97,7 +98,8 @@
 			del_flag,
 			remarks,
 			member_ids,
-			type
+			type,
+			expect_num
 		) VALUES (
 			#{id},
 			#{photo},
@@ -115,7 +117,8 @@
 			#{delFlag},
 			#{remarks},
 			#{memberIds},
-			#{type}
+			#{type},
+			#{expectNum}
 		)
 	</insert>
 	
@@ -133,7 +136,8 @@
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			member_ids = #{memberIds},
-			type = #{type}
+			type = #{type},
+			expect_num = #{expectNum}
 		WHERE id = #{id}
 	</update>
 	
@@ -150,6 +154,7 @@
 		a.photo AS "photo",
 		a.name AS "name",
 		a.person_num AS "personNum",
+		a.expect_num AS "expectNum",
 		a.group_id AS "groupId",
 		c.name AS "groupName",
 		a.position AS "position",

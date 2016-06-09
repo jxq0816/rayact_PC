@@ -105,33 +105,85 @@ public class TeamController extends BaseController {
 	public void saveApp(Team team,HttpServletRequest request, HttpServletResponse response)throws Exception {
 		String file = request.getParameter("files");
 		String modelName = request.getParameter("modelName");
-		byte[] image = Base64.decode(file);
-		FileModel fileModel = new FileModel();
-		String destPath = Global.getBaseDir();
-		String tmp = destPath + "resources/www";
-		File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
-		if (!f.getParentFile().exists())
-			f.getParentFile().mkdirs();
-		if (!f.exists())
-			f.createNewFile();
-		FileOutputStream fos = new FileOutputStream(f);
-		fos.write(image);
-		fos.close();
-		fileModel.setStoreType(StoreType.SYSTEM);
-		fileModel.setToken(new Date().toString());
-		fileModel.setFilePath(f.getAbsolutePath());
-		fileModel.setContentType("pic");
-		AttMain attMain = new AttMain(fileModel);
-		attMain.setFdModelName(modelName);
-		attMain = attMainService.saveAttMain(attMain);
-		fileModel.setAttId(attMain.getId());
-		team.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH+attMain.getId());
+		if(!"".equals(file)&&file!=null){
+			byte[] image = Base64.decode(file);
+			FileModel fileModel = new FileModel();
+			String destPath = Global.getBaseDir();
+			String tmp = destPath + "resources/www";
+			File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
+			if (!f.getParentFile().exists())
+				f.getParentFile().mkdirs();
+			if (!f.exists())
+				f.createNewFile();
+			FileOutputStream fos = new FileOutputStream(f);
+			fos.write(image);
+			fos.close();
+			fileModel.setStoreType(StoreType.SYSTEM);
+			fileModel.setToken(new Date().toString());
+			fileModel.setFilePath(f.getAbsolutePath());
+			fileModel.setContentType("pic");
+			AttMain attMain = new AttMain(fileModel);
+			attMain.setFdModelName(modelName);
+			attMain = attMainService.saveAttMain(attMain);
+			fileModel.setAttId(attMain.getId());
+			team.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH+attMain.getId());
+		}
 		JSONObject j = new JSONObject();
-		teamService.save(team);
+		if(!StringUtils.isNotBlank(team.getId())){
+			teamService.save(team);
+		}
 		String teamMember = request.getParameter("members");
 		saveMembers(teamMember,team);
 		j.put("status","success");
 		j.put("msg","队伍创建成功");
+		j.put("teamId",team.getId());
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException g) {
+
+		}
+
+	}
+
+	@RequestMapping(value = "app/edit")
+	public void editApp(Team team,HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String file = request.getParameter("files");
+		String modelName = request.getParameter("modelName");
+		if(!"".equals(file)&&file!=null){
+			byte[] image = Base64.decode(file);
+			FileModel fileModel = new FileModel();
+			String destPath = Global.getBaseDir();
+			String tmp = destPath + "resources/www";
+			File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
+			if (!f.getParentFile().exists())
+				f.getParentFile().mkdirs();
+			if (!f.exists())
+				f.createNewFile();
+			FileOutputStream fos = new FileOutputStream(f);
+			fos.write(image);
+			fos.close();
+			fileModel.setStoreType(StoreType.SYSTEM);
+			fileModel.setToken(new Date().toString());
+			fileModel.setFilePath(f.getAbsolutePath());
+			fileModel.setContentType("pic");
+			AttMain attMain = new AttMain(fileModel);
+			attMain.setFdModelName(modelName);
+			attMain = attMainService.saveAttMain(attMain);
+			fileModel.setAttId(attMain.getId());
+			team.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH+attMain.getId());
+		}
+		JSONObject j = new JSONObject();
+		if(!StringUtils.isNotBlank(team.getId())){
+			teamService.save(team);
+		}
+		String teamMember = request.getParameter("members");
+		saveMembers(teamMember,team);
+		j.put("status","success");
+		j.put("msg","队伍创建成功");
+		j.put("teamId",team.getId());
 		try {
 			response.reset();
 			response.setContentType("application/json");
@@ -205,14 +257,34 @@ public class TeamController extends BaseController {
 		if(ja.size()>0){
 			for(int i =0;i<ja.size();i++){
 				JSONObject jo = ja.getJSONObject(i);
-				TeamMember tm = new TeamMember();
-				tm.setTeam(team);
-				tm.setName(String.valueOf(jo.get("name")));
-				tm.setPhone(String.valueOf(jo.get("phone")));
-				tm.setRole(String.valueOf(jo.get("role")));
-				tm.setIscaptain(String.valueOf(jo.get("isCaptain")));
-				tm.setRemarks(String.valueOf(jo.get("remarks")));
-				teamMemberService.save(tm);
+				String id = jo.get("id")!=null?String.valueOf(jo.get("id")):"";
+				String phone = jo.get("phone")!=null?String.valueOf(jo.get("phone")):"";
+				if(StringUtils.isNotBlank(id)){
+					TeamMember tm = teamMemberService.get(id);
+					tm.setTeam(team);
+					tm.setName(String.valueOf(jo.get("name")));
+					tm.setPhone(phone);
+					tm.setRole(String.valueOf(jo.get("role")));
+					tm.setIscaptain(jo.get("isCaptain")!=null ? String.valueOf(jo.get("isCaptain")):"0");
+					tm.setRemarks(String.valueOf(jo.get("remarks")));
+					teamMemberService.save(tm);
+				}else{
+					TeamMember tms = new TeamMember();
+					tms.setPhone(phone);
+					List<TeamMember> l = teamMemberService.findList(tms);
+					if(l!=null&&l.size()>0){
+						continue;
+					}else{
+						TeamMember tm = new TeamMember();
+						tm.setTeam(team);
+						tm.setName(String.valueOf(jo.get("name")));
+						tm.setPhone(phone);
+						tm.setRole(String.valueOf(jo.get("role")));
+						tm.setIscaptain(jo.get("isCaptain")!=null ? String.valueOf(jo.get("isCaptain")):"0");
+						tm.setRemarks(String.valueOf(jo.get("remarks")));
+						teamMemberService.save(tm);
+					}
+				}
 			}
 		}
 	}

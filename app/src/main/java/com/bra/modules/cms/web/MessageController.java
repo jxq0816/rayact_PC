@@ -4,10 +4,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Message;
+import com.bra.modules.cms.entity.MessageCheck;
+import com.bra.modules.cms.service.MessageCheckService;
 import com.bra.modules.cms.service.MessageService;
+import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +37,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/cms/message")
 public class MessageController extends BaseController {
-
+	@Autowired
+    private MessageCheckService messageCheckService;
 	@Autowired
 	private MessageService messageService;
 	
@@ -84,6 +91,32 @@ public class MessageController extends BaseController {
 	@RequestMapping(value = "app/list")
 	public void listApp(Message message, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<Map<String,String>> rtn = messageService.findMapList(new Page<Message>(request, response), message);
+		User user = UserUtils.getUser();
+		MessageCheck mcf = null;
+		if(user!=null && user.getId()!=null && rtn!=null && rtn.size()>0){
+			MessageCheck mc = new MessageCheck();
+			mc.setCreateBy(user);
+			List<MessageCheck> list = messageCheckService.findList(mc);
+			if(list!=null&&list.size()>0){
+				mcf = list.get(0);
+			}else{
+				mcf = new MessageCheck();
+			}
+			for(Map<String,String> m:rtn){
+				if(mcf.getUpdateDate()!=null){
+					String date = m.get("createDate");
+					Date d = DateUtils.parseDate(date);
+					if(d.before(mcf.getUpdateDate())){
+						m.put("isNew","false");
+					}else{
+						m.put("isNew","true");
+					}
+				}else{
+					m.put("isNew","true");
+				}
+			}
+			messageCheckService.save(mcf);
+		}
 		try {
 			response.reset();
 			response.setContentType("application/json");

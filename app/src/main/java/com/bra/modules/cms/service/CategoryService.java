@@ -49,7 +49,8 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@SuppressWarnings("unchecked")
 	public List<Category> findByUser(boolean isCurrentSite, String module){
 		
-		List<Category> list = (List<Category>) UserUtils.getCache(CACHE_CATEGORY_LIST);
+		//List<Category> list = (List<Category>) UserUtils.getCache(CACHE_CATEGORY_LIST);
+		List<Category> list = null;
 		if (list == null){
 			User user = UserUtils.getUser();
 			Category category = new Category();
