@@ -66,7 +66,7 @@ public class ReserveFieldStatusService {
         //获取场地的时间价格
         List<ReserveFieldPriceSet> reserveFieldPriceSetList=this.fieldTimePriceList(fieldList,date,venue);
         //获得场地的状态
-        List<FieldPrice> fieldPriceList=buildTimePrice(reserveFieldPriceSetList, venueConsList,emptyChecks, times);
+        List<FieldPrice> fieldPriceList=fieldStatus(reserveFieldPriceSetList, venueConsList,emptyChecks, times);
         return fieldPriceList;
     }
     //获取场地的时间价格
@@ -140,14 +140,14 @@ public class ReserveFieldStatusService {
         return null;
     }
     /**
-     *
+     * 场地的状态
      * @param reserveFieldPriceSetList 场地的时间价格列表
      * @param venueConsList 场馆订单
      * @param reserveVenueEmptyChecks 空场审核
      * @param times 时间表
      * @return
      */
-    private List<FieldPrice> buildTimePrice(List<ReserveFieldPriceSet> reserveFieldPriceSetList,
+    private List<FieldPrice> fieldStatus(List<ReserveFieldPriceSet> reserveFieldPriceSetList,
                                 List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
         List<FieldPrice> fieldPriceList = Lists.newLinkedList();
         FieldPrice fieldPrice;
