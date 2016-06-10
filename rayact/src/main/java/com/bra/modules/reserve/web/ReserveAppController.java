@@ -300,4 +300,15 @@ public class ReserveAppController extends BaseController {
         }
         return map;
     }
+    @RequestMapping(value = "checkUserOrder")
+    @ResponseBody
+    /**
+     *检测用户是否有未付款的订单
+     * @param orderId
+     * @return
+     */
+    public String checkUserOrder(String phone) {
+        List<Map> orderList = reserveAppVenueConsService.orderList("1",phone);
+        return  JSON.toJSONString(orderList);
+    }
 }
