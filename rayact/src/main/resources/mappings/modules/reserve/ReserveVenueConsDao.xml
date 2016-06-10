@@ -206,7 +206,7 @@
         select a.id,
         a.venue_id as "venue.id",v.name as "venue.name",
         a.user_name as "member.name",a.cons_mobile as "member.mobile",
-        a.update_date as consDate,a.update_date as updateDate,
+        a.order_date as consDate,a.update_date as updateDate,
         a.collect_price as orderPrice,
         a.collect_price as shouldPrice,
         0 as discountPrice,

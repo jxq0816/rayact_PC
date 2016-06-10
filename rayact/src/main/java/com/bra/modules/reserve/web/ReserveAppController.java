@@ -157,7 +157,19 @@ public class ReserveAppController extends BaseController {
                                  Double aliPayInput,
                                  Double couponInput) {
         Map map=new HashMap<>();
-        Double inputSum=memberCardInput+bankCardInput+weiXinInput+aliPayInput+couponInput;
+        Double inputSum=0.0;
+        if(memberCardInput!=null){
+            inputSum+=bankCardInput;
+        }
+        if(weiXinInput!=null){
+            inputSum+=weiXinInput;
+        }
+        if(aliPayInput!=null){
+            inputSum+=aliPayInput;
+        }
+        if(couponInput!=null){
+            inputSum+=couponInput;
+        }
         if(consPrice==null){
             map.put("result",3);
             map.put("msg","实付金额不能为空");
