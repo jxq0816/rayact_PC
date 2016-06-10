@@ -88,33 +88,37 @@
     </div>
 </div>
 <%--结账模态--%>
-<!--查看详情-->
-<button class="btn btn-primary btn-flat md-trigger" id="detailsBtn" style="display: none"
-        data-modal="details-primary">Basic Form
+
+<!-- 订场详情modal -->
+<button id="detailsBtn" style="display: none" class="btn btn-primary btn-large" href="#detaisDialogModal"
+        data-toggle="modal">订场详情
 </button>
-<div class="md-modal colored-header custom-width md-effect-12" id="details-primary">
-    <div class="md-content">
-        <div class="modal-header">
-            <h5>预定详情</h5>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body form-horizontal" id="detailsForm">
-            <!--预定详情-->
+<div class="modal fade" style="width:auto;" id="detaisDialogModal" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">订场详情</h4>
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="reserve_top_line">
 
-
-            <!--end 预定详情-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="closeDetailsBtn" class="btn btn-default btn-flat md-close"
-                    data-dismiss="modal">
-                关闭
-            </button>
+                </div>
+                <div class="modal-body form-horizontal" id="detailsForm">
+                    <!--赠品表单-->
+                    <!--end 赠品表单-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeDetailsBtn" class="btn btn-default btn-flat md-close"
+                        data-dismiss="modal">
+                    确定
+                </button>
+            </div>
         </div>
     </div>
 </div>
-<!--end 查看详情-->
-
 <!-- 赠品Modal -->
 <button id="giftBtn" style="display: none" class="btn btn-primary btn-large" href="#giftDialogModal"
         data-toggle="modal">赠品

@@ -8,7 +8,9 @@
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/jquery/smartMenu.css"/>
     <script type="text/javascript"
             src="${ctxStatic}/jquery/jquery-smartMenu-min.js"></script>
-    <script type="text/javascript">var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';</script>
+    <script type="text/javascript">
+        var ctx = '${ctx}', consDate = '${consDate.time}', venueId = '${reserveVenue.id}';
+    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">

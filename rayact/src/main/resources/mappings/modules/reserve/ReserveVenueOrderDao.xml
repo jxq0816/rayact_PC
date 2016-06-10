@@ -71,6 +71,12 @@
 			<if test="reserveField != null">
 				and a.fk_reserve_field_id= #{reserveField.id}
 			</if>
+			<if test="startTime != null and startTime!=''">
+				and a.start_time= #{startTime}
+			</if>
+			<if test="endTime != null and endTime!=''">
+				and a.end_time= #{endTime}
+			</if>
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">
