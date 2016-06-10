@@ -1,45 +1,4 @@
 $(document).ready(function () {
-    $("#saveBtn").on('click', function () {
-        var memberType = $("#memberType input:radio:checked").val();
-        if(memberType=='2'){
-            var memberId=$("#memberId").val();
-            if(!memberId){
-                errorLoding("请选择次卡会员");
-                return;
-            }
-        }
-        var collectPrice=$("#collectPrice").val();
-        if(isNaN(collectPrice)){
-            errorLoding("支付金额必须为数字");
-            return;
-        }
-        var formJson = $("#formBean").serializeArray();
-        jQuery.postItems({
-            url: ctx+'/reserve/reserveVenueOrder/save?random='+Math.random(),
-            data: formJson,
-            success: function (result) {
-                if (result) {
-                    if (result == "1") {
-                        formLoding("保存成功");
-                        $("#closeBtn").click();
-                        return;
-                    }else if (result == "2") {
-                        errorLoding("该用户没有次卡");
-                        return;
-                    }else if (result == "3") {
-                        errorLoding("该用户剩余次数不足");
-                        return;
-                    }else if (result == "4") {
-                        errorLoding("该用户的次票不可在该场地使用,请使用非会员，现金结账");
-                        return;
-                    }else {
-                        errorLoding("保存失败");
-                    }
-                }
-            }
-        });
-    });
-
     $("#isMember").on('ifChecked', function () {
         $("#memberId").removeAttr("disabled");
         $("#consPrice").attr("readonly", "readonly");
@@ -71,6 +30,68 @@ $(document).ready(function () {
         $("#userName").attr("value", username);
         $("#consMobile").attr("value", mobile);
     });
+
+    $("#saveBtn").on('click', function () {
+        var memberType = $("#memberType input:radio:checked").val();
+        var startTime=$("#startTime").val();
+        var endTime=$("#endTime").val();
+        if (startTime == endTime) {
+            formLoding('开始时间应小于结束时间');
+            return false;
+        }
+        $.postItems({
+            url: ctx + '/reserve/field/checkTime',
+            data: {startTime: startTime, endTime: endTime},
+            success: function (values) {
+                if (values == "0") {
+                    formLoding('开始时间应小于结束时间');
+                    return false;
+                }
+            }
+        });
+        if(memberType=='2'){
+            var memberId=$("#memberId").val();
+            if(!memberId){
+                errorLoding("请选择次卡会员");
+                return;
+            }
+        }
+        var collectPrice=$("#collectPrice").val();
+        if(isNaN(collectPrice)){
+            errorLoding("支付金额必须为数字");
+            return;
+        }
+        var formJson = $("#formBean").serializeArray();
+        var checkFlag=false;
+        jQuery.postItems({
+            url: ctx+'/reserve/reserveVenueOrder/checkSave?random='+Math.random(),
+            data: formJson,
+            success: function (result) {
+                result = $.parseJSON(result);
+                if (result.status) {
+                    checkFlag=true;
+                }{
+                    formLoding(result.msg);
+                    return;
+                }
+            }
+        });
+        if(checkFlag==true){
+            jQuery.postItems({
+                url: ctx+'/reserve/reserveVenueOrder/save?random='+Math.random(),
+                data: formJson,
+                success: function (result) {
+                    result = $.parseJSON(result);
+                    if (result.status) {
+                        $("#closeBtn").click();
+                    }
+                    formLoding(result.msg);
+                }
+            });
+        }
+    });
+
+
 
     jQuery.addPrice = function (price, orderPrice, count) {
         if (price == '' || price == undefined) {

@@ -82,5 +82,6 @@
 </div>
 <%--结账模态--%>
 <script src="${ctxStatic}/modules/reserve/js/time_ticket_form.js" type="text/javascript"></script>
+
 </body>
 </html>
