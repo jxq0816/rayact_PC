@@ -103,7 +103,7 @@
                                 <div class="col-lg-4">
                                     <input id="orderDate" name="orderDate" type="text"
                                            class="input-small form-control Wdate"
-                                           value="<fmt:formatDate value="${orderDate}" type="date"/> "
+                                           value="<fmt:formatDate value="${orderDate}" type="date" pattern="yyyy-MM-dd"/>"
                                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                                 </div>
                             </div>
