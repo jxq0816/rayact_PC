@@ -106,8 +106,8 @@
 
                 </div>
                 <div class="modal-body form-horizontal" id="detailsForm">
-                    <!--赠品表单-->
-                    <!--end 赠品表单-->
+                    <!--订场详情-->
+                    <!--end 订场详情-->
                 </div>
             </div>
             <div class="modal-footer">

@@ -5,7 +5,9 @@
     <sql id="reserveVenueOrderColumns">
 		a.id AS "id",
 		a.venue_id AS "reserveVenue.id",
+		v.name AS "reserveVenue.name",
 		a.fk_reserve_field_id AS "reserveField.id",
+		f.name AS "reserveField.name",
 		a.visitors_set_id AS "visitorsSet.id",
 		p.name AS "visitorsSet.name",
 		a.member_id AS "member.id",
@@ -29,6 +31,8 @@
 
     <sql id="reserveVenueOrderJoins">
 		LEFT JOIN reserve_venue_visitors_set p ON a.visitors_set_id = p.id
+		LEFT JOIN reserve_venue v ON a.venue_id = v.id
+		LEFT JOIN reserve_field f ON a.fk_reserve_field_id = f.id
 	</sql>
 
     <select id="get" resultType="ReserveVenueOrder">
