@@ -53,7 +53,8 @@
         SELECT
         a.id AS "orderId",
         v.name AS "venueName",
-        a.order_price AS "orderPrice"
+        a.order_price AS "orderPrice",
+        a.cons_date AS "orderDate"
         FROM reserve_venue_cons as a
         LEFT JOIN reserve_venue as v ON v.id = a.venue_id
         where a.del_flag = '0'
