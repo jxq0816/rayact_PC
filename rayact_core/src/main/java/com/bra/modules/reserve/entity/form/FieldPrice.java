@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 场地价格
+ * 场地的所有属性
  * Created by jiang on 16/1/11.
  */
 public class FieldPrice implements Serializable{

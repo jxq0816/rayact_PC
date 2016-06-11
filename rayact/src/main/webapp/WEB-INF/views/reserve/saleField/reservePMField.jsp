@@ -33,6 +33,7 @@
                         <c:set var="status" value="${tp.status}"/>
                         <c:set var="price" value="${tp.price}"/>
                         <c:set var="username" value="${tp.userName}"/>
+                        <c:set var="ticketId" value="${tp.ticket.id}"/>
                         <c:set var="itemId" value="${tp.consItem.id}"/>
                         <c:set var="checkId" value="${tp.check.id}"/>
                         <%-- A场地 B时间 的状态 结束--%>

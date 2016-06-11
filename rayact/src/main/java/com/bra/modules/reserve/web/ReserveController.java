@@ -61,6 +61,8 @@ public class ReserveController extends BaseController {
     @Autowired
     private ReserveTutorOrderService reserveTutorOrderService;
     @Autowired
+    private ReserveVenueOrderService reserveVenueOrderService;
+    @Autowired
     private ReserveCommodityService reserveCommodityService;
     @Autowired
     private ReserveVenueGiftService reserveVenueGiftService;
@@ -473,20 +475,32 @@ public class ReserveController extends BaseController {
 
     //订单详情
     @RequestMapping(value = "details")
-    public String details(String itemId, Model model) {
-        ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
-        ReserveVenueConsItem search = new ReserveVenueConsItem();
-        //consItem.getConsData().setReserveType("3");
-
-        search.setConsData(consItem.getConsData());
-        ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
-        model.addAttribute("cos", cons);
-        List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
-        model.addAttribute("itemList", itemList);
-        model.addAttribute("tutorOrderList", reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY));
-        //赠品
-        model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
-        return "reserve/saleField/details";
+    public String details(String itemId, String fieldId,String time,String date,Model model) {
+        if(StringUtils.isNoneEmpty(itemId)) {
+            ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);
+            ReserveVenueConsItem search = new ReserveVenueConsItem();
+            //consItem.getConsData().setReserveType("3");
+            search.setConsData(consItem.getConsData());
+            ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
+            model.addAttribute("cos", cons);
+            List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
+            model.addAttribute("itemList", itemList);
+            model.addAttribute("tutorOrderList", reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY));
+            //赠品
+            model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
+            return "reserve/saleField/details";
+        }else{
+            ReserveVenueOrder order=new ReserveVenueOrder();
+            order.setReserveField(new ReserveField(fieldId));
+            order.setOrderDate(new Date(date));
+            String startTime=time.substring(0,5);
+            String endTime=time.substring(6,11);
+            order.setStartTime(startTime);
+            order.setEndTime(endTime);
+            List<ReserveVenueOrder> ticketList = reserveVenueOrderService.findList(order);
+            model.addAttribute("ticketList", ticketList);
+            return "reserve/saleField/ticketDetails";
+        }
     }
 
     //退款

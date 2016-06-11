@@ -17,6 +17,7 @@
         <tr>
                 <%-- 纵坐标：场地名称--%>
             <th><span>${fullField.fieldName}</span></th>
+                    <c:set var="fieldId" value="${fullField.fieldId}"/>
                 <%-- 横坐标：时间--%>
             <c:forEach items="${timesAM}" var="t">
                 <c:set var="status" value="0"/>
@@ -33,6 +34,7 @@
                         <c:set var="status" value="${tp.status}"/>
                         <c:set var="price" value="${tp.price}"/>
                         <c:set var="username" value="${tp.userName}"/>
+                        <c:set var="ticketId" value="${tp.ticket.id}"/>
                         <c:set var="itemId" value="${tp.consItem.id}"/>
                         <c:set var="checkId" value="${tp.check.id}"/>
                         <%-- A场地 B时间 的状态 结束--%>
@@ -80,14 +82,17 @@
                 <j:if test="${'1' eq status}">
                     <c:set var="midClass" value="reserveTd"/>
                 </j:if>
+                <j:if test="${'11' eq status}">
+                    <c:set var="midClass" value="reserveTd ticketOccupation"/>
+                </j:if>
                 <j:if test="${'1' eq fullStatus}">
-                    <c:set var="midClass" value="fullFieldHasReserved"/><%--全场已经预订，半场不可再预订--%>
+                    <c:set var="midClass" value="hasReserved"/><%--全场已经预订，半场不可再预订--%>
                 </j:if>
                 <j:if test="${'1' eq leftStatus}">
-                    <c:set var="midClass" value="halfFieldHasReserved"/><%--左半场已经预订，全场不可再预订--%>
+                    <c:set var="midClass" value="hasReserved"/><%--左半场已经预订，全场不可再预订--%>
                 </j:if>
                 <j:if test="${'1' eq rightStatus}">
-                    <c:set var="midClass" value="halfFieldHasReserved"/><%--右半场已经预订，全场不可再预订--%>
+                    <c:set var="midClass" value="hasReserved"/><%--右半场已经预订，全场不可再预订--%>
                 </j:if>
                 <j:if test="${'4' eq status}">
                     <c:set var="midClass" value="reserveTd red"/>
@@ -99,21 +104,25 @@
                     <c:set var="midClass" value="reserveTd abnormal"/>
                 </j:if>
                 <j:if test="${'01' eq fullStatus}">
-                    <c:set var="midClass" value="fullFieldHasAbnormal"/>
+                    <c:set var="midClass" value="reserveTd abnormal"/><%--全场审核不通过，半场审核也不通过--%>
                 </j:if>
                 <%--设置全场的class end--%>
 
                 <%-- 场地 B时间 的状态展示--%>
 
                 <%-- 如果有半场 显示为midClass--%>
-                <td style="color: #000;" status="${status}"
+                <td style="color: #000;"
+                    status="${status}"
                     data-item="${itemId}"
+                    data-field="${fieldId}"
                     data-check="${checkId}"
                     class="${midClass}"
                     data-price="${price}"
+                    data-time="${t}"
                     data-field="${fullField.fieldId}"
                     data-isHalfCourt="0"
-                    data-time="${t}" title="${username}">
+                    data-date="${consDate}"
+                    title="${username}">
                         ${username}
                 </td>
                 <%-- A场地 B时间 的状态展示 结束--%>

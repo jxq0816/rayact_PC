@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +60,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
 
     /**
      * 订单列表
-     * @param reserveType 订单状态
+     * @param reserveType 订单状态 1:已预订 4：已结算
      * @return
      */
     public  List<Map>  orderList(String reserveType,String phone) {
@@ -93,7 +94,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
      * @param reserveVenueCons
      */
     @Transactional(readOnly = false)
-    public String saveOrder(ReserveVenueCons reserveVenueCons) {
+    public Map saveOrder(ReserveVenueCons reserveVenueCons) {
         //获取会员
         String mobile=reserveVenueCons.getConsMobile();//预订人手机号
         ReserveMember appMember=new ReserveMember();
@@ -154,7 +155,12 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
         reserveVenueConsDao.insert(reserveVenueCons);//订单价格更改
-        return reserveVenueCons.getId();
+        Map map=new HashMap<>();
+        map.put("orderId",reserveVenueCons.getId());
+        Date createTime=reserveVenueCons.getCreateDate();
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        map.put("orderCreateTime",dateFormat.format(createTime));
+        return map;
     }
 
     @Transactional(readOnly = false)
@@ -222,5 +228,22 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         for(ReserveVenueConsItem i:itemList){
             reserveVenueConsItemDao.delete(i);//删除订单明细
         }
+    }
+    /**
+     * 检测用户是否有未付款的订单
+     *
+     * @param phone app 用户的手机
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public List<Map> checkUserUnpaidOrder(String phone) {
+        Map map=new HashMap<>();
+        map.put("phone",phone);
+        List<Map> orderList=reserveVenueConsDao.checkUserUnpaidOrder(map);
+        for(Map i:orderList){
+            List<Map> itemList=reserveVenueConsItemDao.orderItemList(i);
+            i.put("itemList",itemList);
+        }
+        return orderList;
     }
 }

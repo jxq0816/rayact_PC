@@ -157,7 +157,19 @@ public class ReserveAppController extends BaseController {
                                  Double aliPayInput,
                                  Double couponInput) {
         Map map=new HashMap<>();
-        Double inputSum=memberCardInput+bankCardInput+weiXinInput+aliPayInput+couponInput;
+        Double inputSum=0.0;
+        if(memberCardInput!=null){
+            inputSum+=bankCardInput;
+        }
+        if(weiXinInput!=null){
+            inputSum+=weiXinInput;
+        }
+        if(aliPayInput!=null){
+            inputSum+=aliPayInput;
+        }
+        if(couponInput!=null){
+            inputSum+=couponInput;
+        }
         if(consPrice==null){
             map.put("result",3);
             map.put("msg","实付金额不能为空");
@@ -230,7 +242,8 @@ public class ReserveAppController extends BaseController {
                 break;//该时间段不能使用，跳出循环
             }
         }
-        String orderId=null;
+        Map map=new HashMap<>();
+        map.put("bool",bool);
         if (bool==true) {
             ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
             reserveVenueCons.setUserName(username);
@@ -241,11 +254,8 @@ public class ReserveAppController extends BaseController {
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
             reserveVenueCons.setConsDate(consDate);
             reserveVenueCons.setVenueConsList(items);
-            orderId=reserveAppVenueConsService.saveOrder(reserveVenueCons);//保存预订信息
+            map.putAll(reserveAppVenueConsService.saveOrder(reserveVenueCons));//保存预订信息
         }
-        Map map=new HashMap<>();
-        map.put("orderId", orderId);
-        map.put("bool", bool);
         return map;
     }
 
@@ -299,5 +309,16 @@ public class ReserveAppController extends BaseController {
             map.put("msg","订单取消成功");
         }
         return map;
+    }
+    @RequestMapping(value = "checkUserOrder")
+    @ResponseBody
+    /**
+     *检测用户是否有未付款的订单
+     * @param orderId
+     * @return
+     */
+    public String checkUserOrder(String phone) {
+        List<Map> mapList = reserveAppVenueConsService.checkUserUnpaidOrder(phone);
+        return  JSON.toJSONString(mapList);
     }
 }

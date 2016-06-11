@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	   xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task" xsi:schemaLocation="
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:util="http://www.springframework.org/schema/util"  xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
-		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
 	   default-lazy-init="true">
 
 	<description>Spring Configuration</description>
@@ -58,10 +55,6 @@
 		<property name="configLocation" value="classpath:${ehcache.configFile}" />
 	</bean>
 
-	<!-- 计划任务配置，用 @Service @Lazy(false)标注类，用@Scheduled(cron = "0 0 2 * * ?")标注方法 -->
-	<task:executor id="executor" pool-size="10"/> <task:scheduler id="scheduler" pool-size="10"/>
-	<task:annotation-driven scheduler="scheduler" executor="executor" proxy-target-class="true"/>
-
 	<!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
@@ -99,22 +92,8 @@
 		<property name="testOnReturn" value="false" />
 		<property name="poolPreparedStatements" value="true" />
 
-		<!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）
-		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
-
 		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat" />
 	</bean>
-
-	<!-- 数据源配置, 使用应用服务器的数据库连接池
-	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/jeesite" />-->
-
-	<!-- 数据源配置, 不使用连接池
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
-	</bean>-->
 
 </beans>

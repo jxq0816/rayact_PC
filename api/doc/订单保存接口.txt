@@ -20,3 +20,4 @@ bool:预订是否成功 boolean
     false:预订失败
 }
 orderId: 订单编号 String
+orderCreateTime: 订单创建时间 String

@@ -55,6 +55,8 @@ public interface ReserveVenueConsDao extends CrudDao<ReserveVenueCons> {
     BigDecimal sellMonthOfChart(ReserveVenueCons venueCons);
     /*订单详情*/
     Map detail(Map map);
+    /*检测用户是否有未付款的订单*/
+    List<Map> checkUserUnpaidOrder(Map map);
     /*订单列表*/
     List<Map> orderList(Map map);
 }

@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import java.util.List;
 
 /**
- * 场地价格Entity
+ * 场地时间价格Entity
  *
  * @author 肖斌
  * @version 2016-01-06
@@ -22,7 +22,6 @@ public class ReserveFieldPriceSet extends SaasEntity<ReserveFieldPriceSet> {
     private ReserveField reserveField;//所属场地
     private String week;            //星期  1：周一至周五 2：周六 3：周日
     private String consType;        // 消费类型(1:市场价,2:会员,3:团体)
-    private String consPrice;        // 价格
     private String consJson;      //按照时间和价格组装成json
     private ReserveTimeInterval reserveTimeInterval;//时令
 
@@ -74,14 +73,6 @@ public class ReserveFieldPriceSet extends SaasEntity<ReserveFieldPriceSet> {
 
     public void setConsType(String consType) {
         this.consType = consType;
-    }
-
-    public String getConsPrice() {
-        return consPrice;
-    }
-
-    public void setConsPrice(String consPrice) {
-        this.consPrice = consPrice;
     }
 
     public String getConsJson() {
