@@ -68,9 +68,9 @@ $(document).ready(function () {
             data: formJson,
             success: function (result) {
                 result = $.parseJSON(result);
-                if (result.status) {
+                if (result.status==true) {
                     checkFlag=true;
-                }{
+                }else{
                     formLoding(result.msg);
                     return;
                 }

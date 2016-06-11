@@ -82,6 +82,7 @@ public class ReserveVenueOrderController extends BaseController {
         //会员
         ReserveMember member = new ReserveMember();
         member.setReserveVenue(venue);
+        member.setCartType("2");
         model.addAttribute("memberList", reserveMemberService.findList(member));
         //获取预定开始时间
         List<String> times = TimeUtils.getTimeSpacList(venue.getStartTime(), venue.getEndTime(), TimeUtils.BENCHMARK);
