@@ -320,7 +320,7 @@ public class ReserveAppController extends BaseController {
      * @return
      */
     public String checkUserOrder(String phone) {
-        List<Map> orderList = reserveAppVenueConsService.orderList("1",phone);
-        return  JSON.toJSONString(orderList);
+        List<Map> mapList = reserveAppVenueConsService.checkUserUnpaidOrder(phone);
+        return  JSON.toJSONString(mapList);
     }
 }

@@ -223,4 +223,21 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             reserveVenueConsItemDao.delete(i);//删除订单明细
         }
     }
+    /**
+     * 检测用户是否有未付款的订单
+     *
+     * @param phone app 用户的手机
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public List<Map> checkUserUnpaidOrder(String phone) {
+        Map map=new HashMap<>();
+        map.put("phone",phone);
+        List<Map> orderList=reserveVenueConsDao.checkUserUnpaidOrder(map);
+        for(Map i:orderList){
+            List<Map> itemList=reserveVenueConsItemDao.orderItemList(i);
+            i.put("itemList",itemList);
+        }
+        return orderList;
+    }
 }
