@@ -158,7 +158,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         Map map=new HashMap<>();
         map.put("orderId",reserveVenueCons.getId());
         Date createTime=reserveVenueCons.getCreateDate();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         map.put("orderCreateTime",dateFormat.format(createTime));
         return map;
     }

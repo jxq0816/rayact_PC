@@ -42,7 +42,8 @@
     <!--订单详情for 手机端-->
     <select id="detail" parameterType="Map" resultType="Map">
         SELECT
-        v.name AS "venueName"
+        v.name AS "venueName",
+        DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i') AS "orderCreateTime"
         FROM reserve_venue_cons as a
         <include refid="reserveVenueConsDataJoins"/>
         WHERE a.id = #{orderId}
