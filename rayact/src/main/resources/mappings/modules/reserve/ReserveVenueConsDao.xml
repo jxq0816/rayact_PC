@@ -66,7 +66,8 @@
         a.id AS "orderId",
         v.name AS "venueName",
         a.order_price AS "orderPrice",
-        DATE_FORMAT(cons_date,'%Y-%m-%d') AS "orderDate"
+        DATE_FORMAT(cons_date,'%Y-%m-%d') AS "orderDate",
+        DATE_FORMAT(a.create_date,'%Y-%m-%d %H:%i') AS "orderCreateTime"
         FROM reserve_venue_cons as a
         LEFT JOIN reserve_venue as v ON v.id = a.venue_id
         where a.del_flag = '0'
