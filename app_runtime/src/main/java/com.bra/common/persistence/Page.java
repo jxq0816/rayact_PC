@@ -544,7 +544,7 @@ public class Page<T> {
     public int getFirstResult() {
         int firstResult = (getPageNo() - 1) * getPageSize();
         if (firstResult >= getCount()) {
-            firstResult = 0;
+            firstResult = (int)getCount();
         }
         return firstResult;
     }

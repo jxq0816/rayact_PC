@@ -148,53 +148,6 @@ public class TeamController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "app/edit")
-	public void editApp(Team team,HttpServletRequest request, HttpServletResponse response)throws Exception {
-		String file = request.getParameter("files");
-		String modelName = request.getParameter("modelName");
-		if(!"".equals(file)&&file!=null){
-			byte[] image = Base64.decode(file);
-			FileModel fileModel = new FileModel();
-			String destPath = Global.getBaseDir();
-			String tmp = destPath + "resources/www";
-			File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
-			if (!f.getParentFile().exists())
-				f.getParentFile().mkdirs();
-			if (!f.exists())
-				f.createNewFile();
-			FileOutputStream fos = new FileOutputStream(f);
-			fos.write(image);
-			fos.close();
-			fileModel.setStoreType(StoreType.SYSTEM);
-			fileModel.setToken(new Date().toString());
-			fileModel.setFilePath(f.getAbsolutePath());
-			fileModel.setContentType("pic");
-			AttMain attMain = new AttMain(fileModel);
-			attMain.setFdModelName(modelName);
-			attMain = attMainService.saveAttMain(attMain);
-			fileModel.setAttId(attMain.getId());
-			team.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH+attMain.getId());
-		}
-		JSONObject j = new JSONObject();
-		if(!StringUtils.isNotBlank(team.getId())){
-			teamService.save(team);
-		}
-		String teamMember = request.getParameter("members");
-		saveMembers(teamMember,team);
-		j.put("status","success");
-		j.put("msg","队伍创建成功");
-		j.put("teamId",team.getId());
-		try {
-			response.reset();
-			response.setContentType("application/json");
-			response.setCharacterEncoding("utf-8");
-			response.getWriter().print(j.toJSONString());
-		} catch (IOException g) {
-
-		}
-
-	}
-
 	@RequestMapping(value = "app/list")
 	public void listApp(Team team,HttpServletRequest request, HttpServletResponse response) {
 		String mode = request.getParameter("mode");
@@ -271,6 +224,7 @@ public class TeamController extends BaseController {
 				}else{
 					TeamMember tms = new TeamMember();
 					tms.setPhone(phone);
+					tms.setTeam(team);
 					List<TeamMember> l = teamMemberService.findList(tms);
 					if(l!=null&&l.size()>0){
 						continue;

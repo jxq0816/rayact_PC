@@ -8,6 +8,7 @@
 		a.model_name AS "modelName",
 		a.url AS "url",
 		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -16,6 +17,7 @@
 	</sql>
 	
 	<sql id="cmsCollectionJoins">
+		LEFT JOIN sys_user u ON u.id = a.create_by
 	</sql>
     
 	<select id="get" resultType="CmsCollection">

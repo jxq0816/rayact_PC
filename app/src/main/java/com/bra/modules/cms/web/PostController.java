@@ -109,6 +109,7 @@ public class PostController extends BaseController {
 				Post po = new Post();
 				po.setPostId(p.getId());
 				List pop = postService.findMapList(po);
+				peanut.put("id",p.getId());
 				peanut.put("pname",p.getCreateBy().getName());
 				peanut.put("photo",p.getCreateBy().getPhoto());
 				peanut.put("content",p.getContent());

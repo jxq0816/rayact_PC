@@ -37,6 +37,7 @@
 				<th>实例所属模块</th>
 				<th>链接</th>
 				<th>备注</th>
+				<th>创建者</th>
 				<th>创建时间</th>
 				<shiro:hasPermission name="cms:cmsCollection:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -55,6 +56,9 @@
 				</td>
 				<td>
 						${cmsCollection.remarks}
+				</td>
+				<td>
+						${cmsCollection.createBy.name}
 				</td>
 				<td>
 					<fmt:formatDate value="${cmsCollection.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

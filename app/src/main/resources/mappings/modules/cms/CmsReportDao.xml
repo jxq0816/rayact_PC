@@ -32,6 +32,12 @@
 		<include refid="cmsReportJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+	  		<if test="modelId!=null and modelId != ''">
+				AND a.model_id = #{modelId}
+			</if>
+		    <if test="modelName!=null and modelName != ''">
+				AND a.model_name = #{modelName}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

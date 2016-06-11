@@ -20,6 +20,8 @@ public class Principal implements Serializable {
     private String loginType;//登录类型
     private String tenantId;//路由标识
 
+    public Principal(){}
+
 
 //		private Map<String, Object> cacheMap;
 

@@ -50,6 +50,7 @@ public class PostMainService extends CrudService<PostMainDao, PostMain> {
 	}
 
 	public List<Map<String,String>> getPostMainList(Page<PostMain> page,PostMain postMain){
+		postMain.setPage(page);
 		return postMainDao.getPostMainList(postMain);
 	}
 	

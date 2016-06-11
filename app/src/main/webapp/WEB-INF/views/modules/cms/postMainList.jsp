@@ -65,6 +65,7 @@
 				</td>
 				<shiro:hasPermission name="cms:postMain:edit"><td>
     				<a href="${ctx}/cms/postMain/form?id=${postMain.id}">修改</a>
+					<a href="${ctx}/cms/post/list?postMain.id=${postMain.id}">回帖列表</a>
 					<a href="${ctx}/cms/postMain/delete?id=${postMain.id}" onclick="return confirmx('确认要删除该帖子吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

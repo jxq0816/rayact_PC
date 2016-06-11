@@ -51,6 +51,9 @@
 			<if test="phone!=null and phone != ''">
 				AND a.phone = #{phone}
 			</if>
+			<if test="team!=null and team.id != ''">
+				AND a.team_id = #{team.id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

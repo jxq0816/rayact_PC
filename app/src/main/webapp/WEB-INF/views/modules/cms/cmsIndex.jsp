@@ -8,7 +8,7 @@
 <body>
 	<div id="content" class="row-fluid">
 		<div id="left">
-			<iframe id="cmsMenuFrame" name="cmsMenuFrame" src="${ctx}/cms/tree" style="overflow:visible;"
+			<iframe id="cmsMenuFrame" name="cmsMenuFrame" src="${ctx}/cms/tree/${mmo}" style="overflow:visible;"
 				scrolling="yes" frameborder="no" width="100%"></iframe>
 		</div>
 		<div id="openClose" class="close">&nbsp;</div>

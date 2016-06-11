@@ -64,6 +64,7 @@
 				</td>
 				<shiro:hasPermission name="cms:team:edit"><td>
     				<a href="${ctx}/cms/team/form?id=${team.id}">修改</a>
+					<a href="${ctx}/cms/teamMember/list?team.id=${team.id}">球员列表</a>
 					<a href="${ctx}/cms/team/delete?id=${team.id}" onclick="return confirmx('确认要删除该战队吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

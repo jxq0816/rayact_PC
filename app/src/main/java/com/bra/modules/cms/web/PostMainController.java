@@ -10,9 +10,11 @@ import com.bra.common.upload.StoreType;
 import com.bra.common.upload.UploadUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.cms.entity.Category;
 import com.bra.modules.cms.entity.Focus;
 import com.bra.modules.cms.entity.Post;
 import com.bra.modules.cms.entity.PostMain;
+import com.bra.modules.cms.service.CategoryService;
 import com.bra.modules.cms.service.FocusService;
 import com.bra.modules.cms.service.PostMainService;
 import com.bra.modules.cms.service.PostService;
@@ -49,6 +51,8 @@ import java.util.Map;
 @RequestMapping(value = "${adminPath}/cms/postMain")
 public class PostMainController extends BaseController {
 	@Autowired
+	private CategoryService categoryService;
+	@Autowired
 	private FocusService focusService;
 	@Autowired
 	private SystemService systemService;
@@ -74,6 +78,7 @@ public class PostMainController extends BaseController {
 	@RequiresPermissions("cms:postMain:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PostMain postMain, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Category> list = categoryService.findByUser(true,"postMain");
 		Page<PostMain> page = postMainService.findPage(new Page<PostMain>(request, response), postMain); 
 		model.addAttribute("page", page);
 		return "modules/cms/postMainList";
@@ -210,7 +215,7 @@ public class PostMainController extends BaseController {
 		Post post = new Post();
 		post.setPostMain(postMain);
 		Page<Post> lop = new Page<>(request,response);
-		lop.setPageSize(3);
+		lop.setPageSize(10);
 		lop.setPageNo(1);
 		Page<Post> ptm = postService.findPage(lop,post);
 		request.setAttribute("ptm",ptm.getList());

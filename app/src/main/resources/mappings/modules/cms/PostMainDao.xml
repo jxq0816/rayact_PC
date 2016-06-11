@@ -40,6 +40,9 @@
 		<include refid="postMainJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="group!=null and group.id != null">
+				AND a.fk_group_id = #{group.id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -81,7 +84,8 @@
 			create_by,
 			create_date,
 			update_date,
-			update_by
+			update_by,
+			remarks
 		) VALUES (
 			#{id},
 			#{subject},
@@ -93,7 +97,8 @@
 			#{createBy.id},
 			#{createDate},
 			#{updateDate},
-			#{updateBy.id}
+			#{updateBy.id},
+			#{remarks}
 		)
 	</insert>
 	
@@ -105,7 +110,8 @@
 			post_num = #{postNum},
 			order_num = #{orderNum},
 			update_date = #{updateDate},
-			update_by = #{updateBy.id}
+			update_by = #{updateBy.id},
+			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 	
@@ -128,14 +134,21 @@
 		 pm.remarks AS postImg,
 		 pm.content AS postContent,
 		 date_format(pm.create_date,"%Y-%m-%d %T") AS createDate,
-		SUM(CASE WHEN c.create_by = #{currentUser.id} AND c.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END ) AS hasCollection
+		<choose>
+			<when test="currentUser!=null and currentUser.id !=null">
+				SUM(CASE WHEN c.create_by = #{currentUser.id} AND c.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END ) AS hasCollection
+			</when>
+			<otherwise>
+				 0 AS hasCollection
+			</otherwise>
+		</choose>
 		FROM post_main pm
 		LEFT JOIN cms_category cc ON cc.id = pm.fk_group_id
 		LEFT JOIN sys_user u ON u.id = pm.create_by
 		LEFT JOIN collection c ON c.model_id = pm.id
 		WHERE
 		pm.del_flag = #{DEL_FLAG_NORMAL}
-		<if test="group!=null and group.id !=null">
+		<if test="group!=null and group.id !=null and group.id!=''">
 			AND (cc.parent_ids like CONCAT('%',#{group.id},'%') OR cc.id = #{group.id})
 		</if>
 		<if test="sqlMap!=null and sqlMap.addition!=null">

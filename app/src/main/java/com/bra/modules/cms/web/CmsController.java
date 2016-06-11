@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 内容管理Controller
  *
@@ -25,14 +27,16 @@ public class CmsController extends BaseController {
 	
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "")
-	public String index() {
+	public String index(HttpServletRequest request) {
+		String module = request.getParameter("module");
+		request.setAttribute("mmo",module);
 		return "modules/cms/cmsIndex";
 	}
 	
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "tree")
 	public String tree(Model model) {
-		model.addAttribute("categoryList", categoryService.findByUser(true, null));
+		model.addAttribute("categoryList", categoryService.findByUser(true, "article"));
 		return "modules/cms/cmsTree";
 	}
 	
@@ -40,6 +44,27 @@ public class CmsController extends BaseController {
 	@RequestMapping(value = "none")
 	public String none() {
 		return "modules/cms/cmsNone";
+	}
+
+	@RequiresPermissions("cms:view")
+	@RequestMapping(value = "tree/postMain")
+	public String treePostMain(Model model) {
+		model.addAttribute("categoryList", categoryService.findByUser(true, "group"));
+		return "modules/cms/cmsTreePostMain";
+	}
+
+	@RequiresPermissions("cms:view")
+	@RequestMapping(value = "tree/team")
+	public String treeTeam(Model model) {
+		model.addAttribute("categoryList", categoryService.findByUser(true, "group"));
+		return "modules/cms/cmsTreeTeam";
+	}
+
+	@RequiresPermissions("cms:view")
+	@RequestMapping(value = "tree/activity")
+	public String treeActivity(Model model) {
+		model.addAttribute("categoryList", categoryService.findByUser(true, "group"));
+		return "modules/cms/cmsTreeActivity";
 	}
 
 }

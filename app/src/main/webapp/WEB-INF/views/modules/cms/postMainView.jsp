@@ -67,7 +67,14 @@
 </div>
 <script>
 	function jumpToApp(){
-		iOSskip();
+		///intent();
+		if(typeof iOSskip === 'function'){
+			iOSskip();
+		}else if(window.intent){
+			intent.DLCallAndroid();
+		}else{
+			alert("无方法");
+		}
 	}
 	function jumpToInfo(dom){
 		var id = $(dom).attr("name");
