@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +94,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
      * @param reserveVenueCons
      */
     @Transactional(readOnly = false)
-    public String saveOrder(ReserveVenueCons reserveVenueCons) {
+    public Map saveOrder(ReserveVenueCons reserveVenueCons) {
         //获取会员
         String mobile=reserveVenueCons.getConsMobile();//预订人手机号
         ReserveMember appMember=new ReserveMember();
@@ -154,7 +155,12 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
         reserveVenueConsDao.insert(reserveVenueCons);//订单价格更改
-        return reserveVenueCons.getId();
+        Map map=new HashMap<>();
+        map.put("orderId",reserveVenueCons.getId());
+        Date createTime=reserveVenueCons.getCreateDate();
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+        map.put("orderCreateTime",dateFormat.format(createTime));
+        return map;
     }
 
     @Transactional(readOnly = false)

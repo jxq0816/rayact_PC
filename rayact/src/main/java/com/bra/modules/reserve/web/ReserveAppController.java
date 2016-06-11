@@ -242,7 +242,8 @@ public class ReserveAppController extends BaseController {
                 break;//该时间段不能使用，跳出循环
             }
         }
-        String orderId=null;
+        Map map=new HashMap<>();
+        map.put("bool",bool);
         if (bool==true) {
             ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
             reserveVenueCons.setUserName(username);
@@ -253,11 +254,8 @@ public class ReserveAppController extends BaseController {
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
             reserveVenueCons.setConsDate(consDate);
             reserveVenueCons.setVenueConsList(items);
-            orderId=reserveAppVenueConsService.saveOrder(reserveVenueCons);//保存预订信息
+            map.putAll(reserveAppVenueConsService.saveOrder(reserveVenueCons));//保存预订信息
         }
-        Map map=new HashMap<>();
-        map.put("orderId", orderId);
-        map.put("bool", bool);
         return map;
     }
 
