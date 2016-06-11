@@ -387,7 +387,10 @@
 
 	<!--APP高管查看某件商品的收入-->
 	<select id="commIncome" resultType="java.util.Map" parameterType="java.util.Map">
-		SELECT v.name,sum(cd.num) as num,SUM(cd.detail_sum) as income
+		SELECT
+		v.name,
+		sum(CASE WHEN cd.num IS NOT NULL THEN cd.num ELSE 0 END ) as num,
+		SUM(CASE WHEN cd.detail_sum IS NOT NULL THEN cd.detail_sum ELSE 0 END ) as income
 		FROM reserve_venue v
 		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.id = #{commId}
 		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
