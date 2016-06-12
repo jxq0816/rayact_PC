@@ -11,7 +11,6 @@ import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.VenueGiftForm;
 import com.bra.modules.reserve.service.*;
-import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
@@ -126,25 +125,32 @@ public class ReserveController extends BaseController {
             ReserveField reserveField = new ReserveField();
             reserveField.setReserveVenue(reserveVenue);
             //上午场地价格
-            List<String> timesAM = new ArrayList<>();
-
-            timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
-            model.addAttribute("timesAM", timesAM);
+            List<String> timesAM = TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30);
             List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesAM);
-            model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
             //下午场地价格
             List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
-            model.addAttribute("timesPM", timesPM);
             List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesPM);
-            model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
             //晚上场地价格
             List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
-            model.addAttribute("timesEvening", timesEvening);
             List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDate(reserveVenue.getId(), "1", consDate, timesEvening);
-            model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
-        }
-        if ("5".equals(AuthorityUtils.getUserType())) {
-            return "reserve/saleField/reserveFieldStatus";
+
+            List list=new ArrayList<>();
+            Map mapAM=new HashMap<>();
+            mapAM.put("fieldPriceList",venueFieldPriceListAM);
+            mapAM.put("timeName","上午");
+            mapAM.put("times",timesAM);
+            list.add(mapAM);
+            Map mapPM=new HashMap<>();
+            mapPM.put("fieldPriceList",venueFieldPriceListPM);
+            mapPM.put("timeName","下午");
+            mapPM.put("times",timesPM);
+            list.add(mapPM);
+            Map mapEvening=new HashMap<>();
+            mapEvening.put("fieldPriceList",venueFieldPriceListEvening);
+            mapEvening.put("timeName","晚上");
+            mapEvening.put("times",timesEvening);
+            list.add(mapEvening);
+            model.addAttribute("list", list);
         }
         return "reserve/saleField/reserveField";
     }
@@ -210,8 +216,6 @@ public class ReserveController extends BaseController {
             mapEvening.put("fieldPriceList",venueFieldPriceListEvening);
             mapEvening.put("times",timesEvening);
             list.add(mapEvening);
-           /* list.add(venueFieldPriceListPM);
-            list.add(venueFieldPriceListEvening);*/
             model.addAttribute("list", list);
         }
         return "reserve/saleField/reserveFieldStatus";

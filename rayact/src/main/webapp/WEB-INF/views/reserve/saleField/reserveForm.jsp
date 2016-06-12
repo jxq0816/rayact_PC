@@ -141,10 +141,10 @@
                     <div class="form-group">
                         <label for="memberId" class="control-label col-lg-3">会员姓名:</label>
                         <div class="col-sm-6">
-                            <select style="width: 200px;" class="select2" id="memberId" name="member.id">
+                            <select style="width: 100%;" id="memberId" class="select2" name="member.id">
                                 <option value="">--请选择--</option>
                                 <c:forEach items="${memberList}" var="m">
-                                    <option value="${m.id}" name="${m.mobile}">${m.cartno}-${m.name}</option>
+                                    <option value="${m.id}">${m.mobile}-${m.name}</option>
                                 </c:forEach>
                             </select>
                         </div>

@@ -33,7 +33,6 @@
                     </ul>
                     <ul class="table-ul">
                         <li style="margin-left: 0px;"><span class="green-bg-color"></span>可预订</li>
-                        <%-- <li><span class="blue-bg-color"></span>已选场次</li>--%>
                         <li><span class="grey-bg-color"></span>已占用</li>
                         <li><span class="red-bg-color"></span>已付款</li>
                     </ul>
@@ -85,9 +84,7 @@
                 <div class="sy-tab-cont">
 
                     <div class="table-left">
-                        <%@include file="reserveAMField.jsp" %>
-                        <%@include file="reservePMField.jsp" %>
-                        <%@include file="reserveEveningField.jsp" %>
+                        <%@include file="reserveDayField.jsp" %>
                     </div>
 
                     <script type="text/javascript">
@@ -102,8 +99,6 @@
 </div>
 <%@include file="../include/modal.jsp" %>
 <!--end dialog-->
-<script>
-    document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field.js?t=" + Math.random() + "'><\/script>");
-</script>
+<script src="${ctxStatic}/modules/reserve/js/reserve_field.js" type="text/javascript"></script>
 </body>
 </html>

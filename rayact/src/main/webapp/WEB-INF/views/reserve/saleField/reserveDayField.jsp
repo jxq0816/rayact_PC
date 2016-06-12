@@ -5,7 +5,7 @@
     <thead>
     <%--时刻--%>
     <tr>
-        <th>上午</th>
+        <th>${map.timeName}</th>
         <c:forEach items="${map.times}" var="t">
             <th style="background-color: #fff;">${t}</th>
         </c:forEach>
