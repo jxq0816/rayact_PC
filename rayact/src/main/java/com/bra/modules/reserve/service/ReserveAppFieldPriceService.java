@@ -153,7 +153,7 @@ public class ReserveAppFieldPriceService {
                 //遍历时间价格组成的Jason
                 for (TimePrice tp : timePriceList) {
                     String t = tp.getTime();//获取时间
-                    Double price = tp.getPrice();//获取价格
+                    Double price = tp.getPrice()/2;//获取后端是按照一小时设定的价格，前端是半个小时
                     String hour = time.substring(0, 2);
                     t = t.substring(0, 2);
                     if (hour.equals(t)) {//时间一致
