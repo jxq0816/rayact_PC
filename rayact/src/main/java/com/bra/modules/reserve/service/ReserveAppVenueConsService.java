@@ -57,7 +57,6 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         }
         return order;
     }
-
     /**
      * 订单列表
      * @param reserveType 订单状态 1:已预订 4：已结算
@@ -73,6 +72,10 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             Map m=new HashMap<>();
             m.put("orderId",orderId);
             List<Map> itemList=reserveVenueConsItemDao.orderItemList(m);
+            if(itemList.size()>0){
+                String projectName=(String)itemList.get(0).get("projectName");
+                i.put("projectName",projectName);
+            }
             String startTime=null;
             for(Map j:itemList){
                 String start=(String) j.get("startTime");

@@ -50,10 +50,11 @@
 		a.order_price AS "orderPrice",
 		a.start_time AS "startTime",
 		a.end_time AS "endTime",
-		c.name AS "filedName"
+		field.fieldName AS "fieldName",
+		field.projectName AS "projectName"
 		FROM reserve_venue_cons_item as a
 		LEFT JOIN reserve_venue_cons as b on a.cons_data_id=b.id
-		LEFT JOIN reserve_field as c on a.field_id=c.id
+		LEFT JOIN (select f.id as id ,p.name as projectName,f.name as fieldName from reserve_field as f LEFT JOIN reserve_project as p on f.project_id=p.id) as field on a.field_id=field.id
 		WHERE b.id = #{orderId}
 	</select>
 
