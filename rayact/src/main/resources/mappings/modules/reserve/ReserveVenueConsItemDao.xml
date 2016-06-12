@@ -53,8 +53,8 @@
 		field.fieldName AS "fieldName",
 		field.projectName AS "projectName"
 		FROM reserve_venue_cons_item as a
-		LEFT JOIN reserve_venue_cons as b on a.cons_data_id=b.id
-		LEFT JOIN (select f.id as id ,p.name as projectName,f.name as fieldName from reserve_field as f LEFT JOIN reserve_project as p on f.project_id=p.id) as field on a.field_id=field.id
+		INNER JOIN reserve_venue_cons as b on a.cons_data_id=b.id
+		INNER JOIN (select f.id as id ,p.name as projectName,f.name as fieldName from reserve_field as f INNER JOIN reserve_project as p on f.project_id=p.id) as field on a.field_id=field.id
 		WHERE b.id = #{orderId}
 	</select>
 
