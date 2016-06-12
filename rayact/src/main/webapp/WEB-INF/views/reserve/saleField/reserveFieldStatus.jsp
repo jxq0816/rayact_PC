@@ -93,9 +93,7 @@
                 <div class="sy-tab-cont">
 
                     <div class="table-left">
-                        <%@include file="reserveAMField.jsp" %>
-                        <%@include file="reservePMField.jsp" %>
-                        <%@include file="reserveEveningField.jsp" %>
+                        <%@include file="reserveDayField.jsp" %>
                     </div>
 
                     <script type="text/javascript">
