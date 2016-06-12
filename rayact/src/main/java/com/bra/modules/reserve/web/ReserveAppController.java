@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.modules.reserve.entity.ReserveField;
-import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.entity.ReserveVenueCons;
-import com.bra.modules.reserve.entity.ReserveVenueConsItem;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.FieldPrice;
 import com.bra.modules.reserve.entity.form.TimePrice;
 import com.bra.modules.reserve.service.ReserveAppFieldPriceService;
@@ -199,7 +196,7 @@ public class ReserveAppController extends BaseController {
     }
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public Map reservation(String reserveJson,String username,String phone) {
+    public Map reservation(String reserveJson,String projectId,String username,String phone) {
         String reserve=reserveJson.replaceAll("&quot;","\"");
         JSONObject object=JSON.parseObject(reserve);
         String date = (String)object.get("consDate");
@@ -248,6 +245,7 @@ public class ReserveAppController extends BaseController {
             ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
             reserveVenueCons.setUserName(username);
             reserveVenueCons.setConsMobile(phone);
+            reserveVenueCons.setProject(new ReserveProject(projectId));//该字段用于PC统计项目收入
             String reserveVenueId=(String)object.get("reserveVenueId");
             ReserveVenue venue=new ReserveVenue(reserveVenueId);
             reserveVenueCons.setReserveVenue(venue);
