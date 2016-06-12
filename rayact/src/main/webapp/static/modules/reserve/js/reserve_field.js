@@ -15,18 +15,20 @@ $(document).ready(function () {
         }
         var date = consDate;//日期
         jQuery.postItems({
-            url: ctx + '/reserve/field/reserveForm',
+            url: ctx + '/reserve/field/reserveForm?math='+Math.random(),
             data: {fieldId: fieldId, time: time, date: date, venueId: venueId, isHalfCourt: isHalfCourt},
             success: function (result) {
-                $("#reserveForm").html(result);
-                $("#reserveDialog").click();
-                $("#reserveForm .select2").select2({
-                    width: '100%'
-                });
-                $('#reserveForm .icheck').iCheck({
-                    checkboxClass: 'icheckbox_square-blue checkbox',
-                    radioClass: 'iradio_square-blue'
-                });
+                if (result) {
+                    $("#reserveForm").html(result);
+                    $("#reserveDialog").click();
+                    $("#reserveForm .select2").select2({
+                        width: '100%'
+                    });
+                    $('#reserveForm .icheck').iCheck({
+                        checkboxClass: 'icheckbox_square-blue checkbox',
+                        radioClass: 'iradio_square-blue'
+                    });
+                }
             }
         });
     });
