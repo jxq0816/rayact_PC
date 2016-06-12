@@ -4,10 +4,8 @@ import com.bra.common.service.CrudService;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
-import com.bra.modules.reserve.entity.ReserveMember;
-import com.bra.modules.reserve.entity.ReserveStoredcardMemberSet;
-import com.bra.modules.reserve.entity.ReserveVenueCons;
-import com.bra.modules.reserve.entity.ReserveVenueConsItem;
+import com.bra.modules.reserve.dao.ReserveVenueDao;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.event.venue.VenueCheckoutEvent;
 import com.bra.modules.reserve.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,8 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
 
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
+    @Autowired
+    private ReserveVenueDao reserveVenueDao;
     @Autowired
     private ReserveVenueConsDao reserveVenueConsDao;
     @Autowired
@@ -105,10 +105,11 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         appMember.setMobile(mobile);
         ReserveMember consumer = reserveMemberService.get(appMember);//通过APP用户的手机号，判断该用户是否为场馆的会员
         ReserveStoredcardMemberSet card = null;
+        ReserveVenue venue=reserveVenueDao.get(reserveVenueCons.getReserveVenue());
         //如果预订人是会员
         if (consumer != null) {
             //该场馆的会员
-            if(reserveVenueCons.getReserveVenue().equals(consumer.getReserveVenue().getId())){
+            if(venue.getId().equals(consumer.getReserveVenue().getId())){
                 //获取消费者的全部信息
                 reserveVenueCons.setConsType("2");//会员
                 //获取折扣卡
@@ -152,12 +153,14 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             filedSum+=price;
             item.setConsPrice(price);//订单明细 应收金额=场地应收+教练费
             item.preInsert();
+            item.setTenantId(venue.getTenantId());
             reserveVenueConsItemDao.insert(item);//保存预订信息
             sum += price;
         }
         reserveVenueCons.setByPC("0");//通过APP预订的
         reserveVenueCons.setOrderPrice(filedSum);//场地应收金额
         reserveVenueCons.setShouldPrice(sum);//订单应收：没有优惠券，应收等于订单金额+教练费用
+        reserveVenueCons.setTenantId(venue.getTenantId());
         reserveVenueConsDao.insert(reserveVenueCons);//订单价格更改
         Map map=new HashMap<>();
         map.put("orderId",reserveVenueCons.getId());
