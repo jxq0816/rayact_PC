@@ -196,3 +196,14 @@
 </form>
 <script src="${ctxStatic}/cleanzone/js/jquery.select2/select2.min.js" type="text/javascript"></script>
 <script src="${ctxStatic}/modules/reserve/js/time_ticket_sell.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        $(".select2").select2({
+            width: '100%'
+        });
+        $('.icheck').iCheck({
+            checkboxClass: 'icheckbox_square-blue checkbox',
+            radioClass: 'iradio_square-blue'
+        });
+    })
+</script>

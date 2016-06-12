@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.md-trigger').modalEffects();
+/*    $('.md-trigger').modalEffects();*/
     //-------预定---------
     $(".table-chang tbody td").on('dblclick', function () {
         if (!$(this).hasClass("access")) {
@@ -115,13 +115,6 @@ $(document).ready(function () {
             success: function (result) {
                 $("#cancelForm").html(result);
                 $("#cancelBtn").click();
-                $("#cancelForm .select2").select2({
-                    width: '100%'
-                });
-                $('#cancelForm .icheck').iCheck({
-                    checkboxClass: 'icheckbox_square-blue checkbox',
-                    radioClass: 'iradio_square-blue'
-                });
             }
         });
     }

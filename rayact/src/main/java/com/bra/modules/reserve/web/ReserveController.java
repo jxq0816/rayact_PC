@@ -254,6 +254,7 @@ public class ReserveController extends BaseController {
         }
         model.addAttribute("venueId", venueId);
         return "reserve/saleField/reserveForm";
+       /* return "reserve/visitorsSetOrder/reserveFormSelect2";*/
     }
 
     //取消预定表单
