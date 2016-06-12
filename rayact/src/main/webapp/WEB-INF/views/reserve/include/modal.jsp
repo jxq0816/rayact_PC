@@ -1,32 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!-- 场馆预订Modal -->
-<button id="reserveDialog" class="btn btn-primary btn-flat md-trigger" style="display: none" data-modal="order-primary">
-    预订
-</button>
-<div class="md-modal colored-header  custom-width md-effect-12" id="order-primary">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">场地预定</h4>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="reserve_top_line">
 
-            </div>
-            <div class="modal-body form-horizontal" id="reserveForm">
-                <!--预定表单-->
-                <!--end 预定表单-->
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="closeBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                取消
-            </button>
-            <button type="button" id="saveBtn" class="btn btn-primary btn-flat">确定</button>
-        </div>
-    </div>
-</div>
 <!--取消订单-->
 <button class="btn btn-primary btn-large" id="cancelBtn" style="display: none" href="#cancelDialogModal" data-toggle="modal">取消订单</button>
 <div class="modal fade" id="cancelDialogModal" tabindex="-1" style="display: none;" aria-labelledby="cancelDialogModal"
@@ -152,7 +126,7 @@
 </div>
 
 <!-- 申请优惠Modal -->
-<button class="btn btn-primary btn-flat md-trigger" id="applyCutBtn" style="display: none"
+<%--<button class="btn btn-primary btn-flat md-trigger" id="applyCutBtn" style="display: none"
         data-modal="applyCut-primary">Basic Form
 </button>
 <div class="md-modal colored-header custom-width md-effect-12" id="applyCut-primary">
@@ -179,7 +153,7 @@
 
         </div>
     </div>
-</div>
+</div>--%>
 <%--多方式付款详情模态--%>
 <button id="multiplePaymentsBtn" style="display: none" class="btn btn-primary btn-large"
         href="#multiplePaymentsDialogModal" data-toggle="modal">多方式付款详情
