@@ -99,6 +99,7 @@ public class ReserveAppFieldPriceService {
             reserveFieldPriceSetList.addAll(list);
         }
         //查询所有预定的信息(作为本场地的预定标记)
+        reserveVenueConsItem.setTenantId(null);//APP 预订的没有集团标识
         List<ReserveVenueConsItem> venueConsList = reserveVenueConsItemDao.findListByDate(reserveVenueConsItem);
         buildTimePrice(fieldPriceList, reserveFieldPriceSetList, venueConsList, times);//获取场地的价格列表，并查询当前时间是否预定,并标记位已定
 

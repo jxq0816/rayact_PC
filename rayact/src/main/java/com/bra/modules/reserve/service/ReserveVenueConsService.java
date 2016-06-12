@@ -305,6 +305,12 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
     @Transactional(readOnly = false)
     public void delete(ReserveVenueCons reserveVenueCons) {
+        ReserveVenueConsItem item =new ReserveVenueConsItem();
+        item.setConsData(reserveVenueCons);
+        List<ReserveVenueConsItem> itemList=reserveVenueConsItemDao.findList(item);
+        for(ReserveVenueConsItem i:itemList){
+            reserveVenueConsItemDao.delete(i);
+        }
         super.delete(reserveVenueCons);
     }
 

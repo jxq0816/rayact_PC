@@ -48,7 +48,7 @@ public class ReserveAppController extends BaseController {
 
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Date consDate, String venueId,String projectId,Model model) throws ParseException {
+    public String main(Date consDate, String venueId,String projectId,Model model){
         if (consDate == null) {
             consDate = new Date();
         }
