@@ -392,7 +392,7 @@
 		sum(CASE WHEN cd.num IS NOT NULL THEN cd.num ELSE 0 END ) as num,
 		SUM(CASE WHEN cd.detail_sum IS NOT NULL THEN cd.detail_sum ELSE 0 END ) as income
 		FROM reserve_venue v
-		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.id = #{commId}
+		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.name = #{commName}
 		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
 		WHERE 1=1
 		<if test="startDate!=null and endDate !=null">
@@ -411,6 +411,7 @@
 			and datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>
 		${sqlMap.dsf}
+		GROUP BY c.name
 	</select>
 
 	<select id="ticketIncome" resultType="java.util.Map" parameterType="SearchForm">

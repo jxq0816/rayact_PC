@@ -241,9 +241,11 @@ public class ReserveSellReportController extends BaseController {
         List<ReserveCommodity> cs = reserveCardStatementsService.commSell(form);
         if (cs != null) {
             for (ReserveCommodity c : cs) {
-                Map<String, String> node = new HashMap<>();
+                Map node = new HashMap<>();
                 node.put("commId", c.getId());
                 node.put("commName", c.getName());
+                node.put("startDate",startDate);
+                node.put("endDate",endDate);
                 //查询该用户管理的所有场馆 售卖的某件商品的销量
                 List<Map<String, Object>> tmp = reserveCardStatementsService.commIncome(node);
                 node.put("data", JSONArray.toJSONString(tmp));
