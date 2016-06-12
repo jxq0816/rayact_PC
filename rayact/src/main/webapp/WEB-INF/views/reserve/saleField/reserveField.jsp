@@ -90,7 +90,6 @@
                     <script type="text/javascript">
                         $(".table-left-l ul").css("padding-top", parseInt($(".table-chang thead").eq(0).height()) + 3 + "px");
                     </script>
-
                 </div>
             </div>
         </div>
@@ -98,7 +97,6 @@
     </div>
 </div>
 <%@include file="../include/modal.jsp" %>
-<%--<%@include file="../include/reserveFormModal2.jsp" %>--%>
 <%@include file="../include/reserveFormModal.jsp" %>
 <%@include file="../include/applyCutFormModal.jsp" %>
 <!--end dialog-->

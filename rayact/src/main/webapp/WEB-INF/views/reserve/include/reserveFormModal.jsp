@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!-- 场馆预订Modal -->
 <button id="reserveDialog"  style="display: none" class="btn btn-primary btn-large" href="#reserveDialogModal"  data-toggle="modal">预订</button>
-<div class="modal fade"  id="reserveDialogModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade"  id="reserveDialogModal" style="display: none"  aria-hidden="true">
     <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-header">
