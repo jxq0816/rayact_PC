@@ -118,15 +118,6 @@ public class ReserveFieldPriceService {
         return null;
     }
 
-    private ReserveFieldHolidayPriceSet timeHasHoliday(String time, List<ReserveFieldHolidayPriceSet> holidayPriceSetList) {
-        for (ReserveFieldHolidayPriceSet ps : holidayPriceSetList) {
-            if (TimeUtils.compare(time, ps.getFieldStartTime()) >= 0 && TimeUtils.compare(time, ps.getFieldEndTime()) < 0) {
-                return ps;
-            }
-        }
-        return null;
-    }
-
     /**
      * 根据场馆Id和时间获取场地不同时间段的价格,并查询当前时间是否预定,并标记位已定
      *
@@ -157,8 +148,7 @@ public class ReserveFieldPriceService {
         List<ReserveVenueEmptyCheck> emptyChecks = reserveVenueEmptyCheckService.findList(reserveVenueEmptyCheck);
         //查询价格
         ReserveFieldPriceSet reserveFieldPriceSet = new ReserveFieldPriceSet();
-        reserveFieldPriceSet.setReserveVenue(new ReserveVenue(venueId));
-
+        reserveFieldPriceSet.setReserveVenue(venue);
         setWeek(reserveFieldPriceSet, date);
         //会员类型(1:散客,2:会员)
         if (StringUtils.isNotBlank(consType)) {
@@ -188,9 +178,11 @@ public class ReserveFieldPriceService {
 
     /**
      *
-     *
-     * @param venueId 场馆Id
-     * @param date    时间
+     * @param venueId
+     * @param consType
+     * @param date
+     * @param times
+     * @param user 手机端 登陆的用户
      * @return
      */
     public List<FieldPrice> findByDateForMobile(String venueId, String consType, Date date, List<String> times,User user) {
@@ -211,7 +203,6 @@ public class ReserveFieldPriceService {
         reserveVenueCons.setConsWeek(TimeUtils.getWeekOfDate(date));
 
         ReserveVenueCons venueCons = new ReserveVenueCons();
-        venueCons.setReserveType("3");//排除已经取消的
         reserveVenueCons.setConsData(venueCons);
         reserveVenueCons.setTenantId(user.getCompany().getId());
         //查询所有预定的信息(作为本场地的预定标记)
@@ -232,7 +223,7 @@ public class ReserveFieldPriceService {
         }
         String weekType = TimeUtils.getWeekType(date);//获得当天属于周几
         reserveFieldPriceSet.setWeek(weekType);
-        List<ReserveFieldPriceSet> reserveFieldPriceSetList = new ArrayList<ReserveFieldPriceSet>();
+        List<ReserveFieldPriceSet> reserveFieldPriceSetList = new ArrayList<>();
         for (ReserveField i : fieldList) {//处理场地
             reserveFieldPriceSet.setReserveField(i);
             if ("1".equals(i.getIsTimeInterval())) {//该场地分时令
@@ -253,8 +244,10 @@ public class ReserveFieldPriceService {
     }
 
     /**
+     * 查询场地的状态
      * @param items
-     * @param time  网格时间
+     * @param fieldPriceSet
+     * @param time
      * @return
      */
     private ReserveVenueConsItem hasReserve(List<ReserveVenueConsItem> items, ReserveFieldPriceSet fieldPriceSet, String time) {
@@ -272,6 +265,14 @@ public class ReserveFieldPriceService {
         }
         return null;
     }
+
+    /**
+     * 查询场地是否已经通过审核
+     * @param checks
+     * @param fieldPriceSet
+     * @param time
+     * @return
+     */
     private ReserveVenueEmptyCheck hasCheck(List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet fieldPriceSet, String time) {
         for (ReserveVenueEmptyCheck check : checks) {
             if (fieldPriceSet.getReserveField().getId().equals(check.getField().getId())) {
@@ -288,12 +289,13 @@ public class ReserveFieldPriceService {
         return null;
     }
 
-    //获取场地的时间，价格，状态
-    /*
-        fieldPriceList:场地的时间价格列表
-        reserveFieldPriceSetList:场地价格设置
-        venueConsList：场馆订单
-        times：时间表
+    /**
+     *获取场地的时间，价格，状态
+     * @param fieldPriceList 场地的时间价格列表
+     * @param reserveFieldPriceSetList 场地价格设置
+     * @param venueConsList 场馆订单
+     * @param reserveVenueEmptyChecks 空场审核
+     * @param times 时间表
      */
     private void buildTimePrice(List<FieldPrice> fieldPriceList, List<ReserveFieldPriceSet> reserveFieldPriceSetList,
                                 List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times) {
@@ -423,13 +425,14 @@ public class ReserveFieldPriceService {
             fieldPriceList.add(fieldPrice);//添加某个场地的所有价格和状态列表
         }
     }
-
-    //获取场地的时间，价格，状态
-    /*
-        fieldPriceList:场地的时间价格列表
-        reserveFieldPriceSetList:场地价格设置
-        venueConsList：场馆订单
-        times：时间表
+    /**
+     * 获取场地的时间，价格，状态 for mobile
+     * @param fieldPriceList
+     * @param reserveFieldPriceSetList
+     * @param venueConsList
+     * @param reserveVenueEmptyChecks
+     * @param times
+     * @param user 手机端登陆的用户
      */
     private void buildTimePriceMobile(List<FieldPrice> fieldPriceList, List<ReserveFieldPriceSet> reserveFieldPriceSetList,
                                 List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> reserveVenueEmptyChecks, List<String> times,User user) {
@@ -562,45 +565,51 @@ public class ReserveFieldPriceService {
         }
     }
 
-    /*
-    查询半场的 时间 价格 状态
+    /**
+     * 查询场地的状态和价格
+     * @param timePriceList
+     * @param venueConsList
+     * @param checks
+     * @param setLeft
+     * @param times
+     * @return
      */
-    private FieldPrice buildFieldPrice(List<TimePrice> LeftTimePriceList, List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet setLeft, List<String> times) {
+    private FieldPrice buildFieldPrice(List<TimePrice> timePriceList, List<ReserveVenueConsItem> venueConsList,List<ReserveVenueEmptyCheck> checks, ReserveFieldPriceSet setLeft, List<String> times) {
 
-        FieldPrice leftFieldPrice = new FieldPrice();
+        FieldPrice fieldPrice = new FieldPrice();
         for (String i : times) {
-            TimePrice LeftTimePrice = new TimePrice();
-            LeftTimePrice.setTime(i);
-            //遍历左半场 时间价格组成的Jason
-            for (TimePrice j : LeftTimePriceList) {
+            TimePrice timePrice = new TimePrice();
+            timePrice.setTime(i);
+            //遍历半场 时间价格组成的Json
+            for (TimePrice j : timePriceList) {
                 String t = j.getTime();
                 Double price = j.getPrice();
                 String hour = i.substring(0, 2);
                 t = t.substring(0, 2);
                 if (hour.equals(t)) {
-                    LeftTimePrice.setPrice(price);
+                    timePrice.setPrice(price);
                     break;
                 }
             }
-            //查询左半场在时间i是否已经预定
-            ReserveVenueConsItem cons = hasReserve(venueConsList, setLeft, i);
-            if (cons != null) {//已经预定
-                LeftTimePrice.setConsItem(cons);
-                LeftTimePrice.setConsType(cons.getConsData().getConsType());
-                LeftTimePrice.setUserName(cons.getConsData().getUserName());
-                LeftTimePrice.setStatus(cons.getConsData().getReserveType());
+            //查询半场在时间i是否已经预定
+            ReserveVenueConsItem item = hasReserve(venueConsList, setLeft, i);
+            if (item != null) {//已经预定
+                timePrice.setConsItem(item);
+                timePrice.setConsType(item.getConsData().getConsType());
+                timePrice.setUserName(item.getConsData().getUserName());
+                timePrice.setStatus(item.getConsData().getReserveType());
             } else {
-                LeftTimePrice.setStatus("0");
+                timePrice.setStatus("0");
             }
             //查询时间time是否已经通过空场审核
             ReserveVenueEmptyCheck check = hasCheck(checks, setLeft, i);
             if (check != null) {//已经审核
-                LeftTimePrice.setCheck(check);//设置审核
-                LeftTimePrice.setUserName(check.getCreateBy().getName());//审核人
-                LeftTimePrice.setStatus("0"+check.getCheckStatus());//审核状态
+                timePrice.setCheck(check);//设置审核
+                timePrice.setUserName(check.getCreateBy().getName());//审核人
+                timePrice.setStatus("0"+check.getCheckStatus());//审核状态
             }
-            leftFieldPrice.getTimePriceList().add(LeftTimePrice);
+            fieldPrice.getTimePriceList().add(timePrice);
         }
-        return leftFieldPrice;
+        return fieldPrice;
     }
 }
