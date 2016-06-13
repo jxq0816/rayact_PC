@@ -64,6 +64,7 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
         card.setTransactionType("9");
         card.setReserveMember(reserveVenueOrder.getMember());
         card.setRemarks("次卡消费");
+        card.setOrderId(reserveVenueOrder.getId());
         reserveCardStatementsService.save(card);
         applicationContext.publishEvent(new VenueOrderEvent(reserveVenueOrder));
     }

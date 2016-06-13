@@ -37,4 +37,5 @@
 alter table reserve_venue_order add start_time VARCHAR(5);
 alter table reserve_venue_order add end_time VARCHAR(5);
 alter table reserve_venue_order add fk_reserve_field_id VARCHAR(19);
-
+20160613:reserve_card_statements 新增字段：订单编号
+alter table reserve_card_statements add fk_order_id VARCHAR(19);
