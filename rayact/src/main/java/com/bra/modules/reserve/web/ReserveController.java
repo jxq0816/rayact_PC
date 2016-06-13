@@ -239,7 +239,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("times", times);
         //会员
         ReserveMember reserveMember = new ReserveMember();
-        reserveMember.setReserveVenue(new ReserveVenue(venueId));
+       /* reserveMember.setReserveVenue(new ReserveVenue(venueId));*/
         reserveMember.setCartType("1");//卡号类型(会员类型1:储值卡,2:次卡)
         model.addAttribute("memberList", reserveMemberService.findList(reserveMember));
 
