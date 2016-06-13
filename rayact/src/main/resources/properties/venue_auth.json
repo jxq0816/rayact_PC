@@ -250,6 +250,12 @@
         "authorityList": []
       },
       {
+        "code": "saleVenueLogMS",
+        "name": "场地售卖记录管理",
+        "href":"/reserve/saleVenue/listMS",
+        "authorityList": []
+      },
+      {
         "code": "reserveCommoditySellDetail",
         "name": "商品销售记录",
         "href":"/reserve/reserveCommoditySellDetail/findSellDetailList",

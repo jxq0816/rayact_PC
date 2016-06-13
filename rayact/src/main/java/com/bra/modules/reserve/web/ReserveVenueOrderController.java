@@ -157,7 +157,6 @@ public class ReserveVenueOrderController extends BaseController {
             residue -= ticketNum;//修改该用户的剩余次数
             double remainder = member.getRemainder();
             /* 预付次数减*/
-            Double collectPrice = 0.0;
             ReserveTimeCardPrepayment prepayment = new ReserveTimeCardPrepayment();
             prepayment.setReserveMember(member);
             prepayment.setReserveProject(project);
@@ -169,7 +168,6 @@ public class ReserveVenueOrderController extends BaseController {
                 int remainTime = i.getRemainTime();//预付剩余次数
                 //如果剩余次数大于等于购买票数
                 if (remainTime >= ticketNum) {
-                    collectPrice += singleTimePrice * ticketNum;//统计本次交易额
                     remainderPre -= singleTimePrice * ticketNum;
                     i.setRemainder(remainderPre);//修改预付款余额
                     remainTime -= ticketNum;
@@ -178,7 +176,6 @@ public class ReserveVenueOrderController extends BaseController {
                     break;//本次预付款就可以结清
                 } else {
                     //如果剩余次数 小于 购买票数
-                    collectPrice += remainderPre;//统计本次交易额
                     i.setRemainTime(0);//次数减为零
                     i.setRemainder(0.0);//余额清空
                     reserveTimeCardPrepaymentService.save(i);
@@ -187,10 +184,9 @@ public class ReserveVenueOrderController extends BaseController {
                 }
             }
             member.setResidue(residue);//保存剩余次数
-            remainder -= collectPrice;
+            remainder -= reserveVenueOrder.getCollectCount();
             member.setRemainder(remainder);//会员余额更新
             reserveMemberService.save(member);
-            reserveVenueOrder.setCollectPrice(collectPrice);//订单金额，即本次交易额
             reserveVenueOrder.setMember(member);
             reserveVenueOrderService.save(reserveVenueOrder);//会员结算保存
         }else{

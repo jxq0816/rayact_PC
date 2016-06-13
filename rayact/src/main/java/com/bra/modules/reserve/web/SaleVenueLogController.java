@@ -1,14 +1,14 @@
 package com.bra.modules.reserve.web;
 
+import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.DateUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
-import com.bra.modules.reserve.service.ReserveProjectService;
-import com.bra.modules.reserve.service.ReserveUserService;
-import com.bra.modules.reserve.service.ReserveVenueConsService;
-import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.entity.ReserveVenueCons;
+import com.bra.modules.reserve.entity.ReserveVenueOrder;
+import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.reserve.web.form.SaleVenueLog;
 import com.bra.modules.sys.entity.User;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,10 +41,23 @@ public class SaleVenueLogController extends BaseController {
     private ReserveVenueService reserveVenueService;
     @Autowired
     private ReserveProjectService reserveProjectService;
+    @Autowired
+    private ReserveVenueOrderService reserveVenueOrderService;
 
     @RequestMapping(value = "list")
     public String list(Model model, SaleVenueLog venueLog, HttpServletRequest request, HttpServletResponse response) {
-       /* request.setAttribute("sessionId",request.getSession().getId());*/
+        model.addAttribute("userList",reserveUserService.findList(new User()));
+        ReserveVenue venue = new ReserveVenue();
+        model.addAttribute("venueList",reserveVenueService.findList(venue));
+        List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
+        model.addAttribute("projectList",projectList);
+        model.addAttribute("query",venueLog);//参数返回
+        Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<>(request, response), venueLog);
+        model.addAttribute("page", page);
+        return "/reserve/saleField/saleVenueLog";
+    }
+    @RequestMapping(value = "listMS")
+    public String listMS(Model model, SaleVenueLog venueLog, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("userList",reserveUserService.findList(new User()));
         ReserveVenue venue = new ReserveVenue();
         model.addAttribute("venueList",reserveVenueService.findList(venue));
@@ -52,7 +66,7 @@ public class SaleVenueLogController extends BaseController {
         model.addAttribute("query",venueLog);//参数返回
         Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<SaleVenueLog>(request, response), venueLog);
         model.addAttribute("page", page);
-        return "/reserve/saleField/saleVenueLog";
+        return "/reserve/saleField/saleVenueLogMS";
     }
 
     @RequestMapping(value = "listExport")
@@ -85,14 +99,15 @@ public class SaleVenueLogController extends BaseController {
         ExcelInfo info = new ExcelInfo(response,"场地售卖报表"+ DateUtils.formatDate(now),titles,contentList);
         info.export();
     }
-    private String getType(String typeCode){
-        if("1".equals(typeCode)){
-            return "(场次)";
-        }else if("2".equals(typeCode)){
-            return "(人次)";
+    @RequestMapping(value = "delete")
+    private String delete(String orderId,String isTicket,RedirectAttributes redirectAttributes){
+        if("1".equals(isTicket)){
+            reserveVenueOrderService.delete(new ReserveVenueOrder(orderId));
         }else{
-            return "";
+            ReserveVenueCons order=new ReserveVenueCons(orderId);
+            reserveVenueConsService.delete(order);
         }
+        addMessage(redirectAttributes, "删除记录成功");
+        return "redirect:" + Global.getAdminPath() + "/reserve/saleVenue/listMS";
     }
-
 }

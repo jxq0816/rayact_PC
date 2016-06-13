@@ -38,6 +38,16 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
 
     private ReserveProject project;
 
+    private String isTicket;
+
+    public String getIsTicket() {
+        return isTicket;
+    }
+
+    public void setIsTicket(String isTicket) {
+        this.isTicket = isTicket;
+    }
+
     public ReserveProject getProject() {
         return project;
     }

@@ -190,7 +190,8 @@
         p.name as "project.name",
         i.start_time as startTime,
         i.end_time as endTime,
-        tutor.name as "tutorName"
+        tutor.name as "tutorName",
+        '0' as isTicket
         from reserve_venue_cons as a
         INNER JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
         INNER JOIN  reserve_venue as v ON a.venue_id = v.id
@@ -231,7 +232,8 @@
         p.name as projectName,
         a.start_time as startTime,
         a.end_time as endTime,
-        tutor.name as "tutorName"
+        tutor.name as "tutorName",
+        '1' as isTicket
         from reserve_venue_order a
         INNER JOIN reserve_venue v ON a.venue_id = v.id
         INNER JOIN reserve_user u ON a.create_by = u.id
