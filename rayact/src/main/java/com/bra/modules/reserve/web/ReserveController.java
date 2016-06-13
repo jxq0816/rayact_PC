@@ -49,6 +49,8 @@ public class ReserveController extends BaseController {
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
     @Autowired
+    private ReserveMobileFieldPriceService reserveMobileFieldPriceService;
+    @Autowired
     private ReserveFieldStatusService reserveFieldStatusService;
     @Autowired
     private ReserveVenueConsService reserveVenueConsService;
@@ -842,17 +844,17 @@ public class ReserveController extends BaseController {
         List<String> timesAM = new ArrayList<>();
         timesAM.addAll(TimeUtils.getTimeSpacListValue("06:00:00", "12:30:00", 30));
         model.addAttribute("timesAM", timesAM);
-        List<FieldPrice> venueFieldPriceListAM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesAM, user);
+        List<FieldPrice> venueFieldPriceListAM = reserveMobileFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesAM, user);
         model.addAttribute("venueFieldPriceListAM", venueFieldPriceListAM);
         //下午场地价格
         List<String> timesPM = TimeUtils.getTimeSpacListValue("12:30:00", "18:30:00", 30);
         model.addAttribute("timesPM", timesPM);
-        List<FieldPrice> venueFieldPriceListPM = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesPM, user);
+        List<FieldPrice> venueFieldPriceListPM = reserveMobileFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesPM, user);
         model.addAttribute("venueFieldPriceListPM", venueFieldPriceListPM);
         //晚上场地价格
         List<String> timesEvening = TimeUtils.getTimeSpacListValue("18:30:00", "00:30:00", 30);
         model.addAttribute("timesEvening", timesEvening);
-        List<FieldPrice> venueFieldPriceListEvening = reserveFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesEvening, user);
+        List<FieldPrice> venueFieldPriceListEvening = reserveMobileFieldPriceService.findByDateForMobile(reserveVenue.getId(), "1", consDate, timesEvening, user);
         model.addAttribute("venueFieldPriceListEvening", venueFieldPriceListEvening);
         return "reserve/saleField/reserveFieldStatusMobile";
     }
