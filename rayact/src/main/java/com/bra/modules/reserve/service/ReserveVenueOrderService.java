@@ -24,8 +24,6 @@ import java.util.Map;
 public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, ReserveVenueOrder> {
 
     @Autowired
-    private ReserveMemberService memberService;
-    @Autowired
     private  ReserveCardStatementsService reserveCardStatementsService;
 
     public ReserveVenueOrder get(String id) {
@@ -72,6 +70,12 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
     @Transactional(readOnly = false)
     public void delete(ReserveVenueOrder reserveVenueOrder) {
         super.delete(reserveVenueOrder);
+        ReserveCardStatements statements = new ReserveCardStatements();
+        statements.setOrderId(reserveVenueOrder.getId());
+        List<ReserveCardStatements> list = reserveCardStatementsService.findList(statements);
+        for(ReserveCardStatements i:list){
+            reserveCardStatementsService.delete(i);
+        }
     }
 
 }

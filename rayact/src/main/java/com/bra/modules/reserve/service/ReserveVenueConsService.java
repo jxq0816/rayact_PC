@@ -44,6 +44,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
     private ReserveVenueApplyCutService reserveVenueApplyCutService;
     @Autowired
     private ReserveTutorOrderService reserveTutorOrderService;
+    @Autowired
+    private  ReserveCardStatementsService reserveCardStatementsService;
 
     public Page<SaleVenueLog> findOrderLog(Page<SaleVenueLog> page, SaleVenueLog venueLog) {
         if (venueLog != null) {
@@ -312,6 +314,12 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
             reserveVenueConsItemDao.delete(i);
         }
         super.delete(reserveVenueCons);
+        ReserveCardStatements statements = new ReserveCardStatements();
+        statements.setOrderId(reserveVenueCons.getId());
+        List<ReserveCardStatements> list = reserveCardStatementsService.findList(statements);
+        for(ReserveCardStatements i:list){
+            reserveCardStatementsService.delete(i);
+        }
     }
 
 }
