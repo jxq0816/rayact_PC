@@ -9,7 +9,7 @@
 				<div class="row">
 					<div class="form-group">
 						<label for="reserveFieldName" class="col-sm-2 control-label"> 场地:</label>
-						<div class="col-lg-10">
+						<div class="col-lg-4">
 							<input readonly="readonly" id="reserveFieldName" class="form-control"
 								   value="${reserveField.name}"/>
 							<input type="hidden" id="checkDate" name="checkDate"
@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="form-group">
 						<label for="startTime" class="col-sm-2 control-label">时间:</label>
-						<div class="col-sm-4">
+						<div class="col-sm-2">
 							<select id="startTime" class="select2" name="startTime" >
 								<c:forEach items="${times}" var="t">
 									<option
@@ -32,8 +32,8 @@
 								</c:forEach>
 							</select>
 						</div>
-						<label for="endTime" class="col-lg-2 control-label" style="text-align: center">至</label>
-						<div class="col-sm-4">
+						<label for="endTime" class="col-lg-1 control-label" style="text-align: center">至</label>
+						<div class="col-sm-2">
 							<select id="endTime" class="select2"  name="endTime">
 								<c:forEach items="${times}" var="t">
 									<option
@@ -51,8 +51,6 @@
 							<input type="radio" id="normalStatus" class="icheck" value="0"
 								   <c:if test="${check.checkStatus == '0'}">checked="checked"</c:if>
 								   name="checkStatus"/>正常
-						</div>
-						<div class="col-lg-3">
 							<input type="radio" id="abnormalStatus" class="icheck" value="1"
 								   <c:if test="${check.checkStatus == '1'}">checked="checked"</c:if>
 								   name="checkStatus"/>异常

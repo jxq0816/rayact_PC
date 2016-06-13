@@ -107,6 +107,7 @@
     </div>
 </div>
 <%@include file="../include/modal.jsp" %>
+<%@include file="../include/checkEmptyFormModal.jsp" %>
 <!--end dialog-->
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_field_status.js?t=" + Math.random() + "'><\/script>");

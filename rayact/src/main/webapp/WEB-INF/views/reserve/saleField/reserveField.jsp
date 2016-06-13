@@ -99,6 +99,7 @@
 <%@include file="../include/modal.jsp" %>
 <%@include file="../include/reserveFormModal.jsp" %>
 <%@include file="../include/applyCutFormModal.jsp" %>
+
 <!--end dialog-->
 <script src="${ctxStatic}/modules/reserve/js/reserve_field.js" type="text/javascript"></script>
 </body>
