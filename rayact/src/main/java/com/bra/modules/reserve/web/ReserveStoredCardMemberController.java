@@ -99,6 +99,7 @@ public class ReserveStoredCardMemberController extends BaseController {
             Double remainderOld = reserveMemberOld.getRemainder();
             Double transactionVolume = remainder - remainderOld;
             reserveCardStatements.setTransactionVolume(transactionVolume);
+            reserveCardStatements.setReserveMember(reserveMember);
             reserveCardStatements.setRemarks("超级管理员修改余额");
             reserveCardStatements.setTransactionType("4");//交易类型
             reserveCardStatements.setVenue(reserveMember.getReserveVenue());
