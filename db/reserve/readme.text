@@ -29,6 +29,7 @@
 20160523:reserve_multiple_payment 商品销售表 修改支付方式字段pay_type varchar(2);
 20160523:reserve_venue_cons 场地订单表 修改支付方式字段pay_type varchar(2);
 20160523:reserve_card_statements 交易流水表 修改支付方式字段pay_type varchar(2);
+alter table reserve_card_statements modify pay_type varchar(2);
 20160525:reserve_multiple_payment 多方式付款 添加fk_reserve_field_id varchar(19);
 20160603:reserve_venue_cons订单表 添加by_pc char(1); alter table  reserve_venue_cons add by_pc char(1);
 20160605:reserve_commodity_supplier 供应商表
