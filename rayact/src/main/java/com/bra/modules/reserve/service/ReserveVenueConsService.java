@@ -318,6 +318,12 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         statements.setOrderId(reserveVenueCons.getId());
         List<ReserveCardStatements> list = reserveCardStatementsService.findList(statements);
         for(ReserveCardStatements i:list){
+            if("1".equals(i.getPayType())){//储值卡支付，应该把金额还给顾客
+                ReserveMember reserveMember=i.getReserveMember();
+                reserveMember=storedCardMemberService.get(reserveMember);
+                reserveMember.setRemainder(reserveMember.getRemainder()+i.getTransactionVolume());
+                storedCardMemberService.save(reserveMember);
+            }
             reserveCardStatementsService.delete(i);
         }
     }
