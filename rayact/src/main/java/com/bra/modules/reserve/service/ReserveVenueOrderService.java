@@ -3,8 +3,7 @@ package com.bra.modules.reserve.service;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
-import com.bra.modules.reserve.entity.ReserveCardStatements;
-import com.bra.modules.reserve.entity.ReserveVenueOrder;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.event.visitors.VenueOrderEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,12 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
 
     @Autowired
     private  ReserveCardStatementsService reserveCardStatementsService;
+    @Autowired
+    private ReserveTimecardMemberSetService reserveTimecardMemberSetService;
+    @Autowired
+    private ReserveMemberService reserveMemberService;
+    @Autowired
+    private ReserveTimeCardPrepaymentService reserveTimeCardPrepaymentService;
 
     public ReserveVenueOrder get(String id) {
         return super.get(id);
@@ -74,6 +79,28 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
         statements.setOrderId(reserveVenueOrder.getId());
         List<ReserveCardStatements> list = reserveCardStatementsService.findList(statements);
         for(ReserveCardStatements i:list){
+            if("1".equals(i.getPayType())){
+                reserveVenueOrder=this.get(reserveVenueOrder);
+                /*将用户的次数和金额 作为新的预储值冲回*/
+                int ticketNum=reserveVenueOrder.getCollectCount();
+                double collectPrice=reserveVenueOrder.getCollectPrice();
+                ReserveMember member=reserveVenueOrder.getMember();
+                member=reserveMemberService.get(member);
+                ReserveTimecardMemberSet memberTimecarSet = member.getTimecardSet();
+                memberTimecarSet = reserveTimecardMemberSetService.get(memberTimecarSet);
+                ReserveProject project = memberTimecarSet.getReserveProject();
+                ReserveTimeCardPrepayment prepayment = new ReserveTimeCardPrepayment();
+                prepayment.setReserveMember(member);
+                prepayment.setReserveProject(project);
+                prepayment.setRemainder(collectPrice);
+                prepayment.setRemainTime(ticketNum);
+                prepayment.setSingleTimePrice(collectPrice/ticketNum);
+                reserveTimeCardPrepaymentService.save(prepayment);
+                //会员剩余次数变更，
+                member.setRemainder(member.getRemainder()+collectPrice);
+                member.setResidue(member.getResidue()+ticketNum);
+                reserveMemberService.save(member);
+            }
             reserveCardStatementsService.delete(i);
         }
     }
