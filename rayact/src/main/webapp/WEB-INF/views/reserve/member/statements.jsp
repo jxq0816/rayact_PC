@@ -41,6 +41,7 @@
                                 <th>充值金额</th>
                                 <th>消费类型</th>
                                 <th>半小时</th>
+                                <th>支付方式</th>
                                 <th>消费金额</th>
                                 <th>会员余额</th>
                                 <th>操作员</th>
@@ -83,6 +84,9 @@
                                             ${statement.transactionNum}
                                     </td>
                                     <td>
+                                        ${fns:getPayType(statement.payType)}
+                                    </td>
+                                    <td>
                                         <j:if test="${statement.transactionType!=1 and statement.transactionType!=7}">
                                             ${statement.transactionVolume}
                                         </j:if>
@@ -90,6 +94,7 @@
                                     <td>
                                             ${statement.reserveMember.remainder}
                                     </td>
+
                                     <td>
                                             ${statement.updateBy.name}
                                     </td>

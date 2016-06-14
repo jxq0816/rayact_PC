@@ -33,28 +33,27 @@ public class MemberCheckoutListener{
     @EventListener
     public void onEvent(VenueCheckoutEvent event) {
         ReserveVenueCons venueCons = event.getReserveVenueCons();
+        ReserveMember reserveMember=venueCons.getMember();
+        ReserveCardStatements statements = new ReserveCardStatements();
+        reserveMember = storedCardMemberService.get(reserveMember);//获得余额,如果是散客，reserveMember等于null
         //选择会员卡
-        if ("1".equals(venueCons.getPayType()) && venueCons.getMember() != null) {
-            //会员卡扣款
-            ReserveMember reserveMember = storedCardMemberService.get(venueCons.getMember().getId());
+        if ("1".equals(venueCons.getPayType()) && reserveMember != null) {
             if (reserveMember.getRemainder() == null) {
                 reserveMember.setRemainder(0D);
             }
-            reserveMember.setRemainder(reserveMember.getRemainder() - venueCons.getConsPrice());
+            reserveMember.setRemainder(reserveMember.getRemainder() - venueCons.getConsPrice());//会员卡扣款
             storedCardMemberService.save(reserveMember);
-            venueCons.setMember(reserveMember);//余额加入日志
+
         }
         //记录日志
         String payType=venueCons.getPayType();
-        ReserveCardStatements statements = new ReserveCardStatements();
         Date consDate=venueCons.getConsDate();
         statements.setCreateDate(consDate);//createTime:订单与结算的日期保持一致， 即使第2天结算，也会将流水计入订单的日期，updateTime:系统的扣款时间，该时间用于个人交易明细的排序
         statements.setOrderId(venueCons.getId());
         statements.setVenue(venueCons.getReserveVenue());
-        statements.setTransactionType("8");//场地收入
-        statements.setReserveMember(venueCons.getMember());
-        statements.setRemarks("场地收入");
-
+        statements.setTransactionType("8");//场地消费
+        statements.setReserveMember(reserveMember);//余额加入日志
+        statements.setRemarks("场地消费");
         ReserveVenueConsItem search = new ReserveVenueConsItem();
         search.setConsData(venueCons);
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
@@ -78,6 +77,14 @@ public class MemberCheckoutListener{
             ReserveField field=venueCons.getVenueConsList().get(0).getReserveField();
             String orderId=venueCons.getId();
             if(memberCardInput!=null && memberCardInput!=0){
+                //会员卡扣款
+                if (reserveMember.getRemainder() == null) {
+                    reserveMember.setRemainder(0D);
+                }
+                reserveMember.setRemainder(reserveMember.getRemainder() - memberCardInput);
+                storedCardMemberService.save(reserveMember);//修改余额
+
+                statements.setReserveMember(reserveMember);//余额加入日志
                 statements.setPayType("1");
                 statements.setTransactionVolume(memberCardInput);
                 statements.setId(null);
