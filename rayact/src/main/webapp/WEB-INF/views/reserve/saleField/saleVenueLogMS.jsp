@@ -85,7 +85,7 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    <th>订单编号</th>
+                                  <%--  <th>订单编号</th>--%>
                                     <th>所属场馆</th>
                                     <th>所属项目</th>
                                     <th>时间区间</th>
@@ -111,7 +111,7 @@
                                 <c:set var="consPriceSum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="log">
                                     <tr style="height: 30px;">
-                                       <td>${log.id}</td>
+                                     <%--  <td>${log.id}</td>--%>
                                         <td>${log.venue.name}</td>
                                         <td>${log.project.name}</td>
                                         <td>${log.startTime}—${log.endTime}</td>
@@ -136,7 +136,7 @@
                                                             type="date"></fmt:formatDate></td>
                                         <td><fmt:formatDate value="${log.updateDate}"
                                                             type="both"></fmt:formatDate></td>
-                                        <td>${log.isTicket}</td>
+                                       <%-- <td>${log.isTicket}</td>--%>
                                         <td>
                                           <%--  <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/storedCardMemberSet/form?id=${reserveStoredcardMemberSet.id}">
