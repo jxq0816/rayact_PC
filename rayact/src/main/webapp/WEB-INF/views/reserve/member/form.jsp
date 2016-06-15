@@ -9,13 +9,12 @@
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
     <jsp:param name="action" value="member"></jsp:param>
 </jsp:include>
-
-<div class="cl-mcont" id="pcont">
+<div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>会员添加</h3>
+                    <h3>会员基本信息编辑</h3>
                 </div>
                 <div class="content">
                     <div class="tab-container">
@@ -46,7 +45,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">密码：</label>
                                         <div class="col-sm-6">
-                                            <form:input path="password" type="password" htmlEscape="false" maxlength="16"
+                                            <form:input path="password" type="password" htmlEscape="false"
+                                                        maxlength="16"
                                                         class="form-control "/>
                                         </div>
                                     </div>
@@ -72,14 +72,16 @@
                                         <div class="col-sm-6">
                                             <form:radiobuttons path="cartType" items="${fns:getDictList('cart_type')}"
                                                                itemLabel="label"
-                                                               itemValue="value" htmlEscape="false" class=""/>
+                                                               itemValue="value" htmlEscape="false" class="icheck"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">场馆：</label>
                                         <div class="col-sm-6">
-                                            <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                            <sys:select cssClass="input-large"
+                                                        name="reserveVenue.id"
+                                                        cssStyle="width:100%"
                                                         items="${venueList}"
                                                         value="${reserveMember.reserveVenue.id}"
                                                         itemLabel="name"
@@ -99,7 +101,8 @@
                                     </div>
                                     <div class="form-actions">
                                         <input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;
-                                        <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+                                        <input id="btnCancel" class="btn" type="button" value="返 回"
+                                               onclick="history.go(-1)"/>
                                     </div>
                                 </form:form>
                             </div>
