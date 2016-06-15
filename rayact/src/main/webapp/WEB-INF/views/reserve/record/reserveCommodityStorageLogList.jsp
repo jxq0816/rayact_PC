@@ -59,6 +59,8 @@
                         <div class="form-group col-lg-2 col-sm-2">
                             <input id="btnSubmit" class="btn btn-primary" type="submit"
                                    value="查询"/>
+                            <input id="btnExport" class="btn btn-primary"
+                                   type="button" value="导出"/>
                         </div>
                     </div>
                     <sys:message content="${message}"/>
