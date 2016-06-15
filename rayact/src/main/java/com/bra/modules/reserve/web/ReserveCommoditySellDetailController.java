@@ -173,7 +173,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			contentList.add(o);
 		}
 		Date now = new Date();
-		ExcelInfo info = new ExcelInfo(response,"商品销售记录"+ DateUtils.formatDate(now),titles,contentList);
+		ExcelInfo info = new ExcelInfo(response,"商品销售记录 导出时间："+ DateUtils.formatDate(now),titles,contentList);
 		info.export();
 	}
 
