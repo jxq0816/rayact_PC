@@ -32,9 +32,14 @@ $(document).ready(function () {
     });
 
     $("#saveBtn").on('click', function () {
+        var fieldId = $("#fieldId").val();
         var memberType = $("#memberType input:radio:checked").val();
         var startTime=$("#startTime").val();
         var endTime=$("#endTime").val();
+        if (!fieldId) {
+            formLoding('请选择场地');
+            return false;
+        }
         if (startTime == endTime) {
             formLoding('开始时间应小于结束时间');
             return false;

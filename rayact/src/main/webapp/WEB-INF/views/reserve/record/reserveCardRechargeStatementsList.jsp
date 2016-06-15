@@ -124,7 +124,7 @@
                                         合计
                                     </td>
                                     <td>${sum}</td>
-                                    <td colspan="4"></td>
+                                    <td colspan="5"></td>
                                 </tr>
                                 </tbody>
                             </table>
