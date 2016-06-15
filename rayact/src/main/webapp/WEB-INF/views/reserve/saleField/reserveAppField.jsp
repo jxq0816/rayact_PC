@@ -12,7 +12,7 @@
 <c:set var="width" value="${(fn:length(venueFieldPriceList)+1)*60}px"></c:set>
 <div style="OVERFLOW-X: scroll;width:${width}" align=center>
     <table class="table-chang">
-        <thead>
+        <thead style="position:fixed;left:0px;top:0px;">
         <%--时刻--%>
         <tr>
             <th class="time_cell"></th>
@@ -22,68 +22,72 @@
         </tr>
         <%--时刻--%>
         </thead>
+
         <tbody>
-        <%-- 遍历所有全场的场地开始--%>
-        <c:forEach items="${times}" var="t">
-            <tr>
-                    <%-- 纵坐标：时间--%>
-                <td class="time_cell">
-                    <span>
-                            ${fn:substring(t, 0, 5)}
-                    </span>
-                </td>
-                    <%-- 横坐标：场地名称--%>
-                <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
-                    <c:set var="status" value="0"/>
-                    <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
-                    <c:forEach items="${field.timePriceList}" var="tp">
-                        <%--场地jason的时间与横坐标的时间一致 --%>
-                        <j:if test="${t eq tp.time}">
-                            <%--设置单个场地 时间T 的状态--%>
-                            <c:set var="status" value="${tp.status}"/>
-                            <c:set var="price" value="${tp.price}"/>
-                            <%-- A场地 B时间 的状态 结束--%>
-                        </j:if>
-                    </c:forEach>
+        <div style="margin-top:20px;">
+            <%-- 遍历所有全场的场地开始--%>
+            <c:forEach items="${times}" var="t">
+                <tr>
+                        <%-- 纵坐标：时间--%>
+                    <td class="time_cell">
+                        <span>
+                                ${fn:substring(t, 0, 5)}
+                        </span>
+                    </td>
+                        <%-- 横坐标：场地名称--%>
+                    <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
+                        <c:set var="status" value="0"/>
+                        <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
+                        <c:forEach items="${field.timePriceList}" var="tp">
+                            <%--场地jason的时间与横坐标的时间一致 --%>
+                            <j:if test="${t eq tp.time}">
+                                <%--设置单个场地 时间T 的状态--%>
+                                <c:set var="status" value="${tp.status}"/>
+                                <c:set var="price" value="${tp.price}"/>
+                                <%-- A场地 B时间 的状态 结束--%>
+                            </j:if>
+                        </c:forEach>
 
 
-                    <%--设置全场的class--%>
-                    <j:if test="${'0' eq status}">
-                        <c:set var="midClass" value="reserveTd access"/>
-                    </j:if>
-                    <j:if test="${!('0' eq status)}">
-                        <c:set var="midClass" value="reserveTd unavailable"/>
-                    </j:if>
-                    <%--设置全场的class end--%>
-
-                    <%-- 场地 B时间 的状态展示--%>
-
-                    <%-- 如果有半场 显示为midClass--%>
-                    <td status="${status}"
-                        class="${midClass}"
-                        data-price="${price}"
-                        data-field-id="${field.fieldId}"
-                        data-field-name="${field.fieldName}"
-                        data-consDate="${consDate}"
-                        data-consMobile="${consMobile}"
-                        data-time="${t}"
-                    >
+                        <%--设置全场的class--%>
                         <j:if test="${'0' eq status}">
-                            ¥ ${price}
+                            <c:set var="midClass" value="reserveTd access"/>
                         </j:if>
                         <j:if test="${!('0' eq status)}">
-                            <span>已预订</span>
+                            <c:set var="midClass" value="reserveTd unavailable"/>
                         </j:if>
+                        <%--设置全场的class end--%>
 
-                    </td>
-                    <%-- A场地 B时间 的状态展示 结束--%>
-                </c:forEach>
-                    <%-- 横坐标：时间 结束--%>
-            </tr>
-            <%-- 纵坐标：场地 结束--%>
-        </c:forEach>
+                        <%-- 场地 B时间 的状态展示--%>
+
+                        <%-- 如果有半场 显示为midClass--%>
+                        <td status="${status}"
+                            class="${midClass}"
+                            data-price="${price}"
+                            data-field-id="${field.fieldId}"
+                            data-field-name="${field.fieldName}"
+                            data-consDate="${consDate}"
+                            data-consMobile="${consMobile}"
+                            data-time="${t}"
+                        >
+                            <j:if test="${'0' eq status}">
+                                ¥ ${price}
+                            </j:if>
+                            <j:if test="${!('0' eq status)}">
+                                <span>已预订</span>
+                            </j:if>
+
+                        </td>
+                        <%-- A场地 B时间 的状态展示 结束--%>
+                    </c:forEach>
+                        <%-- 横坐标：时间 结束--%>
+                </tr>
+                <%-- 纵坐标：场地 结束--%>
+            </c:forEach>
+        </div>
         <%-- 遍历所有全场 场地结束--%>
         </tbody>
+
     </table>
 </div>
 <div class="row" style="display: none">
