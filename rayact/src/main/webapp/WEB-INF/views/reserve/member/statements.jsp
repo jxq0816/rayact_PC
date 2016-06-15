@@ -13,27 +13,50 @@
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>交易明细</h3>
-                        <a href="${ctx}/reserve/reserveMember/list"><img
-                                style="width:30px;height: 30px;position: absolute;top:30px;right:40px"
-                                src="${ctxStatic}/modules/reserve/images/return.png"></a>
-                    </div>
+                <div class="header">
+                    <h3>交易明细</h3>
+
+                    <a href="${ctx}/reserve/reserveMember/list"><img
+                            style="width:30px;height: 30px;position: absolute;top:20px;right:40px"
+                            src="${ctxStatic}/modules/reserve/images/return.png"></a>
+                </div>
+
+                <form:form id="searchForm" action="${ctx}/reserve/reserveMember/statements" method="post">
+                    <input type="hidden" name="reserveMember.id" value="${statements.reserveMember.id}">
                     <table class="table">
                         <tr>
-                            <th>姓名：${member.name}</th>
-                            <th>场馆：${member.reserveVenue.name}</th>
-                            <th>卡号：${member.cartno}</th>
+                            <th>姓名：${statements.reserveMember.name}</th>
+                            <th>场馆：${statements.reserveMember.reserveVenue.name}</th>
+                            <th>卡号：${statements.reserveMember.cartno}</th>
                             <th>会员卡类型：
-                                <j:if test="${member.cartType==1}">
+                                <j:if test="${statements.reserveMember.cartType==1}">
                                     储值卡
                                 </j:if>
-                                <j:if test="${member.cartType==2}">
+                                <j:if test="${statements.reserveMember.cartType==2}">
                                     次卡
                                 </j:if>
                             </th>
-                            <th>手机号：${member.mobile}</th>
+                            <th>手机号：${statements.reserveMember.mobile}</th>
+                            <th>
+                                <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${statements.startDate}"/>"
+                                       name="startDate" id="startDate" type="text"
+                                       maxlength="20"
+                                       class="input-medium form-control Wdate "
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                            </th>
+                            <th>
+                                <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${statements.endDate}"/>"
+                                       name="endDate" id="endDate" type="text"
+                                       maxlength="20"
+                                       class="input-medium form-control Wdate "
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                            </th>
+                            <th>
+                                <input id="btnSubmit" class="btn btn-primary" type="submit"
+                                       value="查询"/>
+                                <input id="btnExport" class="btn btn-primary"
+                                       type="button" value="导出"/>
+                            </th>
                         </tr>
                     </table>
 
@@ -104,10 +127,17 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                </div>
+                </form:form>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#btnExport").click(function () {
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveMember/statementsExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveMember/statements");
+    });
+</script>
 </body>
 </html>

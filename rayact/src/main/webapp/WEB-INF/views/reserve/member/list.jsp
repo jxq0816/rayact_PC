@@ -106,7 +106,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-primary btn-xs"
-                                           href="${ctx}/reserve/reserveMember/statements?memberId=${reserveMember.id}">交易明细</a>
+                                           href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
                                     </td>
                                 </tr>
                             </c:forEach>

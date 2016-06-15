@@ -47,6 +47,15 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 		page.setList(list);
 		return page;
 	}
+	/**
+	 * 个人消费明细
+	 * @param reserveCardStatements
+	 * @return
+	 */
+	public List<ReserveCardStatements> findPersonalStatementsList(ReserveCardStatements reserveCardStatements) {
+		List<ReserveCardStatements> list = dao.findPersonalStatements(reserveCardStatements);
+		return list;
+	}
 
 	public List<ReserveMemberIntervalReport> memberIncomeCollectReport( ReserveMemberIntervalReport reserveMemberIntervalReport) {
 		if (reserveMemberIntervalReport != null) {

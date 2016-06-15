@@ -2,6 +2,7 @@ package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
@@ -11,6 +12,9 @@ import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.utils.ExcelInfo;
+import com.bra.modules.reserve.utils.StatementsUtils;
+import com.bra.modules.reserve.utils.VenueOrderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -143,14 +149,45 @@ public class ReserveMemberController extends BaseController {
 	}
 
 	@RequestMapping(value = "statements")
-	public String statements(String memberId, HttpServletRequest request, HttpServletResponse response, Model model){
-		ReserveCardStatements query=new ReserveCardStatements();
-		ReserveMember member=reserveMemberService.get(memberId);
-		query.setReserveMember(member);
-		Page<ReserveCardStatements> page = reserveCardStatementsService.findPersonalStatementsPage(new Page<ReserveCardStatements>(request, response),query);
+	public String statements(ReserveCardStatements statements, HttpServletRequest request, HttpServletResponse response, Model model){
+
+		Page<ReserveCardStatements> page = reserveCardStatementsService.findPersonalStatementsPage(new Page<>(request, response),statements);
 		model.addAttribute("page", page);
-		model.addAttribute("member", member);
+		ReserveMember member=reserveMemberService.get(statements.getReserveMember());
+		statements.setReserveMember(member);
+		model.addAttribute("statements", statements);
 		return "reserve/member/statements";
 	}
 
+	@RequestMapping(value = {"statementsExport", ""})
+	public void statementsExport(ReserveCardStatements statements,HttpServletResponse response)throws Exception {
+		List<ReserveCardStatements> list = reserveCardStatementsService.findPersonalStatementsList(statements);
+		String[] titles = {"充值金额","消费类型","半小时","支付方式","消费金额","会员余额","操作员","备注","操作时间"};
+		List<String[]> contentList = new ArrayList<>();
+		for(ReserveCardStatements map :list){
+			String[] o = new String[9];
+			if("1".equals(map.getTransactionType())||"7".equals(map.getTransactionType())){
+				o[0] = map.getTransactionVolume().toString();
+			}else{
+				o[0]="";
+			}
+			o[1]= StatementsUtils.getTransactionType(map.getTransactionType());
+			if(map.getTransactionNum()!=null){
+				o[2]= map.getTransactionNum().toString();
+			}else{
+				o[2]="";
+			}
+			o[3]= VenueOrderUtils.getPayType(map.getPayType());
+			o[4]= map.getTransactionVolume().toString();
+			o[5]= map.getReserveMember().getRemainder().toString();
+			o[6]= map.getCreateBy().getName();
+			o[7]= map.getRemarks();
+			o[8] = DateUtils.formatDateTime(map.getCreateDate());
+			contentList.add(o);
+		}
+		Date now = new Date();
+		ReserveMember member=reserveMemberService.get(statements.getReserveMember());
+		ExcelInfo info = new ExcelInfo(response,member.getName()+"的交易明细，导出时间："+ DateUtils.formatDate(now),titles,contentList);
+		info.export();
+	}
 }
