@@ -46,10 +46,12 @@
                                     </td>
                                     <td>
                                    卡号类型：
+                                    </td>
                                     <td>
                                         <form:radiobuttons class="icheck"  path="cartType" items="${fns:getDictList('cart_type')}"
                                                            itemLabel="label"
                                                            itemValue="value" htmlEscape="false"/>
+                                    </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
                                 </tr>
                                 </tbody>
