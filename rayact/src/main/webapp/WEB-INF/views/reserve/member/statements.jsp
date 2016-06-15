@@ -58,27 +58,7 @@
                                         </j:if>
                                     </td>
                                     <td>
-                                        <j:if test="${statement.transactionType==1}">
-                                            储值卡充值
-                                        </j:if>
-                                        <j:if test="${statement.transactionType==2}">
-                                            退费
-                                        </j:if>
-                                        <j:if test="${statement.transactionType==33}">
-                                            商品
-                                        </j:if>
-                                        <j:if test="${statement.transactionType==4}">
-                                            超级管理员修改余额
-                                        </j:if>
-                                        <j:if test="${statement.transactionType==7}">
-                                           次卡充值
-                                        </j:if>
-                                        <j:if test="${statement.transactionType==8}">
-                                            场地售卖
-                                        </j:if>
-                                        <j:if test="${statement.transactionType==9}">
-                                            场次票售卖
-                                        </j:if>
+                                            ${fns:getTransactionType(statement.transactionType)}
                                     </td>
                                     <td>
                                             ${statement.transactionNum}

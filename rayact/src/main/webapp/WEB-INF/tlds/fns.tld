@@ -249,11 +249,19 @@
     </function>
 
     <function>
-        <description>获取交易类型。</description>
+        <description>获取支付类型。</description>
         <name>getPayType</name>
         <function-class>com.bra.modules.reserve.utils.VenueOrderUtils</function-class>
         <function-signature>java.lang.String getPayType(java.lang.String)</function-signature>
         <example>${fns:getPayType('payType')}</example>
+    </function>
+
+    <function>
+        <description>获取交易类型</description>
+        <name>getTransactionType</name>
+        <function-class>com.bra.modules.reserve.utils.StatementsUtils</function-class>
+        <function-signature>java.lang.String getTransactionType(java.lang.String)</function-signature>
+        <example>${fns:getTransactionType('transactionType')}</example>
     </function>
 
     <function>
