@@ -50,10 +50,17 @@
                             <tr>
                                 <th>场馆名称</th>
                                 <th>是否启用</th>
-                                <th>地址</th>
-                                <th>负责人</th>
+
+                                <th>经度</th>
+                                <th>维度</th>
+                                <th>标签</th>
+                                <th>平均消费</th>
+                                <th>评分</th>
                                 <th>营业开始时间</th>
                                 <th>营业结束时间</th>
+                                <th>城市</th>
+                                <th>区</th>
+                                <th>详细地址</th>
                                     <th>操作</th>
                             </tr>
                             </thead>
@@ -66,17 +73,36 @@
                                     <td class="color-success">
                                             ${fns:getDictLabel(reserveVenue.available, 'yes_no', '')}
                                     </td>
+
                                     <td>
-                                            ${reserveVenue.address}
+                                            ${reserveVenue.longitude}
                                     </td>
                                     <td>
-                                            ${reserveVenue.chargeUser.id}
+                                            ${reserveVenue.latitude}
+                                    </td>
+                                    <td>
+                                            ${reserveVenue.moreService}
+                                    </td>
+                                    <td>
+                                            ${reserveVenue.avePrice}
+                                    </td>
+                                    <td>
+                                            ${reserveVenue.evaluateScore}
                                     </td>
                                     <td>
                                             ${reserveVenue.startTime}
                                     </td>
                                     <td>
                                             ${reserveVenue.endTime}
+                                    </td>
+                                    <td>
+                                            ${reserveVenue.cityName}
+                                    </td>
+                                    <td>
+                                            ${reserveVenue.districtName}
+                                    </td>
+                                    <td>
+                                            ${reserveVenue.address}
                                     </td>
                                         <td>
                                             <a class="btn btn-primary btn-xs"

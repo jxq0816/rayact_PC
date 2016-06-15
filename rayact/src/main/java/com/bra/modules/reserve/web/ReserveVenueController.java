@@ -312,6 +312,7 @@ public class ReserveVenueController extends BaseController {
                 AttMainService attMainService = SpringContextHolder.getBean("attMainService");
                 attMains = attMainService.getAttMain(v.getId(), "ReserveVenue", "venuePic");
                 if(attMains.size()>0){
+                    /*rootURL="http://"+Global.getConfig("server.ip")+":"+Global.getConfig("server.port");*/
                     venueNode.put("imgUrl",rootURL+"/mechanism/file/image/"+attMains.get(0).getId());
                 }else{
                     venueNode.put("imgUrl","");
