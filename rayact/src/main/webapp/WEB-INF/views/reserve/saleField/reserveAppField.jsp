@@ -12,7 +12,7 @@
 <c:set var="width" value="${(fn:length(venueFieldPriceList)+3)*60}px"></c:set>
 
 <div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width};z-index: 1" align=center>
-    <table class="table-chang" style="margin-right:5px;z-index: 2">
+    <table class="table-chang" style="margin-right:-5px;z-index: 2">
         <c:forEach items="${times}" var="t">
             <tr>
                 <td style="color: #000;font-size: 10px;position: relative;top:15px;">
