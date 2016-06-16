@@ -8,27 +8,32 @@
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/app_field.css"/>
 </head>
 <body>
-<c:set var="width" value="${(fn:length(venueFieldPriceList)+3)*60}px"></c:set>
-
-<div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width};z-index: 1" align=center>
-    <table class="table-time" style="z-index: 2">
-        <c:forEach items="${times}" var="t">
-            <tr>
-                <td style="color: #000;font-size: 10px;position: relative;top:15px;">
-                        ${fn:substring(t, 0, 5)}
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
+<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60}px"></c:set>
+<div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}" align=center>
     <table class="table-chang">
-            <tr>
-                <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
-                    <td class="field_cell" style="background-color: #ffffff">${field.fieldName}</td>
-                </c:forEach>
-            </tr>
+        <thead id="fieldThead" style="position:fixed;top:0px;background-color: #ffffff">
+        <%--时刻--%>
+        <tr style="width:${width}">
+            <td class="time_cell" style="width: 30px;background: transparent;"></td>
+            <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
+                <th class="field_cell">${field.fieldName}</th>
+            </c:forEach>
+        </tr>
+        <%--时刻--%>
+        </thead>
+
+        <tbody>
+        <div style="margin-top:30px;">
             <%-- 遍历所有全场的场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
+                        <%-- 纵坐标：时间--%>
+                    <td style="width: 30px;position: relative;bottom:20px;">
+                        <span class="time_cell">
+                                ${fn:substring(t, 0, 5)}
+                        </span>
+                    </td>
+
                         <%-- 横坐标：场地状态--%>
                     <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                         <c:set var="status" value="0"/>
@@ -69,7 +74,7 @@
                                 ¥ ${price}
                             </j:if>
                             <j:if test="${!('0' eq status)}">
-                                已预订
+                                <span>已预订</span>
                             </j:if>
 
                         </td>
@@ -79,7 +84,10 @@
                 </tr>
                 <%-- 纵坐标：场地 结束--%>
             </c:forEach>
+        </div>
         <%-- 遍历所有全场 场地结束--%>
+        </tbody>
+
     </table>
 </div>
 <div class="row" style="display: none">
