@@ -1,6 +1,13 @@
 //保存数据
 $(document).ready(function () {
     //-------预定---------
+    var padding_left=-$(window).scrollLeft()+"px";
+    $("#fieldThead").css({"left":padding_left});
+    $(window).scroll(function () {
+        var padding_left=-$(window).scrollLeft()+"px";
+        $("#fieldThead").css({"left":padding_left});
+    });
+
     $(".reserveTd").on('mousedown', function () {
         var fieldId = $(this).attr("data-field-id");
         var fieldName = $(this).attr("data-field-name");

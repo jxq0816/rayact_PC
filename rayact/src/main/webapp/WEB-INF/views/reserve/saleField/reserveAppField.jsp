@@ -9,10 +9,10 @@
     <link href="${ctxStatic}/cleanzone/js/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
-<c:set var="width" value="${(fn:length(venueFieldPriceList)+1)*60}px"></c:set>
-<div style="OVERFLOW-X: scroll;width:${width}" align=center>
+<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60}px"></c:set>
+<div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}" align=center>
     <table class="table-chang">
-        <thead style="position:fixed;left:0px;top:0px;">
+        <thead id="fieldThead" style="position:fixed;top:0px;">
         <%--时刻--%>
         <tr style="width:${width}">
             <td class="time_cell" style="width: 30px;background: transparent;"></td>
