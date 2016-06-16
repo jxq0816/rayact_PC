@@ -12,7 +12,7 @@
 <c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60}px"></c:set>
 <div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}" align=center>
     <table class="table-chang">
-        <thead id="fieldThead" style="position:fixed;top:0px;">
+        <thead id="fieldThead" style="position:fixed;top:0px;background-color: #ffffff">
         <%--时刻--%>
         <tr style="width:${width}">
             <td class="time_cell" style="width: 30px;background: transparent;"></td>
