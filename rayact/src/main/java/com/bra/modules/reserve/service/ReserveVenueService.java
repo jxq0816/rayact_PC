@@ -122,7 +122,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             Map img=imgList.get(0);
             if(img!=null){
                 String imgId=(String)img.get("imgId");
-                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/rayact/mechanism/file/image/";
+                String pre="http://"+ServerConfig.ip+":"+ServerConfig.port+"/mechanism/file/image/";
                 String url=pre+imgId;
                 venueMap.put("imgUrl", url);
             }

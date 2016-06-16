@@ -14,27 +14,28 @@
     <table class="table-chang">
         <thead style="position:fixed;left:0px;top:0px;">
         <%--时刻--%>
-        <tr>
-            <th class="time_cell"></th>
+        <tr style="width:${width}">
+            <td class="time_cell" style="width: 30px;background: transparent;"></td>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
-                <th class="field_cell"><span>${field.fieldName}</span></th>
+                <th class="field_cell">${field.fieldName}</th>
             </c:forEach>
         </tr>
         <%--时刻--%>
         </thead>
 
         <tbody>
-        <div style="margin-top:20px;">
+        <div style="margin-top:30px;">
             <%-- 遍历所有全场的场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
                         <%-- 纵坐标：时间--%>
-                    <td class="time_cell">
-                        <span>
+                    <td style="width: 30px;position: relative;bottom:20px;">
+                        <span class="time_cell">
                                 ${fn:substring(t, 0, 5)}
                         </span>
                     </td>
-                        <%-- 横坐标：场地名称--%>
+
+                        <%-- 横坐标：场地状态--%>
                     <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                         <c:set var="status" value="0"/>
                         <%--遍历单个场地的时间、价格组成的Jason 获得状态--%>
