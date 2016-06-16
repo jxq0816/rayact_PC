@@ -8,8 +8,7 @@
 .table-chang td div.unPayed{background: #F0860C;}
 .table-chang thead th{font-size: 10px;border:0px;background:transparent}
 .table-chang thead tr td .time_cell{width:30px;height:30px;text-align: center}
-.table-chang tbody tr td .time_cell {width:30px;height:30px;font-size:10px;color:#000;border:0px;background: transparent;}
-.table-chang tbody tr td .time_cell span{font-size:10px;float: right;position: relative;bottom:18px;}
+.table-chang  tr td .time_cell {width:30px;height:30px;font-size:10px;color:#000;border:0px}
 .my-sel-place{overflow: hidden;margin-bottom: 10px;}
 .my-sel-place li{text-align: center;height: 25px;line-height: 25px;
     overflow: hidden;border: 1px solid #5b9aef;margin-top: 7px;}

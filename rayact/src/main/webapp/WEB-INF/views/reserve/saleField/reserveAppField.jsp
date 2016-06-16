@@ -9,10 +9,10 @@
     <link href="${ctxStatic}/cleanzone/js/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
-<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60}px"></c:set>
+<c:set var="width" value="${(fn:length(venueFieldPriceList)+3)*60}px"></c:set>
 
 <div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width};z-index: 1" align=center>
-    <table class="table-chang" style="margin-top:0px;z-index: 2">
+    <table class="table-chang" style="margin-right:5px;z-index: 2">
         <c:forEach items="${times}" var="t">
             <tr>
                 <td style="color: #000;font-size: 10px;position: relative;top:15px;">
@@ -25,7 +25,7 @@
         <thead id="fieldThead" style="position:fixed;top:0px;">
         <%--时刻--%>
         <tr style="width:${width}">
-            <td style="background: transparent"></td>
+            <th style="background: transparent"></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <th class="field_cell" style="background-color: #ffffff">${field.fieldName}</th>
             </c:forEach>
