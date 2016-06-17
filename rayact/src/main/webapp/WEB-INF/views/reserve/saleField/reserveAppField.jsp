@@ -21,9 +21,9 @@
     .table-chang tbody tr td .time_cell span{font-size:22px;float: right;position: relative;bottom:18px;}
 </style>
 <body>
-<div id="reserveStatus" style="OVERFLOW-X: scroll;width:720px" align=center>
+<div id="reserveStatus" style="OVERFLOW-X: scroll;width:720px;" align=center>
     <table class="table-chang">
-        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:10px;background-color: #ffffff">
+        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:-5px;background-color: #ffffff">
         <%--时刻--%>
         <tr>
             <th></th>

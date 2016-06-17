@@ -1,11 +1,9 @@
 //保存数据
 $(document).ready(function () {
     //-------预定---------
-    var padding_left=-$(window).scrollLeft()+"px";
-    $("#fieldThead").css({"left":padding_left});
     $("#reserveStatus").scroll(function () {
         var scrollLeft=$("#reserveStatus").scrollLeft();
-        var margin_left=Number(10)-Number(scrollLeft);
+        var margin_left=Number(-5)-Number(scrollLeft);
         $("#fieldThead").css({"margin-left":margin_left});
     });
 
