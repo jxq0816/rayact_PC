@@ -78,8 +78,6 @@
                             data-price="${price}"
                             data-field-id="${field.fieldId}"
                             data-field-name="${field.fieldName}"
-                            data-consDate="${consDate}"
-                            data-consMobile="${consMobile}"
                             data-time="${t}"
                         >
                             <j:if test="${'0' eq status}">
