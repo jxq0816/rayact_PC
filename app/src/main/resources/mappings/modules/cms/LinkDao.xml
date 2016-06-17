@@ -158,6 +158,6 @@
 		FROM cms_link a
 		LEFT JOIN mechanism_att_main m on a.id = m.fd_model_id
 		LEFT JOIN cms_category c on c.id = a.category_id
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND c.name = '首页轮播'
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND c.name = '首页轮播' AND m.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
 </mapper>

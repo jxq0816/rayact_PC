@@ -84,6 +84,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
     @Transactional(readOnly = false)
     public void save(Article article, AttMainForm attMainForm) {
+        article.setTitle(StringEscapeUtils.unescapeHtml4(
+                article.getTitle()));
         if (article.getArticleData().getContent() != null) {
             article.getArticleData().setContent(StringEscapeUtils.unescapeHtml4(
                     article.getArticleData().getContent()));
@@ -222,6 +224,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
     }
 
     public List<Map<String,Object>> findListMap(Page page,Article article){
+        article.setPage(page);
         List<Map<String,Object>> list =  articleDao.findListMap(article);
         for(Map<String,Object> node:list){
             String attId = String.valueOf(node.get("attId"));

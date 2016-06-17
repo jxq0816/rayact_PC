@@ -14,8 +14,6 @@ import com.bra.common.utils.CookieUtils;
 import com.bra.common.utils.IdGen;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.modules.sys.entity.Role;
-import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.security.FormAuthenticationFilter;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Maps;
@@ -32,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -148,15 +145,15 @@ public class LoginController extends BaseController {
             }
             return "redirect:" + adminPath + "/login";
         }
-        List<Role> roleList = UserUtils.getRoleList();
-        User user = UserUtils.getUser();
-        if (!user.isAdmin()) {
-            for (Role role : roleList) {
-                if (Role.COOPERATIVE.equals(role.getEnname()) || Role.COOPERATIVE_USER.equals(role.getEnname())) {
-                    return "redirect:" + adminPath + "/reserve/main";
-                }
-            }
-        }
+//        List<Role> roleList = UserUtils.getRoleList();
+//        User user = UserUtils.getUser();
+//        if (!user.isAdmin()) {
+//            for (Role role : roleList) {
+//                if (Role.COOPERATIVE.equals(role.getEnname()) || Role.COOPERATIVE_USER.equals(role.getEnname())) {
+//                    return "redirect:" + adminPath + "/reserve/main";
+//                }
+//            }
+//        }
         return "modules/sys/sysIndex";
     }
 
@@ -224,7 +221,6 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(value = "${adminPath}/api/getSession")
     public void getSession(HttpServletRequest request, HttpServletResponse response) {
-        UserUtils.getSubject().logout();
         JSONObject j = new JSONObject();
         j.put("sessionId",request.getSession().getId());
         try {
@@ -233,6 +229,7 @@ public class LoginController extends BaseController {
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(j.toJSONString());
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -144,7 +144,7 @@
 		a.is_avaliable AS isAvaliable,
 		m.id AS attId
 		FROM activity a
-		LEFT JOIN mechanism_att_main m ON m.fd_model_id = a.id
+		LEFT JOIN mechanism_att_main m ON m.fd_model_id = a.id AND m.del_flag = #{DEL_FLAG_NORMAL}
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="isAvaliable!=null and isAvaliable != ''">
@@ -152,7 +152,7 @@
 			</if>
 		</where>
 		GROUP BY a.id
-		ORDER BY a.create_date DESC
+		ORDER BY a.update_date DESC
 	</select>
 	
 </mapper>

@@ -257,8 +257,9 @@
 			count(c.id) AS commentNum,
 			CASE WHEN a.category_id is NULL THEN "" ELSE a.category_id  END AS categoryId
 			FROM cms_article a
-			LEFT JOIN mechanism_att_main m on a.id = m.fd_model_id
+			LEFT JOIN mechanism_att_main m on a.id = m.fd_model_id AND m.del_flag = #{DEL_FLAG_NORMAL}
 			LEFT JOIN cms_comment c ON c.content_id = a.id
+			WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 			GROUP BY a.id
 			ORDER BY commentNum DESC
 	</select>

@@ -113,4 +113,11 @@ public class ActivityController extends BaseController {
 		}
 	}
 
+	@RequestMapping(value = "app/view")
+	public String viewApp(Activity activity, HttpServletRequest request, HttpServletResponse response){
+		Activity a = activityService.get(activity.getId());
+		request.setAttribute("activity",a);
+		return "modules/cms/activityView";
+	}
+
 }

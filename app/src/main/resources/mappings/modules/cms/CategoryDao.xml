@@ -317,8 +317,8 @@
 		        SUM(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS focusNum
 				FROM cms_category c
 		        LEFT JOIN sys_user u ON c.create_by = u.id
-				LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id AND att.fd_key = 'catepic'
-		        LEFT JOIN mechanism_att_main attbg ON attbg.fd_model_id = c.parent_id AND attbg.fd_key = 'catebg'
+				LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id AND att.fd_key = 'catepic' AND att.del_flag = #{DEL_FLAG_NORMAL}
+		        LEFT JOIN mechanism_att_main attbg ON attbg.fd_model_id = c.parent_id AND attbg.fd_key = 'catebg' AND attbg.del_flag = #{DEL_FLAG_NORMAL}
 				LEFT JOIN focus f ON f.model_id = c.id
 				WHERE
 				c.del_flag = #{DEL_FLAG_NORMAL}

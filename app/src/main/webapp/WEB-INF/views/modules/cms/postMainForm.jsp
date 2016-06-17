@@ -4,6 +4,7 @@
 <head>
 	<title>帖子管理</title>
 	<meta name="decorator" content="default"/>
+	<%@include file="/WEB-INF/views/include/upload.jsp" %>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
@@ -40,17 +41,22 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">图片：</label>
+			<div class="controls">
+				<mechanism:upload id="image" name="attMains1" imgWidth="50" imgHeight="50" exts="" showImg="true" modelId="${postMain.id}" fdKey="pic" modelName="com.bra.modules.cms.entity.PostMain" multi="true"></mechanism:upload>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">内容：</label>
 			<div class="controls">
-				<form:textarea id="content" htmlEscape="true" path="content" rows="4" maxlength="200" class="input-xxlarge"/>
-				<sys:ckeditor replace="content" uploadPath="/cms/postMain" />
+				<form:textarea id="content" htmlEscape="true" path="content" rows="4" maxlength="1000" class="input-xxlarge" cssStyle="height: 600px"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">所属圈子：</label>
 			<div class="controls">
 				<sys:treeselect id="group" name="group.id" value="${postMain.group.id}" labelName="group.name" labelValue="${postMain.group.name}"
-								title="栏目" url="/cms/category/treeData" module="group" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>&nbsp;
+								title="栏目" url="/cms/category/treeData" module="group" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="false" cssClass="required"/>&nbsp;
 			</div>
 		</div>
 		<div class="form-actions">

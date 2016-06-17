@@ -26,7 +26,7 @@
 				${adminPath}/cms/post/app/ptp = anon
 				${adminPath}/cms/postMain/app/list = anon
 				${adminPath}/cms/postMain/app/view = anon
-				${adminPath}/cms/postMain/app/list = anon
+				${adminPath}/cms/postMain/app/test = anon
 				${adminPath}/cms/category/app/cateList = anon
 				${adminPath}/cms/activity/app/list = anon
 				${adminPath}/cms/comment/app/list = anon
@@ -103,7 +103,7 @@
 	<bean id="sessionDAO" class="com.bra.common.security.shiro.session.CacheSessionDAO">
 		<property name="sessionIdGenerator" ref="idGen" />
 		<property name="activeSessionsCacheName" value="activeSessionsCache" />
-		<property name="cacheManager" ref="shiroCacheManager" />
+		<property name="cacheManager" ref="shiroCacheManager"/>
 	</bean>
 	
 	<!-- 定义授权缓存管理器 -->

@@ -124,7 +124,7 @@ public class LinkController extends BaseController {
 
 	@RequestMapping(value = "app/getList")
 	public void getLinkList(Link link, HttpServletRequest request, HttpServletResponse response){
-		List<Map<String,String>> rtn = linkService.findListMap(link);
+		List<Map<String,String>> rtn = linkService.findListMap(link,request);
 		try {
 			response.reset();
 			response.setContentType("application/json");

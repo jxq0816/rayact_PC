@@ -20,6 +20,7 @@ import com.bra.modules.cms.service.PostMainService;
 import com.bra.modules.cms.service.PostService;
 import com.bra.modules.mechanism.entity.AttMain;
 import com.bra.modules.mechanism.service.AttMainService;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
@@ -93,11 +94,11 @@ public class PostMainController extends BaseController {
 
 	@RequiresPermissions("cms:postMain:edit")
 	@RequestMapping(value = "save")
-	public String save(PostMain postMain, Model model, RedirectAttributes redirectAttributes) {
+	public String save(PostMain postMain, AttMainForm attMainForm, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, postMain)){
 			return form(postMain, model);
 		}
-		postMainService.save(postMain);
+		postMainService.save(postMain,attMainForm);
 		addMessage(redirectAttributes, "保存帖子成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/postMain/?repage";
 	}
@@ -215,11 +216,12 @@ public class PostMainController extends BaseController {
 		Post post = new Post();
 		post.setPostMain(postMain);
 		Page<Post> lop = new Page<>(request,response);
-		lop.setPageSize(10);
+		lop.setPageSize(5);
 		lop.setPageNo(1);
 		Page<Post> ptm = postService.findPage(lop,post);
 		request.setAttribute("ptm",ptm.getList());
 		return "modules/cms/postMainView";
 	}
+
 
 }

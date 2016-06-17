@@ -4,6 +4,9 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.cms.dao.PostMainDao;
 import com.bra.modules.cms.entity.PostMain;
+import com.bra.modules.mechanism.entity.AttMain;
+import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.sys.utils.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +39,28 @@ public class PostMainService extends CrudService<PostMainDao, PostMain> {
 	}
 	
 	@Transactional(readOnly = false)
-	public void save(PostMain postMain) {
+	public void save(PostMain postMain,AttMainForm attMainForm) {
+		String remarks = "";
+		if(attMainForm!=null){
+			List<AttMain> list = attMainForm.getAttMains1();
+			if(list!=null&&list.size()>0){
+				for(AttMain att:list){
+					if(att.getId()!=null&&!StringUtils.isNull(att.getId()))
+						remarks += StringUtils.ATTPATH + list.get(0).getId()+";";
+				}
+			}
+		}
+		if(!StringUtils.isNull(remarks)){
+			postMain.setRemarks(remarks);
+		}
+		postMain.setSubject(StringEscapeUtils.unescapeHtml4(
+				postMain.getSubject()));
 		if (postMain.getContent() != null) {
 			postMain.setContent(StringEscapeUtils.unescapeHtml4(
 					postMain.getContent()));
 		}
 		super.save(postMain);
+		updateAttMain(postMain,attMainForm);
 	}
 	
 	@Transactional(readOnly = false)
