@@ -8,13 +8,22 @@
     <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/app_field.css"/>
 </head>
 <body>
-<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60}px"></c:set>
+<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60+20}px"></c:set>
 <div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}" align=center>
+    <table class="table-chang" style="margin-top:5px;z-index: 2">
+        <c:forEach items="${times}" var="t">
+            <tr>
+                <td style="color: #000;font-size: 10px;position: relative;top:15px;">
+                        ${fn:substring(t, 0, 5)}
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
     <table class="table-chang">
-        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:10px;background-color: #ffffff">
+        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:12px;background-color: #ffffff">
         <%--时刻--%>
         <tr>
-            <th></th>
+            <th style="background: transparent"></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <th>${field.fieldName}</th>
             </c:forEach>
@@ -23,16 +32,16 @@
         </thead>
 
         <tbody>
-        <div style="margin-top:30px;">
+        <div style="margin-top:35px;">
             <%-- 遍历所有全场的场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
-                        <%-- 纵坐标：时间--%>
+                   <%--     &lt;%&ndash; 纵坐标：时间&ndash;%&gt;
                     <td style="width: 30px;position: relative;bottom:20px;">
                         <span class="time_cell">
                                 ${fn:substring(t, 0, 5)}
                         </span>
-                    </td>
+                    </td>--%>
 
                         <%-- 横坐标：场地状态--%>
                     <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
