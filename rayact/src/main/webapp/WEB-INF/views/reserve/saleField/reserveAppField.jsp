@@ -18,20 +18,20 @@
     .table-chang thead th{font-size: 22px;border:1px;background:transparent}
     .table-chang thead tr td .time_cell{width:30px;height:30px;text-align: center;color: #323232}
     .table-chang tbody tr td .time_cell {width:30px;height:30px;font-size:20px;color:#000;border:0px;background: transparent;}
-    .table-chang tbody tr td .time_cell span{font-size:22px;float: right;position: relative;bottom:18px;}
+    .table-chang tbody tr td .time_cell span{font-size:22px;float: right;}
 </style>
 <body>
 <div id="reserveStatus" style="OVERFLOW-X: scroll;width:720px;" align=center>
     <table class="table-chang">
         <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:-5px;background-color: #ffffff">
-        <%--时刻--%>
+        <%--场地--%>
         <tr>
             <th></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <th>${field.fieldName}</th>
             </c:forEach>
         </tr>
-        <%--时刻--%>
+        <%--场地--%>
         </thead>
 
         <tbody>
