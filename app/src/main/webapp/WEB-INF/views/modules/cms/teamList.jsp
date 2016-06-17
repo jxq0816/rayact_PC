@@ -8,6 +8,17 @@
 		$(document).ready(function() {
 			
 		});
+		function viewMember(href){
+			top.$.jBox.open('iframe:'+href,'查看队员',$(top.document).width()-220,$(top.document).height()-120,{
+				buttons:{"关闭":true},
+				loaded:function(h){
+					$(".jbox-content", top.document).css("overflow-y","hidden");
+					$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
+					$("body", h.find("iframe").contents()).css("margin","10px");
+				}
+			});
+			return false;
+		}
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -64,7 +75,7 @@
 				</td>
 				<shiro:hasPermission name="cms:team:edit"><td>
     				<a href="${ctx}/cms/team/form?id=${team.id}">修改</a>
-					<a href="${ctx}/cms/teamMember/list?team.id=${team.id}">球员列表</a>
+					<a href="${ctx}/cms/teamMember/list?team.id=${team.id}" onclick="return viewMember(this.href)">球员列表</a>
 					<a href="${ctx}/cms/team/delete?id=${team.id}" onclick="return confirmx('确认要删除该战队吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

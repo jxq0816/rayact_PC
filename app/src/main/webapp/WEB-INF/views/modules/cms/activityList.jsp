@@ -34,6 +34,7 @@
 		<thead>
 			<tr>
 				<th>标题</th>
+				<th>链接</th>
 				<th>发起人</th>
 				<th>所属分类</th>
 				<th>开始时间</th>
@@ -49,6 +50,9 @@
 				<td><a href="${ctx}/cms/activity/form?id=${activity.id}">
 					${activity.subject}
 				</a></td>
+				<td>
+				    <a href="${activity.url}">${activity.url}</a>
+				</td>
 				<td>
 					${activity.fkManagerName}
 				</td>

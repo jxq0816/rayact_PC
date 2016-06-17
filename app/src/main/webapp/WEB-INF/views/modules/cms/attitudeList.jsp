@@ -38,7 +38,7 @@
 				<th>态度</th>
 				<th>操作者</th>
 				<th>时间</th>
-				<shiro:hasPermission name="cms:attitude:edit"><th>操作</th></shiro:hasPermission>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>

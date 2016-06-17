@@ -8,6 +8,17 @@
 		$(document).ready(function() {
 			
 		});
+		function viewPost(href){
+			top.$.jBox.open('iframe:'+href,'查看回帖',$(top.document).width()-220,$(top.document).height()-120,{
+				buttons:{"关闭":true},
+				loaded:function(h){
+					$(".jbox-content", top.document).css("overflow-y","hidden");
+					$(".nav,.form-actions,[class=btn]", h.find("iframe").contents()).hide();
+					$("body", h.find("iframe").contents()).css("margin","10px");
+				}
+			});
+			return false;
+		}
 		function page(n,s){
 			$("#pageNo").val(n);
 			$("#pageSize").val(s);
@@ -65,7 +76,7 @@
 				</td>
 				<shiro:hasPermission name="cms:postMain:edit"><td>
     				<a href="${ctx}/cms/postMain/form?id=${postMain.id}">修改</a>
-					<a href="${ctx}/cms/post/list?postMain.id=${postMain.id}">回帖列表</a>
+					<a href="${ctx}/cms/post/list?postMain.id=${postMain.id}" onclick="return viewPost(this.href)">回帖列表</a>
 					<a href="${ctx}/cms/postMain/delete?id=${postMain.id}" onclick="return confirmx('确认要删除该帖子吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

@@ -63,7 +63,7 @@ public class CmsController extends BaseController {
 	@RequiresPermissions("cms:view")
 	@RequestMapping(value = "tree/activity")
 	public String treeActivity(Model model) {
-		model.addAttribute("categoryList", categoryService.findByUser(true, "group"));
+		model.addAttribute("categoryList", categoryService.findByUser(true, "activity"));
 		return "modules/cms/cmsTreeActivity";
 	}
 

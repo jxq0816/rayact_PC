@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,7 @@ public class LinkService extends CrudService<LinkDao, Link> {
 		return list;
 	}
 
-	public List<Map<String,String>> findListMap(Link link){
+	public List<Map<String,String>> findListMap(Link link, HttpServletRequest request){
 		List<Map<String,String>> list =  linkDao.findListMap(link);
 		for(Map<String,String> node:list){
 			String attId = node.get("attId");
@@ -83,6 +84,7 @@ public class LinkService extends CrudService<LinkDao, Link> {
 				node.put("attUrl","");
 			}
 			node.remove("attId");
+			node.put("sessionId",request.getSession().getId());
 		}
 		return list;
 	}

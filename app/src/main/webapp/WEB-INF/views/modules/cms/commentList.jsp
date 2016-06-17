@@ -37,14 +37,12 @@
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-bordered table-condensed">
-		<thead><tr><th>评论内容</th><th>文档标题</th><th>评论人</th><th>评论IP</th><th>评论时间</th><th nowrap="nowrap">操作</th></tr></thead>
+		<thead><tr><th>评论内容</th><th>评论人</th><th>评论时间</th><th nowrap="nowrap">操作</th></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="comment">
 			<tr>
 				<td><a href="javascript:" onclick="$('#c_${comment.id}').toggle()">${fns:abbr(fns:replaceHtml(comment.content),40)}</a></td>
-				<td><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/view-${comment.category.id}-${comment.contentId}${fns:getUrlSuffix()}" title="${comment.title}" onclick="return view(this.href);">${fns:abbr(comment.title,40)}</a></td>
 				<td>${comment.name}</td>
-				<td>${comment.ip}</td>
 				<td><fmt:formatDate value="${comment.createDate}" type="both"/></td>
 				<td><shiro:hasPermission name="cms:comment:edit">
 					<c:if test="${comment.delFlag ne '2'}"><a href="${ctx}/cms/comment/delete?id=${comment.id}${comment.delFlag ne 0?'&isRe=true':''}" 
