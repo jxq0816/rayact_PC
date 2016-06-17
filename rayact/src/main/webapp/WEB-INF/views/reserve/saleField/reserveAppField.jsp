@@ -40,7 +40,7 @@
             <c:forEach items="${times}" var="t">
                 <tr>
                         <%-- 纵坐标：时间--%>
-                    <td style="width: 30px;position: relative;bottom:20px;">
+                    <td style="width: 30px;position: relative;bottom:30px;">
                         <span class="time_cell">
                                 ${fn:substring(t, 0, 5)}
                         </span>
