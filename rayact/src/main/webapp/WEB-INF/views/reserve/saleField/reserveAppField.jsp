@@ -36,7 +36,7 @@
 
         <tbody>
         <div style="margin-top:60px;">
-            <%-- 遍历所有全场的场地开始--%>
+            <%-- 遍历所有场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
                         <%-- 纵坐标：时间--%>
@@ -61,20 +61,19 @@
                         </c:forEach>
 
 
-                        <%--设置全场的class--%>
+                        <%--设置td的class--%>
                         <j:if test="${'0' eq status}">
-                            <c:set var="midClass" value="reserveTd access"/>
+                            <c:set var="tdClass" value="reserveTd access"/>
                         </j:if>
                         <j:if test="${!('0' eq status)}">
-                            <c:set var="midClass" value="reserveTd unavailable"/>
+                            <c:set var="tdClass" value="reserveTd unavailable"/>
                         </j:if>
-                        <%--设置全场的class end--%>
+                        <%--设置td的class end--%>
 
                         <%-- 场地 B时间 的状态展示--%>
 
-                        <%-- 如果有半场 显示为midClass--%>
                         <td status="${status}"
-                            class="${midClass}"
+                            class="${tdClass}"
                             data-price="${price}"
                             data-field-id="${field.fieldId}"
                             data-field-name="${field.fieldName}"
@@ -110,11 +109,8 @@
     </form>
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="${ctxStatic}/common/jeesite.js"></script>
-<script type="text/javascript" src="${ctxStatic}/json/jquery.serializejson.js"></script>
 <script>
     document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_app_field.js?t=" + Math.random() + "'><\/script>");
 </script>
-
 </body>
 </html>
