@@ -5,25 +5,24 @@
 <html>
 <head>
     <title>场地预定</title>
-    <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/app_field.css"/>
+    <link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/app_field_iphone.css"/>
 </head>
 <body>
-<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60+20}px"></c:set>
-<div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}" align=center>
-    <table class="table-chang" style="margin-top:5px;z-index: 2">
+<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*20+20}"></c:set>
+<div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}%; height:200%"  align=center>
+    <table class="table-time">
         <c:forEach items="${times}" var="t">
             <tr>
-                <td style="color: #000;font-size: 10px;position: relative;top:15px;">
+                <td style="color: #000;font-size: 10px;position: relative;bottom:4%;">
                         ${fn:substring(t, 0, 5)}
                 </td>
             </tr>
         </c:forEach>
     </table>
     <table class="table-chang">
-        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:12px;background-color: #ffffff">
+        <thead id="fieldThead"  style="width:${width*0.97}%;position:fixed;top:0px;margin-left:6%;background-color: #ffffff">
         <%--时刻--%>
         <tr>
-            <th style="background: transparent"></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <th>${field.fieldName}</th>
             </c:forEach>
@@ -32,7 +31,7 @@
         </thead>
 
         <tbody>
-        <div style="margin-top:35px;">
+        <div>
             <%-- 遍历所有全场的场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
