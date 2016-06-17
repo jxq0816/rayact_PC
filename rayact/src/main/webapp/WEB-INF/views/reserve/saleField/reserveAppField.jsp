@@ -8,10 +8,12 @@
     <%--<link type="text/css" rel="stylesheet" href="${ctxStatic}/modules/reserve/css/app_field.css"/>--%>
 </head>
 <style type="text/css">
-    .table-chang{margin-left: 0px;overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
+    .table-time{margin-left: 0px;overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
+    .table-time th{width: 40px;min-width:40px;max-width:40px;height: 50px;font-weight: normal;text-align: center;}
+    .table-time td{width: 40px;min-width:40px;max-width:40px;height: 50px;background: #FFF;text-align: center;color: #fff;font-size: 10px;padding:0px;border: 1px solid  #FFFFFF;}
+    .table-chang{overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
     .table-chang th{width: 100px;min-width:100px;max-width:100px;height: 50px;font-weight: normal;text-align: center;}
     .table-chang td{width: 100px;min-width:100px;max-width:100px;height: 50px;background: #FFF;text-align: center;color: #fff;font-size: 10px;padding:0px;border: 1px solid  #FFFFFF;}
-    .table-chang td a{display: block;width: 100%;height: 100%;}
     .table-chang td.access{background: #FFF;color:#A62A04;border: 1px dashed #A62A04;}
     .table-chang td.unavailable{background: #F0F0F0;color:#C8C8C8}
     .table-chang td.unPayed{background: #F0860C;}
@@ -21,18 +23,26 @@
     .table-chang tbody tr td .time_cell span{font-size:10px;float: right;position: relative;bottom:18px;}
 </style>
 <body>
-<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*60}px"></c:set>
+<c:set var="width" value="${(fn:length(venueFieldPriceList)+2)*100}px"></c:set>
 <div id="reserveStatus" style="OVERFLOW-X: scroll;width:${width}" align=center>
+    <table class="table-time" style="margin-top:5px;z-index: 2">
+        <c:forEach items="${times}" var="t">
+            <tr>
+                <td style="color: #000;font-size: 10px;position: relative;top:15px;">
+                        ${fn:substring(t, 0, 5)}
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
     <table class="table-chang">
-        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:10px;background-color: #ffffff">
-        <%--时刻--%>
+        <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:60px;background-color: #ffffff">
+        <%--场地--%>
         <tr>
-            <th></th>
             <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                 <th>${field.fieldName}</th>
             </c:forEach>
         </tr>
-        <%--时刻--%>
+        <%--场地--%>
         </thead>
 
         <tbody>
@@ -40,13 +50,6 @@
             <%-- 遍历所有全场的场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
-                        <%-- 纵坐标：时间--%>
-                    <td style="width: 30px;position: relative;bottom:20px;">
-                        <span class="time_cell">
-                                ${fn:substring(t, 0, 5)}
-                        </span>
-                    </td>
-
                         <%-- 横坐标：场地状态--%>
                     <c:forEach items="${venueFieldPriceList}" var="field" varStatus="status">
                         <c:set var="status" value="0"/>
