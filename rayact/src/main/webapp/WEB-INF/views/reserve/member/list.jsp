@@ -16,7 +16,7 @@
                 <div class="header">
                     <h3>会员统计列表</h3>
                 </div>
-                <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/"
+                <form:form id="searchForm" modelAttribute="reserveMember" action="${ctx}/reserve/reserveMember/list"
                            method="post">
                 <div class="breadcrumb form-search">
                     <div class="row">
