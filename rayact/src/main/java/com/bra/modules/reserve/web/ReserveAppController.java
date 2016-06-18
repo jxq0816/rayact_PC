@@ -277,7 +277,10 @@ public class ReserveAppController extends BaseController {
      * @return
      */
     public String orderList(String reserveType,String phone) {
-        List<Map> orderList = reserveAppVenueConsService.orderList(reserveType,phone);
+        List<Map> orderList =null;
+        if(StringUtils.isNoneEmpty(phone)){
+            orderList=reserveAppVenueConsService.orderList(reserveType,phone);
+        }
         return JSON.toJSONString(orderList);
     }
     @RequestMapping(value = "cancelOrder")
