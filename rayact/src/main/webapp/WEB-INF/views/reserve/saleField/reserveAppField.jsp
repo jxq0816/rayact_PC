@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>场地预定</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
 </head>
 <style type="text/css">
     .table-chang{margin-left: 0px;overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
@@ -108,8 +109,6 @@
     </form>
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
-<script>
-    document.write("<script type='text/javascript' src='${ctxStatic}/modules/reserve/js/reserve_app_field.js?t=" + Math.random() + "'><\/script>");
-</script>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/reserve_app_field.js"></script>
 </body>
 </html>
