@@ -8,20 +8,19 @@
 </head>
 <style type="text/css">
     .table-chang{margin-left: 0px;overflow: hidden;float: left;border-collapse: separate;border-spacing:5px}
-    .table-chang th{width: 120px;min-width:120px;max-width:120px;height: 60px;font-weight: normal;text-align: center;color: #323232}
-    .table-chang td{width: 120px;min-width:120px;max-width:120px;height: 60px;background: #FFF;text-align: center;color: #fff;font-size: 20px;padding:0px;border: 1px solid  #FFFFFF;}
+    .table-chang th{width: 60px;min-width:60px;max-width:60px;height: 30px;font-weight: normal;text-align: center;color: #323232}
+    .table-chang td{width: 60px;min-width:60px;max-width:60px;height: 30px;background: #FFF;text-align: center;color: #fff;font-size: 15px;padding:0px;border: 1px solid  #FFFFFF;}
     .table-chang td a{display: block;width: 100%;height: 100%;}
     .table-chang td.access{background: #FFF;color:#A62A04;border: 1px dashed #A62A04;}
     .table-chang td.unavailable{background: #F0F0F0;color:#C8C8C8}
     .table-chang td.unPayed{background: #F0860C;}
     .table-chang td div.unPayed{background: #F0860C;}
-    .table-chang thead th{font-size: 22px;border:1px;background:transparent}
-    .table-chang thead tr td .time_cell{width:30px;height:30px;text-align: center;color: #323232}
-    .table-chang tbody tr td .time_cell {width:30px;height:30px;font-size:20px;color:#000;border:0px;background: transparent;}
+    .table-chang thead th{font-size: 15px;border:1px;background:transparent}
+    .table-chang tbody tr td .time_cell {width:30px;height:30px;font-size:15px;color:#323232;border:0px;background: transparent;}
     .table-chang tbody tr td .time_cell span{font-size:22px;float: right;}
 </style>
 <body>
-<div id="reserveStatus" style="OVERFLOW-X: scroll;width:720px;" align=center>
+<div id="reserveStatus" style="OVERFLOW-X: scroll;" align=center>
     <table class="table-chang">
         <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:-5px;background-color: #ffffff">
         <%--场地--%>
@@ -35,12 +34,12 @@
         </thead>
 
         <tbody>
-        <div style="margin-top:60px;">
+        <div style="margin-top:30px;">
             <%-- 遍历所有场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
                         <%-- 纵坐标：时间--%>
-                    <td style="width: 30px;position: relative;bottom:30px;">
+                    <td style="width: 30px;position: relative;bottom:15px;">
                         <span class="time_cell">
                                 ${fn:substring(t, 0, 5)}
                         </span>
