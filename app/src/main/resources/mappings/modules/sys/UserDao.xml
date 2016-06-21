@@ -200,7 +200,7 @@
 	<!-- 根据微信号查询用户 -->
 	<select id="getByMobile" resultType="Map" parameterType="User">
 		SELECT
-		a.id AS id
+		a.*
 		FROM sys_user a
 		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>

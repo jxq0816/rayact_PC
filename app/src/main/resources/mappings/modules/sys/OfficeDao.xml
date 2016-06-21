@@ -57,7 +57,9 @@
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<!-- 数据范围过滤 -->
 		${sqlMap.dsf}
+		<if test="currentUser != null and currentUser.office != null">
 		OR a.id = #{currentUser.office.id}
+		</if>
 		ORDER BY a.code
 	</select>
 			

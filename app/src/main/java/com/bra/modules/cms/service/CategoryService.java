@@ -49,7 +49,8 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	@SuppressWarnings("unchecked")
 	public List<Category> findByUser(boolean isCurrentSite, String module){
 		
-		List<Category> list = (List<Category>) UserUtils.getCache(CACHE_CATEGORY_LIST);
+		//List<Category> list = (List<Category>) UserUtils.getCache(CACHE_CATEGORY_LIST);
+		List<Category> list = null;
 		if (list == null){
 			User user = UserUtils.getUser();
 			Category category = new Category();
@@ -139,12 +140,33 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 	}
 	
 	@Transactional(readOnly = false)
-	public void save(Category category,AttMainForm attMainForm) {
+	public void save(Category category,AttMainForm attMainForm)throws Exception {
 		category.setSite(new Site(Site.getCurrentSiteId()));
 		if (StringUtils.isNotBlank(category.getViewConfig())){
             category.setViewConfig(StringEscapeUtils.unescapeHtml4(category.getViewConfig()));
         }
+		Office o = new Office();
+		//测试
+		o.setId("1");
+		category.setOffice(o);
 		boolean isNew = category.getIsNewRecord();
+		if(isNew){
+			Category ca = new Category();
+			ca.setParent(category.getParent());
+			ca.getSqlMap().put("dsf"," and a.name = '"+category.getName()+"' ");
+			List<Category> cates = findListUn(ca);
+			if(cates!=null && cates.size()>0){
+				throw new Exception("圈子名称重复！");
+			}
+		}else{
+			Category ca = new Category();
+			ca.setParent(category.getParent());
+			ca.getSqlMap().put("dsf"," and a.name = '"+category.getName()+"' and a.id != '"+category.getId()+"' ");
+			List<Category> cates = findListUn(ca);
+			if(cates!=null && cates.size()>0){
+				throw new Exception("圈子名称重复！");
+			}
+		}
 		super.save(category);
 		if(isNew && "group".equals(category.getModule())){
 			PostMain pm = new PostMain();
@@ -234,5 +256,9 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 			category.setOffice(parent.getOffice());
 		}
 
+	}
+
+	public List<Category> findListUn(Category category){
+		return categoryDao.findListUn(category);
 	}
 }

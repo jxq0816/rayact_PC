@@ -19,6 +19,8 @@ import java.util.Map;
 public interface CategoryDao extends TreeDao<Category> {
 	
 	public List<Category> findModule(Category category);
+
+	public List<Category> findListUn(Category category);
 	
 //	public List<Category> findByParentIdsLike(Category category);
 //	{

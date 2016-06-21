@@ -102,6 +102,10 @@ public class ActivityController extends BaseController {
 				}else{
 					node.put("isAvaliable","0");
 				}
+				String url = node.get("url");
+				if(!StringUtils.isNotBlank(url)){
+					node.put("url", com.bra.modules.sys.utils.StringUtils.ROOTPATH + "/a/cms/activity/app/view?id="+node.get("id"));
+				}
 			}
 		}
 		try {

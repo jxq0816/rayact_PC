@@ -64,6 +64,24 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="findListUn" resultType="Team">
+		SELECT
+			a.*
+		FROM team a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name = #{name}
+			</if>
+			<if test="group != null and group.id != null">
+				AND a.group_id = #{group.id}
+			</if>
+			<if test="id != null and id != null">
+				AND a.id != #{id}
+			</if>
+		</where>
+	</select>
 	
 	<select id="findAllList" resultType="Team">
 		SELECT 

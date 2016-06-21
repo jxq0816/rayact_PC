@@ -84,7 +84,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
                     user.getName(), user.getOffice()==null?"":user.getOffice().getId(), token.isMobileLogin(),token.getLoginType()),
                     user.getPassword(), getName());
         } else {
-            return null;
+            throw new AuthenticationException("msg:无此用户，请注册.");
         }
     }
 

@@ -38,7 +38,7 @@ public class TeamService extends CrudService<TeamDao, Team> {
 	}
 	
 	@Transactional(readOnly = false)
-	public void save(Team team, AttMainForm attMainForm) {
+	public void save(Team team, AttMainForm attMainForm)throws Exception {
 		if(attMainForm!=null){
 			List<AttMain> list = attMainForm.getAttMains1();
 			if(list!=null&&list.size()>0){
@@ -48,7 +48,12 @@ public class TeamService extends CrudService<TeamDao, Team> {
 				}
 			}
 		}
-		super.save(team);
+		List list = findListUn(team);
+		if(list!=null&&list.size()>0){
+			throw new Exception("数据重复");
+		}else{
+			super.save(team);
+		}
 		updateAttMain(team,attMainForm);
 	}
 	
@@ -60,5 +65,6 @@ public class TeamService extends CrudService<TeamDao, Team> {
 	public List<Map<String,String>> findListMap(Page<Team> page,Team team){
 		return teamDao.findListMap(team);
 	}
+	public List<Team> findListUn(Team team){return teamDao.findListUn(team);}
 	
 }

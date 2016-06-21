@@ -15,5 +15,5 @@ import java.util.Map;
 @MyBatisDao
 public interface TeamDao extends CrudDao<Team> {
     public List<Map<String,String>> findListMap(Team team);
-	
+	public List<Team> findListUn(Team team);
 }

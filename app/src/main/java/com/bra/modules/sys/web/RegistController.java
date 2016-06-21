@@ -2,7 +2,9 @@ package com.bra.modules.sys.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bra.common.web.BaseController;
+import com.bra.modules.sys.entity.Office;
 import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.service.OfficeService;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by DDT on 2016/5/9.
@@ -21,6 +24,8 @@ import java.io.IOException;
 public class RegistController extends BaseController {
     @Autowired
     private SystemService systemService;
+    @Autowired
+    private OfficeService officeService;
 
     /**
      * 快速注册
@@ -37,12 +42,20 @@ public class RegistController extends BaseController {
             String weixinName = request.getParameter("weixinName");
             String qqImage = request.getParameter("qqImage");
             String weixinImage = request.getParameter("weixinImage");
-            User a = systemService.getUserByMobile(phone);
-            if(a != null){
+            User u = new User();
+            u.setMobile(phone);
+            List<User> list = systemService.findListApi(u);
+            if(list != null&&list.size()>0){
                 rtn.put("msg","该手机号已注册！");
                 rtn.put("status","fail");
             }else{
                 User user = new User();
+                Office o =  new Office();
+                o.getSqlMap().put("dsf"," and a.name = '"+StringUtils.OFFICECOZE+"' ");
+                List<Office> li = officeService.findList(o);
+                if(li!=null&&li.size()>0){
+                    user.setOffice(li.get(0));
+                }
                 if(!StringUtils.isNull(phone)){
                     user.setName(phone);
                     user.setLoginName(phone);
