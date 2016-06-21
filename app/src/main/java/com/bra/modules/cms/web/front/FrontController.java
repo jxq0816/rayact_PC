@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
-import com.bra.common.servlet.ValidateCodeServlet;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.*;
@@ -359,26 +358,21 @@ public class FrontController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "comment", method=RequestMethod.POST)
 	public String commentSave(Comment comment, String validateCode,@RequestParam(required=false) String replyId, HttpServletRequest request) {
-		if (StringUtils.isNotBlank(validateCode)){
-			if (ValidateCodeServlet.validate(request, validateCode)){
-				if (StringUtils.isNotBlank(replyId)){
+		       if(!StringUtils.isNotBlank(comment.getContent())){
+				   return "内容为空";
+			   }
+		       if (StringUtils.isNotBlank(replyId)){
 					Comment replyComment = commentService.get(replyId);
 					if (replyComment != null){
-						comment.setContent("<div class=\"reply\">"+replyComment.getName()+":<br/>"
-								+replyComment.getContent()+"</div>"+comment.getContent());
+						comment.setContent("回复"+replyComment.getName()+":"
+								+comment.getContent());
 					}
 				}
 				comment.setIp(request.getRemoteAddr());
 				comment.setCreateDate(new Date());
-				comment.setDelFlag(Comment.DEL_FLAG_AUDIT);
+				comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
 				commentService.save(comment);
-				return "{result:1, message:'提交成功。'}";
-			}else{
-				return "{result:2, message:'验证码不正确。'}";
-			}
-		}else{
-			return "{result:2, message:'验证码不能为空。'}";
-		}
+				return "提交成功";
 	}
 
 	/**

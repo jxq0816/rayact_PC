@@ -207,12 +207,14 @@ public class PostMainController extends BaseController {
 		}
 	}
 
-	@RequestMapping(value = "app/view")
+	@RequestMapping(value = "app/view.html")
 	public String viewApp(PostMain postMain,HttpServletRequest request,HttpServletResponse response){
 		PostMain p = postMainService.get(postMain.getId());
 		request.setAttribute("postMain",p);
-		String[] remarks = p.getRemarks()!=null ? p.getRemarks().split(";"):null;
-		request.setAttribute("imgs",remarks);
+		if(p!=null){
+			String[] remarks = p.getRemarks()!=null ? p.getRemarks().split(";"):null;
+			request.setAttribute("imgs",remarks);
+		}
 		Post post = new Post();
 		post.setPostMain(postMain);
 		Page<Post> lop = new Page<>(request,response);

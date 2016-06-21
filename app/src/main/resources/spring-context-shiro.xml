@@ -25,10 +25,11 @@
 				${adminPath}/cms/post/app/list = anon
 				${adminPath}/cms/post/app/ptp = anon
 				${adminPath}/cms/postMain/app/list = anon
-				${adminPath}/cms/postMain/app/view = anon
+				${adminPath}/cms/postMain/app/view.html = anon
 				${adminPath}/cms/postMain/app/test = anon
 				${adminPath}/cms/category/app/cateList = anon
 				${adminPath}/cms/activity/app/list = anon
+				${adminPath}/cms/activity/app/view = anon
 				${adminPath}/cms/comment/app/list = anon
 				${adminPath}/cms/attitude/app/num = anon
 				/f/ = anon

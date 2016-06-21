@@ -28,12 +28,12 @@
 		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn ${disabled} ${hideBtn ? 'hide' : ''}" style="${smallBtn?'padding:4px 2px;':''}">&nbsp;<i class="icon-search"></i>&nbsp;</a>&nbsp;&nbsp;
 </div>
 <script type="text/javascript">
-	$("#${id}Button, #${id}Name").click(function(){
+	$("#${id}Button, #${id}Name").live("click",function(){
 		// 是否限制选择，如果限制，设置为disabled
 		if ($("#${id}Button").hasClass("disabled")){
 			return true;
 		}
-		// 正常打开	
+		// 正常打开
 		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&isAll=${isAll}", "选择${title}", 300, 420, {
 			ajaxData:{selectIds: $("#${id}Id").val()},buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
 				if (v=="ok"){
@@ -73,7 +73,7 @@
 				else if (v=="clear"){
 					$("#${id}Id").val("");
 					$("#${id}Name").val("");
-                }//</c:if>
+				}//</c:if>
 				if(typeof ${id}TreeselectCallBack == 'function'){
 					${id}TreeselectCallBack(v, h, f);
 				}

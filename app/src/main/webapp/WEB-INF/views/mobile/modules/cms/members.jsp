@@ -20,7 +20,7 @@
 					电话：<input type="text" name="member[${status.index}].phone" value="${member.phone}" readonly style="width:80%;height: 45px;font-size: 40px">
 				</div>
 				<div class="row" style="margin:10px 20px;height: 50px;font-size: 45px">
-					位置：<input type="text" name="member[${status.index}].role" style="width:80%;height: 45px;font-size: 40px">
+					位置：<c:if test="${member.role == null || member.role == 'null' || member.role == ''}"><input type="text" name="member[${status.index}].role" value="" style="width:80%;height: 45px;font-size: 40px"></c:if><c:if test="${member.role != null && member.role != 'null' && member.role != ''}"><input type="text" name="member[${status.index}].role" value="${member.role}" style="width:80%;height: 45px;font-size: 40px"></c:if>
 				</div>
 			</div>
 		</c:forEach>
@@ -53,12 +53,8 @@
 			}
 		});
 		$.post("save",{'members':JSON.stringify(a),'teamId':'${param.teamId}'},function(){
-
+			iOSskipToTeam();
 		});
-	}
-	function jumpToInfo(dom){
-		var id = $(dom).attr("name");
-		iOSPhotoskip(id);
 	}
 </script>
 </body>

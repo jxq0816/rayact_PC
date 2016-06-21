@@ -116,7 +116,12 @@ public class CategoryController extends BaseController {
 		if (!beanValidator(model, category)){
 			return form(category, model);
 		}
-		categoryService.save(category,attMainForm);
+		try{
+			categoryService.save(category,attMainForm);
+		}catch (Exception e){
+			addMessage(redirectAttributes, "圈子名称重复！");
+			return "redirect:" + adminPath + "/cms/category/form?id="+category.getId();
+		}
 		addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
 		return "redirect:" + adminPath + "/cms/category/";
 	}
@@ -224,35 +229,42 @@ public class CategoryController extends BaseController {
 	public void saveApp(Category category,HttpServletRequest request,HttpServletResponse response)throws Exception {
 		String file = request.getParameter("files");
 		String modelName = request.getParameter("modelName");
-		byte[] image = Base64.decode(file);
-		FileModel fileModel = new FileModel();
-		String destPath = Global.getBaseDir();
-		String tmp = destPath + "resources/www";
-		File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
-		if (!f.getParentFile().exists())
-			f.getParentFile().mkdirs();
-		if (!f.exists())
-			f.createNewFile();
-		FileOutputStream fos = new FileOutputStream(f);
-		fos.write(image);
-		fos.close();
-		fileModel.setStoreType(StoreType.SYSTEM);
-		fileModel.setToken(new Date().toString());
-		fileModel.setFilePath(f.getAbsolutePath());
-		fileModel.setContentType("pic");
-		AttMain attMain = new AttMain(fileModel);
-		if("user".equals(modelName)){
-			attMain.setFdModelName(modelName);
-		}else if("postMain".equals(modelName)){
-			attMain.setFdModelName(modelName);
+		if(StringUtils.isNotBlank(file)){
+			byte[] image = Base64.decode(file);
+			FileModel fileModel = new FileModel();
+			String destPath = Global.getBaseDir();
+			String tmp = destPath + "resources/www";
+			File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
+			if (!f.getParentFile().exists())
+				f.getParentFile().mkdirs();
+			if (!f.exists())
+				f.createNewFile();
+			FileOutputStream fos = new FileOutputStream(f);
+			fos.write(image);
+			fos.close();
+			fileModel.setStoreType(StoreType.SYSTEM);
+			fileModel.setToken(new Date().toString());
+			fileModel.setFilePath(f.getAbsolutePath());
+			fileModel.setContentType("pic");
+			AttMain attMain = new AttMain(fileModel);
+			if("user".equals(modelName)){
+				attMain.setFdModelName(modelName);
+			}else if("postMain".equals(modelName)){
+				attMain.setFdModelName(modelName);
+			}
+			attMain = attMainService.saveAttMain(attMain);
+			fileModel.setAttId(attMain.getId());
+			category.setImage(com.bra.modules.sys.utils.StringUtils.ATTPATH + attMain.getId());
 		}
-		attMain = attMainService.saveAttMain(attMain);
-		fileModel.setAttId(attMain.getId());
-		category.setImage(com.bra.modules.sys.utils.StringUtils.ATTPATH + attMain.getId());
-		categoryService.save(category);
 		JSONObject j = new JSONObject();
-		j.put("status","success");
-		j.put("msg","圈子新建成功");
+		try{
+			categoryService.save(category,null);
+			j.put("status","success");
+			j.put("msg","圈子新建成功");
+		}catch (Exception e){
+			j.put("status","fail");
+			j.put("msg","圈子名称重复");
+		}
 		try {
 			response.reset();
 			response.setContentType("application/json");

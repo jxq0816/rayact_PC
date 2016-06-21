@@ -67,7 +67,7 @@
 		</div>
 		<div style="line-height: 150%;font-size: 50px;color:#555555;">${postMain.content}</div>
 		<c:forEach items="${imgs}" var="url">
-			<img src="${url}"/>
+			<img src="${url}" width="100%"/>
 		</c:forEach>
 	</div>
 </div>

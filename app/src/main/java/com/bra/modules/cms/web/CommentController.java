@@ -109,7 +109,7 @@ public class CommentController extends BaseController {
 			response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
 
 		} catch (IOException e) {
-
+			e.printStackTrace();
 		}
 	}
 

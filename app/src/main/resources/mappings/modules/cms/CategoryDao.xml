@@ -98,21 +98,38 @@
 	</select>
 	
 	<select id="findList" resultType="Category">
-		SELECT 
+		SELECT
 			<include refid="cmsCategoryDaoColumns"/>
 		FROM cms_category a
 		<include refid="cmsCategoryDaoJoins"/>
 		<where>
 			a.del_flag = #{delFlag}
-			<if test=" site.id != null and site.id != ''">
+			<if test="site!=null and site.id != null and site.id != ''">
 				AND a.site_id  = #{site.id}
 			</if>
-			<if test="parent.id != null and parent.id != ''">
+			<if test="parent!=null and parent.id != null and parent.id != ''">
 				AND a.parent_id  = #{parent.id}
 			</if>
 			${sqlMap.dsf}
-		</where>		
+		</where>
 			ORDER BY a.site_id,a.sort ASC
+	</select>
+
+	<select id="findListUn" resultType="Category">
+		SELECT
+			a.*
+		FROM cms_category a
+		<where>
+			a.del_flag = #{delFlag}
+			<if test="site!=null and site.id != null and site.id != ''">
+				AND a.site_id  = #{site.id}
+			</if>
+			<if test="parent!=null and parent.id != null and parent.id != ''">
+				AND a.parent_id  = #{parent.id}
+			</if>
+			${sqlMap.dsf}
+		</where>
+		ORDER BY a.site_id,a.sort ASC
 	</select>
 	
 	<select id="findModule" resultType="Category">

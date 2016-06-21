@@ -88,7 +88,12 @@ public class TeamController extends BaseController {
 		if (!beanValidator(model, team)){
 			return form(team, model);
 		}
-		teamService.save(team,attMainForm);
+		try {
+			teamService.save(team,attMainForm);
+		}catch (Exception e){
+			addMessage(redirectAttributes, "数据重复");
+			return "redirect:"+Global.getAdminPath()+"/cms/team/form?id="+team.getId();
+		}
 		addMessage(redirectAttributes, "保存战队成功");
 		return "redirect:"+Global.getAdminPath()+"/cms/team/?repage";
 	}
@@ -129,14 +134,24 @@ public class TeamController extends BaseController {
 			team.setPhoto(com.bra.modules.sys.utils.StringUtils.ATTPATH+attMain.getId());
 		}
 		JSONObject j = new JSONObject();
+		boolean flag = true;
 		if(!StringUtils.isNotBlank(team.getId())){
-			teamService.save(team);
+			try{
+				teamService.save(team,null);
+			}catch (Exception e){
+				j.put("status","fail");
+				j.put("msg","此球队已存在");
+				j.put("teamId","");
+				flag=false;
+			}
 		}
-		String teamMember = request.getParameter("members");
-		saveMembers(teamMember,team);
-		j.put("status","success");
-		j.put("msg","队伍创建成功");
-		j.put("teamId",team.getId());
+		if(flag){
+			String teamMember = request.getParameter("members");
+			saveMembers(teamMember,team);
+			j.put("status","success");
+			j.put("msg","队伍创建成功");
+			j.put("teamId",team.getId());
+		}
 		try {
 			response.reset();
 			response.setContentType("application/json");

@@ -26,15 +26,6 @@
 			display:inline-block
 		}
 	</style>
-	<script>
-		function jumpToApp(){
-			iOSskipInfo();
-		}
-		function jumpToInfo(dom){
-			var id = $(dom).attr("name");
-			iOSPhotoskipInfo(id);
-		}
-	</script>
 </head>
 <body style="margin:0; padding:0;">
 <div class="row" style="margin-left: 10px;">
@@ -67,5 +58,14 @@
 		<div onclick="jumpToApp(this)" style="margin:10px;height:50px;width:100%;background-image:url(${ctxStatic}/images/more2x.png);background-repeat:no-repeat;background-position:center;" ></div>
 	</div>
 </div>
+<script>
+	function jumpToApp(){
+		iOSskipInfo();
+	}
+	function jumpToInfo(dom){
+		var id = $(dom).attr("name");
+		iOSPhotoskipInfo(id);
+	}
+</script>
 </body>
 </html>

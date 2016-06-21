@@ -282,54 +282,69 @@ public class UserController extends BaseController {
 					user.setSex(sex);
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(qq)){
-					User tmp = systemService.getUserByQq(qq);
-					User now = UserUtils.getUser();
-					if(tmp!=null&&now.getId().equals(tmp.getId())){
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","已经绑定");
-					}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","该QQ号已经注册");
-					}else{
-						user.setQq(qq);
-						user.setQqName(qqName);
+					User u = new User();
+					u.setQq(qq);
+					List<User> l = systemService.findListApi(u);
+					if(l!=null&&l.size()>0){
+						User tmp = l.get(0);
+						User now = UserUtils.getUser();
+						if(tmp!=null&&now.getId().equals(tmp.getId())){
+							flag = false;
+							rtn.put("status","fail");
+							rtn.put("msg","已经绑定");
+						}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
+							flag = false;
+							rtn.put("status","fail");
+							rtn.put("msg","该QQ号已经注册");
+						}else{
+							user.setQq(qq);
+							user.setQqName(qqName);
+						}
 					}
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(area)){
 					user.setArea(area);
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(phone)){
-					User tmp = systemService.getUserByMobile(phone);
-					User now = UserUtils.getUser();
-					if(tmp!=null&&now.getId().equals(tmp.getId())){
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","已经绑定");
-					}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","该手机号已经注册");
-					}else{
-						user.setMobile(phone);
-						user.setLoginName(phone);
+					User u = new User();
+					u.setMobile(phone);
+					List<User> l = systemService.findListApi(u);
+					if(l!=null&&l.size()>0){
+						User tmp = l.get(0);
+						User now = UserUtils.getUser();
+						if(tmp!=null&&now.getId().equals(tmp.getId())){
+							flag = false;
+							rtn.put("status","fail");
+							rtn.put("msg","已经绑定");
+						}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
+							flag = false;
+							rtn.put("status","fail");
+							rtn.put("msg","该手机号已经注册");
+						}else{
+							user.setMobile(phone);
+							user.setLoginName(phone);
+						}
 					}
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(weixin)){
-					User tmp = systemService.getUserByWeixin(weixin);
-					User now = UserUtils.getUser();
-					if(tmp!=null&&now.getId().equals(tmp.getId())){
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","已经绑定");
-					}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
-						flag = false;
-						rtn.put("status","fail");
-						rtn.put("msg","该微信号已经注册");
-					}else{
-						user.setWeixin(weixin);
-						user.setWeixinName(weixinName);
+					User u = new User();
+					u.setWeixin(weixin);
+					List<User> l = systemService.findListApi(u);
+					if(l!=null&&l.size()>0){
+						User tmp = l.get(0);
+						User now = UserUtils.getUser();
+						if(tmp!=null&&now.getId().equals(tmp.getId())){
+							flag = false;
+							rtn.put("status","fail");
+							rtn.put("msg","已经绑定");
+						}else if(tmp!=null&&!now.getId().equals(tmp.getId())){
+							flag = false;
+							rtn.put("status","fail");
+							rtn.put("msg","该微信号已经注册");
+						}else{
+							user.setWeixin(weixin);
+							user.setWeixinName(weixinName);
+						}
 					}
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(name)){

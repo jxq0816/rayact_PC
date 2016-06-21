@@ -101,24 +101,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public User getUserByWeixin(String weixin) {
 		User user = new User();
 		user.setWeixin(weixin);
-		return userDao.getByQq(user);
-	}
-	/**
-	 * 根据微信获取用户
-	 * @param mobile
-	 * @return
-	 */
-	public User getUserByMobile(String mobile) {
-		User user = new User();
-		user.setMobile(mobile);
-		user.setPhone(mobile);
-		user.setLoginName(mobile);
-		List<Map<String,String>> list = userDao.getByMobile(user);
-		if(list!=null&&list.size()>0){
-			return null;
-		}else{
-			return null;
-		}
+		return userDao.getByWeixin(user);
 	}
 	
 	public Page<User> findUser(Page<User> page, User user) {
