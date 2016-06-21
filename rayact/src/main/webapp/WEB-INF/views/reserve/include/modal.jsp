@@ -177,7 +177,7 @@
             <div class="modal-footer">
                 <button type="button" id="closeSettlementResultBtn" onclick="updateFieldStatus()"
                         class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                    确定
+                    关闭
                 </button>
             </div>
         </div>
