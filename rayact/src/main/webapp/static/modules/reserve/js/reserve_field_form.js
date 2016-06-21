@@ -24,7 +24,7 @@ $(document).ready(function () {
      $("#memberId").on('change', function () {
          var text = $(this).find("option:selected").text();
          var username = text.split('-')[1];
-         var mobile = text.split('-')[0];
+         var mobile = text.split('-')[2];
          $("#userName").attr("value", username);
          $("#consMobile").attr("value", mobile);
      });
