@@ -15,6 +15,7 @@ import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.reserve.utils.StatementsUtils;
 import com.bra.modules.reserve.utils.VenueOrderUtils;
+import com.bra.modules.sys.utils.DictUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +61,32 @@ public class ReserveMemberController extends BaseController {
 		return entity;
 	}
 	
+	@RequestMapping(value = {"listExport", ""})
+	public void listExport(ReserveMember reserveMember, HttpServletResponse response) {
+		List<ReserveMember> list = reserveMemberService.findList(reserveMember);
+		String[] titles = {"场馆","场馆","手机号","性别","卡号","卡号类型","余额","备注"};
+		List<String[]> contentList = new ArrayList<>();
+		for(ReserveMember map :list){
+			String[] o = new String[8];
+			o[0] = map.getReserveVenue().getName();
+			o[1] = map.getName();
+			o[2] = map.getMobile();
+			o[3] = DictUtils.getDictLabel(map.getSex(),"sex","");
+			o[4] = map.getCartno();
+			o[5] = DictUtils.getDictLabel(map.getCartType(),"cart_type","");
+			o[6] = String.valueOf(map.getRemainder());
+			o[7] =  String.valueOf(map.getRemarks());
+			contentList.add(o);
+		}
+		Date now = new Date();
+		try {
+			ExcelInfo info = new ExcelInfo(response,"会员统计列表 导出时间："+ DateUtils.formatDate(now),titles,contentList);
+			info.export();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember);

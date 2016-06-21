@@ -52,7 +52,9 @@
                                                            itemLabel="label"
                                                            itemValue="value" htmlEscape="false"/>
                                     </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
+                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                        <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -136,6 +138,11 @@
         $('.icheck').iCheck({
             checkboxClass: 'icheckbox_square-blue checkbox',
             radioClass: 'iradio_square-blue'
+        });
+        $("#btnExport").click(function () {
+            $("#searchForm").attr("action", "${ctx}/reserve/reserveMember/listExport");
+            $("#searchForm").submit();
+            $("#searchForm").attr("action", "${ctx}/reserve/reserveMember/list");
         });
     });
 </script>
