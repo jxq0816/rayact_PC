@@ -136,6 +136,11 @@
 			<if test="reserveVenue != null and reserveVenue.id !=null and reserveVenue.id != ''">
 				AND a.fk_reserve_venue_id =#{reserveVenue.id}
 			</if>
+			<if test="isOwning != null and isOwning != ''">
+				<if test="'1'.toString()==isOwning">
+					AND <![CDATA[ a.remainder<0]]>
+				</if>
+			</if>
 			${sqlMap.sql}
 		</where>
 		<choose>

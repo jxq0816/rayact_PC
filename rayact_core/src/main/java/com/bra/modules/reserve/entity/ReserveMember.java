@@ -30,14 +30,21 @@ public class ReserveMember extends SaasEntity<ReserveMember> {
 	private Double remainder ; //储值卡余额
 	private Integer residue;//次卡剩余次数
 	private ReserveVenue reserveVenue;//所属场馆
-
-
-	//-------------------------储值卡-次卡------------------------------
 	private String cartno;		// 卡号
 	private String cartType;		// 卡号类型(会员类型1:储值卡,2:次卡)
+	private String isOwning; //是否欠款 0：否 1：是
+	private Date validitystart;		// 卡号开始日期
+	private Date validityend;		// 卡号结束日期
 	private ReserveStoredcardMemberSet storedcardSet;
 	private ReserveTimecardMemberSet timecardSet;
 
+	public String getIsOwning() {
+		return isOwning;
+	}
+
+	public void setIsOwning(String isOwning) {
+		this.isOwning = isOwning;
+	}
 
 	public ReserveStoredcardMemberSet getStoredcardSet() {
 		return storedcardSet;
@@ -55,8 +62,7 @@ public class ReserveMember extends SaasEntity<ReserveMember> {
 		this.timecardSet = timecardSet;
 	}
 
-	private Date validitystart;		// 卡号开始日期
-	private Date validityend;		// 卡号结束日期
+
 	
 	public ReserveMember() {
 		super();

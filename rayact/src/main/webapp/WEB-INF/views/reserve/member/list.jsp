@@ -44,8 +44,11 @@
                                     <td>卡号：</td>
                                     <td><form:input path="cartno" cssStyle="width:100px;" htmlEscape="false" class="form-control"/>
                                     </td>
+                                    <td>欠费：</td>
                                     <td>
-                                   卡号类型：
+                                        <form:radiobuttons class="icheck"  path="isOwning" items="${fns:getDictList('yes_no')}"
+                                                           itemLabel="label"
+                                                           itemValue="value" htmlEscape="false"/>
                                     </td>
                                     <td>
                                         <form:radiobuttons class="icheck"  path="cartType" items="${fns:getDictList('cart_type')}"
