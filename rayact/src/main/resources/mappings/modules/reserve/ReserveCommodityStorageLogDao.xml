@@ -56,6 +56,11 @@
 					AND a.fk_reserve_venue_id = #{reserveVenue.id}
 				</if>
 			</if>
+			<if test="reserveCommodity != null">
+				<if test="reserveCommodity.name !=null and reserveCommodity.name != ''">
+					AND commodity.name LIKE #{reserveCommodity.name}
+				</if>
+			</if>
 			<if test="reserveCommoditySupplier != null">
 				<if test="reserveCommoditySupplier.id !=null and reserveCommoditySupplier.id != ''">
 					AND a.fk_reserve_commodity_supplier_id = #{reserveCommoditySupplier.id}

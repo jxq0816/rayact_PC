@@ -24,7 +24,6 @@
                         <div class="form-group col-lg-3 col-sm-5">
                             <label class="control-label" for="venue">场馆：</label>
                             <sys:select cssClass="input-large" name="reserveVenue.id" id="venue"
-                                        cssStyle="width:50%"
                                         value="${query.reserveVenue.id}"
                                         items="${venues}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"
@@ -33,14 +32,18 @@
                         <div class="form-group col-lg-3 col-sm-5">
                             <label class="control-label" for="venue">供应商：</label>
                             <sys:select cssClass="input-large" name="reserveCommoditySupplier.id" id="venue"
-                                        cssStyle="width:50%"
                                         value="${query.reserveCommoditySupplier.id}"
                                         items="${reserveCommoditySupplierList}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
                         </div>
-
-                        <div class="form-group col-lg-4 col-sm-6">
+                        <div class="form-group col-lg-2 col-sm-2">
+                            <form:input path="reserveCommodity.name" htmlEscape="false"
+                                        maxlength="30"
+                                        placeholder="请输入商品名称"
+                                        class="form-control"/>
+                        </div>
+                        <div class="form-group col-lg-2 col-sm-3">
                             <div class="col-lg-6 col-sm-6 ">
                                 <input id="startDate" name="startDate" type="text"
                                        value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${query.startDate}"/>"
