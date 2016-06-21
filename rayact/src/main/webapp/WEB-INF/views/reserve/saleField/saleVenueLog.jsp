@@ -20,9 +20,9 @@
                 <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
                       method="post">
                     <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
-                        <div class="form-group col-lg-3 col-sm-3">
+                        <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="venue">场馆：</label>
-                            <select id="venue" name="venue.id" class="select2 " style="width: 50%">
+                            <select id="venue" name="venue.id" class="select2 ">
                                 <option value="">---请选择---</option>
                                 <c:forEach items="${venueList}" var="venue">
                                     <option
@@ -32,14 +32,38 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-lg-3 col-sm-3">
+                        <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="project">项目：</label>
                             <sys:select cssClass="input-large" name="project.id" id="project"
-                                        cssStyle="width:50%"
                                         value="${query.project.id}"
                                         items="${projectList}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
+                        </div>
+
+                        <div class="form-group col-lg-2 col-sm-2">
+                            <label class="control-label" for="payType">支付方式：</label>
+                            <select id="payType" name="payType">
+                                <option value ="">全部</option>
+                                <option value ="1" <j:if test="${1 eq query.payType}">selected="selected"</j:if>
+                                >会员卡</option>
+                                <option value ="2" <j:if test="${2 eq query.payType}">selected="selected"</j:if>
+                                >现金</option>
+                                <option value="3" <j:if test="${3 eq query.payType}">selected="selected"</j:if>
+                                >银行卡</option>
+                                <option value="4" <j:if test="${4 eq query.payType}">selected="selected"</j:if>
+                                >微信</option>
+                                <option value="5" <j:if test="${5 eq query.payType}">selected="selected"</j:if>
+                                >支付宝</option>
+                                <option value="6" <j:if test="${6 eq query.payType}">selected="selected"</j:if>
+                                >优惠券</option>
+                                <option value="8" <j:if test="${8 eq query.payType}">selected="selected"</j:if>
+                                >多方式付款</option>
+                                <option value="9" <j:if test="${9 eq query.payType}">selected="selected"</j:if>
+                                >微信（个人）</option>
+                                <option value="10" <j:if test="${10 eq query.payType}">selected="selected"</j:if>
+                                >支付宝（个人）</option>
+                            </select>
                         </div>
 
                         <div class="form-group col-lg-2 col-sm-2">
@@ -54,7 +78,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-lg-2 col-sm-3">
+                        <div class="form-group col-lg-2 col-sm-2">
                             <div class="col-lg-6 col-sm-6">
                                 <input name="startDate"
                                        value="<fmt:formatDate value="${query.startDate}" pattern="yyyy-MM-dd"/>"
@@ -93,7 +117,7 @@
                                     <th>应收金额</th>
                                     <th>优惠金额</th>
                                     <th>实收金额</th>
-                                    <th>支付类型</th>
+                                    <th>支付方式</th>
                                     <th>预定人</th>
                                     <th>操作人</th>
                                     <th>授权人</th>
