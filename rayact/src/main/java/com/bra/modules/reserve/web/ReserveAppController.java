@@ -12,6 +12,7 @@ import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.TimeUtils;
+import com.bra.modules.util.pingplusplus.PingPlusCharge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -136,7 +137,18 @@ public class ReserveAppController extends BaseController {
         }
         return "reserve/saleField/reserveAppField";
     }
-
+    /**
+     * 结算订单
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "charge")
+    @ResponseBody
+    public String charge(String orderId, int amount,String subject,String body,String channel, String clientIP) {
+        String charge = PingPlusCharge.charge(orderId, amount, subject, body, channel, clientIP);
+        return charge;
+    }
 
     /**
      * 结算订单
@@ -194,9 +206,18 @@ public class ReserveAppController extends BaseController {
         }
         return map;
     }
+
+    /**
+     * 订单保存
+     * @param reserveJson
+     * @param projectId
+     * @param username
+     * @param phone
+     * @return
+     */
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public Map reservation(String reserveJson,String projectId,String username,String phone) {
+    public Map reservation(String reserveJson,String projectId,String username,String phone,String channel,String clientIP) {
         String reserve=reserveJson.replaceAll("&quot;","\"");
         JSONObject object=JSON.parseObject(reserve);
         String date = (String)object.get("consDate");
@@ -253,6 +274,7 @@ public class ReserveAppController extends BaseController {
             reserveVenueCons.setConsDate(consDate);
             reserveVenueCons.setVenueConsList(items);
             map.putAll(reserveAppVenueConsService.saveOrder(reserveVenueCons));//保存预订信息
+
         }
         return map;
     }
