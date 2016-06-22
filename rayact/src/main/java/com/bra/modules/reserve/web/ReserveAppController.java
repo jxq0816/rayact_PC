@@ -12,7 +12,7 @@ import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.TimeUtils;
-import com.bra.modules.util.pingplusplus.PingPlusCharge;
+import com.bra.modules.util.pingplusplus.PingPlusPlusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +43,8 @@ public class ReserveAppController extends BaseController {
     //订单service
     @Autowired
     private ReserveAppVenueConsService reserveAppVenueConsService;
-
+    @Autowired
+    private PingPlusPlusService pingPlusPlusService;
     //场地状态界面
     @RequestMapping(value = "main")
     public String main(Date consDate, String venueId,String projectId,Model model){
@@ -145,8 +146,8 @@ public class ReserveAppController extends BaseController {
      */
     @RequestMapping(value = "charge")
     @ResponseBody
-    public String charge(String orderId, int amount,String subject,String body,String channel, String clientIP) {
-        String charge = PingPlusCharge.charge(orderId, amount, subject, body, channel, clientIP);
+    public String charge(String order_no, int amount,String subject,String body,String channel, String client_ip) {
+        String charge = pingPlusPlusService.charge(order_no, amount, subject, body, channel, client_ip);
         return charge;
     }
 
@@ -343,5 +344,10 @@ public class ReserveAppController extends BaseController {
     public String checkUserOrder(String phone) {
         List<Map> mapList = reserveAppVenueConsService.checkUserUnpaidOrder(phone);
         return  JSON.toJSONString(mapList);
+    }
+    public static void main(String[] args) throws Exception {
+        PingPlusPlusService service=new PingPlusPlusService();
+        String rs=service.charge("asdasd", 123,"sub","body","wx", "192.168.1.182");
+        System.out.println(rs);
     }
 }

@@ -1,12 +1,8 @@
 package com.bra.modules.util.pingplusplus;
 
-import com.bra.common.utils.SystemPath;
-import com.pingplusplus.Pingpp;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,28 +11,14 @@ import java.util.Map;
  */
 public class PingPlusCharge {
 
-    /**
-     * Pingpp 管理平台对应的 API Key
-     */
-    private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
+    private String appId;
 
-    /**
-     * Pingpp 管理平台对应的应用 ID
-     */
-    private final static String appId = "app_5aX5q9j90O8KyPCu";
 
-    /**
-     * 你生成的私钥路径
-     */
-    private final static String privateKeyFilePath = SystemPath.getSysPath()+"../../src/"+"res/your_rsa_private_key.pem";
+    PingPlusCharge(String appId) {
+        this.appId = appId;
+    }
 
-    public static String charge(String orderNo,int amount,String subject,String body,String channel,String clientIP){
-
-        // 设置 API Key
-        Pingpp.apiKey = apiKey;
-
-        // 设置私钥路径，用于请求签名
-        Pingpp.privateKeyPath = privateKeyFilePath;
+    public String createCharge(String orderNo, int amount, String subject, String body, String channel, String clientIP) {
 
         /**
          * 或者直接设置私钥内容
@@ -55,7 +37,7 @@ public class PingPlusCharge {
         Map<String, String> app = new HashMap<String, String>();
         app.put("id", appId);
         chargeMap.put("app", app);
-        String chargeString=null;
+        String chargeString = null;
         try {
             //发起交易请求
             Charge charge = Charge.create(chargeMap);
@@ -65,12 +47,5 @@ public class PingPlusCharge {
             e.printStackTrace();
         }
         return chargeString;
-    }
-
-    private static SecureRandom random = new SecureRandom();
-
-    public static String randomString(int length) {
-        String str = new BigInteger(130, random).toString(32);
-        return str.substring(0, length);
     }
 }
