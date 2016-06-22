@@ -72,6 +72,7 @@
                                     <th>购买数量</th>
                                     <th>单价</th>
                                     <th>合计</th>
+                                    <th>支付方式</th>
                                     <th>售卖人</th>
                                     <th>场馆</th>
                                     <th>时间</th>
@@ -89,6 +90,9 @@
                                         <c:set var="num" value="${num+reserveCommoditySellDetail.num}"></c:set>
                                         <td>${reserveCommoditySellDetail.price}</td>
                                         <td>${reserveCommoditySellDetail.detailSum}</td>
+                                        <td>
+                                    ${fns:getPayType(reserveCommoditySellDetail.reserveCommoditySell.payType)}
+                                        </td>
                                         <c:set var="sum" value="${sum+reserveCommoditySellDetail.detailSum}"></c:set>
                                         <td>${reserveCommoditySellDetail.updateBy.name}</td>
                                         <td>${reserveCommoditySellDetail.reserveCommodity.reserveVenue.name}</td>

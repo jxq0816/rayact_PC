@@ -8,6 +8,7 @@
 		a.fk_reserve_commodity_id AS "reserveCommodity.id",
 		commodity.name AS "reserveCommodity.name",
 		a.fk_reserve_commodity_sell_id  AS "reserveCommoditySell.id",
+		s.pay_type AS "reserveCommoditySell.payType",
 		a.num AS "num",
 		a.price AS "price",
 		a.detail_sum AS "detailSum",
@@ -22,6 +23,7 @@
     <sql id="reserveCommoditySellDetailJoins">
 		LEFT JOIN reserve_commodity as commodity ON commodity.id = a.fk_reserve_commodity_id
 		LEFT JOIN reserve_member as m ON m.id = a.fk_reserve_member_id
+		LEFT JOIN reserve_commodity_sell as s ON s.id = a.fk_reserve_commodity_sell_id
 	</sql>
 
     <select id="get" resultType="ReserveCommoditySellDetail">
@@ -43,6 +45,7 @@
         venue.name AS "reserveCommodity.reserveVenue.name",
         t.name AS "reserveCommodity.commodityType.name",
         a.fk_reserve_commodity_sell_id AS "reserveCommoditySell.id",
+        s.pay_type AS "reserveCommoditySell.payType",
         a.num AS "num",
         a.price AS "price",
         a.detail_sum AS "detailSum",
@@ -56,6 +59,7 @@
         FROM reserve_commodity_sell_detail as a
         left join reserve_member as m on a.fk_reserve_member_id=m.id
         LEFT JOIN  reserve_user as u on u.id=a.create_by
+        LEFT JOIN reserve_commodity_sell as s ON s.id = a.fk_reserve_commodity_sell_id
         ,reserve_commodity as commodity,reserve_commodity_type as t,reserve_venue as venue
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND
