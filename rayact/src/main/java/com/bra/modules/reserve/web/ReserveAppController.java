@@ -42,26 +42,27 @@ public class ReserveAppController extends BaseController {
     //订单service
     @Autowired
     private ReserveAppVenueConsService reserveAppVenueConsService;
+
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Date consDate, String venueId,String projectId,Model model){
+    public String main(Date consDate, String venueId, String projectId, Model model) {
         if (consDate == null) {
             consDate = new Date();
         }
-        List<String> times=new ArrayList<>();
-        ReserveVenue venue=reserveVenueService.get(venueId);
-        String startTime=venue.getStartTime();
-        String endTime=venue.getEndTime();
-        if(StringUtils.isEmpty(startTime)){
-            startTime="06:00:00";
+        List<String> times = new ArrayList<>();
+        ReserveVenue venue = reserveVenueService.get(venueId);
+        String startTime = venue.getStartTime();
+        String endTime = venue.getEndTime();
+        if (StringUtils.isEmpty(startTime)) {
+            startTime = "06:00:00";
         }
-        if(StringUtils.isEmpty(endTime)){
-            endTime="00:30:00";
+        if (StringUtils.isEmpty(endTime)) {
+            endTime = "00:30:00";
         }
         times.addAll(TimeUtils.getTimeSpacListValue(startTime, endTime, 30));
         if (StringUtils.isNoneEmpty(venueId)) {
             //场地价格
-            List<FieldPrice> venueFieldPriceList = reserveAppFieldPriceService.findByDate(venueId,projectId, "1", consDate, times);
+            List<FieldPrice> venueFieldPriceList = reserveAppFieldPriceService.findByDate(venueId, projectId, "1", consDate, times);
             for (FieldPrice i : venueFieldPriceList) {
                 i.setHaveFullCourt(null);
                 i.setHaveHalfCourt(null);
@@ -69,39 +70,38 @@ public class ReserveAppController extends BaseController {
                 FieldPrice left = i.getFieldPriceLeft();
                 FieldPrice right = i.getFieldPriceRight();
                 for (TimePrice j : i.getTimePriceList()) {
-                    Date systemTime=new Date();
-                    String time=j.getTime();//当前场地的时间
-                    String startTimeSub=time.substring(0,5);
-                    if("00:00".endsWith(startTimeSub)){
+                    Date systemTime = new Date();
+                    String time = j.getTime();//当前场地的时间
+                    String startTimeSub = time.substring(0, 5);
+                    if ("00:00".endsWith(startTimeSub)) {
                         Calendar c = Calendar.getInstance();
                         c.setTime(systemTime);
                         int day = c.get(Calendar.DATE);
                         c.set(Calendar.DATE, day - 1);
-                        systemTime=c.getTime();
+                        systemTime = c.getTime();
                     }
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String date=dateFormat.format(consDate);
-                    startTimeSub=TimeUtils.earlyMorningFormat(startTimeSub);
-                    startTimeSub=date+" "+startTimeSub;//场地时间
+                    String date = dateFormat.format(consDate);
+                    startTimeSub = TimeUtils.earlyMorningFormat(startTimeSub);
+                    startTimeSub = date + " " + startTimeSub;//场地时间
 
 
-
-                    SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String sysTime=myFmt.format(systemTime);//系统时间
-                    if(startTimeSub.compareTo(sysTime)<0){
+                    SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String sysTime = myFmt.format(systemTime);//系统时间
+                    if (startTimeSub.compareTo(sysTime) < 0) {
                         j.setStatus("1");
-                    }else if("0".equals(j.getStatus())){
-                        if(StringUtils.isNoneEmpty(time)){
-                            if(full!=null){
+                    } else if ("0".equals(j.getStatus())) {
+                        if (StringUtils.isNoneEmpty(time)) {
+                            if (full != null) {
                                 for (TimePrice k : full.getTimePriceList()) {
-                                    String fullTime=k.getTime();
-                                    if(time.endsWith(fullTime)&&"1".equals(k.getStatus())){
+                                    String fullTime = k.getTime();
+                                    if (time.endsWith(fullTime) && "1".equals(k.getStatus())) {
                                         j.setStatus("1");//全场已占用，半场不可用
                                         break;
                                     }
                                 }
                             }
-                            if(left!=null) {
+                            if (left != null) {
                                 if ("0".equals(j.getStatus())) {
                                     for (TimePrice k : left.getTimePriceList()) {
                                         String leftTime = k.getTime();
@@ -112,8 +112,8 @@ public class ReserveAppController extends BaseController {
                                     }
                                 }
                             }
-                            if(right!=null){
-                                if("0".equals(j.getStatus())) {
+                            if (right != null) {
+                                if ("0".equals(j.getStatus())) {
                                     for (TimePrice k : right.getTimePriceList()) {
                                         String rightTime = k.getTime();
                                         if (time.endsWith(rightTime) && "1".equals(k.getStatus())) {
@@ -129,12 +129,13 @@ public class ReserveAppController extends BaseController {
             }
             model.addAttribute("venueFieldPriceList", venueFieldPriceList);
             model.addAttribute("times", times);
-            SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             model.addAttribute("consDate", fmt.format(consDate));
             model.addAttribute("venueId", venueId);
         }
         return "reserve/saleField/reserveAppField";
     }
+
     /**
      * 结算订单
      *
@@ -143,58 +144,47 @@ public class ReserveAppController extends BaseController {
      */
     @RequestMapping(value = "saveSettlement")
     @ResponseBody
-    public Map saveSettlement(String orderId, String payType,
-                                 Double consPrice,
-                                 Double memberCardInput,
-                                 Double bankCardInput,
-                                 Double weiXinInput,
-                                 Double aliPayInput,
-                                 Double couponInput) {
-        System.out.println("订单支付");
-        Map map=new HashMap<>();
-        Double inputSum=0.0;
-        if(memberCardInput!=null){
-            inputSum+=bankCardInput;
+    public Map saveSettlement(ReserveVenueCons order, String payType,
+                              Double consPrice,
+                              Double memberCardInput,
+                              Double bankCardInput,
+                              Double weiXinInput,
+                              Double aliPayInput,
+                              Double couponInput) {
+        Map map = new HashMap<>();
+        Double inputSum = 0.0;
+        if (memberCardInput != null) {
+            inputSum += bankCardInput;
         }
-        if(weiXinInput!=null){
-            inputSum+=weiXinInput;
+        if (weiXinInput != null) {
+            inputSum += weiXinInput;
         }
-        if(aliPayInput!=null){
-            inputSum+=aliPayInput;
+        if (aliPayInput != null) {
+            inputSum += aliPayInput;
         }
-        if(couponInput!=null){
-            inputSum+=couponInput;
+        if (couponInput != null) {
+            inputSum += couponInput;
         }
-        if(consPrice==null){
-            map.put("result",3);
-            map.put("msg","实付金额不能为空");
+        if (consPrice.equals(inputSum) == false) {
+            map.put("result", 4);
+            map.put("msg", "多方式付款总和不等于实付金额");
             return map;
         }
-        if(consPrice.equals(inputSum)==false){
-            map.put("result",4);
-            map.put("msg","多方式付款总和不等于实付金额");
-            return map;
-        }
-        ReserveVenueCons reserveVenueCons = reserveAppVenueConsService.get(orderId);
-        if(reserveVenueCons==null){
-            map.put("result",0);
-            map.put("msg","该订单不存在");
-        }else{
-            Boolean bool = reserveAppVenueConsService.saveSettlement(reserveVenueCons,payType,consPrice,
-                    memberCardInput,bankCardInput,weiXinInput,aliPayInput,couponInput);
-            if(bool){
-                map.put("result",1);
-                map.put("msg","订单结算成功");
-            }else{
-                map.put("result",2);
-                map.put("msg","订单已结算，不可重复结算");
-            }
+        Boolean bool = reserveAppVenueConsService.saveSettlement(order, payType, consPrice,
+                memberCardInput, bankCardInput, weiXinInput, aliPayInput, couponInput);
+        if (bool) {
+            map.put("result", 1);
+            map.put("msg", "订单结算成功");
+        } else {
+            map.put("result", 2);
+            map.put("msg", "订单已结算，不可重复结算");
         }
         return map;
     }
 
     /**
      * 订单保存
+     *
      * @param reserveJson
      * @param projectId
      * @param username
@@ -203,10 +193,10 @@ public class ReserveAppController extends BaseController {
      */
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public Map reservation(String reserveJson,String projectId,String username,String phone,String channel,String clientIP) {
-        String reserve=reserveJson.replaceAll("&quot;","\"");
-        JSONObject object=JSON.parseObject(reserve);
-        String date = (String)object.get("consDate");
+    public Map reservation(String reserveJson, String projectId, String username, String phone, String channel, String clientIP) {
+        String reserve = reserveJson.replaceAll("&quot;", "\"");
+        JSONObject object = JSON.parseObject(reserve);
+        String date = (String) object.get("consDate");
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date consDate = null;
         try {
@@ -214,24 +204,24 @@ public class ReserveAppController extends BaseController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        List<Map> list= (List<Map>) object.get("venueConsList");
-         List<ReserveVenueConsItem> items=new ArrayList<>();
-        for(Map i:list){
-            ReserveVenueConsItem item=new ReserveVenueConsItem();
-            ReserveField field=new ReserveField();
-            String filedId=(String) i.get("reserveFieldId");
+        List<Map> list = (List<Map>) object.get("venueConsList");
+        List<ReserveVenueConsItem> items = new ArrayList<>();
+        for (Map i : list) {
+            ReserveVenueConsItem item = new ReserveVenueConsItem();
+            ReserveField field = new ReserveField();
+            String filedId = (String) i.get("reserveFieldId");
             field.setId(filedId);
-            String filedName=(String) i.get("reserveFieldName");
+            String filedName = (String) i.get("reserveFieldName");
             field.setName(filedName);
             item.setReserveField(field);
 
-            String price=(String)i.get("orderPrice");
-            Double orderPrice=Double.valueOf(price);
+            String price = (String) i.get("orderPrice");
+            Double orderPrice = Double.valueOf(price);
             item.setOrderPrice(orderPrice);
 
-            String startTime=(String)i.get("startTime");
+            String startTime = (String) i.get("startTime");
             item.setStartTime(startTime);
-            String endTime=(String)i.get("endTime");
+            String endTime = (String) i.get("endTime");
             item.setEndTime(endTime);
             items.add(item);
         }
@@ -242,19 +232,19 @@ public class ReserveAppController extends BaseController {
             ReserveField field = i.getReserveField();//场地
             //遍历该日期区间 的场地是否有预订
             bool = reserveVenueConsItemService.checkReserveTime(consDate, field, startTime, endTime);
-            if(bool==false){
+            if (bool == false) {
                 break;//该时间段不能使用，跳出循环
             }
         }
-        Map map=new HashMap<>();
-        map.put("bool",bool);
-        if (bool==true) {
-            ReserveVenueCons reserveVenueCons=new ReserveVenueCons();
+        Map map = new HashMap<>();
+        map.put("bool", bool);
+        if (bool == true) {
+            ReserveVenueCons reserveVenueCons = new ReserveVenueCons();
             reserveVenueCons.setUserName(username);
             reserveVenueCons.setConsMobile(phone);
             reserveVenueCons.setProject(new ReserveProject(projectId));//该字段用于PC统计项目收入
-            String reserveVenueId=(String)object.get("reserveVenueId");
-            ReserveVenue venue=new ReserveVenue(reserveVenueId);
+            String reserveVenueId = (String) object.get("reserveVenueId");
+            ReserveVenue venue = new ReserveVenue(reserveVenueId);
             reserveVenueCons.setReserveVenue(venue);
             reserveVenueCons.setReserveType(ReserveVenueCons.RESERVATION);//已预定
             reserveVenueCons.setConsDate(consDate);
@@ -284,13 +274,14 @@ public class ReserveAppController extends BaseController {
      * @param orderId
      * @return
      */
-    public String orderList(String reserveType,String phone) {
-        List<Map> orderList =null;
-        if(StringUtils.isNoneEmpty(phone)){
-            orderList=reserveAppVenueConsService.orderList(reserveType,phone);
+    public String orderList(String reserveType, String phone) {
+        List<Map> orderList = null;
+        if (StringUtils.isNoneEmpty(phone)) {
+            orderList = reserveAppVenueConsService.orderList(reserveType, phone);
         }
         return JSON.toJSONString(orderList);
     }
+
     @RequestMapping(value = "cancelOrder")
     @ResponseBody
     /**
@@ -300,25 +291,26 @@ public class ReserveAppController extends BaseController {
      */
     public Map cancelOrder(String orderId) {
         ReserveVenueCons venueCons = reserveAppVenueConsService.get(orderId);
-        Map map=new HashMap<>();
-        if(venueCons==null){
-            map.put("rs",0);
-            map.put("msg","该订单不存在");
+        Map map = new HashMap<>();
+        if (venueCons == null) {
+            map.put("rs", 0);
+            map.put("msg", "该订单不存在");
             return map;
         }
-        String reserveType=venueCons.getReserveType();
-        if("4".equals(reserveType)){
-            map.put("rs",4);
-            map.put("msg","该订单已结算，不可取消");
+        String reserveType = venueCons.getReserveType();
+        if ("4".equals(reserveType)) {
+            map.put("rs", 4);
+            map.put("msg", "该订单已结算，不可取消");
             return map;
         }
-        if(venueCons!=null){
+        if (venueCons != null) {
             reserveAppVenueConsService.cancelOrder(venueCons);
-            map.put("rs",1);
-            map.put("msg","订单取消成功");
+            map.put("rs", 1);
+            map.put("msg", "订单取消成功");
         }
         return map;
     }
+
     @RequestMapping(value = "checkUserOrder")
     @ResponseBody
     /**
@@ -328,6 +320,6 @@ public class ReserveAppController extends BaseController {
      */
     public String checkUserOrder(String phone) {
         List<Map> mapList = reserveAppVenueConsService.checkUserUnpaidOrder(phone);
-        return  JSON.toJSONString(mapList);
+        return JSON.toJSONString(mapList);
     }
 }
