@@ -4,6 +4,8 @@ import com.bra.common.utils.SystemPath;
 import com.pingplusplus.Pingpp;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 /**
  * Created by Afon on 16/4/26.
  */
@@ -23,7 +25,7 @@ public class PingPlusPlusService {
     /**
      * 你生成的私钥路径
      */
-    private final static String privateKeyFilePath = SystemPath.getClassPath()+"res\\your_rsa_private_key.pem";
+    private final static String privateKeyFilePath = File.separator+SystemPath.getClassPath()+"res"+ File.separator+"your_rsa_private_key.pem";
 
     public static String charge(String orderNo,int amount,String subject,String body,String channel,String clientIP){
 
