@@ -1,4 +1,4 @@
- http://192.168.1.166:8080/rayact/a/app/reserve/field/charge
+ http://192.168.1.166:8080/rayact/a/app/pingPlusPlus/charge
 一、请求参数
 order_no:
     required 商户订单号
