@@ -12,7 +12,6 @@ import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.reserve.service.ReserveVenueConsItemService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.TimeUtils;
-import com.bra.modules.util.pingplusplus.PingPlusPlusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,8 +42,6 @@ public class ReserveAppController extends BaseController {
     //订单service
     @Autowired
     private ReserveAppVenueConsService reserveAppVenueConsService;
-    @Autowired
-    private PingPlusPlusService pingPlusPlusService;
     //场地状态界面
     @RequestMapping(value = "main")
     public String main(Date consDate, String venueId,String projectId,Model model){
@@ -153,6 +150,7 @@ public class ReserveAppController extends BaseController {
                                  Double weiXinInput,
                                  Double aliPayInput,
                                  Double couponInput) {
+        System.out.println("订单支付");
         Map map=new HashMap<>();
         Double inputSum=0.0;
         if(memberCardInput!=null){
