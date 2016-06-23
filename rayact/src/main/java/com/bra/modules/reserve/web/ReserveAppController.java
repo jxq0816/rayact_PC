@@ -161,9 +161,10 @@ public class ReserveAppController extends BaseController {
             String channel=charge.getChannel();
             String payType=null;
             int amountFen=charge.getAmount();
-            Double amountYuan= amountFen*1.0/100;//ping++扣款
+            Double amountYuan= amountFen*1.0/100;//ping++扣款,精确到分，而数据库精确到元
             Double weiXinInput = null;
             Double aliPayInput = null;
+            Double bankCardInput=null;
 
             if("wx".equals(channel)){
                 payType="4";//支付类型(1:储值卡，2:现金,3:银行卡,4:微信,5:支付宝,6:优惠券，7：打白条;8:多方式付款;9:微信个人，10：支付宝（个人）)
@@ -171,12 +172,15 @@ public class ReserveAppController extends BaseController {
             }else if("alipay".equals(channel)){
                 payType="5";
                 aliPayInput=amountYuan;
+            }else if("upacp".equals(channel)||"upacp_wap".equals(channel)||"upacp_pc".equals(channel)){
+                payType="3";
+                bankCardInput=amountYuan;
             }
             Double couponInput;
             ReserveVenueCons reserveVenueCons = reserveAppVenueConsService.get(orderId);
             Double orderPrice=reserveVenueCons.getOrderPrice();
             couponInput=orderPrice-amountYuan;//订单金额-ping++扣款 等于优惠金额
-            saveSettlement(orderId,payType,amountYuan,0.0,0.0,weiXinInput,aliPayInput,couponInput);
+            saveSettlement(orderId,payType,amountYuan,0.0,bankCardInput,weiXinInput,aliPayInput,couponInput);
         }
     }
 
