@@ -66,9 +66,6 @@
 		<include refid="reserveVenueConsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="tenantId != null and tenantId != ''">
-				and a.tenant_id = #{tenantId}
-			</if>
 			<if test="consDate != null and consDate != ''">
 				and DATE(d.cons_date) = DATE (#{consDate})
 			</if>
