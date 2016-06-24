@@ -20,14 +20,39 @@
                            action="${ctx}/reserve/reserveCommoditySellDetail/findSellDetailList" method="post">
 
                     <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
-                        <div class="form-group col-lg-3 col-sm-4">
+                        <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="venue">场馆：</label>
                             <sys:select id="venue" cssClass="input-large" name="reserveCommodity.reserveVenue.id"
-                                        cssStyle="width:50%"
                                         value="${reserveCommoditySellDetail.reserveCommodity.reserveVenue.id}"
                                         items="${venueList}" itemLabel="name" itemValue="id"
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
+                        </div>
+                        <div class="form-group col-lg-3 col-sm-3">
+                            <label class="control-label col-lg-5" for="payType">支付方式：</label>
+                            <div class="col-lg-7">
+                                <select id="payType" name="reserveCommoditySell.payType" style="width: 100%">
+                                    <option value ="">全部</option>
+                                    <option value ="1" <j:if test="${1 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >会员卡</option>
+                                    <option value ="2" <j:if test="${2 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >现金</option>
+                                    <option value="3" <j:if test="${3 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >银行卡</option>
+                                    <option value="4" <j:if test="${4 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >微信</option>
+                                    <option value="5" <j:if test="${5 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >支付宝</option>
+                                    <option value="6" <j:if test="${6 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >优惠券</option>
+                                    <option value="8" <j:if test="${8 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >多方式付款</option>
+                                    <option value="9" <j:if test="${9 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >微信（个人）</option>
+                                    <option value="10" <j:if test="${10 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                    >支付宝（个人）</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group col-lg-2 col-sm-2">
@@ -37,7 +62,7 @@
                                         placeholder="请输入商品名称"
                                         class="form-control"/>
                         </div>
-                        <div class="form-group col-lg-4 col-sm-3">
+                        <div class="form-group col-lg-3 col-sm-3">
                             <div class="col-lg-6 col-sm-6">
                                 <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
                                        name="startDate" id="startDate" type="text"

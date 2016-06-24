@@ -76,6 +76,9 @@
                 <if test="reserveCommoditySell.id !=null and reserveCommoditySell.id !=''">
                     and a.fk_reserve_commodity_sell_id = #{reserveCommoditySell.id}
                 </if>
+                <if test="reserveCommoditySell.payType !=null and reserveCommoditySell.payType !=''">
+                    and s.pay_type = #{reserveCommoditySell.payType}
+                </if>
             </if>
             <if test="startDate!=null and endDate !=null">
                 and (Date(a.create_date) between Date(#{startDate}) and Date(#{endDate}))
