@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 会员结账事件
- * Created by xiaobin on 16/1/22.
+ * Created by jiangxingqi on 16/1/22.
  */
 @Component
 public class MemberCheckoutListener{
@@ -53,7 +53,8 @@ public class MemberCheckoutListener{
         statements.setVenue(venueCons.getReserveVenue());
         statements.setTransactionType("8");//场地消费
         statements.setReserveMember(reserveMember);//余额加入日志
-        statements.setRemarks("场地消费");
+        String remarks=venueCons.getRemarks();
+        statements.setRemarks(remarks);
         ReserveVenueConsItem search = new ReserveVenueConsItem();
         search.setConsData(venueCons);
         List<ReserveVenueConsItem> itemList = reserveVenueConsItemService.findList(search);
@@ -90,7 +91,7 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"1",memberCardInput,"会员卡支付");
+                this.saveMultiplePayment(orderId,field,"1",memberCardInput,remarks);
             }
             if(cashInput!=null && cashInput!=0){
                 statements.setPayType("2");
@@ -98,7 +99,7 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"2",cashInput,"现金支付");
+                this.saveMultiplePayment(orderId,field,"2",cashInput,remarks);
             }
             if(bankCardInput!=null && bankCardInput!=0){
                 statements.setPayType("3");
@@ -106,7 +107,7 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"3",bankCardInput,"银行卡支付");
+                this.saveMultiplePayment(orderId,field,"3",bankCardInput,remarks);
             }
             if(weiXinInput!=null && weiXinInput!=0){
                 statements.setPayType("4");
@@ -114,7 +115,7 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"4",weiXinInput,"微信支付");
+                this.saveMultiplePayment(orderId,field,"4",weiXinInput,remarks);
             }
             if(weiXinPersonalInput!=null && weiXinPersonalInput!=0){
                 statements.setPayType("9");
@@ -122,7 +123,7 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"9",weiXinPersonalInput,"微信个人支付");
+                this.saveMultiplePayment(orderId,field,"9",weiXinPersonalInput,remarks);
             }
             if(aliPayInput!=null && aliPayInput!=0){
                 statements.setPayType("5");
@@ -130,7 +131,7 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"5",aliPayInput,"支付宝支付");
+                this.saveMultiplePayment(orderId,field,"5",aliPayInput,remarks);
             }
             if(aliPayPersonalInput!=null && aliPayPersonalInput!=0){
                 statements.setPayType("10");
@@ -138,14 +139,14 @@ public class MemberCheckoutListener{
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
                 //记录多方式付款
-                this.saveMultiplePayment(orderId,field,"10",aliPayPersonalInput,"支付宝（个人）支付");
+                this.saveMultiplePayment(orderId,field,"10",aliPayPersonalInput,remarks);
             }
             if(couponInput!=null && couponInput!=0){
                 statements.setPayType("6");
                 statements.setTransactionVolume(couponInput);
                 statements.setId(null);
                 reserveCardStatementsService.save(statements);
-                this.saveMultiplePayment(orderId,field,"6",couponInput,"优惠券支付");
+                this.saveMultiplePayment(orderId,field,"6",couponInput,remarks);
             }
         }else{
             statements.setPayType(payType);
