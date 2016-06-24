@@ -195,7 +195,7 @@ public class ReserveAppController extends BaseController {
      */
     @RequestMapping(value = "reservation")
     @ResponseBody
-    public Map reservation(String reserveJson, String projectId, String username, String phone, String channel, String clientIP) {
+    public Map reservation(String reserveJson, String projectId, String username, String phone) {
         String reserve = reserveJson.replaceAll("&quot;", "\"");
         JSONObject object = JSON.parseObject(reserve);
         String date = (String) object.get("consDate");
