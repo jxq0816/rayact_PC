@@ -15,13 +15,15 @@ public class PingPlusPlusService {
     /**
      * Pingpp 管理平台对应的 API Key
      */
-    private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
+    //private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
+    private final static String apiKey = "sk_live_9qnbz59qXzbLKerj18XrjTuD";
+
+
 
     /**
      * Pingpp 管理平台对应的应用 ID
      */
     private final static String appId = "app_5aX5q9j90O8KyPCu";
-
     /**
      * 你生成的私钥路径
      */

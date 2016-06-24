@@ -31,6 +31,8 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, ReserveVenueCons> {
     @Autowired
+    private ReserveMemberService reserveMemberService;
+    @Autowired
     private StoredCardMemberService storedCardMemberService;
     @Autowired
     private ReserveVenueConsItemDao reserveVenueConsItemDao;
@@ -148,6 +150,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
 
     public ReserveVenueCons get(String id) {
         ReserveVenueCons reserveVenueCons=super.get(id);
+        ReserveMember member=reserveMemberService.get(reserveVenueCons.getMember());
+        reserveVenueCons.setMember(member);//获得会员余额
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(reserveVenueCons.getId(), ReserveVenueCons.MODEL_KEY);
         reserveVenueCons.setTutorOrderList(tutorOrderList);
