@@ -193,11 +193,11 @@
         tutor.name as "tutorName",
         '0' as isTicket
         from reserve_venue_cons as a
-        INNER JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
-        INNER JOIN  reserve_venue as v ON a.venue_id = v.id
-        LEFT JOIN  reserve_user as u on a.create_by = u.id
-        INNER JOIN  reserve_project as p ON a.project_id = p.id
-        LEFT JOIN  reserve_user as checkout on a.checkout_id = checkout.id
+        INNER JOIN  reserve_venue_cons_item as i on (a.id = i.cons_data_id and i.del_flag='0')
+        INNER JOIN  reserve_venue as v ON (a.venue_id = v.id and v.del_flag='0')
+        LEFT JOIN  reserve_user as u on (a.create_by = u.id and v.del_flag='0')
+        INNER JOIN  reserve_project as p ON (a.project_id = p.id and v.del_flag='0')
+        LEFT JOIN  reserve_user as checkout on (a.checkout_id = checkout.id and v.del_flag='0')
         LEFT JOIN ( select t.name,ord.model_id from reserve_tutor_order as ord INNER JOIN reserve_tutor as t on ord.tutor_id=t.id ) as tutor  on tutor.model_id=a.id
         where a.del_flag = '0' and a.reserve_type = '4'
         <if test="payType != null and payType != ''">
