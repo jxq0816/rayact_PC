@@ -34,6 +34,7 @@
 		LEFT JOIN  reserve_user as crt on crt.id=a.create_by
 		LEFT JOIN  reserve_user as upt on upt.id=a.create_by
 		LEFT JOIN  reserve_venue as v on v.id = a.venue_id
+	    LEFT JOIN reserve_venue_cons as cons on cons.id=a.fk_order_id
 	</sql>
 
 	<select id="rechargeOfToday" resultType="BigDecimal">
@@ -183,7 +184,7 @@
 		FROM reserve_card_statements a
 		<include refid="reserveCardStatementsJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="reserveMember!=null">
 				<if test="reserveMember.id !=null and reserveMember.id !=''">
 					and a.fk_reserve_member_id=#{reserveMember.id}
@@ -192,6 +193,9 @@
 					and ( (m.name like concat('%',#{reserveMember.name},'%')) or (m.cartno like
 					concat('%',#{reserveMember.name},'%')) or (m.mobile like concat('%',#{reserveMember.name},'%')) )
 				</if>
+			</if>
+			<if test="orderId!=null and orderId !=''">
+				  and a.fk_order_id=#{orderId}
 			</if>
 			<if test="venue!=null and venue.id!=null and venue.id!=''">
 				and a.venue_id = #{venue.id}
