@@ -40,6 +40,12 @@
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
                         </div>
+                        <div class="form-group col-lg-1 col-sm-1">
+                            <input name="username" htmlEscape="false"
+                                   maxlength="30" value="${query.username}"
+                                   placeholder="请输入预订人"
+                                   class="form-control"/>
+                        </div>
                         <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="payType">支付方式：</label>
                             <select id="payType" name="payType">
@@ -97,7 +103,7 @@
                                 />
                             </div>
                         </div>
-                        <div class="form-group col-lg-2 col-sm-3">
+                        <div class="form-group col-lg-1 col-sm-3">
                             <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
                             <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
                         </div>

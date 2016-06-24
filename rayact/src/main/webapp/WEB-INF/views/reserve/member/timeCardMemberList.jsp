@@ -108,6 +108,8 @@
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
                                                     class="fa fa-pencil"></i>修改</a>
+                                            <a class="btn btn-primary btn-xs"
+                                               href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
                                             <a class="btn btn-danger btn-xs"
                                                href="${ctx}/reserve/timeCardMember/delete?id=${reserveMember.id}"
                                                onclick="return confirmb('确认要删除该会员吗？', this.href)"> <i

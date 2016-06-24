@@ -28,6 +28,8 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
 
     private String checkoutName;
 
+    private String username;
+
     private String startTime;
 
     private String endTime;
@@ -163,6 +165,15 @@ public class SaleVenueLog extends SaasEntity<SaleVenueLog> {
     public void setTutorName(String tutorName) {
         this.tutorName = tutorName;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
     //---------------------------------------------------------
     private Date startDate;

@@ -203,6 +203,9 @@
         <if test="payType != null and payType != ''">
             and a.pay_type = #{payType}
         </if>
+        <if test="username != null and username != ''">
+            and a.user_name like concat('%',#{username},'%')
+        </if>
         <if test="startDate != null and endDate != null">
             and (Date(a.cons_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>
@@ -249,6 +252,9 @@
         </if>
         <if test="venue!=null and venue.id!=null and venue.id!=''">
             and a.venue_id = #{venue.id}
+        </if>
+        <if test="username != null and username != ''">
+            and a.user_name like concat('%',#{username},'%')
         </if>
         <if test="project!=null and project.id!=null and project.id!=''">
             and p.id = #{project.id}
