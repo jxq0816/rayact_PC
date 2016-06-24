@@ -203,9 +203,6 @@
         <if test="payType != null and payType != ''">
             and a.pay_type = #{payType}
         </if>
-        <if test="tenantId != null and tenantId != ''">
-            and a.tenant_id = #{tenantId}
-        </if>
         <if test="startDate != null and endDate != null">
             and (Date(a.cons_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
         </if>

@@ -151,6 +151,7 @@ public class ReserveAppController extends BaseController {
                               Double weiXinInput,
                               Double aliPayInput,
                               Double couponInput) {
+        System.out.println("开始支付"+order.getId());
         Map map = new HashMap<>();
         Double inputSum = 0.0;
         if (memberCardInput != null) {
@@ -170,6 +171,7 @@ public class ReserveAppController extends BaseController {
             map.put("msg", "多方式付款总和不等于实付金额");
             return map;
         }
+
         Boolean bool = reserveAppVenueConsService.saveSettlement(order, payType, consPrice,
                 memberCardInput, bankCardInput, weiXinInput, aliPayInput, couponInput);
         if (bool) {

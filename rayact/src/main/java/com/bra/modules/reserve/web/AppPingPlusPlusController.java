@@ -45,6 +45,7 @@ public class AppPingPlusPlusController extends BaseController {
     @ResponseBody
     public String webhooks ( HttpServletRequest request) {
         StringBuffer eventJson=new StringBuffer();
+        String rs=null;
        BufferedReader reader= null;
         try {
             reader = request.getReader();
@@ -54,12 +55,11 @@ public class AppPingPlusPlusController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(eventJson);
         JSONObject event=JSON.parseObject(eventJson.toString());
         if("charge.succeeded".equals(event.get("type"))){
             JSONObject data=JSON.parseObject(event.get("data").toString());
             JSONObject object=JSON.parseObject(data.get("object").toString());
-            String orderId=(String)object.get("id");
+            String orderId=(String)object.get("order_no");
             String channel=(String)object.get("channel");
             String payType=null;
             int amountFen=(int)object.get("amount");
@@ -79,14 +79,22 @@ public class AppPingPlusPlusController extends BaseController {
                 bankCardInput=amountYuan;
             }
             Double couponInput;
-            System.out.println(orderId);
-            ReserveVenueCons reserveVenueCons = reserveAppVenueConsService.get(orderId);
-            if(reserveVenueCons!=null){
-                Double orderPrice=reserveVenueCons.getOrderPrice();
+            System.out.println("orderId:"+orderId);
+            ReserveVenueCons order = reserveAppVenueConsService.get(orderId);
+            if(order!=null){
+                Double orderPrice=order.getOrderPrice();
                 couponInput=orderPrice-amountYuan;//订单金额-ping++扣款 等于优惠金额
-                reserveAppController.saveSettlement(orderId,payType,amountYuan,0.0,bankCardInput,weiXinInput,aliPayInput,couponInput);
+                Boolean bool = reserveAppVenueConsService.saveSettlement(order, payType, amountYuan,
+                        0.0, bankCardInput, weiXinInput, aliPayInput, couponInput);
+                if(bool){
+                    return "订单结算成功";
+                }else{
+                    return "订单结算失败";
+                }
+            }else{
+                return "该订单不存在";
             }
         }
-        return "success";
+        return "p++ 支付成功";
     }
 }
