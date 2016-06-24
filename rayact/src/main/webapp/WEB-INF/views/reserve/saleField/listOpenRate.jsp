@@ -36,21 +36,19 @@
                                                         href="${ctx}/reserve/saleVenueReport/listOpenRate?search=2">当月</a></li>
                                                 <li <j:if test="${'3' eq search}">class="on"</j:if>><a
                                                         href="${ctx}/reserve/saleVenueReport/listOpenRate?search=3">当年</a></li>
-                                                <li id="userDesign" style="cursor: hand;"
-                                                    <j:if test="${'4' eq search}">class="on"</j:if>><a>自定义</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                     <td><input name="startDate" value="<fmt:formatDate value="${startDate}" pattern="yyyy-MM-dd"/>" type="text" id="startDate"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
-                                               <j:if test="${'4' eq search}">onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false})" </j:if>
+                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false})"
                                                value="${reserveVenue.endDate}"/></td>
                                     <td>
                                         <input name="endDate" value="<fmt:formatDate value="${endDate}" pattern="yyyy-MM-dd"/>"  type="text" id="endDate"
                                                maxlength="20"
                                                class="input-medium form-control Wdate "
-                                               <j:if test="${'4' eq search}">onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false})" </j:if>
+                                              onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false})"
                                                value="${reserveVenue.endDate}"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
@@ -97,18 +95,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#userDesign").on('click',function(){
-            $(".tab-tit-first ul li").removeClass("on");
-            $(this).addClass("on");
-            $("#startDate").unbind('click').bind('click',function(){
-                WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
-            });
-            $("#endDate").unbind('click').bind('click',function(){
-                WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});
-            });
-        });
-    });
     $("#btnExport").click(function(){
         $("#searchForm").attr("action","${ctx}/reserve/saleVenueReport/listOpenRateExport");
         $("#searchForm").submit();
