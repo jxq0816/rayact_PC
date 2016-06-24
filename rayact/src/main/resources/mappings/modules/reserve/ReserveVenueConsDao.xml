@@ -195,7 +195,7 @@
         from reserve_venue_cons as a
         INNER JOIN  reserve_venue_cons_item as i on a.id = i.cons_data_id
         INNER JOIN  reserve_venue as v ON a.venue_id = v.id
-        INNER JOIN  reserve_user as u on a.create_by = u.id
+        LEFT JOIN  reserve_user as u on a.create_by = u.id
         INNER JOIN  reserve_project as p ON a.project_id = p.id
         LEFT JOIN  reserve_user as checkout on a.checkout_id = checkout.id
         LEFT JOIN ( select t.name,ord.model_id from reserve_tutor_order as ord INNER JOIN reserve_tutor as t on ord.tutor_id=t.id ) as tutor  on tutor.model_id=a.id
