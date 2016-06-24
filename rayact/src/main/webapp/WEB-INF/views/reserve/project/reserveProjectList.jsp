@@ -48,7 +48,7 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    <th>场地名称</th>
+                                    <th>项目名称</th>
                                     <th>是否启用</th>
                                     <th>备注</th>
                                     <th>操作</th>
