@@ -415,7 +415,10 @@ public class ReserveController extends BaseController {
         //操作类型(1:已预定,3:已取消,4:已结算)
         ReserveVenueConsItem consItem = reserveVenueConsItemService.get(itemId);//获得预订详情
         ReserveVenueCons order = reserveVenueConsService.get(consItem.getConsData().getId());//获得订单
-        ReserveMember member = reserveMemberService.get(order.getMember().getId());
+        ReserveMember member = null;
+        if(order.getMember()!=null){
+            member= reserveMemberService.get(order.getMember().getId());
+        }
         //申请优惠
         ReserveVenueApplyCut applycut = new ReserveVenueApplyCut();
         applycut.getSqlMap().put("dsf", " and c.id = '" + order.getId() + "' ");
