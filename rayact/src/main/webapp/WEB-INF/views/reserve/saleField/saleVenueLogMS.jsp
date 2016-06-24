@@ -108,7 +108,6 @@
                             <table>
                                 <thead>
                                 <tr>
-                                  <%--  <th>订单编号</th>--%>
                                     <th>所属场馆</th>
                                     <th>所属项目</th>
                                     <th>时间区间</th>
@@ -123,7 +122,6 @@
                                       <th>教练</th>
                                     <th>订单时间</th>
                                     <th>操作时间</th>
-                                   <%-- <th>类型</th>--%>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -134,7 +132,6 @@
                                 <c:set var="consPriceSum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="log">
                                     <tr style="height: 30px;">
-                                     <%--  <td>${log.id}</td>--%>
                                         <td>${log.venue.name}</td>
                                         <td>${log.project.name}</td>
                                         <td>${log.startTime}—${log.endTime}</td>
@@ -159,14 +156,10 @@
                                                             type="date"></fmt:formatDate></td>
                                         <td><fmt:formatDate value="${log.updateDate}"
                                                             type="both"></fmt:formatDate></td>
-                                       <%-- <td>${log.isTicket}</td>--%>
                                         <td>
-                                          <%--  <a class="btn btn-primary btn-xs"
-                                               href="${ctx}/reserve/storedCardMemberSet/form?id=${reserveStoredcardMemberSet.id}">
-                                                <i class="fa fa-pencil"></i>修改</a>--%>
                                             <a class="btn btn-danger btn-xs"
                                                href="${ctx}/reserve/saleVenue/delete?orderId=${log.id}&isTicket=${log.isTicket}"
-                                               onclick="return confirmb('确认要删除该记录吗？', this.href)">
+                                               onclick="return confirmb('预订人：${log.member.name}<br>时间区间：${log.startTime}—${log.endTime}<br>实收金额：${log.consPrice}<br><br>确认要删除该记录吗？', this.href)">
                                                 <i class="fa fa-times"></i>删除</a>
                                         </td>
                                     </tr>
