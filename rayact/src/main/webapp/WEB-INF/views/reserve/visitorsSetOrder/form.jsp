@@ -118,7 +118,7 @@
                                 </div>
                                 <label class="col-lg-2 control-label">实付：</label>
                                 <div class="col-lg-4">
-                                    <input type="text" id="collectPrice" class="form-control"
+                                    <input type="text" id="collectPrice" class="form-control" readonly="readonly"
                                            value="${visitorsSet.price}" name="collectPrice"/>
                                 </div>
                             </div>
