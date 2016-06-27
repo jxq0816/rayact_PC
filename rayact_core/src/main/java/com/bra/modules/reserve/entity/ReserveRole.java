@@ -23,7 +23,7 @@ public class ReserveRole extends SaasEntity<ReserveRole> {
     private static final long serialVersionUID = 1L;
     private User user;        // 对应用户ID
     private String authority;        // 对应用户权限(json字符串)
-    private String userType;        // 用户类型(1:管理员;2:场馆管理员;3:财务;4:收银)
+    private String userType;        // 用户类型(1:超级管理员;2:场馆管理员;3:高管;4:收银;5:财务)
     private String venueJson;        // 对应场馆的id(json字符串)
 
     public ReserveRole() {
@@ -52,7 +52,7 @@ public class ReserveRole extends SaasEntity<ReserveRole> {
         this.authority = authority;
     }
 
-    @Length(min = 0, max = 2, message = "用户类型(1:管理员;2:场馆管理员;3:财务;4:收银)长度必须介于 0 和 2 之间")
+    @Length(min = 0, max = 2, message = "用户类型(1:超级管理员;2:场馆管理员;3:高管;4:收银;5:财务)长度必须介于 0 和 2 之间")
     public String getUserType() {
         return userType;
     }

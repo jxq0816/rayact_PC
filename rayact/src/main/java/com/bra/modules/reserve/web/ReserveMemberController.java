@@ -12,6 +12,7 @@ import com.bra.modules.reserve.entity.ReserveVenue;
 import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.reserve.utils.StatementsUtils;
 import com.bra.modules.reserve.utils.VenueOrderUtils;
@@ -91,6 +92,7 @@ public class ReserveMemberController extends BaseController {
 	public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<ReserveMember> page = reserveMemberService.findPage(new Page<ReserveMember>(request, response), reserveMember);
 		List<ReserveVenue> venueList=reserveVenueService.findList(new ReserveVenue());
+		model.addAttribute("userType",AuthorityUtils.getUserType());
 		model.addAttribute("venueList", venueList);
 		model.addAttribute("query", reserveMember);
 		model.addAttribute("page", page);
