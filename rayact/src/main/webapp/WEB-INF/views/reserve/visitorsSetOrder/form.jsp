@@ -99,7 +99,7 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <label for="orderDate" class="control-label col-lg-2">日期:</label>
+                                <label for="orderDate" class="control-label col-lg-2">日期：</label>
                                 <div class="col-lg-4">
                                     <input id="orderDate" name="orderDate" type="text"
                                            class="input-small form-control Wdate"
@@ -125,7 +125,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group">
-                                <label for="startTime" class="col-sm-2 control-label">时间:</label>
+                                <label for="startTime" class="col-sm-2 control-label">时间：</label>
                                 <div class="col-sm-4">
                                     <select id="startTime" class="select2" name="startTime">
                                         <c:forEach items="${times}" var="t">
