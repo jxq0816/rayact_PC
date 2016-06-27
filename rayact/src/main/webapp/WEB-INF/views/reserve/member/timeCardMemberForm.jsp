@@ -33,9 +33,24 @@
                                                  <span class="help-inline"><font color="red">*</font> </span>
                                              </td>--%>
                                         <td>姓名:</td>
-                                        <td><form:input path="name" htmlEscape="false" maxlength="30"
+                                        <td>
+                                            <div class="input-group">
+                                                    <form:input path="name" htmlEscape="false" maxlength="30"
                                                         class="form-control required "/>
-                                            <span class="help-inline"><font color="red">*</font> </span></td>
+                                                <span class="input-group-addon"><font color="red">*</font> </span>
+                                            </div>
+                                        </td>
+                                        <td>次卡类别:</td>
+                                        <td>
+                                            <sys:select cssClass="input-xlarge" name="timecardSet.id"
+                                                        items="${timecardSetList}"
+                                                        value="${reserveMember.timecardSet.id}"
+                                                        itemLabel="name" itemValue="id"
+                                                        cssStyle="width:50%"
+                                                        defaultLabel="请选择次卡"
+                                                        defaultValue="">
+                                            </sys:select>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>身份证:</td>
@@ -59,25 +74,14 @@
                                         </td>
                                         <td>手机号:</td>
                                         <td>
-                                            <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
-                                                        class="form-control phone required"/>
-                                            <span class="help-inline"><font color="red">*</font> </span>
+                                            <div class="input-group">
+                                                <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
+                                                            class="form-control phone required"/>
+                                                <span class="input-group-addon"><font color="red">*</font> </span>
+                                                </div>
                                         </td>
 
                                     </tr>
-                                    <tr>
-                                        <td>次卡名称:</td>
-                                        <td colspan="3">
-                                            <sys:select cssClass="input-xlarge" name="timecardSet.id"
-                                                        items="${timecardSetList}"
-                                                        value="${reserveMember.timecardSet.id}"
-                                                        itemLabel="name" itemValue="id"
-                                                        defaultLabel="请选择次卡"
-                                                        defaultValue="">
-                                            </sys:select>
-                                        </td>
-                                    </tr>
-
 
                                     <tr>
                                             <%-- <td>卡号截止日期:</td>
@@ -91,8 +95,20 @@
 
                                         <td>剩余次数:</td>
                                         <td>
-                                            <form:input path="residue" htmlEscape="false" maxlength="11" readonly="true"
-                                                        class="form-control "/>&nbsp;次
+                                            <div class="input-group">
+                                                <form:input path="residue" htmlEscape="false" maxlength="11"
+                                                            readonly="true"
+                                                            class="form-control"/>
+                                                <span class="input-group-addon">次</span>
+                                            </div>
+                                        </td>
+                                        <td>余额:</td>
+                                        <td>
+                                            <div class="input-group" cssStyle="width: 30%">
+                                                <form:input path="remainder" htmlEscape="false" readonly="true"
+                                                            class="form-control "/>
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -109,6 +125,7 @@
                                         <td>场馆：</td>
                                         <td colspan="3">
                                             <sys:select cssClass="input-xlarge" name="reserveVenue.id"
+                                                        cssStyle="width:40%"
                                                         id="reserveVenue_id"
                                                         items="${venueList}"
                                                         value="${reserveMember.reserveVenue.id}"
