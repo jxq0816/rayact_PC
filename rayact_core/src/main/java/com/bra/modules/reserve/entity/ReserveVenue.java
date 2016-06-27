@@ -22,8 +22,8 @@ public class ReserveVenue extends SaasEntity<ReserveVenue> {
     private String address;        // 地址
     private Double longitude;//经度
     private Double latitude;//维度
-    private Double addressX;//地理位置X
-    private Double addressY;//地理位置Y
+    private Double addressX;//地理位置X 经度
+    private Double addressY;//地理位置Y 维度
     private String cityName;//城市
     private String districtName;//区
     private double evaluateScore;//评分

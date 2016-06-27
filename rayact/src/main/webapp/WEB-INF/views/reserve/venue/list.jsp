@@ -75,10 +75,10 @@
                                     </td>
 
                                     <td>
-                                            ${reserveVenue.longitude}
+                                            ${reserveVenue.addressX}
                                     </td>
                                     <td>
-                                            ${reserveVenue.latitude}
+                                            ${reserveVenue.addressY}
                                     </td>
                                     <td>
                                             ${reserveVenue.moreService}
