@@ -33,7 +33,7 @@
         </thead>
 
         <tbody>
-        <div style="margin-top:20px;">
+        <div style="margin-top:30px;">
             <%-- 遍历所有场地开始--%>
             <c:forEach items="${times}" var="t">
                 <tr>
