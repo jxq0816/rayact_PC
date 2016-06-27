@@ -103,7 +103,7 @@
                                                onclick="addTime('${reserveMember.id}')"><i
                                                     class="fa fa-pencil"></i>充值</a>
                                             <a class="btn btn-primary btn-xs"
-                                               href="${ctx}/reserve/reserveTimeCardPrepayment/list?memberId=${reserveMember.id}"
+                                               onclick="prePayment('${reserveMember.id}')"
                                                class="fa fa-pencil">预付款</a>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
@@ -137,7 +137,8 @@
         </div>
     </div>
 </div>
-<jsp:include page="timeCardAddDialog.jsp"></jsp:include>
+<jsp:include page="../include/timeCardAddDialog.jsp"></jsp:include>
+<jsp:include page="../include/prePaymentListModal.jsp"></jsp:include>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/timecard.js"></script>
 </body>
 </html>

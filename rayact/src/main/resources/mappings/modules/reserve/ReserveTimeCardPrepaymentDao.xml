@@ -40,7 +40,7 @@
 		FROM reserve_time_card_prepayment a
 		<include refid="reserveTimeCardPrepaymentJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			a.tenant_id = #{tenantId}
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>

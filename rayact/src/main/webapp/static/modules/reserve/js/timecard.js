@@ -8,6 +8,16 @@ function addTime(id) {
         }
     });
 }
+function prePayment(memberId) {
+    jQuery.postItems({
+        url: ctx + '/reserve/reserveTimeCardPrepayment/list',
+        data: {memberId: memberId},
+        success: function (result) {
+            $("#prePaymentDialogButton").click();
+            $("#prePaymentDialogForm").html(result);
+        }
+    });
+}
 function timeCardRechargeAddTime(){
     var id=$("#id").val();
     var rechargeVolume=$("#rechargeVolume").val();
