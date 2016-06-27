@@ -64,6 +64,7 @@
                                     <th>开始时间</th>
                                     <th>到期时间</th>
                                     <th>操作</th>
+                                    <th>交易</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -100,20 +101,23 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-primary btn-xs"
-                                               onclick="addTime('${reserveMember.id}')"><i
-                                                    class="fa fa-pencil"></i>充值</a>
-                                            <a class="btn btn-primary btn-xs"
-                                               onclick="prePayment('${reserveMember.id}')"
-                                               class="fa fa-pencil">预付款</a>
-                                            <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/timeCardMember/form?id=${reserveMember.id}"><i
                                                     class="fa fa-pencil"></i>修改</a>
-                                            <a class="btn btn-primary btn-xs"
-                                               href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
                                             <a class="btn btn-danger btn-xs"
                                                href="${ctx}/reserve/timeCardMember/delete?id=${reserveMember.id}"
                                                onclick="return confirmb('确认要删除该会员吗？', this.href)"> <i
                                                     class="fa fa-times"></i>删除</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary btn-xs"
+                                               onclick="addTime('${reserveMember.id}')"><i
+                                                    class="fa fa-pencil"></i>充值</a>
+                                            <a class="btn btn-primary btn-xs"
+                                               onclick="prePayment('${reserveMember.id}')"
+                                               class="fa fa-pencil">预付款记录</a>
+                                            <a class="btn btn-primary btn-xs"
+                                               href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
+
                                         </td>
                                     </tr>
                                 </c:forEach>

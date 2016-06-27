@@ -104,6 +104,8 @@
                                             <a class="btn btn-primary btn-xs cancellationBtn"
                                                data-id="${reserveMember.id}"><i
                                                     class="fa fa-pencil"></i>销卡</a>
+                                            <a class="btn btn-primary btn-xs"
+                                               href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
