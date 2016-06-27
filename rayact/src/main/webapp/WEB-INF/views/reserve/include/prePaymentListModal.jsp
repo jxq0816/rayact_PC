@@ -19,9 +19,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closeBtn" class="btn btn-default btn-flat md-close" data-dismiss="modal">
-                    取消
+                    关闭
                 </button>
-                <button type="button" id="saveBtn" class="btn btn-primary btn-flat">确定</button>
             </div>
         </div>
     </div>
