@@ -10,6 +10,16 @@
             <div class="tab-pane active" id="home">
                 <table id="contentTable" class="table table-bordered">
                     <tr>
+                        <td>场馆：</td>
+                        <td>
+                                ${commodity.reserveVenue.name}
+                        </td>
+                        <td>商品备注：</td>
+                        <td>
+                                ${commodity.remarks}
+                        </td>
+                    </tr>
+                    <tr>
                         <td>商品类型：</td>
                         <td>
                                 ${commodity.commodityType.name}
@@ -64,12 +74,7 @@
                                 ${commodity.quickSearch}
                         </td>
                     </tr>
-                    <tr>
-                        <td>商品备注：</td>
-                        <td colspan="3">
-                                ${commodity.remarks}
-                        </td>
-                    </tr>
+
                     <tr>
                         <td>入库数量：</td>
                         <td>
