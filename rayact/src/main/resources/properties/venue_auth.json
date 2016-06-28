@@ -155,7 +155,7 @@
     "authorityList": [
       {
         "code": "totalIncomeReport",
-        "name": "总收入统计",
+        "name": "流水收益统计",
         "href":"/reserve/reserveVenue/totalIncomeReport",
         "authorityList": []
       },
