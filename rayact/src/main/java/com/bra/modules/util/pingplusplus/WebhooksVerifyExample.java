@@ -1,15 +1,11 @@
 package com.bra.modules.util.pingplusplus;
 
-import java.io.*;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.SignatureException;
-import java.security.spec.X509EncodedKeySpec;
-
+import com.bra.common.utils.SystemPath;
 import org.apache.commons.codec.binary.Base64;
+
+import java.io.*;
+import java.security.*;
+import java.security.spec.X509EncodedKeySpec;
 
 /**
  * Created by sunkai on 15/5/19. webhooks 验证签名示例
@@ -25,9 +21,9 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class WebhooksVerifyExample {
 
-	private static String pubKeyPath = "res/pingpp_public_key.pem";
-	private static String eventPath = "res/webhooks_raw_post_data.json";
-	private static String signPath = "res/signature.txt";
+	private static String pubKeyPath = File.separator+ SystemPath.getClassPath()+"res"+ File.separator+"pingpp_public_key.pem";
+	private static String eventPath = File.separator+SystemPath.getClassPath()+"res"+ File.separator+"webhooks_raw_post_data.json";
+	private static String signPath = File.separator+SystemPath.getClassPath()+"res"+ File.separator+"signature.txt";
 
 	/**
 	 * 验证 webhooks 签名，仅供参考
