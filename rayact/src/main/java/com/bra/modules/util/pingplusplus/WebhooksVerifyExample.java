@@ -43,7 +43,6 @@ public class WebhooksVerifyExample {
         String signature = getStringFromFile(signPath);
         System.out.println("------- 签名 -------");
         System.out.println(signature);
-
         boolean result = verifyData(webhooksRawPostData, signature, getPubKey());
         System.out.println("验签结果：" + (result ? "通过" : "失败"));
     }

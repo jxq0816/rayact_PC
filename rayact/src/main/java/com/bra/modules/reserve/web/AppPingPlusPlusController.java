@@ -54,11 +54,11 @@ public class AppPingPlusPlusController extends BaseController {
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();
             String value = request.getHeader(key);
-            if("X-Pingplusplus-Signature".equals(key)){
+            if("x-pingplusplus-signature".equals(key)){
                 signature=value;
             }
-            System.out.println(key+" "+value);
         }
+        System.out.println("signature"+signature);
         // 获得 http body 内容
         StringBuffer eventJson=new StringBuffer();
        BufferedReader reader= null;
@@ -75,10 +75,12 @@ public class AppPingPlusPlusController extends BaseController {
         boolean verifyRS=false;
         try {
             PublicKey publicKey=WebhooksVerifyExample.getPubKey();
+            System.out.println(publicKey);
             verifyRS=WebhooksVerifyExample.verifyData(eventJson.toString(),signature,publicKey);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         if(verifyRS) {
             System.out.println("签名验证成功");
             if ("charge.succeeded".equals(event.get("type"))) {

@@ -15,8 +15,8 @@ public class PingPlusPlusService {
     /**
      * Pingpp 管理平台对应的 API Key
      */
-    //private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
-    private final static String apiKey = "sk_live_9qnbz59qXzbLKerj18XrjTuD";
+    private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
+    //private final static String apiKey = "sk_live_9qnbz59qXzbLKerj18XrjTuD";
 
 
 
