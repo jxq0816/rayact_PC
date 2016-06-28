@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveRoleAuthDao">
+    
+	<sql id="reserveRoleAuthColumns">
+		a.id AS "id",
+		a.fk_reserve_role_id AS "fkReserveRoleId",
+		a.authority AS "authority"
+	</sql>
+	
+	<sql id="reserveRoleAuthJoins">
+	</sql>
+    
+	<select id="get" resultType="ReserveRoleAuth">
+		SELECT 
+			<include refid="reserveRoleAuthColumns"/>
+		FROM reserve_role_auth a
+		<include refid="reserveRoleAuthJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveRoleAuth">
+		SELECT 
+			<include refid="reserveRoleAuthColumns"/>
+		FROM reserve_role_auth a
+		<include refid="reserveRoleAuthJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveRoleAuth">
+		SELECT 
+			<include refid="reserveRoleAuthColumns"/>
+		FROM reserve_role_auth a
+		<include refid="reserveRoleAuthJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_role_auth(
+			id,
+			fk_reserve_role_id,
+			authority
+		) VALUES (
+			#{id},
+			#{fkReserveRoleId},
+			#{authority}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_role_auth SET 	
+			fk_reserve_role_id = #{fkReserveRoleId},
+			authority = #{authority}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM reserve_role_auth
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

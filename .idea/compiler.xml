@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="app" />
         <module name="control" />
+        <module name="control (2)" />
         <module name="rayact_core" />
       </profile>
       <profile default="false" name="Annotation profile for app_runtime" enabled="true">

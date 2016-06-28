@@ -34,6 +34,12 @@
         "authorityList": []
       },
       {
+        "code": "roleAuth",
+        "name": "角色权限管理",
+        "href":"/reserve/reserveRoleAuth/list",
+        "authorityList": []
+      },
+      {
         "code": "timeInterval",
         "name": "时令管理",
         "href":"/reserve/reserveTimeInterval/list",
