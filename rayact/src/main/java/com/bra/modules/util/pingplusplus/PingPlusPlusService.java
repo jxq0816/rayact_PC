@@ -15,8 +15,8 @@ public class PingPlusPlusService {
     /**
      * Pingpp 管理平台对应的 API Key
      */
-    //private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
-    private final static String apiKey = "sk_live_9qnbz59qXzbLKerj18XrjTuD";
+    private final static String apiKey = "sk_test_D8eX5C4GiHC4azzbL8zXjLS8";
+    //private final static String apiKey = "sk_live_9qnbz59qXzbLKerj18XrjTuD";
 
 
 
@@ -27,7 +27,7 @@ public class PingPlusPlusService {
     /**
      * 你生成的私钥路径
      */
-    private final static String privateKeyFilePath = File.separator+SystemPath.getClassPath()+"res"+ File.separator+"your_rsa_private_key.pem";
+    private final static String privateKeyFilePath = File.separator+SystemPath.getClassPath()+"res"+ File.separator+"rsa_private_key.pem";
 
     public static String charge(String orderNo,int amount,String subject,String body,String channel,String clientIP){
 
