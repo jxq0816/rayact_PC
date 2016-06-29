@@ -239,7 +239,7 @@ public class ReserveAppController extends BaseController {
             }
         }
         Map map = new HashMap<>();
-        map.put("bool", bool);
+        map.put("bool",  String.valueOf(bool));
         if (bool == true) {
             ReserveVenueCons reserveVenueCons = new ReserveVenueCons();
             reserveVenueCons.setUserName(username);
