@@ -19,7 +19,7 @@ import java.security.spec.X509EncodedKeySpec;
  *  该实例仅供演示如何验证签名，请务必不要直接 copy 到实际项目中使用。
  *
  */
-public class WebhooksVerifyExample {
+public class WebhooksVerifyService {
 
 	private static String pubKeyPath = File.separator+ SystemPath.getClassPath()+"res"+ File.separator+"pingpp_public_key.pem";
 	private static String eventPath = File.separator+SystemPath.getClassPath()+"res"+ File.separator+"webhooks_raw_post_data.json";

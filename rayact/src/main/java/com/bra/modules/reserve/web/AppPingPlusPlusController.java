@@ -6,7 +6,7 @@ import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveVenueCons;
 import com.bra.modules.reserve.service.ReserveAppVenueConsService;
 import com.bra.modules.util.pingplusplus.PingPlusPlusService;
-import com.bra.modules.util.pingplusplus.WebhooksVerifyExample;
+import com.bra.modules.util.pingplusplus.WebhooksVerifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,9 +74,9 @@ public class AppPingPlusPlusController extends BaseController {
         JSONObject event=JSON.parseObject(eventJson.toString());
         boolean verifyRS=false;
         try {
-            PublicKey publicKey=WebhooksVerifyExample.getPubKey();
+            PublicKey publicKey= WebhooksVerifyService.getPubKey();
             System.out.println(publicKey);
-            verifyRS=WebhooksVerifyExample.verifyData(eventJson.toString(),signature,publicKey);
+            verifyRS=WebhooksVerifyService.verifyData(eventJson.toString(),signature,publicKey);
         } catch (Exception e) {
             e.printStackTrace();
         }

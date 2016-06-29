@@ -46,7 +46,8 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/reserveVenue")
 public class ReserveVenueController extends BaseController {
-    private String rootURL = "http://101.200.148.75:8080";
+    private String rootURL="http://"+Global.getConfig("server.ip")+":"+Global.getConfig("server.port");
+    //private String rootURL = "http://101.200.148.75:8080";
     @Autowired
     private ReserveFieldRelationService reserveFieldRelationService;
     @Autowired
@@ -392,7 +393,8 @@ public class ReserveVenueController extends BaseController {
             for(ReserveVenue v:vs){
                 Map<String,String> node = new HashMap<>();
                 node.put("venueId",v.getId());
-                node.put("venueName",getVenueImgUrl(v.getName()));
+                node.put("venueName",v.getName());
+             /*   node.put("venueBg","/static/images/venue_bg.png");*/
                 rtn.add(node);
             }
         }
@@ -410,18 +412,6 @@ public class ReserveVenueController extends BaseController {
             return rootURL+"/static/images/basketball.png";
         }
     }
-    private String getVenueImgUrl(String name){
-        if("四得公园体育场".equals(name)){
-            return rootURL+"/static/images/sd.png";
-        }else if("丽都".equals(name)){
-            return rootURL+"/static/images/ld.png";
-        }else if("中电体育馆".equals(name)){
-            return rootURL+"/static/images/zd.png";
-        }else if("798足球公园".equals(name)){
-            return rootURL+"/static/images/798.png";
-        } return "";
-    }
-
     @RequestMapping(value = {"mobile/rv/fieldAll", ""})
     public @ResponseBody String fieldAll(HttpServletRequest request, HttpServletResponse response) {
         JSONObject rtn = new JSONObject();
