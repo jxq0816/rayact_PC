@@ -796,8 +796,15 @@ CREATE TABLE `reserve_commodity_supplier` (
 DROP TABLE IF EXISTS `reserve_role_auth`;
 CREATE TABLE `reserve_role_auth` (
   `id` varchar(19) NOT NULL,
-  `fk_reserve_role_id` varchar(19) NOT NULL COMMENT '角色ID',
+  `name` varchar(19) NOT NULL COMMENT '角色',
   `authority` varchar(5000) DEFAULT NULL COMMENT '对应用户权限(json字符串)',
+   `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -805,7 +812,14 @@ DROP TABLE IF EXISTS `reserve_user_role`;
 CREATE TABLE `reserve_user_role` (
   `id` varchar(19) NOT NULL,
 	`fk_reserve_user_id` varchar(19) NOT NULL COMMENT '用户ID',
-  `fk_reserve_role_id` varchar(19) NOT NULL COMMENT '角色ID',
+  `fk_reserve_role_auth_id` varchar(19) NOT NULL COMMENT '角色ID',
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

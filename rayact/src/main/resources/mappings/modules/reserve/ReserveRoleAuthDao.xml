@@ -1,80 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.reserve.dao.ReserveRoleAuthDao">
-    
+
 	<sql id="reserveRoleAuthColumns">
 		a.id AS "id",
-		a.fk_reserve_role_id AS "fkReserveRoleId",
-		a.authority AS "authority"
+		a.name AS "name",
+		a.authority AS "authority",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
 	</sql>
-	
+
 	<sql id="reserveRoleAuthJoins">
 	</sql>
-    
+
 	<select id="get" resultType="ReserveRoleAuth">
-		SELECT 
-			<include refid="reserveRoleAuthColumns"/>
+		SELECT
+		<include refid="reserveRoleAuthColumns"/>
 		FROM reserve_role_auth a
 		<include refid="reserveRoleAuthJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+
 	<select id="findList" resultType="ReserveRoleAuth">
-		SELECT 
-			<include refid="reserveRoleAuthColumns"/>
+		SELECT
+		<include refid="reserveRoleAuthColumns"/>
 		FROM reserve_role_auth a
 		<include refid="reserveRoleAuthJoins"/>
 		<where>
-			
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<select id="findAllList" resultType="ReserveRoleAuth">
-		SELECT 
-			<include refid="reserveRoleAuthColumns"/>
+		SELECT
+		<include refid="reserveRoleAuthColumns"/>
 		FROM reserve_role_auth a
 		<include refid="reserveRoleAuthJoins"/>
 		<where>
-			
-		</where>		
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<insert id="insert">
 		INSERT INTO reserve_role_auth(
-			id,
-			fk_reserve_role_id,
-			authority
+		id,
+		name,
+		authority,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		remarks,
+		del_flag,
+		tenant_id
 		) VALUES (
-			#{id},
-			#{fkReserveRoleId},
-			#{authority}
+		#{id},
+		#{name},
+		#{authority},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{remarks},
+		#{delFlag},
+		#{tenantId}
 		)
 	</insert>
-	
+
 	<update id="update">
-		UPDATE reserve_role_auth SET 	
-			fk_reserve_role_id = #{fkReserveRoleId},
-			authority = #{authority}
+		UPDATE reserve_role_auth SET
+		name = #{name},
+		authority = #{authority},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate},
+		remarks = #{remarks},
+		tenant_id = #{tenantId}
 		WHERE id = #{id}
 	</update>
-	
+
 	<update id="delete">
-		DELETE FROM reserve_role_auth
+		UPDATE reserve_role_auth SET
+			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
 </mapper>
