@@ -174,11 +174,11 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
                                     <td>${orderPriceSum}</td>
                                     <td>${shouldPriceSum}</td>
                                     <td>${discountPriceSum}</td>
                                     <td>${consPriceSum}</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
