@@ -47,6 +47,7 @@ public class AppPingPlusPlusController extends BaseController {
     @RequestMapping(value = "webhooks")
     @ResponseBody
     public void webhooks ( HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
+        System.out.println("ping++　webhooks");
         request.setCharacterEncoding("UTF8");
         //获取头部所有信息
         Enumeration headerNames = request.getHeaderNames();
@@ -75,18 +76,19 @@ public class AppPingPlusPlusController extends BaseController {
         boolean verifyRS=false;
         try {
             PublicKey publicKey= WebhooksVerifyService.getPubKey();
-            System.out.println(publicKey);
+          /*  System.out.println(publicKey);*/
             verifyRS=WebhooksVerifyService.verifyData(eventJson.toString(),signature,publicKey);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if(verifyRS) {
-            System.out.println("签名验证成功");
+            /*System.out.println("签名验证成功");*/
             if ("charge.succeeded".equals(event.get("type"))) {
                 JSONObject data = JSON.parseObject(event.get("data").toString());
                 JSONObject object = JSON.parseObject(data.get("object").toString());
                 String orderId = (String) object.get("order_no");
+                /*System.out.println("orderId:"+orderId);*/
                 String channel = (String) object.get("channel");
                 String payType = null;
                 int amountFen = (int) object.get("amount");
@@ -107,29 +109,29 @@ public class AppPingPlusPlusController extends BaseController {
                 }
                 Double couponInput;
                 ReserveVenueCons order = reserveAppVenueConsService.get(orderId);
-                System.out.println("order:"+order);
+
                 if (order != null) {
                     Double orderPrice = order.getShouldPrice();
                     couponInput = orderPrice - amountYuan;//订单金额-ping++扣款 等于优惠金额
                     Boolean bool = reserveAppVenueConsService.saveSettlement(order, payType, amountYuan,
                             0.0, bankCardInput, weiXinInput, aliPayInput, couponInput);
                     if (bool) {
-                        System.out.println("订单结算成功");
+                      /*  System.out.println("订单结算成功");*/
                         response.setStatus(200);
                         //return "订单结算成功";
                     } else {
-                        System.out.println("订单结算失败");
+                       /* System.out.println("订单结算失败");*/
                         //return "订单结算失败";
                         response.setStatus(500);
                     }
                 } else {
-                    System.out.println("该订单不存在");
+                   /* System.out.println("该订单不存在");*/
                     //return "该订单不存在";
                     response.setStatus(500);
                 }
             }
         }else{
-            System.out.println("签名验证失败");
+            /*System.out.println("签名验证失败");*/
             //return "签名验证失败";
             response.setStatus(500);
         }

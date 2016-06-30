@@ -204,24 +204,25 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
             reserveVenueCons.setReserveType("4");//已结账
             int cnt=dao.update(reserveVenueCons);
             if(cnt!=0){
-                System.out.println("更新："+cnt+" 状态改变成功");
-            }
-
-            //会员扣款;结算教练(事件通知)
-            String phone=reserveVenueCons.getConsMobile();
-            if(StringUtils.isNoneEmpty(phone)){
-                ReserveMember member=new ReserveMember();
-                member.setMobile(phone);
-                List<ReserveMember> list = reserveMemberService.findExactList(member);
-                for(ReserveMember i: list){
-                    member=i;
+                //System.out.println("更新："+cnt+" 状态改变成功");
+                //会员扣款;结算教练(事件通知)
+                String phone=reserveVenueCons.getConsMobile();
+                if(StringUtils.isNoneEmpty(phone)){
+                    ReserveMember member=new ReserveMember();
+                    member.setMobile(phone);
+                    List<ReserveMember> list = reserveMemberService.findExactList(member);
+                    for(ReserveMember i: list){
+                        member=i;
+                    }
+                    reserveVenueCons.setMember(member);//通过手机号，找到场馆的会员，最后在监听器中处理余额
                 }
-                reserveVenueCons.setMember(member);//通过手机号，找到场馆的会员，最后在监听器中处理余额
-            }
 
-            VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
-            applicationContext.publishEvent(venueCheckoutEvent);
-            return true;
+                VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
+                applicationContext.publishEvent(venueCheckoutEvent);
+                return true;
+            }else{
+                return false;
+            }
         }else{
             return false;//已结算，不可重复结算
         }
