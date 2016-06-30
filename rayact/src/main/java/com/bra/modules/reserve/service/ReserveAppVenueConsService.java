@@ -198,7 +198,7 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         reserveVenueCons.setAliPayInput(aliPayInput);
         reserveVenueCons.setCouponInput(couponInput);
         reserveVenueCons.setConsPrice(consPrice);//结算价格
-        System.out.println("订单状态："+reserveVenueCons.getReserveType());
+        /*System.out.println("订单状态："+reserveVenueCons.getReserveType());*/
         //reserveType:1:已预定,未付款
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");//已结账

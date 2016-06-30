@@ -47,7 +47,7 @@ public class AppPingPlusPlusController extends BaseController {
     @RequestMapping(value = "webhooks")
     @ResponseBody
     public void webhooks ( HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException  {
-        System.out.println("ping++　webhooks");
+        /*System.out.println("ping++　webhooks");*/
         request.setCharacterEncoding("UTF8");
         //获取头部所有信息
         Enumeration headerNames = request.getHeaderNames();
@@ -59,7 +59,7 @@ public class AppPingPlusPlusController extends BaseController {
                 signature=value;
             }
         }
-        System.out.println("signature"+signature);
+        /*System.out.println("signature"+signature);*/
         // 获得 http body 内容
         StringBuffer eventJson=new StringBuffer();
        BufferedReader reader= null;
