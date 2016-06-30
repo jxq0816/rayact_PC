@@ -109,8 +109,7 @@ public class ReserveFieldController extends BaseController {
     @Token(save = true)
     public String priceSetForm(ReserveField reserveField, String timeIntervalId,Model model) throws ParseException {
         //获取营业时间
-        List<String> times = TimeUtils.getTimeSpacList("06:00:00", "00:00:00", 60);
-        model.addAttribute("times", times);
+
         ReserveFieldPriceSet priceSet = new ReserveFieldPriceSet();
         if (StringUtils.isNotBlank(reserveField.getId())) {
             reserveField = reserveFieldService.get(reserveField.getId());
@@ -140,6 +139,20 @@ public class ReserveFieldController extends BaseController {
         List<ReserveFieldPriceSet> priceSetList = reserveFieldPriceSetService.findListByField(priceSet);
         //时令列表
         model.addAttribute("reserveTimeIntervalList", reserveTimeIntervalList);
+        //时间列表
+        ReserveVenue venue=reserveField.getReserveVenue();
+        venue=reserveVenueService.get(venue);
+        String startTime=venue.getStartTime();
+        if(StringUtils.isEmpty(startTime)){
+            startTime="06:00:00";
+        }
+        String endTime=venue.getEndTime();
+        if(StringUtils.isEmpty(endTime)){
+            startTime="00:30:00";
+        }
+        List<String> times = TimeUtils.getTimeSpacList(startTime, endTime, 60);
+        model.addAttribute("times", times);
+
         //事件周期
         model.addAttribute("weekDays", TimeUtils.WEEK_DAYS);
         model.addAttribute("reserveField", reserveField);

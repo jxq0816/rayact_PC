@@ -269,7 +269,7 @@ public class ReserveController extends BaseController {
         model.addAttribute("startTime", item.getStartTime());
         model.addAttribute("endTime", item.getEndTime());
         model.addAttribute("item", item);
-        List<String> times = TimeUtils.getTimeSpacList("08:00:00", "00:30:00", TimeUtils.BENCHMARK);
+        List<String> times = TimeUtils.getTimeSpacList("06:00:00", "00:30:00", TimeUtils.BENCHMARK);
         model.addAttribute("times", times);
         //教练订单
         List<ReserveTutorOrder> tutorOrderList = reserveTutorOrderService.findNotCancel(cons.getId(), ReserveVenueCons.MODEL_KEY);
