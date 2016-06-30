@@ -45,6 +45,7 @@ public class MemberCheckoutListener{
             storedCardMemberService.save(reserveMember);
 
         }
+        System.out.println("开始记录日志");
         //记录日志
         String payType=venueCons.getPayType();
         Date consDate=venueCons.getConsDate();

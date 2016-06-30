@@ -1,52 +1,87 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>角色权限管理</title>
-	<meta name="decorator" content="default"/>
-	<script type="text/javascript">
-		$(document).ready(function() {
-
-		});
-		function page(n,s){
-			$("#pageNo").val(n);
-			$("#pageSize").val(s);
-			$("#searchForm").submit();
-        	return false;
-        }
-	</script>
+	<meta name="decorator" content="main"/>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/reserve/reserveRoleAuth/">角色权限列表</a></li>
-		<shiro:hasPermission name="reserve:reserveRoleAuth:edit"><li><a href="${ctx}/reserve/reserveRoleAuth/form">角色权限添加</a></li></shiro:hasPermission>
-	</ul>
-	<form:form id="searchForm" modelAttribute="reserveRoleAuth" action="${ctx}/reserve/reserveRoleAuth/" method="post" class="breadcrumb form-search">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>
-	<sys:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead>
-			<tr>
-				<shiro:hasPermission name="reserve:reserveRoleAuth:edit"><th>操作</th></shiro:hasPermission>
-			</tr>
-		</thead>
-		<tbody>
-		<c:forEach items="${page.list}" var="reserveRoleAuth">
-			<tr>
-				<shiro:hasPermission name="reserve:reserveRoleAuth:edit"><td>
-    				<a href="${ctx}/reserve/reserveRoleAuth/form?id=${reserveRoleAuth.id}">修改</a>
-					<a href="${ctx}/reserve/reserveRoleAuth/delete?id=${reserveRoleAuth.id}" onclick="return confirmx('确认要删除该角色权限吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
-	<div class="pagination">${page}</div>
+<jsp:include page="/WEB-INF/views/include/sidebar.jsp">
+	<jsp:param name="action" value="roleAuth"></jsp:param>
+</jsp:include>
+<div class="container-fluid" id="pcont">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="block-flat">
+				<div class="header">
+					<h3>角色权限列表</h3>
+				</div>
+				<form:form id="searchForm" modelAttribute="reserveRoleAuth" action="${ctx}/reserve/reserveRoleAuth/list"
+						   method="post">
+					<div class="breadcrumb form-search">
+						<div class="row">
+							<div class="col-sm-12 col-md-12 col-lg-12">
+								<div class="form-group col-lg-3">
+									<form:input placeholder="" path="name" htmlEscape="false"
+												cssstyle="width:70px;" maxlength="30"
+												class="form-control"/>
+								</div>
+								<div class="form-group col-lg-2">
+									<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+								</div>
+								<div class="form-group pull-right">
+									<a class="btn btn-success" href="${ctx}/reserve/reserveRoleAuth/form">
+										<i class="fa fa-plus"></i>添加
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="content">
+						<div class="table-responsive">
+							<table>
+								<thead>
+								<tr>
+									<th>角色</th>
+									<th>操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								<c:forEach items="${page.list}" var="reserveRoleAuth">
+									<tr>
+										<td><a href="${ctx}/reserve/reserveRoleAuth/form?id=${reserveRoleAuth.id}">
+												${reserveRoleAuth.name}
+										</a></td>
+
+											<td>
+												<a class="btn btn-primary btn-xs "
+												   href="${ctx}/reserve/reserveRoleAuth/form?id=${reserveRoleAuth.id}">配置</a>
+												<a class="btn btn-danger btn-xs"
+												   href="${ctx}/reserve/reserveRoleAuth/delete?id=${reserveRoleAuth.id}"
+												   onclick="return confirmb('确认要删除该角色权限吗？', this.href)">删除</a>
+											</td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-sm-12">
+
+									<div class="pull-right">
+										<div class="dataTables_paginate paging_bs_normal">
+											<sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form:form>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

@@ -107,8 +107,9 @@ public class AppPingPlusPlusController extends BaseController {
                 }
                 Double couponInput;
                 ReserveVenueCons order = reserveAppVenueConsService.get(orderId);
+                System.out.println("order:"+order);
                 if (order != null) {
-                    Double orderPrice = order.getOrderPrice();
+                    Double orderPrice = order.getShouldPrice();
                     couponInput = orderPrice - amountYuan;//订单金额-ping++扣款 等于优惠金额
                     Boolean bool = reserveAppVenueConsService.saveSettlement(order, payType, amountYuan,
                             0.0, bankCardInput, weiXinInput, aliPayInput, couponInput);

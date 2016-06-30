@@ -34,6 +34,8 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
     @Autowired
     private ReserveVenueDao reserveVenueDao;
     @Autowired
+    private ReserveVenueConsService reserveVenueConsService;
+    @Autowired
     private ReserveVenueConsDao reserveVenueConsDao;
     @Autowired
     private ReserveFieldPriceService reserveFieldPriceService;
@@ -196,12 +198,15 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
         reserveVenueCons.setAliPayInput(aliPayInput);
         reserveVenueCons.setCouponInput(couponInput);
         reserveVenueCons.setConsPrice(consPrice);//结算价格
-
-        //reserveType:1:已预定,未付款;payType:1:会员卡;
+        System.out.println("订单状态："+reserveVenueCons.getReserveType());
+        //reserveType:1:已预定,未付款
         if ("1".equals(reserveVenueCons.getReserveType())) {
             reserveVenueCons.setReserveType("4");//已结账
-            reserveVenueCons.preUpdate();
-            dao.update(reserveVenueCons);
+            int cnt=dao.update(reserveVenueCons);
+            if(cnt!=0){
+                System.out.println("更新："+cnt+" 状态改变成功");
+            }
+
             //会员扣款;结算教练(事件通知)
             String phone=reserveVenueCons.getConsMobile();
             if(StringUtils.isNoneEmpty(phone)){
@@ -213,11 +218,13 @@ public class ReserveAppVenueConsService extends CrudService<ReserveVenueConsDao,
                 }
                 reserveVenueCons.setMember(member);//通过手机号，找到场馆的会员，最后在监听器中处理余额
             }
+
             VenueCheckoutEvent venueCheckoutEvent = new VenueCheckoutEvent(reserveVenueCons);
             applicationContext.publishEvent(venueCheckoutEvent);
             return true;
+        }else{
+            return false;//已结算，不可重复结算
         }
-        return false;//已结算，不可重复结算
     }
 
     /**
