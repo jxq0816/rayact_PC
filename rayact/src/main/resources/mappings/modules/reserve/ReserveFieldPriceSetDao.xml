@@ -133,7 +133,6 @@
 			field_id = #{reserveField.id},
 			week = #{week},
 			cons_type = #{consType},
-			cons_price = #{consPrice},
 			cons_json = #{consJson},
 			fk_reserve_time_interval_id = #{reserveTimeInterval.id},
 			update_by = #{updateBy.id},
