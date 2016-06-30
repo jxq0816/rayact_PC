@@ -108,7 +108,7 @@
                                                                 <input type="hidden"
                                                                        name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
                                                                        value="${t.time}"/>
-                                                                <input value="<fmt:formatNumber value='${t.price}' pattern='0'/>"
+                                                                <input value="<fmt:formatNumber value='${t.price}' pattern='0.00'/>"
                                                                        type="text" data-time="${t.time}"
                                                                        data="${priceSet.week}-${priceSet.consType}"
                                                                        name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"

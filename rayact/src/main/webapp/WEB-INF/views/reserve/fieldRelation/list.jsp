@@ -28,12 +28,14 @@
                                 <tr>
                                     <td>父场地：</td>
                                     <td><sys:select cssClass="input-medium" name="parentField.id"
+                                                    cssStyle="width:100%"
                                                     value="${reserveFieldRelation.parentField.id}"
                                                     items="${fields}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"
                                                     defaultValue=""></sys:select></td>
                                     <td>子场地：</td>
                                     <td><sys:select cssClass="input-medium" name="childField.id"
+                                                    cssStyle="width:100%"
                                                     value="${reserveFieldRelation.childField.id}"
                                                     items="${fields}" itemLabel="name" itemValue="id"
                                                     defaultLabel="----请选择-----"

@@ -29,7 +29,7 @@
                                 <tbody class="no-border-y">
                                 <tr>
                                     <td>场馆：</td>
-                                    <td><sys:select cssClass="input-medium" name="reserveVenue.id"
+                                    <td><sys:select cssClass="input-medium" name="reserveVenue.id" cssStyle="width:100%"
                                                      value="${reserveField.reserveVenue.id}"
                                                      items="${venues}" itemLabel="name" itemValue="id"
                                                      defaultLabel="----请选择-----"
