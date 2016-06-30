@@ -102,6 +102,20 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
                 }
             }
         }
+        String venueIdFR=reserveField.getReserveVenue().getId();
+        if(StringUtils.isNoneEmpty(venueIdFR)){
+            ReserveField reserveFieldDB=dao.get(reserveField);
+            String venueIdDB=reserveFieldDB.getReserveVenue().getId();
+            if(venueIdDB.equals(venueIdFR)==false){//所属场馆变更
+                ReserveFieldPriceSet set=new ReserveFieldPriceSet();
+                set.setReserveField(reserveFieldDB);
+                List<ReserveFieldPriceSet> list = reserveFieldPriceSetService.findList(set);
+                for(ReserveFieldPriceSet i:list){
+                    i.setReserveVenue(reserveField.getReserveVenue());
+                    reserveFieldPriceSetService.save(i);
+                }
+            }
+        }
         super.save(reserveField);
     }
 
