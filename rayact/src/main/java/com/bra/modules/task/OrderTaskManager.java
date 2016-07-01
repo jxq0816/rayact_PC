@@ -20,12 +20,15 @@ public class OrderTaskManager {
         order.setReserveType("1");//已预订
         List<ReserveVenueCons> list = orderService.findList(order);
         for(ReserveVenueCons i:list){
+            //订单创建时间
             Calendar createCalendar= Calendar.getInstance();
-            Calendar nowCalendar=Calendar.getInstance();
             Date createTime=i.getCreateDate();
             createCalendar.setTime(createTime);
+            //当前时间
+            Calendar nowCalendar=Calendar.getInstance();
             Date systemTime=new Date();
             nowCalendar.setTime(systemTime);
+
             long create=createCalendar.getTimeInMillis();
             long now=nowCalendar.getTimeInMillis();
             long minute=(now-create)/(1000*60);//转化minute

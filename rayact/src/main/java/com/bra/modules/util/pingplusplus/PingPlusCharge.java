@@ -3,6 +3,7 @@ package com.bra.modules.util.pingplusplus;
 import com.pingplusplus.exception.PingppException;
 import com.pingplusplus.model.Charge;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,12 @@ public class PingPlusCharge {
         chargeMap.put("body", body);
         chargeMap.put("order_no", orderNo);
         chargeMap.put("channel", channel);
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 15);//15分钟失效
+        long timestamp = cal.getTimeInMillis()/ 1000L;
+        chargeMap.put("time_expire", timestamp);
+
         chargeMap.put("client_ip", clientIP); // 客户端 ip 地址(ipv4)
         Map<String, String> app = new HashMap<String, String>();
         app.put("id", appId);

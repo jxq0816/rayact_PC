@@ -107,6 +107,7 @@ public class ReserveFieldService extends CrudService<ReserveFieldDao, ReserveFie
             ReserveField reserveFieldDB=dao.get(reserveField);
             String venueIdDB=reserveFieldDB.getReserveVenue().getId();
             if(venueIdDB.equals(venueIdFR)==false){//所属场馆变更
+                /*将价格表 变更*/
                 ReserveFieldPriceSet set=new ReserveFieldPriceSet();
                 set.setReserveField(reserveFieldDB);
                 List<ReserveFieldPriceSet> list = reserveFieldPriceSetService.findList(set);
