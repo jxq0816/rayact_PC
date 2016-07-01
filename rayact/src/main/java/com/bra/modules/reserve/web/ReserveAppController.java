@@ -265,8 +265,12 @@ public class ReserveAppController extends BaseController {
      * @return
      */
     public String orderDetail(String orderId) {
-        Map order = reserveAppVenueConsService.detail(orderId);
-        return JSON.toJSONString(order);
+        String rs=null;
+        if(StringUtils.isNoneEmpty(orderId)){
+            Map order = reserveAppVenueConsService.detail(orderId);
+            rs=JSON.toJSONString(order);
+        }
+        return rs;
     }
 
     @RequestMapping(value = "orderList")
