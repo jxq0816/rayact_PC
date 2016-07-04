@@ -121,17 +121,6 @@
                             <label><input type="radio" <j:if test="${userRole.userType eq roleAuth.userType}"> checked="checked" </j:if>
                                           name="userType" class="icheck userType" value="${roleAuth.userType}"/>${roleAuth.name}</label>
                         </c:forEach>
-
-                       <%-- <label><input type="radio" <j:if test="${'1' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="userType" class="icheck userType" value="1"/>超级管理员</label>
-                        <label><input type="radio" <j:if test="${'2' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="userType" class="icheck userType" value="2"/>场馆管理员</label>
-                        <label><input type="radio" <j:if test="${'3' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="userType" class="icheck userType" value="3"/>高管</label>
-                        <label><input type="radio" <j:if test="${'4' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="userType" class="icheck userType" value="4"/>收银</label>
-                        <label><input type="radio" <j:if test="${'5' eq userRole.userType}"> checked="checked" </j:if>
-                                      name="userType" class="icheck userType" value="5"/>财务</label>--%>
                     </div>
                 </div>
 
@@ -143,73 +132,6 @@
                                     class="form-control"/>
                     </div>
 
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">权限:</label>
-
-                    <div class="col-sm-10">
-
-                        <c:forEach items="${authList}" var="auth" varStatus="astatus">
-                            <%--遍历所有权限--%>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-8 col-lg-10 cl-mcont">
-                                    <div class="block-flat">
-                                            <%--权限组--%>
-                                        <div class="header">
-                                            <c:set value="" var="checked"></c:set>
-                                            <c:forEach items="${userRole.authorityList}" var="ur">
-                                                <%--遍历用户的已有权限--%>
-                                                <c:if test="${ur.code eq auth.code}">
-                                                    <c:set value="checked='checked'" var="checked"></c:set>
-                                                </c:if>
-                                                <%--遍历用户的已有权限 end--%>
-                                            </c:forEach>
-                                            <label>
-                                                <input type="checkbox" ${checked}
-                                                       name="reserveRole.authorityList[${astatus.index}].code"
-                                                       class="icheck authCheck"
-                                                       value="${auth.code}"/>
-                                                    ${auth.name}
-                                            </label>
-                                        </div>
-                                            <%--权限组结束--%>
-
-                                        <c:forEach items="${auth.authorityList}" var="a" varStatus="s">
-                                            <%-- 权限组的子权限--%>
-                                            <div class="radio col-lg-4">
-                                                <c:set value="" var="childchecked"></c:set>
-                                                <c:forEach items="${userRole.authorityList}" var="ur">
-                                                    <%--遍历用户的已有权限--%>
-                                                    <c:if test="${ur.code eq auth.code}">
-                                                        <c:forEach items="${ur.authorityList}" var="child">
-                                                            <c:if test="${a.code eq child.code}">
-                                                                <c:set value="checked='checked'"
-                                                                       var="childchecked"></c:set>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </c:if>
-                                                    <%--遍历用户的已有权限 end--%>
-                                                </c:forEach>
-
-                                                <label> <input data-parent="${auth.code}"
-                                                               type="checkbox" ${childchecked} value="${a.code}"
-                                                               name="reserveRole.authorityList[${astatus.index}].authorityList[${s.index}].code"
-                                                               class="icheck childAuthCheck"> ${a.name}
-                                                        <input
-                                                           type="hidden"
-                                                           name="reserveRole.authorityList[${astatus.index}].authorityList[${s.index}].code"
-                                                           >
-                                                </label>
-                                            </div>
-                                            <%-- 子权限 end--%>
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                            </div>
-                            <%--遍历所有权限 end--%>
-                        </c:forEach>
-                    </div>
                 </div>
 
                 <div class="form-group">

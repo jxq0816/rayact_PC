@@ -7,6 +7,7 @@ import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.json.Authority;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class ReserveRoleAuth extends SaasEntity<ReserveRoleAuth> {
 	private String authority;		// 对应用户权限(json字符串)
 
 	private List<Authority> frontAuthorityList;//该字段用于传输用户所修改的权限
-	private List<Authority> authorityList;
+	private List<Authority> authorityList=new ArrayList<Authority>();
 
 	public List<Authority> getAuthorityList() {
 		if (Collections3.isEmpty(authorityList) && StringUtils.isNotBlank(authority)) {

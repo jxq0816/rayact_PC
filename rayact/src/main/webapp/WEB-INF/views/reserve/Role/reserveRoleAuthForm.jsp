@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>商品管理</title>
+    <title>角色权限配置</title>
     <meta name="decorator" content="main"/>
 </head>
 <body>
@@ -61,26 +61,27 @@
 
                                         <div class="col-sm-10">
 
-                                            <c:forEach items="${authList}" var="auth" varStatus="astatus">
+                                            <c:forEach items="${allAuthList}" var="auth" varStatus="astatus">
                                                 <%--遍历所有权限--%>
                                                 <div class="row">
                                                     <div class="col-sm-6 col-md-8 col-lg-10">
                                                         <div class="row" style="margin-top:20px">
                                                                 <%--权限组--%>
                                                             <div class="header">
-                                                                <c:set value="" var="checked"></c:set>
 
-                                                                <c:forEach items="${reserveRoleAuth.authorityList}" var="ur">
-                                                                    <%--遍历用户的已有权限--%>
-                                                                    <c:if test="${ur.code eq auth.code}">
-                                                                        <c:set value="checked='checked'"
-                                                                               var="checked"></c:set>
-                                                                    </c:if>
-                                                                    <%--遍历用户的已有权限 end--%>
-                                                                </c:forEach>
+                                                                <%--检测用户是否拥有该权限组--%>
+                                                                    <c:set value="" var="checked"></c:set>
+                                                                    <c:forEach items="${reserveRoleAuth.authorityList}" var="myAuth">
+                                                                        <%--遍历用户的已有权限--%>
+                                                                        <c:if test="${myAuth.code eq auth.code}">
+                                                                            <c:set value="checked='true'" var="checked"></c:set>
+                                                                        </c:if>
+                                                                        <%--遍历用户的已有权限 end--%>
+                                                                    </c:forEach>
+                                                                    <%--检测用户是否拥有该权限--%>
                                                                 <label>
                                                                     <input type="checkbox" ${checked}
-                                                                           name="authorityList[${astatus.index}].code"
+                                                                           name="frontAuthorityList[${astatus.index}].code"
                                                                            class="icheck authCheck"
                                                                            value="${auth.code}"/>
                                                                         ${auth.name}
@@ -111,11 +112,11 @@
                                                                         <label> <input data-parent="${auth.code}"
                                                                                        type="checkbox" ${childchecked}
                                                                                        value="${a.code}"
-                                                                                       name="authorityList[${astatus.index}].authorityList[${s.index}].code"
+                                                                                       name="frontAuthorityList[${astatus.index}].authorityList[${s.index}].code"
                                                                                        class="icheck childAuthCheck"> ${a.name}
                                                                             <input
                                                                                     type="hidden"
-                                                                                    name="authorityList[${astatus.index}].authorityList[${s.index}].code"
+                                                                                    name="frontAuthorityList[${astatus.index}].authorityList[${s.index}].code"
                                                                             >
                                                                         </label>
                                                                     </div>
@@ -147,28 +148,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var childCheck = false;
-        $(".authCheck").on('ifChecked', function () {
-            if (childCheck) {
-                return;
-            }
-            var id = $(this).attr("value");
-            $(".childAuthCheck[data-parent='" + id + "']").iCheck('check');
-        });
-        $(".authCheck").on('ifUnchecked', function () {
-            var id = $(this).attr("value");
-            $(".childAuthCheck[data-parent='" + id + "']").iCheck('uncheck');
-        });
-        $(".childAuthCheck").on('ifChecked', function (event) {
-            var id = $(this).attr("data-parent");
-            childCheck = true;
-            $(".authCheck[value='" + id + "']").iCheck('check');
-            childCheck = false;
-        });
-    });
-</script>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/validate.js"></script>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/reserve_role_auth.js"></script>
 </body>
 </html>
