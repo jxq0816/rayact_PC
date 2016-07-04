@@ -5,6 +5,7 @@
 	<sql id="reserveRoleAuthColumns">
 		a.id AS "id",
 		a.name AS "name",
+		a.user_type AS "userType",
 		a.authority AS "authority",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -72,6 +73,7 @@
 		INSERT INTO reserve_role_auth(
 		id,
 		name,
+		user_type,
 		authority,
 		create_by,
 		create_date,
@@ -83,6 +85,7 @@
 		) VALUES (
 		#{id},
 		#{name},
+		#{userType},
 		#{authority},
 		#{createBy.id},
 		#{createDate},
@@ -97,6 +100,7 @@
 	<update id="update">
 		UPDATE reserve_role_auth SET
 		name = #{name},
+		user_type = #{userType},
 		authority = #{authority},
 		update_by = #{updateBy.id},
 		update_date = #{updateDate},

@@ -19,7 +19,16 @@ public class ReserveRoleAuth extends SaasEntity<ReserveRoleAuth> {
 
 	private static final long serialVersionUID = 1L;
 	private String name;		// 角色
+	private String userType; //角色编号
 	private String authority;		// 对应用户权限(json字符串)
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	private List<Authority> authorityList = Lists.newArrayList();
 
