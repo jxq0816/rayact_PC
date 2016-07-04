@@ -1,14 +1,16 @@
 package com.bra.modules.reserve.service;
 
-import java.util.List;
-
+import com.bra.common.persistence.Page;
+import com.bra.common.service.CrudService;
+import com.bra.common.utils.JsonUtils;
+import com.bra.modules.reserve.dao.ReserveRoleAuthDao;
+import com.bra.modules.reserve.entity.ReserveRoleAuth;
+import com.bra.modules.reserve.entity.json.Authority;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bra.common.persistence.Page;
-import com.bra.common.service.CrudService;
-import com.bra.modules.reserve.entity.ReserveRoleAuth;
-import com.bra.modules.reserve.dao.ReserveRoleAuthDao;
+import java.util.List;
 
 /**
  * 角色权限管理Service
@@ -33,6 +35,9 @@ public class ReserveRoleAuthService extends CrudService<ReserveRoleAuthDao, Rese
 	
 	@Transactional(readOnly = false)
 	public void save(ReserveRoleAuth reserveRoleAuth) {
+		List<Authority> authorities = AuthorityUtils.findByAuths(reserveRoleAuth.getAuthorityList());
+		String authJson = JsonUtils.writeObjectToJson(authorities);
+		reserveRoleAuth.setAuthority(authJson);
 		super.save(reserveRoleAuth);
 	}
 	

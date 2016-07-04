@@ -5,7 +5,9 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveRoleAuth;
+import com.bra.modules.reserve.entity.json.Authority;
 import com.bra.modules.reserve.service.ReserveRoleAuthService;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 角色权限管理Controller
@@ -50,7 +53,10 @@ public class ReserveRoleAuthController extends BaseController {
 
 	@RequestMapping(value = "form")
 	public String form(ReserveRoleAuth reserveRoleAuth, Model model) {
+		List<Authority> authorities = AuthorityUtils.findByAuths(reserveRoleAuth.getAuthorityList());
+		reserveRoleAuth.setAuthorityList(authorities);
 		model.addAttribute("reserveRoleAuth", reserveRoleAuth);
+		model.addAttribute("authList", AuthorityUtils.getAll());
 		return "reserve/role/reserveRoleAuthForm";
 	}
 
@@ -59,6 +65,7 @@ public class ReserveRoleAuthController extends BaseController {
 		if (!beanValidator(model, reserveRoleAuth)){
 			return form(reserveRoleAuth, model);
 		}
+
 		reserveRoleAuthService.save(reserveRoleAuth);
 		addMessage(redirectAttributes, "保存角色权限成功");
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveRoleAuth/?repage";

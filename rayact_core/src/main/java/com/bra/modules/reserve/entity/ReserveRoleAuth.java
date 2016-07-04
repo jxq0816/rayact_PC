@@ -1,7 +1,14 @@
 package com.bra.modules.reserve.entity;
 
 import com.bra.common.persistence.SaasEntity;
+import com.bra.common.utils.Collections3;
+import com.bra.common.utils.JsonUtils;
+import com.bra.common.utils.StringUtils;
+import com.bra.modules.reserve.entity.json.Authority;
+import com.google.common.collect.Lists;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 /**
  * 角色权限Entity
@@ -13,6 +20,19 @@ public class ReserveRoleAuth extends SaasEntity<ReserveRoleAuth> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// 角色
 	private String authority;		// 对应用户权限(json字符串)
+
+	private List<Authority> authorityList = Lists.newArrayList();
+
+	public List<Authority> getAuthorityList() {
+		if (Collections3.isEmpty(authorityList) && StringUtils.isNotBlank(authority)) {
+			authorityList = JsonUtils.readBeanByJson(authority, List.class, Authority.class);
+		}
+		return authorityList;
+	}
+
+	public void setAuthorityList(List<Authority> authorityList) {
+		this.authorityList = authorityList;
+	}
 
 	public ReserveRoleAuth() {
 		super();
