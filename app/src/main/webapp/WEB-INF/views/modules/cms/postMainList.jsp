@@ -36,6 +36,9 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>帖子名称：</label>
+				<form:input path="subject" htmlEscape="false" maxlength="255" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -47,6 +50,7 @@
 				<th>主题</th>
 				<th>所属圈子</th>
 				<th>回复数</th>
+				<th>权重</th>
 				<th>最后回复时间</th>
 				<th>创建人</th>
 				<th>创建时间</th>
@@ -64,6 +68,9 @@
 				</td>
 				<td>
 					${postMain.postNum}
+				</td>
+				<td>
+				    ${postMain.orderNum}
 				</td>
 				<td>
 					<fmt:formatDate value="${postMain.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

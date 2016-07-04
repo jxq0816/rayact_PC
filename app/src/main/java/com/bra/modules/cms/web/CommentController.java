@@ -114,13 +114,21 @@ public class CommentController extends BaseController {
 	}
 
 	@RequestMapping(value = "app/save")
-	public void saveApp(Comment comment, RedirectAttributes redirectAttributes,HttpServletResponse response) {
+	public void saveApp(Comment comment, RedirectAttributes redirectAttributes,HttpServletRequest request,HttpServletResponse response) {
 		JSONObject j = new JSONObject();
+		String replyId = request.getParameter("replyId");
 		try {
 			if (beanValidator(redirectAttributes, comment)) {
 				if (comment.getAuditUser() == null) {
 					comment.setAuditUser(UserUtils.getUser());
 					comment.setAuditDate(new Date());
+				}
+				if (StringUtils.isNotBlank(replyId)){
+					Comment replyComment = commentService.get(replyId);
+					if (replyComment != null){
+						comment.setContent("@"+replyComment.getName()+":"
+								+comment.getContent());
+					}
 				}
 				comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
 				commentService.save(comment);

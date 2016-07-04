@@ -38,6 +38,9 @@
 			<if test="modelId!=null and modelId != '' ">
 				AND a.model_id = #{modelId}
 			</if>
+			<if test="modelName!=null and modelName != '' ">
+				AND a.model_name = #{modelName}
+			</if>
 			<if test="createBy!=null and createBy.id != null">
 				AND a.create_by = #{createBy.id}
 			</if>
@@ -127,6 +130,7 @@
 		</if>
 		WHERE a.model_name = #{modelName} AND a.create_by = #{createBy.id} AND a.del_flag = #{DEL_FLAG_NORMAL}
 		GROUP BY a.id
+		ORDER BY a.create_date DESC
 	</select>
 
 	<select id="findListUn" resultType="CmsCollection">

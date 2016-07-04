@@ -31,16 +31,11 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		c.name AS "parent.name",
-		c.view_config AS "parent.viewConfig",
-		o.name AS "office.name",
-		s.theme AS "site.theme"
+		c.view_config AS "parent.viewConfig"
 	</sql>
 	
 	<sql id="cmsCategoryDaoJoins">
 	    LEFT JOIN cms_category c ON c.id = a.parent_id
-		JOIN sys_office o ON o.id = a.office_id
-		JOIN sys_user u ON u.id = a.create_by
-		JOIN cms_site s ON a.site_id = s.id
 	</sql>
     
 	<select id="get" resultType="Category">
@@ -336,7 +331,7 @@
 		        LEFT JOIN sys_user u ON c.create_by = u.id
 				LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id AND att.fd_key = 'catepic' AND att.del_flag = #{DEL_FLAG_NORMAL}
 		        LEFT JOIN mechanism_att_main attbg ON attbg.fd_model_id = c.parent_id AND attbg.fd_key = 'catebg' AND attbg.del_flag = #{DEL_FLAG_NORMAL}
-				LEFT JOIN focus f ON f.model_id = c.id
+				LEFT JOIN focus f ON f.model_id = c.id AND f.del_flag = #{DEL_FLAG_NORMAL}
 				WHERE
 				c.del_flag = #{DEL_FLAG_NORMAL}
 				<if test="module != null and module!='' ">

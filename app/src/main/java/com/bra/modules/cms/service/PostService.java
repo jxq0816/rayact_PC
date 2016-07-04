@@ -8,6 +8,7 @@ import com.bra.modules.cms.entity.Message;
 import com.bra.modules.cms.entity.Post;
 import com.bra.modules.cms.entity.PostMain;
 import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +49,8 @@ public class PostService extends CrudService<PostDao, Post> {
 		PostMain pm = post.getPostMain();
 		//更新回复数
 		pm = postMainService.get(pm.getId());
-		pm.setPostNum(pm.getOrderNum()+1);
+		pm.setPostNum(pm.getPostNum()+1);
+		pm.setOrderNum(pm.getOrderNum()+1);
 		postMainService.save(pm);
 		String postId = post.getPostId();
 		String ptpId = post.getPtpId();
@@ -58,18 +60,21 @@ public class PostService extends CrudService<PostDao, Post> {
 		}else if(StringUtils.isNotBlank(postId)){
 			Post p = get(postId);
 			notify = p.getCreateBy();
+		}else if(StringUtils.isNotBlank(post.getRemarks())){
+			notify = new User();
+			notify.setId(post.getRemarks());
 		}else if(pm != null){
 			notify = pm.getCreateBy();
 		}
 		if(notify != null){
 			Message m = new Message();
 			m.setSubject("有人回复你了，快去看看吧！");
+			m.setContent(UserUtils.getUser().getName() +" 在帖子‘"+pm.getSubject()+"' 里回复了你。");
 			m.setTargetId(notify.getId());
 			m.setTargetName(notify.getClass().getName());
-			m.setSendId(post.getId());
-			m.setSendName(post.getClass().getName());
-			m.setUrl(com.bra.modules.sys.utils.StringUtils.ROOTPATH+"/cms/postMain/app/view?id="+pm.getId());//需改
-			m.setContent("");
+			m.setSendId(pm.getId());
+			m.setSendName(pm.getClass().getName());
+			m.setUrl(com.bra.modules.sys.utils.StringUtils.ROOTPATH+"/cms/postMain/app/view?id="+pm.getId());
 			messageService.save(m);
 		}
 	}

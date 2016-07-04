@@ -7,7 +7,7 @@
 		a.model_name AS "modelName",
 		a.model_id AS "modelId",
 		a.fk_fans_id AS "fan.id",
-		u.name AS "fan.name",
+		u.name AS "createBy.name",
 		a.create_date AS "createDate",
 		a.del_flag AS "delFlag",
 		a.create_by AS "createBy.id",
@@ -16,7 +16,7 @@
 	</sql>
 	
 	<sql id="focusJoins">
-		LEFT JOIN sys_user u ON u.id = a.fk_fans_id
+		LEFT JOIN sys_user u ON u.id = a.create_by
 	</sql>
     
 	<select id="get" resultType="Focus">

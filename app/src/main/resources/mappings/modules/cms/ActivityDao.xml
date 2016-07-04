@@ -18,7 +18,8 @@
 		a.create_by AS "createBy.id",
 		a.update_date AS "updateDate",
 		a.update_by AS "updateBy.id",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.order_num AS "order"
 	</sql>
 	
 	<sql id="activityJoins">
@@ -52,7 +53,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.order_num DESC ,a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -70,7 +71,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.order_num DESC ,a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -91,7 +92,8 @@
 			create_by,
 			update_date,
 			update_by,
-			del_flag
+			del_flag,
+			order_num
 		) VALUES (
 			#{id},
 			#{subject},
@@ -107,7 +109,8 @@
 			#{createBy.id},
 			#{updateDate},
 			#{updateBy.id},
-			#{delFlag}
+			#{delFlag},
+			#{order}
 		)
 	</insert>
 	
@@ -123,7 +126,8 @@
 			url = #{url},
 			is_avaliable = #{isAvaliable},
 			update_date = #{updateDate},
-			update_by = #{updateBy.id}
+			update_by = #{updateBy.id},
+			order_num = #{order}
 		WHERE id = #{id}
 	</update>
 	
@@ -152,7 +156,7 @@
 			</if>
 		</where>
 		GROUP BY a.id
-		ORDER BY a.update_date DESC
+		ORDER BY a.order_num DESC ,a.update_date DESC
 	</select>
 	
 </mapper>

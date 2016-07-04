@@ -3,7 +3,6 @@ package com.bra.modules.sys.security;
 import com.bra.common.config.Global;
 import com.bra.common.security.CustomCredentialsMatcher;
 import com.bra.common.security.Principal;
-import com.bra.common.servlet.ValidateCodeServlet;
 import com.bra.common.utils.SpringContextHolder;
 import com.bra.common.web.Servlets;
 import com.bra.modules.sys.entity.Menu;
@@ -12,7 +11,6 @@ import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.LogUtils;
 import com.bra.modules.sys.utils.UserUtils;
-import com.bra.modules.sys.web.LoginController;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -56,14 +54,14 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             logger.debug("login submit, active session size: {}, username: {}", activeSessionSize, token.getUsername());
         }
 
-        // 校验登录验证码
-        if (LoginController.isValidateCodeLogin(token.getUsername(), false, false)) {
-            Session session = UserUtils.getSession();
-            String code = (String) session.getAttribute(ValidateCodeServlet.VALIDATE_CODE);
-            if (token.getCaptcha() == null || !token.getCaptcha().toUpperCase().equals(code)) {
-                throw new AuthenticationException("msg:验证码错误, 请重试.");
-            }
-        }
+        // 校验登录验证码(屏蔽掉)
+//        if (LoginController.isValidateCodeLogin(token.getUsername(), false, true)) {
+//            Session session = UserUtils.getSession();
+//            String code = (String) session.getAttribute(ValidateCodeServlet.VALIDATE_CODE);
+//            if (token.getCaptcha() == null || !token.getCaptcha().toUpperCase().equals(code)) {
+//                throw new AuthenticationException("msg:验证码错误, 请重试.");
+//            }
+//        }
 
         // 校验用户名密码
         User user = getSystemService().getUserByLoginName(token.getUsername());

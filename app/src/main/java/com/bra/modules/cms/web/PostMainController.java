@@ -8,22 +8,19 @@ import com.bra.common.persistence.Page;
 import com.bra.common.upload.FileModel;
 import com.bra.common.upload.StoreType;
 import com.bra.common.upload.UploadUtils;
+import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.modules.cms.entity.Category;
-import com.bra.modules.cms.entity.Focus;
-import com.bra.modules.cms.entity.Post;
-import com.bra.modules.cms.entity.PostMain;
-import com.bra.modules.cms.service.CategoryService;
-import com.bra.modules.cms.service.FocusService;
-import com.bra.modules.cms.service.PostMainService;
-import com.bra.modules.cms.service.PostService;
+import com.bra.modules.cms.entity.*;
+import com.bra.modules.cms.service.*;
 import com.bra.modules.mechanism.entity.AttMain;
 import com.bra.modules.mechanism.service.AttMainService;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
+import com.bra.modules.sys.utils.ImageUtils;
 import com.bra.modules.sys.utils.UserUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.codec.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +60,8 @@ public class PostMainController extends BaseController {
 	private PostMainService postMainService;
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private PostMainCheckService postMainCheckService;
 	
 	@ModelAttribute
 	public PostMain get(@RequestParam(required=false) String id) {
@@ -88,6 +87,12 @@ public class PostMainController extends BaseController {
 	@RequiresPermissions("cms:postMain:view")
 	@RequestMapping(value = "form")
 	public String form(PostMain postMain, Model model) {
+		String c = postMain.getContent();
+		if(StringUtils.isNotBlank(c)){
+			c = c.replaceAll("<br>","\n");
+			c = c.replaceAll("&nbsp;"," ");
+			postMain.setContent(c);
+		}
 		model.addAttribute("postMain", postMain);
 		return "modules/cms/postMainForm";
 	}
@@ -117,7 +122,7 @@ public class PostMainController extends BaseController {
 		String modelName = request.getParameter("modelName");
 		String[] file = files.split(",");
 		String remarks ="";
-		if(file!=null&&file.length>0){
+		if(file!=null&&file.length>0&&StringUtils.isNotBlank(file[0])){
 			for(int i =0;i<file.length;i++){
 				String obj = file[i];
 				byte[] image = Base64.decode(obj);
@@ -132,6 +137,7 @@ public class PostMainController extends BaseController {
 				FileOutputStream fos = new FileOutputStream(f);
 				fos.write(image);
 				fos.close();
+				ImageUtils.resizeFix(f,768,1024);
 				fileModel.setStoreType(StoreType.SYSTEM);
 				fileModel.setToken(new Date().toString());
 				fileModel.setFilePath(f.getAbsolutePath());
@@ -148,6 +154,10 @@ public class PostMainController extends BaseController {
 			}
 		}
 		postMain.setRemarks(remarks);
+		postMain.setContent(StringEscapeUtils.unescapeHtml4(
+				postMain.getContent()));
+		postMain.setSubject(StringEscapeUtils.unescapeHtml4(
+				postMain.getSubject()));
 		postMainService.save(postMain);
 		JSONObject j = new JSONObject();
 		j.put("status","success");
@@ -166,10 +176,22 @@ public class PostMainController extends BaseController {
 		String keyword = request.getParameter("keyword");
 		String mode = request.getParameter("mode");
 		String userId = request.getParameter("userId");
+		Date last = null;
 		if("create".equals(mode)){
 			if(StringUtils.isNotBlank(userId)){
 				postMain.getSqlMap().put("addition"," and pm.create_by = '"+ userId +"' ");
 			}else{
+				PostMainCheck check = new PostMainCheck();
+				check.setCreateBy(UserUtils.getUser());
+				List<PostMainCheck> list = postMainCheckService.findList(check);
+				if(list!=null&&list.size()>0){
+					PostMainCheck cl = list.get(0);
+					last = cl.getUpdateDate();
+					postMainCheckService.save(cl);
+				}else{
+					PostMainCheck c = new PostMainCheck();
+					postMainCheckService.save(c);
+				}
 				postMain.getSqlMap().put("addition"," and pm.create_by = '"+ UserUtils.getUser().getId()+"' ");
 			}
 		}else if("focus".equals(mode)){
@@ -197,6 +219,11 @@ public class PostMainController extends BaseController {
 			postMain.setContent(keyword);
 			postMain.setSubject(keyword);
 		}
+		if(last!=null){
+			postMain.setUpdateDate(last);
+		}else{
+			postMain.setUpdateDate(DateUtils.parseDate("1970-09-01"));
+		}
 		List<Map<String,String>> rtn = 	postMainService.getPostMainList(new Page<PostMain>(request, response),postMain);
 		try {
 			response.reset();
@@ -221,6 +248,7 @@ public class PostMainController extends BaseController {
 		lop.setPageSize(5);
 		lop.setPageNo(1);
 		Page<Post> ptm = postService.findPage(lop,post);
+		request.setAttribute("count",ptm.getCount());
 		request.setAttribute("ptm",ptm.getList());
 		return "modules/cms/postMainView";
 	}

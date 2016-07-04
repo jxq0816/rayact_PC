@@ -122,9 +122,20 @@
 		    a.id AS "id",
 			a.subject AS "subject",
 			a.content AS "content",
-			date_format(a.create_date,'%Y-%m-%d %T') AS "createDate"
+			date_format(a.create_date,'%Y-%m-%d %T') AS "createDate",
+		    a.send_id AS "sendId",
+		    a.send_name AS "sendName"
 		  FROM message a
 		  WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		  <choose>
+			  <when test="targetId != null and targetId != ''">
+				  AND (a.target_id = '' OR a.target_id IS NULL OR a.target_id = #{targetId})
+			  </when>
+			  <otherwise>
+				  AND (a.target_id = '' OR a.target_id IS NULL)
+			  </otherwise>
+		  </choose>
+		  ORDER BY a.create_date DESC
 
 	</select>
 	

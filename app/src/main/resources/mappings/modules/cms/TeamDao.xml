@@ -182,16 +182,25 @@
 		a.position_x AS "positionX",
 		a.position_y AS "positionY",
 		a.create_by AS "createById",
-		CASE WHEN locate(#{currentUser.id},a.member_ids)>0 THEN 1 ELSE 0 END AS "isMember",
-		CASE WHEN a.create_by = #{currentUser.id} THEN 1 ELSE 0 END AS "isCreate",
+		<choose>
+			<when test="currentUser!=null and currentUser.id !=null">
+				CASE WHEN locate(#{currentUser.id},a.member_ids)>0 THEN 1 ELSE 0 END AS "isMember",
+				CASE WHEN a.create_by = #{currentUser.id} THEN 1 ELSE 0 END AS "isCreate",
+				SUM(CASE WHEN f.create_by = #{currentUser.id} AND f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS "hasFocus",
+			</when>
+			<otherwise>
+				0 AS "isMember",
+				0 AS "isCreate",
+				0 AS "hasFocus",
+			</otherwise>
+		</choose>
 		u.name AS "createByName",
 		date_format(a.create_date,'%Y-%m-%d %T') AS "createDate",
 		a.remarks AS "remarks",
-		SUM(CASE WHEN f.create_by = #{currentUser.id} AND f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS "hasFocus",
 		sum(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END ) AS "focusNum"
 		FROM team a
 		<include refid="teamJoins"/>
-		LEFT JOIN focus f ON f.model_id = a.id
+		LEFT JOIN focus f ON f.model_id = a.id AND f.del_flag = #{DEL_FLAG_NORMAL}
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="name != null and name != ''">

@@ -47,7 +47,7 @@
 					AND a.post_id = #{postId}
 				</when>
 				<otherwise>
-					AND a.post_id is NULL
+					AND (a.post_id is NULL OR a.post_id = '')
 				</otherwise>
 			</choose>
 		</where>
@@ -134,7 +134,7 @@
 			a.create_by AS "createById",
 			u.name AS "createByName",
 			u.photo AS "createByPhoto",
-			a.create_date AS "createDate",
+			date_format(a.create_date,"%Y-%m-%d %T") AS "createDate",
 			a.remarks AS "remarks"
 		FROM post a
 		<include refid="postJoins"/>

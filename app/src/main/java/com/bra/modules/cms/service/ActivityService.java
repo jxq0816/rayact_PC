@@ -56,6 +56,7 @@ public class ActivityService extends CrudService<ActivityDao, Activity> {
 		updateAttMain(activity, attMainForm);
 	}
 	public List<Map<String,String>> findListMap(Page page,Activity activity){
+		activity.setPage(page);
 		return activityDao.findListMap(activity);
 	}
 	

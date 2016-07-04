@@ -261,6 +261,6 @@
 			LEFT JOIN cms_comment c ON c.content_id = a.id
 			WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 			GROUP BY a.id
-			ORDER BY commentNum DESC
+			ORDER BY a.create_date DESC ,commentNum DESC
 	</select>
 </mapper>

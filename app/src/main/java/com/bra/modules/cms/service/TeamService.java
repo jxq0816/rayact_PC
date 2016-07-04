@@ -63,6 +63,7 @@ public class TeamService extends CrudService<TeamDao, Team> {
 	}
 
 	public List<Map<String,String>> findListMap(Page<Team> page,Team team){
+		team.setPage(page);
 		return teamDao.findListMap(team);
 	}
 	public List<Team> findListUn(Team team){return teamDao.findListUn(team);}

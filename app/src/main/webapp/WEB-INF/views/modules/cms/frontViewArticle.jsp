@@ -28,7 +28,13 @@
 	</style>
 	<script>
 		function jumpToApp(){
-			iOSskipInfo();
+			if(typeof iOSskipInfo === 'function'){
+				iOSskipInfo();
+			}else if(window.intent){
+				intent.DLCallAndroid();
+			}else{
+				alert("无方法");
+			}
 		}
 		function jumpToInfo(dom){
 			var id = $(dom).attr("name");
@@ -36,7 +42,7 @@
 		}
 	</script>
 </head>
-<body style="margin:0; padding:0;">
+<body style="font-family: Microsoft Yahei">
 <div class="row" style="margin-left: 10px;">
 	<div style="font-size:60px;text-align:left;margin:20px 0;font-weight: bold;line-height: 200%;">${article.title}</div>
 	<div style="border-bottom:1px solid #ddd;padding:10px;margin:15px 0;font-size:30px;line-height: 150%">
@@ -48,24 +54,27 @@
 	</c:if>
 	<div style="width: 100%;line-height: 150%;font-size:50px;color:#555555;">${article.articleData.content}</div>
 </div>
-<div class="row">
+<div class="row" style="border-top: 1px solid #c8c8c8;width: 100%;margin-top: 38px;padding-top: 28px">
 	<div class="head postSubject">评论</div>
 	<div class="list">
 		<c:forEach items="${comments}" var="comment">
-			<div class="item" style="margin-top: 20px;line-height: 50px">
-				<div class="img" style="display: inline-block;"><img src="${comment.createBy.photo}" class="round" width="100px" height="100px" onclick="jumpToInfo(this)" name="${comment.createBy.id}"></div>
-				<div style="display: inline-block;position:relative;top: 10px;width: 80%">
+			<div class="item" style="margin-top: 20px;line-height: 50px;padding-bottom: 10px;border-bottom: 1px solid #C8C8C8;">
+				<div class="img" style="display: inline-block;float:left;"><img src="${comment.createBy.photo}" class="round" width="100px" height="100px" onclick="jumpToInfo(this)" name="${comment.auditUser.id}"></div>
+				<div style="display: inline-block;float:left;width: 80%;color: #1e1e1e;font-size: 30px;margin-left: 10px">
 					<span class="name" name="${comment.createBy.id}" style="display: inline-block;color: #f0860c;font-size: 40px">${comment.createBy.name}:</span>
+					<br><fmt:formatDate value="${comment.createDate}" pattern="MM-dd HH:mm"/>
 				</div>
-				<div>
-					<span class="content" style="color:#555555;display: inline-block;font-size: 40px;margin-left: 100px;">${comment.content}<br><fmt:formatDate value="${comment.createDate}" pattern="MM-dd HH:mm"/></span>
+				<div style="margin-left: 10px">
+					<span class="content" style="color:#555555;display: inline-block;font-size: 40px;margin-left: 100px;">${comment.content}</span>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
-	<div class="row" style="padding: 10px;align:center;">
-		<div onclick="jumpToApp(this)" style="margin:10px;height:50px;width:100%;background-image:url(${ctxStatic}/images/more2x.png);background-repeat:no-repeat;background-position:center;" ></div>
-	</div>
+	<c:if test="${comments.size() > 0}">
+		<div class="row" style="padding: 10px;align:center;">
+			<div onclick="jumpToApp(this)" style="margin:10px;height:100px;width:100%;background-image:url(${ctxStatic}/images/more.png);background-repeat:no-repeat;background-position:center;" ></div>
+		</div>
+	</c:if>
 </div>
 </body>
 </html>

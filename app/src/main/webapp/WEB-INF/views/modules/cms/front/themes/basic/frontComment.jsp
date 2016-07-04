@@ -19,9 +19,6 @@
 <script src="${ctxStatic}/jquery-validation/1.11.1/jquery.validate.method.min.js" type="text/javascript"></script>
 <style type="text/css">.reply{border:1px solid #ddd;background:#fefefe;margin:10px;}</style>
 <script type="text/javascript">
-	$(document).ready(function() {
-		comment(0);
-	});
 	function comment(id,name){
 			$("#commentForm0  input[name='replyId']").val(id);
 		    $("#commentForm0  textarea[name='content']").attr("placeholder","回复"+name+":");

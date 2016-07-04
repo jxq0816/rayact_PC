@@ -53,6 +53,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">权重：</label>
+			<div class="controls">
+				<form:input path="orderNum" htmlEscape="false" maxlength="30" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">所属圈子：</label>
 			<div class="controls">
 				<sys:treeselect id="group" name="group.id" value="${postMain.group.id}" labelName="group.name" labelValue="${postMain.group.name}"

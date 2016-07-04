@@ -46,7 +46,7 @@ public class PostMainService extends CrudService<PostMainDao, PostMain> {
 			if(list!=null&&list.size()>0){
 				for(AttMain att:list){
 					if(att.getId()!=null&&!StringUtils.isNull(att.getId()))
-						remarks += StringUtils.ATTPATH + list.get(0).getId()+";";
+						remarks += StringUtils.ATTPATH + att.getId()+";";
 				}
 			}
 		}
@@ -56,8 +56,10 @@ public class PostMainService extends CrudService<PostMainDao, PostMain> {
 		postMain.setSubject(StringEscapeUtils.unescapeHtml4(
 				postMain.getSubject()));
 		if (postMain.getContent() != null) {
-			postMain.setContent(StringEscapeUtils.unescapeHtml4(
-					postMain.getContent()));
+			String c = postMain.getContent();
+			c = c.replaceAll("\n","<br>");
+			c = c.replaceAll(" ","&nbsp;");
+			postMain.setContent(c);
 		}
 		super.save(postMain);
 		updateAttMain(postMain,attMainForm);

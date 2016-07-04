@@ -175,7 +175,7 @@ public class TeamController extends BaseController {
 			}else if("join".equals(mode)){
 				team.getSqlMap().put("addition"," and a.member_ids like '%"+userId+"%' ");
 			}
-		}else{
+		}else if(UserUtils.getUser()!=null&&StringUtils.isNotBlank(UserUtils.getUser().getId())){
 			if("create".equals(mode)){
 				team.getSqlMap().put("addition"," and a.create_by = '"+UserUtils.getUser().getId()+"' ");
 			}else if("focus".equals(mode)){
