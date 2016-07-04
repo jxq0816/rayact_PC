@@ -43,6 +43,7 @@ public class MessageService extends CrudService<MessageDao, Message> {
 		super.delete(message);
 	}
 	public List<Map<String,String>> findMapList(Page<Message> page,Message message){
+		message.setPage(page);
 		return messageDao.findMapList(message);
 	}
 }

@@ -15,7 +15,7 @@ public class PostMain extends DataEntity<PostMain> {
 	private String subject;		// subject
 	private String content;		// content
 	private Category group;		// fk_group_id
-	private int orderNum;		// order
+	private int orderNum = 100;		// order
 	private int postNum;
 	
 	public PostMain() {

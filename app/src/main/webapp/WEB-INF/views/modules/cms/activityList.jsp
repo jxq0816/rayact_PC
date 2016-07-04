@@ -39,6 +39,7 @@
 				<th>所属分类</th>
 				<th>开始时间</th>
 				<th>结束时间</th>
+				<th>权重</th>
 				<th>是否有效</th>
 				<th>创建时间</th>
 				<shiro:hasPermission name="cms:activity:edit"><th>操作</th></shiro:hasPermission>
@@ -62,6 +63,9 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${activity.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+				    ${activity.order}
 				</td>
 				<td>
 					${activity.isAvaliable}

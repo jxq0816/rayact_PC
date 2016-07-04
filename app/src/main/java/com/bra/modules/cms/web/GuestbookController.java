@@ -3,6 +3,7 @@
  */
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -81,6 +83,26 @@ public class GuestbookController extends BaseController {
 		guestbookService.delete(guestbook, isRe);
 		addMessage(redirectAttributes, (isRe!=null&&isRe?"恢复审核":"删除")+"留言成功");
 		return "redirect:" + adminPath + "/cms/guestbook/?repage&status=2";
+	}
+
+	@RequestMapping(value = "app/save")
+	public void save(Guestbook guestbook,HttpServletResponse response) {
+		if (guestbook.getReUser() == null){
+			guestbook.setReUser(UserUtils.getUser());
+			guestbook.setReDate(new Date());
+		}
+		guestbookService.save(guestbook);
+		JSONObject j = new JSONObject();
+		j.put("status","success");
+		j.put("msg","您的反馈我们已经收到，谢谢！");
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException g) {
+
+		}
 	}
 
 }

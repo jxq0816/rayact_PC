@@ -89,6 +89,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">权重：</label>
+			<div class="controls">
+				<form:input path="order" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">是否有效：</label>
 			<div class="controls">
 				<form:select path="isAvaliable">

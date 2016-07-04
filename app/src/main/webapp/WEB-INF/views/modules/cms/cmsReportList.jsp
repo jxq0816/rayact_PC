@@ -25,6 +25,15 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>模块名称：</label>
+				<form:select path="modelName" htmlEscape="false" maxlength="255" class="input-medium">
+					<form:option value="">请选择</form:option>
+					<form:option value="article">资讯</form:option>
+					<form:option value="postMain">帖子</form:option>
+					<form:option value="user">人</form:option>
+					<form:option value="group">圈子</form:option>
+				</form:select>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>

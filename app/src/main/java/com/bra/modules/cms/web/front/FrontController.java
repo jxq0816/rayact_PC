@@ -283,42 +283,38 @@ public class FrontController extends BaseController{
 	/**
 	 * 显示内容
 	 */
-	@RequestMapping(value = "app/view-{categoryId}-{contentId}${urlSuffix}")
-	public String appView(@PathVariable String categoryId, @PathVariable String contentId, Model model) {
-		Category category = categoryService.get(categoryId);
-		if ("article".equals(category.getModule())){
-			// 获取文章内容
-			Article article = articleService.get(contentId);
-			if (article==null || !Article.DEL_FLAG_NORMAL.equals(article.getDelFlag())){
-				return "error/404";
-			}
-			// 文章阅读次数+1
-			articleService.updateHitsAddOne(contentId);
-			if(article.getCopyfrom()!=null){
-				if("扣子体育".equals(article.getCopyfrom())){
-					model.addAttribute("copyfrom", "独家");
-				}else{
-					model.addAttribute("copyfrom",article.getCopyfrom());
-				}
-			}
-			article.setArticleData(articleDataService.get(article.getId()));
-			model.addAttribute("article", article);
-			CmsUtils.addViewConfigAttribute(model, article.getCategory());
-			CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
-			Site site = siteService.get(category.getSite().getId());
-			Comment c = new Comment();
-			c.setContentId(article.getId());
-			c.setDelFlag(Comment.DEL_FLAG_NORMAL);
-			Page<Comment> page = new Page();
-			page.setPageNo(1);
-			page.setPageSize(4);
-			Page<Comment> pages = commentService.findPage(page,c);
-			if(page!=null){
-				model.addAttribute("comments",pages.getList());
-			}
-			return "modules/cms/frontViewArticle";
+	@RequestMapping(value = "app/viewArticle.html")
+	public String appView(HttpServletRequest request,Model model) {
+		String contentId = request.getParameter("id");
+		// 获取文章内容
+		Article article = articleService.get(contentId);
+		if (article==null || !Article.DEL_FLAG_NORMAL.equals(article.getDelFlag())){
+			return "error/404";
 		}
-		return "error/404";
+		// 文章阅读次数+1
+		articleService.updateHitsAddOne(contentId);
+		if(article.getCopyfrom()!=null){
+			if("扣子体育".equals(article.getCopyfrom())){
+				model.addAttribute("copyfrom", "独家");
+			}else{
+				model.addAttribute("copyfrom",article.getCopyfrom());
+			}
+		}
+		article.setArticleData(articleDataService.get(article.getId()));
+		model.addAttribute("article", article);
+		CmsUtils.addViewConfigAttribute(model, article.getCategory());
+		CmsUtils.addViewConfigAttribute(model, article.getViewConfig());
+		Comment c = new Comment();
+		c.setContentId(article.getId());
+		c.setDelFlag(Comment.DEL_FLAG_NORMAL);
+		Page<Comment> page = new Page();
+		page.setPageNo(1);
+		page.setPageSize(4);
+		Page<Comment> pages = commentService.findPage(page,c);
+		if(page!=null){
+			model.addAttribute("comments",pages.getList());
+		}
+		return "modules/cms/frontViewArticle";
 	}
 	/**
 	 * 获取内容评论
@@ -364,7 +360,7 @@ public class FrontController extends BaseController{
 		       if (StringUtils.isNotBlank(replyId)){
 					Comment replyComment = commentService.get(replyId);
 					if (replyComment != null){
-						comment.setContent("回复"+replyComment.getName()+":"
+						comment.setContent("@"+replyComment.getName()+":"
 								+comment.getContent());
 					}
 				}

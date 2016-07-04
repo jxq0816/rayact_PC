@@ -40,9 +40,16 @@
 		<include refid="postMainJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="subject != null and subject != ''">
+				AND a.subject LIKE
+				<if test="dbName == 'oracle'">'%'||#{subject}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{subject}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{subject},'%')</if>
+			</if>
 			<if test="group!=null and group.id != null">
 				AND a.fk_group_id = #{group.id}
 			</if>
+			${sqlMap.dsf}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -122,24 +129,28 @@
 	</update>
 
 	<select id="getPostMainList" resultType="Map">
+		select a.*,SUM(CASE WHEN timediff(p.create_date,#{updateDate})>=TIME('00:00:00') THEN 1 ELSE 0 END) AS newPostNum
+		from (
 		SELECT
-		 pm.id AS postId,
-		 pm.subject AS postName,
-		 cc.name AS groupName,
-		 cc.id AS groupId,
-		 pm.create_by AS creatorId,
-		 u.name AS creatorName,
-		 u.photo AS creatorPhoto,
-		 pm.post_num AS postNum,
-		 pm.remarks AS postImg,
-		 pm.content AS postContent,
-		 date_format(pm.create_date,"%Y-%m-%d %T") AS createDate,
+		pm.id AS postId,
+		pm.subject AS postName,
+		cc.name AS groupName,
+		cc.id AS groupId,
+		pm.create_by AS creatorId,
+		u.name AS creatorName,
+		u.photo AS creatorPhoto,
+		pm.post_num AS postNum,
+		pm.remarks AS postImg,
+		pm.content AS postContent,
+		date_format(pm.create_date,"%Y-%m-%d %T") AS createDate,
+		pm.order_num AS orderNum,
+		date_format(pm.update_date,"%Y-%m-%d %T") AS updateDate,
 		<choose>
 			<when test="currentUser!=null and currentUser.id !=null">
 				SUM(CASE WHEN c.create_by = #{currentUser.id} AND c.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END ) AS hasCollection
 			</when>
 			<otherwise>
-				 0 AS hasCollection
+				0 AS hasCollection
 			</otherwise>
 		</choose>
 		FROM post_main pm
@@ -155,18 +166,14 @@
 			${sqlMap.addition}
 		</if>
 		<if test="subject!=null and subject != ''">
-           AND (pm.subject like CONCAT('%',#{subject},'%') OR pm.content like CONCAT('%',#{content},'%'))
+			AND (pm.subject like CONCAT('%',#{subject},'%') OR pm.content like CONCAT('%',#{content},'%'))
 		</if>
 		GROUP BY pm.id
-		<choose>
-			<when test="page != null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy} DESC
-			</when>
-			<otherwise>
-				ORDER BY pm.update_date DESC
-			</otherwise>
-		</choose>
-
+		) a
+		LEFT JOIN post p on p.main_id = a.postId AND p.del_flag = #{DEL_FLAG_NORMAL}
+		GROUP BY a.postId
+		ORDER BY a.orderNum DESC,a.updateDate DESC
 	</select>
+
 	
 </mapper>

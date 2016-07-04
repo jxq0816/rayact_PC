@@ -69,6 +69,7 @@
 		a.content_id AS "contentId",
 		CASE WHEN a.content_model is NULL THEN "" ELSE a.content_model  END AS "contentModel",
 		CASE WHEN a.content is NULL THEN "" ELSE a.content  END  AS "content",
+		u.id AS "creatorId",
 		CASE WHEN u.name is NULL THEN "" ELSE u.name  END AS "name",
 		CASE WHEN u.photo is NULL THEN "" ELSE u.photo  END AS "photo",
 		CASE WHEN a.create_date is NULL THEN "" ELSE date_format(a.create_date,'%Y-%m-%d %T')  END AS "createDate",

@@ -23,7 +23,18 @@ public class Activity extends DataEntity<Activity> {
 	private String content;		// content
 	private String url;		// url
 	private String isAvaliable;		// is_avaliable
-	
+	private int order;
+
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+
 	public Activity() {
 		super();
 	}

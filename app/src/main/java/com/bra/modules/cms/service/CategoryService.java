@@ -54,10 +54,8 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 		if (list == null){
 			User user = UserUtils.getUser();
 			Category category = new Category();
-			category.setOffice(new Office());
-			category.getSqlMap().put("dsf", dataScopeFilter(user, "o", "u"));
-			category.setSite(new Site());
-			category.setParent(new Category());
+			//category.getSqlMap().put("dsf", dataScopeFilter(user, "o", "u"));
+			//category.setParent(new Category());
 			list = dao.findList(category);
 			// 将没有父节点的节点，找到父节点
 			Set<String> parentIdSet = Sets.newHashSet();
@@ -86,22 +84,22 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 			UserUtils.putCache(CACHE_CATEGORY_LIST, list);
 		}
 		
-		if (isCurrentSite){
-			List<Category> categoryList = Lists.newArrayList(); 
-			for (Category e : list){
-				if (Category.isRoot(e.getId()) || (e.getSite()!=null && e.getSite().getId() !=null 
-						&& e.getSite().getId().equals(Site.getCurrentSiteId()))){
-					if (StringUtils.isNotEmpty(module)){
-						if (module.equals(e.getModule()) || "".equals(e.getModule())){
-							categoryList.add(e);
-						}
-					}else{
-						categoryList.add(e);
-					}
-				}
-			}
-			return categoryList;
-		}
+//		if (isCurrentSite){
+//			List<Category> categoryList = Lists.newArrayList();
+//			for (Category e : list){
+//				if (Category.isRoot(e.getId()) || (e.getSite()!=null && e.getSite().getId() !=null
+//						&& e.getSite().getId().equals(Site.getCurrentSiteId()))){
+//					if (StringUtils.isNotEmpty(module)){
+//						if (module.equals(e.getModule()) || "".equals(e.getModule())){
+//							categoryList.add(e);
+//						}
+//					}else{
+//						categoryList.add(e);
+//					}
+//				}
+//			}
+//			return categoryList;
+//		}
 		return list;
 	}
 

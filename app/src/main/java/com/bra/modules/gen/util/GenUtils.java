@@ -328,7 +328,6 @@ public class GenUtils {
 						new String[]{"//", "/", "."}, new String[]{File.separator, File.separator, File.separator})
 				+ FreeMarkers.renderString(tpl.getFileName(), model);
 		logger.debug(" fileName === " + fileName);
-
 		// 获取生成文件内容
 		String content = FreeMarkers.renderString(StringUtils.trimToEmpty(tpl.getContent()), model);
 		logger.debug(" content === \r\n" + content);

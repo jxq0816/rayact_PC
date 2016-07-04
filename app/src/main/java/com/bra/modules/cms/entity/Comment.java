@@ -25,7 +25,7 @@ public class Comment extends DataEntity<Comment> {
 	private String content; // 评论内容
 	private String name; 	// 评论姓名
 	private String ip; 		// 评论IP
-	private User auditUser; // 审核人
+	private User auditUser; // 审核人---------评论人
 	private Date auditDate;	// 审核时间
 	public Comment() {
 		super();

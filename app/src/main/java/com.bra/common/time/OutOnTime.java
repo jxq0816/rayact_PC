@@ -1,7 +1,9 @@
 package com.bra.common.time;
 
 import com.bra.modules.cms.entity.Activity;
+import com.bra.modules.cms.entity.PostMain;
 import com.bra.modules.cms.service.ActivityService;
+import com.bra.modules.cms.service.PostMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,10 +20,13 @@ import java.util.List;
 public class OutOnTime {
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private PostMainService postMainService;
     public static long num =0 ;
     public static int index =0;
-    @Scheduled(cron = "* 0/30 * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void job1() {
+        System.out.println("活动结束定时计算任务开始。"+new Date().toString());
         Activity activity = new Activity();
         activity.setIsAvaliable("1");
         List<Activity> list = activityService.findList(activity);
@@ -33,6 +38,7 @@ public class OutOnTime {
                 activityService.save(activity1);
             }
         }
+        System.out.println("活动结束定时计算任务结束。"+new Date().toString());
 //        MyThread t = new MyThread();
 //        t.start();
 //        if(OutOnTime.index%4==0){
@@ -44,6 +50,21 @@ public class OutOnTime {
 //                }
 //            }
 //        }
+    }
+    //计算帖子的权重
+    @Scheduled(cron = "0 0/30 * * * ?")
+    public void job2(){
+        System.out.println("帖子权重定时计算任务开始。"+new Date().toString());
+        PostMain p = new PostMain();
+        p.getSqlMap().put("dsf"," and a.order_num > 0 ");
+        List<PostMain> ps = postMainService.findList(p);
+        for(PostMain postMain:ps){
+            int order = postMain.getOrderNum();
+            int now = order-1 > 0 ? order-1:0;
+            postMain.setOrderNum(now);
+            postMainService.save(postMain);
+        }
+        System.out.println("帖子权重定时计算任务结束。"+new Date().toString());
     }
 }
 

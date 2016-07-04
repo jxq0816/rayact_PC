@@ -23,7 +23,7 @@
 		}
 	</script>
 </head>
-<body>
+<body style="font-family: Microsoft Yahei">
 <div class="row">
 	<style>
 		.round {
@@ -38,57 +38,70 @@
 		.subject{
 			font-size:60px;
 			line-height:65px;
-			width:90%;
-			text-align:center;
-			margin:10px 30px;
+			width:83%;
+			margin:10px 10px;
 			display: inline-block;
 			font-weight:bold;
+			float: right;
 		}
 		.postSubject{
 			line-height:150%;
 			margin:20px 0px;
-			border-left:20px solid #f0860c;
 			color:#555555;
 			font-size:50px;
 			text-align:left;
-			width: 18%;
+			width: 25%;
 			display:inline-block
 		}
 	</style>
 	<div class="row">
-		<div class="subject">${postMain.subject}</div>
-		<div style="margin:25px 0px;display: inline-block">
+		<div style="margin:10px 0px;display: inline-block">
 			<img class="round" src="${postMain.createBy.photo}" name="${postMain.createBy.id}" onclick="jumpToInfo(this)">
 		</div>
-		<div style="display: inline-block;position: relative;bottom: -30px;line-height: 50px">
+		<div class="subject">${postMain.subject}</div>
+		<div style="display: inline-block;line-height: 80px;border-bottom: 1px solid #c8c8c8;width: 100%">
 			<span style="color: #f0860c;font-size: 40px">${postMain.createBy.name}</span>
-			<br>
-			<span style="color:#8C8C8C"> 楼主 &nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${postMain.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+			<span style="color:#8C8C8C;font-size: 40px">&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${postMain.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
 		</div>
-		<div style="line-height: 150%;font-size: 50px;color:#555555;">${postMain.content}</div>
+		<div style="line-height: 150%;font-size: 50px;color:#555555;margin-top: 30px;word-wrap:break-word;word-break:break-all;">${postMain.content}</div>
 		<c:forEach items="${imgs}" var="url">
 			<img src="${url}" width="100%"/>
 		</c:forEach>
 	</div>
 </div>
-<div class="row">
-	<div class="postSubject">回帖</div><div style="border-bottom:1px solid #C8C8C8;width: 75%;display:inline-block"></div>
+<div class="row" style="border-top: 1px solid #c8c8c8;width: 100%;margin-top: 38px;padding-top: 28px">
+	<div class="postSubject"><div style="border-left:13px solid #f0860c;border-right:3px solid #f0860c;display:inline-block;margin-right: 15px">&nbsp;</div>回帖(${count})</div>
 	<c:forEach items="${ptm}" var="post" varStatus="status">
 		<div class="row" style="margin:0 5px;padding-bottom: 10px;border-bottom: 1px solid #C8C8C8;">
 			<div class="row" style="display: block;">
-				<div style="display: inline-block"><img src="${post.createBy.photo}" class="round" name="${post.createBy.id}" onclick="jumpToInfo(this)"></div>
-				<div style="display: inline-block;position: relative;bottom: -30px;line-height: 50px"><span style="color: #f0860c;font-size: 40px">${post.createBy.name}</span><br><span style="color:#8C8C8C"> 第${status.index + 1}楼 &nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${post.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span></div>
-				<img src="${ctxStatic}/images/btn-huifu-h@2x.png" height="30px" width="60px" style="float: right;display: inline-block;"/>
-				<div style="margin-left:110px;line-height: 150%;font-size: 45px">${post.content}</div>
+				<div style="display: inline-block">
+					<c:choose>
+						<c:when test="${post.createBy.photo != null && post.createBy.photo != '' && post.createBy.photo != 'null'}">
+							<img src="${post.createBy.photo}" class="round" name="${post.createBy.id}" onclick="jumpToInfo(this)">
+						</c:when>
+						<c:otherwise>
+							<img src="${ctxStatic}/images/blank.png" class="round" name="${post.createBy.id}" onclick="jumpToInfo(this)">
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div style="display: inline-block;position: relative;bottom: -30px;line-height: 50px">
+					<span style="color: #f0860c;font-size: 40px">${post.createBy.name}</span>
+					<br>
+					<span style="color:#7a7a7a; font-size: 40px"> 第${status.index + 1}楼 &nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${post.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+				</div>
+				<!--<img src="${ctxStatic}/images/btn-huifu-h@2x.png" height="50px" width="100px" style="float: right;display: inline-block;"/>-->
+				<div style="margin-left:140px;line-height: 150%;font-size: 42px">${post.content}</div>
 			</div>
-			<div  name="${post.id}" class="ptp"  style="margin-left:110px">
+			<div  name="${post.id}" class="ptp"  style="margin-left:140px">
 
 			</div>
 		</div>
 	</c:forEach>
-	<div class="row" style="padding: 10px;align:center;">
-		<div onclick="jumpToApp()" style="margin:10px;height:50px;width:100%;background-image:url(${ctxStatic}/images/more2x.png);background-repeat:no-repeat;background-position:center;" ></div>
-	</div>
+	<c:if test="${ptm.size() > 0}">
+		<div class="row" style="padding: 10px;align:center;">
+			<div onclick="jumpToApp()" style="margin:10px;height:100px;width:100%;background-image:url(${ctxStatic}/images/more_post.png);background-repeat:no-repeat;background-position:center;" ></div>
+		</div>
+	</c:if>
 </div>
 <script>
 	function jumpToApp(){
@@ -97,8 +110,6 @@
 			iOSskip();
 		}else if(window.intent){
 			intent.DLCallAndroid();
-		}else{
-			alert("无方法");
 		}
 	}
 	function jumpToInfo(dom){
@@ -113,7 +124,7 @@
 				var vo = eval(data);
 				if (vo&&vo.length>0){
 					for(var i = 0 ; i < vo.length ; i++){
-						$dom.append("<div style='line-height:60px'><div style='color:#f0860c;margin-top:10px;font-size: 35px;display: inline-block'>"+vo[i].pname+":</div><div style='font-size: 40px;display: inline-block'>"+vo[i].content+"</div></div>");
+						$dom.append("<div style='line-height:60px'><div style='color:#7a7a7a;margin-top:10px;font-size: 35px;display: inline-block'>"+vo[i].pname+":<span style='font-size: 40px;display: inline-block;color:#1e1e1e'>"+vo[i].content+"</span></div></div>");
 					}
 				}
 			});

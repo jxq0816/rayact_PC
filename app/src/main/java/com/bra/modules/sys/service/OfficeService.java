@@ -42,6 +42,11 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
 		}
 		return  new ArrayList<Office>();
 	}
+
+	@Transactional(readOnly = true)
+	public List<Office> findListUn(Office office){
+		return dao.findList(office);
+	}
 	
 	@Transactional(readOnly = false)
 	public void save(Office office) {

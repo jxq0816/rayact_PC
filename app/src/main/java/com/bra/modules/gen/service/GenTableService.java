@@ -87,7 +87,6 @@ public class GenTableService extends BaseService {
 			
 			List<GenTable> list = genDataBaseDictDao.findTableList(genTable);
 			if (list.size() > 0){
-				
 				// 如果是新增，初始化表属性
 				if (StringUtils.isBlank(genTable.getId())){
 					genTable = list.get(0);

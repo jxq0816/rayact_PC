@@ -15,5 +15,5 @@ import java.util.Map;
 @MyBatisDao
 public interface PostMainDao extends CrudDao<PostMain> {
     public List<Map<String,String>> getPostMainList(PostMain postMain);
-	
+
 }

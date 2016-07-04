@@ -22,6 +22,7 @@ import java.util.List;
  */
 @Controller
 public class RegistController extends BaseController {
+    private String[] coze = {""};
     @Autowired
     private SystemService systemService;
     @Autowired
@@ -52,12 +53,14 @@ public class RegistController extends BaseController {
                 User user = new User();
                 Office o =  new Office();
                 o.getSqlMap().put("dsf"," and a.name = '"+StringUtils.OFFICECOZE+"' ");
-                List<Office> li = officeService.findList(o);
+                List<Office> li = officeService.findListUn(o);
                 if(li!=null&&li.size()>0){
                     user.setOffice(li.get(0));
                 }
+                //默认头像
+                user.setPhoto(StringUtils.ROOTPATH + "/static/images/blank.png");
                 if(!StringUtils.isNull(phone)){
-                    user.setName(phone);
+                    user.setName(phone.substring(0,3) + "****" + phone.substring(7, phone.length()));
                     user.setLoginName(phone);
                     user.setMobile(phone);
                 }
