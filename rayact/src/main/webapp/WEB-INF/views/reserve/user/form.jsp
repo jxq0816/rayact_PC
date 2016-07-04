@@ -145,25 +145,25 @@
 
                 </div>
 
-                <%--<div class="form-group">
+                <div class="form-group">
                     <label class="col-sm-2 control-label">权限:</label>
 
                     <div class="col-sm-10">
 
                         <c:forEach items="${authList}" var="auth" varStatus="astatus">
-                            &lt;%&ndash;遍历所有权限&ndash;%&gt;
+                            <%--遍历所有权限--%>
                             <div class="row">
                                 <div class="col-sm-6 col-md-8 col-lg-10 cl-mcont">
                                     <div class="block-flat">
-                                            &lt;%&ndash;权限组&ndash;%&gt;
+                                            <%--权限组--%>
                                         <div class="header">
                                             <c:set value="" var="checked"></c:set>
                                             <c:forEach items="${userRole.authorityList}" var="ur">
-                                                &lt;%&ndash;遍历用户的已有权限&ndash;%&gt;
+                                                <%--遍历用户的已有权限--%>
                                                 <c:if test="${ur.code eq auth.code}">
                                                     <c:set value="checked='checked'" var="checked"></c:set>
                                                 </c:if>
-                                                &lt;%&ndash;遍历用户的已有权限 end&ndash;%&gt;
+                                                <%--遍历用户的已有权限 end--%>
                                             </c:forEach>
                                             <label>
                                                 <input type="checkbox" ${checked}
@@ -173,14 +173,14 @@
                                                     ${auth.name}
                                             </label>
                                         </div>
-                                            &lt;%&ndash;权限组结束&ndash;%&gt;
+                                            <%--权限组结束--%>
 
                                         <c:forEach items="${auth.authorityList}" var="a" varStatus="s">
-                                            &lt;%&ndash; 权限组的子权限&ndash;%&gt;
+                                            <%-- 权限组的子权限--%>
                                             <div class="radio col-lg-4">
                                                 <c:set value="" var="childchecked"></c:set>
                                                 <c:forEach items="${userRole.authorityList}" var="ur">
-                                                    &lt;%&ndash;遍历用户的已有权限&ndash;%&gt;
+                                                    <%--遍历用户的已有权限--%>
                                                     <c:if test="${ur.code eq auth.code}">
                                                         <c:forEach items="${ur.authorityList}" var="child">
                                                             <c:if test="${a.code eq child.code}">
@@ -189,7 +189,7 @@
                                                             </c:if>
                                                         </c:forEach>
                                                     </c:if>
-                                                    &lt;%&ndash;遍历用户的已有权限 end&ndash;%&gt;
+                                                    <%--遍历用户的已有权限 end--%>
                                                 </c:forEach>
 
                                                 <label> <input data-parent="${auth.code}"
@@ -202,15 +202,15 @@
                                                            >
                                                 </label>
                                             </div>
-                                            &lt;%&ndash; 子权限 end&ndash;%&gt;
+                                            <%-- 子权限 end--%>
                                         </c:forEach>
                                     </div>
                                 </div>
                             </div>
-                            &lt;%&ndash;遍历所有权限 end&ndash;%&gt;
+                            <%--遍历所有权限 end--%>
                         </c:forEach>
                     </div>
-                </div>--%>
+                </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">备注:</label>

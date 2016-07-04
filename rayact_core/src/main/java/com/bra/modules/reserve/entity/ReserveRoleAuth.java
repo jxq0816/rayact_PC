@@ -5,7 +5,6 @@ import com.bra.common.utils.Collections3;
 import com.bra.common.utils.JsonUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.modules.reserve.entity.json.Authority;
-import com.google.common.collect.Lists;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -22,15 +21,8 @@ public class ReserveRoleAuth extends SaasEntity<ReserveRoleAuth> {
 	private String userType; //角色编号
 	private String authority;		// 对应用户权限(json字符串)
 
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
-	private List<Authority> authorityList = Lists.newArrayList();
+	private List<Authority> frontAuthorityList;//该字段用于传输用户所修改的权限
+	private List<Authority> authorityList;
 
 	public List<Authority> getAuthorityList() {
 		if (Collections3.isEmpty(authorityList) && StringUtils.isNotBlank(authority)) {
@@ -68,5 +60,22 @@ public class ReserveRoleAuth extends SaasEntity<ReserveRoleAuth> {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public List<Authority> getFrontAuthorityList() {
+		return frontAuthorityList;
+	}
+
+	public void setFrontAuthorityList(List<Authority> frontAuthorityList) {
+		this.frontAuthorityList = frontAuthorityList;
+	}
+
 
 }

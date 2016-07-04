@@ -56,16 +56,17 @@ public class ReserveRoleAuthController extends BaseController {
 		List<Authority> authorities = AuthorityUtils.findByAuths(reserveRoleAuth.getAuthorityList());
 		reserveRoleAuth.setAuthorityList(authorities);
 		model.addAttribute("reserveRoleAuth", reserveRoleAuth);
-		model.addAttribute("authList", AuthorityUtils.getAll());
+		model.addAttribute("allAuthList", AuthorityUtils.getAll());
 		return "reserve/role/reserveRoleAuthForm";
 	}
 
 	@RequestMapping(value = "save")
 	public String save(ReserveRoleAuth reserveRoleAuth, Model model, RedirectAttributes redirectAttributes) {
+
 		if (!beanValidator(model, reserveRoleAuth)){
 			return form(reserveRoleAuth, model);
 		}
-
+		reserveRoleAuth.setAuthorityList(reserveRoleAuth.getFrontAuthorityList());
 		reserveRoleAuthService.save(reserveRoleAuth);
 		addMessage(redirectAttributes, "保存角色权限成功");
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveRoleAuth/?repage";
