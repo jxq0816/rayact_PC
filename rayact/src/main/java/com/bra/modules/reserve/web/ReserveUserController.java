@@ -7,7 +7,9 @@ import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.reserve.entity.ReserveRoleAuth;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.service.ReserveRoleAuthService;
 import com.bra.modules.reserve.service.ReserveUserService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.AuthorityUtils;
@@ -18,11 +20,15 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by xiaobin on 16/1/19.
@@ -34,7 +40,8 @@ public class ReserveUserController extends BaseController {
     private ReserveVenueService reserveVenueService;
     @Autowired
     private ReserveUserService reserveUserService;
-
+    @Autowired
+    private ReserveRoleAuthService reserveRoleAuthService;
     @ModelAttribute
     public User get(@RequestParam(required = false) String id) {
         if (StringUtils.isNotBlank(id)) {
@@ -68,6 +75,8 @@ public class ReserveUserController extends BaseController {
         if (StringUtils.isNotBlank(user.getId())) {
             model.addAttribute("userRole", reserveUserService.getRole(user));
         }
+        List<ReserveRoleAuth> roleAuthList = reserveRoleAuthService.findList(new ReserveRoleAuth());
+        model.addAttribute("roleAuthList", roleAuthList);
         model.addAttribute("venueList", reserveVenueService.findList(new ReserveVenue()));
         model.addAttribute("authList", AuthorityUtils.getAll());
         return "reserve/user/form";

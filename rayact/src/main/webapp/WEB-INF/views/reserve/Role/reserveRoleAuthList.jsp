@@ -44,6 +44,7 @@
 								<thead>
 								<tr>
 									<th>角色</th>
+									<th>编号</th>
 									<th>操作</th>
 								</tr>
 								</thead>
@@ -53,7 +54,9 @@
 										<td><a href="${ctx}/reserve/reserveRoleAuth/form?id=${reserveRoleAuth.id}">
 												${reserveRoleAuth.name}
 										</a></td>
-
+										<td>
+												${reserveRoleAuth.userType}
+										</td>
 											<td>
 												<a class="btn btn-primary btn-xs "
 												   href="${ctx}/reserve/reserveRoleAuth/form?id=${reserveRoleAuth.id}">配置</a>
