@@ -1,11 +1,11 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveMenu;
 import com.bra.modules.reserve.service.ReserveMenuService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +45,10 @@ public class ReserveMenuController extends BaseController {
 	/*@RequiresPermissions("reserve:reserveMenu:view")*/
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveMenu reserveMenu, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveMenu> page = reserveMenuService.findPage(new Page<ReserveMenu>(request, response), reserveMenu);
-		model.addAttribute("page", page);
+		List<ReserveMenu> list = Lists.newArrayList();
+		List<ReserveMenu> sourcelist = reserveMenuService.findList(reserveMenu);
+		ReserveMenu.sortList(list, sourcelist, reserveMenu.getRootId(), true);
+		model.addAttribute("list", list);
 		return "reserve/menu/reserveMenuList";
 	}
 

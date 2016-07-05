@@ -5,6 +5,11 @@
     <title>菜单管理</title>
     <meta name="decorator" content="main"/>
     <%@include file="/WEB-INF/views/include/treetable.jsp" %>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#treeTable").treeTable({expandLevel : 3}).show();
+        });
+    </script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -37,7 +42,7 @@
                                     <th>权限标识</th>
                                     <th>操作</th>
                                 </thead>
-                                <tbody><c:forEach items="${page.list}" var="menu">
+                                <tbody><c:forEach items="${list}" var="menu">
                                     <tr id="${menu.id}" pId="${menu.parent.id ne '1'?menu.parent.id:'0'}">
                                         <td nowrap><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i><a
                                                 href="${ctx}/reserve/reserveMenu/form?id=${menu.id}">${menu.name}</a></td>
