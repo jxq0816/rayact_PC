@@ -44,6 +44,12 @@
         "name": "时令管理",
         "href":"/reserve/reserveTimeInterval/list",
         "authorityList": []
+      },
+      {
+        "code": "menu",
+        "name": "菜单管理",
+        "href":"/reserve/reserveMenu/list",
+        "authorityList": []
       }
     ]
   },
