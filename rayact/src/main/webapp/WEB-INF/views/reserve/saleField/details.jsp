@@ -10,6 +10,9 @@
                 <td>预定人:${cos.userName}(<j:ifelse
                         test="${'1' eq cos.consType}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
                 </td>
+                <td>
+                    手机号：${cos.consMobile}
+                </td>
                 <j:if test="${!empty tutorOrderList}">
                     <c:forEach items="${tutorOrderList}" var="tutorOrder">
                         <td>教练:</td><td>${tutorOrder.tutor.name}</td>

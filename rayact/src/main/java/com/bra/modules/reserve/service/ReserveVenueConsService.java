@@ -96,8 +96,8 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                                            Double weiXinPersonalInput,
                                           Double aliPayInput,
                                            Double aliPayPersonalInput,
-                                          Double couponInput/*,
-                                          Double owningInput*/) {
+                                          Double couponInput,
+                                          String remarks) {
 
         ReserveVenueCons reserveVenueCons = this.get(id);
         reserveVenueCons.setPayType(payType);
@@ -109,7 +109,7 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
         reserveVenueCons.setAliPayInput(aliPayInput);
         reserveVenueCons.setAliPayPersonalInput(aliPayPersonalInput);
         reserveVenueCons.setCouponInput(couponInput);
-      /*  reserveVenueCons.setOwningInput(owningInput);*/
+        reserveVenueCons.setRemarks(remarks);
         User checkOutUser = new User();
         checkOutUser.setId(authUserId);
         reserveVenueCons.setCheckOutUser(checkOutUser);//授权人

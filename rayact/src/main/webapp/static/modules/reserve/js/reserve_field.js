@@ -363,6 +363,7 @@ $(document).ready(function () {
 
         var shouldPrice = $("#shouldPrice").val();
         var discountPrice = $("#discountPrice").val();
+        var remarks = $("#remarks").val();
         var consPrice = shouldPrice;
         if(discountPrice){
             if (isNaN(discountPrice)) {
@@ -440,8 +441,8 @@ $(document).ready(function () {
                 weiXinPersonalInput: weiXinPersonalInput,
                 aliPayInput: aliPayInput,
                 aliPayPersonalInput: aliPayPersonalInput,
-                couponInput: couponInput
-                /*  owningInput:owningInput*/
+                couponInput: couponInput,
+                remarks:remarks
             },
             success: function (values) {
                 if(values){

@@ -244,7 +244,7 @@
         </if>
         ORDER BY day ASC
     </select>
-    <!--pc总收入统计 流水-->
+    <!--pc统计 流水收益-->
     <select id="totalIncomeReport" resultType="com.bra.modules.reserve.entity.form.ReserveVenueTotalIntervalReport">
         SELECT
 		v.id as "reserveVenue.id",

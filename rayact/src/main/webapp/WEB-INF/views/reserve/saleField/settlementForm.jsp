@@ -7,6 +7,7 @@
         <table>
             <thead>
             <th>预定人</th>
+            <th>手机号</th>
             <th>场地</th>
             <th>开始时间</th>
             <th>结束时间</th>
@@ -27,6 +28,11 @@
                     <td>
                             ${order.userName}(<j:ifelse
                             test="${member==null}"><j:then>散客</j:then><j:else>会员</j:else></j:ifelse>)
+
+
+                    </td>
+                    <td>
+                            ${order.consMobile}
                     </td>
                     <td>
                             ${item.reserveField.name}
@@ -67,6 +73,13 @@
         <label class="col-lg-2">预订人备注信息:</label>
         <div class="col-lg-10">
             ${member.remarks}
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <label class="col-lg-2">订单备注:</label>
+        <div class="col-lg-10">
+            <input id="remarks" value="${order.remarks}" type="text" class="form-control"/>
         </div>
     </div>
     <hr/>

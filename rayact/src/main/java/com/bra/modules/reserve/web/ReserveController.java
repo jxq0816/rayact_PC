@@ -469,11 +469,10 @@ public class ReserveController extends BaseController {
                               Double aliPayInput,
                               Double aliPayPersonalInput,
                               Double couponInput,
-                              /*   Double owningInput,*/
-                              Model model) {
+                              String remarks) {
 
         ReserveVenueCons venueCons = reserveVenueConsService.saveSettlement(id, payType, authUserId, discountPrice, consPrice,
-                memberCardInput, cashInput, bankCardInput, weiXinInput, weiXinPersonalInput, aliPayInput, aliPayPersonalInput, couponInput/*,owningInput*/);
+                memberCardInput, cashInput, bankCardInput, weiXinInput, weiXinPersonalInput, aliPayInput, aliPayPersonalInput, couponInput,remarks);
         List<Map<String, String>> mapList = getReserveMap(venueCons.getVenueConsList());
         Map map = new HashMap<>();
         map.put("mapList", mapList);
