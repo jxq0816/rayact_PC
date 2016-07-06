@@ -3,18 +3,51 @@
 <html>
 <head>
     <title>菜单管理</title>
+    <%@include file="/WEB-INF/views/include/treetable.jsp" %>
+    <%@include file="/WEB-INF/views/include/head.jsp" %>
+   <%-- <link href="${ctxStatic}/bootstrap/2.3.1/css_default/bootstrap.min.css" type="text/css" rel="stylesheet" />--%>
     <meta name="decorator" content="main"/>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#name").focus();
+            $("#inputForm").validate({
+                submitHandler: function(form){
+                    loading('正在提交，请稍等...');
+                    form.submit();
+                },
+                errorContainer: "#messageBox",
+                errorPlacement: function(error, element) {
+                    $("#messageBox").text("输入有误，请先更正。");
+                    if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+                        error.appendTo(element.parent().parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
+    if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
+        $("body").prepend("<i id=\"btnMenu\" class=\"icon-th-list\" style=\"cursor:pointer;float:right;margin:10px;\"></i><div id=\"menuContent\"></div>");
+        $("#btnMenu").click(function(){
+            top.$.jBox('get:${ctx}/sys/menu/treeselect;JSESSIONID=<shiro:principal property="sessionid"/>', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
+            //if ($("#menuContent").html()==""){$.get("${ctx}/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
+        });
+    }//-->
+    </script>
 </head>
 <body>
+
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="roleAuth"></jsp:param>
+    <jsp:param name="action" value="menu"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-lg-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>角色权限配置</h3>
+                    <h3>菜单管理</h3>
                 </div>
                 <div class="content">
                     <div class="tab-container">
@@ -24,18 +57,10 @@
                                 <form:hidden path="id"/>
                                 <sys:message content="${message}"/>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">父级编号：</label>
+                                    <label class="col-sm-3 control-label">上级菜单：</label>
                                     <div class="col-sm-6">
-                                        <sys:select cssClass="input-large"
-                                                    name="parent.id"
-                                                    cssStyle="width:100%"
-                                                    items="${menuList}"
-                                                    value="${reserveMenu.parent.id}"
-                                                    itemLabel="name"
-                                                    itemValue="id"
-                                                    defaultValue=""
-                                                    defaultLabel="请选择父菜单"
-                                        ></sys:select>
+                                        <sys:treeselect id="menu" name="parent.id" value="${reserveMenu.parent.id}" labelName="parent.name" labelValue="${reserveMenu.parent.name}"
+                                                        title="菜单" url="/reserve/reserveMenu/treeData" extId="${reserveMenu.id}" cssClass="required"/>
                                     </div>
                                 </div>
                                 <%--<div class="form-group">

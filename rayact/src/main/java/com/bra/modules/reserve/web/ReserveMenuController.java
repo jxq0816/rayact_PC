@@ -6,17 +6,20 @@ import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveMenu;
 import com.bra.modules.reserve.service.ReserveMenuService;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单配置Controller
@@ -56,8 +59,20 @@ public class ReserveMenuController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(ReserveMenu reserveMenu, Model model) {
 		model.addAttribute("reserveMenu", reserveMenu);
-		List<ReserveMenu> menuList=reserveMenuService.findList(new ReserveMenu());
-		model.addAttribute("menuList",menuList);
+		if (reserveMenu.getParent()==null||reserveMenu.getParent().getId()==null){
+			reserveMenu.setParent(new ReserveMenu(ReserveMenu.getRootId()));
+		}
+		reserveMenu.setParent(reserveMenuService.get(reserveMenu.getParent().getId()));
+		// 获取排序号，最末节点排序号+30
+		if (StringUtils.isBlank(reserveMenu.getId())){
+			List<ReserveMenu> list = Lists.newArrayList();
+			List<ReserveMenu> sourcelist = reserveMenuService.findList(new ReserveMenu());
+			ReserveMenu.sortList(list, sourcelist, reserveMenu.getParentId(), false);
+			if (list.size() > 0){
+				reserveMenu.setSort(list.get(list.size()-1).getSort() + 30);
+			}
+		}
+		model.addAttribute("reserveMenu",reserveMenu);
 		return "reserve/menu/reserveMenuForm";
 	}
 
@@ -78,6 +93,27 @@ public class ReserveMenuController extends BaseController {
 		reserveMenuService.delete(reserveMenu);
 		addMessage(redirectAttributes, "删除菜单成功");
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveMenu/?repage";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "treeData")
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, @RequestParam(required=false) String isShowHide, HttpServletResponse response) {
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		List<ReserveMenu> list = reserveMenuService.findList(new ReserveMenu());
+		for (int i=0; i<list.size(); i++){
+			ReserveMenu e = list.get(i);
+			if (StringUtils.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
+				if(isShowHide != null && isShowHide.equals("0") && e.getIsShow().equals("0")){
+					continue;
+				}
+				Map<String, Object> map = Maps.newHashMap();
+				map.put("id", e.getId());
+				map.put("pId", e.getParentId());
+				map.put("name", e.getName());
+				mapList.add(map);
+			}
+		}
+		return mapList;
 	}
 
 }
