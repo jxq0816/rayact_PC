@@ -7,6 +7,8 @@ import com.bra.common.persistence.CrudDao;
 import com.bra.common.persistence.annotation.MyBatisDao;
 import com.bra.modules.reserve.entity.ReserveMenu;
 
+import java.util.List;
+
 /**
  * 菜单配置DAO接口
  * @author jiangxingqi
@@ -14,5 +16,12 @@ import com.bra.modules.reserve.entity.ReserveMenu;
  */
 @MyBatisDao
 public interface ReserveMenuDao extends CrudDao<ReserveMenu> {
-	
+
+    List<ReserveMenu> findByParentIdsLike(ReserveMenu menu);
+
+    List<ReserveMenu> findByUserId(ReserveMenu menu);
+
+    int updateParentIds(ReserveMenu menu);
+
+    int updateSort(ReserveMenu menu);
 }

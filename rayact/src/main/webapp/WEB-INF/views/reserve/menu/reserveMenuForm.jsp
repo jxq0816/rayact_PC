@@ -4,8 +4,22 @@
 <head>
     <title>菜单管理</title>
     <%@include file="/WEB-INF/views/include/treetable.jsp" %>
-    <%@include file="/WEB-INF/views/include/head.jsp" %>
-   <%-- <link href="${ctxStatic}/bootstrap/2.3.1/css_default/bootstrap.min.css" type="text/css" rel="stylesheet" />--%>
+    <script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <link href="${ctxStatic}/bootstrap/2.3.1/custom-theme/jquery-ui-1.10.3.custom.css" type="text/css" rel="stylesheet" />
+    <script src="${ctxStatic}/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--[if lte IE 6]><link href="${ctxStatic}/bootstrap/bsie/css/bootstrap-ie6.min.css" type="text/css" rel="stylesheet" />
+    <script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
+    <link href="${ctxStatic}/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
+    <script src="${ctxStatic}/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
+    <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
+    <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
+    <link href="${ctxStatic}/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
+    <script src="${ctxStatic}/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
+    <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="${ctxStatic}/common/mustache.min.js" type="text/javascript"></script>
+    <script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
+    <script src="${ctxStatic}/bootstrap/2.3.1/custom-theme/assets/js/vendor/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+    <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
     <meta name="decorator" content="main"/>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -69,14 +83,14 @@
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
                                 </div>--%>
-                                <div class="form-group">
+                               <%-- <div class="form-group">
                                     <label class="col-sm-3 control-label">所有父级编号：</label>
                                     <div class="col-sm-6">
                                         <form:input path="parentIds" htmlEscape="false" maxlength="2000"
                                                     class="form-control required"/>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
-                                </div>
+                                </div>--%>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">名称：</label>
                                     <div class="col-sm-6">
