@@ -137,6 +137,12 @@
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
+
+	<update id="updateSort">
+		UPDATE reserve_menu SET
+		sort = #{sort}
+		WHERE id = #{id}
+	</update>
 	
 	<update id="updateParentIds">
 		UPDATE reserve_menu SET 

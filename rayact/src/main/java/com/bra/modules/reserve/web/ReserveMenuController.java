@@ -116,4 +116,15 @@ public class ReserveMenuController extends BaseController {
 		return mapList;
 	}
 
+	@RequestMapping(value = "updateSort")
+	public String updateSort(String[] ids, Integer[] sorts, RedirectAttributes redirectAttributes) {
+		for (int i = 0; i < ids.length; i++) {
+			ReserveMenu menu = new ReserveMenu(ids[i]);
+			menu.setSort(sorts[i]);
+			reserveMenuService.updateMenuSort(menu);
+		}
+		addMessage(redirectAttributes, "保存菜单排序成功!");
+		return "redirect:" + adminPath + "/reserve/reserveMenu";
+	}
+
 }

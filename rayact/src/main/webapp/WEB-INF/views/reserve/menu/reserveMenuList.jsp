@@ -5,11 +5,7 @@
     <title>菜单管理</title>
     <meta name="decorator" content="main"/>
     <%@include file="/WEB-INF/views/include/treetable.jsp" %>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#treeTable").treeTable({expandLevel : 3}).show();
-        });
-    </script>
+
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
@@ -75,5 +71,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#treeTable").treeTable({expandLevel : 3}).show();
+    });
+    function updateSort() {
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveMenu/updateSort");
+        $("#searchForm").submit();
+    }
+</script>
 </body>
 </html>

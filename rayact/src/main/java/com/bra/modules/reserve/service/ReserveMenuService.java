@@ -74,4 +74,11 @@ public class ReserveMenuService extends CrudService<ReserveMenuDao, ReserveMenu>
 		super.delete(reserveMenu);
 	}
 
+	@Transactional(readOnly = false)
+	public void updateMenuSort(ReserveMenu reserveMenu) {
+		reserveMenuDao.updateSort(reserveMenu);
+		/*// 清除用户菜单缓存
+		UserUtils.removeCache(UserUtils.CACHE_MENU_LIST);*/
+	}
+
 }
