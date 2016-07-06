@@ -22,9 +22,9 @@ public class StatementsUtils {
         }else if ("7".equals(transactionType)) {
             return "次卡充值";
         }else if ("8".equals(transactionType)) {
-            return "包场消费";
+            return "场地";
         }else if ("9".equals(transactionType)) {
-            return "场次票";
+            return "场次";
         }else if ("10".equals(transactionType)) {
             return "教练费用";
         }

@@ -64,10 +64,14 @@
                         <thead>
                         <tr>
                             <th>充值金额</th>
-                            <th>消费类型</th>
-                            <th>半小时</th>
-                            <th>支付方式</th>
+                            <j:set name="chargeSum" value="0"></j:set>
+                            <th>项目/摘要</th>
+                            <th>消费时间/半小时</th>
+                            <j:set name="consumptionTimeSum" value="0"></j:set>
+                            <th>付款方式</th>
+                            <th>消费日期</th>
                             <th>消费金额</th>
+                            <j:set name="transactionVolumeSum" value="0"></j:set>
                             <th>会员余额</th>
                             <th>操作员</th>
                             <th>备注</th>
@@ -80,6 +84,7 @@
                                 <td>
                                     <j:if test="${statement.transactionType==1 or statement.transactionType==7}">
                                         ${statement.transactionVolume}
+                                        <j:set name="chargeSum" value="${statement.transactionVolume+chargeSum}"></j:set>
                                     </j:if>
                                 </td>
                                 <td>
@@ -87,13 +92,19 @@
                                 </td>
                                 <td>
                                         ${statement.transactionNum}
+                                    <j:set name="consumptionTimeSum" value="${consumptionTimeSum+statement.transactionNum}"></j:set>
                                 </td>
                                 <td>
                                         ${fns:getPayType(statement.payType)}
                                 </td>
                                 <td>
+                                        <fmt:formatDate value="${statement.createDate}"
+                                                        pattern="yyyy-MM-dd"/>
+                                </td>
+                                <td>
                                     <j:if test="${statement.transactionType!=1 and statement.transactionType!=7}">
                                         ${statement.transactionVolume}
+                                        <j:set name="transactionVolumeSum" value="${statement.transactionVolume+transactionVolumeSum}"></j:set>
                                     </j:if>
                                 </td>
                                 <td>
@@ -106,13 +117,43 @@
                                 <td>
                                         ${statement.remarks}
                                 </td>
+
+                                </td>
                                 <td>
                                     <fmt:formatDate value="${statement.updateDate}"
                                                     pattern="yyyy-MM-dd HH:mm:ss"/>
-
                                 </td>
                             </tr>
                         </c:forEach>
+                        <tr>
+                            <td>
+                                    ${chargeSum}
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                    ${consumptionTimeSum}
+                            </td>
+                            <td>
+                                    ${fns:getPayType(statement.payType)}
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                    ${transactionVolumeSum}
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
 
