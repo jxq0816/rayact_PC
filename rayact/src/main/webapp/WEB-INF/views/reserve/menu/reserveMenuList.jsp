@@ -17,13 +17,19 @@
             <div class="block-flat">
                 <div class="header">
                     <h3>菜单列表</h3>
-                    <div class="pull-right">
-                        <a class="btn btn-success" href="${ctx}/reserve/reserveMenu/form">
-                            <i class="fa fa-plus"></i>添加
-                        </a>
+                </div>
+                <div class="breadcrumb form-search">
+                    <div class="row">
+                        <div class="pull-right">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <a class="btn btn-success" href="${ctx}/reserve/reserveMenu/form">
+                                    <i class="fa fa-plus"></i>添加
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <sys:message content="${message}"/>
+                <sys:msg content="${message}"/>
                 <form:form id="searchForm" modelAttribute="reserveMenu" action="${ctx}/reserve/reserveMenu/list"
                            method="post">
                     <div class="content">
@@ -41,13 +47,14 @@
                                 <tbody><c:forEach items="${list}" var="menu">
                                     <tr id="${menu.id}" pId="${menu.parent.id ne '1'?menu.parent.id:'0'}">
                                         <td nowrap><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i><a
-                                                href="${ctx}/reserve/reserveMenu/form?id=${menu.id}">${menu.name}</a></td>
+                                                href="${ctx}/reserve/reserveMenu/form?id=${menu.id}">${menu.name}</a>
+                                        </td>
                                         <td title="${menu.href}">${fns:abbr(menu.href,30)}</td>
                                         <td style="text-align:center;">
                                             <input type="hidden" name="ids" value="${menu.id}"/>
                                             <input name="sorts" type="text" value="${menu.sort}"
                                                    style="width:50px;margin:0;padding:0;text-align:center;">
-                                               <%-- ${menu.sort}--%>
+                                                <%-- ${menu.sort}--%>
                                         </td>
                                         <td>${menu.isShow eq '1'?'显示':'隐藏'}</td>
                                         <td title="${menu.permission}">${fns:abbr(menu.permission,30)}</td>
@@ -62,18 +69,18 @@
                             </table>
                         </div>
                     </div>
-                        <div class="form-actions pagination-left">
-                            <input id="btnSubmit" class="btn btn-primary" type="button" value="保存排序"
-                                   onclick="updateSort();"/>
-                        </div>
+                    <div class="form-actions pagination-left">
+                        <input id="btnSubmit" class="btn btn-primary" type="button" value="保存排序"
+                               onclick="updateSort();"/>
+                    </div>
                 </form:form>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#treeTable").treeTable({expandLevel : 3}).show();
+    $(document).ready(function () {
+        $("#treeTable").treeTable({expandLevel: 3}).show();
     });
     function updateSort() {
         $("#searchForm").attr("action", "${ctx}/reserve/reserveMenu/updateSort");
