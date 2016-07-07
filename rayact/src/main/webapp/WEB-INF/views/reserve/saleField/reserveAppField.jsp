@@ -108,7 +108,7 @@
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/reserve_app_field.js"></script>
-<script>
+<%--<script>
     window.alert = function(name){
         var iframe = document.createElement("IFRAME");
         iframe.style.display="none";
@@ -117,6 +117,6 @@
         window.frames[0].window.alert(name);
         iframe.parentNode.removeChild(iframe);
     }
-</script>
+</script>--%>
 </body>
 </html>

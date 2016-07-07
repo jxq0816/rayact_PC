@@ -27,9 +27,20 @@ $(document).ready(function () {
 
         if ($(this).hasClass("access")) {//预定
             var index = $("#orderForm div").length;
-          /*  if(index>=0){
-                $("#reserve_submit").show();
-            }*/
+            if(index==0){
+                jQuery.postItems({
+                    url: ctx+'/app/reserve/field/checkUnPayOrder',
+                    data:{
+                        reserveType :1,
+                        phone:'${phone}'
+                    },
+                    success: function (result) {
+                        if(typeof iOSskip === 'function'){
+                            iOSskip(result);
+                        }
+                    }
+                });
+            }
             if(index>=8){
                 alert("您选择的场地太多啦，请分两次下单结算哦。");
                 return;

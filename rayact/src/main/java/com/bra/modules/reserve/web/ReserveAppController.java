@@ -45,7 +45,7 @@ public class ReserveAppController extends BaseController {
 
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Date consDate, String venueId, String projectId, Model model) {
+    public String main(Date consDate, String venueId, String projectId, String phone,Model model) {
         if (consDate == null) {
             consDate = new Date();
         }
@@ -132,6 +132,7 @@ public class ReserveAppController extends BaseController {
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             model.addAttribute("consDate", fmt.format(consDate));
             model.addAttribute("venueId", venueId);
+            model.addAttribute("phone", phone);
         }
         return "reserve/saleField/reserveAppField";
     }
@@ -286,6 +287,30 @@ public class ReserveAppController extends BaseController {
             orderList = reserveAppVenueConsService.orderList(reserveType, phone);
         }
         return JSON.toJSONString(orderList);
+    }
+
+    @RequestMapping(value = "checkUnPayOrder")
+    @ResponseBody
+    /**
+     *订单详情
+     * @param orderId
+     * @return
+     */
+    public String checkUnPayOrder(String phone) {
+        List<Map> orderList = null;
+        if (StringUtils.isNoneEmpty(phone)) {
+            orderList = reserveAppVenueConsService.orderList("1", phone);
+        }
+        Map rs=new HashMap<>();
+        if(orderList!=null){
+            Map map = orderList.get(0);
+            String orderId=(String)map.get("orderId");
+            rs.put("rs","1");
+            rs.put("orderId",orderId);
+        }else{
+            rs.put("rs","0");
+        }
+        return JSON.toJSONString(rs);
     }
 
     @RequestMapping(value = "cancelOrder")
