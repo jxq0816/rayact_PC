@@ -34,7 +34,7 @@
 		<include refid="focusJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="createBy!=null and createBy.id != null">
+			<if test="createBy!=null and createBy.id != null and createBy.id != ''">
 				AND a.create_by = #{createBy.id}
 			</if>
 			<if test="modelId!=null and modelId != '' ">
@@ -143,6 +143,12 @@
 		UPDATE focus SET
 		del_flag = #{delFlag}
 		WHERE id = #{id}
+	</update>
+
+	<update id="deleteAll">
+		UPDATE focus SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
 	</update>
 	
 </mapper>

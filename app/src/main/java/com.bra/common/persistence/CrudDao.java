@@ -78,5 +78,12 @@ public interface CrudDao<T> extends BaseDao {
 	 * @return
 	 */
 	public int delete(T entity);
-	
+
+	/**
+	 * 批量删除数据（一般为逻辑删除，更新del_flag字段为1）
+	 * @param entity
+	 * @return
+	 */
+	public int deleteAll(T entity);
+
 }

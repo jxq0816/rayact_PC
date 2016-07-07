@@ -20,6 +20,30 @@
 			$("#searchForm").submit();
         	return false;
         }
+        //全选、取消全选的事件
+		function selectAll(){
+			if ($("input[name='selectAll']").attr("checked")) {
+				$(":checkbox").attr("checked", true);
+			} else {
+				$(":checkbox").attr("checked", false);
+			}
+		}
+		function deleteAll(){
+		    if(confirm("确认删除？")){
+			var delIds = [];
+			$("input[name='ids']:checked").each(function(){
+				delIds.push($(this).val());
+			});
+			if(delIds.length<=0){
+				alert("未选中删除项");
+				return;
+			}
+			$.post("${r"${ctx}"}/${urlPrefix}/deleteAll",{ids:delIds},function(data){
+				alert(data);
+				location.reload();
+			})
+			}
+		}
 	</script>
 </head>
 <body>
@@ -70,6 +94,9 @@
 			</#if>
 		</#list>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+			<shiro:hasPermission name="${permissionPrefix}:edit">
+			<li class="btns"><input class="btn btn-primary" type="button" value="批量删除" onclick="deleteAll();"/></li>
+			</shiro:hasPermission>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -78,6 +105,7 @@
 		<thead>
 			<tr>
 				<#list table.columnList as c>
+				<th>全选：<input type="checkbox" name="selectAll" onclick="selectAll();"/></th>
 					<#if c.isList?? && c.isList == "1">
 				<th>${c.comments}</th>
 					</#if>
@@ -88,6 +116,7 @@
 		<tbody>
 		<c:forEach items="${r"${page.list}"}" var="${className}">
 			<tr>
+			    <td><input type="checkbox" name="ids" value="${"${"+className+".id}"></td>
 				<#assign firstListField = true>
 				<#list table.columnList as c>
 					<#if c.isList?? && c.isList == "1">

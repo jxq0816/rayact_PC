@@ -29,6 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +79,6 @@ public class PostMainController extends BaseController {
 	@RequiresPermissions("cms:postMain:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(PostMain postMain, HttpServletRequest request, HttpServletResponse response, Model model) {
-		List<Category> list = categoryService.findByUser(true,"postMain");
 		Page<PostMain> page = postMainService.findPage(new Page<PostMain>(request, response), postMain); 
 		model.addAttribute("page", page);
 		return "modules/cms/postMainList";
@@ -253,5 +253,44 @@ public class PostMainController extends BaseController {
 		return "modules/cms/postMainView";
 	}
 
+	@RequiresPermissions("cms:postMain:edit")
+	@RequestMapping(value = "deleteAll")
+	@ResponseBody
+	public String deleteAll(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String[] ida = request.getParameterValues("ids[]");
+		String del = " id in (";
+		if(ida!=null&&ida.length>0){
+			for(int i =0;i<ida.length;i++){
+				if(i<ida.length-1)
+					del+="'"+ida[i]+"',";
+				else
+					del+="'"+ida[i]+"')";
+			}
+		}
+		PostMain a = new PostMain();
+		a.getSqlMap().put("del",del);
+		postMainService.deleteAll(a);
+		return "删除成功";
+	}
+
+	@RequestMapping(value = "app/view2.html")
+	public String viewApp2(PostMain postMain,HttpServletRequest request,HttpServletResponse response){
+		PostMain p = postMainService.get(postMain.getId());
+		request.setAttribute("sid",UserUtils.getSession().getId());
+		request.setAttribute("postMain",p);
+		if(p!=null){
+			String[] remarks = p.getRemarks()!=null ? p.getRemarks().split(";"):null;
+			request.setAttribute("imgs",remarks);
+		}
+		Post post = new Post();
+		post.setPostMain(postMain);
+		Page<Post> lop = new Page<>(request,response);
+		lop.setPageSize(5);
+		lop.setPageNo(1);
+		Page<Post> ptm = postService.findPage(lop,post);
+		request.setAttribute("count",ptm.getCount());
+		request.setAttribute("ptm",ptm.getList());
+		return "modules/cms/postMainView2";
+	}
 
 }

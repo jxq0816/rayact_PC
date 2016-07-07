@@ -25,6 +25,9 @@
 			width: 18%;
 			display:inline-block
 		}
+		.a_content img{
+			width: 100%;
+		}
 	</style>
 	<script>
 		function jumpToApp(){
@@ -52,7 +55,7 @@
 		<div style="color: #555555;font-size:30px;line-height: 150%;margin: 20px 0px">摘要：<span style="color: #8C8C8C;font-size: 30px">${article.description}</span>
 		</div>
 	</c:if>
-	<div style="width: 100%;line-height: 150%;font-size:50px;color:#555555;">${article.articleData.content}</div>
+	<div class="a_content" style="width: 100%;line-height: 150%;font-size:50px;color:#555555;">${article.articleData.content}</div>
 </div>
 <div class="row" style="border-top: 1px solid #c8c8c8;width: 100%;margin-top: 38px;padding-top: 28px">
 	<div class="head postSubject">评论</div>

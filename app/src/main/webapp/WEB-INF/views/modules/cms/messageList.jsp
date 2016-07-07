@@ -51,10 +51,10 @@
 					${message.subject}
 				</td>
 				<td>
-					${message.targetId}
+						${message.targetName}
 				</td>
 				<td>
-						${message.targetName}
+						${message.targetId}
 				</td>
 				<td>
 						${message.content}

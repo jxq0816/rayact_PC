@@ -189,5 +189,11 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<update id="deleteAll">
+		UPDATE team_member SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
+	</update>
 	
 </mapper>

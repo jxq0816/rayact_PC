@@ -159,6 +159,8 @@ public class MessageController extends BaseController {
 						}
 					}
 				}
+			}else{
+				flag = "false";
 			}
 		}
 		JSONObject j = new JSONObject();

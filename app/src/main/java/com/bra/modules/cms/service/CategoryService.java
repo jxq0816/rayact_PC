@@ -56,6 +56,7 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
 			Category category = new Category();
 			//category.getSqlMap().put("dsf", dataScopeFilter(user, "o", "u"));
 			//category.setParent(new Category());
+			category.setModule(module);
 			list = dao.findList(category);
 			// 将没有父节点的节点，找到父节点
 			Set<String> parentIdSet = Sets.newHashSet();
