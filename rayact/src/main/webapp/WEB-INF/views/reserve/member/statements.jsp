@@ -63,6 +63,8 @@
                     <table>
                         <thead>
                         <tr>
+                            <th>流水编号</th>
+                            <th>状态</th>
                             <th>充值金额</th>
                             <j:set name="chargeSum" value="0"></j:set>
                             <th>项目/摘要</th>
@@ -81,6 +83,12 @@
                         <tbody>
                         <c:forEach items="${page.list}" var="statement">
                             <tr>
+                                <td>
+                                        ${statement.id}
+                                </td>
+                                <td>
+                                        ${fns:getDictLabel(statement.delFlag,'del_flag',null)}
+                                </td>
                                 <td>
                                     <j:if test="${statement.transactionType==1 or statement.transactionType==7}">
                                         ${statement.transactionVolume}
@@ -126,6 +134,8 @@
                             </tr>
                         </c:forEach>
                         <tr>
+                            <td colspan="2">
+                            </td>
                             <td>
                                     ${chargeSum}
                             </td>

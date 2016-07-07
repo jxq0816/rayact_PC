@@ -14,7 +14,7 @@ public class StatementsUtils {
         } else if ("3".equals(transactionType)) {
             return "商品";
         } else if ("4".equals(transactionType)) {
-            return "超级管理员修改余额";
+            return "系统退还";
         } else if ("5".equals(transactionType)) {
             return "销户退还用户的金额";
         } else if ("6".equals(transactionType)) {

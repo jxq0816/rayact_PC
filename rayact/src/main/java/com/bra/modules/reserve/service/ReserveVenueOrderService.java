@@ -2,6 +2,7 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
+import com.bra.common.utils.DateUtils;
 import com.bra.modules.reserve.dao.ReserveVenueOrderDao;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.event.visitors.VenueOrderEvent;
@@ -79,6 +80,7 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
         ReserveCardStatements statements = new ReserveCardStatements();
         statements.setOrderId(reserveVenueOrder.getId());
         List<ReserveCardStatements> list = reserveCardStatementsService.findList(statements);
+        //金额冲回
         for(ReserveCardStatements i:list){
             if("1".equals(i.getPayType())){
                 reserveVenueOrder=this.get(reserveVenueOrder);
@@ -104,6 +106,15 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
             }
             reserveCardStatementsService.delete(i);
         }
+        //记录 冲回金额
+        if("1".equals(reserveVenueOrder.getPayType())){
+            ReserveCardStatements log = new ReserveCardStatements();
+            log.setTransactionType("4");
+            ReserveMember member=reserveVenueOrder.getMember();
+            member=reserveMemberService.get(member);
+            log.setReserveMember(member);
+            log.setRemarks(DateUtils.formatDate(reserveVenueOrder.getOrderDate())+"场次票 充回");
+            reserveCardStatementsService.save(log);
+        }
     }
-
 }

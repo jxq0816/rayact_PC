@@ -225,7 +225,7 @@
 		FROM reserve_card_statements a
 		<include refid="reserveCardStatementsJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND transaction_type !='3'
+			and a.tenant_id = #{tenantId} AND transaction_type !='3'
 			<if test="reserveMember!=null">
 				<if test="reserveMember.id !=null and reserveMember.id !=''">
 					and a.fk_reserve_member_id=#{reserveMember.id}

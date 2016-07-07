@@ -2,6 +2,7 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
+import com.bra.common.utils.DateUtils;
 import com.bra.modules.reserve.dao.ReserveVenueConsDao;
 import com.bra.modules.reserve.dao.ReserveVenueConsItemDao;
 import com.bra.modules.reserve.entity.*;
@@ -329,6 +330,16 @@ public class ReserveVenueConsService extends CrudService<ReserveVenueConsDao, Re
                 storedCardMemberService.save(reserveMember);
             }
             reserveCardStatementsService.delete(i);
+        }
+        //记录 冲回金额
+        if("1".equals(reserveVenueCons.getPayType())){
+            ReserveCardStatements log = new ReserveCardStatements();
+            log.setTransactionType("4");
+            ReserveMember member=reserveVenueCons.getMember();
+            member=reserveMemberService.get(member);
+            log.setReserveMember(member);
+            log.setRemarks(DateUtils.formatDate(reserveVenueCons.getConsDate())+"场次票 充回");
+            reserveCardStatementsService.save(log);
         }
     }
 

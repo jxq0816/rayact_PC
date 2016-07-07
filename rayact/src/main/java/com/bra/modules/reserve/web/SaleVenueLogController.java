@@ -102,9 +102,10 @@ public class SaleVenueLogController extends BaseController {
     @RequestMapping(value = "delete")
     private String delete(String orderId,String isTicket,RedirectAttributes redirectAttributes){
         if("1".equals(isTicket)){
-            reserveVenueOrderService.delete(new ReserveVenueOrder(orderId));
+            ReserveVenueOrder order =reserveVenueOrderService.get(orderId);
+            reserveVenueOrderService.delete(order);
         }else{
-            ReserveVenueCons order=new ReserveVenueCons(orderId);
+            ReserveVenueCons order=reserveVenueConsService.get(orderId);
             reserveVenueConsService.delete(order);
         }
         addMessage(redirectAttributes, "删除记录成功");
