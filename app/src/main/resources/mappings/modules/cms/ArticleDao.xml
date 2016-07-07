@@ -263,4 +263,23 @@
 			GROUP BY a.id
 			ORDER BY a.create_date DESC ,commentNum DESC
 	</select>
+
+	<select id="findListUn" resultType="Article">
+		SELECT
+		a.id
+		FROM cms_article a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.title = #{title}
+			<if test="id!=null and id != ''">
+				AND a.id != #{id}
+			</if>
+		</where>
+	</select>
+
+	<update id="deleteAll">
+		UPDATE cms_article SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
+	</update>
 </mapper>

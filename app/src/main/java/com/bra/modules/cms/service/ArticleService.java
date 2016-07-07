@@ -83,7 +83,11 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
     }
 
     @Transactional(readOnly = false)
-    public void save(Article article, AttMainForm attMainForm) {
+    public void save(Article article, AttMainForm attMainForm)throws Exception {
+        List l = findListMapUn(article);
+        if(l!=null&&l.size()>0){
+         throw new Exception("标题重复");
+        }
         article.setTitle(StringEscapeUtils.unescapeHtml4(
                 article.getTitle()));
         if (article.getArticleData().getContent() != null) {
@@ -252,5 +256,10 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         }
         return list;
     }
+
+    public List<Map<String,String>> findListMapUn(Article article){
+        return articleDao.findListUn(article);
+    }
+
 
 }

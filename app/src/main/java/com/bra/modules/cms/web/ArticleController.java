@@ -107,8 +107,12 @@ public class ArticleController extends BaseController {
         if (!beanValidator(model, article)) {
             return form(article, model);
         }
-        articleService.save(article, attMainForm);
-        addMessage(redirectAttributes, "保存文章'" + StringUtils.abbr(article.getTitle(), 50) + "'成功");
+        try {
+            articleService.save(article, attMainForm);
+            addMessage(redirectAttributes, "保存文章'" + StringUtils.abbr(article.getTitle(), 50) + "'成功");
+        }catch (Exception e){
+            addMessage(redirectAttributes, e.getMessage()+"保存文章'" + StringUtils.abbr(article.getTitle(), 50) + "'失败");
+        }
         String categoryId = article.getCategory() != null ? article.getCategory().getId() : null;
         return "redirect:" + adminPath + "/cms/article/?repage&category.id=" + (categoryId != null ? categoryId : "");
     }
@@ -162,5 +166,25 @@ public class ArticleController extends BaseController {
             response.getWriter().print(JSONArray.toJSONString(rtn, SerializerFeature.WriteMapNullValue));
         } catch (IOException e) {
         }
+    }
+
+    @RequiresPermissions("cms:article:edit")
+    @RequestMapping(value = "deleteAll")
+    @ResponseBody
+    public String deleteAll(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String[] ida = request.getParameterValues("ids[]");
+        String del = " id in (";
+        if(ida!=null&&ida.length>0){
+            for(int i =0;i<ida.length;i++){
+                if(i<ida.length-1)
+                    del+="'"+ida[i]+"',";
+                else
+                    del+="'"+ida[i]+"')";
+            }
+        }
+        Article a = new Article();
+        a.getSqlMap().put("del",del);
+        articleService.deleteAll(a);
+        return "删除成功";
     }
 }

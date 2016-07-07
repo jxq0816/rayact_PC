@@ -21,6 +21,30 @@
 			$("#searchForm").submit();
         	return false;
         }
+		//全选、取消全选的事件
+		function selectAll(){
+			if ($("input[name='selectAll']").attr("checked")) {
+				$(":checkbox").attr("checked", true);
+			} else {
+				$(":checkbox").attr("checked", false);
+			}
+		}
+		function deleteAll(){
+			if(confirm("确认删除？")){
+			var delIds = [];
+			$("input[name='ids']:checked").each(function(){
+				delIds.push($(this).val());
+			});
+			if(delIds.length<=0){
+				alert("未选中删除项");
+				return;
+			}
+			$.post("${ctx}/cms/comment/deleteAll",{ids:delIds},function(data){
+				alert(data);
+				location.reload();
+			})
+			}
+		}
 	</script>
 </head>
 <body>
@@ -33,14 +57,16 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label>文档标题：</label><form:input path="title" htmlEscape="false" maxlength="50" class="input-small"/>&nbsp;
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>&nbsp;&nbsp;
+		<input  class="btn btn-primary" type="button" value="批量删除" onclick="deleteAll();"/>
 		<label>状态：</label><form:radiobuttons onclick="$('#searchForm').submit();" path="delFlag" items="${fns:getDictList('cms_del_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-bordered table-condensed">
-		<thead><tr><th>评论内容</th><th>评论人</th><th>评论时间</th><th nowrap="nowrap">操作</th></tr></thead>
+		<thead><tr><th><input type="checkbox" name="selectAll" onclick="selectAll();"/></th><th>评论内容</th><th>评论人</th><th>评论时间</th><th nowrap="nowrap">操作</th></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="comment">
 			<tr>
+				<td><input type="checkbox" name="ids" value="${comment.id}"></td>
 				<td><a href="javascript:" onclick="$('#c_${comment.id}').toggle()">${fns:abbr(fns:replaceHtml(comment.content),40)}</a></td>
 				<td>${comment.name}</td>
 				<td><fmt:formatDate value="${comment.createDate}" type="both"/></td>

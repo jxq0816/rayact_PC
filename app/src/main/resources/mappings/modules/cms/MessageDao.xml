@@ -138,5 +138,11 @@
 		  ORDER BY a.create_date DESC
 
 	</select>
+
+	<update id="deleteAll">
+		UPDATE message SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
+	</update>
 	
 </mapper>

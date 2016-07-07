@@ -158,5 +158,11 @@
 		GROUP BY a.id
 		ORDER BY a.order_num DESC ,a.update_date DESC
 	</select>
+
+	<update id="deleteAll">
+		UPDATE activity SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
+	</update>
 	
 </mapper>

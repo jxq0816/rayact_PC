@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -148,6 +149,26 @@ public class TeamMemberController extends BaseController {
 		request.setAttribute("members",l);
 		request.setAttribute("teamId",teamId);
 		return "modules/cms/members";
+	}
+
+	@RequiresPermissions("cms:teamMember:edit")
+	@RequestMapping(value = "deleteAll")
+	@ResponseBody
+	public String deleteAll(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String[] ida = request.getParameterValues("ids[]");
+		String del = " id in (";
+		if(ida!=null&&ida.length>0){
+			for(int i =0;i<ida.length;i++){
+				if(i<ida.length-1)
+					del+="'"+ida[i]+"',";
+				else
+					del+="'"+ida[i]+"')";
+			}
+		}
+		TeamMember a = new TeamMember();
+		a.getSqlMap().put("del",del);
+		teamMemberService.deleteAll(a);
+		return "删除成功";
 	}
 
 }

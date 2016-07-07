@@ -26,6 +26,7 @@
 				${adminPath}/cms/post/app/ptp = anon
 				${adminPath}/cms/postMain/app/list = anon
 				${adminPath}/cms/postMain/app/view.html = anon
+				${adminPath}/cms/postMain/app/view2.html = anon
 				${adminPath}/cms/postMain/app/test = anon
 				${adminPath}/cms/category/app/cateList = anon
 				${adminPath}/cms/activity/app/list = anon

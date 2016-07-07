@@ -144,4 +144,24 @@ public class PostController extends BaseController {
 		}
 	}
 
+	@RequiresPermissions("cms:post:edit")
+	@RequestMapping(value = "deleteAll")
+	@ResponseBody
+	public String deleteAll(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String[] ida = request.getParameterValues("ids[]");
+		String del = " id in (";
+		if(ida!=null&&ida.length>0){
+			for(int i =0;i<ida.length;i++){
+				if(i<ida.length-1)
+					del+="'"+ida[i]+"',";
+				else
+					del+="'"+ida[i]+"')";
+			}
+		}
+		Post a = new Post();
+		a.getSqlMap().put("del",del);
+		postService.deleteAll(a);
+		return "删除成功";
+	}
+
 }

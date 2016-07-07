@@ -25,6 +25,30 @@
 			$("#searchForm").submit();
         	return false;
         }
+		//全选、取消全选的事件
+		function selectAll(){
+			if ($("input[name='selectAll']").attr("checked")) {
+				$(":checkbox").attr("checked", true);
+			} else {
+				$(":checkbox").attr("checked", false);
+			}
+		}
+		function deleteAll(){
+			if(confirm("确认删除？")){
+				var delIds = [];
+				$("input[name='ids']:checked").each(function(){
+					delIds.push($(this).val());
+				});
+				if(delIds.length<=0){
+					alert("未选中删除项");
+					return;
+				}
+				$.post("${ctx}/cms/team/deleteAll",{ids:delIds},function(data){
+					alert(data);
+					location.reload();
+				})
+			}
+		}
 	</script>
 </head>
 <body>
@@ -39,7 +63,16 @@
 			<li><label>队伍名称：</label>
 				<form:input path="name" htmlEscape="false" maxlength="255" class="input-medium"/>
 			</li>
+			<li><label>所属圈子：</label>
+				<sys:treeselect id="group" name="group.id" value="${team.group.id}" labelName="group.name" labelValue="${team.group.name}"
+								title="所属圈子" url="/cms/category/treeData" module="group" notAllowSelectRoot="false" cssClass="input-small"/>
+			</li>
+			<li><label>创建者：</label>
+				<sys:treeselect id="createBy" name="createBy.id" value="${team.createBy.id}" labelName="createBy.name" labelValue="${team.createBy.name}"
+								title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+			<li class="btns"><input  class="btn btn-primary" type="button" value="批量删除" onclick="deleteAll();"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -47,6 +80,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th><input type="checkbox" name="selectAll" onclick="selectAll();"/></th>
 				<th>队伍名称</th>
 				<th>位置</th>
 				<th>创建人</th>
@@ -58,6 +92,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="team">
 			<tr>
+				<td><input type="checkbox" name="ids" value="${team.id}"></td>
 				<td><a href="${ctx}/cms/team/form?id=${team.id}">
 					${team.name}
 				</a></td>

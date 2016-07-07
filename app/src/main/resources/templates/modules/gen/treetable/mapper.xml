@@ -209,6 +209,16 @@ ${updateField?substring(0, updateField?last_index_of(","))}
 		WHERE id = ${"#"}{id} OR parent_ids LIKE '%,'||${"#"}{id}||',%'
 	</#if>
 	</update>
+
+	<update id="deleteAll">
+	<#if table.delFlagExists>
+		UPDATE ${table.name} SET
+			del_flag = ${"#"}{DEL_FLAG_DELETE}
+	<#else>
+		DELETE FROM ${table.name}
+	</#if>
+		WHERE ${"$"}{sqlMap.del}
+	</update>
 	
 </mapper>]]>
 	</content>

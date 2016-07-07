@@ -33,6 +33,10 @@
 					<form:option value="user">人</form:option>
 				</form:select>
 			</li>
+			<li><label>用户：</label>
+				<sys:treeselect id="createBy" name="createBy.id" value="${focus.createBy.id}" labelName="createBy.name" labelValue="${focus.createBy.name}"
+								title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>

@@ -46,8 +46,11 @@
 				<if test="dbName == 'mssql'">'%'+#{subject}+'%'</if>
 				<if test="dbName == 'mysql'">concat('%',#{subject},'%')</if>
 			</if>
-			<if test="group!=null and group.id != null">
+			<if test="group!=null and group.id != null and group.id != ''">
 				AND a.fk_group_id = #{group.id}
+			</if>
+			<if test="createBy!=null and createBy.id != null and createBy.id != ''">
+				AND a.create_by = #{createBy.id}
 			</if>
 			${sqlMap.dsf}
 		</where>
@@ -172,8 +175,14 @@
 		) a
 		LEFT JOIN post p on p.main_id = a.postId AND p.del_flag = #{DEL_FLAG_NORMAL}
 		GROUP BY a.postId
-		ORDER BY a.orderNum DESC,a.updateDate DESC
+		ORDER BY a.orderNum DESC,a.createDate DESC
 	</select>
+
+	<update id="deleteAll">
+		UPDATE post_main SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
+	</update>
 
 	
 </mapper>

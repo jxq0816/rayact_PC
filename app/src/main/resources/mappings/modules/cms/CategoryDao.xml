@@ -105,6 +105,9 @@
 			<if test="parent!=null and parent.id != null and parent.id != ''">
 				AND a.parent_id  = #{parent.id}
 			</if>
+			<if test="module != null and module!='' ">
+				AND a.module = #{module}
+			</if>
 			${sqlMap.dsf}
 		</where>
 			ORDER BY a.site_id,a.sort ASC
@@ -318,6 +321,8 @@
 				SELECT
 				c.id AS id,
 				c.name AS name,
+		        ct.id AS groupId,
+		        ct.name AS groupName,
 		        c.description AS remarks,
 		        c.create_by AS createId,
 		        u.name AS createName,
@@ -328,6 +333,7 @@
 				SUM(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} AND f.create_by = #{currentUser.id} THEN 1 ELSE 0 END) AS isFocus,
 		        SUM(CASE WHEN f.del_flag = #{DEL_FLAG_NORMAL} THEN 1 ELSE 0 END) AS focusNum
 				FROM cms_category c
+		        LEFT JOIN cms_category ct ON c.parent_id = ct.id
 		        LEFT JOIN sys_user u ON c.create_by = u.id
 				LEFT JOIN mechanism_att_main att ON att.fd_model_id = c.id AND att.fd_key = 'catepic' AND att.del_flag = #{DEL_FLAG_NORMAL}
 		        LEFT JOIN mechanism_att_main attbg ON attbg.fd_model_id = c.parent_id AND attbg.fd_key = 'catebg' AND attbg.del_flag = #{DEL_FLAG_NORMAL}

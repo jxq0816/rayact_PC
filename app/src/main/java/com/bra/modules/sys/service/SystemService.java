@@ -134,7 +134,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	@SuppressWarnings("unchecked")
 	public List<User> findUserByOfficeId(String officeId) {
 		List<User> list = (List<User>) CacheUtils.get(UserUtils.USER_CACHE, UserUtils.USER_CACHE_LIST_BY_OFFICE_ID_ + officeId);
-		if (list == null){
+		if ((list!=null&&list.size()==0)||list == null){
 			User user = new User();
 			user.setOffice(new Office(officeId));
 			list = userDao.findUserByOfficeId(user);
@@ -160,10 +160,11 @@ public class SystemService extends BaseService implements InitializingBean {
 		}
 		if (StringUtils.isNotBlank(user.getId())){
 			// 更新用户与角色关联
-//			userDao.deleteUserRole(user);
-//			if (user.getRoleList() != null && user.getRoleList().size() > 0){
-//				userDao.insertUserRole(user);
-//			}else{
+			userDao.deleteUserRole(user);
+			if (user.getRoleList() != null && user.getRoleList().size() > 0){
+				userDao.insertUserRole(user);
+			}
+//			else{
 //				throw new ServiceException(user.getLoginName() + "没有设置角色！");
 //			}
 			// 将当前用户同步到Activiti
@@ -171,7 +172,23 @@ public class SystemService extends BaseService implements InitializingBean {
 			// 清除用户缓存
 			UserUtils.clearCache(user);
 //			// 清除权限缓存
-//			systemRealm.clearAllCachedAuthorizationInfo();
+			systemRealm.clearAllCachedAuthorizationInfo();
+		}
+	}
+	@Transactional(readOnly = false)
+	public void saveUserApp(User user) {
+		if (StringUtils.isBlank(user.getId())){
+			user.preInsert();
+			userDao.insert(user);
+		}else{
+			// 清除原用户机构用户缓存
+			User oldUser = userDao.get(user.getId());
+			if (oldUser.getOffice() != null && oldUser.getOffice().getId() != null){
+				CacheUtils.remove(UserUtils.USER_CACHE, UserUtils.USER_CACHE_LIST_BY_OFFICE_ID_ + oldUser.getOffice().getId());
+			}
+			// 更新用户数据
+			user.preUpdate();
+			userDao.update(user);
 		}
 	}
 	

@@ -16,6 +16,7 @@ import com.bra.modules.cms.service.FocusService;
 import com.bra.modules.sys.entity.Office;
 import com.bra.modules.sys.entity.Role;
 import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.service.OfficeService;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
@@ -48,7 +49,10 @@ public class UserController extends BaseController {
 	private FocusService focusService;
 	@Autowired
 	private SystemService systemService;
-	
+	@Autowired
+	private OfficeService officeService;
+
+
 	@ModelAttribute
 	public User get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
@@ -240,8 +244,16 @@ public class UserController extends BaseController {
 	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) String officeId, HttpServletResponse response) {
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String officeId,HttpServletResponse response) {
 		List<Map<String, Object>> mapList = Lists.newArrayList();
+        if(!StringUtils.isNotBlank(officeId)){
+			Office o =  new Office();
+			o.getSqlMap().put("dsf"," and a.name = '"+ com.bra.modules.sys.utils.StringUtils.OFFICECOZE+"' ");
+			List<Office> li = officeService.findListUn(o);
+			if(li!=null&&li.size()>0){
+				officeId = li.get(0).getId();
+			}
+		}
 		List<User> list = systemService.findUserByOfficeId(officeId);
 		for (int i=0; i<list.size(); i++){
 			User e = list.get(i);

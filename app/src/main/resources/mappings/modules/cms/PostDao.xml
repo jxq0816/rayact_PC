@@ -42,6 +42,9 @@
 			<if test="postMain != null and postMain.id != null">
 				AND a.main_id = #{postMain.id}
 			</if>
+			<if test="createBy!=null and createBy.id != null and createBy.id != ''">
+				AND a.create_by = #{createBy.id}
+			</if>
 			<choose>
 				<when test="postId != null and postId != ''">
 					AND a.post_id = #{postId}
@@ -154,5 +157,11 @@
 		</where>
 		ORDER BY a.create_date DESC
 	</select>
+
+	<update id="deleteAll">
+		UPDATE post SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE ${sqlMap.del}
+	</update>
 	
 </mapper>

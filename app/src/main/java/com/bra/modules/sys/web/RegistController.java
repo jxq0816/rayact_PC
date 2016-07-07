@@ -77,7 +77,7 @@ public class RegistController extends BaseController {
                     user.setWeixinName(weixinName);
                     user.setPhoto(weixinImage);
                 }
-                systemService.saveUser(user);
+                systemService.saveUserApp(user);
                 rtn.put("status","success");
                 rtn.put("msg",user.getId());
             }

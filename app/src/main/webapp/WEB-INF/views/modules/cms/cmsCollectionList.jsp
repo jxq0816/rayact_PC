@@ -32,6 +32,10 @@
 					<form:option value="postMain">帖子</form:option>
 				</form:select>
 			</li>
+			<li><label>用户：</label>
+				<sys:treeselect id="createBy" name="createBy.id" value="${cmsCollection.createBy.id}" labelName="createBy.name" labelValue="${cmsCollection.createBy.name}"
+								title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
