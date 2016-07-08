@@ -36,6 +36,8 @@ $(document).ready(function () {
                         if(result!=''||result!=null||result!=undefined){
                             if(typeof iOScheckOrder === 'function'){
                                 iOScheckOrder(result);
+                            }else if(window.orderId){
+                                window.orderId.orderIdCallAndroid(result);
                             }
                         }
                     }
