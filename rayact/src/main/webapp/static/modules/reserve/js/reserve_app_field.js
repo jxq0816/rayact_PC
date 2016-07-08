@@ -33,7 +33,7 @@ $(document).ready(function () {
             if(index==0){
                 $.get(ctx+ '/app/reserve/field/checkUnPayOrder', {phone:phone},function (result) {
                         orderId=result;
-                        if(result!=''||result!=null||result!=undefined){
+                        if(result!='' && result!=null && result!=undefined){
                             if(typeof iOScheckOrder === 'function'){
                                 iOScheckOrder(result);
                             }else if(window.orderId){
