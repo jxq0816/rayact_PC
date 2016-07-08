@@ -862,7 +862,6 @@ CREATE TABLE `reserve_role_menu` (
   `del_flag` char(1) NOT NULL DEFAULT '0',
   `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
   PRIMARY KEY (`id`)
-  PRIMARY KEY (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色-菜单';
 
 
