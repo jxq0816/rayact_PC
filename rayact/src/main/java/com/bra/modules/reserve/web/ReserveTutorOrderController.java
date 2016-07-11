@@ -108,6 +108,8 @@ public class ReserveTutorOrderController extends BaseController {
 		List<Map<String,Object>> list = reserveTutorOrderService.getTutorDetail(order);
 		page.setList(list);
 		model.addAttribute("page", page);
+		model.addAttribute("startDate", start);
+		model.addAttribute("endDate", end);
 		return "reserve/report/tutorDetailList";
 	}
 

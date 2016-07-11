@@ -220,7 +220,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY o.update_date DESC
+				ORDER BY date DESC
 			</otherwise>
 		</choose>
 	</select>

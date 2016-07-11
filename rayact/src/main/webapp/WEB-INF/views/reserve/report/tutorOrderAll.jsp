@@ -138,10 +138,10 @@
     });
 </script>
 <script type="text/javascript">
-    $("#btnExport").click(function(){
-        $("#searchForm").attr("action","${ctx}/reserve/reserveTutorOrder/orderAllExport");
+    $("#btnExport").click(function () {
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveTutorOrder/orderAllExport");
         $("#searchForm").submit();
-        $("#searchForm").attr("action","${ctx}/reserve/reserveTutorOrder/orderAll");
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveTutorOrder/orderAll");
     });
 </script>
 </body>
