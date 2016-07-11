@@ -114,14 +114,6 @@
     <example>${fns:getCache(cacheName, defaultValue)}</example>  
   </function>
 
-  <function>
-    <description>获取场馆用户的权限</description>
-    <name>getAuthByUser</name>
-    <function-class>com.bra.modules.reserve.utils.AuthorityUtils</function-class>
-    <function-signature>java.util.List getAuthByUser(com.bra.modules.sys.entity.User)</function-signature>
-    <example>${fns:getAuthByUser(user)}</example>
-  </function>
-	
   <!-- DictUtils -->
   <function>
     <description>获取字典标签</description>
