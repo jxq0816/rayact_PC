@@ -148,7 +148,7 @@ public class ReserveFieldController extends BaseController {
         }
         String endTime=venue.getEndTime();
         if(StringUtils.isEmpty(endTime)){
-            startTime="00:30:00";
+            endTime="00:30:00";
         }
         List<String> times = TimeUtils.getTimeSpacList(startTime, endTime, 60);
         model.addAttribute("times", times);
