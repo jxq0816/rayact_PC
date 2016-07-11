@@ -66,9 +66,14 @@ public class AuthorityUtils {
     public static String getVenueIds(List<String> venueIds, String defaultField) {
         List<String> venueIdInList = Lists.newArrayList();
         StringBuffer dsf = new StringBuffer(" and " + defaultField + " in(");
-        venueIdInList.addAll(venueIds.stream().map(venueId -> "'" + venueId + "'").collect(Collectors.toList()));
-        dsf.append(StringUtils.join(venueIdInList, ','));
-        dsf.append(")");
+
+        if(venueIds.size()!=0){
+            venueIdInList.addAll(venueIds.stream().map(venueId -> "'" + venueId + "'").collect(Collectors.toList()));
+            dsf.append(StringUtils.join(venueIdInList, ','));
+            dsf.append(")");
+        }else{
+            dsf.append("null)");
+        }
         return dsf.toString();
     }
 

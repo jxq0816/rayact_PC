@@ -31,7 +31,7 @@
     
     <sql id="userJoins">
 		LEFT JOIN reserve_office c ON c.id = a.company_id
-		LEFT JOIN sys_area ca ON ca.id = c.area_id
+		/*LEFT JOIN sys_area ca ON ca.id = c.area_id*/
 		/*LEFT JOIN sys_user_role ur ON ur.user_id = a.id*/
         LEFT JOIN reserve_role r ON r.user_id = a.id
     </sql>
@@ -67,10 +67,7 @@
 
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		<if test="company != null and company.id != null and company.id != ''">
-			AND (c.id = #{company.id} OR c.parent_ids LIKE 
-					<if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
-					<if test="dbName == 'mssql'">'%,'+#{company.id}+',%')</if>
-					<if test="dbName == 'mysql'">CONCAT('%,', #{company.id}, ',%'))</if>
+			AND c.id = #{company.id}
 		</if>
 
 		<!-- 如果不是超级管理员，则不显示超级管理员用户 -->
