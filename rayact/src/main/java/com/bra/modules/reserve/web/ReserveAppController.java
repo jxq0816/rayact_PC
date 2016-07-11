@@ -45,93 +45,96 @@ public class ReserveAppController extends BaseController {
 
     //场地状态界面
     @RequestMapping(value = "main")
-    public String main(Date consDate, String venueId, String projectId, Model model) {
+    public String main(Date consDate, String venueId, String projectId, String phone, Model model) {
         if (consDate == null) {
             consDate = new Date();
         }
-        List<String> times = new ArrayList<>();
-        ReserveVenue venue = reserveVenueService.get(venueId);
-        String startTime = venue.getStartTime();
-        String endTime = venue.getEndTime();
-        if (StringUtils.isEmpty(startTime)) {
-            startTime = "06:00:00";
-        }
-        if (StringUtils.isEmpty(endTime)) {
-            endTime = "00:30:00";
-        }
-        times.addAll(TimeUtils.getTimeSpacListValue(startTime, endTime, 30));
         if (StringUtils.isNoneEmpty(venueId)) {
-            //场地价格
-            List<FieldPrice> venueFieldPriceList = reserveAppFieldPriceService.findByDate(venueId, projectId, "1", consDate, times);
-            for (FieldPrice i : venueFieldPriceList) {
-                i.setHaveFullCourt(null);
-                i.setHaveHalfCourt(null);
-                FieldPrice full = i.getFieldPriceFull();//全场的状态
-                FieldPrice left = i.getFieldPriceLeft();
-                FieldPrice right = i.getFieldPriceRight();
-                for (TimePrice j : i.getTimePriceList()) {
-                    Date systemTime = new Date();
-                    String time = j.getTime();//当前场地的时间
-                    String startTimeSub = time.substring(0, 5);
-                    if ("00:00".endsWith(startTimeSub)) {
-                        Calendar c = Calendar.getInstance();
-                        c.setTime(systemTime);
-                        int day = c.get(Calendar.DATE);
-                        c.set(Calendar.DATE, day - 1);
-                        systemTime = c.getTime();
-                    }
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String date = dateFormat.format(consDate);
-                    startTimeSub = TimeUtils.earlyMorningFormat(startTimeSub);
-                    startTimeSub = date + " " + startTimeSub;//场地时间
-
-
-                    SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String sysTime = myFmt.format(systemTime);//系统时间
-                    if (startTimeSub.compareTo(sysTime) < 0) {
-                        j.setStatus("1");
-                    } else if ("0".equals(j.getStatus())) {
-                        if (StringUtils.isNoneEmpty(time)) {
-                            if (full != null) {
-                                for (TimePrice k : full.getTimePriceList()) {
-                                    String fullTime = k.getTime();
-                                    if (time.endsWith(fullTime) && "1".equals(k.getStatus())) {
-                                        j.setStatus("1");//全场已占用，半场不可用
-                                        break;
-                                    }
-                                }
-                            }
-                            if (left != null) {
-                                if ("0".equals(j.getStatus())) {
-                                    for (TimePrice k : left.getTimePriceList()) {
-                                        String leftTime = k.getTime();
-                                        if (time.endsWith(leftTime) && "1".equals(k.getStatus())) {
-                                            j.setStatus("1");//半场已占用，全场不可用
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            if (right != null) {
-                                if ("0".equals(j.getStatus())) {
-                                    for (TimePrice k : right.getTimePriceList()) {
-                                        String rightTime = k.getTime();
-                                        if (time.endsWith(rightTime) && "1".equals(k.getStatus())) {
-                                            j.setStatus("1");//半场已占用，全场不可用
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }//该时间段的验证结束
-                    }//状态 更新结束
-                }
+            List<String> times = new ArrayList<>();
+            ReserveVenue venue = reserveVenueService.get(venueId);
+            String startTime = venue.getStartTime();
+            String endTime = venue.getEndTime();
+            if (StringUtils.isEmpty(startTime)) {
+                startTime = "06:00:00";
             }
-            model.addAttribute("venueFieldPriceList", venueFieldPriceList);
-            model.addAttribute("times", times);
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-            model.addAttribute("consDate", fmt.format(consDate));
-            model.addAttribute("venueId", venueId);
+            if (StringUtils.isEmpty(endTime)) {
+                endTime = "00:30:00";
+            }
+            times.addAll(TimeUtils.getTimeSpacListValue(startTime, endTime, 30));
+            if (StringUtils.isNoneEmpty(venueId)) {
+                //场地价格
+                List<FieldPrice> venueFieldPriceList = reserveAppFieldPriceService.findByDate(venueId, projectId, "1", consDate, times);
+                for (FieldPrice i : venueFieldPriceList) {
+                    i.setHaveFullCourt(null);
+                    i.setHaveHalfCourt(null);
+                    FieldPrice full = i.getFieldPriceFull();//全场的状态
+                    FieldPrice left = i.getFieldPriceLeft();
+                    FieldPrice right = i.getFieldPriceRight();
+                    for (TimePrice j : i.getTimePriceList()) {
+                        Date systemTime = new Date();
+                        String time = j.getTime();//当前场地的时间
+                        String startTimeSub = time.substring(0, 5);
+                        if ("00:00".endsWith(startTimeSub)) {
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(systemTime);
+                            int day = c.get(Calendar.DATE);
+                            c.set(Calendar.DATE, day - 1);
+                            systemTime = c.getTime();
+                        }
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String date = dateFormat.format(consDate);
+                        startTimeSub = TimeUtils.earlyMorningFormat(startTimeSub);
+                        startTimeSub = date + " " + startTimeSub;//场地时间
+
+
+                        SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String sysTime = myFmt.format(systemTime);//系统时间
+                        if (startTimeSub.compareTo(sysTime) < 0) {
+                            j.setStatus("1");
+                        } else if ("0".equals(j.getStatus())) {
+                            if (StringUtils.isNoneEmpty(time)) {
+                                if (full != null) {
+                                    for (TimePrice k : full.getTimePriceList()) {
+                                        String fullTime = k.getTime();
+                                        if (time.endsWith(fullTime) && "1".equals(k.getStatus())) {
+                                            j.setStatus("1");//全场已占用，半场不可用
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (left != null) {
+                                    if ("0".equals(j.getStatus())) {
+                                        for (TimePrice k : left.getTimePriceList()) {
+                                            String leftTime = k.getTime();
+                                            if (time.endsWith(leftTime) && "1".equals(k.getStatus())) {
+                                                j.setStatus("1");//半场已占用，全场不可用
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (right != null) {
+                                    if ("0".equals(j.getStatus())) {
+                                        for (TimePrice k : right.getTimePriceList()) {
+                                            String rightTime = k.getTime();
+                                            if (time.endsWith(rightTime) && "1".equals(k.getStatus())) {
+                                                j.setStatus("1");//半场已占用，全场不可用
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }//该时间段的验证结束
+                        }//状态 更新结束
+                    }
+                }
+                model.addAttribute("venueFieldPriceList", venueFieldPriceList);
+                model.addAttribute("times", times);
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                model.addAttribute("consDate", fmt.format(consDate));
+                model.addAttribute("venueId", venueId);
+                model.addAttribute("phone", phone);
+            }
         }
         return "reserve/saleField/reserveAppField";
     }
@@ -151,7 +154,7 @@ public class ReserveAppController extends BaseController {
                               Double weiXinInput,
                               Double aliPayInput,
                               Double couponInput) {
-        System.out.println("开始支付"+order.getId());
+        System.out.println("开始支付" + order.getId());
         Map map = new HashMap<>();
         Double inputSum = 0.0;
         if (memberCardInput != null) {
@@ -239,7 +242,7 @@ public class ReserveAppController extends BaseController {
             }
         }
         Map map = new HashMap<>();
-        map.put("bool",  String.valueOf(bool));
+        map.put("bool", String.valueOf(bool));
         if (bool == true) {
             ReserveVenueCons reserveVenueCons = new ReserveVenueCons();
             reserveVenueCons.setUserName(username);
@@ -265,10 +268,10 @@ public class ReserveAppController extends BaseController {
      * @return
      */
     public String orderDetail(String orderId) {
-        String rs=null;
-        if(StringUtils.isNoneEmpty(orderId)){
+        String rs = null;
+        if (StringUtils.isNoneEmpty(orderId)) {
             Map order = reserveAppVenueConsService.detail(orderId);
-            rs=JSON.toJSONString(order);
+            rs = JSON.toJSONString(order);
         }
         return rs;
     }
@@ -286,6 +289,26 @@ public class ReserveAppController extends BaseController {
             orderList = reserveAppVenueConsService.orderList(reserveType, phone);
         }
         return JSON.toJSONString(orderList);
+    }
+
+    @RequestMapping(value = "checkUnPayOrder")
+    @ResponseBody
+    /**
+     *订单详情
+     * @param orderId
+     * @return
+     */
+    public String checkUnPayOrder(String phone) {
+        List<Map> orderList = null;
+        String orderId = null;
+        if (StringUtils.isNoneEmpty(phone)) {
+            orderList = reserveAppVenueConsService.orderList("1", phone);
+        }
+        if (orderList != null && orderList.size() != 0) {
+            Map map = orderList.get(0);
+            orderId = (String) map.get("orderId");
+        }
+        return orderId;
     }
 
     @RequestMapping(value = "cancelOrder")

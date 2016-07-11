@@ -19,6 +19,7 @@
     .table-chang tbody tr td .time_cell {width:30px;height:30px;font-size:13px;color:#323232;border:0px;background: transparent;}
 </style>
 <body>
+<input value="${phone}" id="phone" type="hidden"/>
 <div id="reserveStatus" style="OVERFLOW-X: scroll;" align=center>
     <table class="table-chang">
         <thead id="fieldThead"  style="position:fixed;top:0px;margin-left:-5px;background-color: #ffffff">
@@ -108,7 +109,7 @@
 </div>
 <script type="text/javascript" src="${ctxStatic}/jquery/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/reserve_app_field.js"></script>
-<script>
+<%--<script>
     window.alert = function(name){
         var iframe = document.createElement("IFRAME");
         iframe.style.display="none";
@@ -117,6 +118,6 @@
         window.frames[0].window.alert(name);
         iframe.parentNode.removeChild(iframe);
     }
-</script>
+</script>--%>
 </body>
 </html>
