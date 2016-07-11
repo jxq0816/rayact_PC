@@ -19,7 +19,8 @@
                 </div>
                 <form id="searchForm" action="${ctx}/reserve/saleVenue/list"
                       method="post">
-                    <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
+                    <div class="row breadcrumb form-search col-lg-12 col-sm-12"
+                         style="margin-left:0px; margin-right:0px;">
                         <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="venue">场馆：</label>
                             <select id="venue" name="venue.id" class="select2 ">
@@ -49,30 +50,48 @@
                         <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="payType">支付方式：</label>
                             <select id="payType" name="payType">
-                                <option value ="">全部</option>
-                                <option value ="1" <j:if test="${1 eq query.payType}">selected="selected"</j:if>
-                                >会员卡</option>
-                                <option value ="2" <j:if test="${2 eq query.payType}">selected="selected"</j:if>
-                                >现金</option>
-                                <option value="3" <j:if test="${3 eq query.payType}">selected="selected"</j:if>
-                                >银行卡</option>
-                                <option value="4" <j:if test="${4 eq query.payType}">selected="selected"</j:if>
-                                >微信</option>
-                                <option value="5" <j:if test="${5 eq query.payType}">selected="selected"</j:if>
-                                >支付宝</option>
-                                <option value="6" <j:if test="${6 eq query.payType}">selected="selected"</j:if>
-                                >优惠券</option>
-                                <option value="8" <j:if test="${8 eq query.payType}">selected="selected"</j:if>
-                                >多方式付款</option>
-                                <option value="9" <j:if test="${9 eq query.payType}">selected="selected"</j:if>
-                                >微信（个人）</option>
-                                <option value="10" <j:if test="${10 eq query.payType}">selected="selected"</j:if>
-                                >支付宝（个人）</option>
+                                <option value="">全部</option>
+                                <option value="1"
+                                        <j:if test="${1 eq query.payType}">selected="selected"</j:if>
+                                >会员卡
+                                </option>
+                                <option value="2"
+                                        <j:if test="${2 eq query.payType}">selected="selected"</j:if>
+                                >现金
+                                </option>
+                                <option value="3"
+                                        <j:if test="${3 eq query.payType}">selected="selected"</j:if>
+                                >银行卡
+                                </option>
+                                <option value="4"
+                                        <j:if test="${4 eq query.payType}">selected="selected"</j:if>
+                                >微信
+                                </option>
+                                <option value="5"
+                                        <j:if test="${5 eq query.payType}">selected="selected"</j:if>
+                                >支付宝
+                                </option>
+                                <option value="6"
+                                        <j:if test="${6 eq query.payType}">selected="selected"</j:if>
+                                >优惠券
+                                </option>
+                                <option value="8"
+                                        <j:if test="${8 eq query.payType}">selected="selected"</j:if>
+                                >多方式付款
+                                </option>
+                                <option value="9"
+                                        <j:if test="${9 eq query.payType}">selected="selected"</j:if>
+                                >微信（个人）
+                                </option>
+                                <option value="10"
+                                        <j:if test="${10 eq query.payType}">selected="selected"</j:if>
+                                >支付宝（个人）
+                                </option>
                             </select>
                         </div>
 
                         <div class="form-group col-lg-2 col-sm-2">
-                            <label class="control-label" for="createBy">操作人：</label>
+                            <label class="control-label" for="createBy">预订操作人：</label>
                             <select id="createBy" name="createBy.id" class="select2">
                                 <option value="">请选择</option>
                                 <c:forEach items="${userList}" var="createBy">
@@ -114,7 +133,7 @@
                             <table>
                                 <thead>
                                 <tr>
-                                  <%--  <th>订单编号</th>--%>
+                                    <%--  <th>订单编号</th>--%>
                                     <th>所属场馆</th>
                                     <th>所属项目</th>
                                     <th>时间区间</th>
@@ -124,9 +143,10 @@
                                     <th>实收金额</th>
                                     <th>支付方式</th>
                                     <th>预定人</th>
-                                    <th>操作人</th>
+                                    <th>预订操作人</th>
+                                    <th>结账操作人</th>
                                     <th>授权人</th>
-                                      <th>教练</th>
+                                    <th>教练</th>
                                     <th>订单时间</th>
                                     <th>操作时间</th>
                                 </tr>
@@ -138,7 +158,7 @@
                                 <c:set var="consPriceSum" value="0"></c:set>
                                 <c:forEach items="${page.list}" var="log">
                                     <tr style="height: 30px;">
-                                       <%-- <td>${log.id}</td>--%>
+                                            <%-- <td>${log.id}</td>--%>
                                         <td>${log.venue.name}</td>
                                         <td>${log.project.name}</td>
                                         <td>${log.startTime}—${log.endTime}</td>
@@ -147,7 +167,8 @@
                                         <td>${log.shouldPrice}</td>
                                         <c:set var="shouldPriceSum" value="${shouldPriceSum+log.shouldPrice}"></c:set>
                                         <td>${log.discountPrice}</td>
-                                        <c:set var="discountPriceSum" value="${discountPriceSum+log.discountPrice}"></c:set>
+                                        <c:set var="discountPriceSum"
+                                               value="${discountPriceSum+log.discountPrice}"></c:set>
                                         <td>${log.consPrice}</td>
                                         <c:set var="consPriceSum" value="${consPriceSum+log.consPrice}"></c:set>
                                         <td>${fns:getPayType(log.payType)}
@@ -156,9 +177,10 @@
                                             </j:if>
                                         </td>
                                         <td>${log.member.name}</td>
+                                        <td>${log.createBy.name}</td>
                                         <td>${log.updateBy.name}</td>
                                         <td>${log.checkoutName}</td>
-                                           <td>${log.tutorName}</td>
+                                        <td>${log.tutorName}</td>
                                         <td><fmt:formatDate value="${log.consDate}"
                                                             type="date"></fmt:formatDate></td>
                                         <td><fmt:formatDate value="${log.updateDate}"
