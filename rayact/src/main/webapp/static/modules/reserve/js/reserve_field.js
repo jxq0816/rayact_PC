@@ -61,8 +61,8 @@ $(document).ready(function () {
             formLoding('请输入预定人姓名');
             return false;
         }
-        if (consMobile == '') {
-             formLoding('请输入预定人手机');
+        if (checkMobile(consMobile)==false) {
+             formLoding('请输入正确的手机');
              return false;
          }
         if (frequency == '2' || frequency == '3') {
@@ -575,4 +575,13 @@ function settlementResult(orderId) {
             }
         }
     });
+}
+function checkMobile(s){
+    var length = s.length;
+    if(length == 11 && /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(14[0-9]{1})|)+\d{8})$/.test(s) )
+    {
+        return true;
+    }else{
+        return false;
+    }
 }
