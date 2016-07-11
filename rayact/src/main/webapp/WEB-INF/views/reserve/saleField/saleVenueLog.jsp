@@ -156,7 +156,7 @@
                                             </j:if>
                                         </td>
                                         <td>${log.member.name}</td>
-                                        <td>${log.createBy.name}</td>
+                                        <td>${log.updateBy.name}</td>
                                         <td>${log.checkoutName}</td>
                                            <td>${log.tutorName}</td>
                                         <td><fmt:formatDate value="${log.consDate}"
