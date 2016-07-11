@@ -185,6 +185,9 @@
 		<include refid="reserveCardStatementsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="tenantId != null and tenantId != ''">
+				and a.tenant_id = #{tenantId}
+			</if>
 			<if test="reserveMember!=null">
 				<if test="reserveMember.id !=null and reserveMember.id !=''">
 					and a.fk_reserve_member_id=#{reserveMember.id}
