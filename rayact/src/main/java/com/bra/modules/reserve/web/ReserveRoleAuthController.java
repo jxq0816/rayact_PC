@@ -4,8 +4,10 @@ import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.reserve.entity.ReserveMenu;
 import com.bra.modules.reserve.entity.ReserveRoleAuth;
 import com.bra.modules.reserve.entity.json.Authority;
+import com.bra.modules.reserve.service.ReserveMenuService;
 import com.bra.modules.reserve.service.ReserveRoleAuthService;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/reserveRoleAuth")
 public class ReserveRoleAuthController extends BaseController {
+	@Autowired
+	private ReserveMenuService reserveMenuService;
 
 	@Autowired
 	private ReserveRoleAuthService reserveRoleAuthService;
@@ -57,7 +61,19 @@ public class ReserveRoleAuthController extends BaseController {
 		reserveRoleAuth.setAuthorityList(authorities);
 		model.addAttribute("reserveRoleAuth", reserveRoleAuth);
 		model.addAttribute("allAuthList", AuthorityUtils.getAll());
+		List<ReserveMenu> menuList = reserveMenuService.findList(new ReserveMenu());
+		model.addAttribute("menuList", menuList);
 		return "reserve/role/reserveRoleAuthForm";
+	}
+	@RequestMapping(value = "menuForm")
+	public String menuform(ReserveRoleAuth reserveRoleAuth, Model model) {
+		List<Authority> authorities = AuthorityUtils.findByAuths(reserveRoleAuth.getAuthorityList());
+		reserveRoleAuth.setAuthorityList(authorities);
+		model.addAttribute("reserveRoleAuth", reserveRoleAuth);
+		model.addAttribute("allAuthList", AuthorityUtils.getAll());
+		List<ReserveMenu> menuList = reserveMenuService.findList(new ReserveMenu());
+		model.addAttribute("menuList", menuList);
+		return "reserve/role/reserveRoleMenuForm";
 	}
 
 	@RequestMapping(value = "save")
