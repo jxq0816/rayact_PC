@@ -200,6 +200,11 @@
         "name": "项目收入统计",
         "href":"/reserve/saleVenueReport/list",
         "authorityList": []
+      }, {
+        "code": "tutorOrder",
+        "name": "教练收入统计",
+        "href":"/reserve/reserveTutorOrder/orderAll",
+        "authorityList": []
       },
       {
         "code": "listOpenRate",
@@ -217,12 +222,6 @@
         "code": "invoiceList",
         "name": "发票管理",
         "href":"/reserve/reserveInvoice/list",
-        "authorityList": []
-      },
-      {
-        "code": "tutorOrder",
-        "name": "教练收入统计",
-        "href":"/reserve/reserveTutorOrder/orderAll",
         "authorityList": []
       }
     ]
