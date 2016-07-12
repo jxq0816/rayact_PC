@@ -106,7 +106,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{companyId},
+			#{company.id},
 			#{loginName},
 			#{password},
 			#{no},
@@ -131,7 +131,7 @@
 	
 	<update id="update">
 		UPDATE reserve_user SET 	
-			company_id = #{companyId},
+			company_id = #{company.id},
 			login_name = #{loginName},
 			password = #{password},
 			no = #{no},

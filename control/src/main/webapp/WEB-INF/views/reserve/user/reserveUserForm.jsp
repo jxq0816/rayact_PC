@@ -51,13 +51,16 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">密码：</label>
-			<div class="controls">
-				<form:input path="password" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+
+			<div class="control-group">
+				<label class="control-label">密码：</label>
+				<div class="controls">
+					<input id="password" name="password" type="password" value="" maxlength="50" minlength="3" class="<c:if test="${empty reserveUser.id}">required</c:if>"/>
+					<c:if test="${empty reserveUser.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
+					<c:if test="${not empty reserveUser.id}"><span class="help-inline">若不修改密码，请留空</span></c:if>
+				</div>
 			</div>
-		</div>
+
 		<div class="control-group">
 			<label class="control-label">工号：</label>
 			<div class="controls">

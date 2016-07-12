@@ -2,6 +2,7 @@ package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.utils.MD5Util;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveOffice;
@@ -68,6 +69,13 @@ public class ReserveUserController extends BaseController {
 	public String save(ReserveUser reserveUser, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, reserveUser)){
 			return form(reserveUser, model);
+		}
+		if (StringUtils.isEmpty(reserveUser.getId())) {//用户注册
+			reserveUser.setPassword(MD5Util.getMD5String(reserveUser.getPassword()));
+		}else if(StringUtils.isNotEmpty(reserveUser.getPassword())){//用户修改密码
+			reserveUser.setPassword(MD5Util.getMD5String(reserveUser.getPassword()));
+		}else{
+			reserveUser.setPassword(reserveUserService.get(reserveUser).getPassword());//用户修改资料，但是没有密码
 		}
 		reserveUserService.save(reserveUser);
 		addMessage(redirectAttributes, "保存商家用户成功");
