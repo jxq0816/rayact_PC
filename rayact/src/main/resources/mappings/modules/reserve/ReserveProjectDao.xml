@@ -6,7 +6,6 @@
 		a.id AS "id",
 		a.name AS "name",
 		a.available AS "available",
-		a.ticket_type AS "ticketType",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -33,9 +32,6 @@
         <include refid="reserveProjectJoins"/>
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL}
-            <if test="ticketType != null and ticketType != ''">
-                AND ticket_type = #{ticketType}
-            </if>
             <if test="name != null and name != ''">
                 AND a.name LIKE
                 <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -98,7 +94,6 @@
 			id,
 			name,
 			available,
-			ticket_type,
 			create_by,
 			create_date,
 			update_by,
@@ -110,7 +105,6 @@
 			#{id},
 			#{name},
 			#{available},
-			#{ticketType},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -124,7 +118,6 @@
     <update id="update">
 		UPDATE reserve_project SET 	
 			name = #{name},
-			ticket_type = #{ticketType},
 			available = #{available},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

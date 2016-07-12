@@ -36,7 +36,7 @@
                 <label class="col-sm-3 control-label">项目:</label>
                 <div class="col-sm-6">
                     <sys:select cssClass="input-large" name="reserveProject.id"
-                                items="${reserveProjectList}"
+                                items="${reserveProjectList}" cssStyle="width:50%"
                                 defaultLabel="全部" defaultValue=""
                                 value="${reserveTimecardMemberSet.reserveProject.id}" itemLabel="name" itemValue="id">
 

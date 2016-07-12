@@ -54,7 +54,7 @@ public class ReserveVenueOrderController extends BaseController {
         model.addAttribute("visitorsSets", visitorsSets);
 
         ReserveProject project = new ReserveProject();
-        project.setTicketType("2");
+       /* project.setTicketType("2");*/
         List<ReserveProject> projects = reserveProjectService.findList(project);
         if (visitorsSet.getProject() != null && StringUtils.isNotBlank(visitorsSet.getProject().getId())) {
             model.addAttribute("projectId", visitorsSet.getProject().getId());

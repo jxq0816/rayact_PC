@@ -1,14 +1,15 @@
 package com.bra.modules.reserve.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.bra.common.config.Global;
+import com.bra.common.utils.StringUtils;
+import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.entity.ReserveVenue;
+import com.bra.modules.reserve.entity.ReserveVenueVisitorsSet;
 import com.bra.modules.reserve.service.ReserveProjectService;
 import com.bra.modules.reserve.service.ReserveVenueService;
-import com.bra.modules.reserve.utils.AuthorityUtils;
+import com.bra.modules.reserve.service.ReserveVenueVisitorsSetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.bra.common.config.Global;
-import com.bra.common.persistence.Page;
-import com.bra.common.web.BaseController;
-import com.bra.common.utils.StringUtils;
-import com.bra.modules.reserve.entity.ReserveVenueVisitorsSet;
-import com.bra.modules.reserve.service.ReserveVenueVisitorsSetService;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -67,7 +63,7 @@ public class ReserveVenueVisitorsSetController extends BaseController {
 	public String form(ReserveVenueVisitorsSet reserveVenueVisitorsSet, Model model) {
 		model.addAttribute("reserveVenues",reserveVenueService.findList(new ReserveVenue())) ;
 		ReserveProject project = new ReserveProject();
-		project.setTicketType("2");
+		/*project.setTicketType("2");*/
 		model.addAttribute("projects",reserveProjectService.findList(project));
 		model.addAttribute("reserveVenueVisitorsSet", reserveVenueVisitorsSet);
 		return "reserve/visitorsset/form";
