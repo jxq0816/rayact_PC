@@ -1,93 +1,67 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-    <title>项目管理</title>
-    <meta name="decorator" content="default"/>
+	<title>项目管理管理</title>
+	<meta name="decorator" content="default"/>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+		});
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
+			$("#searchForm").submit();
+        	return false;
+        }
+	</script>
 </head>
 <body>
-<div class="container-fluid" id="pcont">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="block-flat">
-                <div class="header">
-                    <h3>项目列表</h3>
-                </div>
-                <form:form id="searchForm" modelAttribute="reserveProject" action="${ctx}/reserve/reserveProject/"
-                           method="post">
-
-                    <div class="row breadcrumb form-search"
-                         style="margin-left:0px; margin-right:0px;">
-                        <div class="form-group col-lg-3 col-sm-4">
-                            <label class="control-label" for="name">项目名称：</label>
-                            <form:input path="name" id="name" htmlEscape="false" maxlength="30"
-                                        class="input-medium"/>
-                        </div>
-
-
-                        <div class="form-group col-lg-2 col-sm-3">
-                            <input id="btnSubmit" class="btn btn-primary" type="submit"
-                                   value="查询"/>
-                        </div>
-
-                        <div class="pull-right">
-                            <a class="btn btn-success" href="${ctx}/reserve/reserveProject/form">
-                                <i class="fa fa-plus"></i>添加
-                            </a>
-                        </div>
-
-                    </div>
-
-
-                    <sys:message content="${message}"/>
-                    <div class="content">
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>项目名称</th>
-                                    <th>是否启用</th>
-                                    <th>备注</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${page.list}" var="reserveProject">
-                                    <tr>
-                                        <td><a href="${ctx}/reserve/reserveProject/form?id=${reserveProject.id}">
-                                                ${reserveProject.name}
-                                        </a></td>
-                                        <td>
-                                                ${fns:getDictLabel(reserveProject.available, 'yes_no', '')}
-                                        </td>
-                                        <td>
-                                                ${reserveProject.remarks}
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-xs" href="${ctx}/reserve/reserveProject/form?id=${reserveProject.id}">修改</a>
-                                            <a class="btn btn-danger btn-xs" href="${ctx}/reserve/reserveProject/delete?id=${reserveProject.id}"
-                                               onclick="return confirmb('确认要删除该项目吗？', this.href)">删除</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="pull-right">
-                                        <div class="dataTables_paginate paging_bs_normal">
-                                            <sys:javascript_page p="${page}" formId="searchForm"></sys:javascript_page>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form:form>
-            </div>
-        </div>
-    </div>
-</div>
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="${ctx}/reserve/reserveProject/">项目管理列表</a></li>
+		<shiro:hasPermission name="reserve:reserveProject:edit"><li><a href="${ctx}/reserve/reserveProject/form">项目管理添加</a></li></shiro:hasPermission>
+	</ul>
+	<form:form id="searchForm" modelAttribute="reserveProject" action="${ctx}/reserve/reserveProject/" method="post" class="breadcrumb form-search">
+		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+		<ul class="ul-form">
+			<li><label>名称：</label>
+				<form:input path="name" htmlEscape="false" maxlength="30" class="input-medium"/>
+			</li>
+			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+			<li class="clearfix"></li>
+		</ul>
+	</form:form>
+	<sys:message content="${message}"/>
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>名称</th>
+				<th>时间</th>
+				<th>备注</th>
+				<shiro:hasPermission name="reserve:reserveProject:edit"><th>操作</th></shiro:hasPermission>
+			</tr>
+		</thead>
+		<tbody>
+		<c:forEach items="${page.list}" var="reserveProject">
+			<tr>
+				<td><a href="${ctx}/reserve/reserveProject/form?id=${reserveProject.id}">
+					${reserveProject.name}
+				</a></td>
+				<td>
+					<fmt:formatDate value="${reserveProject.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					${reserveProject.remarks}
+				</td>
+				<shiro:hasPermission name="reserve:reserveProject:edit"><td>
+    				<a href="${ctx}/reserve/reserveProject/form?id=${reserveProject.id}">修改</a>
+					<a href="${ctx}/reserve/reserveProject/delete?id=${reserveProject.id}" onclick="return confirmx('确认要删除该项目吗？', this.href)">删除</a>
+				</td></shiro:hasPermission>
+			</tr>
+		</c:forEach>
+		</tbody>
+	</table>
+	<div class="pagination">${page}</div>
 </body>
 </html>

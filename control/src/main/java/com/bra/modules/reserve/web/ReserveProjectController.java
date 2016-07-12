@@ -4,9 +4,9 @@ import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveProject;
 import com.bra.modules.reserve.service.ReserveProjectService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 项目管理Controller
- * @author xiaobin
- * @version 2015-12-29
+ * @author jiang
+ * @version 2016-07-12
  */
 @Controller
 @RequestMapping(value = "${adminPath}/reserve/reserveProject")
@@ -29,7 +29,7 @@ public class ReserveProjectController extends BaseController {
 
 	@Autowired
 	private ReserveProjectService reserveProjectService;
-	
+
 	@ModelAttribute
 	public ReserveProject get(@RequestParam(required=false) String id) {
 		ReserveProject entity = null;
@@ -41,37 +41,39 @@ public class ReserveProjectController extends BaseController {
 		}
 		return entity;
 	}
-	
+
+	@RequiresPermissions("reserve:reserveProject:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(ReserveProject reserveProject, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<ReserveProject> page = reserveProjectService.findPage(new Page<ReserveProject>(request, response), reserveProject); 
+		Page<ReserveProject> page = reserveProjectService.findPage(new Page<ReserveProject>(request, response), reserveProject);
 		model.addAttribute("page", page);
 		return "reserve/project/reserveProjectList";
 	}
 
+	@RequiresPermissions("reserve:reserveProject:view")
 	@RequestMapping(value = "form")
-	@Token(save = true)
 	public String form(ReserveProject reserveProject, Model model) {
 		model.addAttribute("reserveProject", reserveProject);
 		return "reserve/project/reserveProjectForm";
 	}
 
+	@RequiresPermissions("reserve:reserveProject:edit")
 	@RequestMapping(value = "save")
-	@Token(remove = true)
 	public String save(ReserveProject reserveProject, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, reserveProject)){
 			return form(reserveProject, model);
 		}
 		reserveProjectService.save(reserveProject);
-		addMessage(redirectAttributes, "保存项目成功");
-		return "redirect:"+Global.getAdminPath()+"/reserve/reserveProject/list";
+		addMessage(redirectAttributes, "保存项目管理成功");
+		return "redirect:"+Global.getAdminPath()+"/reserve/reserveProject/?repage";
 	}
-	
+
+	@RequiresPermissions("reserve:reserveProject:edit")
 	@RequestMapping(value = "delete")
 	public String delete(ReserveProject reserveProject, RedirectAttributes redirectAttributes) {
 		reserveProjectService.delete(reserveProject);
-		addMessage(redirectAttributes, "删除项目成功");
-		return "redirect:"+Global.getAdminPath()+"/reserve/reserveProject/list";
+		addMessage(redirectAttributes, "删除项目管理成功");
+		return "redirect:"+Global.getAdminPath()+"/reserve/reserveProject/?repage";
 	}
 
 }
