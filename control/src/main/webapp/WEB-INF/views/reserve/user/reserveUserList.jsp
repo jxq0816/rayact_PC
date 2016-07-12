@@ -41,7 +41,6 @@
     <tr>
         <th>姓名</th>
         <th>商家</th>
-        <th>角色</th>
         <th>登录名</th>
         <th>最后登陆IP</th>
         <th>最后登陆时间</th>
@@ -61,10 +60,6 @@
             <td>
                     ${reserveUser.company.name}
             </td>
-            <td>
-                    ${reserveUser.reserveRoleAuth.name}
-            </td>
-
             <td>
                     ${reserveUser.loginName}
             </td>

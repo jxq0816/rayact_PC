@@ -37,7 +37,7 @@
 			<label class="control-label">归属公司：</label>
 			<div class="controls">
 				<sys:select cssClass="input-large" name="company.id"
-							cssStyle="width:50%"
+							cssStyle="width:16%"
 							value="${reserveUser.company.id}"
 							items="${reserveOfficeList}" itemLabel="name" itemValue="id"
 							defaultLabel="----请选择-----"
@@ -92,33 +92,17 @@
 		<div class="control-group">
 			<label class="control-label">用户类型：</label>
 			<div class="controls">
-				<form:input path="userType" htmlEscape="false" maxlength="1" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">用户头像：</label>
-			<div class="controls">
-				<form:input path="photo" htmlEscape="false" maxlength="1000" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">最后登陆IP：</label>
-			<div class="controls">
-				<form:input path="loginIp" htmlEscape="false" maxlength="100" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">最后登陆时间：</label>
-			<div class="controls">
-				<input name="loginDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${reserveUser.loginDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				超级管理员
+				<form:input path="userType" value="1" type="hidden" htmlEscape="false" maxlength="1" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">是否可登录：</label>
 			<div class="controls">
-				<form:input path="loginFlag" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				<form:select path="loginFlag" cssClass="input-large" cssStyle="width: 16%">
+					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				<span class="help-inline"><font color="red">*</font> “是”代表此账号允许登录，“否”则表示此账号不允许登录</span>
 			</div>
 		</div>
 		<div class="control-group">

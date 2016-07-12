@@ -34,7 +34,6 @@ public class ReserveUserController extends BaseController {
 	private ReserveUserService reserveUserService;
 	@Autowired
 	private ReserveOfficeService reserveOfficeService;
-	
 	@ModelAttribute
 	public ReserveUser get(@RequestParam(required=false) String id) {
 		ReserveUser entity = null;

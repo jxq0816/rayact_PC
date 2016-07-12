@@ -14,9 +14,6 @@
 		a.phone AS "phone",
 		a.mobile AS "mobile",
 		a.user_type AS "userType",
-		r.id AS "reserveRoleAuth.id",
-    	r.user_type AS "reserveRoleAuth.userType",
-    	r.name AS "reserveRoleAuth.name",
 		a.photo AS "photo",
 		a.login_ip AS "loginIp",
 		a.login_date AS "loginDate",
@@ -32,7 +29,6 @@
 	
 	<sql id="reserveUserJoins">
 		LEFT JOIN reserve_office company ON company.id = a.company_id
-        LEFT JOIN reserve_role_auth r ON r.user_type = a.user_type
 	</sql>
     
 	<select id="get" resultType="ReserveUser">
@@ -49,7 +45,7 @@
 		FROM reserve_user a
 		<include refid="reserveUserJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.user_type='1'
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -73,7 +69,7 @@
 		FROM reserve_user a
 		<include refid="reserveUserJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL}  and a.user_type='1'
 		</where>		
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
