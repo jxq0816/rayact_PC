@@ -10,6 +10,7 @@ import com.bra.modules.reserve.entity.ReserveRole;
 import com.bra.modules.reserve.entity.json.Authority;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.sys.dao.UserDao;
+import com.bra.modules.sys.entity.Office;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
 import com.bra.modules.sys.utils.UserUtils;
@@ -42,7 +43,8 @@ public class ReserveUserService extends CrudService<UserDao, User> {
     public Page<User> findUser(Page<User> page, User user) {
         // 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
         // 设置分页参数
-        user=UserUtils.getUser();
+        Office company=UserUtils.getUser().getCompany();
+        user.setCompany(company);
         user.setPage(page);
         // 执行分页查询
         page.setList(dao.findList(user));

@@ -15,17 +15,17 @@ if (typeof JSON !== 'object') {
         Date.prototype.toJSON = function () {
 
             return isFinite(this.valueOf())
-                ? this.getUTCFullYear()     + '-' +
-                f(this.getUTCMonth() + 1) + '-' +
-                f(this.getUTCDate())      + 'T' +
-                f(this.getUTCHours())     + ':' +
-                f(this.getUTCMinutes())   + ':' +
-                f(this.getUTCSeconds())   + 'Z'
+                ? this.getUTCFullYear() + '-' +
+            f(this.getUTCMonth() + 1) + '-' +
+            f(this.getUTCDate()) + 'T' +
+            f(this.getUTCHours()) + ':' +
+            f(this.getUTCMinutes()) + ':' +
+            f(this.getUTCSeconds()) + 'Z'
                 : null;
         };
 
-        String.prototype.toJSON      =
-            Number.prototype.toJSON  =
+        String.prototype.toJSON =
+            Number.prototype.toJSON =
                 Boolean.prototype.toJSON = function () {
                     return this.valueOf();
                 };
@@ -194,7 +194,7 @@ if (typeof JSON !== 'object') {
             '\n': '\\n',
             '\f': '\\f',
             '\r': '\\r',
-            '"' : '\\"',
+            '"': '\\"',
             '\\': '\\\\'
         };
         JSON.stringify = function (value, replacer, space) {
@@ -229,7 +229,7 @@ if (typeof JSON !== 'object') {
             rep = replacer;
             if (replacer && typeof replacer !== 'function' &&
                 (typeof replacer !== 'object' ||
-                    typeof replacer.length !== 'number')) {
+                typeof replacer.length !== 'number')) {
                 throw new Error('JSON.stringify');
             }
 
@@ -301,9 +301,9 @@ if (typeof JSON !== 'object') {
 // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
 
             if (/^[\],:{}\s]*$/
-                .test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-                    .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-                    .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                    .test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+                        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+                        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
 // In the third stage we use the eval function to compile the text into a
 // JavaScript structure. The '{' operator is subject to a syntactic ambiguity

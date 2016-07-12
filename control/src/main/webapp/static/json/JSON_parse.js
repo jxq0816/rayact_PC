@@ -12,14 +12,14 @@ var json_parse = (function () {
     var at,     // The index of the current character
         ch,     // The current character
         escapee = {
-            '"':  '"',
+            '"': '"',
             '\\': '\\',
-            '/':  '/',
-            b:    '\b',
-            f:    '\f',
-            n:    '\n',
-            r:    '\r',
-            t:    '\t'
+            '/': '/',
+            b: '\b',
+            f: '\f',
+            n: '\n',
+            r: '\r',
+            t: '\t'
         },
         text,
 
@@ -28,10 +28,10 @@ var json_parse = (function () {
 // Call error when something is wrong.
 
             throw {
-                name:    'SyntaxError',
+                name: 'SyntaxError',
                 message: m,
-                at:      at,
-                text:    text
+                at: at,
+                text: text
             };
         },
 

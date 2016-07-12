@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.reserve.dao.ReserveUserDao">
+    
+	<sql id="reserveUserColumns">
+		a.id AS "id",
+		a.company_id AS "company.id",
+		company.name AS "company.name",
+		a.login_name AS "loginName",
+		a.password AS "password",
+		a.no AS "no",
+		a.name AS "name",
+		a.email AS "email",
+		a.phone AS "phone",
+		a.mobile AS "mobile",
+		a.user_type AS "userType",
+		r.id AS "reserveRoleAuth.id",
+    	r.user_type AS "reserveRoleAuth.userType",
+    	r.name AS "reserveRoleAuth.name",
+		a.photo AS "photo",
+		a.login_ip AS "loginIp",
+		a.login_date AS "loginDate",
+		a.login_flag AS "loginFlag",
+		a.checkout_pwd AS "checkoutPwd",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="reserveUserJoins">
+		LEFT JOIN reserve_office company ON company.id = a.company_id
+        LEFT JOIN reserve_role_auth r ON r.user_type = a.user_type
+	</sql>
+    
+	<select id="get" resultType="ReserveUser">
+		SELECT 
+			<include refid="reserveUserColumns"/>
+		FROM reserve_user a
+		<include refid="reserveUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ReserveUser">
+		SELECT 
+			<include refid="reserveUserColumns"/>
+		FROM reserve_user a
+		<include refid="reserveUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ReserveUser">
+		SELECT 
+			<include refid="reserveUserColumns"/>
+		FROM reserve_user a
+		<include refid="reserveUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO reserve_user(
+			id,
+			company_id,
+			login_name,
+			password,
+			no,
+			name,
+			email,
+			phone,
+			mobile,
+			user_type,
+			photo,
+			login_ip,
+			login_date,
+			login_flag,
+			checkout_pwd,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{companyId},
+			#{loginName},
+			#{password},
+			#{no},
+			#{name},
+			#{email},
+			#{phone},
+			#{mobile},
+			#{userType},
+			#{photo},
+			#{loginIp},
+			#{loginDate},
+			#{loginFlag},
+			#{checkoutPwd},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE reserve_user SET 	
+			company_id = #{companyId},
+			login_name = #{loginName},
+			password = #{password},
+			no = #{no},
+			name = #{name},
+			email = #{email},
+			phone = #{phone},
+			mobile = #{mobile},
+			user_type = #{userType},
+			photo = #{photo},
+			login_ip = #{loginIp},
+			login_date = #{loginDate},
+			login_flag = #{loginFlag},
+			checkout_pwd = #{checkoutPwd},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE reserve_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
