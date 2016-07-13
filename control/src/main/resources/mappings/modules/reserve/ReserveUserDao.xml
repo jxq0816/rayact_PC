@@ -62,6 +62,19 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="getExactUser" resultType="ReserveUser">
+		SELECT
+		<include refid="reserveUserColumns"/>
+		FROM reserve_user a
+		<include refid="reserveUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="loginName != null and loginName != ''">
+				AND a.login_name =#{loginName}
+			</if>
+		</where>
+	</select>
 	
 	<select id="findAllList" resultType="ReserveUser">
 		SELECT 

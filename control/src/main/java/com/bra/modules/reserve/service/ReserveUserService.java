@@ -4,6 +4,7 @@ import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveUserDao;
 import com.bra.modules.reserve.entity.ReserveUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,18 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ReserveUserService extends CrudService<ReserveUserDao, ReserveUser> {
 
+	@Autowired
+	private ReserveUserDao dao;
+
 	public ReserveUser get(String id) {
 		return super.get(id);
 	}
+
+	public ReserveUser getExactUser(ReserveUser reserveUser) {
+		return dao.getExactUser(reserveUser);
+	}
+
+
 	
 	public List<ReserveUser> findList(ReserveUser reserveUser) {
 		return super.findList(reserveUser);

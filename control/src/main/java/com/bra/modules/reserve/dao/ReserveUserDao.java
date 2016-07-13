@@ -11,5 +11,5 @@ import com.bra.modules.reserve.entity.ReserveUser;
  */
 @MyBatisDao
 public interface ReserveUserDao extends CrudDao<ReserveUser> {
-	
+    ReserveUser getExactUser(ReserveUser reserveUser);
 }

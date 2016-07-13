@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,35 @@ public class ReserveUserController extends BaseController {
 		}
 		return entity;
 	}
+
+	/**
+	 * 验证登录名是否有效
+	 *
+	 * @param oldLoginName
+	 * @param loginName
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "checkLoginName")
+	public Boolean checkLoginName(String oldLoginName, String loginName) {
+
+		if (StringUtils.isNoneBlank(loginName)) {
+			if(loginName.equals(oldLoginName)){
+				return true;
+			}else{
+				ReserveUser user=new ReserveUser();
+				user.setLoginName(loginName);
+				user = reserveUserService.getExactUser(user);
+				if(user==null){
+					return true;//没有人使用该用户名
+				}else{
+					return false;
+				}
+			}
+		}else{
+			return false;
+		}
+	}
 	
 	@RequiresPermissions("reserve:reserveUser:view")
 	@RequestMapping(value = {"list", ""})
@@ -70,12 +100,12 @@ public class ReserveUserController extends BaseController {
 		if (!beanValidator(model, reserveUser)){
 			return form(reserveUser, model);
 		}
-		if (StringUtils.isEmpty(reserveUser.getId())) {//用户注册
+		if (StringUtils.isEmpty(reserveUser.getId())) {//注册用户
 			reserveUser.setPassword(MD5Util.getMD5String(reserveUser.getPassword()));
-		}else if(StringUtils.isNotEmpty(reserveUser.getPassword())){//用户修改密码
+		}else if(StringUtils.isNotEmpty(reserveUser.getPassword())){//修改用户密码
 			reserveUser.setPassword(MD5Util.getMD5String(reserveUser.getPassword()));
 		}else{
-			reserveUser.setPassword(reserveUserService.get(reserveUser).getPassword());//用户修改资料，但是没有密码
+			reserveUser.setPassword(reserveUserService.get(reserveUser).getPassword());//修改用户资料，但是没有修改密码
 		}
 		reserveUserService.save(reserveUser);
 		addMessage(redirectAttributes, "保存商家用户成功");
