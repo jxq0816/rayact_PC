@@ -133,17 +133,17 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    <th>所属场馆</th>
-                                    <th>所属项目</th>
+                                    <th>场馆</th>
+                                    <th>项目</th>
                                     <th>时间区间</th>
                                     <th>场地费用</th>
                                     <th>应收金额</th>
                                     <th>优惠金额</th>
                                     <th>实收金额</th>
-                                    <th>支付类型</th>
-                                    <th>预定人</th>
-                                    <th>预订操作人</th>
-                                    <th>结账操作人</th>
+                                    <th>支付方式</th>
+                                    <th>顾客</th>
+                                    <th>预订人</th>
+                                    <th>结账人</th>
                                     <th>授权人</th>
                                     <th>教练</th>
                                     <th>订单时间</th>
