@@ -10,14 +10,17 @@ import com.bra.common.upload.StoreType;
 import com.bra.common.upload.UploadUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.modules.cms.entity.Message;
 import com.bra.modules.cms.entity.Team;
 import com.bra.modules.cms.entity.TeamMember;
 import com.bra.modules.cms.service.FocusService;
+import com.bra.modules.cms.service.MessageService;
 import com.bra.modules.cms.service.TeamMemberService;
 import com.bra.modules.cms.service.TeamService;
 import com.bra.modules.mechanism.entity.AttMain;
 import com.bra.modules.mechanism.service.AttMainService;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.codec.Base64;
@@ -47,6 +50,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/cms/team")
 public class TeamController extends BaseController {
+	@Autowired
+	private MessageService messageService;
 	@Autowired
 	private FocusService focusService;
 	@Autowired
@@ -203,6 +208,17 @@ public class TeamController extends BaseController {
 		List<TeamMember> tms = teamMemberService.findList(tm);
 		if(tms!=null){
 			for(TeamMember mm:tms){
+				String userId = mm.getMemberId();
+				if(StringUtils.isNotBlank(userId)){
+					Message m = new Message();
+					m.setSubject("队伍解散啦！");
+					m.setContent(UserUtils.getUser().getName() +" 解散了队伍‘"+team.getName()+"'！ ");
+					m.setTargetId(userId);
+					m.setTargetName(User.class.getName());
+					m.setSendId(team.getId());
+					m.setSendName(team.getClass().getName());
+					messageService.save(m);
+				}
 				teamMemberService.delete(mm);
 			}
 		}
@@ -277,6 +293,30 @@ public class TeamController extends BaseController {
 		a.getSqlMap().put("del",del);
 		teamService.deleteAll(a);
 		return "删除成功";
+	}
+
+	@RequestMapping(value = "app/isCreator")
+	public void isCreator(Team team,HttpServletRequest request, HttpServletResponse response) {
+		if(UserUtils.getUser()!=null&&StringUtils.isNotBlank(UserUtils.getUser().getId())){
+			team.setCreateBy(UserUtils.getUser());
+		}else{
+			team.setName("*********");
+		}
+		List<Team> list = teamService.findList(team);
+		JSONObject j = new JSONObject();
+		if(list!=null&&list.size()>0){
+			j.put("status","true");
+		}else{
+			j.put("status","false");
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException g) {
+
+		}
 	}
 
 }

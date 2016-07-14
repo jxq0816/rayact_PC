@@ -41,8 +41,10 @@
 				${adminPath}/cas = cas
 				${adminPath}/login = authc
 				${adminPath}/logout = logout
+				${adminPath}/api/checkVersion = anon
 				${adminPath}/api/createSimple = anon
 				${adminPath}/sys/user/api/getUserInfo= anon
+				${adminPath}/sys/user/api/updatePass= anon
 				${adminPath}/** = user
 				/act/rest/service/editor/** = perms[act:model:edit]
 				/act/rest/service/model/** = perms[act:model:edit]

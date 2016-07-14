@@ -8,7 +8,9 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.CmsCollection;
+import com.bra.modules.cms.entity.PostMain;
 import com.bra.modules.cms.service.CmsCollectionService;
+import com.bra.modules.cms.service.PostMainService;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -37,6 +39,8 @@ public class CmsCollectionController extends BaseController {
 
 	@Autowired
 	private CmsCollectionService cmsCollectionService;
+	@Autowired
+	private PostMainService postMainService;
 	
 	@ModelAttribute
 	public CmsCollection get(@RequestParam(required=false) String id) {
@@ -133,6 +137,39 @@ public class CmsCollectionController extends BaseController {
 			cmsCollectionService.save(cmsCollection);
 			j.put("status","success");
 			j.put("msg","收藏成功");
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException e) {
+		}
+	}
+
+	@RequestMapping(value = "app/isCollect")
+	public void isCollect(CmsCollection cmsCollection, HttpServletResponse response) {
+		JSONObject j = new JSONObject();
+		cmsCollection.setCreateBy(UserUtils.getUser());
+		List<CmsCollection> list=  cmsCollectionService.findList(cmsCollection);
+		if(list!=null&&list.size()>0){
+			j.put("status","true");
+		}else {
+			j.put("status","false");
+		}
+		if("postMain".equals(cmsCollection.getModelName())){
+			PostMain pm = postMainService.get(cmsCollection.getModelId());
+			if(pm!=null){
+				User uc = pm.getCreateBy();
+				User now = UserUtils.getUser();
+				if(uc!=null&&now!=null&&uc.getId().equals(now.getId())){
+					j.put("isCreate","true");
+				}else{
+					j.put("isCreate","false");
+				}
+			}else{
+				j.put("isCreate","false");
+			}
 		}
 		try {
 			response.reset();

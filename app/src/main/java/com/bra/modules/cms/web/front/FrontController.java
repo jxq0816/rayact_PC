@@ -13,6 +13,7 @@ import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.*;
 import com.bra.modules.cms.service.*;
 import com.bra.modules.cms.utils.CmsUtils;
+import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -316,6 +317,43 @@ public class FrontController extends BaseController{
 		}
 		return "modules/cms/frontViewArticle";
 	}
+
+	/**
+	 * 显示内容
+	 */
+	@RequestMapping(value = "app/viewArticle2.html")
+	public String appView2(HttpServletRequest request,Model model) {
+		request.setAttribute("sid", UserUtils.getSession().getId());
+		String contentId = request.getParameter("id");
+		// 获取文章内容
+		Article article = articleService.get(contentId);
+		if (article==null || !Article.DEL_FLAG_NORMAL.equals(article.getDelFlag())){
+			return "error/404";
+		}
+		// 文章阅读次数+1
+		articleService.updateHitsAddOne(contentId);
+		if(article.getCopyfrom()!=null){
+			if("扣子体育".equals(article.getCopyfrom())){
+				model.addAttribute("copyfrom", "独家");
+			}else{
+				model.addAttribute("copyfrom",article.getCopyfrom());
+			}
+		}
+		article.setArticleData(articleDataService.get(article.getId()));
+		model.addAttribute("article", article);
+		Comment c = new Comment();
+		c.setContentId(article.getId());
+		c.setDelFlag(Comment.DEL_FLAG_NORMAL);
+		Page<Comment> page = new Page();
+		page.setPageNo(1);
+		page.setPageSize(1);
+		Page<Comment> pages = commentService.findPage(page,c);
+		if(page!=null){
+			model.addAttribute("count",pages.getCount());
+		}
+		return "modules/cms/frontViewArticle2";
+	}
+
 	/**
 	 * 获取内容评论
 	 */

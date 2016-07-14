@@ -69,9 +69,11 @@ public class TeamMemberService extends CrudService<TeamMemberDao, TeamMember> {
 		super.delete(teamMember);
 		Team t = teamService.get(teamMember.getTeam().getId());
 		String ids = t.getMemberIds();
-		ids = ids.replaceAll(teamMember.getMemberId()+",","");
-		t.setMemberIds(ids);
-		t.setPersonNum(t.getPersonNum()-1);
+		if(!StringUtils.isNull(ids)){
+			ids = ids.replaceAll(teamMember.getMemberId()+",","");
+			t.setMemberIds(ids);
+			t.setPersonNum(t.getPersonNum()-1);
+		}
 		teamService.save(t);
 	}
 

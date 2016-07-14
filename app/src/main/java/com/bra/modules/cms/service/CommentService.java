@@ -49,9 +49,6 @@ public class CommentService extends CrudService<CommentDao, Comment> {
 	}
 
 	public List<Map<String,String>> findListMap(Page page,Comment comment){
-		if(page.getPageSize()==0)
-			page.setPageSize(10);
-		page.setPageNo((page.getPageNo()-1)*page.getPageSize());
 		comment.setPage(page);
 		return commentDao.findListMap(comment);
 	}

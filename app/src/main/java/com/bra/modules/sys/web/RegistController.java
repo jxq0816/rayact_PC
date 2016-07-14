@@ -1,6 +1,7 @@
 package com.bra.modules.sys.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bra.common.utils.MD5Util;
 import com.bra.common.web.BaseController;
 import com.bra.modules.sys.entity.Office;
 import com.bra.modules.sys.entity.User;
@@ -47,8 +48,30 @@ public class RegistController extends BaseController {
             u.setMobile(phone);
             List<User> list = systemService.findListApi(u);
             if(list != null&&list.size()>0){
-                rtn.put("msg","该手机号已注册！");
-                rtn.put("status","fail");
+                User ua = list.get(0);
+                String p = ua.getPassword();
+                if((com.bra.common.utils.StringUtils.isNotBlank(qq)|| com.bra.common.utils.StringUtils.isNotBlank(weixin))&&MD5Util.getMD5String(password).equals(p)){
+                    if(!StringUtils.isNull(qq)&&!StringUtils.isNull(qqName)){
+                        ua.setQq(qq);
+                        ua.setQqName(qqName);
+                        if(StringUtils.isNull(ua.getPhoto())){
+                            ua.setPhoto(qqImage);
+                        }
+                    }
+                    if(!StringUtils.isNull(weixin)&&!StringUtils.isNull(weixinName)){
+                        ua.setWeixin(weixin);
+                        ua.setWeixinName(weixinName);
+                        if(StringUtils.isNull(ua.getPhoto())){
+                            ua.setPhoto(weixinImage);
+                        }
+                    }
+                    systemService.saveUserApp(ua);
+                    rtn.put("msg",ua.getId());
+                    rtn.put("status","success");
+                }else{
+                    rtn.put("msg","该手机号已注册！");
+                    rtn.put("status","fail");
+                }
             }else{
                 User user = new User();
                 Office o =  new Office();
@@ -93,4 +116,5 @@ public class RegistController extends BaseController {
         } catch (IOException e) {
         }
     }
+
 }
