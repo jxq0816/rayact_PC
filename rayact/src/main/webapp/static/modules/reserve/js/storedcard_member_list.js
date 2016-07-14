@@ -87,8 +87,8 @@ $(document).ready(function () {
     });
     /*大客户退费保存*/
     $("#refundSaveForVIPBtn").on('click', function () {
-        var refundVolume =$("#refundVolume").val();
-        refundVolume= $.trim(refundVolume);
+        var refundVolume =$("#refundVolume").val().trim();
+        var remarks =$("#remarks").val().trim();
         if (refundVolume ==null || refundVolume=='' || refundVolume==undefined ) {
             formLoding("请输入退费");
             return;
@@ -109,7 +109,8 @@ $(document).ready(function () {
             data: {
                 id: id,
                 token: token,
-                refundVolume: refundVolume
+                refundVolume: refundVolume,
+                remarks:remarks
             },
             success: function (result) {
                 if (result == "success") {

@@ -81,6 +81,7 @@
                                 <th>电话</th>
                                 <th>支付方式</th>
                                 <th>操作人</th>
+                                <th>备注</th>
                                 <th>时间</th>
                             </tr>
                             </thead>
@@ -108,6 +109,10 @@
 
                                     <td>
                                             ${reserveCardStatements.createBy.name}
+                                    </td>
+
+                                    <td>
+                                            ${reserveCardStatements.remarks}
                                     </td>
 
                                     <td>

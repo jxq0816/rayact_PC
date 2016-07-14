@@ -32,7 +32,14 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="form-group">
+                        <label for="remarks" class="col-sm-2 control-label">充值备注:</label>
+                        <div class="col-sm-10">
+                            <input id="remarks" name="remarks" htmlEscape="false" maxlength="30" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-6">

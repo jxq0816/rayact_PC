@@ -190,32 +190,7 @@
         </div>
     </div>
 </div>
-<button class="btn btn-primary btn-flat md-trigger" id="refundForVIPDialogBtn" style="display: none"
-        data-modal="refundForVIPDialog">
-    大客户退费
-</button>
-<div class="md-modal colored-header custom-width md-effect-12 warning" id="refundForVIPDialog">
-    <div class="md-content">
-        <div class="modal-header">
-            <h5>大客户退费</h5>
-            <button type="button" class="close md-close" data-dismiss="modal"
-                    aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body form-horizontal" id="refundForVIPForm">
-            <!--大客户退费-->
-
-
-            <!--end 大客户退费-->
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="refundCloseForVIPBtn" class="btn btn-default btn-flat md-close"
-                    data-dismiss="modal">
-                取消
-            </button>
-            <button type="button" id="refundSaveForVIPBtn" class="btn btn-primary btn-flat">保存</button>
-        </div>
-    </div>
-</div>
+<jsp:include page="../include/refundModal.jsp"></jsp:include>
 <script src="${ctxStatic}/modules/reserve/js/storedcard_member_list.js" type="text/javascript"></script>
 </body>
 </html>

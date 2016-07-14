@@ -20,8 +20,9 @@ function prePayment(memberId) {
 }
 function timeCardRechargeAddTime(){
     var id=$("#id").val();
-    var rechargeVolume=$("#rechargeVolume").val();
-    var time=$("#time").val();
+    var rechargeVolume=$("#rechargeVolume").val().trim();
+    var time=$("#time").val().trim();
+    var remarks=$("#remarks").val().trim();
     if(rechargeVolume==null||rechargeVolume==""||rechargeVolume==undefined){
         errorLoding("请输入充值金额");
         return;
@@ -45,7 +46,7 @@ function timeCardRechargeAddTime(){
     }
     jQuery.postItems({
         url: ctx + '/reserve/timeCardMember/addTime',
-        data: {id: id,rechargeVolume:rechargeVolume,time:time,payType:payType},
+        data: {id: id,rechargeVolume:rechargeVolume,time:time,payType:payType,remarks:remarks},
         success: function () {
             successLoding("充值成功");
             location.reload(true);

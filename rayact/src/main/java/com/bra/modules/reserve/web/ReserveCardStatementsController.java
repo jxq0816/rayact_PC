@@ -340,7 +340,7 @@ public class ReserveCardStatementsController extends BaseController {
 	@RequestMapping(value = "refundForVIP")
 	@ResponseBody
 	@Token(remove = true)
-	public String refundForVIP(Double refundVolume,String id) {
+	public String refundForVIP(Double refundVolume,String remarks,String id) {
 		ReserveMember reserveMember=reserveMemberService.get(id);
 		Double remainder= reserveMember.getRemainder();
 		if(remainder<refundVolume){
@@ -355,6 +355,7 @@ public class ReserveCardStatementsController extends BaseController {
 		reserveCardStatements.setReserveMember(reserveMember);
 		reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 		reserveCardStatements.setTransactionVolume(refundVolume);
+		reserveCardStatements.setRemarks(remarks);
 		reserveCardStatementsService.save(reserveCardStatements);
 		return "success";
 	}
