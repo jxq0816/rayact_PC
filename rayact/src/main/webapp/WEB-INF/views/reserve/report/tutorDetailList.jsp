@@ -14,41 +14,45 @@
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
-                <div class="header row">
-                    <div class="col-lg-3">
-                        <h3>${param.tutorName}教练授课明细</h3>
-                    </div>
+                <div class="header">
+                    <h3>${param.tutorName}教练授课明细</h3>
                     <form:form id="searchForm" modelAttribute="reserveTutorOrder"
-                               action="${ctx}/reserve/reserveTutorOrder/orderDetail?tutorId=${param.tutorId}&tutorName=${param.tutorName}"
+                               action="${ctx}/reserve/reserveTutorOrder/orderDetail"
                                method="post">
-                        <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                        <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+                    <input type="hidden" name="tutorId" value="${param.tutorId}">
+                    <input type="hidden" name="tutorName" value="${param.tutorName}">
+                    <div class="breadcrumb form-search">
+                        <div class="row">
+                            <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+                            <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 
-                        <div class="col-lg-2">
-                            <input
-                                    value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${startDate}"/>"
-                                    name="startDate" id="startDate" type="text"
-                                    maxlength="20"
-                                    class="input-medium form-control Wdate"
-                                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                        </div>
-                        <div class="col-lg-2">
-                            <input
-                                    value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${endDate}"/>"
-                                    name="endDate" id="endDate" type="text"
-                                    maxlength="20"
-                                    class="input-medium form-control Wdate "
-                                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-                        </div>
-                        <div class="col-lg-2">
-                            <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-                           <%-- <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>--%>
-                        </div>
-                    </form:form>
-                    <div class="col-lg-1 pull-right">
+                            <div class="col-lg-2">
+                                <input
+                                        value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${startDate}"/>"
+                                        name="startDate" id="startDate" type="text"
+                                        maxlength="20"
+                                        class="input-medium form-control Wdate"
+                                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                            </div>
+                            <div class="col-lg-2">
+                                <input
+                                        value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${endDate}"/>"
+                                        name="endDate" id="endDate" type="text"
+                                        maxlength="20"
+                                        class="input-medium form-control Wdate "
+                                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+                            </div>
+                            <div class="col-lg-2">
+                                <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+                            </div>
+                            </form:form>
+                            <div class="col-lg-1 pull-right">
 
-                        <a href="${ctx}/reserve/reserveTutorOrder/orderAll"><img style="width:30px;height: 30px"
-                                                                                 src="${ctxStatic}/modules/reserve/images/return.png"></a>
+                                <a href="${ctx}/reserve/reserveTutorOrder/orderAll"><img style="width:30px;height: 30px"
+                                                                                         src="${ctxStatic}/modules/reserve/images/return.png"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <sys:message content="${message}"/>
@@ -123,6 +127,12 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $("#btnExport").click(function () {
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveTutorOrder/orderDetailExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action", "${ctx}/reserve/reserveTutorOrder/orderDetail");
+    });
+</script>
 </body>
 </html>
