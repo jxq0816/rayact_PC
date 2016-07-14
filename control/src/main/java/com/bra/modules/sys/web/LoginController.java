@@ -13,8 +13,6 @@ import com.bra.common.utils.CookieUtils;
 import com.bra.common.utils.IdGen;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
-import com.bra.modules.sys.entity.Role;
-import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.security.FormAuthenticationFilter;
 import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Maps;
@@ -30,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,14 +45,14 @@ public class LoginController extends BaseController {
      * 管理登录
      */
     @RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
-    public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String login(HttpServletRequest request, HttpServletResponse response) {
         Principal principal = SecurityUtil.getPrincipal();
 
-//		// 默认页签模式
-//		String tabmode = CookieUtils.getCookie(request, "tabmode");
-//		if (tabmode == null){
-//			CookieUtils.setCookie(response, "tabmode", "1");
-//		}
+        // 默认页签模式
+	    String tabmode = CookieUtils.getCookie(request, "tabmode");
+        if (tabmode == null){
+            CookieUtils.setCookie(response, "tabmode", "1");
+	    }
 
         if (logger.isDebugEnabled()) {
             logger.debug("login, active session size: {}", sessionDAO.getActiveSessions(false).size());
@@ -70,12 +67,7 @@ public class LoginController extends BaseController {
         if (principal != null && !principal.isMobileLogin()) {
             return "redirect:" + adminPath;
         }
-//		String view;
-//		view = "/WEB-INF/views/modules/sys/sysLogin.jsp";
-//		view = "classpath:";
-//		view += "jar:file:/D:/GitHub/jeesite/src/main/webapp/WEB-INF/lib/jeesite.jar!";
-//		view += "/"+getClass().getName().replaceAll("\\.", "/").replace(getClass().getSimpleName(), "")+"view/sysLogin";
-//		view += ".jsp";
+
         return "modules/sys/sysLogin";
     }
 
@@ -163,15 +155,6 @@ public class LoginController extends BaseController {
                 return "modules/sys/sysIndex";
             }
             return "redirect:" + adminPath + "/login";
-        }
-        List<Role> roleList = UserUtils.getRoleList();
-        User user = UserUtils.getUser();
-        if (!user.isAdmin()) {
-            for (Role role : roleList) {
-                if (Role.COOPERATIVE.equals(role.getEnname()) || Role.COOPERATIVE_USER.equals(role.getEnname())) {
-                    return "redirect:" + adminPath + "/reserve/main";
-                }
-            }
         }
         return "modules/sys/sysIndex";
     }
