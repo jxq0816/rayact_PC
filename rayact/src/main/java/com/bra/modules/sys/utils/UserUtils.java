@@ -3,26 +3,24 @@
  */
 package com.bra.modules.sys.utils;
 
-import java.util.List;
-
 import com.bra.common.security.Principal;
 import com.bra.common.security.SecurityUtil;
-import com.bra.common.service.BaseService;
+import com.bra.common.utils.CacheUtils;
+import com.bra.common.utils.SpringContextHolder;
 import com.bra.common.utils.StringUtils;
+import com.bra.modules.sys.dao.AreaDao;
+import com.bra.modules.sys.dao.OfficeDao;
+import com.bra.modules.sys.dao.UserDao;
 import com.bra.modules.sys.entity.Area;
 import com.bra.modules.sys.entity.Office;
+import com.bra.modules.sys.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import com.bra.common.utils.CacheUtils;
-import com.bra.common.utils.SpringContextHolder;
-import com.bra.modules.sys.dao.AreaDao;
-import com.bra.modules.sys.dao.OfficeDao;
-import com.bra.modules.sys.dao.UserDao;
-import com.bra.modules.sys.entity.User;
+import java.util.List;
 
 /**
  * 用户工具类
@@ -74,12 +72,13 @@ public class UserUtils {
     public static User getByLoginName(String loginName) {
         User user = (User) CacheUtils.get(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginName);
         if (user == null) {
-            user = userDao.getByLoginName(new User(null, loginName));
-            if (user == null) {
-                return null;
+            User query=new User();
+            query.setLoginName(loginName);
+            user = userDao.getByLoginName(query);
+            if (user != null) {
+                CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+                CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
             }
-            CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
-            CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
         }
         return user;
     }

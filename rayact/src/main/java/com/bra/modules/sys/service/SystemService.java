@@ -59,7 +59,8 @@ public class SystemService extends BaseService {
      * @return
      */
     public User getUserByLoginName(String loginName) {
-        return UserUtils.getByLoginName(loginName);
+        User user=UserUtils.getByLoginName(loginName);
+        return user;
     }
 
     //查询用户授权码
