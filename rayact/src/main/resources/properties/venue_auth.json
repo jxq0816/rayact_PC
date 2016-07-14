@@ -22,12 +22,6 @@
         "authorityList": []
       },
       {
-        "code": "project",
-        "name": "项目管理",
-        "href":"/reserve/reserveProject/list",
-        "authorityList": []
-      },
-      {
         "code": "user",
         "name": "用户管理",
         "href":"/reserve/user/list",
