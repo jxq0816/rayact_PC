@@ -6,9 +6,10 @@ import com.bra.common.utils.MD5Util;
  * Created by DDT on 2016/5/9.
  */
 public class StringUtils {
+    public static String CURRENT_VERSION = "1.0";
     public  static String OFFICECOZE = "coze";
-    public static String ROOTPATH = "http://192.168.3.31:8080/app";
-    //public static String ROOTPATH = "http://101.200.148.75:8081/app";
+    //public static String ROOTPATH = "http://192.168.3.31:8080/app";
+    public static String ROOTPATH = "http://101.200.148.75:8081/app";
     public static String ATTPATH = ROOTPATH + "/mechanism/file/image/";
 
     public static boolean isNull(String word){

@@ -133,14 +133,12 @@ public class CommentController extends BaseController {
 				}
 				comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
 				commentService.save(comment);
-				addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
-						+ "评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()), 50) + "'成功");
 				j.put("status","success");
-				j.put("msg",comment.getId());
+				j.put("msg","回复成功");
 			}
 		}catch (Exception e){
 			j.put("status","failed");
-			j.put("msg",e.getMessage());
+			j.put("msg","回复失败");
 		}
 		try {
 			response.reset();
@@ -201,6 +199,48 @@ public class CommentController extends BaseController {
 		a.getSqlMap().put("del",del);
 		commentService.deleteAll(a);
 		return "删除成功";
+	}
+
+	@RequestMapping(value = "app/save2")
+	public void saveApp2(Comment comment, RedirectAttributes redirectAttributes,HttpServletRequest request,HttpServletResponse response) {
+		JSONObject j = new JSONObject();
+		String replyId = request.getParameter("replyId");
+		try {
+			if (beanValidator(redirectAttributes, comment)) {
+				if (comment.getAuditUser() == null) {
+					comment.setAuditUser(UserUtils.getUser());
+					comment.setAuditDate(new Date());
+				}
+				if (StringUtils.isNotBlank(replyId)){
+					Comment replyComment = commentService.get(replyId);
+					if (replyComment != null){
+						if (replyComment != null){
+							comment.setContent("<div class=\"reply\">"+replyComment.getName()+":<br/>"
+									+replyComment.getContent()+"</div>"+comment.getContent());
+						}
+					}
+				}
+				comment.setDelFlag(Comment.DEL_FLAG_NORMAL);
+				commentService.save(comment);
+				addMessage(redirectAttributes, DictUtils.getDictLabel(comment.getDelFlag(), "cms_del_flag", "保存")
+						+ "评论'" + StringUtils.abbr(StringUtils.replaceHtml(comment.getContent()), 50) + "'成功");
+				j.put("status","success");
+				j.put("msg",comment.getId());
+			}
+		}catch (Exception e){
+			j.put("status","failed");
+			j.put("msg",e.getMessage());
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+
+		} catch (IOException g) {
+
+		}
+
 	}
 
 }

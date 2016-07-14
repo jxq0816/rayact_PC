@@ -367,7 +367,7 @@ public class UserController extends BaseController {
 				}
 			}
 			if(flag){
-				systemService.saveUser(user);
+				systemService.saveUserApp(user);
 				rtn.put("status","success");
 				rtn.put("msg","操作成功");
 			}
@@ -451,6 +451,43 @@ public class UserController extends BaseController {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(JSONArray.toJSONString(list, SerializerFeature.WriteMapNullValue));
+		} catch (IOException e) {
+		}
+	}
+
+	/**
+	 * 忘记密码
+	 */
+	@RequestMapping(value = "api/updatePass")
+	public void updatePass(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject rtn = new JSONObject();
+		try{
+			String phone = request.getParameter("phone");
+			String newPassword = request.getParameter("newPassword");
+			User u = new User();
+			u.setLoginName(phone);
+			List<User> users = systemService.findListApi(u);
+			if(users!=null&&users.size()>0){
+				User user = users.get(0);
+				if(!com.bra.modules.sys.utils.StringUtils.isNull(newPassword)){
+					user.setPassword(com.bra.modules.sys.utils.StringUtils.entryptPassword(newPassword));
+					systemService.saveUser(user);
+				}
+				rtn.put("status","success");
+				rtn.put("msg","操作成功");
+			}else{
+				rtn.put("status","fail");
+				rtn.put("msg","没有该用户！");
+			}
+		}catch(Exception e){
+			rtn.put("status","fail");
+			rtn.put("msg","操作失败");
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(rtn.toJSONString());
 		} catch (IOException e) {
 		}
 	}

@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="row" style="margin-left: 20px;margin-top: 30px">
-	<div style="border-left:5px solid #f0860c;color:#555555;font-size:45px;text-align:left;width: 25%;display:inline-block">队员信息</div><div style="border-bottom:1px solid #C8C8C8;width: 70%;display:inline-block"></div>
 	<form action="a/cms/teamMember/app/save" name="membersForm">
 		<c:forEach items="${members}" var="member" varStatus="status">
 			<div class="row" style="border-bottom:1px solid #C8C8C8;padding: 10px">

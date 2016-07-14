@@ -189,6 +189,7 @@ public class SystemService extends BaseService implements InitializingBean {
 			// 更新用户数据
 			user.preUpdate();
 			userDao.update(user);
+			UserUtils.clearCache(user);
 		}
 	}
 	

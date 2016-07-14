@@ -6,7 +6,10 @@ import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.Focus;
+import com.bra.modules.cms.entity.Team;
 import com.bra.modules.cms.service.FocusService;
+import com.bra.modules.cms.service.TeamService;
+import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ public class FocusController extends BaseController {
 
 	@Autowired
 	private FocusService focusService;
+	@Autowired
+	private TeamService teamService;
 	
 	@ModelAttribute
 	public Focus get(@RequestParam(required=false) String id) {
@@ -131,11 +136,38 @@ public class FocusController extends BaseController {
 
 		}
 	}
-	//我关注的
-	@RequestMapping(value = "app/list")
-	public void listApp(Focus focus, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Focus> page = focusService.findPage(new Page<Focus>(request, response), focus);
-		model.addAttribute("page", page);
+
+	@RequestMapping(value = "app/isFocus")
+	public void isFocus(Focus focus, HttpServletResponse response) {
+		JSONObject j = new JSONObject();
+		focus.setCreateBy(UserUtils.getUser());
+		List<Focus> list=  focusService.findList(focus);
+		if(list!=null&&list.size()>0){
+			j.put("status","true");
+		}else {
+			j.put("status","false");
+		}
+		if("team".equals(focus.getModelName())){
+			Team t = teamService.get(focus.getModelId());
+			if(t!=null){
+				User uc = t.getCreateBy();
+				User now = UserUtils.getUser();
+				if(uc!=null&&now!=null&&uc.getId().equals(now.getId())){
+					j.put("isCreate","true");
+				}else{
+					j.put("isCreate","false");
+				}
+			}else{
+				j.put("isCreate","false");
+			}
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException e) {
+		}
 	}
 
 }

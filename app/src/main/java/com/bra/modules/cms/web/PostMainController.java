@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +122,7 @@ public class PostMainController extends BaseController {
 		String files = request.getParameter("files");
 		String modelName = request.getParameter("modelName");
 		String[] file = files.split(",");
+		List<String> attIds = new ArrayList<>();
 		String remarks ="";
 		if(file!=null&&file.length>0&&StringUtils.isNotBlank(file[0])){
 			for(int i =0;i<file.length;i++){
@@ -149,6 +151,7 @@ public class PostMainController extends BaseController {
 					attMain.setFdModelName(modelName);
 				}
 				attMain = attMainService.saveAttMain(attMain);
+				attIds.add(attMain.getId());
 				fileModel.setAttId(attMain.getId());
 				remarks += com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId()+";";
 			}
@@ -159,6 +162,11 @@ public class PostMainController extends BaseController {
 		postMain.setSubject(StringEscapeUtils.unescapeHtml4(
 				postMain.getSubject()));
 		postMainService.save(postMain);
+		String modelId = postMain.getId();
+		String modelNamea = postMain.getClass().getName();
+		for(String id:attIds){
+			attMainService.updateAttMain(id,modelId,modelNamea,"pic");
+		}
 		JSONObject j = new JSONObject();
 		j.put("status","success");
 		j.put("msg","发帖成功");
@@ -273,6 +281,40 @@ public class PostMainController extends BaseController {
 		return "删除成功";
 	}
 
+	@RequestMapping(value = "app/deleteAll")
+	@ResponseBody
+	public String deleteAllApp(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String[] ida = request.getParameterValues("ids[]");
+		String del = " id in (";
+		if(ida!=null&&ida.length>0){
+			for(int i =0;i<ida.length;i++){
+				if(i<ida.length-1)
+					del+="'"+ida[i]+"',";
+				else
+					del+="'"+ida[i]+"')";
+			}
+		}
+		PostMain a = new PostMain();
+		a.getSqlMap().put("del",del);
+		postMainService.deleteAll(a);
+		return "删除成功";
+	}
+
+	@RequestMapping(value = "app/delete")
+	public void deleteApp(PostMain postMain, HttpServletResponse response) {
+		postMainService.delete(postMain);
+		JSONObject j = new JSONObject();
+		j.put("msg","删除帖子成功");
+		j.put("status","success");
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException e) {
+		}
+	}
+
 	@RequestMapping(value = "app/view2.html")
 	public String viewApp2(PostMain postMain,HttpServletRequest request,HttpServletResponse response){
 		PostMain p = postMainService.get(postMain.getId());
@@ -285,12 +327,35 @@ public class PostMainController extends BaseController {
 		Post post = new Post();
 		post.setPostMain(postMain);
 		Page<Post> lop = new Page<>(request,response);
-		lop.setPageSize(5);
+		lop.setPageSize(1);
 		lop.setPageNo(1);
 		Page<Post> ptm = postService.findPage(lop,post);
 		request.setAttribute("count",ptm.getCount());
-		request.setAttribute("ptm",ptm.getList());
 		return "modules/cms/postMainView2";
+	}
+
+	@RequestMapping(value = "app/isCreator")
+	public void isCreator(PostMain postMain,HttpServletRequest request, HttpServletResponse response) {
+		if(UserUtils.getUser()!=null&&StringUtils.isNotBlank(UserUtils.getUser().getId())){
+			postMain.setCreateBy(UserUtils.getUser());
+		}else{
+			postMain.setSubject("**********");
+		}
+		List<PostMain> list = postMainService.findList(postMain);
+		JSONObject j = new JSONObject();
+		if(list!=null&&list.size()>0){
+			j.put("status","true");
+		}else{
+			j.put("status","false");
+		}
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException g) {
+
+		}
 	}
 
 }
