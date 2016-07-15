@@ -149,6 +149,9 @@
                                     <th>教练</th>
                                     <th>订单时间</th>
                                     <th>操作时间</th>
+                                    <j:if test="${userType==1 || userType==5}">
+                                        <th>操作</th>
+                                    </j:if>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -185,6 +188,14 @@
                                                             type="date"></fmt:formatDate></td>
                                         <td><fmt:formatDate value="${log.updateDate}"
                                                             type="both"></fmt:formatDate></td>
+                                        <j:if test="${userType==1 || userType==5}">
+                                            <td>
+                                                <a class="btn btn-danger btn-xs"
+                                                   href="${ctx}/reserve/saleVenue/delete?orderId=${log.id}&isTicket=${log.isTicket}"
+                                                   onclick="return confirmb('预订人：${log.member.name}<br>时间区间：${log.startTime}—${log.endTime}<br>实收金额：${log.consPrice}<br><br>确认要删除该记录吗？', this.href)">
+                                                    <i class="fa fa-times"></i>删除</a>
+                                            </td>
+                                        </j:if>
                                     </tr>
                                 </c:forEach>
                                 <tr style="height: 30px;">
@@ -195,6 +206,7 @@
                                     <td>${shouldPriceSum}</td>
                                     <td>${discountPriceSum}</td>
                                     <td>${consPriceSum}</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

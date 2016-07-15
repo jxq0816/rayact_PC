@@ -12,6 +12,7 @@ import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.reserve.web.form.SaleVenueLog;
 import com.bra.modules.sys.entity.User;
+import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,19 +55,9 @@ public class SaleVenueLogController extends BaseController {
         model.addAttribute("query",venueLog);//参数返回
         Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<>(request, response), venueLog);
         model.addAttribute("page", page);
+        String userType=UserUtils.getUser().getUserType();
+        model.addAttribute("userType", userType);
         return "/reserve/saleField/saleVenueLog";
-    }
-    @RequestMapping(value = "listMS")
-    public String listMS(Model model, SaleVenueLog venueLog, HttpServletRequest request, HttpServletResponse response) {
-        model.addAttribute("userList",reserveUserService.findList(new User()));
-        ReserveVenue venue = new ReserveVenue();
-        model.addAttribute("venueList",reserveVenueService.findList(venue));
-        List<ReserveProject> projectList = reserveProjectService.findList(new ReserveProject());
-        model.addAttribute("projectList",projectList);
-        model.addAttribute("query",venueLog);//参数返回
-        Page<SaleVenueLog> page = reserveVenueConsService.findOrderLog(new Page<>(request, response), venueLog);
-        model.addAttribute("page", page);
-        return "/reserve/saleField/saleVenueLogMS";
     }
 
     @RequestMapping(value = "listExport")
@@ -109,6 +100,6 @@ public class SaleVenueLogController extends BaseController {
             reserveVenueConsService.delete(order);
         }
         addMessage(redirectAttributes, "删除记录成功");
-        return "redirect:" + Global.getAdminPath() + "/reserve/saleVenue/listMS";
+        return "redirect:" + Global.getAdminPath() + "/reserve/saleVenue/list";
     }
 }
