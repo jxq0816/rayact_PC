@@ -39,7 +39,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
     }
     public  Map getForApp(ReserveVenue reserveVenue){
         Map venue = dao.getForApp(reserveVenue);//获得所有场馆的信息
-        List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);
+        List<Map> projectList=dao.findProjectListOfVenueForApp(reserveVenue);
         for(Map project:projectList){
             project.remove("venueId");
         }
@@ -64,7 +64,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         List<Map> venueList = dao.findListForApp(reserveVenue);//获得所有场馆的信息
         List<Map> venueListRS = new ArrayList<>();//结果
         if(StringUtils.isNoneEmpty(reserveVenue.getProjectId())){//有项目筛选条件
-            List<Map> projectList=dao.findPojectListOfVenueForApp(reserveVenue);//有项目筛选条件
+            List<Map> projectList=dao.findProjectListOfVenueForApp(reserveVenue);//有项目筛选条件
             for(Map venueMap:venueList){//遍历所有的场馆
                 String venueId=(String)venueMap.get("venueId");//场馆的编号
                 for(Map projectMap:projectList){//拥有用户所选择项目的场馆

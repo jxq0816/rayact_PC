@@ -61,6 +61,9 @@
             <if test="tenantId != null and tenantId != ''">
                 and a.tenant_id = #{tenantId}
             </if>
+            <if test="available != null and available != ''">
+                and a.available = #{available}
+            </if>
             <if test="name != null and name != ''">
                 AND a.name LIKE
                 <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -79,7 +82,7 @@
         </choose>
     </select>
     <!--app获得某场馆的项目列表-->
-    <select id="findPojectListOfVenueForApp" parameterType="ReserveVenue" resultType="Map">
+    <select id="findProjectListOfVenueForApp" parameterType="ReserveVenue" resultType="Map">
         SELECT
         DISTINCT
         c.id AS "projectId",
@@ -116,7 +119,7 @@
         a.ave_price AS "avePrice"
         FROM reserve_venue a
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL}
+            a.del_flag = #{DEL_FLAG_NORMAL} and available='1'
             <if test="name != null and name != ''">
                 AND a.name LIKE concat('%',#{name},'%')
             </if>

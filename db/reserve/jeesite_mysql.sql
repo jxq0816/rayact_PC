@@ -864,6 +864,22 @@ CREATE TABLE `reserve_role_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色-菜单';
 
+DROP TABLE IF EXISTS `reserve_order_evaluate`;
+CREATE TABLE `reserve_order_evaluate` (
+  `id` varchar(19) NOT NULL,
+  `fk_reserve_venue_cons_id` varchar(19) NOT NULL COMMENT '订单编号',
+  `evaluate_content` text NOT NULL COMMENT '评价内容',
+  `evaluate_score` FLOAT NOT NULL COMMENT '评分',
+  `create_by` varchar(64) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(64) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  `del_flag` char(1) NOT NULL DEFAULT '0',
+  `tenant_id` varchar(19) DEFAULT NULL COMMENT '路由标识',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单-评价';
+
 
 
 
