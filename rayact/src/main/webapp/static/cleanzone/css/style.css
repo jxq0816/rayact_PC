@@ -277,9 +277,9 @@ pre {
 
 .navbar-default .navbar-brand {
    /* margin与bootstrap冲突，需要在页面定义style*/
-    width: 114px;
+    width: 200px;
     height:70px;
-    background: url(../images/side.png) no-repeat 0 11px;
+    background: url(../images/rayact.png) no-repeat 0 11px;
    /* background-size: 122px 60px;*/
     line-height: 56px;
     margin-top:1%;
