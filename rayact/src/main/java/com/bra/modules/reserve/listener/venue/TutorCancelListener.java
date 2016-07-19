@@ -9,10 +9,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by xiaobin on 16/1/22.
+ * Created by jiangxingqi on 16/1/22.
  */
 @Component
-public class TutorCacelListener{
+public class TutorCancelListener{
 
     @Autowired
     private ReserveTutorOrderService tutorOrderService;
@@ -26,7 +26,6 @@ public class TutorCacelListener{
         if(StringUtils.isBlank(event.getTutorOrderId()))
             return;
         ReserveTutorOrder tutorOrder = new ReserveTutorOrder(event.getTutorOrderId());
-        tutorOrder.setReserveType("3");
-        tutorOrderService.updateReserveType(tutorOrder);
+        tutorOrderService.delete(tutorOrder);
     }
 }
