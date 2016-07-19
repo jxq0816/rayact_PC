@@ -193,8 +193,11 @@ public class ReserveSellReportController extends BaseController {
      */
     @RequestMapping(value = "mobile/commIncome")
     public String commIncome(HttpServletRequest request) {
+
         List<Map<String, String>> rtn = new ArrayList<>();
         String userId = request.getParameter("userId");
+        User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
+        String tenantId=user.getCompany().getId();
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         if(StringUtils.isBlank(startDate)){
@@ -219,8 +222,7 @@ public class ReserveSellReportController extends BaseController {
         //查询该用户管理的所有场馆
         ReserveVenue reserveVenue = new ReserveVenue();
         if (userId != null && !userId.equals("")) {
-            User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
-            reserveVenue.setTenantId(user.getCompany().getId());
+            reserveVenue.setTenantId(tenantId);
             //场馆权限过滤
             if (reserveVenue.getSqlMap().get("dsf") == null) {
                 ReserveRole reserveRole = new ReserveRole();
@@ -234,8 +236,7 @@ public class ReserveSellReportController extends BaseController {
         List<ReserveVenue> vs = reserveVenueService.findList(reserveVenue);
         ReserveCommodity reserveCommodity = new ReserveCommodity();
         if (userId != null && !userId.equals("")) {
-            User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
-            reserveCommodity.setTenantId(user.getCompany().getId());
+            reserveCommodity.setTenantId(tenantId);
             //场馆权限过滤
             if (form.getSqlMap().get("dsf") == null) {
                 ReserveRole reserveRole = new ReserveRole();
@@ -246,10 +247,12 @@ public class ReserveSellReportController extends BaseController {
             }
         }
         //查询该用户管理的所有场馆 售卖的所有商品
+        form.setTenantId(tenantId);
         List<ReserveCommodity> cs = reserveCardStatementsService.commSell(form);
         if (cs != null) {
             for (ReserveCommodity c : cs) {
                 Map node = new HashMap<>();
+
                 node.put("commId", c.getId());
                 node.put("commName", c.getName());
                 node.put("startDate",startDate);
@@ -263,10 +266,7 @@ public class ReserveSellReportController extends BaseController {
         ReserveCardStatements reserveCardStatements = new ReserveCardStatements();
         reserveCardStatements.setStartDate(start);
         reserveCardStatements.setEndDate(end);
-        if (userId != null && !userId.equals("")) {
-            User user = SpringContextHolder.getBean(SystemService.class).getUser(userId);
-            reserveCardStatements.setTenantId(user.getCompany().getId());
-        }
+        reserveCardStatements.setTenantId(tenantId);
         if (reserveCardStatements.getStartDate() == null || reserveCardStatements.getEndDate() == null) {
             Calendar c = Calendar.getInstance();
             reserveCardStatements.setEndDate(c.getTime());

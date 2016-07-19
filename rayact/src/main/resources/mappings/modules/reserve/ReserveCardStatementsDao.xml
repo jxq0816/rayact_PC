@@ -415,9 +415,9 @@
 	<select id="commSell" resultType="ReserveCommodity" parameterType="SearchForm">
 		SELECT c.*
 		FROM reserve_commodity as c
-		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
-		LEFT JOIN reserve_venue as v ON v.id=c.fk_reserve_venue_id
-		WHERE 1=1 and c.del_flag = #{DEL_FLAG_NORMAL} and cd.del_flag = #{DEL_FLAG_NORMAL}
+		LEFT JOIN reserve_commodity_sell_detail cd ON (c.id = cd.fk_reserve_commodity_id and cd.del_flag = '0')
+		LEFT JOIN reserve_venue as v ON (v.id=c.fk_reserve_venue_id and v.del_flag='0')
+		WHERE 1=1 and  c.tenant_id = #{tenantId}
 		<if test="startDate!=null and endDate !=null">
 			and datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>
