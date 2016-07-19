@@ -405,7 +405,7 @@
 		FROM reserve_venue v
 		LEFT JOIN reserve_commodity c ON c.fk_reserve_venue_id = v.id AND c.name = #{commName}
 		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
-		WHERE 1=1
+		WHERE 1=1 and c.del_flag = '0' and cd.del_flag='0'
 		<if test="startDate!=null and endDate !=null">
 			and datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>
@@ -417,7 +417,7 @@
 		FROM reserve_commodity as c
 		LEFT JOIN reserve_commodity_sell_detail cd ON c.id = cd.fk_reserve_commodity_id
 		LEFT JOIN reserve_venue as v ON v.id=c.fk_reserve_venue_id
-		WHERE 1=1
+		WHERE 1=1 and c.del_flag = #{DEL_FLAG_NORMAL} and cd.del_flag = #{DEL_FLAG_NORMAL}
 		<if test="startDate!=null and endDate !=null">
 			and datediff(cd.update_date,#{startDate})>=0 and datediff(#{endDate},cd.update_date)>=0
 		</if>

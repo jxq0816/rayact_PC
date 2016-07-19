@@ -3,6 +3,7 @@ package com.bra.modules.reserve.web;
 import com.alibaba.fastjson.JSONArray;
 import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.SpringContextHolder;
+import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveCommodity;
@@ -16,6 +17,7 @@ import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -195,6 +197,12 @@ public class ReserveSellReportController extends BaseController {
         String userId = request.getParameter("userId");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
+        if(StringUtils.isBlank(startDate)){
+            startDate=DateFormatUtils.format(new Date(), "yyyy-MM-dd");
+        }
+        if(StringUtils.isBlank(endDate)){
+            endDate=DateFormatUtils.format(new Date(), "yyyy-MM-dd");
+        }
         Date start = DateUtils.parseDate(startDate);
         Date end = DateUtils.parseDate(endDate);
         SearchForm form = new SearchForm();
