@@ -269,7 +269,7 @@ public class LoginController extends BaseController {
                         rtn.put("status","200");
                         rtn.put("id",user.getId());
                         rtn.put("name",user.getName());
-                        rtn.put("role", user.getReserveRole().getUserType());
+                        rtn.put("role", user.getUserType());
                     }else{
                         rtn.put("status","203");
                         rtn.put("msg","用户名密码错误");

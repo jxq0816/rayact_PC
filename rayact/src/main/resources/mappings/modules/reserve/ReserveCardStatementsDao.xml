@@ -343,7 +343,7 @@
 		<if test="startDate!=null and endDate !=null">
 			and datediff(s.create_date,#{startDate})>=0 and datediff(#{endDate},s.create_date)>=0
 		</if>
-		where 1=1 and v.tenant_id = #{tenantId}
+		where 1=1 and v.tenant_id = #{tenantId} and a.del_flag = #{DEL_FLAG_NORMAL}
 		${sqlMap.dsf}
 		GROUP BY v.id
 	</select>
