@@ -39,7 +39,7 @@
 		<include refid="reserveTutorOrderJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
-			and a.reserve_type in('1','2')
+			and a.reserve_type='1'
 			<if test="tutor != null and tutor.id != null and tutor.id !=''">
 				AND a.tutor_id = #{tutor.id}
 			</if>

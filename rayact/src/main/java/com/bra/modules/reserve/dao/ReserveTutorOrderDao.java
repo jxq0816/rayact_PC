@@ -15,13 +15,6 @@ import java.util.Map;
 @MyBatisDao
 public interface ReserveTutorOrderDao extends CrudDao<ReserveTutorOrder> {
 
-
-    List<ReserveTutorOrder> findByModelIdAndKey(ReserveTutorOrder tutorOrder);
-
-    void deleteByModelIdAndKey(ReserveTutorOrder tutorOrder);
-
-    void updateReserveType(ReserveTutorOrder tutorOrder);
-
     //查询已经预定和付款的
     List<ReserveTutorOrder> findNotCancel(ReserveTutorOrder tutorOrder);
 

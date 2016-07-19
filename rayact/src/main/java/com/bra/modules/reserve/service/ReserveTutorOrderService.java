@@ -28,11 +28,6 @@ public class ReserveTutorOrderService extends CrudService<ReserveTutorOrderDao, 
         return super.findList(reserveTutorOrder);
     }
 
-    public List<ReserveTutorOrder> findByModelIdAndKey(String modelId, String modelKey) {
-        ReserveTutorOrder tutorOrder = new ReserveTutorOrder(modelId, modelKey);
-        return dao.findByModelIdAndKey(tutorOrder);
-    }
-
     public Page<ReserveTutorOrder> findPage(Page<ReserveTutorOrder> page, ReserveTutorOrder reserveTutorOrder) {
         return super.findPage(page, reserveTutorOrder);
     }
@@ -45,10 +40,6 @@ public class ReserveTutorOrderService extends CrudService<ReserveTutorOrderDao, 
     @Transactional(readOnly = false)
     public void delete(ReserveTutorOrder reserveTutorOrder) {
         super.delete(reserveTutorOrder);
-    }
-
-    public void updateReserveType(ReserveTutorOrder tutorOrder) {
-        dao.updateReserveType(tutorOrder);
     }
 
     //查询已经预定和付款的
