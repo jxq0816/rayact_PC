@@ -8,12 +8,19 @@
 		auth.authority AS "authority",
 		a.user_type AS "userType",
 		a.venue_json AS "venueJson",
-		u2.name AS "user.name"
+		u2.name AS "user.name",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.tenant_id AS "tenantId"
 	</sql>
 	
 	<sql id="reserveRoleJoins">
 		LEFT JOIN reserve_user u2 ON u2.id = a.user_id
-		LEFT JOIN reserve_role_auth auth ON auth.user_type = a.user_type
+		LEFT JOIN reserve_role_auth auth ON (auth.user_type = a.user_type and auth.tenant_id=#{tenantId})
 	</sql>
     
 	<select id="get" resultType="ReserveRole">
@@ -30,8 +37,9 @@
 		FROM reserve_role a
 		<include refid="reserveRoleJoins"/>
 		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 			<if test="user != null and user.id != null and user.id !=''">
-				 a.user_id = #{user.id}
+				 AND a.user_id = #{user.id}
 			</if>
 		</where>
 		<choose>
@@ -49,6 +57,7 @@
 		FROM reserve_role a
 		<include refid="reserveRoleJoins"/>
 		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 			<if test="user != null and user.id != null and user.id !=''">
 				 a.user_id = #{user.id}
 			</if>
@@ -68,13 +77,27 @@
 			user_id,
 			authority,
 			user_type,
-			venue_json
+			venue_json,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			tenant_id
 		) VALUES (
 			#{id},
 			#{user.id},
 			#{authority},
 			#{userType},
-			#{venueJson}
+			#{venueJson},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{tenantId}
 		)
 	</insert>
 	
@@ -83,7 +106,11 @@
 			user_id = #{user.id},
 			authority = #{authority},
 			user_type = #{userType},
-			venue_json = #{venueJson}
+			venue_json = #{venueJson},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			tenant_id = #{tenantId}
 		WHERE id = #{id}
 	</update>
 	

@@ -43,3 +43,13 @@ alter table reserve_card_statements add fk_order_id VARCHAR(19);
 20160704:reserve_role_auth 新增字段 :
 alter table reserve_role_auth add user_type varchar(2);
 20160712:reserve_project 删除字段 ticket_type和interface_id;
+20160720:reserve_role 删除字段reserve_rolecol
+alter table reserve_role drop column reserve_rolecol;
+20160720:reserve_role 新增字段 create_date
+alter table reserve_role add create_by varchar(64) DEFAULT NULL;
+alter table reserve_role add create_date datetime DEFAULT NULL;
+alter table reserve_role add update_by varchar(64) DEFAULT NULL;
+alter table reserve_role add update_date datetime DEFAULT NULL;
+alter table reserve_role add remarks varchar(255) DEFAULT NULL;
+alter table reserve_role add del_flag char(1) NOT NULL DEFAULT '0';
+alter table reserve_role add tenant_id varchar(19) DEFAULT NULL COMMENT '路由标识';
