@@ -33,7 +33,7 @@
 		FROM reserve_role_auth a
 		<include refid="reserveRoleAuthJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 			<if test="name != null and name != ''">
 				AND a.name LIKE
 				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -57,7 +57,7 @@
 		FROM reserve_role_auth a
 		<include refid="reserveRoleAuthJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
