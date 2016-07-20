@@ -60,7 +60,7 @@
                                     <th>类别</th>
                                     <th>场馆</th>
                                     <th>状态</th>
-                                    <j:if test="${userType==5 or userType==1}">
+                                    <j:if test="${userType==5 or userType==1 or userType=6}">
                                         <th>操作</th>
                                     </j:if>
                                 </tr>
