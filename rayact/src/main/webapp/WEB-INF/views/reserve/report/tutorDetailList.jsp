@@ -61,6 +61,7 @@
                         <table>
                             <thead>
                             <tr>
+                                <th>编号</th>
                                 <th>时期</th>
                                 <th>客户姓名</th>
                                 <th>授课时段</th>
@@ -74,6 +75,9 @@
                             <tbody>
                             <c:forEach items="${page.list}" var="order">
                                 <tr>
+                                    <td>
+                                            ${order.id}
+                                    </td>
                                     <td>
                                             ${order.date}
                                     </td>
@@ -97,7 +101,7 @@
                                 </tr>
                             </c:forEach>
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     合计
                                 </td>
                                 <td>

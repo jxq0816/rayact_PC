@@ -199,7 +199,9 @@
 	</update>
 
 	<select id="getTutorDetail" resultType="java.util.Map">
-		SELECT c.user_name AS  name,
+		SELECT
+		o.id as id,
+		c.user_name AS  name,
 		f.name AS fieldName,
 		o.order_count/2 AS hour,
 		o.total_price AS price,

@@ -40,6 +40,7 @@
 
 					<div class="content">
 						<div class="table-responsive">
+							角色编号（1:超级管理员;2:场馆管理员;3:高管;4:收银;5:财务;6:出纳）
 							<table>
 								<thead>
 								<tr>
