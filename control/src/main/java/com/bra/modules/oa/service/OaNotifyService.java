@@ -67,7 +67,7 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 			oaNotifyRecordDao.insertAll(oaNotify.getOaNotifyRecordList());
 		}
 	}
-	
+
 	/**
 	 * 更新阅读状态
 	 */
