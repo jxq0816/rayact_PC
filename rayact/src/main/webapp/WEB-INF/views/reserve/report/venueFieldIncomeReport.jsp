@@ -199,7 +199,7 @@
     $("#btnExport").click(function(){
         $("#searchForm").attr("action","${ctx}/reserve/reserveVenue/reportExport");
         $("#searchForm").submit();
-        $("#searchForm").attr("action","${ctx}/reserve/reserveVenue/report");
+        $("#searchForm").attr("action","${ctx}/reserve/reserveVenue/fieldReport");
     });
 </script>
 </body>
