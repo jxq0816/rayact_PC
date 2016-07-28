@@ -460,6 +460,7 @@ public class ReserveVenueController extends BaseController {
         item.setTenantId(tenantId);
         if (item.getSqlMap().get("dsf") == null) {
             ReserveRole reserveRole = new ReserveRole();
+            reserveRole.setTenantId(tenantId);
             reserveRole.setUser(user);
             List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
             String venues = AuthorityUtils.getVenueIds(venueIds, "i.venue_id");
