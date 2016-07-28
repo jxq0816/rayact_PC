@@ -438,7 +438,7 @@
                 </if>
             </if>
             <if test="startDate !=null and endDate !=null">
-                and (Date(a.update_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
+                and (Date(a.order_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
             </if>
             ${sqlMap.dsf}
         </where>
