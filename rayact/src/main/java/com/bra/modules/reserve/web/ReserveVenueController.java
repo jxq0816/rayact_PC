@@ -261,6 +261,7 @@ public class ReserveVenueController extends BaseController {
             //场馆权限过滤
             if (reserveVenue.getSqlMap().get("dsf") == null) {
                 ReserveRole reserveRole = new ReserveRole();
+                reserveRole.setTenantId(tenantId);
                 reserveRole.setUser(user);
                 List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
                 String venues = AuthorityUtils.getVenueIds(venueIds, "a.id");
@@ -388,6 +389,7 @@ public class ReserveVenueController extends BaseController {
             //场馆权限过滤
             if (reserveVenue.getSqlMap().get("dsf") == null) {
                 ReserveRole reserveRole = new ReserveRole();
+                reserveRole.setTenantId(user.getCompany().getId());
                 reserveRole.setUser(user);
                 List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
                 String venues = AuthorityUtils.getVenueIds(venueIds, "a.id");
@@ -437,6 +439,7 @@ public class ReserveVenueController extends BaseController {
         //场馆权限过滤
         if (field.getSqlMap().get("dsf") == null) {
             ReserveRole reserveRole = new ReserveRole();
+            reserveRole.setTenantId(tenantId);
             reserveRole.setUser(user);
             List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
             String venues = AuthorityUtils.getVenueIds(venueIds, "v.id");

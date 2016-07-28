@@ -113,6 +113,7 @@ public class ReserveSellReportController extends BaseController {
             if (reserveCardStatements.getSqlMap().get("dsf") == null) {
                 ReserveRole reserveRole = new ReserveRole();
                 reserveRole.setUser(user);
+                reserveRole.setTenantId(user.getCompany().getId());
                 List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
                 String venues = AuthorityUtils.getVenueIds(venueIds, "v.id");
                 reserveCardStatements.getSqlMap().put("dsf", venues);
@@ -227,6 +228,7 @@ public class ReserveSellReportController extends BaseController {
             if (reserveVenue.getSqlMap().get("dsf") == null) {
                 ReserveRole reserveRole = new ReserveRole();
                 reserveRole.setUser(user);
+                reserveRole.setTenantId(tenantId);
                 List<String> venueIds = reserveRoleService.findVenueIdsByRole(reserveRole);
                 String venues = AuthorityUtils.getVenueIds(venueIds, "a.id");
                 reserveVenue.getSqlMap().put("dsf", venues);
