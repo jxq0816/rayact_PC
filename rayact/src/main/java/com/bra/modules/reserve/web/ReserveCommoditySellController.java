@@ -130,19 +130,21 @@ public class ReserveCommoditySellController extends BaseController {
 
 		if("1".equals(queryType)){
 			List<ReserveCommodityIntervalReport> incomeCollectReports=reserveCommoditySellService.commodityIncomeCollectReport(reserveCommodityIntervalReport);//收入汇总
-			String[] titles = {"商品类型","储值卡","现金收入","银行卡收入","微信收入","支付宝收入","欠账","其它","合计"};
+			String[] titles = {"商品类型","储值卡","现金","银行卡","微信","微信(个人)","支付宝","支付宝（个人）","欠账","优惠券","合计"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCommodityIntervalReport report :incomeCollectReports){
-				String[] o = new String[9];
+				String[] o = new String[11];
 				o[0] = report.getReserveCommodityType().getName();
 				o[1] = String.valueOf(report.getStoredCardBill());
 				o[2] = String.valueOf(report.getCashBill());
 				o[3] = String.valueOf(report.getBankCardBill());
 				o[4] = String.valueOf(report.getWeiXinBill());
-				o[5] = String.valueOf(report.getAliPayBill());
-				o[6] = String.valueOf(report.getDueBill());
-				o[7] = String.valueOf(report.getOtherBill());
-				o[8] = String.valueOf(report.getBill());
+				o[5] = String.valueOf(report.getPersonalWeiXinBill());
+				o[6] = String.valueOf(report.getAliPayBill());
+				o[7] = String.valueOf(report.getPersonalAliPayBill());
+				o[8] = String.valueOf(report.getDueBill());
+				o[9] = String.valueOf(report.getOtherBill());
+				o[10] = String.valueOf(report.getBill());
 				contentList.add(o);
 			}
 			Date now = new Date();
@@ -150,21 +152,23 @@ public class ReserveCommoditySellController extends BaseController {
 			info.export();
 		}else if("2".equals(queryType)){
 			List<ReserveCommodityIntervalReport> intervalReports=reserveCommoditySellService.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
-			String[] titles = {"日期","商品","储值卡","现金收入","银行卡收入","微信收入","支付宝收入","欠账","其它","合计"};
+			String[] titles = {"日期","商品","储值卡","现金","银行卡","微信","微信（个人）","支付宝","支付宝（个人）","欠账","优惠券","合计"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCommodityIntervalReport report :intervalReports){
 				for(ReserveCommodityDayReport day:report.getDayReportList()){
-					String[] dayin = new String[10];
+					String[] dayin = new String[12];
 					dayin[0] = DateUtils.formatDate(day.getDay());
 					dayin[1] = report.getReserveCommodity().getName();
 					dayin[2] = String.valueOf(report.getStoredCardBill());
 					dayin[3] = String.valueOf(report.getCashBill());
 					dayin[4] = String.valueOf(report.getBankCardBill());
 					dayin[5] = String.valueOf(report.getWeiXinBill());
-					dayin[6] = String.valueOf(report.getAliPayBill());
-					dayin[7] = String.valueOf(report.getDueBill());
-					dayin[8] = String.valueOf(report.getOtherBill());
-					dayin[9] = String.valueOf(report.getBill());
+					dayin[6] = String.valueOf(report.getPersonalWeiXinBill());
+					dayin[7] = String.valueOf(report.getAliPayBill());
+					dayin[8] = String.valueOf(report.getPersonalAliPayBill());
+					dayin[9] = String.valueOf(report.getDueBill());
+					dayin[10] = String.valueOf(report.getOtherBill());
+					dayin[11] = String.valueOf(report.getBill());
 					contentList.add(dayin);
 				}
 			}

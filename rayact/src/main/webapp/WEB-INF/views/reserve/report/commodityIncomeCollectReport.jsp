@@ -90,7 +90,7 @@
                                 <th>支付宝</th>
                                 <th>（个人）支付宝</th>
                                 <th>欠账</th>
-                                <th>其它</th>
+                                <th>优惠券</th>
                                 <th>合计</th>
                             </tr>
                             </thead>
