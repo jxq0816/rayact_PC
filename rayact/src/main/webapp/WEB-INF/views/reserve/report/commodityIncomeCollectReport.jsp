@@ -83,15 +83,25 @@
                             <tr>
                                 <th>商品类型</th>
                                 <th>储值卡</th>
+                                <c:set var="storedCardBill" value="0"></c:set>
                                 <th>现金</th>
-                                <th>银行卡</th>
+                                <c:set var="cashBill" value="0"></c:set>
+                                <th>银行</th>
+                                <c:set var="bankCardBill" value="0"></c:set>
                                 <th>微信</th>
+                                <c:set var="weiXinBill" value="0"></c:set>
                                 <th>（个人）微信</th>
+                                <c:set var="personalWeiXinBill" value="0"></c:set>
                                 <th>支付宝</th>
+                                <c:set var="aliPayBill" value="0"></c:set>
                                 <th>（个人）支付宝</th>
+                                <c:set var="personalAliPayBill" value="0"></c:set>
                                 <th>欠账</th>
+                                <c:set var="dueBill" value="0"></c:set>
                                 <th>优惠券</th>
+                                <c:set var="otherBill" value="0"></c:set>
                                 <th>合计</th>
+                                <c:set var="bill" value="0"></c:set>
                             </tr>
                             </thead>
                             <tbody>
@@ -102,45 +112,68 @@
                                     </td>
                                     <td>
                                             ${incomeCollectReport.storedCardBill}
+                                                 <c:set var="storedCardBill" value="${storedCardBill+incomeCollectReport.storedCardBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.cashBill}
+                                                <c:set var="cashBill" value="${cashBill+incomeCollectReport.cashBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.bankCardBill}
+                                                <c:set var="bankCardBill" value="${bankCardBill+incomeCollectReport.bankCardBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.weiXinBill}
+                                                <c:set var="weiXinBill" value="${weiXinBill+incomeCollectReport.weiXinBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.personalWeiXinBill}
+                                                <c:set var="personalWeiXinBill" value="${personalWeiXinBill+incomeCollectReport.personalWeiXinBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.aliPayBill}
+                                                <c:set var="aliPayBill" value="${aliPayBill+incomeCollectReport.aliPayBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.personalAliPayBill}
+                                                <c:set var="personalAliPayBill" value="${personalAliPayBill+incomeCollectReport.personalAliPayBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.dueBill}
+                                                <c:set var="dueBill" value="${dueBill+incomeCollectReport.dueBill}"></c:set>
                                     </td>
 
                                     <td>
                                             ${incomeCollectReport.otherBill}
+                                                <c:set var="otherBill" value="${otherBill+incomeCollectReport.otherBill}"></c:set>
                                     </td>
                                     <td>
                                             ${incomeCollectReport.bill}
+                                                <c:set var="bill" value="${bill+incomeCollectReport.bill}"></c:set>
                                     </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
+                            <tr>
+                                <td></td>
+                                <td>${storedCardBill}</td>
+                                <td>${cashBill}</td>
+                                <td>${bankCardBill}</td>
+                                <td>${weiXinBill}</td>
+                                <td>${personalWeiXinBill}</td>
+                                <td>${aliPayBill}</td>
+                                <td>${personalAliPayBill}</td>
+                                <td>${dueBill}</td>
+                                <td>${otherBill}</td>
+                                <td>${bill}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>

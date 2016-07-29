@@ -58,17 +58,6 @@
                                             </label>
                                         </div>
                                     </td>
-
-                                        <%--<td>
-                                            <div class="tab-tit-first">
-                                                <ul>
-                                                    <li id="today"><a href="javascript:queryToday()">当天</a></li>
-                                                    <li id="month"><a href="javascript:queryMonth()">当月</a></li>
-                                                    <li id="year"><a href="javascript:queryYear()">当年</a></li>
-                                                    <li id="self"><a href="javascript:querySelf()">自定义</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>--%>
                                     <td>
                                         <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${reserveCommodityIntervalReport.startDate}"/>"
                                                name="startDate" id="startDate" type="text"
@@ -104,15 +93,25 @@
                                 <th>日期</th>
                                 <th>商品</th>
                                 <th>储值卡</th>
+                                <c:set var="storedCardBill" value="0"></c:set>
                                 <th>现金</th>
+                                <c:set var="cashBill" value="0"></c:set>
                                 <th>银行卡</th>
+                                <c:set var="bankCardBill" value="0"></c:set>
                                 <th>微信</th>
+                                <c:set var="weiXinBill" value="0"></c:set>
                                 <th>微信（个人）</th>
+                                <c:set var="personalWeiXinBill" value="0"></c:set>
                                 <th>支付宝</th>
+                                <c:set var="aliPayBill" value="0"></c:set>
                                 <th>支付宝（个人）</th>
+                                <c:set var="personalAliPayBill" value="0"></c:set>
                                 <th>欠账</th>
+                                <c:set var="dueBill" value="0"></c:set>
                                 <th>优惠券</th>
+                                <c:set var="otherBill" value="0"></c:set>
                                 <th>合计</th>
+                                <c:set var="bill" value="0"></c:set>
                             </tr>
                             </thead>
                             <tbody>
@@ -130,47 +129,71 @@
 
                                         <td>
                                                 ${dayReport.storedCardBill}
+                                                    <c:set var="storedCardBill" value="${storedCardBill+dayReport.storedCardBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.cashBill}
+                                                    <c:set var="cashBill" value="${cashBill+dayReport.cashBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.bankCardBill}
+                                                    <c:set var="bankCardBill" value="${bankCardBill+dayReport.bankCardBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.weiXinBill}
+                                                    <c:set var="weiXinBill" value="${weiXinBill+dayReport.weiXinBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.personalWeiXinBill}
+                                                    <c:set var="personalWeiXinBill" value="${personalWeiXinBill+dayReport.personalWeiXinBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.aliPayBill}
+                                                    <c:set var="aliPayBill" value="${aliPayBill+dayReport.aliPayBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.personalAliPayBill}
+                                                    <c:set var="personalAliPayBill" value="${personalAliPayBill+dayReport.personalAliPayBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.dueBill}
+                                                    <c:set var="dueBill" value="${dueBill+dayReport.dueBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.otherBill}
+                                                    <c:set var="otherBill" value="${otherBill+dayReport.otherBill}"></c:set>
                                         </td>
 
                                         <td>
                                                 ${dayReport.bill}
+                                                    <c:set var="bill" value="${bill+dayReport.bill}"></c:set>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </c:forEach>
                             </tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>${storedCardBill}</td>
+                                <td>${cashBill}</td>
+                                <td>${bankCardBill}</td>
+                                <td>${weiXinBill}</td>
+                                <td>${personalWeiXinBill}</td>
+                                <td>${aliPayBill}</td>
+                                <td>${personalAliPayBill}</td>
+                                <td>${dueBill}</td>
+                                <td>${otherBill}</td>
+                                <td>${bill}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
