@@ -160,7 +160,6 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-                            </tbody>
                             <tr>
                                 <td></td>
                                 <td>${storedCardBill}</td>
@@ -174,6 +173,7 @@
                                 <td>${otherBill}</td>
                                 <td>${bill}</td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -179,7 +179,6 @@
                                     </tr>
                                 </c:forEach>
                             </c:forEach>
-                            </tbody>
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -194,6 +193,7 @@
                                 <td>${otherBill}</td>
                                 <td>${bill}</td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
