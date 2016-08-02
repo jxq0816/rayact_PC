@@ -99,7 +99,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <j:if test="${userType==5 or userType==1}">
+                                        <j:if test="${userType==5 or userType==1 or userType==6}">
                                             <td>
                                                 <a class="btn btn-primary btn-xs "
                                                    href="${ctx}/reserve/commodity/form?id=${commodity.id}">修改</a>
