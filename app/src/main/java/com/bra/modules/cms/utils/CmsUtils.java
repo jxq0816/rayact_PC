@@ -295,13 +295,17 @@ public class CmsUtils {
         List<Category> categoryList = Lists.newArrayList();
         Category c = category;
         boolean goon = true;
-        do{
-            if(c.getParent() == null || c.getParent().isRoot()){
-                goon = false;
-            }
-            categoryList.add(c);
-            c = c.getParent();
-        }while(goon);
+		if(c==null){
+			goon = false;
+		}else{
+			do{
+				if(c.getParent() == null || c.getParent().isRoot()){
+					goon = false;
+				}
+				categoryList.add(c);
+				c = c.getParent();
+			}while(goon);
+		}
         Collections.reverse(categoryList);
         for(Category ca : categoryList){
         	addViewConfigAttribute(model, ca.getViewConfig());

@@ -14,6 +14,12 @@
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
+				${adminPath}/cms/teamMemberTmp/app/checkIdCard = anon
+				${adminPath}/cms/teamTmp/formToApp = anon
+				${adminPath}/cms/teamTmp/app/checkSame = anon
+				${adminPath}/cms/teamTmp/teamIndex = anon
+				${adminPath}/cms/teamTmp/app/save = anon
+				${adminPath}/cms/teamTmp/app/search = anon
 				${adminPath}/cms/cmsCollection/app/list = anon
 				${adminPath}/cms/cmsCollection/app/save = anon
 				${adminPath}/api/logout = anon

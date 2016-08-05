@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.TeamMemberTmpDao">
+    
+	<sql id="teamMemberTmpColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.phone AS "phone",
+		a.role AS "role",
+		a.card_no AS "cardNo",
+		a.team_no AS "teamNo",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		u.name AS "createBy.name",
+		a.update_by AS "updateBy.id",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.team_id AS "teamTmp.id",
+		t.name AS "teamTmp.name"
+	</sql>
+	
+	<sql id="teamMemberTmpJoins">
+		LEFT JOIN team_tmp t ON t.id = a.team_id
+		LEFT JOIN sys_user u ON u.id = a.create_by
+	</sql>
+    
+	<select id="get" resultType="TeamMemberTmp">
+		SELECT 
+			<include refid="teamMemberTmpColumns"/>
+		FROM team_member_tmp a
+		<include refid="teamMemberTmpJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TeamMemberTmp">
+		SELECT 
+			<include refid="teamMemberTmpColumns"/>
+		FROM team_member_tmp a
+		<include refid="teamMemberTmpJoins"/>
+		<where>
+			1=1
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="role != null and role != ''">
+				AND a.role = #{role}
+			</if>
+			<if test="cardNo != null and cardNo != ''">
+				AND a.card_no = #{cardNo}
+			</if>
+			<if test="teamTmp != null and teamTmp.id != ''">
+				AND a.team_id = #{teamTmp.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="TeamMemberTmp">
+		SELECT 
+			<include refid="teamMemberTmpColumns"/>
+		FROM team_member_tmp a
+		<include refid="teamMemberTmpJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			   
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO team_member_tmp(
+			id,
+			name,
+			phone,
+			role,
+			card_no,
+			remarks,
+			create_by,
+			update_by,
+			create_date,
+			update_date,
+			del_flag,
+			team_id,
+			team_no
+		) VALUES (
+			#{id},
+			#{name},
+			#{phone},
+			#{role},
+			#{cardNo},
+			#{remarks},
+			#{createBy.id},
+			#{updateBy.id},
+			#{createDate},
+			#{updateDate},
+			#{delFlag},
+			#{teamTmp.id},
+			#{teamNo}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE team_member_tmp SET 	
+			name = #{name},
+			phone = #{phone},
+			role = #{role},
+			card_no = #{cardNo},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			team_id = #{teamTmp.id},
+			team_no = #{teamNo}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE team_member_tmp SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

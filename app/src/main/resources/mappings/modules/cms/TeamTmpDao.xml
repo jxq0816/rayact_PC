@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bra.modules.cms.dao.TeamTmpDao">
+    
+	<sql id="teamTmpColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.reamrks AS "reamrks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.zb AS "zb",
+		a.rz AS "rz"
+	</sql>
+	
+	<sql id="teamTmpJoins">
+	</sql>
+    
+	<select id="get" resultType="TeamTmp">
+		SELECT 
+			<include refid="teamTmpColumns"/>
+		FROM team_tmp a
+		<include refid="teamTmpJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="TeamTmp">
+		SELECT 
+			<include refid="teamTmpColumns"/>
+		FROM team_tmp a
+		<include refid="teamTmpJoins"/>
+		<where>
+			<if test="name != null and name != ''">
+				AND a.name = #{name}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getMemberCount" resultType="Map">
+		SELECT count(DISTINCT t.card_no) AS num,t.role AS role
+		FROM team_tmp a
+		LEFT JOIN team_member_tmp t ON a.id = t.team_id
+		WHERE a.id = #{id}
+		GROUP BY t.role
+		UNION
+		SELECT count(DISTINCT t.card_no) AS num,'9' AS role
+		FROM team_tmp a
+		LEFT JOIN team_member_tmp t ON a.id = t.team_id
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findAllList" resultType="TeamTmp">
+		SELECT 
+			<include refid="teamTmpColumns"/>
+		FROM team_tmp a
+		<include refid="teamTmpJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			   
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO team_tmp(
+			id,
+			name,
+			reamrks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			zb,
+			rz
+		) VALUES (
+			#{id},
+			#{name},
+			#{reamrks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{zb},
+			#{rz}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE team_tmp SET 	
+			name = #{name},
+			reamrks = #{reamrks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			zb = #{zb},
+			rz = #{rz}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE team_tmp SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<update id="changeStatus">
+		UPDATE team_tmp SET
+		del_flag = #{delFlag}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

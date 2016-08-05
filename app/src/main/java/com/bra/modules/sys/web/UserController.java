@@ -308,10 +308,10 @@ public class UserController extends BaseController {
 							flag = false;
 							rtn.put("status","fail");
 							rtn.put("msg","该QQ号已经注册");
-						}else{
-							user.setQq(qq);
-							user.setQqName(qqName);
 						}
+					}else{
+						user.setQq(qq);
+						user.setQqName(qqName);
 					}
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(area)){
@@ -332,10 +332,10 @@ public class UserController extends BaseController {
 							flag = false;
 							rtn.put("status","fail");
 							rtn.put("msg","该手机号已经注册");
-						}else{
-							user.setMobile(phone);
-							user.setLoginName(phone);
 						}
+					}else{
+						user.setMobile(phone);
+						user.setLoginName(phone);
 					}
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(weixin)){
@@ -353,10 +353,10 @@ public class UserController extends BaseController {
 							flag = false;
 							rtn.put("status","fail");
 							rtn.put("msg","该微信号已经注册");
-						}else{
-							user.setWeixin(weixin);
-							user.setWeixinName(weixinName);
 						}
+					}else{
+						user.setWeixin(weixin);
+						user.setWeixinName(weixinName);
 					}
 				}
 				if(!com.bra.modules.sys.utils.StringUtils.isNull(name)){

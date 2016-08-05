@@ -155,7 +155,7 @@
 				</otherwise>
 			</choose>
 		</where>
-		ORDER BY a.create_date DESC
+		ORDER BY a.create_date ASC
 	</select>
 
 	<update id="deleteAll">
