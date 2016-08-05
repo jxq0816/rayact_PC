@@ -14,11 +14,16 @@
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>交易明细</h3>
-
-                    <a href="${ctx}/reserve/reserveMember/list"><img
-                            style="width:30px;height: 30px;position: absolute;top:20px;right:40px"
-                            src="${ctxStatic}/modules/reserve/images/return.png"></a>
+                    <div class="row">
+                        <div class="col-lg-2">
+                             <h3>交易明细</h3>
+                        </div>
+                        <div class="pull-right col-lg-1">
+                            <a onclick="history.go(-1)"><img
+                                    style="width:30px;height: 30px"
+                                    src="${ctxStatic}/modules/reserve/images/return.png"></a>
+                        </div>
+                </div>
                 </div>
 
                 <form:form id="searchForm" action="${ctx}/reserve/reserveMember/statements" method="post">
