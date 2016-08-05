@@ -332,8 +332,18 @@
 //		if(scrollTop + scrollHeight - 110 == windowHeight){
 //			loadMore();
 //		}
-		if(scrollTop + scrollHeight  == windowHeight){
-			loadMore();
+		if("ios" == client){
+			if(scrollTop + scrollHeight - 110 == windowHeight){
+				loadMore();
+			}
+		}else if("android" == client){
+			if(scrollTop + scrollHeight - 110 == windowHeight){
+				loadMore();
+			}
+		}else{
+			if(scrollTop + scrollHeight == windowHeight){
+				loadMore();
+			}
 		}
 	});
 </script>
