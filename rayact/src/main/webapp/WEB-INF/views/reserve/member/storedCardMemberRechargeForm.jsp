@@ -66,6 +66,9 @@
                         <label class="radio-inline">
                             <input type="radio" class="icheck" value="6" name="payType"/>优惠券
                         </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="icheck" value="11" name="payType"/>转账
+                        </label>
                     </div>
                 </td>
             </tr>
