@@ -114,6 +114,9 @@
                 <input type="radio" class="icheck" value="6" name="payType"/>优惠券
             </label>
             <label class="radio-inline">
+                <input type="radio" class="icheck" value="11" name="payType"/>转账
+            </label>
+            <label class="radio-inline">
                 <input type="radio" class="icheck" value="8" id="multiplePayRadio" name="payType"/>多方式付款
             </label>
         </div>
