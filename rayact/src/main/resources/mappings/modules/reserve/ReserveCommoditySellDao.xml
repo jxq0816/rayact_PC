@@ -52,6 +52,7 @@
 		sum(if(pay_type=1,d.detail_sum,0)) AS "storedCardBill",
 		sum(if(pay_type=2,d.detail_sum,0)) AS "cashBill",
 		sum(if(pay_type=3,d.detail_sum,0)) AS "bankCardBill",
+		sum(if(pay_type=11,d.detail_sum,0)) AS "transferBill",
 		sum(if(pay_type=4,d.detail_sum,0)) AS "weiXinBill",
 		sum(if(pay_type=9,d.detail_sum,0)) AS "personalWeiXinBill",
 		sum(if(pay_type=5,d.detail_sum,0)) AS "aliPayBill",

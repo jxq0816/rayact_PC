@@ -88,6 +88,8 @@
                                 <c:set var="cashBill" value="0"></c:set>
                                 <th>银行</th>
                                 <c:set var="bankCardBill" value="0"></c:set>
+                                <th>转账</th>
+                                <c:set var="transferBill" value="0"></c:set>
                                 <th>微信</th>
                                 <c:set var="weiXinBill" value="0"></c:set>
                                 <th>（个人）微信</th>
@@ -123,6 +125,11 @@
                                     <td>
                                             ${incomeCollectReport.bankCardBill}
                                                 <c:set var="bankCardBill" value="${bankCardBill+incomeCollectReport.bankCardBill}"></c:set>
+                                    </td>
+
+                                    <td>
+                                            ${incomeCollectReport.transferBill}
+                                            <c:set var="transferBill" value="${transferBill+incomeCollectReport.transferBill}"></c:set>
                                     </td>
 
                                     <td>
@@ -165,6 +172,7 @@
                                 <td>${storedCardBill}</td>
                                 <td>${cashBill}</td>
                                 <td>${bankCardBill}</td>
+                                <td>${transferBill}</td>
                                 <td>${weiXinBill}</td>
                                 <td>${personalWeiXinBill}</td>
                                 <td>${aliPayBill}</td>
