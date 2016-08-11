@@ -23,6 +23,7 @@
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
+		upd.name AS "updateBy.name",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
@@ -30,6 +31,7 @@
 
     <sql id="reserveVenueConsDataJoins">
 		LEFT JOIN reserve_venue as v ON v.id = a.venue_id
+		LEFT JOIN reserve_user as upd ON upd.id = a.update_by
 	</sql>
 
     <select id="get" resultType="ReserveVenueCons">
