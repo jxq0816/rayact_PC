@@ -221,6 +221,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         Double storedCardSum = 0.0;
         Double cashSum = 0.0;
         Double bankCardSum = 0.0;
+        Double transferSum = 0.0;
         Double weiXinSum = 0.0;
         Double personalWeiXinSum = 0.0;
         Double aliPaySum = 0.0;
@@ -243,6 +244,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             Double storedCard = 0.0;
             Double cash = 0.0;
             Double bankCard = 0.0;
+            Double transfer = 0.0;
             Double weiXin = 0.0;
             Double personalWeiXin = 0.0;
             Double aliPay = 0.0;
@@ -256,6 +258,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                     storedCard += j.getStoredCardBill();
                     cash += j.getCashBill();
                     bankCard += j.getBankCardBill();
+                    transfer+=j.getTransferBill();
                     weiXin += j.getWeiXinBill();
                     personalWeiXin+=j.getPersonalWeiXinBill();
                     aliPay += j.getAliPayBill();
@@ -271,6 +274,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
                     storedCard += k.getStoredCardBill();
                     cash += k.getCashBill();
                     bankCard += k.getBankCardBill();
+                    transfer+=k.getTransferBill();
                     weiXin += k.getWeiXinBill();
                     personalWeiXin+=k.getPersonalWeiXinBill();
                     personalAliPay+=k.getPersonalAliPayBill();
@@ -284,6 +288,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             i.setBill(bill);
             i.setCashBill(cash);
             i.setBankCardBill(bankCard);
+            i.setTransferBill(transfer);
             i.setWeiXinBill(weiXin);
             i.setPersonalWeiXinBill(personalWeiXin);
             i.setAliPayBill(aliPay);
@@ -295,6 +300,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
             storedCardSum += storedCard;
             cashSum += cash;
             bankCardSum += bankCard;
+            transferSum+=transfer;
             weiXinSum += weiXin;
             personalWeiXinSum+=personalWeiXin;
             aliPaySum += aliPay;
@@ -317,6 +323,7 @@ public class ReserveVenueService extends CrudService<ReserveVenueDao, ReserveVen
         venueReport.setStoredCardBill(storedCardSum);
         venueReport.setCashBill(cashSum);
         venueReport.setBankCardBill(bankCardSum);
+        venueReport.setTransferBill(transferSum);
         venueReport.setWeiXinBill(weiXinSum);
         venueReport.setPersonalWeiXinBill(personalWeiXinSum);
         venueReport.setAliPayBill(aliPaySum);

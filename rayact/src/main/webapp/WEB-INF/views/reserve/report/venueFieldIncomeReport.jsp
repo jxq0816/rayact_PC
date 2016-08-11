@@ -92,6 +92,7 @@
                                 <th>储值卡</th>
                                 <th>现金</th>
                                 <th>银行卡</th>
+                                <th>转账</th>
                                 <th>微信</th>
                                 <th>微信(个人)</th>
                                 <th>支付宝</th>
@@ -120,6 +121,10 @@
                                     </td>
                                     <td>
                                             ${report.bankCardBill}
+                                    </td>
+
+                                    <td>
+                                            ${report.transferBill}
                                     </td>
 
                                     <td>

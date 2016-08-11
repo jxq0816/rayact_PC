@@ -96,6 +96,7 @@
                                 <th>储值卡</th>
                                 <th>现金</th>
                                 <th>银行卡</th>
+                                <th>转账</th>
                                 <th>微信</th>
                                 <th>微信（个人）</th>
                                 <th>支付宝</th>
@@ -111,6 +112,7 @@
                             <c:set var="storedCardBill" value="0"/>
                             <c:set var="cashBill" value="0"/>
                             <c:set var="bankCardBill" value="0"/>
+                            <c:set var="transferBill" value="0"/>
                             <c:set var="weiXinBill" value="0"/>
                             <c:set var="personalWeiXinBill" value="0"/>
                             <c:set var="aliPayBill" value="0"/>
@@ -142,6 +144,11 @@
                                                 ${report.cashBill}
                                             <c:set var="cashBill" value="${cashBill+report.cashBill}"/>
                                         </td>
+                                        <td>
+                                                ${report.transferBill}
+                                            <c:set var="transferBill" value="${transferBill+report.transferBill}"/>
+                                        </td>
+
                                         <td>
                                                 ${report.bankCardBill}
                                             <c:set var="bankCardBill" value="${bankCardBill+report.bankCardBill}"/>
@@ -184,10 +191,11 @@
                             <tr>
                             <tr>
                                 <td colspan="2"></td>
-                                <td>订场收入合计</td>
+                                <td>包场合计</td>
                                 <td>${storedCardBill}</td>
                                 <td>${cashBill}</td>
                                 <td>${bankCardBill}</td>
+                                <td>${transferBill}</td>
                                 <td>${weiXinBill}</td>
                                 <td>${personalWeiXinBill}</td>
                                 <td>${aliPayBill}</td>
@@ -201,6 +209,7 @@
                             <c:set var="storedCardBill" value="0"/>
                             <c:set var="cashBill" value="0"/>
                             <c:set var="bankCardBill" value="0"/>
+                            <c:set var="transferBill" value="0"/>
                             <c:set var="weiXinBill" value="0"/>
                             <c:set var="personalWeiXinBill" value="0"/>
                             <c:set var="aliPayBill" value="0"/>
@@ -230,6 +239,10 @@
                                     <td>
                                             ${divided.bankCardBill}
                                         <c:set var="bankCardBill" value="${bankCardBill+divided.bankCardBill}"/>
+                                    </td>
+                                    <td>
+                                            ${divided.transferBill}
+                                        <c:set var="transferBill" value="${transferBill+divided.transferBill}"/>
                                     </td>
 
                                     <td>
@@ -266,10 +279,11 @@
                             </c:forEach>
                             <tr>
                                 <td colspan="2"></td>
-                                <td>场次票收入合计</td>
+                                <td>场次票合计</td>
                                 <td>${storedCardBill}</td>
                                 <td>${cashBill}</td>
                                 <td>${bankCardBill}</td>
+                                <td>${transferBill}</td>
                                 <td>${weiXinBill}</td>
                                 <td>${personalWeiXinBill}</td>
                                 <td>${aliPayBill}</td>
@@ -280,10 +294,11 @@
                             </tr>
                             <tr>
                                 <td colspan="2"></td>
-                                <td>总收入合计（包场收入+场次票收入）</td>
+                                <td>总收入合计</td>
                                 <td>${incomeReport.storedCardBill}</td>
                                 <td>${incomeReport.cashBill}</td>
                                 <td>${incomeReport.bankCardBill}</td>
+                                <td>${incomeReport.transferBill}</td>
                                 <td>${incomeReport.weiXinBill}</td>
                                 <td>${incomeReport.personalWeiXinBill}</td>
                                 <td>${incomeReport.aliPayBill}</td>
