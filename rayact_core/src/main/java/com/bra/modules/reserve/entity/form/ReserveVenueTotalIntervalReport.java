@@ -44,6 +44,8 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     private Double  dueBill;// 欠账
 
+    private Double  transferBill;// 转账
+
     private Date startDate;//开始日期
 
     private Date endDate;//结束日期
@@ -175,6 +177,14 @@ public class ReserveVenueTotalIntervalReport extends SaasEntity<ReserveVenueTota
 
     public void setPersonalAliPayBill(Double personalAliPayBill) {
         this.personalAliPayBill = personalAliPayBill;
+    }
+
+    public Double getTransferBill() {
+        return transferBill;
+    }
+
+    public void setTransferBill(Double transferBill) {
+        this.transferBill = transferBill;
     }
 
 }

@@ -80,6 +80,7 @@
                                 </j:if>
                                 <th>现金</th>
                                 <th>银行卡</th>
+                                <th>转账</th>
                                 <th>微信</th>
                                 <th>微信（个人）</th>
                                 <th>支付宝</th>
@@ -100,10 +101,11 @@
                             </j:if>
                             <c:set var="cashBill" value="0"/>
                             <c:set var="bankCardBill" value="0"/>
+                            <c:set var="transferBill" value="0"/>
                             <c:set var="weiXinBill" value="0"/>
                             <c:set var="personalWeiXinBill" value="0"/>
                             <c:set var="aliPaybill" value="0"/>
-                            <c:set var="aliPayPersonalBill" value="0"/>
+                            <c:set var="personalAliPayBill" value="0"/>
 
                             <c:forEach items="${totalIntervalReportList}" var="report">
                                 <c:set var="sum" value="0"/>
@@ -131,6 +133,12 @@
                                     ${report.bankCardBill}
                                         <c:set var="bankCardBill" value="${bankCardBill+report.bankCardBill}"/>
                                         <c:set var="sum" value="${sum+report.bankCardBill}"/>
+                                </td>
+
+                                <td>
+                                        ${report.transferBill}
+                                    <c:set var="transferBill" value="${transferBill+report.transferBill}"/>
+                                    <c:set var="sum" value="${sum+report.transferBill}"/>
                                 </td>
 
                                 <td>
@@ -183,6 +191,8 @@
                                                 <c:set var="totalSum" value="${totalSum+storedCardBill}"/>
                                     </td>
                                 </j:if>
+
+
                                 <td>
                                     ${cashBill}
                                         <c:set var="totalSum" value="${totalSum+cashBill}"/>
@@ -190,6 +200,11 @@
                                 <td>
                                     ${bankCardBill}
                                         <c:set var="totalSum" value="${totalSum+bankCardBill}"/>
+                                </td>
+
+                                <td>
+                                    ${transferBill}
+                                    <c:set var="totalSum" value="${totalSum+transferBill}"/>
                                 </td>
 
                                 <td>

@@ -261,6 +261,7 @@
 			when 8 then "场地售卖"
 			when 9 then "场次票售卖"
             when 10 then "教练收入"
+            when 11 then "教练收入"
 		END
 		as "transactionType",
         <if test="queryType !=null and '1'.toString()==queryType">
@@ -273,7 +274,8 @@
         sum(if(s.pay_type=4,s.transaction_volume,0)) AS "weiXinBill",
         sum(if(s.pay_type=9,s.transaction_volume,0)) AS "personalWeiXinBill",
         sum(if(s.pay_type=5,s.transaction_volume,0)) AS "aliPayBill",
-        sum(if(s.pay_type=10,s.transaction_volume,0)) AS "personalAliPayBill"
+        sum(if(s.pay_type=10,s.transaction_volume,0)) AS "personalAliPayBill",
+        sum(if(s.pay_type=11,s.transaction_volume,0)) AS "transferBill"
 		FROM reserve_venue v
 		inner JOIN reserve_card_statements s on (s.venue_id = v.id and
             (
