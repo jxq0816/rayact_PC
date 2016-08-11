@@ -29,6 +29,8 @@ public abstract class PayTypeEntity<T> extends SaasEntity<T> {
 
     private Double otherBill;// 其它
 
+    private Double  multiplePaymentBill;// 多方式付款
+
     public Double getBill() {
         return bill;
     }
@@ -115,5 +117,13 @@ public abstract class PayTypeEntity<T> extends SaasEntity<T> {
 
     public void setOtherBill(Double otherBill) {
         this.otherBill = otherBill;
+    }
+
+    public Double getMultiplePaymentBill() {
+        return multiplePaymentBill;
+    }
+
+    public void setMultiplePaymentBill(Double multiplePaymentBill) {
+        this.multiplePaymentBill = multiplePaymentBill;
     }
 }
