@@ -294,7 +294,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2"></td>
-                                <td>总收入合计</td>
+                                <td>合计</td>
                                 <td>${incomeReport.storedCardBill}</td>
                                 <td>${incomeReport.cashBill}</td>
                                 <td>${incomeReport.bankCardBill}</td>

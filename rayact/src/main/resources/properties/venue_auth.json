@@ -85,11 +85,11 @@
   },
   {
     "code": "fieldSet",
-    "name": "场地售卖",
+    "name": "场地预订",
     "authorityList": [
       {
         "code": "reserveField",
-        "name": "场地售卖",
+        "name": "场地预订",
         "href":"/reserve/field/main",
         "authorityList": []
       },
