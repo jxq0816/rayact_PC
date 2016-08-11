@@ -13,8 +13,9 @@
                     <div class="row">
                         <div class="form-group">
                             <label for="memberType" class="col-lg-2 control-label">顾客类型：</label>
-                            <div class="radio-inline"  id="memberType">
-                                <input type="radio" id="isMember" class="icheck" value="2" checked="checked" name="orderType"/>会员
+                            <div class="radio-inline" id="memberType">
+                                <input type="radio" id="isMember" class="icheck" value="2" checked="checked"
+                                       name="orderType"/>会员
                             </div>
                             <div class="radio-inline">
                                 <input type="radio" id="nMember" class="icheck" value="1" name="orderType"/>散客
@@ -137,7 +138,7 @@
                                 </div>
                                 <label for="endTime" class="col-lg-2 control-label" style="text-align: center">至</label>
                                 <div class="col-sm-4">
-                                    <select id="endTime" class="select2"  name="endTime">
+                                    <select id="endTime" class="select2" name="endTime">
                                         <c:forEach items="${times}" var="t">
                                             <option
                                                     <j:if test="${t eq endTime}">selected="selected"</j:if>
@@ -168,7 +169,7 @@
                     <label class="radio-inline">
                         <input type="radio" class="icheck"
                                checked="checked" value="1"
-                               name="payType"/>储值卡
+                               name="payType"/>次卡
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="icheck" value="2"
@@ -176,6 +177,9 @@
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="icheck" value="3" name="payType"/>银行卡
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" class="icheck" value="11" name="payType"/>转账
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="icheck" value="4" name="payType"/>微信
@@ -192,9 +196,6 @@
                     <label class="radio-inline">
                         <input type="radio" class="icheck" value="6" name="payType"/>优惠券
                     </label>
-                    <label class="radio-inline">
-                        <input type="radio" class="icheck" value="11" name="payType"/>转账
-                    </label>
                 </div>
             </div>
         </div>
@@ -210,6 +211,12 @@
         $('.icheck').iCheck({
             checkboxClass: 'icheckbox_square-blue checkbox',
             radioClass: 'iradio_square-blue'
+        });
+        $("#multiplePayRadio").on('ifChecked', function () {
+            $("#multiplePay").show();
+        });
+        $("#multiplePayRadio").on('ifUnchecked', function () {
+            $("#multiplePay").hide();
         });
     })
 </script>
