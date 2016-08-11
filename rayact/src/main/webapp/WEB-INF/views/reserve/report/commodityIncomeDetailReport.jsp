@@ -187,8 +187,7 @@
                                 </c:forEach>
                             </c:forEach>
                             <tr>
-                                <td></td>
-                                <td></td>
+                                <td colspan="2">合计</td>
                                 <td>${storedCardBill}</td>
                                 <td>${cashBill}</td>
                                 <td>${bankCardBill}</td>

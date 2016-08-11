@@ -86,7 +86,7 @@
                                 <c:set var="storedCardBill" value="0"></c:set>
                                 <th>现金</th>
                                 <c:set var="cashBill" value="0"></c:set>
-                                <th>银行</th>
+                                <th>银行卡</th>
                                 <c:set var="bankCardBill" value="0"></c:set>
                                 <th>转账</th>
                                 <c:set var="transferBill" value="0"></c:set>
@@ -168,7 +168,7 @@
                                 </tr>
                             </c:forEach>
                             <tr>
-                                <td></td>
+                                <td>合计</td>
                                 <td>${storedCardBill}</td>
                                 <td>${cashBill}</td>
                                 <td>${bankCardBill}</td>
