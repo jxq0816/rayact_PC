@@ -140,6 +140,9 @@
 				<if test="'1'.toString()==isOwning">
 					AND <![CDATA[ a.remainder<0]]>
 				</if>
+				<if test="'0'.toString()==isOwning">
+					AND <![CDATA[ a.remainder>0]]>
+				</if>
 			</if>
 			${sqlMap.sql}
 		</where>
