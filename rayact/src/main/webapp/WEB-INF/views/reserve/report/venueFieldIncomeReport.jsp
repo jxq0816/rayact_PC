@@ -170,6 +170,10 @@
                                 </td>
 
                                 <td>
+                                    ${incomeReport.transferBill}
+                                </td>
+
+                                <td>
                                     ${incomeReport.weiXinBill}
                                 </td>
                                 <td>
