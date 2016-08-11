@@ -26,16 +26,6 @@
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <table class="no-border">
                                 <tbody class="no-border-y">
-                                    <%--<td colspan="3">
-                                        <div class="tab-tit-first">
-                                            <ul>
-                                                <li id="today"><a href="javascript:queryToday()">当天</a></li>
-                                                <li id="month"><a href="javascript:queryMonth()">当月</a></li>
-                                                <li id="year"><a href="javascript:queryYear()">当年</a></li>
-                                                <li id="self"><a href="javascript:querySelf()">自定义</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>--%>
                                 <td>场馆：</td>
                                 <td>
                                     <sys:select cssClass="input-large" name="reserveVenue.id"
@@ -90,12 +80,13 @@
                             <thead>
                             <tr>
                                 <th>日期</th>
-                                <th>现金收入</th>
-                                <th>银行卡收入</th>
-                                <th>微信收入</th>
-                                <th>（个人）微信收入</th>
-                                <th>支付宝收入</th>
-                                <th>（个人）支付宝收入</th>
+                                <th>现金</th>
+                                <th>银行卡</th>
+                                <th>转账</th>
+                                <th>微信</th>
+                                <th>（个人）微信</th>
+                                <th>支付宝</th>
+                                <th>（个人）支付宝</th>
                                 <th>欠账</th>
                                 <th>优惠券</th>
                                 <th>合计</th>
@@ -118,6 +109,11 @@
 
                                     <td>
                                             ${intervalReport.bankCardBill}
+                                    </td>
+
+
+                                    <td>
+                                            ${intervalReport.transferBill}
                                     </td>
 
                                     <td>
@@ -161,6 +157,10 @@
 
                                         <td>
                                                 ${dayReport.bankCardBill}
+                                        </td>
+
+                                        <td>
+                                                ${intervalReport.transferBill}
                                         </td>
 
                                         <td>

@@ -28,6 +28,8 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
 
     private Double  bankCardBill;//银行卡
 
+    private Double  transferBill;//转账
+
     private Double  weiXinBill;//微信
 
     private Double  personalWeiXinBill;//(个人)微信
@@ -183,6 +185,14 @@ public class ReserveMemberIntervalReport extends SaasEntity<ReserveMemberInterva
 
     public void setPersonalAliPayBill(Double personalAliPayBill) {
         this.personalAliPayBill = personalAliPayBill;
+    }
+
+    public Double getTransferBill() {
+        return transferBill;
+    }
+
+    public void setTransferBill(Double transferBill) {
+        this.transferBill = transferBill;
     }
 
 }
