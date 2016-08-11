@@ -2,12 +2,14 @@ package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.AuthorityUtils;
+import com.bra.modules.reserve.utils.ExcelInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,12 +90,37 @@ public class ReserveCommodityController extends BaseController {
     }
 
     @RequestMapping(value = {"onShelfList", ""})
-    @Token(save = true)
     public String sellList(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
         commodity.setShelvesStatus("1");
         Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
         model.addAttribute("page", page);
         return "reserve/commodity/reserveCommodityOnShelfList";
+    }
+
+    @RequestMapping(value = {"listExport", ""})
+    public void  onShelfListExport(ReserveCommodity commodity, HttpServletResponse response) throws Exception {
+        List<ReserveCommodity> list = commodityService.findList(commodity);
+        String[] titles = {"编号","名称","价格","库存量","规格","类别","场馆","状态"};
+        List<String[]> contentList = new ArrayList<>();
+        for(ReserveCommodity map :list){
+            String[] o = new String[8];
+            o[0] = map.getId();
+            o[1] = map.getName();
+            o[2] = String.valueOf(map.getPrice());
+            o[3] = String.valueOf(map.getRepertoryNum());
+            o[5] = "1*"+map.getUnit()+map.getUnitName();
+            o[4] = String.valueOf(map.getCommodityType().getName());
+            o[6] =  map.getReserveVenue().getName();
+            if("1".equals(map.getShelvesStatus())){
+                o[7] = "上架";
+            }else{
+                o[7] = "下架";
+            }
+            contentList.add(o);
+        }
+        Date now = new Date();
+        ExcelInfo info = new ExcelInfo(response,"商品列表 导出时间："+ DateUtils.formatDate(now),titles,contentList);
+        info.export();
     }
 
     @RequestMapping(value = "form")

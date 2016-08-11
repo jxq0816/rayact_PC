@@ -37,6 +37,7 @@
                                 </div>
                                 <div class="form-group col-lg-2">
                                     <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                                    <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
                                 </div>
                                 <div class="form-group pull-right">
                                     <a class="btn btn-success" href="${ctx}/reserve/commodity/form">
@@ -135,5 +136,12 @@
 </div>
 <%@include file="../include/modal.jsp" %>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/reserve_commodity_instorage.js"></script>
+<script type="text/javascript">
+    $("#btnExport").click(function () {
+        $("#searchForm").attr("action", "${ctx}/reserve/commodity/listExport");
+        $("#searchForm").submit();
+        $("#searchForm").attr("action", "${ctx}/reserve/commodity/list");
+    });
+</script>
 </body>
 </html>
