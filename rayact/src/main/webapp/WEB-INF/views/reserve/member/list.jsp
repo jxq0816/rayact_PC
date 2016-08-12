@@ -44,11 +44,11 @@
                                     <td>卡号：</td>
                                     <td><form:input path="cartno" cssStyle="width:100px;" htmlEscape="false" class="form-control"/>
                                     </td>
-                                    <td>欠费：</td>
                                     <td>
-                                        <form:radiobuttons class="icheck"  path="isOwning" items="${fns:getDictList('yes_no')}"
-                                                           itemLabel="label"
-                                                           itemValue="value" htmlEscape="false"/>
+                                        <input type="radio" class="icheck"  id="isOwning_all" name="isOwning" value=""/>全部
+                                        <input type="radio" class="icheck"  id="isOwning_false" name="isOwning"  value="0"/>储值
+                                        <input type="radio" class="icheck"  id="isOwning_true" name="isOwning" value="1"/>欠费
+                                        <%--<form:radiobutton class="icheck"  path="isOwning" value="1"/>--%>
                                     </td>
                                     <td>
                                         <form:radiobuttons class="icheck"  path="cartType" items="${fns:getDictList('cart_type')}"
@@ -79,7 +79,7 @@
                                 <th>卡号</th>
                                 <th>卡号类型</th>
                                 <th>余额</th>
-                                <th>备注</th>
+                                <th width="300px">备注</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -144,6 +144,16 @@
             checkboxClass: 'icheckbox_square-blue checkbox',
             radioClass: 'iradio_square-blue'
         });
+        var isOwning='${query.isOwning}';
+        if(isOwning=='0'){
+            $("#isOwning_false").iCheck('check');
+        }
+        if(isOwning=='1'){
+            $("#isOwning_true").iCheck('check');
+        }
+        if(isOwning==''){
+            $("#isOwning_all").iCheck('check');
+        }
         $("#btnExport").click(function () {
             $("#searchForm").attr("action", "${ctx}/reserve/reserveMember/listExport");
             $("#searchForm").submit();
