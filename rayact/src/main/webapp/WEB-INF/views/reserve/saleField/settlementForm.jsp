@@ -117,7 +117,7 @@
                 <input type="radio" class="icheck" value="11" name="payType"/>转账
             </label>
             <label class="radio-inline">
-                <input type="radio" class="icheck" value="8" id="multiplePayRadio" name="payType"/>多方式付款
+                <input type="radio" class="icheck" value="8" id="multiplePayRadio" name="payType"/>多方式
             </label>
         </div>
     </div>
@@ -176,7 +176,7 @@
             <label class="col-lg-1" for="gift">赠品:</label>
             <div id="gift">
                 <c:forEach items="${giftList}" var="gift">
-                    <div class="col-lg-1">${gift.gift.name} * ${gift.num}</div>
+                    <div class="col-lg-2">${gift.gift.name} * ${gift.num}</div>
                 </c:forEach>
             </div>
         </div>
