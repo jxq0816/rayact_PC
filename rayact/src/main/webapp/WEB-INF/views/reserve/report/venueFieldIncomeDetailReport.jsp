@@ -101,8 +101,7 @@
                                 <th>微信（个人）</th>
                                 <th>支付宝</th>
                                 <th>支付宝（个人）</th>
-                                <th>其它</th>
-                                <th>欠账</th>
+                                <th>优惠券</th>
                                 <th>合计</th>
                             </tr>
                             </thead>
@@ -118,7 +117,6 @@
                             <c:set var="aliPayBill" value="0"/>
                             <c:set var="personalAliPayBill" value="0"/>
                             <c:set var="otherBill" value="0"/>
-                            <c:set var="dueBill" value="0"/>
                             <c:set var="bill" value="0"/>
                             <%-- 先精确至项目--%>
                             <c:forEach items="${incomeReport.projectIntervalReports}" var="projectReport">
@@ -178,10 +176,6 @@
                                             <c:set var="otherBill" value="${otherBill+report.otherBill}"/>
                                         </td>
                                         <td>
-                                                ${report.dueBill}
-                                            <c:set var="dueBill" value="${dueBill+report.dueBill}"/>
-                                        </td>
-                                        <td>
                                                 ${report.bill}
                                             <c:set var="bill" value="${bill+report.bill}"/>
                                         </td>
@@ -201,7 +195,6 @@
                                 <td>${aliPayBill}</td>
                                 <td>${personalAliPayBill}</td>
                                 <td>${otherBill}</td>
-                                <td>${dueBill}</td>
                                 <td>${bill}</td>
                             </tr>
                             </tr>
@@ -215,7 +208,6 @@
                             <c:set var="aliPayBill" value="0"/>
                             <c:set var="personalAliPayBill" value="0"/>
                             <c:set var="otherBill" value="0"/>
-                            <c:set var="dueBill" value="0"/>
                             <c:set var="bill" value="0"/>
                             <c:forEach items="${venueProjectDividedReports}" var="divided">
                                 <tr>
@@ -268,10 +260,6 @@
                                         <c:set var="otherBill" value="${otherBill+divided.otherBill}"/>
                                     </td>
                                     <td>
-                                            ${divided.dueBill}
-                                        <c:set var="dueBill" value="${dueBill+divided.dueBill}"/>
-                                    </td>
-                                    <td>
                                             ${divided.bill}
                                         <c:set var="bill" value="${bill+divided.bill}"/>
                                     </td>
@@ -289,7 +277,6 @@
                                 <td>${aliPayBill}</td>
                                 <td>${personalAliPayBill}</td>
                                 <td>${otherBill}</td>
-                                <td>${dueBill}</td>
                                 <td>${bill}</td>
                             </tr>
                             <tr>
@@ -304,7 +291,6 @@
                                 <td>${incomeReport.aliPayBill}</td>
                                 <td>${incomeReport.personalAliPayBill}</td>
                                 <td>${incomeReport.otherBill}</td>
-                                <td>${incomeReport.dueBill}</td>
                                 <td>${incomeReport.bill}</td>
                             </tr>
                             </tbody>

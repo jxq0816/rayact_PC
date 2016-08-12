@@ -97,7 +97,6 @@
                                 <th>微信</th>
                                 <th>支付宝</th>
                                 <th>其它</th>
-                                <th>欠账</th>
                                 <th>合计</th>
                             </tr>
                             </thead>
@@ -152,10 +151,6 @@
                                                 <c:set var="fieldBillOther" value="${fieldBillOther+report.fieldBillOther}"/>
                                     </td>
                                     <td>
-                                            ${report.fieldBillDue}
-                                                <c:set var="fieldBillDue" value="${fieldBillDue+report.fieldBillDue}"/>
-                                    </td>
-                                    <td>
                                             ${report.bill}
                                                 <c:set var="bill" value="${bill+report.bill}"/>
                                     </td>
@@ -191,9 +186,6 @@
                                     ${fieldBillOther}
                                 </td>
                                 <td>
-                                    ${fieldBillDue}
-                                </td>
-                                <td>
                                     ${bill}
                                 </td>
                             </tr>
@@ -204,7 +196,6 @@
                             <c:set var="fieldBillWeiXin" value="0"/>
                             <c:set var="fieldBillAliPay" value="0"/>
                             <c:set var="fieldBillOther" value="0"/>
-                            <c:set var="fieldBillDue" value="0"/>
                             <c:set var="bill" value="0"/>
                             <c:forEach items="${venueProjectDividedReports}" var="divided">
                                 <tr>
@@ -243,10 +234,6 @@
                                                 <c:set var="fieldBillOther" value="${fieldBillOther+divided.fieldBillOther}"/>
                                     </td>
                                     <td>
-                                            ${divided.fieldBillDue}
-                                                <c:set var="fieldBillDue" value="${fieldBillDue+divided.fieldBillDue}"/>
-                                    </td>
-                                    <td>
                                             ${divided.bill}
                                                 <c:set var="bill" value="${bill+divided.bill}"/>
                                     </td>
@@ -281,9 +268,6 @@
                                     ${fieldBillOther}
                                 </td>
                                 <td>
-                                    ${fieldBillDue}
-                                </td>
-                                <td>
                                     ${bill}
                                 </td>
                             </tr>
@@ -315,9 +299,6 @@
                                 </td>
                                 <td>
                                     ${incomeReport.otherBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.dueBill}
                                 </td>
                                 <td>
                                     ${incomeReport.bill}

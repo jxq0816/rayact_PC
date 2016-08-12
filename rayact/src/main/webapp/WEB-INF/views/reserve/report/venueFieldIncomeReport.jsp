@@ -98,7 +98,6 @@
                                 <th>支付宝</th>
                                 <th>支付宝（个人）</th>
                                 <th>优惠券</th>
-                                <th>欠账</th>
                                 <th>合计</th>
                             </tr>
                             </thead>
@@ -146,9 +145,6 @@
                                             ${report.otherBill}
                                     </td>
                                     <td>
-                                            ${report.dueBill}
-                                    </td>
-                                    <td>
                                             ${report.bill}
                                     </td>
                                 </tr>
@@ -187,9 +183,6 @@
                                 </td>
                                 <td>
                                     ${incomeReport.otherBill}
-                                </td>
-                                <td>
-                                    ${incomeReport.dueBill}
                                 </td>
                                 <td>
                                     ${incomeReport.bill}

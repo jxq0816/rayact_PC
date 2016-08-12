@@ -92,14 +92,12 @@
                                 <c:set var="transferBill" value="0"></c:set>
                                 <th>微信</th>
                                 <c:set var="weiXinBill" value="0"></c:set>
-                                <th>（个人）微信</th>
+                                <th>微信（个人）</th>
                                 <c:set var="personalWeiXinBill" value="0"></c:set>
                                 <th>支付宝</th>
                                 <c:set var="aliPayBill" value="0"></c:set>
-                                <th>（个人）支付宝</th>
+                                <th>支付宝（个人）</th>
                                 <c:set var="personalAliPayBill" value="0"></c:set>
-                                <th>欠账</th>
-                                <c:set var="dueBill" value="0"></c:set>
                                 <th>优惠券</th>
                                 <c:set var="otherBill" value="0"></c:set>
                                 <th>合计</th>
@@ -153,11 +151,6 @@
                                     </td>
 
                                     <td>
-                                            ${incomeCollectReport.dueBill}
-                                                <c:set var="dueBill" value="${dueBill+incomeCollectReport.dueBill}"></c:set>
-                                    </td>
-
-                                    <td>
                                             ${incomeCollectReport.otherBill}
                                                 <c:set var="otherBill" value="${otherBill+incomeCollectReport.otherBill}"></c:set>
                                     </td>
@@ -177,7 +170,6 @@
                                 <td>${personalWeiXinBill}</td>
                                 <td>${aliPayBill}</td>
                                 <td>${personalAliPayBill}</td>
-                                <td>${dueBill}</td>
                                 <td>${otherBill}</td>
                                 <td>${bill}</td>
                             </tr>

@@ -186,10 +186,10 @@ public class ReserveVenueController extends BaseController {
         incomeReport.setStartDate(startDate);
         incomeReport.setEndDate(endDate);
         if("1".equals(queryType)){
-            String[] titles = {"场馆","项目","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","优惠券","其它","合计"};
+            String[] titles = {"场馆","项目","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","优惠券","合计",};
             List<String[]> contentList = new ArrayList<>();
             for(ReserveVenueProjectIntervalReport report :incomeReport.getProjectIntervalReports()){
-                String[] o = new String[13];
+                String[] o = new String[12];
                 o[0] = report.getReserveVenue().getName();
                 o[1] = report.getReserveProject().getName();
                 o[2] = String.valueOf(report.getStoredCardBill());
@@ -200,12 +200,11 @@ public class ReserveVenueController extends BaseController {
                 o[7] = String.valueOf(report.getPersonalWeiXinBill());
                 o[8] = String.valueOf(report.getAliPayBill());
                 o[9] = String.valueOf(report.getPersonalAliPayBill());
-                o[10] = String.valueOf(report.getDueBill());
-                o[11] = String.valueOf(report.getOtherBill());
-                o[12] = String.valueOf(report.getBill());
+                o[10] = String.valueOf(report.getOtherBill());
+                o[11] = String.valueOf(report.getBill());
                 contentList.add(o);
             }
-            String[] o = new String[13];
+            String[] o = new String[12];
             o[0] = "合计";
             o[1] = "";
             o[2] = String.valueOf(incomeReport.getStoredCardBill());
@@ -216,19 +215,18 @@ public class ReserveVenueController extends BaseController {
             o[7] = String.valueOf(incomeReport.getPersonalWeiXinBill());
             o[8] = String.valueOf(incomeReport.getAliPayBill());
             o[9] = String.valueOf(incomeReport.getPersonalAliPayBill());
-            o[10] = String.valueOf(incomeReport.getDueBill());
-            o[11] = String.valueOf(incomeReport.getOtherBill());
-            o[12] = String.valueOf(incomeReport.getBill());
+            o[10] = String.valueOf(incomeReport.getOtherBill());
+            o[11] = String.valueOf(incomeReport.getBill());
             contentList.add(o);
             Date now = new Date();
             ExcelInfo info = new ExcelInfo(response,"场地收入汇总"+ DateUtils.formatDate(now),titles,contentList);
             info.export();
         }else{
-            String[] titles = {"场馆","项目","场地","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","优惠券","其它","合计"};
+            String[] titles = {"场馆","项目","场地","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","优惠券","合计"};
             List<String[]> contentList = new ArrayList<>();
             for(ReserveVenueProjectIntervalReport report :incomeReport.getProjectIntervalReports()){
                 for(ReserveVenueProjectFieldIntervalReport field:report.getFieldIntervalReports()){
-                    String[] o = new String[14];
+                    String[] o = new String[13];
                     o[0] = field.getReserveVenue().getName();
                     o[1] = field.getReserveProject().getName();
                     o[2] = field.getReserveField().getName();
@@ -240,9 +238,8 @@ public class ReserveVenueController extends BaseController {
                     o[8] = String.valueOf(incomeReport.getPersonalWeiXinBill());
                     o[9] = String.valueOf(field.getAliPayBill());
                     o[10] = String.valueOf(incomeReport.getPersonalAliPayBill());
-                    o[11] = String.valueOf(field.getDueBill());
-                    o[12] = String.valueOf(field.getOtherBill());
-                    o[13] = String.valueOf(field.getBill());
+                    o[11] = String.valueOf(field.getOtherBill());
+                    o[12] = String.valueOf(field.getBill());
                     contentList.add(o);
                 }
             }

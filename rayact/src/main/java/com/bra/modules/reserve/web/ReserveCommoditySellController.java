@@ -136,7 +136,7 @@ public class ReserveCommoditySellController extends BaseController {
 			String[] titles = {"商品类型","储值卡","现金","银行卡","转账","微信","微信(个人)","支付宝","支付宝（个人）","欠账","优惠券","合计"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCommodityIntervalReport report :incomeCollectReports){
-				String[] o = new String[12];
+				String[] o = new String[11];
 				o[0] = report.getReserveCommodityType().getName();
 				o[1] = String.valueOf(report.getStoredCardBill());
 				o[2] = String.valueOf(report.getCashBill());
@@ -146,9 +146,8 @@ public class ReserveCommoditySellController extends BaseController {
 				o[6] = String.valueOf(report.getPersonalWeiXinBill());
 				o[7] = String.valueOf(report.getAliPayBill());
 				o[8] = String.valueOf(report.getPersonalAliPayBill());
-				o[9] = String.valueOf(report.getDueBill());
-				o[10] = String.valueOf(report.getOtherBill());
-				o[11] = String.valueOf(report.getBill());
+				o[9] = String.valueOf(report.getOtherBill());
+				o[10] = String.valueOf(report.getBill());
 				contentList.add(o);
 			}
 			Date now = new Date();
@@ -156,11 +155,11 @@ public class ReserveCommoditySellController extends BaseController {
 			info.export();
 		}else if("2".equals(queryType)){
 			List<ReserveCommodityIntervalReport> intervalReports=reserveCommoditySellService.reserveCommodityIncomeIntervalReport(reserveCommodityIntervalReport);
-			String[] titles = {"日期","商品","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","欠账","优惠券","合计"};
+			String[] titles = {"日期","商品","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","优惠券","合计"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCommodityIntervalReport report :intervalReports){
 				for(ReserveCommodityDayReport day:report.getDayReportList()){
-					String[] dayin = new String[13];
+					String[] dayin = new String[12];
 					dayin[0] = DateUtils.formatDate(day.getDay());
 					dayin[1] = report.getReserveCommodity().getName();
 					dayin[2] = String.valueOf(report.getStoredCardBill());
@@ -171,9 +170,8 @@ public class ReserveCommoditySellController extends BaseController {
 					dayin[7] = String.valueOf(report.getPersonalWeiXinBill());
 					dayin[8] = String.valueOf(report.getAliPayBill());
 					dayin[9] = String.valueOf(report.getPersonalAliPayBill());
-					dayin[10] = String.valueOf(report.getDueBill());
-					dayin[11] = String.valueOf(report.getOtherBill());
-					dayin[12] = String.valueOf(report.getBill());
+					dayin[10] = String.valueOf(report.getOtherBill());
+					dayin[11] = String.valueOf(report.getBill());
 					contentList.add(dayin);
 				}
 			}

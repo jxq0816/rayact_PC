@@ -72,6 +72,9 @@
 			<if test="startDate !=null and endDate !=null">
 				and (Date(a.create_date) BETWEEN DATE (#{startDate}) AND DATE(#{endDate}))
 			</if>
+			<if test="reserveField !=null and reserveField.id !=null">
+				and a.fk_reserve_field_id=#{reserveField.id}
+			</if>
 		</where>
 		GROUP BY b.id
 	</select>

@@ -108,8 +108,6 @@
                                 <c:set var="aliPayBill" value="0"></c:set>
                                 <th>支付宝（个人）</th>
                                 <c:set var="personalAliPayBill" value="0"></c:set>
-                                <th>欠账</th>
-                                <c:set var="dueBill" value="0"></c:set>
                                 <th>优惠券</th>
                                 <c:set var="otherBill" value="0"></c:set>
                                 <th>合计</th>
@@ -170,11 +168,6 @@
                                         </td>
 
                                         <td>
-                                                ${dayReport.dueBill}
-                                                    <c:set var="dueBill" value="${dueBill+dayReport.dueBill}"></c:set>
-                                        </td>
-
-                                        <td>
                                                 ${dayReport.otherBill}
                                                     <c:set var="otherBill" value="${otherBill+dayReport.otherBill}"></c:set>
                                         </td>
@@ -196,7 +189,6 @@
                                 <td>${personalWeiXinBill}</td>
                                 <td>${aliPayBill}</td>
                                 <td>${personalAliPayBill}</td>
-                                <td>${dueBill}</td>
                                 <td>${otherBill}</td>
                                 <td>${bill}</td>
                             </tr>

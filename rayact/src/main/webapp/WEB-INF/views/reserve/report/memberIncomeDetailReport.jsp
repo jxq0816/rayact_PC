@@ -84,10 +84,9 @@
                                 <th>银行卡</th>
                                 <th>转账</th>
                                 <th>微信</th>
-                                <th>（个人）微信</th>
+                                <th>微信（个人）</th>
                                 <th>支付宝</th>
-                                <th>（个人）支付宝</th>
-                                <th>欠账</th>
+                                <th>支付宝（个人）</th>
                                 <th>优惠券</th>
                                 <th>合计</th>
                             </tr>
@@ -133,10 +132,6 @@
                                     </td>
 
                                     <td>
-                                            ${intervalReport.dueBill}
-                                    </td>
-
-                                    <td>
                                             ${intervalReport.otherBill}
                                     </td>
 
@@ -177,10 +172,6 @@
 
                                         <td>
                                                 ${dayReport.personalAliPayBill}
-                                        </td>
-
-                                        <td>
-                                                ${dayReport.dueBill}
                                         </td>
 
                                         <td>
