@@ -15,6 +15,7 @@ import com.bra.modules.reserve.service.ReserveCardStatementsService;
 import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.ExcelInfo;
+import com.bra.modules.reserve.utils.VenueOrderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -109,7 +110,7 @@ public class ReserveCardStatementsController extends BaseController {
 				o[2] = report.getReserveMember().getCartno();
 				o[3] = String.valueOf(report.getTransactionVolume());
 				o[4] = String.valueOf(report.getReserveMember().getMobile());
-				o[5] = String.valueOf(getPayType(report.getPayType()));
+				o[5] = String.valueOf(VenueOrderUtils.getPayType(report.getPayType()));
 				o[6] = String.valueOf(report.getCreateBy().getName());
 				o[7] = DateUtils.formatDate(report.getCreateDate());
 				contentList.add(o);
@@ -164,28 +165,10 @@ public class ReserveCardStatementsController extends BaseController {
 
 	}
 
-	private String getPayType(String typeCode){
-		if("2".equals(typeCode)){
-			return "现金";
-		}else if("3".equals(typeCode)){
-			return "银行卡";
-		}else if("4".equals(typeCode)){
-			return "微信";
-		}else if("5".equals(typeCode)){
-			return "支付宝";
-		}else if("6".equals(typeCode)){
-			return "优惠券";
-		}else{
-			return "";
-		}
-	}
-
-
 	/*会员收入统计:对应*/
 	@RequestMapping(value = {"memberIncomeReport", ""})
 	public String listByStoredCardType(ReserveMemberIntervalReport reserveMemberIntervalReport,
-									   @RequestParam(value="queryType", defaultValue="1") String queryType,
-									   HttpServletRequest request, HttpServletResponse response, Model model) {
+									   @RequestParam(value="queryType", defaultValue="1") String queryType, Model model) {
 
 		List<ReserveVenue> reserveVenueList=reserveVenueService.findList(new ReserveVenue());
 		reserveMemberIntervalReport.setReserveVenue(reserveVenueService.get(reserveMemberIntervalReport.getReserveVenue()));//场馆信息完善
@@ -224,38 +207,68 @@ public class ReserveCardStatementsController extends BaseController {
 		if(reserveMemberIntervalReport.getEndDate()==null){
 			reserveMemberIntervalReport.setEndDate(new Date());
 		}
-		List<ReserveMemberIntervalReport> intervalReports=reserveCardStatementsService.memberIncomeIntervalReport(reserveMemberIntervalReport);
-		String[] titles = {"日期","现金收入","银行卡收入","微信收入","支付宝收入","欠账","其它","合计"};
-		List<String[]> contentList = new ArrayList<>();
-		for(ReserveMemberIntervalReport report :intervalReports){
-			String[] o = new String[8];
-			o[0] = DateUtils.formatDate(reserveMemberIntervalReport.getStartDate())+"~"+DateUtils.formatDate(reserveMemberIntervalReport.getEndDate());
-			o[1] = String.valueOf(report.getCashBill());
-			o[2] = String.valueOf(report.getBankCardBill());
-			o[3] = String.valueOf(report.getWeiXinBill());
-			o[4] = String.valueOf(report.getAliPayBill());
-			o[5] = String.valueOf(report.getDueBill());
-			o[6] = String.valueOf(report.getOtherBill());
-			o[7] = String.valueOf(report.getBill());
-			contentList.add(o);
-			for(ReserveMemberDayReport day:report.getDayReports()){
-				String[] dayin = new String[8];
-				dayin[0] = DateUtils.formatDate(day.getDay());
-				dayin[1] = String.valueOf(day.getCashBill());
-				dayin[2] = String.valueOf(day.getBankCardBill());
-				dayin[3] = String.valueOf(day.getWeiXinBill());
-				dayin[4] = String.valueOf(day.getAliPayBill());
-				dayin[5] = String.valueOf(day.getDueBill());
-				dayin[6] = String.valueOf(day.getOtherBill());
-				dayin[7] = String.valueOf(day.getBill());
-				contentList.add(dayin);
+		//1：汇总 2：明细
+		if("1".equals(queryType)){
+			List<ReserveMemberIntervalReport> collectReport=reserveCardStatementsService.memberIncomeCollectReport(reserveMemberIntervalReport);
+			String[] titles = {"日期","现金","银行卡","转账","微信","微信(个人)","支付宝","支付宝（个人）","优惠券","合计"};
+			List<String[]> contentList = new ArrayList<>();
+			for(ReserveMemberIntervalReport report :collectReport) {
+				String[] o = new String[10];
+				o[0] = report.getReserveVenue().getName();
+				o[1] = String.valueOf(report.getCashBill());
+				o[2] = String.valueOf(report.getBankCardBill());
+				o[3] = String.valueOf(report.getTransferBill());
+				o[4] = String.valueOf(report.getWeiXinBill());
+				o[5] = String.valueOf(report.getPersonalWeiXinBill());
+				o[6] = String.valueOf(report.getAliPayBill());
+				o[7] = String.valueOf(report.getPersonalAliPayBill());
+				o[8] = String.valueOf(report.getOtherBill());
+				o[9] = String.valueOf(report.getBill());
+				contentList.add(o);
 			}
+			Date now = new Date();
+			ReserveVenue venue = reserveMemberIntervalReport.getReserveVenue();
+			String theme = venue!=null?venue.getName():""+"会员充值汇总 ："+ DateUtils.formatDate(now);
+			ExcelInfo info = new ExcelInfo(response,theme,titles,contentList);
+			info.export();
+		}else if("2".equals(queryType)){
+			List<ReserveMemberIntervalReport> intervalReports=reserveCardStatementsService.memberIncomeIntervalReport(reserveMemberIntervalReport);
+			String[] titles = {"日期","现金","银行卡","转账","微信","微信(个人)","支付宝","支付宝（个人）","优惠券","合计"};
+			List<String[]> contentList = new ArrayList<>();
+			for(ReserveMemberIntervalReport report :intervalReports){
+				String[] o = new String[10];
+				o[0] = DateUtils.formatDate(reserveMemberIntervalReport.getStartDate())+"至"+DateUtils.formatDate(reserveMemberIntervalReport.getEndDate());
+				o[1] = String.valueOf(report.getCashBill());
+				o[2] = String.valueOf(report.getBankCardBill());
+				o[3] = String.valueOf(report.getTransferBill());
+				o[4] = String.valueOf(report.getWeiXinBill());
+				o[5] = String.valueOf(report.getPersonalWeiXinBill());
+				o[6] = String.valueOf(report.getAliPayBill());
+				o[7] = String.valueOf(report.getPersonalAliPayBill());
+				o[8] = String.valueOf(report.getOtherBill());
+				o[9] = String.valueOf(report.getBill());
+				contentList.add(o);
+				for(ReserveMemberDayReport day:report.getDayReports()){
+					String[] dayin = new String[10];
+					dayin[0] = DateUtils.formatDate(day.getDay());
+					dayin[1] = String.valueOf(day.getCashBill());
+					dayin[2] = String.valueOf(day.getBankCardBill());
+					dayin[3] = String.valueOf(day.getTransferBill());
+					dayin[4] = String.valueOf(day.getWeiXinBill());
+					dayin[5] = String.valueOf(day.getPersonalWeiXinBill());
+					dayin[6] = String.valueOf(day.getAliPayBill());
+					dayin[7] = String.valueOf(day.getPersonalAliPayBill());
+					dayin[8] = String.valueOf(day.getOtherBill());
+					dayin[9] = String.valueOf(day.getBill());
+					contentList.add(dayin);
+				}
+			}
+			Date now = new Date();
+			ReserveVenue venue = reserveMemberIntervalReport.getReserveVenue();
+			String theme = venue!=null?venue.getName():""+"会员充值明细"+ DateUtils.formatDate(now);
+			ExcelInfo info = new ExcelInfo(response,theme,titles,contentList);
+			info.export();
 		}
-		Date now = new Date();
-		ReserveVenue venue = reserveMemberIntervalReport.getReserveVenue();
-		String theme = venue!=null?venue.getName():""+"会员充值汇总明细"+ DateUtils.formatDate(now);
-		ExcelInfo info = new ExcelInfo(response,theme,titles,contentList);
-		info.export();
 	}
 
 

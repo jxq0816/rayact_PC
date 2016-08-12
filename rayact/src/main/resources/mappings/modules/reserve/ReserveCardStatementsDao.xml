@@ -108,6 +108,7 @@
 		SUM(a.transaction_volume) AS "bill",
 		sum(if(pay_type=2,a.transaction_volume,0)) AS "cashBill",
 		sum(if(pay_type=3,a.transaction_volume,0)) AS "bankCardBill",
+		sum(if(pay_type=11,a.transaction_volume,0)) AS "transferBill",
 		sum(if(pay_type=4,a.transaction_volume,0)) AS "weiXinBill",
 		sum(if(pay_type=9,a.transaction_volume,0)) AS "personalWeiXinBill",
 		sum(if(pay_type=5,a.transaction_volume,0)) AS "aliPayBill",

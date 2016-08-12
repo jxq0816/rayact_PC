@@ -97,7 +97,7 @@
                                 <tr>
                                     <td>
                                         <fmt:formatDate value="${reserveMemberIntervalReport.startDate}"
-                                                        timeStyle="date"></fmt:formatDate>~
+                                                        timeStyle="date"></fmt:formatDate>至
                                         <fmt:formatDate value="${reserveMemberIntervalReport.endDate}"
                                                         timeStyle="date"></fmt:formatDate>
 
@@ -160,7 +160,7 @@
                                         </td>
 
                                         <td>
-                                                ${intervalReport.transferBill}
+                                                ${dayReport.transferBill}
                                         </td>
 
                                         <td>
