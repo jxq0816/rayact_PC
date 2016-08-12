@@ -6,8 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/app_runtime/app_runtime.iml" filepath="$PROJECT_DIR$/app_runtime/app_runtime.iml" />
       <module fileurl="file://$PROJECT_DIR$/control/control.iml" filepath="$PROJECT_DIR$/control/control.iml" />
       <module fileurl="file://$PROJECT_DIR$/rayact/rayact.iml" filepath="$PROJECT_DIR$/rayact/rayact.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rayact_PC.iml" filepath="$PROJECT_DIR$/rayact_PC.iml" />
       <module fileurl="file://$PROJECT_DIR$/rayact_core/rayact_core.iml" filepath="$PROJECT_DIR$/rayact_core/rayact_core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rayact_pc.iml" filepath="$PROJECT_DIR$/rayact_pc.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/rayact_pc.iml" filepath="$PROJECT_DIR$/.idea/rayact_pc.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime/runtime.iml" filepath="$PROJECT_DIR$/runtime/runtime.iml" />
     </modules>
