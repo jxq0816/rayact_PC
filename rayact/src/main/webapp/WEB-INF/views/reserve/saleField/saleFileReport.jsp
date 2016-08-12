@@ -71,12 +71,15 @@
                                 <th>实收金额</th>
                                 <th>会员优惠</th>
                                 <th>订单数量</th>
-                                <th>会员卡</th>
+                                <th>储值卡</th>
                                 <th>现金</th>
                                 <th>银行卡</th>
+                                <th>转账</th>
                                 <th>微信</th>
+                                <th>微信（个人）</th>
                                 <th>支付宝</th>
-                                <th>其它</th>
+                                <th>支付宝（个人）</th>
+                                <th>优惠券</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -87,11 +90,14 @@
                                     <td>${report.orderPrice}</td>
                                     <td>${report.discountPrice}</td>
                                     <td>${report.total}</td>
-                                    <td>${report.memberPrice}</td>
-                                    <td>${report.moneyPrice}</td>
-                                    <td>${report.cardPrice}</td>
-                                    <td>${report.weixinPrice}</td>
-                                    <td>${report.zfbPrice}</td>
+                                    <td>${report.storedCardBill}</td>
+                                    <td>${report.cashBill}</td>
+                                    <td>${report.bankCardBill}</td>
+                                    <td>${report.transferBill}</td>
+                                    <td>${report.weiXinBill}</td>
+                                    <td>${report.personalWeiXinBill}</td>
+                                    <td>${report.aliPayBill}</td>
+                                    <td>${report.personalAliPayBill}</td>
                                     <td>${report.otherPrice}</td>
                                 </tr>
                             </c:forEach>

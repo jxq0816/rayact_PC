@@ -28,7 +28,7 @@ public class VenueOrderUtils {
         } else if ("6".equals(payType)) {
             return "优惠券";
         } else if ("7".equals(payType)) {
-            return "打白条";
+            return "欠账";
         }else if ("8".equals(payType)) {
             return "多方式付款";
         }else if ("9".equals(payType)) {

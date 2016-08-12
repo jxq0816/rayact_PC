@@ -167,7 +167,6 @@
         $(".remainder").each(function(){
             remainder += parseFloat($(this).html());
         });
-        alert(remainder);
         $("#remainder_sum").html(remainder);
 
     });

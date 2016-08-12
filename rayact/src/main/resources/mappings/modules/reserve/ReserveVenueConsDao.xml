@@ -121,11 +121,14 @@
     <select id="findPriceGroupProjectReport" resultType="java.util.Map">
         select d.name as projectName,sum(should_price) as shouldPrice,sum(b.cons_price )as
         orderPrice,sum(b.discount_price) as discountPrice,count(pay_Type) as total,
-        sum(case pay_Type when '1' then b.cons_price else 0 end) memberPrice,
-        sum(case pay_Type when '2' then b.cons_price else 0 end) moneyPrice,
-        sum(case pay_Type when '3' then b.cons_price else 0 end) cardPrice,
-        sum(case pay_Type when '4' then b.cons_price else 0 end) weixinPrice,
-        sum(case pay_Type when '5' then b.cons_price else 0 end) zfbPrice,
+        sum(case pay_Type when '1' then b.cons_price else 0 end) storedCardBill,
+        sum(case pay_Type when '2' then b.cons_price else 0 end) cashBill,
+        sum(case pay_Type when '3' then b.cons_price else 0 end) bankCardBill,
+        sum(case pay_Type when '11' then b.cons_price else 0 end) transferBill,
+        sum(case pay_Type when '4' then b.cons_price else 0 end) weiXinBill,
+        sum(case pay_Type when '9' then b.cons_price else 0 end) personalWeiXinBill,
+        sum(case pay_Type when '5' then b.cons_price else 0 end) aliPayBill,
+        sum(case pay_Type when '10' then b.cons_price else 0 end) personalAliPayBill,
         sum(case pay_Type when '6' then b.cons_price else 0 end) otherPrice
         from reserve_venue_cons_item a,reserve_venue_cons b,reserve_field c,reserve_project d
         where a.cons_data_id = b.id and a.field_id =c.id and c.project_id = d.id
