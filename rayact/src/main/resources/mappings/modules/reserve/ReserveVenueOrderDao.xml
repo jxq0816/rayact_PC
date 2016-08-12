@@ -101,11 +101,14 @@
 	<select id="findPriceGroupProjectReport" resultType="java.util.Map">
 		SELECT sum(a.collect_price) as orderPrice,c.name as projectName,
         count(pay_Type) as total,
-		sum(case pay_Type when '1' then a.collect_price else 0 end) memberPrice,
-        sum(case pay_Type when '2' then a.collect_price else 0 end) moneyPrice,
-        sum(case pay_Type when '3' then a.collect_price else 0 end) cardPrice,
-        sum(case pay_Type when '4' then a.collect_price else 0 end) weixinPrice,
-        sum(case pay_Type when '5' then a.collect_price else 0 end) zfbPrice,
+        sum(case pay_Type when '1' then a.collect_price else 0 end) storedCardBill,
+        sum(case pay_Type when '2' then a.collect_price else 0 end) cashBill,
+        sum(case pay_Type when '3' then a.collect_price else 0 end) bankCardBill,
+        sum(case pay_Type when '11' then a.collect_price else 0 end) transferBill,
+        sum(case pay_Type when '4' then a.collect_price else 0 end) weiXinBill,
+        sum(case pay_Type when '9' then a.collect_price else 0 end) personalWeiXinBill,
+        sum(case pay_Type when '5' then a.collect_price else 0 end) aliPayBill,
+        sum(case pay_Type when '10' then a.collect_price else 0 end) personalAliPayBill,
         sum(case pay_Type when '6' then a.collect_price else 0 end) otherPrice
 		FROM reserve_venue_order a,reserve_venue_visitors_set b,reserve_project c
 		where a.del_flag = '0' and a.visitors_set_id = b.id and b.project_id = c.id

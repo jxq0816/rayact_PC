@@ -93,25 +93,28 @@ public class SaleVenueReportController extends BaseController {
             map.put("saleType", "人次票");
         }
         saleVenueList.addAll(saleOrderList);
-        String[] titles = {"项目类型","应收金额","订单金额","会员优惠","订单数量","会员卡","现金","银行卡","微信","支付宝","其它"};
+        String[] titles = {"项目类型","应收金额","订单金额","会员优惠","订单数量","储值卡","现金","银行卡","转账","微信","微信（个人）","支付宝","支付宝（个人）","优惠券"};
         List<String[]> contentList = new ArrayList<>();
         for(Map<String,Object> map :saleVenueList){
-            String[] o = new String[11];
+            String[] o = new String[14];
             o[0] = map.get("projectName")+"("+map.get("saleType")+")";
             o[1] = map.get("shouldPrice")!=null?String.valueOf(map.get("shouldPrice")):"";
             o[2] = map.get("orderPrice")!=null?String.valueOf( map.get("orderPrice")):"";
             o[3] = map.get("discountPrice")!=null?String.valueOf(map.get("discountPrice")):"";
-            o[4] =  map.get("total")!=null?String.valueOf(map.get("total")):"";
-            o[5] =  map.get("memberPrice")!=null?String.valueOf(map.get("memberPrice")):"";
-            o[6] =  map.get("moneyPrice")!=null?String.valueOf(map.get("moneyPrice")):"";
-            o[7] =  map.get("cardPrice")!=null?String.valueOf(map.get("cardPrice")):"";
-            o[8] =  map.get("weixinPrice")!=null?String.valueOf(map.get("weixinPrice")):"";
-            o[9] =  map.get("zfbPrice")!=null?String.valueOf(map.get("zfbPrice")):"";
-            o[10] =  map.get("otherPrice")!=null?String.valueOf(map.get("otherPrice")):"";
+            o[4] = map.get("total")!=null?String.valueOf(map.get("total")):"";
+            o[5] = map.get("storedCardBill")!=null?String.valueOf(map.get("storedCardBill")):"";
+            o[6] = map.get("cashBill")!=null?String.valueOf(map.get("cashBill")):"";
+            o[7] = map.get("bankCardBill")!=null?String.valueOf(map.get("bankCardBill")):"";
+            o[8] = map.get("transferBill")!=null?String.valueOf(map.get("transferBill")):"";
+            o[9] = map.get("weiXinBill")!=null?String.valueOf(map.get("weiXinBill")):"";
+            o[10] = map.get("personalWeiXinBill")!=null?String.valueOf(map.get("personalWeiXinBill")):"";
+            o[11] = map.get("aliPayBill")!=null?String.valueOf(map.get("aliPayBill")):"";
+            o[12] = map.get("personalAliPayBill")!=null?String.valueOf(map.get("personalAliPayBill")):"";
+            o[13] =  map.get("otherPrice")!=null?String.valueOf(map.get("otherPrice")):"";
             contentList.add(o);
         }
         Date now = new Date();
-        ExcelInfo info = new ExcelInfo(response,"场地售卖报表"+DateUtils.formatDate(now),titles,contentList);
+        ExcelInfo info = new ExcelInfo(response,"项目收入统计 打印时间"+DateUtils.formatDate(now),titles,contentList);
         info.export();
     }
 
