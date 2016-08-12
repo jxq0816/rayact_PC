@@ -48,7 +48,6 @@
                                         <input type="radio" class="icheck"  id="isOwning_all" name="isOwning" value=""/>全部
                                         <input type="radio" class="icheck"  id="isOwning_false" name="isOwning"  value="0"/>储值
                                         <input type="radio" class="icheck"  id="isOwning_true" name="isOwning" value="1"/>欠费
-                                        <%--<form:radiobutton class="icheck"  path="isOwning" value="1"/>--%>
                                     </td>
                                     <td>
                                         <form:radiobuttons class="icheck"  path="cartType" items="${fns:getDictList('cart_type')}"
@@ -105,7 +104,7 @@
                                     <td>
                                             ${fns:getDictLabel(reserveMember.cartType, 'cart_type', '')}
                                     </td>
-                                    <td>
+                                    <td class="remainder">
                                             ${reserveMember.remainder}
                                     </td>
                                     <td>
@@ -117,6 +116,11 @@
                                     </td>
                                 </tr>
                             </c:forEach>
+                            <tr>
+                                <td colspan="6"></td>
+                                <td id="remainder_sum"></td>
+                                <td colspan="2"></td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -159,6 +163,13 @@
             $("#searchForm").submit();
             $("#searchForm").attr("action", "${ctx}/reserve/reserveMember/list");
         });
+        var remainder = 0;
+        $(".remainder").each(function(){
+            remainder += parseFloat($(this).html());
+        });
+        alert(remainder);
+        $("#remainder_sum").html(remainder);
+
     });
 </script>
 </body>
