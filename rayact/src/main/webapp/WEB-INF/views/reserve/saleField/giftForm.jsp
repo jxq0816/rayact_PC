@@ -32,11 +32,11 @@
                     <div class="form-group">
                         <label for="gift" class="col-lg-3 control-label">添加赠品:</label>
                         <div class="col-lg-9">
-                            <select class="select2 input-sm" id="gift">
+                            <select class="select2" style="width: 100%;" id="gift">
                                 <option value="">请选择</option>
-                                <c:forEach items="${giftList}" var="gift">
-                                    <option data-name="${gift.name}" data-unit="${gift.unit}" value="${gift.id}" data-repertory-num="${gift.repertoryNum}">
-                                            ${gift.name}
+                                <c:forEach items="${commodityList}" var="commodity">
+                                    <option data-name="${commodity.name}" data-unit="${commodity.unit}" value="${commodity.id}" data-repertory-num="${commodity.repertoryNum}">
+                                            ${commodity.name}
                                     </option>
                                 </c:forEach>
                             </select>
@@ -47,6 +47,14 @@
             <div class="col-lg-6">
                 <div class="content">
                     <h4>赠品列表</h4>
+                    <table>
+                        <c:forEach items="${giftList}" var="gift">
+                            <tr>
+                                <td>商品名称：${gift.gift.name}</td>
+                                <td>赠送数量：${gift.num}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
                     <table id="giftTable">
                     </table>
                 </div>
@@ -74,13 +82,6 @@
         $("#giftTable").on('click', '.delGifTr', function (event) {
             $(this).parents("tr").remove();
             event.stopPropagation();
-        });
-        $(".select2").select2({
-            width: '100%'
-        });
-        $('.icheck').iCheck({
-            checkboxClass: 'icheckbox_square-blue checkbox',
-            radioClass: 'iradio_square-blue'
         });
     });
 </script>

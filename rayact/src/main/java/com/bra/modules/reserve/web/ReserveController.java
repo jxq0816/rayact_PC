@@ -553,7 +553,8 @@ public class ReserveController extends BaseController {
         ReserveVenueCons cons = reserveVenueConsService.get(consItem.getConsData().getId());
         model.addAttribute("cos", cons);
         //商品
-        model.addAttribute("giftList", reserveCommodityService.findList(new ReserveCommodity()));
+        model.addAttribute("giftList", reserveVenueGiftService.findList(new ReserveVenueGift(cons.getId(), ReserveVenueCons.MODEL_KEY)));
+        model.addAttribute("commodityList", reserveCommodityService.findList(new ReserveCommodity()));
         return "reserve/saleField/giftForm";
     }
 
