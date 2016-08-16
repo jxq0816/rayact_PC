@@ -7,19 +7,23 @@
                 <table>
                     <thead>
                     <tr>
+                        <th>编号</th>
                         <th>姓名</th>
                         <th>项目</th>
                         <th>剩余次数</th>
                         <th>余额</th>
                         <th>单次价格</th>
                         <th>充值时间</th>
-                        <%--  <th>是否失效</th>--%>
+                    <%--    <th>是否失效</th>--%>
                         <th>备注</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${page.list}" var="prepayment">
                         <tr>
+                            <td>
+                                    ${prepayment.id}
+                            </td>
                             <td>
                                     ${prepayment.reserveMember.name}
                             </td>
@@ -39,9 +43,9 @@
 
                                 <fmt:formatDate value="${prepayment.createDate}" type="both"/>
                             </td>
-                                <%-- <td>
-                                         ${prepayment.delFlag}
-                                 </td>--%>
+                       <%--     <td>
+                                    ${prepayment.delFlag}
+                            </td>--%>
                             <td>
                                     ${prepayment.remarks}
                             </td>
