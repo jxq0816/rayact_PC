@@ -47,6 +47,7 @@ public class StreamController {
     private AttMainService attMainService;
 
     /**
+     * 上传图片的第一步
      * html5 上传文件
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -90,6 +91,14 @@ public class StreamController {
         return json;
     }
 
+    /**
+     * 上传文件到指定文件夹在该方法完成
+     * @param req
+     * @param resp
+     * @param model
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> upload(HttpServletRequest req,
@@ -114,7 +123,7 @@ public class StreamController {
         long start = 0;
         boolean success = true;
         String message = "";
-        File f = fileRepository.getTokenedFile(token);
+        File f = fileRepository.getTokenedFile(token);//读取本地文件
         try {
             if (f.length() != range.getFrom()) {
                 throw new StreamException(StreamException.ERROR_FILE_RANGE_START);
@@ -148,7 +157,7 @@ public class StreamController {
                 /** fix the `renameTo` bug */
                 File dst = fileRepository.getFile(token, fileName);
                 dst.delete();
-                f.renameTo(dst);
+                f.renameTo(dst);//将文件写入到指定文件夹
 
                 if (StringUtils.isNotBlank(imgCheck)) {
                     if (!ImageUtils.getFormatName(dst, imgCheck)) {

@@ -1,10 +1,10 @@
-<%@ tag import="java.util.List" %>
-<%@ tag import="java.util.ArrayList" %>
-<%@ tag import="com.bra.modules.mechanism.entity.AttMain" %>
-<%@ tag import="com.bra.common.utils.StringUtils" %>
-<%@ tag import="com.bra.modules.mechanism.service.AttMainService" %>
 <%@ tag import="com.bra.common.utils.Collections3" %>
 <%@ tag import="com.bra.common.utils.SpringContextHolder" %>
+<%@ tag import="com.bra.common.utils.StringUtils" %>
+<%@ tag import="com.bra.modules.mechanism.entity.AttMain" %>
+<%@ tag import="com.bra.modules.mechanism.service.AttMainService" %>
+<%@ tag import="java.util.ArrayList" %>
+<%@ tag import="java.util.List" %>
 <%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ attribute name="id" type="java.lang.String" required="true" description="上传标签id" %>
 <%@ attribute name="name" type="java.lang.String" required="true"
@@ -38,14 +38,14 @@
     if (StringUtils.isNotBlank(modelId) && StringUtils.isNotBlank(modelName)) {
         AttMainService attMainService = SpringContextHolder.getBean("attMainService");
         attMains = attMainService.getAttMain(modelId, modelName, fdKey);
-        if(!Collections3.isEmpty(attMains)){
+        if (!Collections3.isEmpty(attMains)) {
             topAttMainId = attMains.get(0).getId();
         }
     }
-    if(StringUtils.isBlank(btnText)){
+    if (StringUtils.isBlank(btnText)) {
         btnText = "添加";
     }
-    if(btnText.length()>3){
+    if (btnText.length() > 3) {
         btnWidth = "120px";
     }
 
@@ -79,12 +79,12 @@
     request.setAttribute("style", style.toString());
 %>
 
-<%if(!"view".equals(method)){%>
+<%if (!"view".equals(method)) {%>
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button type="button" style="width: <%=btnWidth%>;" class="${btnClass}" id="i_select_files_${id}"> <%=btnText%>
+        <button type="button" style="width: <%=btnWidth%>;" class="${btnClass}" id="i_select_files_${id}"><%=btnText%>
         </button>
-        <%=tipInfo==null?"":tipInfo%>
+        <%=tipInfo == null ? "" : tipInfo%>
         <input id="hidden_${id}" data-rule="${dataRule}" class="${cssClass}" value="<%=topAttMainId%>" type="hidden"/>
     </div>
 </div>
@@ -99,7 +99,7 @@
     <tr id="tr_<%=attMain.getId()%>" class="template-upload fade in">
         <td><p class="name">
             <%
-                if (showImg!=null&&showImg) {
+                if (showImg != null && showImg) {
             %>
             <img ${requestScope.style}
                     src='${ctx}/mechanism/file/image/<%=attMain.getId()%>'/>
@@ -111,11 +111,12 @@
         </p>
         </td>
         <td>
-            <%if(!"view".equals(method)){%>
+            <%if (!"view".equals(method)) {%>
             <span style="cursor: pointer;" class="glyphicon glyphicon-remove"
                   onclick="javascript:deleteAttMain('<%=attMain.getId()%>')">移除</span>|
             <%}%>
-            <a style="cursor: pointer;" class="glyphicon glyphicon-remove" target="_blank" href="${ctx}/mechanism/file/view/<%=attMain.getId()%>">查看</a>
+            <a style="cursor: pointer;" class="glyphicon glyphicon-remove" target="_blank"
+               href="${ctx}/mechanism/file/view/<%=attMain.getId()%>">查看</a>
         </td>
     </tr>
     <%index++;%>
@@ -140,7 +141,7 @@
                     $("#tr_" + attId).remove();
                     var idvalue = $("#hidden_${id}").attr("value");
                     if (idvalue == attId) {
-                        $("#hidden_${id}").attr("value","");
+                        $("#hidden_${id}").attr("value", "");
                     }
                 }
             }, error: function () {
@@ -182,10 +183,10 @@
 //console && console.log("-------------onFileCountExceed-------------------End");
         },
         onExtNameMismatch: function (info) {
-console && console.log("-------------onExtNameMismatch-------------------");
-console && console.log(info);
+            console && console.log("-------------onExtNameMismatch-------------------");
+            console && console.log(info);
             alert("文件类型不匹配");
-console && console.log("-------------onExtNameMismatch-------------------End");
+            console && console.log("-------------onExtNameMismatch-------------------End");
         },
         onAddTask: function (file) {
             <j:ifelse test="${multi}">
@@ -222,7 +223,7 @@ console && console.log("-------------onExtNameMismatch-------------------End");
             $bar.css("width", file.percent + "%");
             var $message = $("#" + file.id).find("span.message-text");
             $message.text("已上传:" + file.formatLoaded + "/" + file.formatSize + " 速 度:" + file.formatSpeed);
-console && console.log("-------------onUploadProgress-------------------End");
+            console && console.log("-------------onUploadProgress-------------------End");
         },
         onComplete: function (file) {
 //console && console.log("-------------onComplete-------------------");
@@ -232,23 +233,24 @@ console && console.log("-------------onUploadProgress-------------------End");
                 $("#hidden_${id}").attr("value", value.attId);
                 if (value && value.status == '1') {
 //<j:if test="${callBack!=null }">
-                    try{
+                    try {
                         if (${callBack}) {
                             ${callBack}(value.attId, value.fileName, '${fdKey}');
                         }
-                    }catch(e){}
+                    } catch (e) {
+                    }
 
 //</j:if>
 
                     // <j:ifelse test="${multi}">
                     // <j:then>
                     jQuery("#inputHidden${id }").append('<div id="div_' + value.attId + '"><input type="text" name="${name}['
-                    + indexx${id } + '].fdFileName" value="' + value.fileName + '" /><input type="text" name="${name}['
-                    + indexx${id } + '].id" value="' + value.attId + '" /><input type="text" name="${name}['
-                    + indexx${id } + '].fdKey" value="${fdKey}" /></div>');
+                            + indexx${id } + '].fdFileName" value="' + value.fileName + '" /><input type="text" name="${name}['
+                            + indexx${id } + '].id" value="' + value.attId + '" /><input type="text" name="${name}['
+                            + indexx${id } + '].fdKey" value="${fdKey}" /></div>');
                     indexx${id}++;
                     $("#" + file.id).find(".glyphicon-remove").attr("onClick", "deleteAttMain('" + value.attId + "')");
-                    $("#" + file.id).find(".glyphicon-see").attr("href", "${ctx}/mechanism/file/view/"+value.attId +"");
+                    $("#" + file.id).find(".glyphicon-see").attr("href", "${ctx}/mechanism/file/view/" + value.attId + "");
                     <j:if test="${showImg}">
                     $("#" + file.id).find(".name").html("<img ${requestScope.style} src='${ctx}/mechanism/file/image/" + value.attId + "?time=" + Math.random() + "'/>");
                     </j:if>
@@ -256,12 +258,12 @@ console && console.log("-------------onUploadProgress-------------------End");
                     // </j:then>
                     //<j:else>
                     jQuery("#inputHidden${id }").html('<div id="div_' + value.attId + '"><input type="text" name="${name}['
-                    + indexx${id } + '].fdFileName" value="' + value.fileName + '" /><input type="text" name="${name}['
-                    + indexx${id } + '].id" value="' + value.attId + '" /><input type="text" name="${name}['
-                    + indexx${id } + '].fdKey" value="${fdKey}" /></div>');
+                            + indexx${id } + '].fdFileName" value="' + value.fileName + '" /><input type="text" name="${name}['
+                            + indexx${id } + '].id" value="' + value.attId + '" /><input type="text" name="${name}['
+                            + indexx${id } + '].fdKey" value="${fdKey}" /></div>');
                     indexx${id}++;
                     $("#" + file.id).find(".glyphicon-remove").attr("onClick", "deleteAttMain('" + value.attId + "')");
-                    $("#" + file.id).find(".glyphicon-see").attr("href", "${ctx}/mechanism/file/view/"+value.attId +"");
+                    $("#" + file.id).find(".glyphicon-see").attr("href", "${ctx}/mechanism/file/view/" + value.attId + "");
                     <j:if test="${showImg}">
                     $("#" + file.id).find(".name").html("<img ${requestScope.style} src='${ctx}/mechanism/file/image/" + value.attId + "?time=" + Math.random() + "'/>");
                     </j:if>
