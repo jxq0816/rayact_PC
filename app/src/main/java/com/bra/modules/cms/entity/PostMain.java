@@ -26,7 +26,7 @@ public class PostMain extends DataEntity<PostMain> {
 		super(id);
 	}
 
-	@Length(min=0, max=30, message="subject长度必须介于 0 和 30 之间")
+	@Length(min=0, max=50, message="subject长度必须介于 0 和 50 之间")
 	public String getSubject() {
 		return subject;
 	}
