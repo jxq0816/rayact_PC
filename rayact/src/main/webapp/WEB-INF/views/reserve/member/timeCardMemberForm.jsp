@@ -7,7 +7,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="timecardMember"></jsp:param>
+    <jsp:param name="action" value="timeCardMember"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">

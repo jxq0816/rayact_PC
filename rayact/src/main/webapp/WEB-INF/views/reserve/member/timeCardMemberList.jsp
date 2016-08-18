@@ -8,7 +8,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="timecardMember"></jsp:param>
+    <jsp:param name="action" value="timeCardMember"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
@@ -113,7 +113,7 @@
                                                onclick="addTime('${reserveMember.id}')"><i
                                                     class="fa fa-pencil"></i>充值</a>
                                             <a class="btn btn-primary btn-xs"
-                                               onclick="prePayment('${reserveMember.id}')"
+                                               href="${ctx}/reserve/reserveTimeCardPrepayment/list?memberId=${reserveMember.id}"
                                                class="fa fa-pencil">预付款记录</a>
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
@@ -142,7 +142,6 @@
     </div>
 </div>
 <jsp:include page="../include/timeCardAddDialog.jsp"></jsp:include>
-<jsp:include page="../include/prePaymentListModal.jsp"></jsp:include>
 <script type="text/javascript" src="${ctxStatic}/modules/reserve/js/timecard.js"></script>
 </body>
 </html>

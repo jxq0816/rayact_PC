@@ -72,7 +72,8 @@ public class ReserveTimeCardPrepaymentController extends BaseController {
 	public String delete(ReserveTimeCardPrepayment reserveTimeCardPrepayment, RedirectAttributes redirectAttributes) {
 		reserveTimeCardPrepaymentService.delete(reserveTimeCardPrepayment);
 		addMessage(redirectAttributes, "删除次卡预付款成功");
-		return "redirect:"+Global.getAdminPath()+"/reserve/reserveTimeCardPrepayment/?repage";
+		redirectAttributes.addAttribute("memberId",reserveTimeCardPrepayment.getReserveMember().getId());
+		return "redirect:"+Global.getAdminPath()+"/reserve/reserveTimeCardPrepayment/list";
 	}
 
 }

@@ -64,7 +64,7 @@
         "authorityList": []
       },
       {
-        "code": "timecardMember",
+        "code": "timeCardMember",
         "name": "次卡会员",
         "href":"/reserve/timeCardMember/list",
         "authorityList": []

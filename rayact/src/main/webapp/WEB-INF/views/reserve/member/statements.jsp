@@ -16,14 +16,14 @@
                 <div class="header">
                     <div class="row">
                         <div class="col-lg-2">
-                             <h3>交易明细</h3>
+                            <h3>交易明细</h3>
                         </div>
                         <div class="pull-right col-lg-1">
                             <a onclick="history.go(-1)"><img
                                     style="width:30px;height: 30px"
                                     src="${ctxStatic}/modules/reserve/images/return.png"></a>
                         </div>
-                </div>
+                    </div>
                 </div>
 
                 <form:form id="searchForm" action="${ctx}/reserve/reserveMember/statements" method="post">
@@ -97,7 +97,8 @@
                                 <td>
                                     <j:if test="${statement.transactionType==1 or statement.transactionType==7}">
                                         ${statement.transactionVolume}
-                                        <j:set name="chargeSum" value="${statement.transactionVolume+chargeSum}"></j:set>
+                                        <j:set name="chargeSum"
+                                               value="${statement.transactionVolume+chargeSum}"></j:set>
                                     </j:if>
                                 </td>
                                 <td>
@@ -105,19 +106,21 @@
                                 </td>
                                 <td>
                                         ${statement.transactionNum}
-                                    <j:set name="consumptionTimeSum" value="${consumptionTimeSum+statement.transactionNum}"></j:set>
+                                    <j:set name="consumptionTimeSum"
+                                           value="${consumptionTimeSum+statement.transactionNum}"></j:set>
                                 </td>
                                 <td>
                                         ${fns:getPayType(statement.payType)}
                                 </td>
                                 <td>
-                                        <fmt:formatDate value="${statement.createDate}"
-                                                        pattern="yyyy-MM-dd"/>
+                                    <fmt:formatDate value="${statement.createDate}"
+                                                    pattern="yyyy-MM-dd"/>
                                 </td>
                                 <td>
                                     <j:if test="${statement.transactionType!=1 and statement.transactionType!=7}">
                                         ${statement.transactionVolume}
-                                        <j:set name="transactionVolumeSum" value="${statement.transactionVolume+transactionVolumeSum}"></j:set>
+                                        <j:set name="transactionVolumeSum"
+                                               value="${statement.transactionVolume+transactionVolumeSum}"></j:set>
                                     </j:if>
                                 </td>
                                 <td>
