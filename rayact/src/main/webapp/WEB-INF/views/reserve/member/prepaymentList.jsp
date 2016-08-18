@@ -38,7 +38,9 @@
                                 <th>单次价格</th>
                                 <th>充值时间</th>
                                 <th>备注</th>
-                                <th>操作</th>
+                                <j:if test="${userType==1 || userType==5}">
+                                    <th>操作</th>
+                                </j:if>
                             </tr>
                             </thead>
                             <tbody>
@@ -69,12 +71,14 @@
                                     <td>
                                             ${prepayment.remarks}
                                     </td>
-                                    <td>
-                                        <a class="btn btn-danger btn-xs"
-                                           href="${ctx}/reserve/reserveTimeCardPrepayment/delete?id=${prepayment.id}"
-                                           onclick="return confirmb('确认要删除该记录吗？', this.href)"> <i
-                                                class="fa fa-times"></i>删除</a>
-                                    </td>
+                                    <j:if test="${userType==1 || userType==5}">
+                                        <td>
+                                            <a class="btn btn-danger btn-xs"
+                                               href="${ctx}/reserve/reserveTimeCardPrepayment/delete?id=${prepayment.id}"
+                                               onclick="return confirmb('确认要删除该记录吗？', this.href)"> <i
+                                                    class="fa fa-times"></i>删除</a>
+                                        </td>
+                                    </j:if>
                                 </tr>
                             </c:forEach>
                             </tbody>

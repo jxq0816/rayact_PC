@@ -7,6 +7,7 @@ import com.bra.common.web.BaseController;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveTimeCardPrepayment;
 import com.bra.modules.reserve.service.ReserveTimeCardPrepaymentService;
+import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +50,8 @@ public class ReserveTimeCardPrepaymentController extends BaseController {
 		reserveTimeCardPrepayment.setReserveMember(member);
 		Page<ReserveTimeCardPrepayment> page = reserveTimeCardPrepaymentService.findPage(new Page<ReserveTimeCardPrepayment>(request, response), reserveTimeCardPrepayment);
 		model.addAttribute("page", page);
+		String userType= UserUtils.getUser().getUserType();
+		model.addAttribute("userType", userType);
 		return "reserve/member/prepaymentList";
 	}
 
