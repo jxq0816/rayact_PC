@@ -8,6 +8,7 @@ import com.bra.modules.reserve.entity.form.ReserveMemberDayReport;
 import com.bra.modules.reserve.entity.form.ReserveMemberIntervalReport;
 import com.bra.modules.reserve.entity.form.SearchForm;
 import com.bra.modules.reserve.utils.AuthorityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ import java.util.*;
 @Service
 @Transactional(readOnly = true)
 public class ReserveCardStatementsService extends CrudService<ReserveCardStatementsDao, ReserveCardStatements> {
+
+	@Autowired
+	private ReserveMemberService reserveMemberService;
 
 	public ReserveCardStatements get(String id) {
 		return super.get(id);
@@ -125,6 +129,15 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 
 	@Transactional(readOnly = false)
 	public void delete(ReserveCardStatements reserveCardStatements) {
+		reserveCardStatements=this.get(reserveCardStatements);
+		if("1".equals(reserveCardStatements.getTransactionType())){
+			ReserveMember member = reserveCardStatements.getReserveMember();
+			member=reserveMemberService.get(member);
+			Double remainder = member.getRemainder();
+			remainder-=reserveCardStatements.getTransactionVolume();
+			member.setRemainder(remainder);
+			reserveMemberService.save(member);//余额应减去充值金额
+		}
 		super.delete(reserveCardStatements);
 	}
 

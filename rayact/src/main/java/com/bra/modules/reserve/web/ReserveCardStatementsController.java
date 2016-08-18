@@ -377,7 +377,7 @@ public class ReserveCardStatementsController extends BaseController {
 	public String delete(ReserveCardStatements reserveCardStatements, RedirectAttributes redirectAttributes) {
 		reserveCardStatementsService.delete(reserveCardStatements);
 		addMessage(redirectAttributes, "删除交易记录成功");
-		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCardStatements/?repage";
+		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCardStatements/list";
 	}
 
 }
