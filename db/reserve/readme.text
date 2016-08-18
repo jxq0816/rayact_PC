@@ -53,3 +53,7 @@ alter table reserve_role add update_date datetime DEFAULT NULL;
 alter table reserve_role add remarks varchar(255) DEFAULT NULL;
 alter table reserve_role add del_flag char(1) NOT NULL DEFAULT '0';
 alter table reserve_role add tenant_id varchar(19) DEFAULT NULL COMMENT '路由标识';
+20160818:reserve_commodity_sell_detail 新增字段 gift_flag
+alter table reserve_commodity_sell_detail add gift_flag char(1);
+20160818:reserve_commodity_sell 删除字段 gift_flag
+alter table reserve_commodity_sell drop column gift_flag;

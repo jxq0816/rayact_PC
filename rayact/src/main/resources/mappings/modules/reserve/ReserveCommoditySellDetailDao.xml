@@ -4,6 +4,7 @@
 
     <sql id="reserveCommoditySellDetailColumns">
 		a.id AS "id",
+        a.gift_flag AS "giftFlag",
 		a.fk_reserve_member_id AS "reserveMember.id",
 		a.fk_reserve_commodity_id AS "reserveCommodity.id",
 		commodity.name AS "reserveCommodity.name",
@@ -37,6 +38,7 @@
     <select id="findSellDetailList" resultType="ReserveCommoditySellDetail">
         SELECT
         a.id AS "id",
+        a.gift_flag AS "giftFlag",
         a.fk_reserve_member_id AS "reserveMember.id",
         m.name AS "reserveMember.name",
         a.fk_reserve_commodity_id AS "reserveCommodity.id",
@@ -64,6 +66,9 @@
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId} AND
             a.fk_reserve_commodity_id=commodity.id and commodity.commodity_type_id =t.id and commodity.fk_reserve_venue_id=venue.id
+            <if test="giftFlag!=null and giftFlag !=''">
+                and gift_flag = #{giftFlag}
+            </if>
             <if test="reserveCommodity != null">
                 <if test="reserveCommodity.name !=null and reserveCommodity.name !=''">
                     and commodity.name LIKE concat('%',#{reserveCommodity.name},'%')
@@ -140,12 +145,13 @@
         </choose>
     </select>
 
-    <insert id="insert" flushCache="true">
+    <insert id="insert">
 		INSERT INTO reserve_commodity_sell_detail(
 			id,
 			fk_reserve_member_id,
 			fk_reserve_commodity_id,
 			fk_reserve_commodity_sell_id,
+			gift_flag,
 			num,
 			price,
 			detail_sum,
@@ -161,6 +167,7 @@
 			#{reserveMember.id},
 			#{reserveCommodity.id},
 			#{reserveCommoditySell.id},
+			#{giftFlag},
 			#{num},
 			#{price},
 			#{detailSum},
@@ -179,6 +186,7 @@
 		 	fk_reserve_member_id = #{reserveMember.id}
 			fk_reserve_commodity_id = #{reserveCommodity.id},
 			fk_reserve_commodity_sell_id = #{reserveCommoditySell.id},
+			gift_flag = #{giftFlag},
 			num = #{num},
 			price = #{price},
 			detail_sum = #{detailSum},

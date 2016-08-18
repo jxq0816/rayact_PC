@@ -15,6 +15,7 @@ public class ReserveCommoditySellDetail extends SaasEntity<ReserveCommoditySellD
 	private ReserveCommodity reserveCommodity;		// 商品
 	private ReserveCommoditySell reserveCommoditySell;		// 商品销售主表
 	private ReserveMember reserveMember;//会员
+	private String giftFlag;       //赠品标识 0代表非赠品，1代表赠品
 	private Integer num;		// 数量
 	private Double price;		// 价格
 	private Double detailSum;		// 总和
@@ -27,7 +28,13 @@ public class ReserveCommoditySellDetail extends SaasEntity<ReserveCommoditySellD
 		this.reserveMember = reserveMember;
 	}
 
+	public String getGiftFlag() {
+		return giftFlag;
+	}
 
+	public void setGiftFlag(String giftFlag) {
+		this.giftFlag = giftFlag;
+	}
 	
 	public ReserveCommoditySellDetail() {
 		super();

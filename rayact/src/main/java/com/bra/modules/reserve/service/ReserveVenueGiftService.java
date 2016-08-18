@@ -61,7 +61,7 @@ public class ReserveVenueGiftService extends CrudService<ReserveVenueGiftDao, Re
         ReserveCommoditySellDetail detail ;
 
         ReserveCommoditySell commoditySell  = new ReserveCommoditySell();
-        commoditySell.setGiftFlag("1");
+
         commoditySell.preInsert();
         reserveCommoditySellDao.insert(commoditySell);
 
@@ -83,7 +83,8 @@ public class ReserveVenueGiftService extends CrudService<ReserveVenueGiftDao, Re
             detail = new ReserveCommoditySellDetail();
             detail.setReserveCommodity(commodity);
             detail.setNum(gift.getNum());
-            detail.setPrice(0D);
+            detail.setGiftFlag("1");
+            detail.setPrice(commodity.getPrice());
             detail.setDetailSum(0D);
             detail.preInsert();
             reserveCommoditySellDetailDao.insert(detail);

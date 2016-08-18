@@ -4,7 +4,6 @@
 
 	<sql id="reserveCommoditySellColumns">
 		a.id AS "id",
-		a.gift_flag AS "giftFlag",
 		a.fk_reserve_member_id AS "reserveMember.id",
 		a.pay_type AS "payType",
 		a.total_sum AS "totalSum",
@@ -219,7 +218,6 @@
 			id,
 			fk_reserve_member_id ,
 			total_sum,
-		    gift_flag,
 		    pay_type,
 			create_by,
 			create_date,
@@ -232,7 +230,6 @@
 			#{id},
 			#{reserveMember.id},
 			#{totalSum},
-			#{giftFlag},
 			#{payType},
 			#{createBy.id},
 			#{createDate},

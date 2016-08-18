@@ -28,6 +28,14 @@
                                         defaultLabel="----请选择-----"
                                         defaultValue=""></sys:select>
                         </div>
+                        <div class="form-group col-lg-2 col-sm-2">
+                            <label class="col-sm-6 control-label">赠品：</label>
+                            <div class="col-sm-6">
+                                <form:radiobuttons path="giftFlag" items="${fns:getDictList('yes_no')}"
+                                                   itemLabel="label"
+                                                   itemValue="value" htmlEscape="false" class="icheck"/>
+                            </div>
+                        </div>
                         <div class="form-group col-lg-3 col-sm-3">
                             <label class="control-label col-lg-5" for="payType">支付方式：</label>
                             <div class="col-lg-7">
@@ -101,6 +109,7 @@
                                     <th>售卖人</th>
                                     <th>场馆</th>
                                     <th>时间</th>
+                                    <th>赠品</th>
                                     <th>备注</th>
                                 </tr>
                                 </thead>
@@ -123,6 +132,7 @@
                                         <td>${reserveCommoditySellDetail.reserveCommodity.reserveVenue.name}</td>
                                         <td><fmt:formatDate value="${reserveCommoditySellDetail.createDate}"
                                                             type="both"/></td>
+                                        <td>${fns:getDictLabel(reserveCommoditySellDetail.giftFlag,"yes_no","")}</td>
                                         <td>${reserveCommoditySellDetail.remarks}</td>
                                     </tr>
                                 </c:forEach>
@@ -130,7 +140,7 @@
                                 <td>${num}</td>
                                 <td></td>
                                 <td>${sum}</td>
-                                <td colspan="4"></td>
+                                <td colspan="6"></td>
                                 </tbody>
                             </table>
                             <div class="row">

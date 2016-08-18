@@ -87,7 +87,6 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		}
 		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
 		reserveCommoditySell.setTotalSum(total);
-		reserveCommoditySell.setGiftFlag("0");
 		reserveCommoditySell.setPayType(payType);
 		ReserveMember reserveMember=sellDetailList.getReserveStoredCardMember();
 		if(reserveMember!=null){
@@ -103,6 +102,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			Integer num=sellDetail.getNum();
 			ReserveCommodity commodity=sellDetail.getReserveCommodity();//买的啥
 			sellDetail.setReserveMember(reserveMember);//谁买的
+			sellDetail.setGiftFlag("0");
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			commodity=reserveCommodityService.get(commodity);
 			int repertoryNum=commodity.getRepertoryNum();
