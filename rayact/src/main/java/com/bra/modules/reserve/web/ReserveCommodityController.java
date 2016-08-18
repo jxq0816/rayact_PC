@@ -89,6 +89,28 @@ public class ReserveCommodityController extends BaseController {
         return "reserve/commodity/reserveCommodityList";
     }
 
+    @RequestMapping(value = {"recycle", ""})
+    public String recycle(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
+        commodity.setDelFlag(commodity.DEL_FLAG_NORMAL);//还原
+        commodityService.save(commodity);
+        ReserveCommodity query=new ReserveCommodity();
+        query.setDelFlag(commodity.DEL_FLAG_DELETE);
+        Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response),query);
+        model.addAttribute("page", page);
+        return "reserve/commodity/reserveCommodityRecycleBinList";
+    }
+
+    @RequestMapping(value = {"recycleBin", ""})
+    public String recycleBin(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
+        commodity.setDelFlag(commodity.DEL_FLAG_DELETE);
+        Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
+        List<ReserveVenue> venues=venueService.findList(new ReserveVenue());
+        model.addAttribute("venues", venues);
+        model.addAttribute("page", page);
+        model.addAttribute("query", commodity);
+        return "reserve/commodity/reserveCommodityRecycleBinList";
+    }
+
     @RequestMapping(value = {"onShelfList", ""})
     public String sellList(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
         commodity.setShelvesStatus("1");

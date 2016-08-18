@@ -116,6 +116,12 @@
         "name": "场馆损益",
         "href":"/reserve/reserveVenueBill/list",
         "authorityList": []
+      },
+      {
+        "code": "tutor",
+        "name": "教练管理",
+        "href":"/reserve/reserveTutor/list",
+        "authorityList": []
       }
     ]
   },
@@ -148,9 +154,9 @@
         "authorityList": []
       },
       {
-        "code": "tutor",
-        "name": "教练管理",
-        "href":"/reserve/reserveTutor/list",
+        "code": "commodityRecycleBin",
+        "name": "商品回收站",
+        "href":"/reserve/commodity/recycleBin",
         "authorityList": []
       }
     ]

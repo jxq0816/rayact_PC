@@ -58,7 +58,10 @@
         FROM reserve_commodity a
         <include refid="commodityJoins"/>
         <where>
-            a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+            a.tenant_id = #{tenantId}
+            <if test="delFlag != null and delFlag != ''">
+                AND a.del_flag=#{delFlag}
+            </if>
             <if test="name != null and name != ''">
                 AND a.name LIKE
                 <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
@@ -162,6 +165,7 @@
         update_by = #{updateBy.id},
         update_date = #{updateDate},
         remarks = #{remarks},
+        del_flag=#{delFlag},
         tenant_id = #{tenantId}
         WHERE id = #{id}
     </update>
