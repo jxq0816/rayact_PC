@@ -55,7 +55,7 @@
                                                            itemValue="value" htmlEscape="false"/>
                                     </td>
                                     <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-                                        <j:if test="${userType==1 || userType==5}">
+                                        <j:if test="${userType==1 || userType==5 || userType==6}">
                                             <input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
                                         </j:if>
                                     </td>

@@ -138,6 +138,17 @@ public class ReserveCardStatementsService extends CrudService<ReserveCardStateme
 			member.setRemainder(remainder);
 			reserveMemberService.save(member);//余额应减去充值金额
 		}
+		if("7".equals(reserveCardStatements.getTransactionType())){
+			ReserveMember member = reserveCardStatements.getReserveMember();
+			member=reserveMemberService.get(member);
+			Double remainder = member.getRemainder();
+			Integer residue=member.getResidue();
+			remainder-=reserveCardStatements.getTransactionVolume();
+			residue-=reserveCardStatements.getTransactionNum();
+			member.setRemainder(remainder);
+			member.setResidue(residue);
+			reserveMemberService.save(member);//余额应减去充值金额
+		}
 		super.delete(reserveCardStatements);
 	}
 

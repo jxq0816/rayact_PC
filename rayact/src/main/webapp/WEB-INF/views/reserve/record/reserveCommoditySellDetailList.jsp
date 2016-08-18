@@ -63,14 +63,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-lg-2 col-sm-2">
-
+                        <div class="form-group col-lg-1 col-sm-1">
                             <form:input path="reserveCommodity.name" htmlEscape="false"
                                         maxlength="30"
-                                        placeholder="请输入商品名称"
+                                        placeholder="商品名称"
                                         class="form-control"/>
                         </div>
-                        <div class="form-group col-lg-3 col-sm-3">
+                        <div class="form-group col-lg-2 col-sm-2">
                             <div class="col-lg-6 col-sm-6">
                                 <input value="<fmt:formatDate  pattern="yyyy-MM-dd" value="${search.startDate}"/>"
                                        name="startDate" id="startDate" type="text"

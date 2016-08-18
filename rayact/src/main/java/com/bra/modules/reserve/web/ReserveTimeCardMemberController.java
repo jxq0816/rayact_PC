@@ -104,10 +104,11 @@ public class ReserveTimeCardMemberController extends BaseController {
         statement.setTransactionVolume(rechargeVolume);
         statement.setTransactionType("7");
         statement.setPayType(payType);
+        statement.setTransactionNum(time);
         statement.setVenue(reserveMember.getReserveVenue());
         statement.setRemarks(remarks);
         reserveCardStatementsService.save(statement);
-        addMessage(redirectAttributes, "保存储值卡会员成功");
+        addMessage(redirectAttributes, "保存次卡会员成功");
         return "redirect:"+ Global.getAdminPath()+"/reserve/timeCardMember/list";
     }
 
@@ -136,14 +137,14 @@ public class ReserveTimeCardMemberController extends BaseController {
             return form(reserveMember, model);
         }
         reserveMemberService.save(reserveMember);
-        addMessage(redirectAttributes, "保存储值卡会员成功");
+        addMessage(redirectAttributes, "保存次卡会员成功");
         return "redirect:"+ Global.getAdminPath()+"/reserve/timeCardMember/list";
     }
 
     @RequestMapping(value = "delete")
     public String delete(ReserveMember reserveMember, RedirectAttributes redirectAttributes) {
         reserveMemberService.delete(reserveMember);
-        addMessage(redirectAttributes, "删除储值卡会员成功");
+        addMessage(redirectAttributes, "删除次卡会员成功");
         return "redirect:"+Global.getAdminPath()+"/reserve/timeCardMember/list";
     }
 }

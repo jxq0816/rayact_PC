@@ -78,11 +78,15 @@
                                 <th>场馆</th>
                                 <th>姓名</th>
                                 <th>金额</th>
+                                <th>次数</th>
                                 <th>电话</th>
                                 <th>支付方式</th>
                                 <th>操作人</th>
                                 <th>备注</th>
                                 <th>时间</th>
+                                <j:if test="${userType==1 || userType==5}">
+                                    <th>操作</th>
+                                </j:if>
                             </tr>
                             </thead>
                             <tbody>
@@ -99,6 +103,9 @@
                                             ${reserveCardStatements.transactionVolume}
                                                 <c:set var="sum"
                                                        value="${sum+reserveCardStatements.transactionVolume}"></c:set>
+                                    </td>
+                                    <td>
+                                            ${reserveCardStatements.transactionNum}
                                     </td>
                                     <td>
                                             ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
@@ -119,6 +126,14 @@
                                         <fmt:formatDate value="${reserveCardStatements.createDate}"
                                                         pattern="yyyy-MM-dd HH:mm:ss"/>
                                     </td>
+                                    <j:if test="${userType==1 || userType==5}">
+                                        <td>
+                                            <a class="btn btn-danger btn-xs"
+                                               href="${ctx}/reserve/reserveCardStatements/delete?id=${reserveCardStatements.id}"
+                                               onclick="return confirmb('确认要删除该条记录吗？', this.href)"><i
+                                                    class="fa fa-times"></i>删除</a>
+                                        </td>
+                                    </j:if>
 
                                 </tr>
                             </c:forEach>

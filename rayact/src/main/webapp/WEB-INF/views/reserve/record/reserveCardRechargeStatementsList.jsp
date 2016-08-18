@@ -99,6 +99,7 @@
                                             <c:set var="sum"
                                                    value="${sum+reserveCardStatements.transactionVolume}"></c:set>
                                         </td>
+
                                         <td>
                                                 ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
 

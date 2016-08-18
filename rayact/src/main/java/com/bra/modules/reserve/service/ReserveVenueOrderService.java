@@ -98,6 +98,7 @@ public class ReserveVenueOrderService extends CrudService<ReserveVenueOrderDao, 
                 prepayment.setRemainder(collectPrice);
                 prepayment.setRemainTime(ticketNum);
                 prepayment.setSingleTimePrice(collectPrice/ticketNum);
+                prepayment.setRemarks("系统退还");
                 reserveTimeCardPrepaymentService.save(prepayment);
                 //会员剩余次数变更，
                 member.setRemainder(member.getRemainder()+collectPrice);

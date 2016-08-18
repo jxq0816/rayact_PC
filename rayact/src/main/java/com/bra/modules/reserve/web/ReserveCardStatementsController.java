@@ -16,6 +16,7 @@ import com.bra.modules.reserve.service.ReserveMemberService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.reserve.utils.VenueOrderUtils;
+import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,6 +85,8 @@ public class ReserveCardStatementsController extends BaseController {
 			rs= "reserve/record/timeCardRechargeStatementsList";
 		}
 		model.addAttribute("query", reserveCardStatements);
+		String userType= UserUtils.getUser().getUserType();
+		model.addAttribute("userType", userType);
 		return rs;
 	}
 
@@ -374,10 +377,10 @@ public class ReserveCardStatementsController extends BaseController {
 	}
 
 	@RequestMapping(value = "delete")
-	public String delete(ReserveCardStatements reserveCardStatements, RedirectAttributes redirectAttributes) {
+	public String delete(ReserveCardStatements reserveCardStatements,RedirectAttributes redirectAttributes) {
 		reserveCardStatementsService.delete(reserveCardStatements);
 		addMessage(redirectAttributes, "删除交易记录成功");
+		redirectAttributes.addAttribute("transactionType",reserveCardStatements.getTransactionType());
 		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCardStatements/list";
 	}
-
 }
