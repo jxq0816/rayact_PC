@@ -38,4 +38,11 @@
         <td class="no-border">会员余额：${venueCons.member.remainder}</td>
     </tr>
     </tbody>
+   <%-- <div class="row">
+        <div class="col-lg-10">
+        </div>
+        <div class="col-lg-2">
+            <input type="button" class="btn btn-primary" onclick="printSettlement()" value="打印小票"/>
+        </div>
+    </div>--%>
 </table>

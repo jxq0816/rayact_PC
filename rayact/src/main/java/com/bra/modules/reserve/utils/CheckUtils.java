@@ -36,8 +36,8 @@ public class CheckUtils {
     }
 
     public static String hasCheckRecord(HttpServletRequest request,String itemName){
-        if (!"5".equals(AuthorityUtils.getUserType())){
-            return "2";//不是财务不展示按钮和水印
+        if (!"6".equals(AuthorityUtils.getUserType())){
+            return "2";//不是出纳不展示按钮和水印
         }
         String venueId = request.getParameter("reserveVenue.id");
         String startDate = request.getParameter("startDate");
