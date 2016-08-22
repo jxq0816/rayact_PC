@@ -14,6 +14,7 @@ import com.bra.modules.reserve.service.*;
 import com.bra.modules.reserve.utils.TimeUtils;
 import com.bra.modules.sys.entity.User;
 import com.bra.modules.sys.service.SystemService;
+import com.bra.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -490,6 +491,7 @@ public class ReserveController extends BaseController {
     public String saveSettlement(String orderId, Model model) {
         ReserveVenueCons venueCons = reserveVenueConsService.get(orderId);
         model.addAttribute("venueCons", venueCons);
+        model.addAttribute("companyName",UserUtils.getOfficeList().get(0).getName());
         return "reserve/saleField/settlementResult";
     }
 

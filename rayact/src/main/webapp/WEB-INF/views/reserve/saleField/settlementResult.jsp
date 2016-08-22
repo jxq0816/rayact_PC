@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
-<div style="text-align: center">四得体育</div>
+<%@include file="printSettlementResult.jsp" %>
+<div style="text-align: center">${companyName}</div>
 <table class="no-border">
     <tbody class="no-border-y">
     <tr>
@@ -38,11 +39,4 @@
         <td class="no-border">会员余额：${venueCons.member.remainder}</td>
     </tr>
     </tbody>
-   <%-- <div class="row">
-        <div class="col-lg-10">
-        </div>
-        <div class="col-lg-2">
-            <input type="button" class="btn btn-primary" onclick="printSettlement()" value="打印小票"/>
-        </div>
-    </div>--%>
 </table>

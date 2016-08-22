@@ -25,11 +25,8 @@
 		a.useable AS useable,
 		a.primary_person AS "primaryPerson.id",
 		a.deputy_person AS "deputyPerson.id",
-		p.name AS "parent.name",
 		ar.name AS "area.name",
-		ar.parent_ids AS "area.parentIds",
-		pp.name AS "primaryPerson.name",
-		dp.name AS "deputyPerson.name"
+		ar.parent_ids AS "area.parentIds"
 	</sql>
 	
 	<sql id="officeJoins">

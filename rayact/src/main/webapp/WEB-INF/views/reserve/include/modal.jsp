@@ -162,7 +162,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">付款成功</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="updateFieldStatus()"><span
+                <button type="button" class="close" data-dismiss="modal"><span
                         aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="closeSettlementResultBtn" onclick="updateFieldStatus()"
+                <button type="button" id="closeSettlementResultBtn"
                         class="btn btn-default btn-flat md-close" data-dismiss="modal">
                     关闭
                 </button>
