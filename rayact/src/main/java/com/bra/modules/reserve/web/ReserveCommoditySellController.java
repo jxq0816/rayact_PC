@@ -13,6 +13,7 @@ import com.bra.modules.reserve.service.ReserveCommoditySellService;
 import com.bra.modules.reserve.service.ReserveCommodityTypeService;
 import com.bra.modules.reserve.service.ReserveVenueService;
 import com.bra.modules.reserve.utils.ExcelInfo;
+import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,11 +55,12 @@ public class ReserveCommoditySellController extends BaseController {
 		}
 		return entity;
 	}
-	//销售报表
+	//支付成功页面
 	@RequestMapping(value = {"sellReport", ""})
 	public String list(ReserveCommoditySell reserveCommoditySell, Model model) {
 		ReserveCommoditySellReport sellReport = reserveCommoditySellService.sellReport(reserveCommoditySell);
 		model.addAttribute("sellReport",sellReport);
+		model.addAttribute("companyName", UserUtils.getOfficeList().get(0).getName());
 		return "reserve/commodity/reserveCommoditySellReport";
 	}
 

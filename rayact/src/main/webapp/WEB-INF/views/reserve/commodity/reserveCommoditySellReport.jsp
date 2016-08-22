@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+
 <html>
 <head>
     <title>支付成功</title>
@@ -83,6 +84,7 @@
             </div>
         </div>
     </div>
+    <%@include file="printCommoditySettlementResult.jsp" %>
 </div>
 </body>
 </html>
