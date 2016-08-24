@@ -97,14 +97,12 @@ public class ReserveCardStatementsController extends BaseController {
 	@RequestMapping(value = {"listExport", ""})
 	public void listExport(ReserveCardStatements reserveCardStatements, HttpServletResponse response)throws Exception {
 		List<ReserveCardStatements> list = reserveCardStatementsService.findList(reserveCardStatements);
-		double sum=0;
 		String type=reserveCardStatements.getTransactionType();
 		//"储值卡充值记录"
 		if("1".equals(type)){
 			String[] titles = {"场馆","姓名","卡号","金额","电话","支付方式","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCardStatements report :list){
-				sum+=report.getTransactionVolume();
 				String[] o = new String[8];
 				ReserveVenue venue = report.getVenue();
 				if(venue!=null){
@@ -125,13 +123,11 @@ public class ReserveCardStatementsController extends BaseController {
 			ExcelInfo info = new ExcelInfo(response,"充值记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
-		sum=0;
 		/*会员退费记录*/
 		if("2".equals(type)){
 			String[] titles = {"场馆","姓名","卡号","金额","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCardStatements report :list){
-				sum+=report.getTransactionVolume();
 				String[] o = new String[7];
 				o[0] = report.getVenue().getName();
 				o[1] = report.getReserveMember().getName();
@@ -151,7 +147,6 @@ public class ReserveCardStatementsController extends BaseController {
 			String[] titles = {"场馆","姓名","卡号","卡内余额","退还金额","违约金","电话","操作人","时间"};
 			List<String[]> contentList = new ArrayList<>();
 			for(ReserveCardStatements report :list){
-				sum+=report.getTransactionVolume();
 				String[] o = new String[9];
 				o[0] = report.getVenue().getName();
 				o[1] = report.getReserveMember().getName();
@@ -166,6 +161,25 @@ public class ReserveCardStatementsController extends BaseController {
 			}
 			Date now = new Date();
 			ExcelInfo info = new ExcelInfo(response,"储值卡销户记录"+ DateUtils.formatDate(now),titles,contentList);
+			info.export();
+		}
+		/*次卡销户记录*/
+		if("11".equals(type)){
+			String[] titles = {"场馆","姓名","卡内余额","退还金额","手机号","操作人","时间"};
+			List<String[]> contentList = new ArrayList<>();
+			for(ReserveCardStatements report :list){
+				String[] o = new String[7];
+				o[0] = report.getVenue().getName();
+				o[1] = report.getReserveMember().getName();
+				o[2] = String.valueOf(report.getReserveMember().getRemainder());
+				o[3] = String.valueOf(report.getTransactionVolume());
+				o[4] = String.valueOf(report.getReserveMember().getMobile());
+				o[5] = String.valueOf(report.getCreateBy().getName());
+				o[6] = DateUtils.formatDate(report.getCreateDate());
+				contentList.add(o);
+			}
+			Date now = new Date();
+			ExcelInfo info = new ExcelInfo(response,"次卡销户记录    导出时间："+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
 	}

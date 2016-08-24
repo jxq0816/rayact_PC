@@ -21,7 +21,7 @@
                            action="${ctx}/reserve/reserveCardStatements/list"
                            method="post">
                     <div class="breadcrumb form-search">
-                        <input id="transactionType" name="transactionType" type="hidden" value="5"/>
+                        <input id="transactionType" name="transactionType" type="hidden" value="11"/>
                         <div class="row">
                             <div class="col-sm-10 col-md-10 col-lg-10">
                                 <table class="no-border">
@@ -77,7 +77,7 @@
                                 <tr>
                                     <th>场馆</th>
                                     <th>姓名</th>
-                                    <th>金额</th>
+                                    <th>卡内余额</th>
                                     <th>退还金额</th>
                                     <th>手机号</th>
                                     <th>操作人</th>
