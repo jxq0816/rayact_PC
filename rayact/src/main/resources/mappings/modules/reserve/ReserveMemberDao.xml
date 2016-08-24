@@ -14,10 +14,10 @@
 		a.address AS "address",
 		a.email AS "email",
 		a.sex AS "sex",
-		a.cartno AS "cartno",
+		a.card_no AS "cardNo",
 		a.remainder AS "remainder",
 		a.residue AS "residue",
-		a.cart_type AS "cartType",
+		a.card_type AS "cardType",
 		v.id AS "reserveVenue.id",
 		v.name AS "reserveVenue.name",
 		a.validitystart AS "validitystart",
@@ -81,11 +81,11 @@
 			<if test="mobile != null and mobile != ''">
 				AND a.mobile =#{mobile}
 			</if>
-			<if test="cartno != null and cartno != ''">
-				AND a.cartno =#{cartno}
+			<if test="cardNo != null and cardNo != ''">
+				AND a.card_no =#{cardNo}
 			</if>
-			<if test="cartType != null and cartType != ''">
-				AND a.cart_type =#{cartType}
+			<if test="cardType != null and cardType != ''">
+				AND a.card_type =#{cardType}
 			</if>
 			<if test="id != null and id != ''">
 				AND a.id !=#{id}
@@ -124,14 +124,14 @@
 					<if test="dbName == 'mssql'">'%'+#{mobile}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{mobile},'%')</if>
 			</if>
-			<if test="cartno != null and cartno != ''">
-				AND a.cartno LIKE 
-					<if test="dbName == 'oracle'">'%'||#{cartno}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{cartno}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{cartno},'%')</if>
+			<if test="cardNo != null and cardNo != ''">
+				AND a.card_no LIKE
+					<if test="dbName == 'oracle'">'%'||#{cardNo}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{cardNo}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{cardNo},'%')</if>
 			</if>
-			<if test="cartType != null and cartType != ''">
-				AND a.cart_type =#{cartType}
+			<if test="cardType != null and cardType != ''">
+				AND a.card_type =#{cardType}
 			</if>
 			<if test="reserveVenue != null and reserveVenue.id !=null and reserveVenue.id != ''">
 				AND a.fk_reserve_venue_id =#{reserveVenue.id}
@@ -189,10 +189,10 @@
 			address,
 			email,
 			sex,
-			cartno,
+			card_no,
 			remainder,
 			residue,
-			cart_type,
+			card_type,
 			fk_reserve_venue_id,
 			validitystart,
 			validityend,
@@ -217,10 +217,10 @@
 			#{address},
 			#{email},
 			#{sex},
-			#{cartno},
+			#{cardNo},
 			#{remainder},
 			#{residue},
-			#{cartType},
+			#{cardType},
 			#{reserveVenue.id},
 			#{validitystart},
 			#{validityend},
@@ -250,8 +250,8 @@
 			sex = #{sex},
 			remainder = #{remainder},
 			residue = #{residue},
-			cartno = #{cartno},
-			cart_type = #{cartType},
+			card_no = #{cardNo},
+			card_type = #{cardType},
 			validitystart = #{validitystart},
 			validityend = #{validityend},
 			update_by = #{updateBy.id},

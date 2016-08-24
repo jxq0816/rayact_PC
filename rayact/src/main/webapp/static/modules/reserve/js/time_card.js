@@ -8,6 +8,16 @@ function addTime(id) {
         }
     });
 }
+function cancelAccountForm(id) {
+    jQuery.postItems({
+        url: ctx + '/reserve/timeCardMember/cancelAccountForm',
+        data: {id: id},
+        success: function (result) {
+            $("#timeCardCancelAccountDialogButton").click();
+            $("#timeCardCancelAccountForm").html(result);
+        }
+    });
+}
 function timeCardRechargeAddTime(){
     var id=$("#id").val();
     var rechargeVolume=$("#rechargeVolume").val().trim();
@@ -39,6 +49,27 @@ function timeCardRechargeAddTime(){
         data: {id: id,rechargeVolume:rechargeVolume,time:time,payType:payType,remarks:remarks},
         success: function () {
             successLoding("充值成功");
+            location.reload(true);
+        }
+    });
+}
+function timeCardCancelAccount(){
+    var id=$("#id").val();
+    var rechargeVolume=$("#rechargeVolume").val().trim();
+    var remarks=$("#remarks").val().trim();
+    if(rechargeVolume==null||rechargeVolume==""||rechargeVolume==undefined){
+        errorLoding("请输入退还金额");
+        return;
+    }
+    if(isNaN(rechargeVolume)){
+        errorLoding("充值金额必须为小数");
+        return;
+    }
+    jQuery.postItems({
+        url: ctx + '/reserve/timeCardMember/cancelAccount',
+        data: {id: id,rechargeVolume:rechargeVolume,remarks:remarks},
+        success: function () {
+            successLoding("销卡成功");
             location.reload(true);
         }
     });

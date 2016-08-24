@@ -26,7 +26,7 @@
                 <td>${reserveMember.sex}</td>
 
                 <td>卡号</td>
-                <td>${reserveMember.cartno}</td>
+                <td>${reserveMember.cardNo}</td>
             </tr>
             <tr>
                 <td>余额</td>

@@ -23,7 +23,7 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		m.cartno AS "reserveMember.cartno",
+		m.card_no AS "reserveMember.cardNo",
 		m.name AS "reserveMember.name",
 	  	m.mobile AS "reserveMember.mobile"
 	</sql>

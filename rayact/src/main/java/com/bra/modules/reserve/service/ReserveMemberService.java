@@ -2,7 +2,9 @@ package com.bra.modules.reserve.service;
 
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
+import com.bra.modules.reserve.dao.ReserveCardStatementsDao;
 import com.bra.modules.reserve.dao.ReserveMemberDao;
+import com.bra.modules.reserve.entity.ReserveCardStatements;
 import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.entity.ReserveTimeCardPrepayment;
 import com.bra.modules.reserve.utils.AuthorityUtils;
@@ -20,7 +22,8 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class ReserveMemberService extends CrudService<ReserveMemberDao, ReserveMember> {
-
+	@Autowired
+	private ReserveCardStatementsDao reserveCardStatementsDao;
 	@Autowired
 	private ReserveTimeCardPrepaymentService reserveTimeCardPrepaymentService;
 
@@ -53,7 +56,9 @@ public class ReserveMemberService extends CrudService<ReserveMemberDao, ReserveM
 		super.delete(reserveMember);
 	}
 	@Transactional(readOnly = false)
-	public void cancelAccount(ReserveMember reserveMember) {
+	public void cancelAccount(String id,double transactionVolume,String remarks) {
+		ReserveMember reserveMember=this.get(id);
+		Double remainder=reserveMember.getRemainder();
 		ReserveTimeCardPrepayment  prepayment=new ReserveTimeCardPrepayment();
 		prepayment.setReserveMember(reserveMember);
 		List<ReserveTimeCardPrepayment> list = reserveTimeCardPrepaymentService.findList(prepayment);
@@ -63,6 +68,24 @@ public class ReserveMemberService extends CrudService<ReserveMemberDao, ReserveM
 		reserveMember.setRemainder(0.0);
 		reserveMember.setResidue(0);
 		super.save(reserveMember);
+		//销户退还用户的金额
+		ReserveCardStatements statements=new ReserveCardStatements();
+		statements.preInsert();
+		statements.setReserveMember(reserveMember);
+		statements.setVenue(reserveMember.getReserveVenue());
+		statements.setTransactionVolume(transactionVolume);
+		statements.setRemarks(remarks);
+		statements.setTransactionType(ReserveCardStatements.CANCEL_ACCOUNT_RETURN);
+		reserveCardStatementsDao.insert(statements);
+		//销户违约金
+		ReserveCardStatements log=new ReserveCardStatements();
+		log.preInsert();
+		log.setReserveMember(reserveMember);
+		log.setVenue(reserveMember.getReserveVenue());
+		log.setTransactionVolume(remainder-transactionVolume);
+		log.setRemarks(remarks);
+		log.setTransactionType(ReserveCardStatements.CANCEL_ACCOUNT_REMAIN);
+		reserveCardStatementsDao.insert(log);
 	}
 
 

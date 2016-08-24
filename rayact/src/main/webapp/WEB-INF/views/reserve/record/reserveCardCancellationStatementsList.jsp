@@ -96,7 +96,7 @@
                                                 ${reserveCardStatements.reserveMember.name}
                                         </td>
                                         <td>
-                                                ${reserveCardStatements.reserveMember.cartno}
+                                                ${reserveCardStatements.reserveMember.cardNo}
                                         </td>
                                         <td>
                                                 ${reserveCardStatements.transactionVolume/0.8}

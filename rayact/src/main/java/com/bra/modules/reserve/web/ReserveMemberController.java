@@ -73,8 +73,8 @@ public class ReserveMemberController extends BaseController {
 			o[1] = map.getName();
 			o[2] = map.getMobile();
 			o[3] = DictUtils.getDictLabel(map.getSex(),"sex","");
-			o[4] = map.getCartno();
-			o[5] = DictUtils.getDictLabel(map.getCartType(),"cart_type","");
+			o[4] = map.getCardNo();
+			o[5] = DictUtils.getDictLabel(map.getCardType(),"cart_type","");
 			o[6] = String.valueOf(map.getRemainder());
 			o[7] =  String.valueOf(map.getRemarks());
 			contentList.add(o);
@@ -117,7 +117,7 @@ public class ReserveMemberController extends BaseController {
 			if (StringUtils.isNoneEmpty(id)) {//修改用户
 				rm1.setId(id);
 			}
-			rm1.setCartno(cardNo);
+			rm1.setCardNo(cardNo);
 			List<ReserveMember> list1 = reserveMemberService.findExactList(rm1);
 			if (list1.size() != 0) {
 				rs = "1";//卡号重复

@@ -42,7 +42,7 @@
                                     </td>
 
                                     <td>卡号：</td>
-                                    <td><form:input path="cartno" cssStyle="width:100px;" htmlEscape="false" class="form-control"/>
+                                    <td><form:input path="cardNo" cssStyle="width:100px;" htmlEscape="false" class="form-control"/>
                                     </td>
                                     <td>
                                         <input type="radio" class="icheck"  id="isOwning_all" name="isOwning" value=""/>全部
@@ -50,7 +50,7 @@
                                         <input type="radio" class="icheck"  id="isOwning_true" name="isOwning" value="1"/>欠费
                                     </td>
                                     <td>
-                                        <form:radiobuttons class="icheck"  path="cartType" items="${fns:getDictList('cart_type')}"
+                                        <form:radiobuttons class="icheck"  path="cardType" items="${fns:getDictList('card_type')}"
                                                            itemLabel="label"
                                                            itemValue="value" htmlEscape="false"/>
                                     </td>
@@ -99,10 +99,10 @@
                                             ${fns:getDictLabel(reserveMember.sex, 'sex', '')}
                                     </td>
                                     <td>
-                                            ${reserveMember.cartno}
+                                            ${reserveMember.cardNo}
                                     </td>
                                     <td>
-                                            ${fns:getDictLabel(reserveMember.cartType, 'cart_type', '')}
+                                            ${fns:getDictLabel(reserveMember.cardType, 'card_type', '')}
                                     </td>
                                     <td class="remainder">
                                             ${reserveMember.remainder}

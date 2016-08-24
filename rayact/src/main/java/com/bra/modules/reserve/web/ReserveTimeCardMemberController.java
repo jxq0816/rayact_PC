@@ -56,7 +56,7 @@ public class ReserveTimeCardMemberController extends BaseController {
 
     @RequestMapping(value = "list")
     public String list(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model){
-        reserveMember.setCartType("2");
+        reserveMember.setCardType("2");
         Page<ReserveMember> page = reserveMemberService.findPage(new Page<>(request, response), reserveMember);
         model.addAttribute("page", page);
         return "reserve/member/timeCardMemberList";
@@ -67,6 +67,21 @@ public class ReserveTimeCardMemberController extends BaseController {
         reserveMember = reserveMemberService.get(reserveMember);
         model.addAttribute("reserveMember", reserveMember);
         return "reserve/member/timeCardAddForm";
+    }
+
+    /**
+     * 次卡销户
+     * @param reserveMember
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "cancelAccountForm")
+    public String cancelAccountForm(ReserveMember reserveMember, HttpServletRequest request, HttpServletResponse response, Model model){
+        reserveMember = reserveMemberService.get(reserveMember);
+        model.addAttribute("reserveMember", reserveMember);
+        return "reserve/member/timeCardCancelAccountForm";
     }
     //次卡充值保存
     @RequestMapping(value = "addTime")
@@ -126,7 +141,7 @@ public class ReserveTimeCardMemberController extends BaseController {
     @RequestMapping(value = "save")
     @Token(remove=true)
     public String save(ReserveMember reserveMember, Model model, RedirectAttributes redirectAttributes) {
-        reserveMember.setCartType("2");
+        reserveMember.setCardType("2");
         if(reserveMember.getResidue()==null){
             reserveMember.setResidue(0);
         }
@@ -149,8 +164,8 @@ public class ReserveTimeCardMemberController extends BaseController {
     }
 
     @RequestMapping(value = "cancelAccount")
-    public String cancelAccount(ReserveMember reserveMember, RedirectAttributes redirectAttributes) {
-        reserveMemberService.cancelAccount(reserveMember);
+    public String cancelAccount(String id, Double rechargeVolume,String remarks, RedirectAttributes redirectAttributes) {
+        reserveMemberService.cancelAccount(id,rechargeVolume,remarks);
         addMessage(redirectAttributes, "次卡会员销户成功");
         return "redirect:"+Global.getAdminPath()+"/reserve/timeCardMember/list";
     }

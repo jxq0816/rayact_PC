@@ -120,8 +120,7 @@
                                                href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
 
                                             <a class="btn btn-danger btn-xs"
-                                               href="${ctx}/reserve/timeCardMember/cancelAccount?id=${reserveMember.id}"
-                                               onclick="return confirmb('确认要销卡吗？', this.href)"> <i
+                                               onclick="cancelAccountForm('${reserveMember.id}')"> <i
                                                     class="fa fa-times"></i>销卡</a>
                                         </td>
                                     </tr>
@@ -146,7 +145,8 @@
         </div>
     </div>
 </div>
+<jsp:include page="../include/timeCardCancelAccountDialog.jsp"></jsp:include>
 <jsp:include page="../include/timeCardAddDialog.jsp"></jsp:include>
-<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/timecard.js"></script>
+<script type="text/javascript" src="${ctxStatic}/modules/reserve/js/time_card.js"></script>
 </body>
 </html>

@@ -12,7 +12,8 @@ import java.util.Date;
 public class ReserveCardStatements extends SaasEntity<ReserveCardStatements> {
 	
 	private static final long serialVersionUID = 1L;
-
+	public static final String CANCEL_ACCOUNT_RETURN = "5";
+	public static final String CANCEL_ACCOUNT_REMAIN = "6";
 	private ReserveVenue venue;//交易发生场馆
 	private ReserveMember reserveMember;	// 会员
 	private ReserveCommodity reserveCommodity;//商品
