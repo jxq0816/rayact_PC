@@ -242,18 +242,7 @@
         "href":"/reserve/reserveCardStatements/list?transactionType=7",
         "authorityList": []
       },
-      {
-        "code": "reserveCardRefundStatements",
-        "name": "会员退费记录",
-        "href":"/reserve/reserveCardStatements/list?transactionType=2",
-        "authorityList": []
-      },
-      {
-        "code": "reserveCardCancellationStatements",
-        "name": "储值卡销户记录",
-        "href":"/reserve/reserveCardStatements/list?transactionType=5",
-        "authorityList": []
-      },
+
       {
         "code": "saleVenueLog",
         "name": "场地售卖记录",
@@ -270,6 +259,23 @@
         "code": "reserveCommodityStorageLog",
         "name": "商品入库记录",
         "href":"/reserve/reserveCommodityStorageLog/list",
+        "authorityList": []
+      },
+      {
+        "code": "reserveCardCancellationStatements",
+        "name": "储值卡销户记录",
+        "href":"/reserve/reserveCardStatements/list?transactionType=5",
+        "authorityList": []
+      },
+      {
+        "code": "reserveCardRefundStatements",
+        "name": "会员退费记录",
+        "href":"/reserve/reserveCardStatements/list?transactionType=2",
+        "authorityList": []
+      },{
+        "code": "timeCardCancellationStatements",
+        "name": "次卡销户记录",
+        "href":"/reserve/reserveCardStatements/list?transactionType=11",
         "authorityList": []
       }
     ]

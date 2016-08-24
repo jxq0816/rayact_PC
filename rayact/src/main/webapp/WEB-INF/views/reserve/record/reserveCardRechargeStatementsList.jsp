@@ -92,7 +92,7 @@
                                                 ${reserveCardStatements.reserveMember.name}
                                         </td>
                                         <td>
-                                                ${reserveCardStatements.reserveMember.cartno}
+                                                ${reserveCardStatements.reserveMember.cardNo}
                                         </td>
                                         <td>
                                                 ${reserveCardStatements.transactionVolume}

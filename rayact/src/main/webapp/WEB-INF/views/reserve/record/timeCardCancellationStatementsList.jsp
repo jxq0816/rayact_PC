@@ -3,18 +3,18 @@
 <html>
 <head>
     <meta name="decorator" content="main"/>
-    <title>储值卡销户记录</title>
+    <title>次卡销户记录</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/sidebar.jsp">
-    <jsp:param name="action" value="reserveCardCancellationStatements"></jsp:param>
+    <jsp:param name="action" value="timeCardCancellationStatements"></jsp:param>
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="row">
         <div class="col-md-12">
             <div class="block-flat">
                 <div class="header">
-                    <h3>储值卡销户记录</h3>
+                    <h3>次卡销户记录</h3>
                 </div>
 
                 <form:form id="searchForm" modelAttribute="reserveCardStatements"
@@ -77,11 +77,9 @@
                                 <tr>
                                     <th>场馆</th>
                                     <th>姓名</th>
-                                    <th>卡号</th>
-                                    <th>卡内余额</th>
+                                    <th>金额</th>
                                     <th>退还金额</th>
-                                    <th>违约金</th>
-                                    <th>电话</th>
+                                    <th>手机号</th>
                                     <th>操作人</th>
                                     <th>时间</th>
                                 </tr>
@@ -96,22 +94,14 @@
                                                 ${reserveCardStatements.reserveMember.name}
                                         </td>
                                         <td>
-                                                ${reserveCardStatements.reserveMember.cardNo}
-                                        </td>
-                                        <td>
-                                                ${reserveCardStatements.transactionVolume/0.8}
+                                                ${reserveCardStatements.reserveMember.remainder}
                                         </td>
                                         <td>
                                                 ${reserveCardStatements.transactionVolume}
                                         </td>
                                         <td>
-                                                ${reserveCardStatements.transactionVolume/4}
-                                        </td>
-                                        <td>
                                                 ${fns:hidePhone(reserveCardStatements.reserveMember.mobile)}
-
                                         </td>
-
                                         <td>
                                                 ${reserveCardStatements.createBy.name}
                                         </td>

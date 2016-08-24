@@ -83,6 +83,9 @@ public class ReserveCardStatementsController extends BaseController {
 		}else if("7".equals(type)){
 			//次卡充值记录
 			rs= "reserve/record/timeCardRechargeStatementsList";
+		}else if("11".equals(type)){
+			//次卡充值记录
+			rs= "reserve/record/timeCardCancellationStatementsList";
 		}
 		model.addAttribute("query", reserveCardStatements);
 		String userType= UserUtils.getUser().getUserType();
@@ -165,7 +168,6 @@ public class ReserveCardStatementsController extends BaseController {
 			ExcelInfo info = new ExcelInfo(response,"储值卡销户记录"+ DateUtils.formatDate(now),titles,contentList);
 			info.export();
 		}
-
 	}
 
 	/*会员收入统计:对应*/
