@@ -100,12 +100,13 @@
                                                     class="fa fa-pencil"></i>充值</a>
                                             <a class="btn btn-primary btn-xs refundBtnForVIP"
                                                data-id="${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>大客户退费</a>
-                                            <a class="btn btn-primary btn-xs cancellationBtn"
-                                               data-id="${reserveMember.id}"><i
-                                                    class="fa fa-pencil"></i>销卡</a>
+                                                    class="fa fa-pencil"></i>退费</a>
+
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
+                                            <a class="btn btn-danger btn-xs cancellationBtn"
+                                               data-id="${reserveMember.id}"><i
+                                                    class="fa fa-pencil"></i>销卡</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -167,12 +168,12 @@
 
 <button class="btn btn-primary btn-flat md-trigger" id="cancellationDialogBtn" style="display: none"
         data-modal="cancellationDialog">
-    销户
+    销卡
 </button>
 <div class="md-modal colored-header custom-width md-effect-12 warning" id="cancellationDialog">
     <div class="md-content">
         <div class="modal-header">
-            <h5>销户</h5>
+            <h5>销卡</h5>
             <button type="button" class="close md-close" data-dismiss="modal"
                     aria-hidden="true">&times;</button>
         </div>

@@ -147,4 +147,11 @@ public class ReserveTimeCardMemberController extends BaseController {
         addMessage(redirectAttributes, "删除次卡会员成功");
         return "redirect:"+Global.getAdminPath()+"/reserve/timeCardMember/list";
     }
+
+    @RequestMapping(value = "cancelAccount")
+    public String cancelAccount(ReserveMember reserveMember, RedirectAttributes redirectAttributes) {
+        reserveMemberService.cancelAccount(reserveMember);
+        addMessage(redirectAttributes, "次卡会员销户成功");
+        return "redirect:"+Global.getAdminPath()+"/reserve/timeCardMember/list";
+    }
 }

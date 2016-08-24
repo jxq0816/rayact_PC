@@ -115,9 +115,14 @@
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveTimeCardPrepayment/list?memberId=${reserveMember.id}"
                                                class="fa fa-pencil">预付款记录</a>
+
                                             <a class="btn btn-primary btn-xs"
                                                href="${ctx}/reserve/reserveMember/statements?reserveMember.id=${reserveMember.id}">交易明细</a>
 
+                                            <a class="btn btn-danger btn-xs"
+                                               href="${ctx}/reserve/timeCardMember/cancelAccount?id=${reserveMember.id}"
+                                               onclick="return confirmb('确认要销卡吗？', this.href)"> <i
+                                                    class="fa fa-times"></i>销卡</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
