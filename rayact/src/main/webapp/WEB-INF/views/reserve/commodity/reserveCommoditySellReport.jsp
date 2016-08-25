@@ -76,6 +76,7 @@
                                        class="btn btn-primary"
                                        type="submit"
                                        value="确认"/>
+                                <%@include file="printCommoditySettlementResult.jsp" %>
                             </div>
                         </div>
                         </form:form>
@@ -83,8 +84,9 @@
                 </div>
             </div>
         </div>
+
     </div>
-    <%@include file="printCommoditySettlementResult.jsp" %>
+
 </div>
 </body>
 </html>
