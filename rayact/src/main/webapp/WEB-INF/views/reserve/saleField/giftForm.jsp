@@ -4,8 +4,9 @@
     <input type="hidden" name="id" value="${cos.id}"/>
     <input type="hidden" name="token" value="${token}"/>
     <input type="hidden" name="itemId" value="${item.id}"/>
+
     <div class="content text-justify" style="text-align: center;vertical-align: middle;">
-        <div class="row">
+         <div class="row">
             <div class="col-lg-6  reserve_mid_line">
                 <div class="row">
                     <div class="form-group">
@@ -93,7 +94,9 @@
                     '<td>' + repertoryNum + '</td>\
                     <td><input type="text" name="giftList[' + length + '].num" value="1" class="form-control"></td>\
                     <td> <input type="hidden" name="giftList[' + length + '].gift.id" value="' + id + '"/>\
-                    <a class="btn btn-danger delGifTr btn-xs" <i class="fa fa-times"></i>删除</a></td></tr>';
+                    <a class="btn btn-danger delGifTr btn-xs" <i class="fa fa-times"></i>删除</a></td>\
+                    <td><input type="hidden" name="giftList[' + length + '].reserveMemberName" value="${cos.userName}"/> </tr>'
+
             $("#giftTable").append(html);
             length++;
         });

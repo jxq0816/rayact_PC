@@ -19,7 +19,8 @@
                 <form:form id="searchForm" modelAttribute="reserveCommoditySellDetail"
                            action="${ctx}/reserve/reserveCommoditySellDetail/findSellDetailList" method="post">
 
-                    <div class="row breadcrumb form-search col-lg-12 col-sm-12" style="margin-left:0px; margin-right:0px;">
+                    <div class="row breadcrumb form-search col-lg-12 col-sm-12"
+                         style="margin-left:0px; margin-right:0px;">
                         <div class="form-group col-lg-2 col-sm-2">
                             <label class="control-label" for="venue">场馆：</label>
                             <sys:select id="venue" cssClass="input-large" name="reserveCommodity.reserveVenue.id"
@@ -29,44 +30,66 @@
                                         defaultValue=""></sys:select>
                         </div>
                         <div class="form-group col-lg-2 col-sm-2">
-                            <label class="col-sm-6 control-label">赠品：</label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-5 control-label">赠品：</label>
+                            <div class="col-sm-7">
                                 <form:radiobuttons path="giftFlag" items="${fns:getDictList('yes_no')}"
                                                    itemLabel="label"
                                                    itemValue="value" htmlEscape="false" class="icheck"/>
                             </div>
                         </div>
-                        <div class="form-group col-lg-3 col-sm-3">
-                            <label class="control-label col-lg-5" for="payType">支付方式：</label>
-                            <div class="col-lg-7">
-                                <select id="payType" name="reserveCommoditySell.payType" style="width: 100%">
-                                    <option value ="">全部</option>
-                                    <option value ="1" <j:if test="${1 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >会员卡</option>
-                                    <option value ="2" <j:if test="${2 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >现金</option>
-                                    <option value="3" <j:if test="${3 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >银行卡</option>
-                                    <option value="4" <j:if test="${4 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >微信</option>
-                                    <option value="5" <j:if test="${5 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >支付宝</option>
-                                    <option value="6" <j:if test="${6 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >优惠券</option>
-                                    <option value="8" <j:if test="${8 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >多方式付款</option>
-                                    <option value="9" <j:if test="${9 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >微信（个人）</option>
-                                    <option value="10" <j:if test="${10 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
-                                    >支付宝（个人）</option>
-                                </select>
-                            </div>
+                        <div class="form-group col-lg-2 col-sm-2">
+
+                            <select id="payType" name="reserveCommoditySell.payType" style="width: 100%">
+                                <option value="">请选择支付方式</option>
+                                <option value="1"
+                                        <j:if test="${1 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >会员卡
+                                </option>
+                                <option value="2"
+                                        <j:if test="${2 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >现金
+                                </option>
+                                <option value="3"
+                                        <j:if test="${3 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >银行卡
+                                </option>
+                                <option value="4"
+                                        <j:if test="${4 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >微信
+                                </option>
+                                <option value="5"
+                                        <j:if test="${5 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >支付宝
+                                </option>
+                                <option value="6"
+                                        <j:if test="${6 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >优惠券
+                                </option>
+                                <option value="8"
+                                        <j:if test="${8 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >多方式付款
+                                </option>
+                                <option value="9"
+                                        <j:if test="${9 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >微信（个人）
+                                </option>
+                                <option value="10"
+                                        <j:if test="${10 eq search.reserveCommoditySell.payType}">selected="selected"</j:if>
+                                >支付宝（个人）
+                                </option>
+                            </select>
                         </div>
 
                         <div class="form-group col-lg-1 col-sm-1">
                             <form:input path="reserveCommodity.name" htmlEscape="false"
                                         maxlength="30"
-                                        placeholder="商品名称"
+                                        placeholder="商品"
+                                        class="form-control"/>
+                        </div>
+                        <div class="form-group col-lg-1 col-sm-1">
+                            <form:input path="reserveMember.name" htmlEscape="false"
+                                        maxlength="30"
+                                        placeholder="客户"
                                         class="form-control"/>
                         </div>
                         <div class="form-group col-lg-2 col-sm-2">
@@ -105,6 +128,7 @@
                                     <th>单价</th>
                                     <th>合计</th>
                                     <th>支付方式</th>
+                                    <th>顾客</th>
                                     <th>售卖人</th>
                                     <th>场馆</th>
                                     <th>时间</th>
@@ -124,8 +148,9 @@
                                         <td>${reserveCommoditySellDetail.price}</td>
                                         <td>${reserveCommoditySellDetail.detailSum}</td>
                                         <td>
-                                    ${fns:getPayType(reserveCommoditySellDetail.reserveCommoditySell.payType)}
+                                                ${fns:getPayType(reserveCommoditySellDetail.reserveCommoditySell.payType)}
                                         </td>
+                                        <td>${reserveCommoditySellDetail.reserveMember.name}</td>
                                         <c:set var="sum" value="${sum+reserveCommoditySellDetail.detailSum}"></c:set>
                                         <td>${reserveCommoditySellDetail.updateBy.name}</td>
                                         <td>${reserveCommoditySellDetail.reserveCommodity.reserveVenue.name}</td>

@@ -187,4 +187,7 @@ public abstract class BaseEntity<T> implements Serializable {
     public static final String DEL_FLAG_DELETE = "1";
     public static final String DEL_FLAG_AUDIT = "2";
 
+
+    public static final String YES = "1";
+    public static final String NO = "0";
 }

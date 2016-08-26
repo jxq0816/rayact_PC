@@ -4,27 +4,15 @@ import com.bra.common.persistence.SaasEntity;
 
 /**
  * 赠品
- * Created by xiaobin on 16/1/27.
+ * Created by jiangxingqi on 16/1/27.
  */
 public class ReserveVenueGift extends SaasEntity<ReserveVenueGift> {
-
-    public ReserveVenueGift(){
-        super();
-    }
-
-    public ReserveVenueGift(String id){
-        super(id);
-    }
-
-    public ReserveVenueGift(String modelId,String modelKey){
-        super();
-        this.modelId = modelId;
-        this.modelKey = modelKey;
-    }
 
     private ReserveCommodity gift;
 
     private ReserveCommoditySell commoditySell;
+
+    private String reserveMemberName;
 
     private String modelId;
 
@@ -70,5 +58,27 @@ public class ReserveVenueGift extends SaasEntity<ReserveVenueGift> {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public ReserveVenueGift(){
+        super();
+    }
+
+    public ReserveVenueGift(String id){
+        super(id);
+    }
+
+    public ReserveVenueGift(String modelId,String modelKey){
+        super();
+        this.modelId = modelId;
+        this.modelKey = modelKey;
+    }
+
+    public String getReserveMemberName() {
+        return reserveMemberName;
+    }
+
+    public void setReserveMemberName(String reserveMemberName) {
+        this.reserveMemberName = reserveMemberName;
     }
 }

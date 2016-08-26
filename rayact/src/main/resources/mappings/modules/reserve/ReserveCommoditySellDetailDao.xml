@@ -39,8 +39,7 @@
         SELECT
         a.id AS "id",
         a.gift_flag AS "giftFlag",
-        a.fk_reserve_member_id AS "reserveMember.id",
-        m.name AS "reserveMember.name",
+        a.reserve_member_name AS "reserveMember.name",
         a.fk_reserve_commodity_id AS "reserveCommodity.id",
         commodity.name AS "reserveCommodity.name",
         venue.id AS "reserveCommodity.reserveVenue.id",
@@ -59,7 +58,6 @@
         a.del_flag AS "delFlag",
         u.name AS "updateBy.name"
         FROM reserve_commodity_sell_detail as a
-        left join reserve_member as m on a.fk_reserve_member_id=m.id
         LEFT JOIN  reserve_user as u on u.id=a.create_by
         LEFT JOIN reserve_commodity_sell as s ON s.id = a.fk_reserve_commodity_sell_id
         ,reserve_commodity as commodity,reserve_commodity_type as t,reserve_venue as venue
@@ -75,6 +73,17 @@
                 </if>
                 <if test="reserveCommodity.reserveVenue !=null and reserveCommodity.reserveVenue.id !=null and reserveCommodity.reserveVenue.id !=''">
                     and venue.id = #{reserveCommodity.reserveVenue.id}
+                </if>
+            </if>
+            <if test="reserveMember != null and reserveMember.name !=null and reserveMember.name !=''">
+                    and a.reserve_member_name LIKE concat('%',#{reserveMember.name},'%')
+            </if>
+            <if test="reserveCommoditySell != null">
+                <if test="reserveCommoditySell.id !=null and reserveCommoditySell.id !=''">
+                    and a.fk_reserve_commodity_sell_id = #{reserveCommoditySell.id}
+                </if>
+                <if test="reserveCommoditySell.payType !=null and reserveCommoditySell.payType !=''">
+                    and s.pay_type = #{reserveCommoditySell.payType}
                 </if>
             </if>
             <if test="reserveCommoditySell != null">
@@ -149,6 +158,7 @@
 		INSERT INTO reserve_commodity_sell_detail(
 			id,
 			fk_reserve_member_id,
+			reserve_member_name,
 			fk_reserve_commodity_id,
 			fk_reserve_commodity_sell_id,
 			gift_flag,
@@ -165,6 +175,7 @@
 		) VALUES (
 			#{id},
 			#{reserveMember.id},
+			#{reserveMember.name},
 			#{reserveCommodity.id},
 			#{reserveCommoditySell.id},
 			#{giftFlag},
@@ -183,7 +194,8 @@
 
     <update id="update" flushCache="true">
 		UPDATE reserve_commodity_sell_detail SET
-		 	fk_reserve_member_id = #{reserveMember.id}
+		 	fk_reserve_member_id = #{reserveMember.id},
+		 	reserve_member_name = #{reserveMember.name},
 			fk_reserve_commodity_id = #{reserveCommodity.id},
 			fk_reserve_commodity_sell_id = #{reserveCommoditySell.id},
 			gift_flag = #{giftFlag},

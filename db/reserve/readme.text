@@ -57,6 +57,10 @@ alter table reserve_role add tenant_id varchar(19) DEFAULT NULL COMMENT '路由�
 alter table reserve_commodity_sell_detail add gift_flag char(1);
 20160818:reserve_commodity_sell 删除字段 gift_flag
 alter table reserve_commodity_sell drop column gift_flag;
-20160818:reserve_member 修改卡号字段
+20160824:reserve_member 修改卡号字段
 alter table reserve_member change cartNo card_no varchar(20) DEFAULT NULL;
 alter table reserve_member change cart_type card_type varchar(1) DEFAULT '1';
+20160826:reserve_commodity_sell_detail 新增字段 reserve_member_name
+alter table reserve_commodity_sell_detail add reserve_member_name varchar(30);
+20160826:reserve_commodity_sell_detail 新增字段 reserve_member_name
+alter table reserve_commodity_sell_detail add reserve_member_name varchar(30);

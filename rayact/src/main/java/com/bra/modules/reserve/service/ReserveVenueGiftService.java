@@ -1,5 +1,6 @@
 package com.bra.modules.reserve.service;
 
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.common.utils.StringUtils;
@@ -7,10 +8,7 @@ import com.bra.modules.reserve.dao.ReserveCommodityDao;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDao;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
 import com.bra.modules.reserve.dao.ReserveVenueGiftDao;
-import com.bra.modules.reserve.entity.ReserveCommodity;
-import com.bra.modules.reserve.entity.ReserveCommoditySell;
-import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
-import com.bra.modules.reserve.entity.ReserveVenueGift;
+import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.VenueGiftForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,7 +81,10 @@ public class ReserveVenueGiftService extends CrudService<ReserveVenueGiftDao, Re
             detail = new ReserveCommoditySellDetail();
             detail.setReserveCommodity(commodity);
             detail.setNum(gift.getNum());
-            detail.setGiftFlag("1");
+            ReserveMember member=new ReserveMember();
+            member.setName(gift.getReserveMemberName());
+            detail.setReserveMember(member);
+            detail.setGiftFlag(ConstantEntity.YES);
             detail.setPrice(commodity.getPrice());
             detail.setDetailSum(0D);
             detail.preInsert();
