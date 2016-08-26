@@ -32,12 +32,12 @@
                         <tr>
                             <th>姓名：${statements.reserveMember.name}</th>
                             <th>场馆：${statements.reserveMember.reserveVenue.name}</th>
-                            <th>卡号：${statements.reserveMember.cartno}</th>
+                            <th>卡号：${statements.reserveMember.cardNo}</th>
                             <th>会员卡类型：
-                                <j:if test="${statements.reserveMember.cartType==1}">
+                                <j:if test="${statements.reserveMember.cardType==1}">
                                     储值卡
                                 </j:if>
-                                <j:if test="${statements.reserveMember.cartType==2}">
+                                <j:if test="${statements.reserveMember.cardType==2}">
                                     次卡
                                 </j:if>
                             </th>
