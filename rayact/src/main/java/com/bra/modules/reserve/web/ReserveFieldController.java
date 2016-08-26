@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
@@ -121,7 +122,7 @@ public class ReserveFieldController extends BaseController {
         List<ReserveTimeInterval> reserveTimeIntervalList = reserveTimeIntervalService.findList(new ReserveTimeInterval() );
 
         //时令 默认夏令
-        if("1".equals(reserveField.getIsTimeInterval())){//该场地分时令
+        if(ConstantEntity.YES.equals(reserveField.getIsTimeInterval())){//该场地分时令
             ReserveTimeInterval reserveTimeInterval=new ReserveTimeInterval();
             if(StringUtils.isNoneEmpty(timeIntervalId)){
                 reserveTimeInterval=reserveTimeIntervalService.get(timeIntervalId);

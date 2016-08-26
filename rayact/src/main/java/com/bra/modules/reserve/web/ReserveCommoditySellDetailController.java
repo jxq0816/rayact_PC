@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
@@ -102,7 +103,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			Integer num=sellDetail.getNum();
 			ReserveCommodity commodity=sellDetail.getReserveCommodity();//买的啥
 			sellDetail.setReserveMember(reserveMember);//谁买的
-			sellDetail.setGiftFlag("0");
+			sellDetail.setGiftFlag(ConstantEntity.NO);
 			sellDetail.setReserveCommoditySell(reserveCommoditySell);
 			commodity=reserveCommodityService.get(commodity);
 			int repertoryNum=commodity.getRepertoryNum();
@@ -115,20 +116,20 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			reserveCardStatements.setReserveCommodity(commodity);
 			reserveCardStatements.setVenue(commodity.getReserveVenue());
 			reserveCardStatements.setReserveMember(reserveMember);
-			reserveCardStatements.setTransactionType("3");//3代表商品消费
+			reserveCardStatements.setTransactionType(ConstantEntity.COMMODITY_CONSUMPTION);
 			reserveCardStatements.setTransactionNum(num);//交易量
 			reserveCardStatements.setPayType(payType);
 			reserveCardStatements.setRemarks("商品消费");
 			reserveCardStatements.setTransactionVolume(sellDetail.getDetailSum());//消费额
 			reserveCardStatementsService.save(reserveCardStatements);
 		}
-		if("1".equals(payType)){// 1代表会员,变更会员余额
+		if(ConstantEntity.STOREDCARD.equals(payType)){// 1代表会员,变更会员余额
 			reserveMember.setRemainder(reserveMember.getRemainder()-total);
 			reserveMemberService.save(reserveMember);
 			ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
 			reserveCardStatements.setVenue(reserveMember.getReserveVenue());
 			reserveCardStatements.setReserveMember(reserveMember);//记录购买人，同时记录余额
-			reserveCardStatements.setTransactionType("33");//33代表商品消费汇总
+			reserveCardStatements.setTransactionType(ConstantEntity.COMMODITY_CONSUMPTION_TOTAL);
 			reserveCardStatements.setPayType(payType);
 			reserveCardStatements.setRemarks(remarks);
 			reserveCardStatements.setTransactionVolume(total);//消费额
