@@ -145,6 +145,9 @@ public class ReserveTimeCardMemberController extends BaseController {
         if(reserveMember.getResidue()==null){
             reserveMember.setResidue(0);
         }
+        if(reserveMember.getRemainder()==null){
+            reserveMember.setRemainder(0.0);
+        }
         if(reserveMember.getId().isEmpty()){
             reserveMember.setValiditystart(new Date());
         }
