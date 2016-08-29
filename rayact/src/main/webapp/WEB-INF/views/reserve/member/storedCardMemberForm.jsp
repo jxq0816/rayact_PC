@@ -57,7 +57,7 @@
                                     <td>性别:</td>
                                     <td>
                                         <form:radiobuttons path="sex" items="${fns:getDictList('sex')}"
-                                                           itemLabel="label" itemValue="value"
+                                                           itemLabel="label" itemValue="value" cssClass="icheck"
                                                            htmlEscape="false"/>
                                     </td>
                                     <td>手机号:</td>
@@ -80,6 +80,7 @@
                                     <td>储值卡名称:</td>
                                     <td>
                                         <sys:select cssClass="input-medium" name="storedcardSet.id"
+                                                    cssStyle="width:100%"
                                                     defaultLabel="请选择"
                                                     defaultValue=""
                                                     items="${storedcardSetList}"
@@ -125,5 +126,12 @@
     </div>
 </div>
 <script src="${ctxStatic}/modules/reserve/js/reserve_member_form.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.icheck').iCheck({
+            checkboxClass: 'icheckbox_square-blue checkbox',
+            radioClass: 'iradio_square-blue'
+        });});
+</script>
 </body>
 </html>

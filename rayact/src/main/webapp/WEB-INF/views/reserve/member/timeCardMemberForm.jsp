@@ -35,8 +35,8 @@
                                         <td>姓名:</td>
                                         <td>
                                             <div class="input-group">
-                                                    <form:input path="name" htmlEscape="false" maxlength="30"
-                                                        class="form-control required "/>
+                                                <form:input path="name" htmlEscape="false" maxlength="30"
+                                                            class="form-control required "/>
                                                 <span class="input-group-addon"><font color="red">*</font> </span>
                                             </div>
                                         </td>
@@ -69,7 +69,7 @@
                                         <td>性别:</td>
                                         <td>
                                             <form:radiobuttons path="sex" items="${fns:getDictList('sex')}"
-                                                               itemLabel="label" itemValue="value"
+                                                               itemLabel="label" itemValue="value" cssClass="icheck"
                                                                htmlEscape="false"/>
                                         </td>
                                         <td>手机号:</td>
@@ -78,7 +78,7 @@
                                                 <form:input id="mobile" path="mobile" htmlEscape="false" maxlength="20"
                                                             class="form-control phone required"/>
                                                 <span class="input-group-addon"><font color="red">*</font> </span>
-                                                </div>
+                                            </div>
                                         </td>
 
                                     </tr>
@@ -153,5 +153,12 @@
     </div>
 </div>
 <script src="${ctxStatic}/modules/reserve/js/reserve_member_form.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.icheck').iCheck({
+            checkboxClass: 'icheckbox_square-blue checkbox',
+            radioClass: 'iradio_square-blue'
+        });});
+</script>
 </body>
 </html>
