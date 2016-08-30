@@ -8,12 +8,15 @@ import java.util.Date;
  * 商品销售明细Entity
  * @author jiangxingqi
  * @version 2016-01-12
+
  */
 public class ReserveCommoditySellDetail extends SaasEntity<ReserveCommoditySellDetail> {
 	
 	private static final long serialVersionUID = 1L;
 	private ReserveCommodity reserveCommodity;		// 商品
 	private ReserveCommoditySell reserveCommoditySell;		// 商品销售主表
+	private ReserveCardStatements reserveCardStatement;		// 商品销售流水
+
 	private ReserveMember reserveMember;//会员
 	private String giftFlag;       //赠品标识 0代表非赠品，1代表赠品
 	private Integer num;		// 数量
@@ -84,6 +87,16 @@ public class ReserveCommoditySellDetail extends SaasEntity<ReserveCommoditySellD
 		this.detailSum = detailSum;
 	}
 
+
+	public ReserveCardStatements getReserveCardStatement() {
+		return reserveCardStatement;
+	}
+
+	public void setReserveCardStatement(ReserveCardStatements reserveCardStatement) {
+		this.reserveCardStatement = reserveCardStatement;
+	}
+
+
 	//---------------------------------------------------------
 	private Date startDate;
 	private Date endDate;
@@ -102,5 +115,6 @@ public class ReserveCommoditySellDetail extends SaasEntity<ReserveCommoditySellD
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
 
 }

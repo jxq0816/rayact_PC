@@ -88,6 +88,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			total+=detailSum;
 		}
 		ReserveCommoditySell reserveCommoditySell=new ReserveCommoditySell();
+		reserveCommoditySell.preInsert();
 		reserveCommoditySell.setTotalSum(total);
 		reserveCommoditySell.setPayType(payType);
 		ReserveMember reserveMember=sellDetailList.getReserveStoredCardMember();
@@ -95,8 +96,6 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			reserveMember=reserveMemberService.get(reserveMember);
 		}
 		reserveCommoditySell.setReserveMember(reserveMember);
-		reserveCommoditySellService.save(reserveCommoditySell);
-
 		String sellId=reserveCommoditySell.getId();
 		String remarks="";
 		//销售明细表
@@ -112,15 +111,17 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			remarks+=commodity.getName()+" "+num+"个;";
 			commodity.setRepertoryNum(repertoryNum);
 			reserveCommodityService.save(commodity);
-			reserveCommoditySellDetailService.save(sellDetail);
 			ReserveCardStatements reserveCardStatements=new ReserveCardStatements();
+			reserveCardStatements.preInsert();
+			sellDetail.setReserveCardStatement(reserveCardStatements);//记录流水
+			reserveCommoditySellDetailService.save(sellDetail);
 			reserveCardStatements.setReserveCommodity(commodity);
 			reserveCardStatements.setVenue(commodity.getReserveVenue());
 			reserveCardStatements.setReserveMember(reserveMember);
 			reserveCardStatements.setTransactionType(ConstantEntity.COMMODITY_CONSUMPTION);
 			reserveCardStatements.setTransactionNum(num);//交易量
 			reserveCardStatements.setPayType(payType);
-			reserveCardStatements.setRemarks("商品消费");
+			reserveCardStatements.setRemarks(sellDetail.getRemarks());
 			reserveCardStatements.setTransactionVolume(sellDetail.getDetailSum());//消费额
 			reserveCardStatementsService.save(reserveCardStatements);
 		}
@@ -135,6 +136,10 @@ public class ReserveCommoditySellDetailController extends BaseController {
 			reserveCardStatements.setRemarks(remarks);
 			reserveCardStatements.setTransactionVolume(total);//消费额
 			reserveCardStatementsService.save(reserveCardStatements);
+			reserveCommoditySell.setReserveCardStatement(reserveCardStatements);//会员消费明细
+			reserveCommoditySellService.save(reserveCommoditySell);
+		}else{
+			reserveCommoditySellService.save(reserveCommoditySell);
 		}
 		return sellId;
 	}

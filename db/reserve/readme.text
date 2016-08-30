@@ -64,3 +64,7 @@ alter table reserve_member change cart_type card_type varchar(1) DEFAULT '1';
 alter table reserve_commodity_sell_detail add reserve_member_name varchar(30);
 20160826:reserve_commodity_sell_detail 新增字段 reserve_member_name
 alter table reserve_commodity_sell_detail add reserve_member_name varchar(30);
+20160826:reserve_commodity_sell_detail 新增字段 fk_reserve_card_statements_id 用于商品销售记录的删除
+alter table reserve_commodity_sell_detail add fk_reserve_card_statements_id varchar(19);
+20160826:reserve_commodity_sell 新增字段 fk_reserve_card_statements 用于会员明细商品购买记录的删除
+alter table reserve_commodity_sell add fk_reserve_card_statements_id varchar(19);

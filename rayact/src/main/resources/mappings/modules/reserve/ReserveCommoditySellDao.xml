@@ -5,6 +5,7 @@
 	<sql id="reserveCommoditySellColumns">
 		a.id AS "id",
 		a.fk_reserve_member_id AS "reserveMember.id",
+		a.fk_reserve_card_statements_id  AS "reserveCardStatement.id",
 		a.pay_type AS "payType",
 		a.total_sum AS "totalSum",
 		a.create_by AS "createBy.id",
@@ -217,6 +218,7 @@
 		INSERT INTO reserve_commodity_sell(
 			id,
 			fk_reserve_member_id ,
+			fk_reserve_card_statements_id,
 			total_sum,
 		    pay_type,
 			create_by,
@@ -229,6 +231,7 @@
 		) VALUES (
 			#{id},
 			#{reserveMember.id},
+			#{reserveCardStatement.id},
 			#{totalSum},
 			#{payType},
 			#{createBy.id},
@@ -244,9 +247,9 @@
 	<update id="update">
 		UPDATE reserve_commodity_sell SET
 		    fk_reserve_member_id = #{reserveMember.id},
+		    fk_reserve_card_statements_id = #{reserveCardStatement.id},
 			total_sum = #{totalSum},
 			pay_type = #{payType},
-			gift_flag = #{giftFlag},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},

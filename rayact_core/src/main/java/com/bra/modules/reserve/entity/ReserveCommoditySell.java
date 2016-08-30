@@ -15,6 +15,7 @@ public class ReserveCommoditySell extends SaasEntity<ReserveCommoditySell> {
 	private Double totalSum;		// 总计
 	private String payType;  		//支付类型(1:储值卡 2:现金,3:银行卡,4:微信,5:支付宝,6:其它)
 	private ReserveMember reserveMember;  //会员
+	private ReserveCardStatements reserveCardStatement;		// 商品销售流水
 
 	public ReserveMember getReserveMember() {
 		return reserveMember;
@@ -48,6 +49,14 @@ public class ReserveCommoditySell extends SaasEntity<ReserveCommoditySell> {
 
 	public void setPayType(String payType) {
 		this.payType = payType;
+	}
+
+	public ReserveCardStatements getReserveCardStatement() {
+		return reserveCardStatement;
+	}
+
+	public void setReserveCardStatement(ReserveCardStatements reserveCardStatement) {
+		this.reserveCardStatement = reserveCardStatement;
 	}
 	
 }
