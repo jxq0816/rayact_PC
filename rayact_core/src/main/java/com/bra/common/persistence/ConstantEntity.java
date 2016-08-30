@@ -36,7 +36,7 @@ public abstract class ConstantEntity{
     public static final String TIMECARD_PENALTY="11";//次卡销户违约金
 
     /*支付类型*/
-    public static final String STOREDCARD="1";//储值卡
+    public static final String STOREDCARD="1";//储值卡,次卡（预储值）
     public static final String CASH="2";//现金
     public static final String BANK_CARD="3";//银行卡
     public static final String WEINXIN="4";//微信

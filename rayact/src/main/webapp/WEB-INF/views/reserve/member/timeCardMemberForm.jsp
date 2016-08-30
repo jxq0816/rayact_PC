@@ -27,11 +27,11 @@
                                 <sys:message content="${message}"/>
                                 <table id="contentTable" class="table table-bordered">
                                     <tr>
-                                            <%-- <td>卡号:</td>
+                                            <td>卡号:</td>
                                              <td>
-                                                 <form:input id="cardno" path="cartno" htmlEscape="false" maxlength="20" class="form-control required"/>
+                                                 <form:input id="cardNo" path="cardNo" htmlEscape="false" maxlength="20" class="form-control required"/>
                                                  <span class="help-inline"><font color="red">*</font> </span>
-                                             </td>--%>
+                                             </td>
                                         <td>姓名:</td>
                                         <td>
                                             <div class="input-group">
@@ -40,17 +40,7 @@
                                                 <span class="input-group-addon"><font color="red">*</font> </span>
                                             </div>
                                         </td>
-                                        <td>次卡类别:</td>
-                                        <td>
-                                            <sys:select cssClass="input-xlarge" name="timecardSet.id"
-                                                        items="${timecardSetList}"
-                                                        value="${reserveMember.timecardSet.id}"
-                                                        itemLabel="name" itemValue="id"
-                                                        cssStyle="width:50%"
-                                                        defaultLabel="请选择次卡"
-                                                        defaultValue="">
-                                            </sys:select>
-                                        </td>
+
                                     </tr>
                                     <tr>
                                         <td>身份证:</td>
@@ -111,21 +101,11 @@
                                             </div>
                                         </td>
                                     </tr>
-
-
-                                    <tr>
-                                        <td>备注:</td>
-                                        <td colspan="3">
-                                            <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
-                                                           class="form-control "/>
-                                        </td>
-                                    </tr>
-
                                     <tr>
                                         <td>场馆：</td>
-                                        <td colspan="3">
+                                        <td>
                                             <sys:select cssClass="input-xlarge" name="reserveVenue.id"
-                                                        cssStyle="width:40%"
+                                                        cssStyle="width:100%"
                                                         id="reserveVenue_id"
                                                         items="${venueList}"
                                                         value="${reserveMember.reserveVenue.id}"
@@ -135,7 +115,27 @@
                                                         defaultLabel="请选择场馆"
                                             ></sys:select>
                                         </td>
+                                        <td>次卡类别:</td>
+                                        <td>
+                                            <sys:select cssClass="input-xlarge" name="timecardSet.id"
+                                                        items="${timecardSetList}"
+                                                        value="${reserveMember.timecardSet.id}"
+                                                        itemLabel="name" itemValue="id"
+                                                        cssStyle="width:100%"
+                                                        defaultLabel="请选择次卡"
+                                                        defaultValue="">
+                                            </sys:select>
+                                        </td>
                                     </tr>
+                                    <tr>
+                                        <td>备注:</td>
+                                        <td colspan="3">
+                                            <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
+                                                           class="form-control "/>
+                                        </td>
+                                    </tr>
+
+
                                 </table>
 
                                 <div class="form-actions">

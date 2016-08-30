@@ -23,7 +23,7 @@ function checkForm() {
     }
 
     if(!venue){
-        errorLoding("场馆不能为空");
+        errorLoding("请选择开户场馆");
         return false;
     }
     jQuery.postItems({

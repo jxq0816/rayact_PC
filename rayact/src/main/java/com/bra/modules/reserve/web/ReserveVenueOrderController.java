@@ -2,6 +2,7 @@ package com.bra.modules.reserve.web;
 
 import com.alibaba.fastjson.JSON;
 import com.bra.common.config.Global;
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.common.web.ViewResult;
@@ -103,21 +104,21 @@ public class ReserveVenueOrderController extends BaseController {
     @RequestMapping(value = "checkSave")
     @ResponseBody
     public String checkSave(ReserveVenueOrder reserveVenueOrder) {
-        ReserveTimecardMemberSet memberTimecarSet = null;
         ViewResult rs = null;
         ReserveVenueVisitorsSet typeSet = reserveVenueOrder.getVisitorsSet();//获得场次票的属性
         typeSet = reserveVenueVisitorsSetService.get(typeSet);
         ReserveProject p = typeSet.getProject();
+        String payType=reserveVenueOrder.getPayType();
         //如果是会员预订
-        if (reserveVenueOrder.getMember() != null && StringUtils.isNoneEmpty(reserveVenueOrder.getMember().getId())) {
+        if (reserveVenueOrder.getMember() != null && StringUtils.isNoneEmpty(reserveVenueOrder.getMember().getId()) && ConstantEntity.STOREDCARD.equals(payType)) {
             ReserveMember member = reserveMemberService.get(reserveVenueOrder.getMember());
-            memberTimecarSet = member.getTimecardSet();//该用户不拥有打折次卡
+            ReserveTimecardMemberSet memberTimeCardSet = member.getTimecardSet();//该用户不拥有打折次卡
 
-            if (memberTimecarSet == null) {
+            if (memberTimeCardSet == null) {
                 rs = new ViewResult(false, "该用户没有次卡！");
             } else {
-                memberTimecarSet = reserveTimecardMemberSetService.get(memberTimecarSet);
-                ReserveProject project = memberTimecarSet.getReserveProject();
+                memberTimeCardSet = reserveTimecardMemberSetService.get(memberTimeCardSet);
+                ReserveProject project = memberTimeCardSet.getReserveProject();
                 if (project != null && StringUtils.isNoneEmpty(project.getId())) {
                     //如果用户 拥有该项目的折扣卡
                     if (p.getId().equals(project.getId())) {
@@ -147,7 +148,8 @@ public class ReserveVenueOrderController extends BaseController {
     @Token(remove = true)
     public String save(ReserveVenueOrder reserveVenueOrder) {
         //如果是会员预订
-        if (reserveVenueOrder.getMember() != null && StringUtils.isNoneEmpty(reserveVenueOrder.getMember().getId())) {
+        String payType=reserveVenueOrder.getPayType();
+        if (reserveVenueOrder.getMember() != null && StringUtils.isNoneEmpty(reserveVenueOrder.getMember().getId()) && ConstantEntity.STOREDCARD.equals(payType)) {
             ReserveMember member = reserveMemberService.get(reserveVenueOrder.getMember());
             ReserveTimecardMemberSet memberTimecarSet = member.getTimecardSet();
             memberTimecarSet = reserveTimecardMemberSetService.get(memberTimecarSet);

@@ -89,18 +89,11 @@
                                                     itemValue="id"></sys:select>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td>备注:</td>
-                                    <td colspan="3">
-                                        <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
-                                                       class="form-control"/>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td>场馆：</td>
                                     <td colspan="3">
                                         <sys:select cssClass="input-xlarge" name="reserveVenue.id" id="reserveVenue_id"
+                                                    cssStyle="width:30%"
                                                     items="${venueList}"
                                                     value="${reserveMember.reserveVenue.id}"
                                                     defaultLabel="请选择开户场馆"
@@ -110,6 +103,14 @@
                                         ></sys:select>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>备注:</td>
+                                    <td colspan="3">
+                                        <form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255"
+                                                       class="form-control"/>
+                                    </td>
+                                </tr>
+
                             </table>
                             <div>
                                 <input id="btnSubmit"
