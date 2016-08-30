@@ -73,8 +73,8 @@ public class ReserveCommoditySellDetailService extends CrudService<ReserveCommod
                 member.setRemainder(remainder);
                 reserveMemberService.save(member);//退款
             }
+            reserveCommoditySellService.delete(sell);
         }
-        reserveCommoditySellService.delete(sell);
         super.delete(reserveCommoditySellDetail);
     }
 
