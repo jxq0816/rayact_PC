@@ -1,9 +1,12 @@
 package com.bra.modules.reserve.service;
 
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
+import com.bra.modules.reserve.entity.ReserveCommoditySell;
 import com.bra.modules.reserve.entity.ReserveCommoditySellDetail;
+import com.bra.modules.reserve.entity.ReserveMember;
 import com.bra.modules.reserve.utils.AuthorityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,9 @@ import java.util.List;
 public class ReserveCommoditySellDetailService extends CrudService<ReserveCommoditySellDetailDao, ReserveCommoditySellDetail> {
 
     @Autowired
-    private ReserveRoleService reserveRoleService;
+    private ReserveCommoditySellService reserveCommoditySellService;
+    @Autowired
+    private ReserveMemberService reserveMemberService;
 
     public ReserveCommoditySellDetail get(String id) {
         return super.get(id);
@@ -55,6 +60,21 @@ public class ReserveCommoditySellDetailService extends CrudService<ReserveCommod
 
     @Transactional(readOnly = false)
     public void delete(ReserveCommoditySellDetail reserveCommoditySellDetail) {
+        reserveCommoditySellDetail=this.get(reserveCommoditySellDetail);
+        ReserveCommoditySell sell= reserveCommoditySellDetail.getReserveCommoditySell();
+        sell=reserveCommoditySellService.get(sell);
+        if(sell!=null){
+            String payType=sell.getPayType();
+            if(ConstantEntity.STOREDCARD.equals(payType)){
+                ReserveMember member=sell.getReserveMember();
+                member=reserveMemberService.get(member);
+                Double remainder=member.getRemainder();
+                remainder+=sell.getTotalSum();
+                member.setRemainder(remainder);
+                reserveMemberService.save(member);//退款
+            }
+        }
+        reserveCommoditySellService.delete(sell);
         super.delete(reserveCommoditySellDetail);
     }
 

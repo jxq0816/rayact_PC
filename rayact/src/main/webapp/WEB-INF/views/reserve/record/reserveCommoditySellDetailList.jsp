@@ -134,6 +134,9 @@
                                     <th>时间</th>
                                     <th>赠品</th>
                                     <th>备注</th>
+                                    <j:if test="${userType==1 || userType==5}">
+                                        <th>操作</th>
+                                    </j:if>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -158,6 +161,14 @@
                                                             type="both"/></td>
                                         <td>${fns:getDictLabel(reserveCommoditySellDetail.giftFlag,"yes_no","")}</td>
                                         <td>${reserveCommoditySellDetail.remarks}</td>
+                                        <j:if test="${userType==1 || userType==5}">
+                                            <td>
+                                                <a class="btn btn-danger btn-xs"
+                                                   href="${ctx}/reserve/reserveCommoditySellDetail/delete?id=${reserveCommoditySellDetail.id}"
+                                                   onclick="return confirmb('确认要删除该条记录吗？', this.href)"><i
+                                                        class="fa fa-times"></i>删除</a>
+                                            </td>
+                                        </j:if>
                                     </tr>
                                 </c:forEach>
                                 <td colspan="2"> 以上数据合计</td>

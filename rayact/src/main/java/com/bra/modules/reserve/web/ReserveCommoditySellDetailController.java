@@ -9,6 +9,7 @@ import com.bra.common.web.BaseController;
 import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.service.*;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -152,6 +153,7 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		model.addAttribute("page", page);
 		model.addAttribute("search", reserveCommoditySellDetail);
 		model.addAttribute("venueList", venueList);
+		model.addAttribute("userType", AuthorityUtils.getUserType());
 		return "reserve/record/reserveCommoditySellDetailList";
 	}
 
@@ -193,14 +195,14 @@ public class ReserveCommoditySellDetailController extends BaseController {
 		}
 		reserveCommoditySellDetailService.save(reserveCommoditySellDetail);
 		addMessage(redirectAttributes, "保存商品销售明细成功");
-		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCommoditySellDetail/?repage";
+		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCommoditySellDetail/list";
 	}
 
 	@RequestMapping(value = "delete")
 	public String delete(ReserveCommoditySellDetail reserveCommoditySellDetail, RedirectAttributes redirectAttributes) {
 		reserveCommoditySellDetailService.delete(reserveCommoditySellDetail);
 		addMessage(redirectAttributes, "删除商品销售明细成功");
-		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCommoditySellDetail/?repage";
+		return "redirect:"+Global.getAdminPath()+"/reserve/reserveCommoditySellDetail/findSellDetailList";
 	}
 
 }
