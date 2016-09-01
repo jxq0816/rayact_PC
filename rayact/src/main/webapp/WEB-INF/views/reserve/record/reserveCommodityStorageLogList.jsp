@@ -120,8 +120,8 @@
                                                 ${reserveCommodityStorageLog.price}
                                         </td>
                                         <td>
-                                                ${reserveCommodityStorageLog.boxPrice*reserveCommodityStorageLog.boxNum}
-                                                <c:set var="sum" value="${sum+reserveCommodityStorageLog.boxPrice*reserveCommodityStorageLog.boxNum}"></c:set>
+                                            <fmt:formatNumber type="number" value="${reserveCommodityStorageLog.boxPrice*reserveCommodityStorageLog.boxNum}" maxFractionDigits="2"/>
+                                            <c:set var="sum" value="${sum+reserveCommodityStorageLog.boxPrice*reserveCommodityStorageLog.boxNum}"></c:set>
                                         </td>
                                         <td>
                                                 ${reserveCommodityStorageLog.createBy.name}

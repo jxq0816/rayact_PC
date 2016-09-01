@@ -192,9 +192,10 @@ public class ReserveCommodityController extends BaseController {
         log.setReserveCommodity(commodity);
         log.setReserveVenue(commodity.getReserveVenue());
         log.setBoxNum(inRepertoryBoxNum);
+        DecimalFormat df=new DecimalFormat("0.00");
+        boxPrice=new Double(df.format(boxPrice).toString());
         log.setBoxPrice(boxPrice);
         Double price=boxPrice/commodity.getUnit();
-        DecimalFormat df=new DecimalFormat("0.00");
         price=new Double(df.format(price).toString());
         log.setPrice(price);
         log.setNum(num);
