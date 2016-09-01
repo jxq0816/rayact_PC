@@ -5,6 +5,7 @@
 	<sql id="reserveCommoditySellColumns">
 		a.id AS "id",
 		a.fk_reserve_member_id AS "reserveMember.id",
+		m.name AS "reserveMember.name",
 		a.fk_reserve_card_statements_id  AS "reserveCardStatement.id",
 		a.pay_type AS "payType",
 		a.total_sum AS "totalSum",
@@ -184,7 +185,10 @@
 		FROM reserve_commodity_sell a
 		<include refid="reserveCommoditySellJoins"/>
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL} and tenant_id = #{tenantId}
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.tenant_id = #{tenantId}
+			<if test="id!=null and id!=''">
+				and a.id=#{id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

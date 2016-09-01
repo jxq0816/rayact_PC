@@ -1,9 +1,11 @@
 package com.bra.modules.reserve.service;
 
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.persistence.Page;
 import com.bra.common.service.CrudService;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDao;
 import com.bra.modules.reserve.dao.ReserveCommoditySellDetailDao;
+import com.bra.modules.reserve.dao.ReserveMemberDao;
 import com.bra.modules.reserve.entity.*;
 import com.bra.modules.reserve.entity.form.ReserveCommodityDayReport;
 import com.bra.modules.reserve.entity.form.ReserveCommodityIntervalReport;
@@ -27,6 +29,13 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 
 	@Autowired
 	private ReserveCommoditySellDetailDao sellDetailDao;
+	@Autowired
+	private ReserveCardStatementsService statementsService;
+	@Autowired
+	private ReserveCommodityService reserveCommodityService;
+
+	@Autowired
+	private ReserveMemberDao reserveMemberDao;
 
 	public ReserveCommoditySell get(String id) {
 		return super.get(id);
@@ -59,6 +68,31 @@ public class ReserveCommoditySellService extends CrudService<ReserveCommoditySel
 
 	@Transactional(readOnly = false)
 	public void delete(ReserveCommoditySell reserveCommoditySell) {
+		ReserveCommoditySellDetail detail=new ReserveCommoditySellDetail();
+		detail.setReserveCommoditySell(reserveCommoditySell);
+		List<ReserveCommoditySellDetail> detailList = sellDetailDao.findList(detail);
+		for(ReserveCommoditySellDetail i:detailList){
+			ReserveCommodity commodity = i.getReserveCommodity();//买的啥
+			int cnt=i.getNum();//买了多少
+			commodity=reserveCommodityService.get(commodity);
+			commodity.setRepertoryNum(commodity.getRepertoryNum()+cnt);//入库
+			reserveCommodityService.save(commodity);
+			sellDetailDao.delete(i);//明细删除
+			ReserveCardStatements statement = i.getReserveCardStatement();
+			if(statement!=null){
+				statementsService.delete(i.getReserveCardStatement());//流水删除
+			}
+		}
+
+		String payType=reserveCommoditySell.getPayType();
+		if(ConstantEntity.STOREDCARD.equals(payType)){
+			ReserveMember member = reserveCommoditySell.getReserveMember();
+			member=reserveMemberDao.get(member);
+			Double totalSum=reserveCommoditySell.getTotalSum();
+			member.setRemainder(member.getRemainder()+totalSum);
+			reserveMemberDao.update(member);//金额退回
+		}
+
 		super.delete(reserveCommoditySell);
 	}
 

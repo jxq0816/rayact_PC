@@ -162,11 +162,11 @@
                                         <td>${reserveCommoditySellDetail.remarks}</td>
                                     </tr>
                                 </c:forEach>
-                                <td colspan="2"> 以上数据合计</td>
+                                <td colspan="3"> 以上数据合计</td>
                                 <td>${num}</td>
                                 <td></td>
                                 <td>${sum}</td>
-                                <td colspan="6"></td>
+                                <td colspan="7"></td>
                                 </tbody>
                             </table>
                             <div class="row">

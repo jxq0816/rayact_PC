@@ -242,7 +242,6 @@
         "href":"/reserve/reserveCardStatements/list?transactionType=7",
         "authorityList": []
       },
-
       {
         "code": "saleVenueLog",
         "name": "场地售卖记录",
@@ -253,6 +252,12 @@
         "code": "reserveCommoditySellDetail",
         "name": "商品销售记录",
         "href":"/reserve/reserveCommoditySellDetail/findSellDetailList",
+        "authorityList": []
+      },
+      {
+        "code": "reserveCommoditySell",
+        "name": "商品订单列表",
+        "href":"/reserve/reserveCommoditySell/list",
         "authorityList": []
       },
       {

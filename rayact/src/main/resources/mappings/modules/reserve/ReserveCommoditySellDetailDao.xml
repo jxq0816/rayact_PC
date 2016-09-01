@@ -122,7 +122,11 @@
                     and commodity.name LIKE concat('%',#{reserveCommodity.name},'%')
                 </if>
             </if>
-
+            <if test="reserveCommoditySell != null">
+                <if test="reserveCommoditySell.id !=null and reserveCommoditySell.id !=''">
+                    and a.fk_reserve_commodity_sell_id = #{reserveCommoditySell.id}
+                </if>
+            </if>
             <if test="startDate!=null and endDate !=null">
                 and (Date(a.create_date) between Date(#{startDate}) and Date(#{endDate}))
             </if>

@@ -1,8 +1,11 @@
 package com.bra.modules.reserve.web;
 
+import com.bra.common.config.Global;
+import com.bra.common.persistence.Page;
 import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
+import com.bra.common.web.annotation.Token;
 import com.bra.modules.reserve.entity.ReserveCommoditySell;
 import com.bra.modules.reserve.entity.ReserveCommodityType;
 import com.bra.modules.reserve.entity.ReserveVenue;
@@ -12,6 +15,7 @@ import com.bra.modules.reserve.entity.form.ReserveCommoditySellReport;
 import com.bra.modules.reserve.service.ReserveCommoditySellService;
 import com.bra.modules.reserve.service.ReserveCommodityTypeService;
 import com.bra.modules.reserve.service.ReserveVenueService;
+import com.bra.modules.reserve.utils.AuthorityUtils;
 import com.bra.modules.reserve.utils.ExcelInfo;
 import com.bra.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +24,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +61,21 @@ public class ReserveCommoditySellController extends BaseController {
 		}
 		return entity;
 	}
+	@RequestMapping(value = {"list", ""})
+	@Token(save = true)
+	public String list(ReserveCommoditySell reserveCommoditySell, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<ReserveCommoditySell> page = reserveCommoditySellService.findPage(new Page<ReserveCommoditySell>(request, response), reserveCommoditySell);
+		model.addAttribute("page", page);
+		model.addAttribute("userType", AuthorityUtils.getUserType());
+		return "reserve/commodity/reserveCommoditySellList";
+	}
+	@RequestMapping(value = "delete")
+	public String delete(ReserveCommoditySell reserveCommoditySell, RedirectAttributes redirectAttributes) {
+		reserveCommoditySellService.delete(reserveCommoditySell);
+		addMessage(redirectAttributes, "删除商品销售主表成功");
+		return "redirect:"+ Global.getAdminPath()+"/reserve/reserveCommoditySell/list";
+	}
+
 	//支付成功页面
 	@RequestMapping(value = {"sellReport", ""})
 	public String list(ReserveCommoditySell reserveCommoditySell, Model model) {
