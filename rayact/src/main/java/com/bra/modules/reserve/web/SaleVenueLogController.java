@@ -77,11 +77,20 @@ public class SaleVenueLogController extends BaseController {
             o[6] = String.valueOf(log.getConsPrice());
             o[7] = log.getPayType();
             o[8] = log.getMember().getName();
-            o[9] = log.getCreateBy().getName();
+            if(log.getCreateBy()!=null){
+                o[9] = log.getCreateBy().getName();
+            }else{
+                o[9] = "";
+            }
             o[10] = log.getCheckoutName();
             o[11] = log.getTutorName();
-            SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-            o[12] = String.valueOf(format.format(log.getConsDate()));
+            if(log.getConsDate()!=null){
+                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                o[12] = String.valueOf(format.format(log.getConsDate()));
+            }else{
+                o[12] = "";
+            }
+
             SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm");
             o[13] =String.valueOf(myFmt.format(log.getUpdateDate()));
             contentList.add(o);
