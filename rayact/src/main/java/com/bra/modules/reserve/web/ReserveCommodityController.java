@@ -1,6 +1,7 @@
 package com.bra.modules.reserve.web;
 
 import com.bra.common.config.Global;
+import com.bra.common.persistence.ConstantEntity;
 import com.bra.common.persistence.Page;
 import com.bra.common.utils.DateUtils;
 import com.bra.common.utils.StringUtils;
@@ -113,8 +114,11 @@ public class ReserveCommodityController extends BaseController {
 
     @RequestMapping(value = {"onShelfList", ""})
     public String sellList(ReserveCommodity commodity, HttpServletRequest request, HttpServletResponse response, Model model) {
-        commodity.setShelvesStatus("1");
+        commodity.setShelvesStatus(ConstantEntity.YES);
         Page<ReserveCommodity> page = commodityService.findPage(new Page<ReserveCommodity>(request, response), commodity);
+        List<ReserveVenue> venues=venueService.findList(new ReserveVenue());
+        model.addAttribute("venues", venues);
+        model.addAttribute("query", commodity);
         model.addAttribute("page", page);
         return "reserve/commodity/reserveCommodityOnShelfList";
     }

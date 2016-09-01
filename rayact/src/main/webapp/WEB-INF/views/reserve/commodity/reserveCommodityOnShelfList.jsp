@@ -27,6 +27,15 @@
                             <table class="no-border">
                                 <tbody class="no-border-y">
                                 <tr>
+                                    <td>场馆：</td>
+                                    <td>
+                                        <sys:select cssClass="input-large" name="reserveVenue.id"
+                                                    cssStyle="width:100%"
+                                                    value="${query.reserveVenue.id}"
+                                                    items="${venues}" itemLabel="name" itemValue="id"
+                                                    defaultLabel="----请选择-----"
+                                                    defaultValue=""></sys:select>
+                                    </td>
                                     <td>名称：</td>
                                     <td><form:input path="name" htmlEscape="false" maxlength="30"
                                                     class="form-control"/></td>
@@ -44,6 +53,7 @@
                     <table id="contentTable">
                         <thead>
                         <tr>
+                            <th>场馆</th>
                             <th>编号</th>
                             <th>名称</th>
                             <th>价格</th>
@@ -55,6 +65,9 @@
                         <tbody>
                         <c:forEach items="${page.list}" var="commodity">
                             <tr>
+                                <td>
+                                        ${commodity.reserveVenue.name}
+                                </td>
                                 <td><a href="${ctx}/reserve/commodity/form?id=${commodity.id}">
                                         ${commodity.commodityId}
                                 </a></td>
