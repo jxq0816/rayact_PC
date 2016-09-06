@@ -56,22 +56,8 @@
                                     <td><a href="${ctx}/reserve/user/form?id=${user.id}">${user.loginName}</a></td>
                                     <td class="text-center">${user.name}</td>
                                     <td>${user.phone}</td>
-				                    <td>
-                                        <c:if test="${user.reserveRole.userType eq 1}">
-                                            超级管理员
-                                        </c:if>
-                                        <c:if test="${user.reserveRole.userType eq 2}">
-                                            场馆管理员
-                                        </c:if>
-                                        <c:if test="${user.reserveRole.userType eq 3}">
-                                           高管
-                                        </c:if>
-                                        <c:if test="${user.reserveRole.userType eq 4}">
-                                            收银
-                                        </c:if>
-                                        <c:if test="${user.reserveRole.userType eq 5}">
-                                            财务
-                                        </c:if>
+                                    <td>
+                                            ${fns:getUserType(user.userType)}
                                     </td>
                                     <td>
                                         <a class="btn btn-primary btn-xs" href="${ctx}/reserve/user/form?id=${user.id}"><i

@@ -63,6 +63,27 @@ public class UserUtils {
         return user;
     }
 
+    public static String getUserType(String userType){
+        String rs=null;
+        switch (userType){
+            case "1":
+                rs="超级管理员";
+                break;
+            case "2":
+                rs="场馆管理员";
+                break;
+            case "3":
+                rs="高管";
+                break;
+            case "4":
+                rs="收银";
+                break;
+            case "5":
+                rs="财务";
+                break;
+        }
+        return rs;
+    }
     /**
      * 根据登录名获取用户
      *

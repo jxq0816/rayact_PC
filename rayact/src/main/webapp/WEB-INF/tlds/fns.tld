@@ -272,6 +272,14 @@
         <example>${fns:isAdmin()}</example>
     </function>
 
+    <function>
+        <description>获取用户类型</description>
+        <name>getUserType</name>
+        <function-class>com.bra.modules.sys.utils.UserUtils</function-class>
+        <function-signature>java.lang.String getUserType(java.lang.String)</function-signature>
+        <example>${fns:getUserType('userType')}</example>
+    </function>
+
     <!-- DateUtils -->
     <function>
         <description>获取当前日期</description>
