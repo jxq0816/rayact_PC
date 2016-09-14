@@ -250,15 +250,19 @@ public class ReserveFieldPriceService {
             for (String time : times) {
                 TimePrice timePrice = new TimePrice();
                 timePrice.setTime(time);
+                String hour = time.substring(0, 2);
                 //遍历时间价格组成的Jason
                 for (TimePrice tp : timePriceList) {
                     String t = tp.getTime();//获取时间
                     Double price = tp.getPrice();//获取价格
-                    String hour = time.substring(0, 2);
-                    t = t.substring(0, 2);
-                    if (hour.equals(t)) {//时间一致
-                        timePrice.setPrice(price);//设置价格
-                        break;
+                    if(StringUtils.isEmpty(t)){
+                        continue;
+                    }else{
+                        t = t.substring(0, 2);
+                        if (hour.equals(t)) {//时间一致
+                            timePrice.setPrice(price);//设置价格
+                            continue;
+                        }
                     }
                 }
                 //查询时间time是否已经预定
@@ -376,16 +380,21 @@ public class ReserveFieldPriceService {
         for (String i : times) {
             TimePrice timePrice = new TimePrice();
             timePrice.setTime(i);
+            String hour = i.substring(0, 2);
             //遍历半场 时间价格组成的Json
             for (TimePrice j : timePriceList) {
                 String t = j.getTime();
-                Double price = j.getPrice();
-                String hour = i.substring(0, 2);
-                t = t.substring(0, 2);
-                if (hour.equals(t)) {
-                    timePrice.setPrice(price);
-                    break;
+                if(StringUtils.isEmpty(t)){
+                    continue;
+                }else {
+                    Double price = j.getPrice();
+                    t = t.substring(0, 2);
+                    if (hour.equals(t)) {
+                        timePrice.setPrice(price);
+                        continue;
+                    }
                 }
+
             }
             //查询半场在时间i是否已经预定
             ReserveVenueConsItem item = hasReserve(venueConsList, setLeft, i);

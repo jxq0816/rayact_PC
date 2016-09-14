@@ -62,13 +62,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">营业时间</label>
                                             <div class="col-sm-2">
-                                                <input name="startTime" type="text" readonly="readonly" maxlength="20"
+                                                <input name="startTime" type="text"  maxlength="20"
                                                        class="form-control Wdate"
                                                        value="${reserveVenue.startTime}"
                                                        onclick="WdatePicker({dateFmt:'HH:mm:ss',isShowClear:false});"/>
                                             </div>
                                             <div class="col-sm-2">
-                                                <input name="endTime" type="text" readonly="readonly" maxlength="20"
+                                                <input name="endTime" type="text"  maxlength="20"
                                                        class="input-medium form-control Wdate "
                                                        value="${reserveVenue.endTime}"
                                                        onclick="WdatePicker({dateFmt:'HH:mm:ss',isShowClear:false});"/>

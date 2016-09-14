@@ -37,22 +37,6 @@
                                     <table class="table table-bordered">
                                         <tr>
                                             <td><span id="weekTd" style="color: red">周一至周日</span></td>
-
-
-                                            <%--<td>时间段:</td>
-                                            <td>
-                                                <select id="startTime">
-                                                    <c:forEach items="${times}" var="t">
-                                                        <option value="${t}">${t}</option>
-                                                    </c:forEach>
-                                                </select>
-                                                至
-                                                <select id="endTime">
-                                                    <c:forEach items="${times}" var="t">
-                                                        <option value="${t}">${t}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </td>--%>
                                             <td>市场价:</td>
                                             <td>
                                                 <input type="text" id="retail" class="number form-control"
@@ -63,7 +47,7 @@
                                                 <input type="text" id="member" class="number form-control"
                                                        style="width: 40px;height:30px;padding: 0px"/>
                                             </td>
-                                            <td valign="top"><input id="globalPrice" data="all" class="btn btn-primary"
+                                            <td><input id="globalPrice" data="all" class="btn btn-primary"
                                                                     type="button"
                                                                     value="价格设定"/></td>
                                         </tr>
@@ -82,12 +66,8 @@
                                             <tr>
                                                     <%--第0-1行：周一到周五 第2-3行：周六 第4-5行：周日--%>
                                                 <j:if test="${status.index==0||status.index==2||status.index==4}">
-                                                    <td rowspan="2" valign="top">
-                                                        <a data="${priceSet.week}"
-                                                           style="color: red"
-                                                           style="width: 25px;"
-                                                           title="点击,设计全局数值" href="#"
-                                                           class="weekPriceTable">${priceSet.weekName}</a>
+                                                    <td rowspan="2">
+                                                        ${priceSet.weekName}
                                                     </td>
                                                 </j:if>
                                                     <%--第0-1行：周一到周五 第2-3行：周六 第4-5行：周日--%>
@@ -101,20 +81,23 @@
                                                        name="fieldPriceSetList[${status.index}].consType"
                                                        value="${priceSet.consType}"/>
                                                     <%-- 这层遍历主要是为了获得时间的index 从而遍历出每个时间的价格--%>
-                                                    <c:forEach items="${priceSet.timePriceList}" var="t"
-                                                               varStatus="priceSetStatus">
-
-                                                            <td style="padding:5px">
-                                                                <input type="hidden"
-                                                                       name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
-                                                                       value="${t.time}"/>
-                                                                <input value="<fmt:formatNumber value='${t.price}' pattern='0.00'/>"
-                                                                       type="text" data-time="${t.time}"
-                                                                       data="${priceSet.week}-${priceSet.consType}"
-                                                                       name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
-                                                                       class="number form-control"/>
-                                                            </td>
-                                                </c:forEach>
+                                                        <c:forEach items="${times}" var="timeThread">
+                                                                <c:forEach items="${priceSet.timePriceList}" var="t"
+                                                                           varStatus="priceSetStatus">
+                                                                    <c:if test="${timeThread==t.time}">
+                                                                        <td style="padding:5px">
+                                                                            <input type="hidden"
+                                                                                   name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].time"
+                                                                                   value="${t.time}"/>
+                                                                            <input value="<fmt:formatNumber value='${t.price}' pattern='0.00'/>"
+                                                                                   type="text" data-time="${t.time}"
+                                                                                   data="${priceSet.week}-${priceSet.consType}"
+                                                                                   name="fieldPriceSetList[${status.index}].timePriceList[${priceSetStatus.index}].price"
+                                                                                   class="number form-control"/>
+                                                                        </td>
+                                                                    </c:if>
+                                                            </c:forEach>
+                                                        </c:forEach>
                                                     <%-- 这层遍历主要是为了获得时间的index 从而遍历出每个时间的价格--%>
                                             </tr>
                                         </c:forEach>
