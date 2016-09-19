@@ -15,30 +15,44 @@ import java.util.Map;
 public class VenueOrderUtils {
 
     public static String getPayType(String payType){
-        if ("1".equals(payType)) {
-            return "会员卡";
-        } else if ("2".equals(payType)) {//现金
-            return "现金";
-        } else if ("3".equals(payType)) {
-            return "银行卡";
-        } else if ("4".equals(payType)) {
-            return "微信";
-        } else if ("5".equals(payType)) {
-            return "支付宝";
-        } else if ("6".equals(payType)) {
-            return "优惠券";
-        } else if ("7".equals(payType)) {
-            return "欠账";
-        }else if ("8".equals(payType)) {
-            return "多方式付款";
-        }else if ("9".equals(payType)) {
-            return "微信（个人）";
-        }else if ("10".equals(payType)) {
-            return "支付宝（个人）";
-        }else if ("11".equals(payType)) {
-            return "转账";
+
+        String rs=null;
+        switch (payType){
+            case "1":
+                rs="预储值";
+                break;
+            case "2":
+                rs= "现金";
+                break;
+            case "3":
+                rs= "银行卡";
+                break;
+            case "4":
+                rs= "微信";
+                break;
+            case "5":
+                rs= "支付宝";
+                break;
+            case "6":
+                rs= "优惠券";
+                break;
+            case "7":
+                rs= "打白条";
+                break;
+            case "8":
+                rs= "多方式付款";
+                break;
+            case "9":
+                rs= "微信（个人）";
+                break;
+            case "10":
+                rs= "支付宝（个人）";
+                break;
+            case "11":
+                rs= "转账";
+                break;
         }
-        return "";
+        return rs;
     }
 
     private static void setPayType(ReserveVenueConsOrder order, String payType) {
