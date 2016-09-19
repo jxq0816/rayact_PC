@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
-<div class="cl-sidebar" style="padding-bottom: 1000px">
+<div class="cl-sidebar">
     <%--<div class="cl-toggle"><i class="fa fa-bars"></i></div>--%>
 
     <div class="cl-navblock">

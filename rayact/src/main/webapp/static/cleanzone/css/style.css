@@ -835,13 +835,6 @@ body.modal-open,
     line-height: 1.3em;
 }
 
-#cl-wrapper {
-    padding-top: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-bottom: 100px;
-}
-
 /*Vertical Navigation*/
 .cl-sidebar {
     position: absolute;
