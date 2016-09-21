@@ -36,29 +36,31 @@
                             </div>
                             <div class="form-group col-xs-4">
                                 <label class="control-label col-xs-4" for="userType">用户类型：</label>
-                                <select id="userType" name="userType" class="col-xs-8 select2-container">
-                                    <option value="">全部</option>
-                                    <option value="1"
-                                            <j:if test="${1 eq query.userType}">selected="selected"</j:if>
-                                    >超级管理员
-                                    </option>
-                                    <option value="2"
-                                            <j:if test="${2 eq query.userType}">selected="selected"</j:if>
-                                    >场馆管理员
-                                    </option>
-                                    <option value="3"
-                                            <j:if test="${3 eq query.userType}">selected="selected"</j:if>
-                                    >高管
-                                    </option>
-                                    <option value="4"
-                                            <j:if test="${3 eq query.userType}">selected="selected"</j:if>
-                                    >收银
-                                    </option>
-                                    <option value="5"
-                                            <j:if test="${5 eq query.userType}">selected="selected"</j:if>
-                                    >财务
-                                    </option>
-                                </select>
+                                <div class="col-xs-8">
+                                    <select id="userType" name="userType" class="select2" style="width: 100%">
+                                        <option value="">全部</option>
+                                        <option value="1"
+                                                <j:if test="${1 eq query.userType}">selected="selected"</j:if>
+                                        >超级管理员
+                                        </option>
+                                        <option value="2"
+                                                <j:if test="${2 eq query.userType}">selected="selected"</j:if>
+                                        >场馆管理员
+                                        </option>
+                                        <option value="3"
+                                                <j:if test="${3 eq query.userType}">selected="selected"</j:if>
+                                        >高管
+                                        </option>
+                                        <option value="4"
+                                                <j:if test="${3 eq query.userType}">selected="selected"</j:if>
+                                        >收银
+                                        </option>
+                                        <option value="5"
+                                                <j:if test="${5 eq query.userType}">selected="selected"</j:if>
+                                        >财务
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group col-xs-2">
                                 <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
