@@ -16,39 +16,76 @@
                 <div class="header">
                     <h3>用户管理</h3>
                 </div>
-                <form:form id="searchForm" modelAttribute="user" action="${ctx}/reserve/user/list"
-                           method="post" class="breadcrumb form-search">
-                    <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-                    <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+                <form id="searchForm" action="${ctx}/reserve/user/list"
+                      method="post">
+                    <div class="row breadcrumb form-search col-lg-12 col-sm-12"
+                         style="margin-left:0px; margin-right:0px;">
+                        <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+                        <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <table class="no-border">
-                                <tbody class="no-border-y">
-                                <tr>
-                                    <td>姓名:</td>
-                                    <td>
-                                        <form:input path="name" htmlEscape="false" cssstyle="width:50px;" maxlength="30"
-                                                    class="form-control"/>
-                                    </td>
-                                    <td><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="pull-right">
-                            <a class="btn btn-success" href="${ctx}/reserve/user/form">
-                                <i class="fa fa-plus"></i>添加
-                            </a>
+                        <div class="row">
+                            <div class="form-group col-xs-4">
+                                <div class="col-xs-4">
+                                    <label class="control-label" for="userName">姓名：</label>
+                                </div>
+                                <div class="col-xs-8" id="userName">
+                                      <input name="name" htmlEscape="false"
+                                             maxlength="30" value="${query.name}"
+                                             class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-4">
+                                <label class="control-label col-xs-4" for="userType">用户类型：</label>
+                                <select id="userType" name="userType" class="col-xs-8 select2-container">
+                                    <option value="">全部</option>
+                                    <option value="1"
+                                            <j:if test="${1 eq query.userType}">selected="selected"</j:if>
+                                    >超级管理员
+                                    </option>
+                                    <option value="2"
+                                            <j:if test="${2 eq query.userType}">selected="selected"</j:if>
+                                    >场馆管理员
+                                    </option>
+                                    <option value="3"
+                                            <j:if test="${3 eq query.userType}">selected="selected"</j:if>
+                                    >高管
+                                    </option>
+                                    <option value="4"
+                                            <j:if test="${3 eq query.userType}">selected="selected"</j:if>
+                                    >收银
+                                    </option>
+                                    <option value="5"
+                                            <j:if test="${5 eq query.userType}">selected="selected"</j:if>
+                                    >财务
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-2">
+                                <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+                            </div>
+                            <div class="pull-right">
+                                <div class="form-group col-xs-2">
+                                    <a class="btn btn-success" href="${ctx}/reserve/user/form">
+                                        <i class="fa fa-plus"></i>添加
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </form:form>
+                </form>
                 <div class="content">
                     <div class="table-responsive">
                         <table>
-                            <thead><tr><th>归属公司</th><th class="sort-column login_name">登录名</th>
-                                <th class="text-center">姓名</th><th>手机</th><th>角色</th>
-                                <th>操作</th></tr></thead>
+                            <thead>
+                            <tr>
+                                <th>归属公司</th>
+                                <th class="sort-column login_name">登录名</th>
+                                <th class="text-center">姓名</th>
+                                <th>手机</th>
+                                <th>角色</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
                             <tbody>
                             <c:forEach items="${page.list}" var="user">
                                 <tr style="height: 30px;">
@@ -62,7 +99,8 @@
                                     <td>
                                         <a class="btn btn-primary btn-xs" href="${ctx}/reserve/user/form?id=${user.id}"><i
                                                 class="fa fa-pencil"></i>修改</a>
-                                        <a class="btn btn-danger btn-xs" href="${ctx}/reserve/user/delete?id=${user.id}" onclick="return confirmb('确认要删除该用户吗？', this.href)"><i
+                                        <a class="btn btn-danger btn-xs" href="${ctx}/reserve/user/delete?id=${user.id}"
+                                           onclick="return confirmb('确认要删除该用户吗？', this.href)"><i
                                                 class="fa fa-times"></i>删除</a>
                                     </td>
                                 </tr>
