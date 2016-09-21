@@ -98,7 +98,7 @@
     <sitemesh:body/>
 </div>
 
-<div  class="milky" style="font-size: 15px;background-color: #fff;text-align:center;z-index:-100;width:100%;line-height:50px;height:50px;position: absolute;bottom: 0px;left:0px;">
+<div  class="milky" style="font-size: 15px;background-color: #fff;text-align:center;z-index:-100;width:100%;line-height:50px;height:50px;position: relative;margin-top: 100px;">
     Powered by 北京博云睿动科技有限公司版权所有
 </div>
 <script type="text/javascript">
