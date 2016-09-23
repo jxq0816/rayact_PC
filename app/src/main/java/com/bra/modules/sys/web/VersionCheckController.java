@@ -21,12 +21,7 @@ public class VersionCheckController extends BaseController {
     @RequestMapping(value = "${adminPath}/api/checkVersion")
     public void createSimple(HttpServletRequest request, HttpServletResponse response) {
         JSONObject rtn = new JSONObject();
-        String version = request.getParameter("version");
-        if(com.bra.modules.sys.utils.StringUtils.CURRENT_VERSION.equals(version)){
-            rtn.put("status","true");
-        }else{
-            rtn.put("status","false");
-        }
+        rtn.put("version",com.bra.modules.sys.utils.StringUtils.CURRENT_VERSION);
         try {
             response.reset();
             response.setContentType("application/json");
@@ -35,5 +30,4 @@ public class VersionCheckController extends BaseController {
         } catch (IOException e) {
         }
     }
-
 }
