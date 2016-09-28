@@ -152,6 +152,9 @@ public class TeamTmpController extends BaseController {
 		tt.setName(teamName);
 		tt.setZb(zb);
 		tt.setRz(rz);
+		MultipartFile logoImg = request.getFile("logoFiles");//队徽
+		String logoImgUrl=dealAtt(logoImg,tt);
+		tt.setReamrks(logoImgUrl);
 		teamTmpService.save(tt);
 
 		TeamMemberTmp member = new TeamMemberTmp();
@@ -169,10 +172,11 @@ public class TeamTmpController extends BaseController {
 		member.setHeight(Integer.valueOf(height));
 		member.setWeight(Integer.valueOf(weight));
 		member.setRole("1");//1领队
-		MultipartFile leaderImg = request.getFile("leaderFiles");
-		leaderRemarks += dealAtt(leaderImg,member);
-		MultipartFile leaderCardImg = request.getFile("leaderCard");
-		leaderRemarks += dealAtt(leaderCardImg,member);
+		MultipartFile img = request.getFile("picFiles");//头像
+		leaderRemarks += dealAtt(img,member);
+		MultipartFile idCard = request.getFile("idCardFiles");//身份证
+		leaderRemarks += dealAtt(idCard,member);
+
 		member.setRemarks(leaderRemarks);
 		teamMemberTmpService.save(member);
 		JSONObject j = new JSONObject();
@@ -188,6 +192,30 @@ public class TeamTmpController extends BaseController {
 	}
 
 	private String dealAtt(MultipartFile files,TeamMemberTmp tmt)throws Exception{
+		FileModel fileModel = new FileModel();
+		String destPath = Global.getBaseDir();
+		String tmp = destPath + "resources/www";
+		File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
+		if (!f.getParentFile().exists())
+			f.getParentFile().mkdirs();
+		if (!f.exists())
+			f.createNewFile();
+		files.transferTo(f);
+		fileModel.setStoreType(StoreType.SYSTEM);
+		fileModel.setToken(new Date().toString());
+		fileModel.setFilePath(f.getAbsolutePath());
+		fileModel.setContentType("pic");
+		AttMain attMain = new AttMain(fileModel);
+		attMain.setFdModelName(tmt.getClass().getName());
+		attMain = attMainService.saveAttMain(attMain);
+		String modelId = tmt.getId();
+		String modelNamea = tmt.getClass().getName();
+		attMainService.updateAttMain(attMain.getId(),modelId,modelNamea,"pic");
+		fileModel.setAttId(attMain.getId());
+		return com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId()+";";
+	}
+
+	private String dealAtt(MultipartFile files,TeamTmp tmt)throws Exception{
 		FileModel fileModel = new FileModel();
 		String destPath = Global.getBaseDir();
 		String tmp = destPath + "resources/www";

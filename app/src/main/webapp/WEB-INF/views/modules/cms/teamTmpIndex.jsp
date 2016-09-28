@@ -31,7 +31,7 @@
 </div>
 <div id="index" class="step">
 			<div style="font-size: 30px;text-align: center">
-					<div class="s1" onclick="jumpToApply();">领队报名</div>
+					<div class="s1" onclick="jumpToApply();">创建球队</div>
 					<div class="s1" onclick="jumpToInfo();">已报名队伍查询</div>
 			</div>
 </div>

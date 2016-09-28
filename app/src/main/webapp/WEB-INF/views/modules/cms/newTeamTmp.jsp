@@ -81,7 +81,7 @@
 	</div>
 	<div class="step" style="display: none" id="step02">
 		<div style="font-size: 15px">
-			<div class="item">
+			<div class="item" id="baseDataWrap">
 				<div >
 					<div class="s2">姓名：</div><input type="text" name="name" />
 				</div>
@@ -101,15 +101,14 @@
 					<div class="s3">鞋码：</div><input type="text" name="weight" class=""/>
 				</div>
 				<div>
-					<div class="s2">领队头像：</div><input id="leaderFiles" name="leaderFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.leaderfiles_preview')"/>
-					<div class="leaderfiles_preview" style="background-color: #ffffff;margin: 2px">
+					<div class="s2">白底一寸免冠照片：</div><input id="leaderFiles" name="picFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.picFiles_preview')"/>
+					<div class="picFiles_preview" style="background-color: #ffffff;margin: 2px">
+					</div>
+					<div class="s2">白底一寸免冠照片：</div><input id="idCardFiles" name="idCardFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.idCardFiles_preview')"/>
+					<div class="idCardFiles_preview" style="background-color: #ffffff;margin: 2px">
 					</div>
 				</div>
-				<div>
-					<div class="s2">领队身份证正面：</div><input id="leaderCard" name="leaderCard" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.leaderCard_preview')"/>
-					<div class="leaderCard_preview" style="background-color: #ffffff;margin: 2px">
-					</div>
-				</div>
+
 			</div>
 		</div>
 		<div style="align:center;">
@@ -119,7 +118,11 @@
 	</div>
 	<div class="step" style="display: none" id="step03">
 		<div id="dataWrap">
-
+			<div>
+				<div class="s2">队徽：</div><input id="logoFiles" name="logoFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.logoFiles_preview')"/>
+				<div class="logoFiles_preview" style="background-color: #ffffff;margin: 2px">
+				</div>
+			</div>
 		</div>
 		<div style="align:center">
 			<div onclick="step03prev()" class="jump" >上一步</div>
@@ -131,7 +134,6 @@
 	var index = 0;
 	function step01next(){
 		var rz = $("#rz").val();
-		/*var zb = $("#zb").val();*/
 		var teamName = $("#teamName").val();
 		if($.trim(teamName)==""){
 			alert("请填写队名！");
@@ -147,18 +149,17 @@
 		$("#step03").hide();
 	}
 	function step02next(){
-		var leaderFlag = true;
-		$("input[name^='leader']").each(function(){
+		var flag = true;
+		$("#baseDataWrap input").each(function(){
 			if($(this).val()==""){
-				leaderFlag = false
+				flag=false;
 			}
 		});
-		if(!leaderFlag){
-			alert("领队信息需要完善！");
+		if(!flag){
+			alert("信息需要完善！");
 			return;
 		}
 		var idNo = $("input[name='idNo']").val();
-		//var teacher = $("input[name='teacherCard']").val();
 		if($.trim(idNo)==""){
 			alert("请填写身份证号码！");
 			return;
@@ -344,11 +345,6 @@
 		return false;
 	}
 
-	function deleteItem(dom){
-		$(dom).parent().prev().prepend("<div id='delBtn' style='float: right;background-color:#000000 ' onclick='deleteItem(this);'>X</div>");
-		$(dom).parent().remove();
-		index--;
-	}
 
 	function checkSame(dom){
 		var name = $(dom).val();
