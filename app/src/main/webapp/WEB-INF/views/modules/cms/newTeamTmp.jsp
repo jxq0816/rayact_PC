@@ -63,19 +63,16 @@
 			<div>
 				<div class="s1">队名：</div><input id="teamName" type="text" name="teamName" onchange="checkSame(this)">
 			</div>
-		<%--	<div>
+			<div>
 				<div class="s1">参赛组别：</div><select id="zb" name="zb">
-				<option value="U16">U16</option>
-				<option value="U18">U18</option>
 				<option value="U23">U23</option>
 			</select>
 			</div>
 			<div>
 				<div class="s1">参赛制式：</div><select id="rz" name="rz">
-				<option value="5">五人制</option>
 				<option value="8">八人制</option>
 			</select>
-			</div>--%>
+			</div>
 		</div>
 		<div style="align:center;">
 			<div onclick="step01next()" class="jump">下一步</div>
@@ -229,7 +226,7 @@
 		var zb = $("#zb").val();
 		var rz = $("#rz").val();
 		$("input[name^='card'][type='text']").each(function(){
-			if(!checkIdcard($(this).val(),'3',zb,rz)){
+			if(!checkIdcard($(this).val())){
 				rightFlag = false;
 			}
 		});
@@ -254,14 +251,8 @@
 					window.open("${ctx}/cms/teamTmp/teamIndex","_self");
 				}
 			};
-			if(rz=="5"){
-				if(confirm("报名需缴纳500元保证金+每人50元报名费</br>本次报名暂无修改入口，您确认信息填写无误吗？")){
-					$('#teamForm').ajaxSubmit(options);
-				}
-			}else{
-				if(confirm("报名需缴纳500元保证金+每人100元报名费</br>本次报名暂无修改入口，您确认信息填写无误吗？")){
-					$('#teamForm').ajaxSubmit(options);
-				}
+			if(confirm("本次报名暂无修改入口，您确认信息填写无误吗？")){
+				$('#teamForm').ajaxSubmit(options);
 			}
 		}
 	}
