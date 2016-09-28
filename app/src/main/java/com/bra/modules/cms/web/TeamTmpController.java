@@ -139,8 +139,6 @@ public class TeamTmpController extends BaseController {
 
 	@RequestMapping(value = "app/save")
 	public void saveApp(MultipartHttpServletRequest request, HttpServletResponse response)throws Exception {
-		String memberNum = request.getParameter("memberNum");
-		int mNum = Integer.valueOf(memberNum)+1;
 		String leaderRemarks = "";
 		TeamTmp tt = new TeamTmp();
 		//队伍名称
@@ -153,8 +151,10 @@ public class TeamTmpController extends BaseController {
 		tt.setZb(zb);
 		tt.setRz(rz);
 		MultipartFile logoImg = request.getFile("logoFiles");//队徽
-		String logoImgUrl=dealAtt(logoImg,tt);
-		tt.setReamrks(logoImgUrl);
+		if(logoImg!=null){
+			String logoImgUrl=dealAtt(logoImg,tt);
+			tt.setReamrks(logoImgUrl);
+		}
 		teamTmpService.save(tt);
 
 		TeamMemberTmp member = new TeamMemberTmp();
@@ -165,18 +165,32 @@ public class TeamTmpController extends BaseController {
 		String idNo = request.getParameter("idNo");
 		String height = request.getParameter("height");
 		String weight = request.getParameter("weight");
+		String[] roleList = request.getParameterValues("role");
+		String role="";
+		for(String i:roleList){
+			role=i+role;
+		}
 		member.setName(name);
 		member.setPhone(phone);
 		member.setCardNo(idNo);
-		member.setPlayerNum(Integer.valueOf(playerNum));
-		member.setHeight(Integer.valueOf(height));
-		member.setWeight(Integer.valueOf(weight));
-		member.setRole("1");//1领队
+		if(StringUtils.isNoneBlank(playerNum)){
+			member.setPlayerNum(Integer.valueOf(playerNum));
+		}
+		if(StringUtils.isNoneBlank(height)){
+			member.setHeight(Integer.valueOf(height));
+		}
+		if(StringUtils.isNoneBlank(weight)){
+			member.setWeight(Integer.valueOf(weight));
+		}
+		member.setRole(role);
 		MultipartFile img = request.getFile("picFiles");//头像
-		leaderRemarks += dealAtt(img,member);
+		if(img!=null){
+			leaderRemarks += dealAtt(img,member);
+		}
 		MultipartFile idCard = request.getFile("idCardFiles");//身份证
-		leaderRemarks += dealAtt(idCard,member);
-
+		if(idCard!=null){
+			leaderRemarks += dealAtt(idCard,member);
+		}
 		member.setRemarks(leaderRemarks);
 		teamMemberTmpService.save(member);
 		JSONObject j = new JSONObject();

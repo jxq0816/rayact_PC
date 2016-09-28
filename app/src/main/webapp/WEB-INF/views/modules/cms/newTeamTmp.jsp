@@ -9,7 +9,7 @@
 	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/jquery-form/jquery.form.js" type="text/javascript"></script>
 	<link href="${ctxStatic}/jquery-mobile/list.css" type="text/css" rel="stylesheet" />
-	<link href="${ctxStatic}/bootstrap/2.3.1/css_default/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="${ctxStatic}/bootstrap/bootstrap-3.3.5-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 </head>
 <body style="font-family: Microsoft Yahei">
 <style>
@@ -34,7 +34,6 @@
 		margin: 5px 0;
 	}
 	.jump{
-		height: 30px;
 		text-align:center;
 		font-size: 30px;
 		padding: 10px;
@@ -44,34 +43,34 @@
 		margin: 5px;
 		color: #ffffff;
 	}
-	#delBtn{
-		height: 20px;
-		width: 20px;
-		text-align: center;
-		border-radius: 10px; /* 所有角都使用半径为5px的圆角，此属性为CSS3标准属性 */
-		-moz-border-radius: 10px; /* Mozilla浏览器的私有属性 */
-		-webkit-border-radius: 10px; /* Webkit浏览器的私有属性 */
-		border-radius: 10px; /* 四个半径值分别是左上角、右上角、右下角和左下角 */
-	}
 </style>
 <div style="width: 100%;text-align: center">
-	<p style="color: #000000;font-size: 28px;margin: 50px 0;line-height:30px">2016青草足球夏季联赛报名</p>
+	<p style="color: #000000;font-size: 28px;margin: 50px 0;line-height:30px">2016青草足球秋季联赛报名</p>
 </div>
 <form id="teamForm" name="teamForm">
 	<div id="step01" class="step">
 		<div style="font-size: 15px;">
-			<div>
-				<div class="s1">队名：</div><input id="teamName" type="text" name="teamName" onchange="checkSame(this)">
+			<div class="col-xs-12">
+				<div class="col-xs-2">队名：</div>
+				<div class="col-xs-10">
+					<input id="teamName" class="form-control" type="text" name="teamName" onchange="checkSame(this)">
+				</div>
 			</div>
-			<div>
-				<div class="s1">参赛组别：</div><select id="zb" name="zb">
-				<option value="U23">U23</option>
-			</select>
+			<div class="col-xs-12">
+				<div class="col-xs-2">参赛组别：</div>
+				<div class="col-xs-10">
+					<select id="zb" name="zb">
+						<option value="U23">U23</option>
+					</select>
+				</div>
 			</div>
-			<div>
-				<div class="s1">参赛制式：</div><select id="rz" name="rz">
-				<option value="8">八人制</option>
-			</select>
+			<div class="col-xs-12">
+				<div class="col-xs-2">参赛制式：</div>
+				<div class="col-xs-10">
+					<select id="rz" name="rz">
+						<option value="8">八人制</option>
+					</select>
+				</div>
 			</div>
 		</div>
 		<div style="align:center;">
@@ -81,31 +80,78 @@
 	</div>
 	<div class="step" style="display: none" id="step02">
 		<div style="font-size: 15px">
-			<div class="item" id="baseDataWrap">
-				<div >
-					<div class="s2">姓名：</div><input type="text" name="name" />
-				</div>
-				<div>
-					<div class="s3">球衣号码：</div><input type="text" name="playerNum" class=""/>
-				</div>
-				<div>
-					<div class="s2">身份证号：</div><input type="text" name="idNo" />
-				</div>
-				<div>
-					<div class="s2">联系电话：</div><input type="text" name="phone"/>
-				</div>
-				<div>
-					<div class="s3">身高：</div><input type="text" name="height" class=""/>
-				</div>
-				<div>
-					<div class="s3">鞋码：</div><input type="text" name="weight" class=""/>
-				</div>
-				<div>
-					<div class="s2">白底一寸免冠照片：</div><input id="leaderFiles" name="picFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.picFiles_preview')"/>
-					<div class="picFiles_preview" style="background-color: #ffffff;margin: 2px">
+			<div class="row" id="baseDataWrap">
+				<div class="col-xs-12">
+					<div class="col-xs-2">
+						<label>角色</label>
 					</div>
-					<div class="s2">白底一寸免冠照片：</div><input id="idCardFiles" name="idCardFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.idCardFiles_preview')"/>
-					<div class="idCardFiles_preview" style="background-color: #ffffff;margin: 2px">
+					<div class="col-xs-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="role" value="1"> 领队
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="role" value="2"> 教练
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox"  name="role" value="3"> 普通队员
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox"  name="role" value="4"> 队长
+						</label>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">姓名：</div>
+					<div class="col-xs-10">
+						<input type="text" class="form-control" name="name" />
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">球衣号码：</div>
+					<div class="col-xs-10">
+						<input type="text" class="form-control" name="playerNum"/>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">身份证号：</div>
+					<div class="col-xs-10">
+						<input type="text" name="idNo" class="control"/>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">联系电话：</div>
+					<div class="col-xs-10">
+						<input type="text" name="phone" class="control"/>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">身高：</div>
+					<div class="col-xs-10">
+						<input type="text" name="height" class="control"/>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">鞋码：</div>
+					<div class="col-xs-10">
+						<input type="text" name="weight" class="control"/>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="col-xs-2">白底一寸免冠照片：</div>
+					<div class="col-xs-2">
+						<input id="leaderFiles" name="picFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.picFiles_preview')"/>
+					</div>
+					<div class="picFiles_preview col-xs-8" style="background-color: #ffffff;margin: 2px">
+
+					</div>
+				</div>
+
+				<div class="col-xs-12">
+					<div class="col-xs-2">白底一寸免冠照片：</div>
+					<div class="col-xs-2">
+						<input id="idCardFiles" name="idCardFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.idCardFiles_preview')"/>
+					</div>
+						<div class="idCardFiles_preview col-xs-8" style="background-color: #ffffff;margin: 2px">
 					</div>
 				</div>
 
@@ -189,8 +235,6 @@
 			alert("请完善队员信息。");
 			return;
 		}
-		var zb = $("#zb").val();
-		var rz = $("#rz").val();
 		$("input[name^='card'][type='text']").each(function(){
 			if(!checkIdcard($(this).val())){
 				rightFlag = false;
