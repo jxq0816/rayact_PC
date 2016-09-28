@@ -1,0 +1,6 @@
+20160928:team_member_tmp 新增字段 队员号码
+alter table team_member_tmp add player_num int;
+20160928:team_member_tmp 新增字段 身高
+alter table team_member_tmp add height int;
+20160928:team_member_tmp 新增字段 体重
+alter table team_member_tmp add weight int;

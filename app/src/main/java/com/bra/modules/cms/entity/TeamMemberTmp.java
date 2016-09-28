@@ -20,7 +20,10 @@ public class TeamMemberTmp extends DataEntity<TeamMemberTmp> {
 	private String cardNo;		// card_no
 	private String teamNo;
 	private TeamTmp teamTmp;		// team_id
-	
+	private Integer playerNum;//队员编号
+	private Integer height;//身高
+	private Integer weight;//体重
+
 	public TeamMemberTmp() {
 		super();
 	}
@@ -81,6 +84,30 @@ public class TeamMemberTmp extends DataEntity<TeamMemberTmp> {
 
 	public void setTeamNo(String teamNo) {
 		this.teamNo = teamNo;
+	}
+
+	public Integer getPlayerNum() {
+		return playerNum;
+	}
+
+	public void setPlayerNum(Integer playerNum) {
+		this.playerNum = playerNum;
+	}
+
+	public Integer getHeight() {
+		return height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
 	}
 
 
