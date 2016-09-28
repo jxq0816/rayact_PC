@@ -83,13 +83,22 @@
 		<div style="font-size: 15px">
 			<div class="item">
 				<div >
-					<div class="s2">领队姓名：</div><input type="text" name="leaderName" />
+					<div class="s2">姓名：</div><input type="text" name="name" />
 				</div>
 				<div>
-					<div class="s2">领队身份证号：</div><input type="text" name="leaderCardNo" />
+					<div class="s3">球衣号码：</div><input type="text" name="playerNum" class=""/>
 				</div>
 				<div>
-					<div class="s2">领队电话：</div><input type="text" name="leaderPhone"/>
+					<div class="s2">身份证号：</div><input type="text" name="idNo" />
+				</div>
+				<div>
+					<div class="s2">联系电话：</div><input type="text" name="phone"/>
+				</div>
+				<div>
+					<div class="s3">身高：</div><input type="text" name="height" class=""/>
+				</div>
+				<div>
+					<div class="s3">鞋码：</div><input type="text" name="weight" class=""/>
 				</div>
 				<div>
 					<div class="s2">领队头像：</div><input id="leaderFiles" name="leaderFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.leaderfiles_preview')"/>
@@ -102,27 +111,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="item">
-				<div>
-					<div class="s2">教练姓名：</div><input type="text" name="teacherName"/>
-				</div>
-				<div>
-					<div class="s2">教练身份证：</div><input type="text" name="teacherCard" />
-				</div>
-				<div>
-					<div class="s2">教练电话：</div><input type="text" name="teacherPhone"/>
-				</div>
-				<div>
-					<div class="s2">教练头像：</div><input id="teacherFiles" name="teacherFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.teacherfiles_preview')"/>
-					<div class="teacherfiles_preview" style="background-color: #ffffff;margin: 2px">
-					</div>
-				</div>
-				<div>
-					<div class="s2">教练身份证正面：</div><input id="teacherCard" name="teacherCard" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.teacherCard_preview')"/>
-					<div class="teacherCard_preview" style="background-color: #ffffff;margin: 2px">
-					</div>
-				</div>
-			</div>
 		</div>
 		<div style="align:center;">
 			<div onclick="step02prev()"  class="jump" >上一步</div>
@@ -131,30 +119,7 @@
 	</div>
 	<div class="step" style="display: none" id="step03">
 		<div id="dataWrap">
-			<div class="item">
-				<div>
-					<div class="s3">姓名：</div><input type="text" name="name[0]" class=""/>
-				</div>
-				<div >
-					<div class="s3">身份证：</div><input type="text" name="card[0]" class="" onchange="checkIdCard(this)">
-				</div>
-				<div>
-					<div class="s3">电话：</div><input type="text" name="phone[0]" class=""/>
-				</div>
-				<div>
-					<div class="s3">头像：</div><input id="files[0]" name="files[0]" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.files_0_preview')"/>
-					<div class="files_0_preview" style="background-color: #ffffff;margin: 2px">
-					</div>
-				</div>
-				<div>
-					<div class="s3">身份证正面：</div><input id="cardFile[0]" name="cardFile[0]" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.card_0_preview')"/>
-					<div class="card_0_preview" style="background-color: #ffffff;margin: 2px">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div >
-			<div onclick="addMember()" style="height:25px;background-color: #000000;margin:20px 0;text-align:center;font-size: 20px;color: #ffffff;width: 100%">添加</div>
+
 		</div>
 		<div style="align:center">
 			<div onclick="step03prev()" class="jump" >上一步</div>
@@ -192,13 +157,13 @@
 			alert("领队信息需要完善！");
 			return;
 		}
-		var leader = $("input[name='leaderCardNo']").val();
+		var idNo = $("input[name='idNo']").val();
 		//var teacher = $("input[name='teacherCard']").val();
-		if($.trim(leader)==""){
-			alert("请填写领队身份证号码！");
+		if($.trim(idNo)==""){
+			alert("请填写身份证号码！");
 			return;
 		}
-		if(checkIdcard(leader,'1')){
+		if(checkIdcard(idNo)){
 			$("#step01").hide();
 			$("#step02").hide();
 			$("#step03").show();
@@ -290,30 +255,6 @@
 			width: width,
 			height: height
 		}
-	}
-	function addMember(){
-		$("#delBtn").remove();
-		index++;
-		var html = "<div class='item'><div id='delBtn' style='float: right;background-color:#000000 ' onclick='deleteItem(this);'>X</div><div>"+
-				"<div class='s3'>姓名：</div><input type='text' name='name["+index+"]' class=''/>"+
-				"</div>"+
-				"<div>"+
-				"		<div class='s3'>身份证：</div><input type='text' name='card["+index+"]' class=''>"+
-				"</div>"+
-				"<div>"+
-				"		<div class='s3'>电话：</div><input type='text' name='phone["+index+"]' class=''/>"+
-				"</div>"+
-				"<div>"+
-				"		<div class='s3'>头像：</div><input id='files[0]' name='files["+index+"]' type='file'  accept='image/png,image/gif,image/jpeg' onchange='previewPic(this,\".files_"+index+"_preview\")'/>"+
-				"<div class='files_"+index+"_preview' style='background-color: #ffffff;margin: 2px'>"+
-				"	</div>"+
-				"		</div>"+
-				"		<div>"+
-				"		<div class='s3'>身份证正面：</div><input id='cardFile["+index+"]' name='cardFile["+index+"]' type='file'  accept='image/png,image/gif,image/jpeg' onchange='previewPic(this,\".card_"+index+"_preview\")'/>"+
-				"<div class='card_"+index+"_preview' style='background-color: #ffffff;margin: 2px'>"+
-				"		</div>"+
-				"		</div></div>";
-		$("#dataWrap").append(html);
 	}
 
 	function checkIdcard(num)

@@ -142,7 +142,6 @@ public class TeamTmpController extends BaseController {
 		String memberNum = request.getParameter("memberNum");
 		int mNum = Integer.valueOf(memberNum)+1;
 		String leaderRemarks = "";
-		String teacherRemarks = "";
 		TeamTmp tt = new TeamTmp();
 		//队伍名称
 		String teamName = request.getParameter("teamName");
@@ -155,67 +154,27 @@ public class TeamTmpController extends BaseController {
 		tt.setRz(rz);
 		teamTmpService.save(tt);
 
-		TeamMemberTmp leader = new TeamMemberTmp();
-		leader.setTeamTmp(tt);
-		//领队姓名
-		String leaderName = request.getParameter("leaderName");
-		//领队电话
-		String leaderPhone = request.getParameter("leaderPhone");
-		//领队身份证号
-		String leaderCard = request.getParameter("leaderCardNo");
-		leader.setName(leaderName);
-		leader.setPhone(leaderPhone);
-		leader.setCardNo(leaderCard);
-		leader.setRole("1");//1领队
+		TeamMemberTmp member = new TeamMemberTmp();
+		member.setTeamTmp(tt);
+		String name = request.getParameter("name");
+		String playerNum = request.getParameter("playerNum");
+		String phone = request.getParameter("phone");
+		String idNo = request.getParameter("idNo");
+		String height = request.getParameter("height");
+		String weight = request.getParameter("weight");
+		member.setName(name);
+		member.setPhone(phone);
+		member.setCardNo(idNo);
+		member.setPlayerNum(Integer.valueOf(playerNum));
+		member.setHeight(Integer.valueOf(height));
+		member.setWeight(Integer.valueOf(weight));
+		member.setRole("1");//1领队
 		MultipartFile leaderImg = request.getFile("leaderFiles");
-		leaderRemarks += dealAtt(leaderImg,leader);
+		leaderRemarks += dealAtt(leaderImg,member);
 		MultipartFile leaderCardImg = request.getFile("leaderCard");
-		leaderRemarks += dealAtt(leaderCardImg,leader);
-		leader.setRemarks(leaderRemarks);
-		teamMemberTmpService.save(leader);
-
-		TeamMemberTmp teacher = new TeamMemberTmp();
-		teacher.setTeamTmp(tt);
-		//教练姓名
-		String teacherName = request.getParameter("teacherName");
-		if(StringUtils.isNotBlank(teacherName)){
-			//教练电话
-			String teacherPhone = request.getParameter("teacherPhone");
-			//教练身份证号
-			String teacherCard = request.getParameter("teacherCard");
-			teacher.setName(teacherName);
-			teacher.setPhone(teacherPhone);
-			teacher.setCardNo(teacherCard);
-			teacher.setRole("2");//2教练
-			MultipartFile teacherImg = request.getFile("teacherFiles");
-			teacherRemarks += dealAtt(teacherImg,teacher);
-			MultipartFile teacherCardImg = request.getFile("teacherCard");
-			teacherRemarks += dealAtt(teacherCardImg,teacher);
-			teacher.setRemarks(teacherRemarks);
-			teamMemberTmpService.save(teacher);
-		}
-
-		for(int i = 0 ;i<mNum;i++){
-			String remarks = "";
-			TeamMemberTmp memberTmp = new TeamMemberTmp();
-			memberTmp.setTeamTmp(tt);
-			//教练姓名
-			String name = request.getParameter("name["+i+"]");
-			//教练电话
-			String phone = request.getParameter("phone["+i+"]");
-			//教练身份证号
-			String card = request.getParameter("card["+i+"]");
-			memberTmp.setName(name);
-			memberTmp.setPhone(phone);
-			memberTmp.setCardNo(card);
-			memberTmp.setRole("3");//3普通队员
-			MultipartFile img = request.getFile("files["+i+"]");
-			remarks += dealAtt(img,memberTmp);
-			MultipartFile cardImg = request.getFile("cardFile["+i+"]");
-			remarks += dealAtt(cardImg,memberTmp);
-			memberTmp.setRemarks(remarks);
-			teamMemberTmpService.save(memberTmp);
-		}
+		leaderRemarks += dealAtt(leaderCardImg,member);
+		member.setRemarks(leaderRemarks);
+		teamMemberTmpService.save(member);
 		JSONObject j = new JSONObject();
 		j.put("status","success");
 		j.put("msg","报名成功");

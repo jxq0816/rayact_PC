@@ -16,7 +16,7 @@ public class TeamMemberTmp extends DataEntity<TeamMemberTmp> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// name
 	private String phone;		// phone
-	private String role;		// role
+	private String role;		// role 1:领队 2:教练 3:普通队员
 	private String cardNo;		// card_no
 	private String teamNo;
 	private TeamTmp teamTmp;		// team_id
