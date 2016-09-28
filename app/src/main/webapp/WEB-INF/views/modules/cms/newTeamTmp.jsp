@@ -63,7 +63,7 @@
 			<div>
 				<div class="s1">队名：</div><input id="teamName" type="text" name="teamName" onchange="checkSame(this)">
 			</div>
-			<div>
+		<%--	<div>
 				<div class="s1">参赛组别：</div><select id="zb" name="zb">
 				<option value="U16">U16</option>
 				<option value="U18">U18</option>
@@ -75,7 +75,7 @@
 				<option value="5">五人制</option>
 				<option value="8">八人制</option>
 			</select>
-			</div>
+			</div>--%>
 		</div>
 		<div style="align:center;">
 			<div onclick="step01next()" class="jump">下一步</div>
@@ -169,11 +169,9 @@
 	var index = 0;
 	function step01next(){
 		var rz = $("#rz").val();
-		var zb = $("#zb").val();
+		/*var zb = $("#zb").val();*/
 		var teamName = $("#teamName").val();
-		if((rz=="5"&&zb=="U23")||(rz=="8"&&zb=="U16")){
-			alert("五人制只能报U16和U18,八人制只能报U18和U23！");
-		}else if($.trim(teamName)==""){
+		if($.trim(teamName)==""){
 			alert("请填写队名！");
 		}else{
 			$("#step01").hide();
@@ -327,7 +325,7 @@
 		$("#dataWrap").append(html);
 	}
 
-	function checkIdcard(num,role,zb,rz)
+	function checkIdcard(num)
 	{
 		num = num.toUpperCase();
 //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
@@ -347,8 +345,8 @@
 
 //检查生日日期是否正确
 			var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-			if('19'+arrSplit[2]>'1998'&&role=="1"){
-				alert("领队或教练必须在18岁以上");
+			if('19'+arrSplit[2]>'1992'){
+				alert("必须在24岁以上");
 				return false;
 			}
 			var bGoodDay;
@@ -381,33 +379,14 @@
 
 //检查生日日期是否正确
 			var dtmBirth = new Date(arrSplit[2] + "/" + arrSplit[3] + "/" + arrSplit[4]);
-			if(arrSplit[2]>'1998'&&role=="1"){
-				alert("领队或教练必须在18岁以上");
-				return false;
-			}
-			if(zb=="U16"&&arrSplit[2]<'2000'&&role=="3"){
-				alert("U16需要队员身份证的出生日期在2000.01.01以后");
-				return false;
-			}
-			if(zb=="U23"&&arrSplit[2]<'1993'&&role=="3"){
-				alert("U23需要队员身份证的出生日期在1993.01.01以后");
-				return false;
-			}
-			if(rz=="5"&&zb=="U18"&&(arrSplit[2]<'1997'||arrSplit[2]=='1997'&&arrSplit[3]<'09')&&role=="3"){
-				alert("U18五人制需要队员身份证的出生日期在1997.09.01以后");
-				return false;
-			}
-			if(rz=="8"&&zb=="U18"&&arrSplit[2]<'1998'&&role=="3"){
-				alert("U18八人制需要队员身份证的出生日期在1998.01.01以后");
+			if(arrSplit[2]>'1992'){
+				alert("年龄必须在24岁以上");
 				return false;
 			}
 			var bGoodDay;
 			bGoodDay = (dtmBirth.getFullYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4]));
 			if (!bGoodDay)
 			{
-//alert(dtmBirth.getYear());
-//alert(arrSplit[2]);
-//alert('输入的身份证号里出生日期不对！');
 				return false;
 			}
 			else
@@ -425,7 +404,6 @@
 				valnum = arrCh[nTemp % 11];
 				if (valnum != num.substr(17, 1))
 				{
-//alert('18位身份证的校验码不正确！应该为：' + valnum);
 					return false;
 				}
 				return true;
