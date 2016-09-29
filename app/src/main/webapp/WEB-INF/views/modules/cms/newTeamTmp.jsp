@@ -187,6 +187,8 @@
 		var flag = true;
 		var idNo = $("input[name='idNo']").val();
 		var phone = $("input[name='phone']").val();
+		var height = $("input[name='height']").val();
+		var weight = $("input[name='weight']").val();
 		$("#baseDataWrap input").each(function(){
 			if($(this).val()==""){
 				flag=false;
@@ -194,6 +196,16 @@
 		});
 		if(flag==false){
 			alert("请完善信息！");
+			return;
+		}
+		if(isNaN(height)){
+			alert("身高必须为数字");
+			flag=false;
+			return;
+		}
+		if(isNaN(weight)){
+			alert("鞋码必须为数字");
+			flag=false;
 			return;
 		}
 		if(checkMobile(phone)==false){

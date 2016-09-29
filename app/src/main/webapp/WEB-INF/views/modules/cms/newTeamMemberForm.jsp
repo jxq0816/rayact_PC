@@ -88,13 +88,13 @@
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身高：</div>
 					<div class="col-xs-8">
-						<input type="text" name="height" class="form-control" value="${query.height}"/>
+						<input type="text" id="height" name="height" class="form-control" value="${query.height}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">鞋码：</div>
 					<div class="col-xs-8">
-						<input type="text" name="weight" class="form-control" value="${query.weight}"/>
+						<input type="text" id="weight" name="weight" class="form-control" value="${query.weight}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
@@ -140,6 +140,18 @@
 		}
 		var idNo = $("input[name='idNo']").val();
 		var phone = $("input[name='phone']").val();
+		var height = $("input[name='height']").val();
+		var weight = $("input[name='weight']").val();
+		if(isNaN(height)){
+			alert("身高必须为数字");
+			flag=false;
+			return;
+		}
+		if(isNaN(weight)){
+			alert("鞋码必须为数字");
+			flag=false;
+			return;
+		}
 		if($.trim(idNo)==""){
 			alert("请填写身份证号码！");
 			flag=false;
