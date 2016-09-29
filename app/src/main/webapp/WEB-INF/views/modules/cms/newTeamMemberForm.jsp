@@ -104,16 +104,21 @@
 					</div>
 				</div>
 				<div class="picFiles_preview row" style="background-color: #ffffff;margin: 2px">
-
+				</div>
+				<div class="row" style="background-color: #ffffff;">
+					<img src="${ctxStatic}/images/sfz.png">
 				</div>
 
 				<div class="row col-xs-12">
-					<div class="col-xs-4">白底一寸免冠照片：</div>
+					<div class="col-xs-4">电子版身份证：</div>
 					<div class="col-xs-2">
 						<input id="idCardFiles" name="idCardFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.idCardFiles_preview')"/>
 					</div>
 				</div>
-				<div class="idCardFiles_preview row" style="background-color: #ffffff;margin: 2px">
+				<div class="idCardFiles_preview row" style="background-color: #ffffff;">
+				</div>
+				<div class="row" style="background-color: #ffffff;">
+					<img src="${ctxStatic}/images/dzsfz.png">
 				</div>
 
 			</div>

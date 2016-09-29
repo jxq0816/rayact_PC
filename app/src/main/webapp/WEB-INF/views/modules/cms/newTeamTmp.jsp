@@ -134,7 +134,9 @@
 					</div>
 				</div>
 				<div class="picFiles_preview row" style="background-color: #ffffff;margin: 2px">
-
+				</div>
+				<div class="row" style="background-color: #ffffff;">
+					<img src="${ctxStatic}/images/sfz.png">
 				</div>
 
 				<div class="row col-xs-12">
@@ -144,6 +146,9 @@
 					</div>
 				</div>
 				<div class="idCardFiles_preview row" style="background-color: #ffffff;margin: 2px">
+				</div>
+				<div class="row" style="background-color: #ffffff;">
+					<img src="${ctxStatic}/images/dzsfz.png">
 				</div>
 
 			</div>
