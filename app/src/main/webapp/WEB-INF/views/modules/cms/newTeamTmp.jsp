@@ -13,79 +13,68 @@
 </head>
 <body style="font-family: Microsoft Yahei">
 <style>
-	.step{
-		margin: 2px;
-		margin-top: 40px;
-	}
-	.s1{
-		display: inline-block;
-		width: 100px;
-	}
 	.s2{
 		display: inline-block;
 		width: 120px;
 	}
-	.s3{
-		display: inline-block;
-		width: 110px;
-	}
-	.item{
-		border-bottom: 1px solid #000000;
-		margin: 5px 0;
-	}
 	.jump{
 		text-align:center;
 		font-size: 30px;
-		padding: 10px;
 		background-color: #000000;
-		width: 40%;
 		display: inline-block;
-		margin: 5px;
 		color: #ffffff;
+	}
+	.row{
+		margin-bottom: 20px;
+		margin-right: 0px;
+		margin-left: 0px;
+	}
+	.btn-primary{
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
 	}
 </style>
 <div style="width: 100%;text-align: center">
 	<p style="color: #000000;font-size: 28px;margin: 50px 0;line-height:30px">2016青草足球秋季联赛报名</p>
 </div>
 <form id="teamForm" name="teamForm">
-	<div id="step01" class="step">
+	<div id="step01">
 		<div style="font-size: 15px;">
-			<div class="col-xs-12">
-				<div class="col-xs-2">队名：</div>
-				<div class="col-xs-10">
+			<div class="row col-xs-12">
+				<div class="col-xs-4">队名：</div>
+				<div class="col-xs-8">
 					<input id="teamName" class="form-control" type="text" name="teamName" onchange="checkSame(this)">
 				</div>
 			</div>
-			<div class="col-xs-12">
-				<div class="col-xs-2">参赛组别：</div>
-				<div class="col-xs-10">
-					<select id="zb" name="zb">
+			<div class="row col-xs-12">
+				<div class="col-xs-4">参赛组别：</div>
+				<div class="col-xs-8">
+					<select id="zb" name="zb" style="width:100%">
 						<option value="U23">U23</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-xs-12">
-				<div class="col-xs-2">参赛制式：</div>
-				<div class="col-xs-10">
-					<select id="rz" name="rz">
+			<div class="row col-xs-12">
+				<div class="col-xs-4">参赛制式：</div>
+				<div class="col-xs-8">
+					<select id="rz" name="rz" style="width:100%">
 						<option value="8">八人制</option>
 					</select>
 				</div>
 			</div>
 		</div>
-		<div style="align:center;">
-			<div onclick="step01next()" class="jump">下一步</div>
-			<div onclick="backToIndex()" class="jump">返回主页</div>
+		<div class="row col-xs-12" style="align:center;">
+			<div onclick="step01next()" class="btn-primary col-xs-5">下一步</div>
+			<div class="col-xs-2"></div>
+			<div onclick="backToIndex()" class="btn-primary col-xs-5">返回主页</div>
 		</div>
 	</div>
 	<div class="step" style="display: none" id="step02">
 		<div style="font-size: 15px">
 			<div class="row" id="baseDataWrap">
-				<div class="col-xs-12">
-					<div class="col-xs-2">
-						<label>角色</label>
-					</div>
-					<div class="col-xs-10">
+				<div class="row col-xs-12">
+					<div class="col-xs-12">
 						<label class="checkbox-inline">
 							<input type="checkbox" name="role" value="1"> 领队
 						</label>
@@ -100,66 +89,67 @@
 						</label>
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">姓名：</div>
-					<div class="col-xs-10">
+				<div class="row col-xs-12">
+					<div class="col-xs-4">姓名：</div>
+					<div class="col-xs-8">
 						<input type="text" class="form-control" name="name" />
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">球衣号码：</div>
-					<div class="col-xs-10">
+				<div class="row col-xs-12">
+					<div class="col-xs-4">球衣号码：</div>
+					<div class="col-xs-8">
 						<input type="text" class="form-control" name="playerNum"/>
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">身份证号：</div>
-					<div class="col-xs-10">
-						<input type="text" name="idNo" class="control"/>
+				<div class="row col-xs-12">
+					<div class="col-xs-4">身份证号：</div>
+					<div class="col-xs-8">
+						<input type="text" name="idNo" class="form-control"/>
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">联系电话：</div>
-					<div class="col-xs-10">
-						<input type="text" name="phone" class="control"/>
+				<div class="row col-xs-12">
+					<div class="col-xs-4">联系电话：</div>
+					<div class="col-xs-8">
+						<input type="text" name="phone" class="form-control"/>
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">身高：</div>
-					<div class="col-xs-10">
-						<input type="text" name="height" class="control"/>
+				<div class="row col-xs-12">
+					<div class="col-xs-4">身高：</div>
+					<div class="col-xs-8">
+						<input type="text" name="height" class="form-control"/>
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">鞋码：</div>
-					<div class="col-xs-10">
-						<input type="text" name="weight" class="control"/>
+				<div class="row col-xs-12">
+					<div class="col-xs-4">鞋码：</div>
+					<div class="col-xs-8">
+						<input type="text" name="weight" class="form-control"/>
 					</div>
 				</div>
-				<div class="col-xs-12">
-					<div class="col-xs-2">白底一寸免冠照片：</div>
+				<div class="row col-xs-12">
+					<div class="col-xs-4">白底一寸免冠照片：</div>
 					<div class="col-xs-2">
 						<input id="leaderFiles" name="picFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.picFiles_preview')"/>
 					</div>
-					<div class="picFiles_preview col-xs-8" style="background-color: #ffffff;margin: 2px">
+				</div>
+				<div class="picFiles_preview row" style="background-color: #ffffff;margin: 2px">
 
-					</div>
 				</div>
 
 				<div class="col-xs-12">
-					<div class="col-xs-2">白底一寸免冠照片：</div>
+					<div class="col-xs-4">白底一寸免冠照片：</div>
 					<div class="col-xs-2">
 						<input id="idCardFiles" name="idCardFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.idCardFiles_preview')"/>
 					</div>
-						<div class="idCardFiles_preview col-xs-8" style="background-color: #ffffff;margin: 2px">
+					<div class="idCardFiles_preview row" style="background-color: #ffffff;margin: 2px">
 					</div>
 				</div>
 
 			</div>
 		</div>
-		<div style="align:center;">
-			<div onclick="step02prev()"  class="jump" >上一步</div>
-			<div onclick="step02next()" class="jump"  >下一步</div>
+		<div class="row col-xs-12" style="align:center;">
+			<div onclick="step02prev()" class="btn-primary col-xs-5">上一步</div>
+			<div class="col-xs-2"></div>
+			<div onclick="step02next()" class="btn-primary col-xs-5">下一步</div>
 		</div>
 	</div>
 	<div class="step" style="display: none" id="step03">
@@ -392,14 +382,19 @@
 
 	function checkSame(dom){
 		var name = $(dom).val();
+		var flag=false;
 		if($.trim(name)!=""){
 			$.get("${ctx}/cms/teamTmp/app/checkSame?name="+name,function(data){
 				if(data=="true"){
 					$(dom).val("");
 					alert("已有同名的队伍了！");
+					flag=true;
+				}else{
+					flag=false;
 				}
 			})
 		}
+		return flag;
 	}
 	function checkIdCard(dom){
 		var card = $(dom).val();

@@ -26,8 +26,8 @@
 			display:inline-block
 		}
 		.a_content img{
-			width: 100%;
-		}
+			 width: 100%;
+		 }
 	</style>
 	<script>
 		function jumpToApp(){

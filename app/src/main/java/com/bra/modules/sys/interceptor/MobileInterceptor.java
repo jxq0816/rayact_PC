@@ -4,8 +4,6 @@
 package com.bra.modules.sys.interceptor;
 
 import com.bra.common.service.BaseService;
-import com.bra.common.utils.StringUtils;
-import com.bra.common.utils.UserAgentUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,9 +28,9 @@ public class MobileInterceptor extends BaseService implements HandlerInterceptor
 			ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null){
 			// 如果是手机或平板访问的话，则跳转到手机视图页面。
-			if(UserAgentUtils.isMobileOrTablet(request) && !StringUtils.startsWithIgnoreCase(modelAndView.getViewName(), "redirect:")){
+			/*if(UserAgentUtils.isMobileOrTablet(request) && !StringUtils.startsWithIgnoreCase(modelAndView.getViewName(), "redirect:")){
 				modelAndView.setViewName("mobile/" + modelAndView.getViewName());
-			}
+			}*/
 		}
 	}
 

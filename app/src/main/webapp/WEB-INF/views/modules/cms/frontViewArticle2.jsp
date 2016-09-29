@@ -8,9 +8,11 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/remodal/remodal.min.js" type="text/javascript"></script>
+	<script src="${ctxStatic}/sinaEmotion/jquery.sinaEmotion.js" type="text/javascript"></script>
 	<link href="${ctxStatic}/remodal/remodal.css" type="text/css" rel="stylesheet" />
 	<link href="${ctxStatic}/remodal/remodal-default-theme.css" type="text/css" rel="stylesheet" />
 	<link href="${ctxStatic}/bootstrap/2.3.1/css_default/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="${ctxStatic}/sinaEmotion/jquery.sinaEmotion.css" />
 	<style>
 		.reply{
 			margin:2px 0px;
@@ -39,7 +41,8 @@
 		.sub_subject{
 			border-bottom:1px solid #ddd;
 			padding:10px;
-			margin:15px 0;
+			margin-top: 15px;
+			margin-bottom: 15px;
 			font-size:15px;
 			line-height: 150%
 		}
@@ -96,6 +99,34 @@
 		.item_comment{
 			color:#555555;display: inline-block;font-size: 40px;margin-left: 100px;
 		}
+		.btnsend{
+			width: 17%;
+			border: 1px solid #f0860c;
+			border-radius: 4px;
+			background-color:#ffffff;
+			text-align: center;
+			height: 25px;
+			color:#f0860c;
+			margin: 3px;
+			float: right
+		}
+		.btnclear{
+			width: 17%;
+			border: 1px solid #f0860c;
+			border-radius: 4px;
+			text-align: center;
+			height: 25px;
+			color:#f0860c;
+			margin: 3px;
+			float: left
+		}
+		.editIcon{
+			position: fixed;
+			bottom: 10px;
+			right: 10px;
+			opacity:0.8;
+			filter:alpha(opacity=80);
+		}
 	</style>
 	<script>
 		function jumpToInfo(dom){
@@ -118,7 +149,19 @@
 </div>
 <div class="row" style="border-top: 1px solid #c8c8c8;width: 100%;margin-top: 5px;padding-top: 5px">
 	<div class="head postSubject">评论(${count})</div>
-	<div id="wrapper" style="position: relative;top:5px;background: #ffffff">
+	<div style="width: 100%;font-size: 17px;height: 100px">
+		<form name="post">
+			<textarea  class="emotion" name="content" style="width: 100%;margin-bottom: 0;" placeholder="我来说几句"></textarea>
+			<input type="hidden" name="remarks"/>
+			<input type="hidden" name="replyId"/>
+			<input type="hidden" name="contentId" value="${article.id}"/>
+			<a href="#modal" style="display: none" class="alertBtn"></a>
+			<div class="btnsend" onclick="postToMain();">发送</div>
+			<div class="btnclear"  onclick="postClear();">清空</div>
+			<div id="face" class="btnclear">表情</div>
+		</form>
+	</div>
+	<div id="wrapper" style="background: #ffffff">
 		<ul style="margin-left: 0;margin-bottom: 0">
 		</ul>
 	</div>
@@ -126,35 +169,56 @@
 <div style="width: 100%;text-align: center;display: none;height:35px" class="more">
 	加载更多......
 </div>
-<div style="width: 100%;height:35px;background: #ffffff;">
-</div>
-<div style="position: fixed;bottom: 0;width: 100%;z-index: 100;height:35px;background: #ffffff;font-size: 17px ">
-	<form name="post">
-		<input type="text" style="width: 80%" name="content"/>
-		<input type="hidden" name="remarks"/>
-		<input type="hidden" name="replyId"/>
-		<input type="hidden" name="contentId" value="${article.id}"/>
-		<a href="#modal" style="display: none" class="alertBtn"></a>
-		<div style="width: 17%;display: inline-block;border: 1px solid #cccccc;border-radius: 4px;text-align: center;margin-bottom: 13px;height: 23px;position: relative;bottom: 2px" onclick="postToMain();">发送</div>
-	</form>
-</div>
 <div class="remodal" data-remodal-id="modal">
-	<button data-remodal-action="close" class="remodal-close"></button>
-	<p>提示</p>
 	<p class="alterInfo">
 
 	</p>
 	<br>
-	<button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+	<button data-remodal-action="confirm" class="remodal-confirm" style="background-color: #f0860c;">确定</button>
 </div>
+<img src="${ctxStatic}/images/bianji@2x.png"  class="editIcon" onclick="postFocus()"/>
 <script type="text/javascript">
+	// 绑定表情
+	$('#face').SinaEmotion($('.emotion'));
+	var client = "${param.client}";
 	var f_flag = true;
 	var pageNo = 0;
 	var count = 5;
 	var contentId = "${article.id}";
 	$(function(){
-		loadMore();
+		var app_id = '1708665333';
+		$.ajax( {
+			dataType : 'jsonp',
+			url : 'https://api.weibo.com/2/emotions.json?source=' + app_id,
+			success : function(response) {
+				var data = response.data;
+				for ( var i in data) {
+					if (data[i].category == '') {
+						data[i].category = '默认';
+					}
+					if (emotions[data[i].category] == undefined) {
+						emotions[data[i].category] = new Array();
+						categorys.push(data[i].category);
+					}
+					emotions[data[i].category].push( {
+						name : data[i].phrase,
+						icon : data[i].icon
+					});
+					uSinaEmotionsHt.put(data[i].phrase, data[i].icon);
+				}
+				loadMore();
+			}
+		});
 	});
+	function postClear(){
+		$("textarea[name='content']").val('');
+		$("input[name='remarks']").val("");
+		$("input[name='replyId']").val("");
+		$("textarea[name='content']").attr("placeholder","我来说几句");
+	}
+	function postFocus(){
+		$("textarea[name='content']").focus();
+	}
 	function loadMore(){
 		$('.more').show();
 		pageNo++;
@@ -181,7 +245,7 @@
 						"<span style='color:#7a7a7a; font-size: 15px'>"+tmp.createDate+"</span>"+
 						"</div>"+
 						"<img src='${ctxStatic}/images/btn-huifu-h@2x.png' height='25px' width='40px' style='float: right;display: inline-block;' onclick='postToForm(this);'/>"+
-						"<div class='post_content'>"+tmp.content+"</div>"+
+						"<div class='post_content'>"+AnalyticEmotion(tmp.content)+"</div>"+
 						"</div>"+
 						"</li>";
 				$("#wrapper ul").append(html);
@@ -194,11 +258,11 @@
 		var id = $(dom).attr("id");
 		$("input[name='remarks']").val(id);
 		$("input[name='replyId']").val(cid);
-		$("input[name='content']").attr("placeholder","@"+name+":");
-		$("input[name='content']").focus();
+		$("textarea[name='content']").attr("placeholder","@"+name+":");
+		$("textarea[name='content']").focus();
 	}
 	function postToMain(){
-		if($.trim($("input[name='content']").val())==""){
+		if($.trim($("textarea[name='content']").val())==""){
 			$(".alterInfo").html("请输入内容");
 			$(".alertBtn")[0].click();
 		}else{
@@ -210,8 +274,8 @@
 				$("#wrapper ul").html("");
 				$("input[name='remarks']").val("");
 				$("input[name='replyId']").val("");
-				$("input[name='content']").attr("placeholder","");
-				$("input[name='content']").val("");
+				$("textarea[name='content']").attr("placeholder","我来说几句");
+				$("textarea[name='content']").val('');
 				//location.reload();
 			});
 		}
@@ -223,8 +287,18 @@
 		var scrollTop = $(window).scrollTop();
 		var scrollHeight = screen.height;
 		var windowHeight = $("body").height();
-		if(scrollTop + scrollHeight == windowHeight){
-			loadMore();
+		if("ios" == client){
+			if(scrollTop + scrollHeight - 110 == windowHeight){
+				loadMore();
+			}
+		}else if("android" == client){
+			if(scrollTop + scrollHeight - 110 == windowHeight){
+				loadMore();
+			}
+		}else{
+			if(scrollTop + scrollHeight == windowHeight){
+				loadMore();
+			}
 		}
 	});
 </script>

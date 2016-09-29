@@ -30,18 +30,18 @@
 	<p style="color: #000000;font-size: 28px;margin: 50px 0;line-height:30px">2016青草足球秋季联赛报名</p>
 </div>
 <div id="index" class="step">
-			<div style="font-size: 30px;text-align: center">
-					<div class="s1" onclick="jumpToApply();">创建球队</div>
-					<div class="s1" onclick="jumpToInfo();">已报名队伍查询</div>
-			</div>
+	<div style="font-size: 30px;text-align: center">
+		<div class="s1" onclick="jumpToApply();">创建球队</div>
+		<div class="s1" onclick="jumpToInfo();">已报名队伍查询</div>
+	</div>
 </div>
 <div class="step" style="display: none" id="search">
-			<div style="font-size: 30px;text-align: center">
-					<div class="s1">输入队名或领队姓名：</div>
-				    <input type="text" name="searchIndex" style="width: 100%;height: 50px"/>
-					<div class="s1" onclick="search()">查询</div>
-					<div class="s1" onclick="backToIndex();">返回主页</div>
-			</div>
+	<div style="font-size: 30px;text-align: center">
+		<div class="s1">输入队名或领队姓名：</div>
+		<input type="text" name="searchIndex" style="width: 100%;height: 50px"/>
+		<div class="s1" onclick="search()">查询</div>
+		<div class="s1" onclick="backToIndex();">返回主页</div>
+	</div>
 </div>
 <script>
 	function jumpToApply(){
