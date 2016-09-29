@@ -116,5 +116,15 @@ public class TeamMemberTmpController extends BaseController {
 			return "false";
 		}
 	}
+	@RequestMapping(value = "join/team")
+	public String joinTeam(String phone,Model model){
+		TeamMemberTmp member=new TeamMemberTmp();
+		member.setPhone(phone);
+		member=teamMemberTmpService.get(member);
+		List<TeamTmp> teamList = teamTmpService.findList(new TeamTmp());
+		model.addAttribute("teamList", teamList);
+		model.addAttribute("query", member);
+		return "modules/cms/newTeamMemberForm";
+	}
 
 }

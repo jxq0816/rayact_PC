@@ -27,6 +27,7 @@
 				${adminPath}/cms/teamMember/app/list = anon
 				${adminPath}/cms/teamMember/app/save = anon
 				${adminPath}/cms/teamMember/app/form = anon
+				${adminPath}/cms/teamMemberTmp/join/team = anon
 				${adminPath}/cms/team/app/list = anon
 				${adminPath}/cms/post/app/list = anon
 				${adminPath}/cms/post/app/ptp = anon

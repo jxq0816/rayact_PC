@@ -115,7 +115,7 @@ public class TeamTmpController extends BaseController {
 	}
 
 	@RequestMapping(value = "formToApp")
-	public String formToApp(HttpServletRequest request) {
+	public String formToApp() {
 		return "modules/cms/newTeamTmp";
 	}
 	@RequestMapping(value = "app/checkSame")

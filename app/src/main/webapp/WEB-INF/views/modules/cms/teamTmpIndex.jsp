@@ -32,6 +32,7 @@
 <div id="index" class="step">
 	<div style="font-size: 30px;text-align: center">
 		<div class="s1" onclick="jumpToApply();">创建球队</div>
+		<div class="s1" onclick="jumpToJoin();">加入球队</div>
 		<div class="s1" onclick="jumpToInfo();">已报名队伍查询</div>
 	</div>
 </div>
@@ -46,6 +47,9 @@
 <script>
 	function jumpToApply(){
 		window.open("${ctx}/cms/teamTmp/formToApp","_self");
+	}
+	function jumpToJoin(){
+		window.open("${ctx}/cms/teamMemberTmp/join/team","_self");
 	}
 	function jumpToInfo(){
 		$("#search").show();

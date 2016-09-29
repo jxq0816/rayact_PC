@@ -13,6 +13,17 @@
 </head>
 <body style="font-family: Microsoft Yahei">
 <style>
+	.s2{
+		display: inline-block;
+		width: 120px;
+	}
+	.jump{
+		text-align:center;
+		font-size: 30px;
+		background-color: #000000;
+		display: inline-block;
+		color: #ffffff;
+	}
 	.row{
 		margin-bottom: 20px;
 		margin-right: 0px;
@@ -28,50 +39,20 @@
 	<p style="color: #000000;font-size: 28px;margin: 50px 0;line-height:30px">2016青草足球秋季联赛报名</p>
 </div>
 <form id="teamForm" name="teamForm">
-	<div id="step01">
-		<div style="font-size: 15px;">
-			<div class="row col-xs-12">
-				<div class="col-xs-4">队名：</div>
-				<div class="col-xs-8">
-					<input id="teamName" class="form-control" type="text" name="teamName" onchange="checkSame(this)">
-				</div>
-			</div>
-			<div class="row col-xs-12">
-				<div class="col-xs-4">参赛组别：</div>
-				<div class="col-xs-8">
-					<select id="zb" name="zb" style="width:100%">
-						<option value="U23">U23</option>
-					</select>
-				</div>
-			</div>
-			<div class="row col-xs-12">
-				<div class="col-xs-4">参赛制式：</div>
-				<div class="col-xs-8">
-					<select id="rz" name="rz" style="width:100%">
-						<option value="8">八人制</option>
-					</select>
-				</div>
-			</div>
-			<div id="teamDataWrap">
-				<div class="row col-xs-12">
-					<div class="col-xs-4">队徽：</div>
-					<div class="col-xs-8">
-						<input id="logoFiles" name="logoFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.logoFiles_preview')"/>
-					</div>
-				</div>
-				<div class="row logoFiles_preview" style="background-color: #ffffff;">
-				</div>
-			</div>
-		</div>
-		<div class="row col-xs-12" style="align:center;">
-			<div onclick="step01next()" class="btn-primary col-xs-5">下一步</div>
-			<div class="col-xs-2"></div>
-			<div onclick="backToIndex()" class="btn-primary col-xs-5">返回主页</div>
-		</div>
-	</div>
-	<div class="step" style="display: none" id="step02">
+	<div class="step">
 		<div style="font-size: 15px">
 			<div class="row" id="baseDataWrap">
+				<div class="row col-xs-12">
+					<div class="col-xs-4">球队：</div>
+					<div class="col-xs-8">
+						<sys:select cssClass="input-large" name="teamTmp.id" id="team"
+									cssStyle="width:100%"
+									value="${query.teamTmp.id}"
+									items="${teamList}" itemLabel="name" itemValue="id"
+									defaultLabel="----请选择-----"
+									defaultValue=""></sys:select>
+					</div>
+				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-12">
 						<label class="checkbox-inline">
@@ -144,39 +125,16 @@
 				</div>
 
 			</div>
-		</div>wer
+		</div>
 		<div class="row col-xs-12" style="align:center;">
-			<div onclick="step02prev()" class="btn-primary col-xs-5">上一步</div>
-			<div class="col-xs-2"></div>
 			<div onclick="submitData(this)" class="btn-primary col-xs-5">保存</div>
+			<div class="col-xs-2"></div>
+			<div onclick="backToIndex()" class="btn-primary col-xs-5">返回主页</div>
 		</div>
 	</div>
 </form>
 <script>
 	var index = 0;
-	function step01next(){
-		var rz = $("#rz").val();
-		var teamName = $("#teamName").val();
-		var flag=true;
-		if($.trim(teamName)==""){
-			alert("请填写队名！");
-			flag=false;
-			return;
-		}
-		if($("#logoFiles").val()==""){
-			alert("请上传队徽！");
-			flag=false;
-			return;
-		}
-		if(checkSame(teamName)){
-			flag=false;
-			return;
-		}
-		if(flag){
-			$("#step01").hide();
-			$("#step02").show();
-		}
-	}
 	function step02prev(){
 		$("#step01").show();
 		$("#step02").hide();
