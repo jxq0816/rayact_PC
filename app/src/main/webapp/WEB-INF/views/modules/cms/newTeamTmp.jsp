@@ -63,6 +63,16 @@
 					</select>
 				</div>
 			</div>
+			<div id="teamDataWrap">
+				<div class="row col-xs-12">
+					<div class="col-xs-4">队徽：</div>
+					<div class="col-xs-8">
+						<input id="logoFiles" name="logoFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.logoFiles_preview')"/>
+					</div>
+				</div>
+				<div class="row logoFiles_preview" style="background-color: #ffffff;">
+				</div>
+			</div>
 		</div>
 		<div class="row col-xs-12" style="align:center;">
 			<div onclick="step01next()" class="btn-primary col-xs-5">下一步</div>
@@ -135,13 +145,13 @@
 
 				</div>
 
-				<div class="col-xs-12">
+				<div class="row col-xs-12">
 					<div class="col-xs-4">白底一寸免冠照片：</div>
 					<div class="col-xs-2">
 						<input id="idCardFiles" name="idCardFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.idCardFiles_preview')"/>
 					</div>
-					<div class="idCardFiles_preview row" style="background-color: #ffffff;margin: 2px">
-					</div>
+				</div>
+				<div class="idCardFiles_preview row" style="background-color: #ffffff;margin: 2px">
 				</div>
 
 			</div>
@@ -149,20 +159,7 @@
 		<div class="row col-xs-12" style="align:center;">
 			<div onclick="step02prev()" class="btn-primary col-xs-5">上一步</div>
 			<div class="col-xs-2"></div>
-			<div onclick="step02next()" class="btn-primary col-xs-5">下一步</div>
-		</div>
-	</div>
-	<div class="step" style="display: none" id="step03">
-		<div id="dataWrap">
-			<div>
-				<div class="s2">队徽：</div><input id="logoFiles" name="logoFiles" type="file"  accept="image/png,image/gif,image/jpeg" onchange="previewPic(this,'.logoFiles_preview')"/>
-				<div class="logoFiles_preview" style="background-color: #ffffff;margin: 2px">
-				</div>
-			</div>
-		</div>
-		<div style="align:center">
-			<div onclick="step03prev()" class="jump" >上一步</div>
-			<div onclick="submitData(this)" class="jump" >提交</div>
+			<div onclick="submitData(this)" class="btn-primary col-xs-5">保存</div>
 		</div>
 	</div>
 </form>
@@ -171,18 +168,29 @@
 	function step01next(){
 		var rz = $("#rz").val();
 		var teamName = $("#teamName").val();
+		var flag=true;
 		if($.trim(teamName)==""){
 			alert("请填写队名！");
-		}else{
+			flag=false;
+			return;
+		}
+		if($("#logoFiles").val()==""){
+			alert("请上传队徽！");
+			flag=false;
+			return;
+		}
+		if(checkSame(teamName)){
+			flag=false;
+			return;
+		}
+		if(flag){
 			$("#step01").hide();
 			$("#step02").show();
-			$("#step03").hide();
 		}
 	}
 	function step02prev(){
 		$("#step01").show();
 		$("#step02").hide();
-		$("#step03").hide();
 	}
 	function step02next(){
 		var flag = true;
@@ -203,15 +211,9 @@
 		if(checkIdcard(idNo)){
 			$("#step01").hide();
 			$("#step02").hide();
-			$("#step03").show();
 		}else{
 			alert("身份证号码有误！");
 		}
-	}
-	function step03prev(){
-		$("#step01").hide();
-		$("#step02").show();
-		$("#step03").hide();
 	}
 	function submitData(dom){
 		var allFlag = true;
@@ -251,7 +253,7 @@
 					window.open("${ctx}/cms/teamTmp/teamIndex","_self");
 				}
 			};
-			if(confirm("本次报名暂无修改入口，您确认信息填写无误吗？")){
+			if(confirm("您确认信息填写无误吗？")){
 				$('#teamForm').ajaxSubmit(options);
 			}
 		}
@@ -312,8 +314,8 @@
 
 //检查生日日期是否正确
 			var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-			if('19'+arrSplit[2]>'1992'){
-				alert("必须在24岁以上");
+			if('19'+arrSplit[2]<'1992'){
+				alert("必须在24岁以下");
 				return false;
 			}
 			var bGoodDay;
