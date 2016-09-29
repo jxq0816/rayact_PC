@@ -1,0 +1,3 @@
+http://192.168.3.199:8080/app/a/cms/teamMemberTmp/join/team
+一、请求参数:
+phone:手机号 String
