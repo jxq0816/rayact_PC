@@ -144,7 +144,7 @@
 				</div>
 
 			</div>
-		</div>wer
+		</div>
 		<div class="row col-xs-12" style="align:center;">
 			<div onclick="step02prev()" class="btn-primary col-xs-5">上一步</div>
 			<div class="col-xs-2"></div>
@@ -181,51 +181,28 @@
 		$("#step01").show();
 		$("#step02").hide();
 	}
-	function step02next(){
+	function submitData(dom){
 		var flag = true;
+		var idNo = $("input[name='idNo']").val();
 		$("#baseDataWrap input").each(function(){
 			if($(this).val()==""){
 				flag=false;
 			}
 		});
-		if(!flag){
-			alert("信息需要完善！");
+		if(flag==false){
+			alert("请完善信息！");
 			return;
 		}
-		var idNo = $("input[name='idNo']").val();
-		if($.trim(idNo)==""){
-			alert("请填写身份证号码！");
-			return;
-		}
-		if(checkIdcard(idNo)){
-			$("#step01").hide();
-			$("#step02").hide();
-		}else{
+		if(checkIdCard(idNo)==false){
 			alert("身份证号码有误！");
-		}
-	}
-	function submitData(dom){
-		var allFlag = true;
-		var rightFlag = true;
-		$("#dataWrap input").each(function(){
-			if($(this).val()==""){
-				allFlag=false;
-			}
-		});
-		if(!allFlag){
-			alert("请完善队员信息。");
 			return;
+			flag=false;
 		}
-		$("input[name^='card'][type='text']").each(function(){
-			if(!checkIdcard($(this).val())){
-				rightFlag = false;
-			}
-		});
-		if(!rightFlag){
-			alert("请检查身份证信息。");
+		if(checkIdCardSame(idNo)==true){
 			return;
+			flag=false;
 		}
-		if(allFlag&&rightFlag){
+		if(flag){
 			$(dom).attr("onclick","");
 			var options={
 				type:"post",
@@ -283,7 +260,7 @@
 		}
 	}
 
-	function checkIdcard(num)
+	function checkIdCard(num)
 	{
 		num = num.toUpperCase();
 //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
@@ -387,17 +364,20 @@
 		}
 		return flag;
 	}
-	function checkIdCard(dom){
+	function checkIdCardSame(dom){
 		var card = $(dom).val();
 		var rz = $("#rz").val();
+		var rs=false;
 		if($.trim(card)!=""){
 			$.get("${ctx}/cms/teamMemberTmp/app/checkIdCard?card="+card+"&rz="+rz,function(data){
 				if(data=="true"){
 					$(dom).val("");
 					alert("该身份证信息已经在同一组别中报过名了！");
+					rs=true;
 				}
 			})
 		}
+		return rs;
 	}
 	function backToIndex(){
 		window.open("${ctx}/cms/teamTmp/teamIndex","_self");
