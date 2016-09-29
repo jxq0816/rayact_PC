@@ -18,7 +18,7 @@ function checkIdCard(num)
 
 //检查生日日期是否正确
         var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
-        if('19'+arrSplit[2]<'1992'){
+        if(arrSplit[2]<'92'){
             alert("必须在24岁以下");
             return false;
         }
@@ -52,7 +52,7 @@ function checkIdCard(num)
 
 //检查生日日期是否正确
         var dtmBirth = new Date(arrSplit[2] + "/" + arrSplit[3] + "/" + arrSplit[4]);
-        if(arrSplit[2]>'1992'){
+        if(arrSplit[2]<'1992'){
             alert("年龄必须在24岁以上");
             return false;
         }
