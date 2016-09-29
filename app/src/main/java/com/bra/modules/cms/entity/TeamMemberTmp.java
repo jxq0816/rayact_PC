@@ -22,7 +22,7 @@ public class TeamMemberTmp extends DataEntity<TeamMemberTmp> {
 	private TeamTmp teamTmp;		// team_id
 	private Integer playerNum;//队员编号
 	private Integer height;//身高
-	private Integer weight;//体重
+	private Integer weight;//鞋码
 
 	public TeamMemberTmp() {
 		super();

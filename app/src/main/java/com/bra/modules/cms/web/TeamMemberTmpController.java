@@ -134,10 +134,10 @@ public class TeamMemberTmpController extends BaseController {
 	public String joinTeam(String phone,Model model){
 		TeamMemberTmp member=new TeamMemberTmp();
 		member.setPhone(phone);
-		member=teamMemberTmpService.get(member);
+		List<TeamMemberTmp> memberList = teamMemberTmpService.findList(member);
 		List<TeamTmp> teamList = teamTmpService.findList(new TeamTmp());
 		model.addAttribute("teamList", teamList);
-		model.addAttribute("query", member);
+		model.addAttribute("query", (memberList!=null&&memberList.size()!=0)?memberList.get(0):null);
 		return "modules/cms/newTeamMemberForm";
 	}
 

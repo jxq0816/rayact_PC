@@ -61,37 +61,37 @@
 				<div class="row col-xs-12">
 					<div class="col-xs-4">姓名：</div>
 					<div class="col-xs-8">
-						<input type="text" class="form-control" name="name" />
+						<input type="text" class="form-control" name="name" value="${query.name}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">球衣号码：</div>
 					<div class="col-xs-8">
-						<input type="text" class="form-control" name="playerNum"/>
+						<input type="text" class="form-control" name="playerNum" value="${query.playerNum}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身份证号：</div>
 					<div class="col-xs-8">
-						<input type="text" name="idNo" class="form-control"/>
+						<input type="text" name="idNo" class="form-control" value="${query.cardNo}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">联系电话：</div>
 					<div class="col-xs-8">
-						<input type="text" name="phone" class="form-control"/>
+						<input type="text" name="phone" class="form-control" value="${query.phone}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身高：</div>
 					<div class="col-xs-8">
-						<input type="text" name="height" class="form-control"/>
+						<input type="text" name="height" class="form-control" value="${query.height}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">鞋码：</div>
 					<div class="col-xs-8">
-						<input type="text" name="weight" class="form-control"/>
+						<input type="text" name="weight" class="form-control" value="${query.weight}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">

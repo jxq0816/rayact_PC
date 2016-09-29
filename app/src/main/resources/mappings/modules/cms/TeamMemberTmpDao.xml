@@ -10,6 +10,8 @@
 		a.card_no AS "cardNo",
 		a.team_no AS "teamNo",
 		a.player_num AS "playerNum",
+		a.height AS "height",
+		a.weight AS "weight",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		u.name AS "createBy.name",
@@ -49,6 +51,9 @@
 			</if>
 			<if test="cardNo != null and cardNo != ''">
 				AND a.card_no = #{cardNo}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
 			</if>
 			<if test="teamTmp != null and teamTmp.id != ''">
 				AND a.team_id = #{teamTmp.id}
