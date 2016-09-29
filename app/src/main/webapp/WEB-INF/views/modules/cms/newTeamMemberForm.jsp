@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="${ctxStatic}/jquery-form/jquery.form.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/common/checkMobile.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/common/checkIdCard.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/common/previewPic.js" type="text/javascript"></script>
-	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script src="${ctxStatic}/jquery-form/jquery.form.js" type="text/javascript"></script>
 	<link href="${ctxStatic}/jquery-mobile/list.css" type="text/css" rel="stylesheet" />
 	<link href="${ctxStatic}/bootstrap/bootstrap-3.3.5-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 </head>
