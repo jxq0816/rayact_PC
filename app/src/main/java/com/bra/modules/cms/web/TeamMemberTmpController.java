@@ -130,6 +130,20 @@ public class TeamMemberTmpController extends BaseController {
 			return "false";
 		}
 	}
+	@RequestMapping(value = "app/checkPhoneSame")
+	@ResponseBody
+	public String checkPhoneSame(HttpServletRequest request)
+	{
+		String phone = request.getParameter("phone");
+		TeamMemberTmp t = new TeamMemberTmp();
+		t.setPhone(phone);
+		List<TeamMemberTmp> members = teamMemberTmpService.findList(t);
+		if(members!=null&&members.size()>0){
+			return "true";//存在
+		}else {
+			return "false";
+		}
+	}
 	@RequestMapping(value = "join/team")
 	public String joinTeam(String phone,Model model){
 		TeamMemberTmp member=new TeamMemberTmp();

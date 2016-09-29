@@ -15,11 +15,8 @@
 		<constructor-arg>
 			<value>
 				${adminPath}/cms/teamMemberTmp/app/checkIdCard = anon
-				${adminPath}/cms/teamTmp/formToApp = anon
-				${adminPath}/cms/teamTmp/app/checkSame = anon
-				${adminPath}/cms/teamTmp/teamIndex = anon
-				${adminPath}/cms/teamTmp/app/save = anon
-				${adminPath}/cms/teamTmp/app/search = anon
+				${adminPath}/cms/teamTmp/** = anon
+				${adminPath}/cms/teamMemberTmp/** = anon
 				${adminPath}/cms/cmsCollection/app/list = anon
 				${adminPath}/cms/cmsCollection/app/save = anon
 				${adminPath}/api/logout = anon
@@ -27,8 +24,6 @@
 				${adminPath}/cms/teamMember/app/list = anon
 				${adminPath}/cms/teamMember/app/save = anon
 				${adminPath}/cms/teamMember/app/form = anon
-				${adminPath}/cms/teamMemberTmp/join/team = anon
-				${adminPath}/cms/teamMemberTmp/app/save = anon
 				${adminPath}/cms/team/app/list = anon
 				${adminPath}/cms/post/app/list = anon
 				${adminPath}/cms/post/app/ptp = anon
