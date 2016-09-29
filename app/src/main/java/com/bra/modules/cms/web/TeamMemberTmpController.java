@@ -3,15 +3,22 @@
  */
 package com.bra.modules.cms.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bra.common.config.Global;
 import com.bra.common.persistence.Page;
+import com.bra.common.upload.FileModel;
+import com.bra.common.upload.StoreType;
+import com.bra.common.upload.UploadUtils;
 import com.bra.common.utils.StringUtils;
 import com.bra.common.web.BaseController;
 import com.bra.modules.cms.entity.TeamMemberTmp;
 import com.bra.modules.cms.entity.TeamTmp;
 import com.bra.modules.cms.service.TeamMemberTmpService;
 import com.bra.modules.cms.service.TeamTmpService;
+import com.bra.modules.mechanism.entity.AttMain;
+import com.bra.modules.mechanism.service.AttMainService;
 import com.bra.modules.mechanism.web.bean.AttMainForm;
+import com.bra.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +27,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +50,8 @@ public class TeamMemberTmpController extends BaseController {
 	private TeamTmpService teamTmpService;
 	@Autowired
 	private TeamMemberTmpService teamMemberTmpService;
+	@Autowired
+	private AttMainService attMainService;
 	
 	@ModelAttribute
 	public TeamMemberTmp get(@RequestParam(required=false) String id) {
@@ -127,4 +141,80 @@ public class TeamMemberTmpController extends BaseController {
 		return "modules/cms/newTeamMemberForm";
 	}
 
+	@RequestMapping(value = "app/save")
+	public void saveApp(MultipartHttpServletRequest request, HttpServletResponse response)throws Exception {
+		String leaderRemarks = "";
+		TeamTmp tt = new TeamTmp();
+		String teamId = request.getParameter("teamTmp.id");
+		tt.setId(teamId);
+		TeamMemberTmp member = new TeamMemberTmp();
+		member.setTeamTmp(tt);
+		String name = request.getParameter("name");
+		String playerNum = request.getParameter("playerNum");
+		String phone = request.getParameter("phone");
+		String idNo = request.getParameter("idNo");
+		String height = request.getParameter("height");
+		String weight = request.getParameter("weight");
+		String[] roleList = request.getParameterValues("role");
+		String role="";
+		for(String i:roleList){
+			role=i+role;
+		}
+		member.setName(name);
+		member.setPhone(phone);
+		member.setCardNo(idNo);
+		if(StringUtils.isNoneBlank(playerNum)){
+			member.setPlayerNum(Integer.valueOf(playerNum));
+		}
+		if(StringUtils.isNoneBlank(height)){
+			member.setHeight(Integer.valueOf(height));
+		}
+		if(StringUtils.isNoneBlank(weight)){
+			member.setWeight(Integer.valueOf(weight));
+		}
+		member.setRole(role);
+		MultipartFile img = request.getFile("picFiles");//头像
+		if(img!=null){
+			leaderRemarks += dealAtt(img,member);
+		}
+		MultipartFile idCard = request.getFile("idCardFiles");//身份证
+		if(idCard!=null){
+			leaderRemarks += dealAtt(idCard,member);
+		}
+		member.setRemarks(leaderRemarks);
+		teamMemberTmpService.save(member);
+		JSONObject j = new JSONObject();
+		j.put("status","success");
+		j.put("msg","报名成功");
+		try {
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(j.toJSONString());
+		} catch (IOException e) {
+		}
+	}
+	private String dealAtt(MultipartFile files,TeamMemberTmp tmt)throws Exception{
+		FileModel fileModel = new FileModel();
+		String destPath = Global.getBaseDir();
+		String tmp = destPath + "resources/www";
+		File f =  new File(tmp + File.separator + UploadUtils.MONTH_FORMAT.format(new Date()) + File.separator + String.valueOf(new Date().getTime())+ UserUtils.getUser().getId());
+		if (!f.getParentFile().exists())
+			f.getParentFile().mkdirs();
+		if (!f.exists())
+			f.createNewFile();
+		files.transferTo(f);
+		fileModel.setStoreType(StoreType.SYSTEM);
+		fileModel.setToken(new Date().toString());
+		fileModel.setFilePath(f.getAbsolutePath());
+		fileModel.setContentType("pic");
+		AttMain attMain = new AttMain(fileModel);
+		attMain.setFdModelName(tmt.getClass().getName());
+		attMain = attMainService.saveAttMain(attMain);
+		String modelId = tmt.getId();
+		String modelNamea = tmt.getClass().getName();
+		attMainService.updateAttMain(attMain.getId(),modelId,modelNamea,"pic");
+		fileModel.setAttId(attMain.getId());
+		return com.bra.modules.sys.utils.StringUtils.ATTPATH + fileModel.getAttId()+";";
+	}
 }
