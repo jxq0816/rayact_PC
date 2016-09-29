@@ -73,7 +73,7 @@
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身份证号：</div>
 					<div class="col-xs-8">
-						<input type="text" name="idNo" class="form-control" value="${query.cardNo}"/>
+						<input type="text" id="idNo" name="idNo" class="form-control" value="${query.cardNo}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
@@ -142,7 +142,7 @@
 			flag=false;
 			return;
 		}
-		if(checkIdcard(idNo)==false){
+		if(checkIdCard(idNo)==false){
 			alert("身份证号码有误！");
 			flag=false;
 			return;

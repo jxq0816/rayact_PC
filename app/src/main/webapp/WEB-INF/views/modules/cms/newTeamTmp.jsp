@@ -106,7 +106,7 @@
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身份证号：</div>
 					<div class="col-xs-8">
-						<input type="text" name="idNo" class="form-control"/>
+						<input type="text" id="idNo" name="idNo" class="form-control"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">

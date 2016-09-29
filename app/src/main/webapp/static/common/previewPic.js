@@ -85,7 +85,7 @@ function submitData(dom){
         return;
         flag=false;
     }
-    if(checkIdCardSame(idNo)==true){
+    if(checkIdCardSame()==true){
         return;
         flag=false;
     }
@@ -132,8 +132,8 @@ function checkSame(dom){
     }
     return flag;
 }
-function checkIdCardSame(dom){
-    var card = $(dom).val();
+function checkIdCardSame(){
+    var card = $("#idNo").val();
     var rz = $("#rz").val();
     var rs=false;
     if($.trim(card)!=""){
