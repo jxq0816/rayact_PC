@@ -16,6 +16,9 @@
 </head>
 <body style="font-family: Microsoft Yahei">
 <style>
+	body {
+		overflow-x: hidden
+	}
 	.row{
 		margin-bottom: 20px;
 		margin-right: 0px;

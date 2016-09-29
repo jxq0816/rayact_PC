@@ -1,11 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta charset='utf-8'/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="referrer" content="always"/>
+	<meta name="format-detection" content="telephone=no"/>
 	<script src="${ctxStatic}/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/jquery-form/jquery.form.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/common/checkMobile.js" type="text/javascript"></script>
@@ -16,6 +19,9 @@
 </head>
 <body style="font-family: Microsoft Yahei">
 <style>
+	body {
+		overflow-x: hidden
+	}
 	.row{
 		margin-bottom: 20px;
 		margin-right: 0px;
