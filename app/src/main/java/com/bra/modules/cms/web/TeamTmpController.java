@@ -268,10 +268,13 @@ public class TeamTmpController extends BaseController {
 			List<TeamMemberTmp> teachers = teamMemberTmpService.findList(tmt);
 			tmt.setRole("3");
 			List<TeamMemberTmp> members = teamMemberTmpService.findList(tmt);
-			request.setAttribute("team",list.get(0));
-			request.setAttribute("leader",(leaders!=null&&leaders.size()>0)?leaders.get(0):null);
+			tmt.setRole("4");
+			List<TeamMemberTmp> captains = teamMemberTmpService.findList(tmt);//队长
+			request.setAttribute("leader",(leaders!=null&&leaders.size()>0)?leaders.get(0):new TeamMemberTmp());
 			request.setAttribute("teacher",(teachers!=null&&teachers.size()>0)?teachers.get(0):new TeamMemberTmp());
+			request.setAttribute("captain",(captains!=null&&captains.size()>0)?captains.get(0):new TeamMemberTmp());
 			request.setAttribute("members",members);
+			request.setAttribute("team",list.get(0));
 		}else{
 			TeamMemberTmp s = new TeamMemberTmp();
 			s.setName(keyword);

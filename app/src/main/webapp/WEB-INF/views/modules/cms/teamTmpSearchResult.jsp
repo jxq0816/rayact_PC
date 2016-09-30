@@ -91,9 +91,9 @@
             <div class="item">
                 <div>
                     <script>
-                        var teacherImg = "${captain.remarks}";
-                        var img = teacherImg.split(";")[0];
-                        document.write("<img src='" + img + "' class='photo' onclick='jumpToInfo(\"${captain.id}\")'/>");
+                        var captainImg = "${captain.remarks}";
+                        var img = captainImg.split(";")[0];
+                        document.write("<img src='" + img + "' class='photo' />");
                     </script>
                 </div>
                 <div>队长：${captain.name}</div>
