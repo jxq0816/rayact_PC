@@ -121,7 +121,7 @@ public class TeamMemberTmpController extends BaseController {
 			for(TeamMemberTmp m:members){
 				String id = m.getTeamTmp().getId();
 				TeamTmp tt = teamTmpService.get(id);
-				if(tt.getRz().equals(rzNew)){
+				if(rzNew.equals(tt.getRz())){
 					return "true";
 				}
 			}

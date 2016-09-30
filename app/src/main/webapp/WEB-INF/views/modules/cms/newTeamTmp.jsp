@@ -247,7 +247,7 @@
 				},
 				success:function(data) {
 					alert("申请成功！");
-					window.open(ctx+"/cms/teamTmp/teamIndex","_self");
+					window.open("${ctx}/cms/teamTmp/formToApp","_self");
 				}
 			};
 			if(confirm("您确认信息填写无误吗？")){
