@@ -57,7 +57,7 @@
 		<td>制式</td><td><c:if test="${team.rz == '5'}">五人制</c:if><c:if test="${team.rz == '8'}">八人制</c:if></td><td>联系方式</td><td>${leader.phone}</td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">
+		<td align="center">
 			<div><script>
 				var leaderImg = "${leader.remarks}";
 				var img = leaderImg.split(";")[0];
@@ -65,15 +65,29 @@
 			</script></div>
 			<div>领队：${leader.name}</div>
 			<div>${leader.cardNo}</div>
-		</td><td colspan="2" align="center">
-		<div><script>
-			var teacherImg = "${teacher.remarks}";
-			var img = teacherImg.split(";")[0];
-			document.write("<img src='"+img+"' class='photo' onclick='jumpToInfo(\"${teacher.id}\")'/>");
-		</script></div>
+		</td>
+		<td align="center">
+			<div>
+				<script>
+					var teacherImg = "${teacher.remarks}";
+					var img = teacherImg.split(";")[0];
+					document.write("<img src='" + img + "' class='photo' onclick='jumpToInfo(\"${teacher.id}\")'/>");
+				</script>
+			</div>
 		<div>教练：${teacher.name}</div>
 		<div>${teacher.cardNo}</div>
-	</td>
+		</td>
+		<td align="center">
+			<div>
+				<script>
+					var teacherImg = "${captain.remarks}";
+					var img = teacherImg.split(";")[0];
+					document.write("<img src='" + img + "' class='photo' onclick='jumpToInfo(\"${captain.id}\")'/>");
+				</script>
+			</div>
+			<div>队长：${captain.name}</div>
+			<div>${captain.cardNo}</div>
+		</td>
 	</tr>
 	<tr><td colspan="4" align="center">参赛成员基本信息</td></tr>
 	<tr>

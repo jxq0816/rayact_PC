@@ -305,16 +305,19 @@ public class TeamTmpController extends BaseController {
 		TeamMemberTmp tmt = new TeamMemberTmp();
 		tmt.setTeamTmp(t);
 		tmt.setRole("1");
-		List<TeamMemberTmp> leaders = teamMemberTmpService.findList(tmt);
+		List<TeamMemberTmp> leaders = teamMemberTmpService.findList(tmt);//领队
 		tmt.setRole("2");
-		List<TeamMemberTmp> teachers = teamMemberTmpService.findList(tmt);
+		List<TeamMemberTmp> teachers = teamMemberTmpService.findList(tmt);//教练
 		tmt.setRole("3");
-		List<TeamMemberTmp> members = teamMemberTmpService.findList(tmt);
+		List<TeamMemberTmp> members = teamMemberTmpService.findList(tmt);//队员
+		tmt.setRole("4");
+		List<TeamMemberTmp> captains = teamMemberTmpService.findList(tmt);//队长
 		List<Map<String,String>> count =  teamTmpService.getMemberCount(t);
 		request.setAttribute("counts",count);
 		request.setAttribute("team",t);
-		request.setAttribute("leader",leaders.get(0));
+		request.setAttribute("leader",(leaders!=null&&leaders.size()>0)?leaders.get(0):new TeamMemberTmp());
 		request.setAttribute("teacher",(teachers!=null&&teachers.size()>0)?teachers.get(0):new TeamMemberTmp());
+		request.setAttribute("captain",(captains!=null&&captains.size()>0)?captains.get(0):new TeamMemberTmp());
 		request.setAttribute("members",members);
 		return "modules/cms/teamTmpInfo";
 	}
