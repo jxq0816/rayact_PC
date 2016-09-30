@@ -54,16 +54,16 @@
 				<div class="row col-xs-12">
 					<div class="col-xs-12">
 						<label class="checkbox-inline">
-							<input type="checkbox" checked="true" name="role" value="1"> 领队
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '1')}">checked="true"</c:if> name="role" value="1"> 领队
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox" name="role" value="2"> 教练
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '2')}">checked="true"</c:if> name="role" value="2"> 教练
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox"  name="role" value="3"> 普通队员
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '3')}">checked="true"</c:if>  name="role" value="3"> 普通队员
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox"  name="role" value="4"> 队长
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '4')}">checked="true"</c:if> name="role" value="4"> 队长
 						</label>
 					</div>
 				</div>
