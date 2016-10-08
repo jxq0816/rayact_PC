@@ -59,6 +59,9 @@
 				<c:if test="${teamMemberTmp.role == '2'}">教练</c:if>
 				<c:if test="${teamMemberTmp.role == '3'}">队员</c:if></td></tr>
 			<tr><td>身份证号</td><td>${teamMemberTmp.cardNo}</td></tr>
+			<tr><td>球衣号</td><td>${teamMemberTmp.playerNum}</td></tr>
+			<tr><td>身高</td><td>${teamMemberTmp.height}</td></tr>
+			<tr><td>鞋码</td><td>${teamMemberTmp.weight}</td></tr>
 			<tr><td>头像</td><td><script>
 				var teacherImg = "${teamMemberTmp.remarks}";
 				var img1 = teacherImg.split(";")[0];
