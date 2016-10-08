@@ -1,0 +1,17 @@
+http://192.168.3.199:8080/app/a/sys/user/api/getUserInfo
+一、请求参数
+JSESSIONID:登陆标识 String
+userId:用户编号 String
+二、返回结果
+userImage
+name
+sex
+area
+phone
+balance:余额 int 以分为单位
+point：积分 int
+qqName
+weixinName
+qq
+weixin
+hasFocus
