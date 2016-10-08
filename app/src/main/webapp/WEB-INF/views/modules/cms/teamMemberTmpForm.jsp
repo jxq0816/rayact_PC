@@ -47,6 +47,24 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">球衣号：</label>
+			<div class="controls">
+				<form:input path="playerNum" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">身高：</label>
+			<div class="controls">
+				<form:input path="height" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">鞋码：</label>
+			<div class="controls">
+				<form:input path="weight" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">角色：</label>
 			<div class="controls">
 				<form:select path="role" htmlEscape="false" maxlength="255" class="input-xlarge ">
