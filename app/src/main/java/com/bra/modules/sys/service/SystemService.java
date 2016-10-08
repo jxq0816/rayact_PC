@@ -225,6 +225,16 @@ public class SystemService extends BaseService implements InitializingBean {
 //		// 清除权限缓存
 //		systemRealm.clearAllCachedAuthorizationInfo();
 	}
+
+	@Transactional(readOnly = false)
+	public void updateUserWallet(String id, int balance, int point) {
+		User user = new User(id);
+		user.setBalance(balance);
+		user.setPoint(point);
+		userDao.updatePasswordById(user);
+		// 清除用户缓存
+		UserUtils.clearCache(user);
+	}
 	
 	@Transactional(readOnly = false)
 	public void updateUserLoginInfo(User user) {
