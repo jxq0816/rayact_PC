@@ -100,7 +100,7 @@
 				</script></div>
 				<%--<div>序号：${status.count}</div>--%>
 				<div>${member.playerNum}-${member.name}</div>
-				<div>身高：${member.height} 鞋码：${member.weight}手机号：${member.phone}</div>
+				<%--<div>身高：${member.height} 鞋码：${member.weight}手机号：${member.phone}</div>--%>
 				<div>${member.cardNo}</div>
 			</td>
 			<c:if test="${status.count%4==0}">
