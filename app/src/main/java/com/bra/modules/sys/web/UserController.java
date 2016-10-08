@@ -393,7 +393,7 @@ public class UserController extends BaseController {
 		String userId = request.getParameter("userId");
 		User user = null;
 		String hasFocus = "0";
-		if(StringUtils.isNotBlank(userId)){
+		if(StringUtils.isNotBlank(userId)){//userId 仅用于贴子
 			user = UserUtils.get(userId);
 			Focus f = new Focus();
 			f.setModelName("user");
@@ -403,7 +403,7 @@ public class UserController extends BaseController {
 			if(l != null && l.size()>0){
 				hasFocus = "1";
 			}
-		}else{
+		}else{//我的
 			user = UserUtils.getUser();
 		}
 		rtn.put("userImage",user.getPhoto()==null?"":user.getPhoto());
