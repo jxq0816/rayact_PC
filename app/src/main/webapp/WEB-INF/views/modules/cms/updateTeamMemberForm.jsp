@@ -37,6 +37,7 @@
 	<p style="color: #000000;font-size: 28px;margin: 50px 0;line-height:30px">2016青草足球秋季联赛报名</p>
 </div>
 <form id="teamForm" name="teamForm">
+	<input type="hidden"  name="id" value="${query.id}"/>
 	<div class="step">
 		<div style="font-size: 15px">
 			<div class="row" id="baseDataWrap">
@@ -45,7 +46,7 @@
 					<div class="col-xs-8">
 						<sys:select cssClass="input-large" name="teamTmp.id" id="team"
 									cssStyle="width:100%"
-									value=""
+									value="${query.teamTmp.id}"
 									items="${teamList}" itemLabel="name" itemValue="id"
 									defaultLabel="----请选择-----"
 									defaultValue=""></sys:select>
@@ -54,53 +55,53 @@
 				<div class="row col-xs-12">
 					<div class="col-xs-12">
 						<label class="checkbox-inline">
-							<input type="checkbox" name="role" value="1"> 领队
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '1')}">checked="true"</c:if> name="role" value="1"> 领队
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox" name="role" value="2"> 教练
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '2')}">checked="true"</c:if> name="role" value="2"> 教练
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox"   name="role" value="3"> 普通队员
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '3')}">checked="true"</c:if>  name="role" value="3"> 普通队员
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox"  name="role" value="4"> 队长
+							<input type="checkbox" <c:if test="${fn:contains(query.role, '4')}">checked="true"</c:if> name="role" value="4"> 队长
 						</label>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">姓名：</div>
 					<div class="col-xs-8">
-						<input type="text" class="form-control" name="name" value=""/>
+						<input type="text" class="form-control" name="name" value="${query.name}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">球衣号码：</div>
 					<div class="col-xs-8">
-						<input type="text" class="form-control" name="playerNum" value=""/>
+						<input type="text" class="form-control" name="playerNum" value="${query.playerNum}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身份证号：</div>
 					<div class="col-xs-8">
-						<input type="text" id="idNo" name="idNo" class="form-control" value=""/>
+						<input type="text" id="idNo" name="idNo" class="form-control" value="${query.cardNo}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">联系电话：</div>
 					<div class="col-xs-8">
-						<input type="text" name="phone" class="form-control" value=""/>
+						<input type="text" name="phone" class="form-control" value="${query.phone}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">身高：</div>
 					<div class="col-xs-8">
-						<input type="text" id="height" name="height" class="form-control" value=""/>
+						<input type="text" id="height" name="height" class="form-control" value="${query.height}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">
 					<div class="col-xs-4">鞋码：</div>
 					<div class="col-xs-8">
-						<input type="text" id="weight" name="weight" class="form-control" value=""/>
+						<input type="text" id="weight" name="weight" class="form-control" value="${query.weight}"/>
 					</div>
 				</div>
 				<div class="row col-xs-12">

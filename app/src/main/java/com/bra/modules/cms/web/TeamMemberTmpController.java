@@ -148,12 +148,15 @@ public class TeamMemberTmpController extends BaseController {
 	}
 	@RequestMapping(value = "join/team")
 	public String joinTeam(String phone,Model model){
-		TeamMemberTmp member=new TeamMemberTmp();
-		member.setPhone(phone);
-		List<TeamMemberTmp> memberList = teamMemberTmpService.findList(member);
 		List<TeamTmp> teamList = teamTmpService.findList(new TeamTmp());
 		model.addAttribute("teamList", teamList);
-		model.addAttribute("query", (memberList!=null&&memberList.size()!=0)?memberList.get(0):null);
+		if(StringUtils.isNoneBlank(phone)){
+			TeamMemberTmp member=new TeamMemberTmp();
+			member.setPhone(phone);
+			List<TeamMemberTmp> memberList = teamMemberTmpService.findList(member);
+			model.addAttribute("query", (memberList!=null&&memberList.size()!=0)?memberList.get(0):null);
+			return "modules/cms/updateTeamMemberForm";
+		}
 		return "modules/cms/newTeamMemberForm";
 	}
 
@@ -165,6 +168,7 @@ public class TeamMemberTmpController extends BaseController {
 		tt.setId(teamId);
 		TeamMemberTmp member = new TeamMemberTmp();
 		member.setTeamTmp(tt);
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String playerNum = request.getParameter("playerNum");
 		String phone = request.getParameter("phone");
@@ -176,6 +180,7 @@ public class TeamMemberTmpController extends BaseController {
 		for(String i:roleList){
 			role=i+role;
 		}
+		member.setId(id);
 		member.setName(name);
 		member.setPhone(phone);
 		member.setCardNo(idNo);
