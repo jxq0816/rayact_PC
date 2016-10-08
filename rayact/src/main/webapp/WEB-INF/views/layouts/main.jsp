@@ -9,11 +9,7 @@
     <link href="${ctxStatic}/cleanzone/js/bootstrap/dist/css/bootstrap.css?time=21" rel="stylesheet"/>
     <link rel="stylesheet" href="${ctxStatic}/cleanzone/fonts/font-awesome-4/css/font-awesome.min.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <![endif]-->
     <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.gritter/css/jquery.gritter.css"/>
-
     <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.nanoscroller/nanoscroller.css"/>
     <link rel="stylesheet" type="text/css"
           href="${ctxStatic}/cleanzone/js/jquery.easypiechart/jquery.easy-pie-chart.css"/>
@@ -23,9 +19,16 @@
     <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.select2/select2.css"/>
     <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/bootstrap.slider/css/slider.css"/>
     <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/intro.js/introjs.css"/>
+    <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.niftymodals/css/component.css"/>
+    <link href="${ctxStatic}/cleanzone/css/style.css" rel="stylesheet"/>
+    <jsp:include page="css.jsp"></jsp:include>
+    <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet"/>
     <!-- Custom styles for this template -->
     <link href="${ctxStatic}/cleanzone/js/jquery.icheck/skins/square/blue.css" rel="stylesheet">
     <link rel="stylesheet" href="${ctxStatic}/cleanzone/css/pygments.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.js"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
@@ -44,13 +47,10 @@
     <script src="${ctxStatic}/cleanzone/js/intro.js/intro.js" type="text/javascript"></script>
     <script src="${ctxStatic}/cleanzone/js/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="${ctxStatic}/cleanzone/js/jquery.parsley/dist/parsley.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="${ctxStatic}/cleanzone/js/jquery.niftymodals/css/component.css"/>
-    <link href="${ctxStatic}/cleanzone/css/style.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript"
             src="${ctxStatic}/cleanzone/js/jquery.niftymodals/js/jquery.modalEffects.js"></script>
     <script type="text/javascript" src="${ctxStatic}/cleanzone/js/jquery.icheck/icheck.min.js"></script>
-    <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet"/>
     <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
     <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
     <script src="${ctxStatic}/cleanzone/js/echart/echarts.common.min.js" type="text/javascript"></script>

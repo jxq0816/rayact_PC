@@ -24,11 +24,13 @@ public class MainController {
     @RequestMapping(value = "main")
     public String main(Model model) {
         Principal principal = SecurityUtil.getPrincipal();
+        String tenantId=principal.getTenantId();
         if (principal.isMobileLogin()) {
             return "modules/sys/main";
         }
         Map<String, Object> data = mainService.controle();
         model.addAllAttributes(data);
+        model.addAttribute("tenantId",tenantId);
         return "reserve/main";
     }
 
