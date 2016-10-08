@@ -1,63 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bra.modules.sys.dao.UserDao">
-	
-	<!-- <resultMap id="userResult" type="User">
-		<id property="id" column="id" />
-		<result property="company.id" column="company.id" />
-		<result property="office.id" column="office.id" />
-		<result property="loginName" column="login_name" />
-		<result property="password" column="password" />
-		<result property="no" column="no" />
-		<result property="name" column="name" />
-		<result property="email" column="email" />
-		<result property="phone" column="phone" />
-		<result property="mobile" column="mobile" />
-		<result property="userType" column="user_type" />
-		<result property="loginIp" column="login_ip" />
-		<result property="loginDate" column="login_date" />
-		<result property="remarks" column="remarks" />
-		<result property="loginFlag" column="loginFlag" />
-		<result property="photo" column="photo" />
-		<result property="createBy.id" column="createBy.id" />
-		<result property="createDate" column="create_date" />
-		<result property="updateBy.id" column="updateBy.id" />
-		<result property="updateDate" column="update_date" />
-		<result property="company.name" column="company.name" />
-		<result property="company.parentId" column="company.parentId" />
-		<result property="company.parentIds" column="company.parentIds" />
-		<result property="company.area.id" column="company.area.id" />
-		<result property="company.area.name" column="company.area.name" />
-		<result property="company.area.parentId" column="company.area.parentId" />
-		<result property="company.area.parentIds" column="company.area.parentIds" />
-		<result property="company.primaryPerson.id" column="company.primaryPerson.id" />
-		<result property="company.primaryPerson.name" column="company.primaryPerson.name" />
-		<result property="company.deputyPerson.id" column="company.deputyPerson.id" />
-		<result property="company.deputyPerson.name" column="company.deputyPerson.name" />
-		<result property="office.name" column="office.name" />
-		<result property="office.parentId" column="office.parentId" />
-		<result property="office.parentIds" column="office.parentIds" />
-		<result property="office.area.id" column="office.area.id" />
-		<result property="office.area.name" column="office.area.name" />
-		<result property="office.area.parentId" column="office.area.parentId" />
-		<result property="office.area.parentIds" column="office.area.parentIds" />
-		<result property="office.primaryPerson.id" column="office.primaryPerson.id" />
-		<result property="office.primaryPerson.name" column="office.primaryPerson.name" />
-		<result property="office.deputyPerson.id" column="office.deputyPerson.id" />
-		<result property="office.deputyPerson.name" column="office.deputyPerson.name" />
-		<collection property="roleList" ofType="Role">
-			<id property="id" column="roleList.id" />
-			<result property="office.id" column="roleList.office.id" />
-			<result property="name" column="roleList.name" />
-			<result property="enname" column="roleList.enname" />
-			<result property="roleType" column="roleList.roleType" />
-			<result property="dataScope" column="roleList.dataScope" />
-			<collection property="officeList" ofType="Office">
-				<id property="id" column="roleList.officeList.id" />
-			</collection>
-		</collection>
-	</resultMap> -->
-	
     <sql id="userColumns">
     	a.id,
     	a.company_id AS "company.id",
@@ -108,13 +51,6 @@
 		a.weixin_name,
 		a.area,
 		a.sex
-		<!-- ,
-        r.id AS "roleList.id",
-        r.office_id AS "roleList.office.id",
-        r.name AS "roleList.name",
-        r.enname AS "roleList.enname",
-        r.role_type AS "roleList.roleType",
-        r.data_scope AS "roleList.dataScope" -->
     </sql>
 	<sql id="userApiColumns">
 		a.id,
@@ -332,7 +268,9 @@
 			name, 
 			email, 
 			phone, 
-			mobile, 
+			mobile,
+			balance,
+			point,
 			user_type, 
 			create_by, 
 			create_date, 
@@ -361,7 +299,9 @@
 			#{name}, 
 			#{email}, 
 			#{phone}, 
-			#{mobile}, 
+			#{mobile},
+			#{balance},
+			#{point},
 			#{userType}, 
 			#{createBy.id}, 
 			#{createDate}, 
@@ -394,7 +334,7 @@
 			name = #{name}, 
 			email = #{email}, 
 			phone = #{phone}, 
-			mobile = #{mobile}, 
+			mobile = #{mobile},
 			user_type = #{userType}, 
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 
@@ -441,6 +381,14 @@
 			photo = #{photo}
 		WHERE id = #{id}
 	</update>
+
+	<update id="updateUserWallet">
+		UPDATE sys_user SET
+		balance = #{balance},
+		point= #{point}
+		WHERE id = #{id}
+	</update>
+
 	
 	<!-- 更新用户密码 -->
 	<update id="updatePasswordById">

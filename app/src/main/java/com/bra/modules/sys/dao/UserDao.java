@@ -44,6 +44,13 @@ public interface UserDao extends CrudDao<User> {
 	 * @return
 	 */
 	public int updatePasswordById(User user);
+
+	/**
+	 * 更新钱包
+	 * @param user
+	 * @return
+	 */
+	public int updateUserWallet(User user);
 	
 	/**
 	 * 更新登录信息，如：登录IP、登录时间

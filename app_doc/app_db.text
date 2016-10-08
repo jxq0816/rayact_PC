@@ -4,3 +4,7 @@ alter table team_member_tmp add player_num int;
 alter table team_member_tmp add height int;
 20160928:team_member_tmp 新增字段 体重
 alter table team_member_tmp add weight int;
+20161008:新增字段 钱包余额
+alter table sys_user add balance int default 0;
+20161008:新增字段 会员积分
+alter table sys_user add point int default 0;

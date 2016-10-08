@@ -411,6 +411,8 @@ public class UserController extends BaseController {
 		rtn.put("sex",user.getSex()==null?"":user.getSex());
 		rtn.put("area",user.getArea()==null?"":user.getArea());
 		rtn.put("phone",user.getMobile()==null?"":user.getMobile());
+		rtn.put("balance",user.getBalance()==null?"":user.getBalance());
+		rtn.put("point",user.getPoint()==null?"":user.getPoint());
 		rtn.put("qqName",user.getQqName()==null?"":user.getQqName());
 		rtn.put("weixinName",user.getWeixinName()==null?"":user.getWeixinName());
 		rtn.put("qq",user.getQq()==null?"":user.getQq());
