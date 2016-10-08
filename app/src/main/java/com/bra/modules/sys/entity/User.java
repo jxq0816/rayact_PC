@@ -45,8 +45,8 @@ public class User extends DataEntity<User> implements BaseUser{
     private String email;    // 邮箱
     private String phone;    // 电话
     private String mobile;    // 手机
-    private String balance;//余额
-    private String point;//积分
+    private Integer balance;//余额
+    private Integer point;//积分
     private String userType;// 用户类型
     private String loginIp;    // 最后登陆IP
     private Date loginDate;    // 最后登陆日期
@@ -387,19 +387,19 @@ public class User extends DataEntity<User> implements BaseUser{
         this.weixinImage = weixinImage;
     }
 
-    public String getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 
-    public String getPoint() {
+    public Integer getPoint() {
         return point;
     }
 
-    public void setPoint(String point) {
+    public void setPoint(Integer point) {
         this.point = point;
     }
 
