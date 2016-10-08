@@ -42,7 +42,7 @@
 		FROM team_member_tmp a
 		<include refid="teamMemberTmpJoins"/>
 		<where>
-			1=1
+			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="name != null and name != ''">
 				AND a.name = #{name}
 			</if>
