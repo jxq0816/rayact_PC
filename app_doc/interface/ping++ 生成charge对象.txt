@@ -1,0 +1,99 @@
+ http://localhost:8080/app/a/pingPlusPlus/charge?order_no=123&amount=1&body=123&channel=wx&client_ip=127.0.0.1&subject=123
+一、请求参数
+order_no:
+    required 商户订单号
+channel:
+    required 支付使用的第三方支付渠道，取值范围。
+    alipay:
+        支付宝手机支付
+    alipay_wap:
+        支付宝手机网页支付
+    alipay_qr:
+        支付宝扫码支付
+    alipay_pc_direct:
+        支付宝 PC 网页支付
+    bfb:
+        百度钱包移动快捷支付
+    bfb_wap:
+        百度钱包手机网页支付
+    upacp:
+        银联全渠道支付（2015 年 1 月 1 日后的银联新商户使用。若有疑问，请与 Ping++ 或者相关的收单行联系）
+    upacp_wap:
+        银联全渠道手机网页支付（2015 年 1 月 1 日后的银联新商户使用。若有疑问，请与 Ping++ 或者相关的收单行联系）
+    upacp_pc:
+        银联 PC 网页支付
+    cp_b2b:
+        银联企业网银支付
+    wx:
+        微信支付
+    wx_pub:
+        微信公众账号支付
+    wx_pub_qr:
+        微信公众账号扫码支付
+    yeepay_wap:
+        易宝手机网页支付
+    jdpay_wap:
+        京东手机网页支付
+    cnp_u:
+        应用内快捷支付（银联）
+    cnp_f:
+        应用内快捷支付（外卡）
+    applepay_upacp:
+        Apple Pay
+    fqlpay_wap:
+        分期乐支付
+    qgbc_wap:
+        量化派支付
+amount:
+    required 订单总金额, 单位为对应币种的最小货币单位，例如：人民币为分（如订单总金额为 1 元，此处请填 100）。
+client_ip:
+    required 发起支付请求客户端的 IP 地址，格式为 IPV4，如: 127.0.0.1。
+currency:
+    required 三位 ISO 货币代码，目前仅支持人民币 cny。
+subject:
+    required 商品的标题，该参数最长为 32 个 Unicode 字符，银联全渠道（upacp/upacp_wap）限制在 32 个字节。
+body:
+    required 商品的描述信息，该参数最长为 128 个 Unicode 字符，yeepay_wap 对于该参数长度限制为 100 个 Unicode 字符。
+description:
+    optional 订单附加说明，最多 255 个 Unicode 字符。
+二、返回参数
+{
+  "id": "ch_PuHG84GqL8SOarj5iPuv5q9O",
+  "object": "charge",
+  "created": 1458186741,
+  "livemode": true,
+  "paid": false,
+  "refunded": false,
+  "app": "app_1Gqj58ynP0mHeX1q",
+  "channel": "alipay_qr",
+  "order_no": "123456789",
+  "client_ip": "127.0.0.1",
+  "amount": 100,
+  "amount_settle": 100,
+  "currency": "cny",
+  "subject": "Your Subject",
+  "body": "Your Body",
+  "extra": {
+  },
+  "time_paid": null,
+  "time_expire": 1458273141,
+  "time_settle": null,
+  "transaction_no": null,
+  "refunds": {
+      "object": "list",
+      "url": "/v1/charges/ch_PuHG84GqL8SOarj5iPuv5q9O/refunds",
+      "has_more": false,
+      "data": [
+      ]
+  },
+  "amount_refunded": 0,
+  "failure_code": null,
+  "failure_msg": null,
+  "metadata": {
+  },
+  "credential": {
+      "object": "credential",
+      "alipay_qr": "https://qr.alipay.com/tax09784bfcqujv2upup2070"
+  },
+  "description": "Your Description"
+}

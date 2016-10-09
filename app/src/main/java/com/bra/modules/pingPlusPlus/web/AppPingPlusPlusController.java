@@ -23,7 +23,7 @@ import java.util.Enumeration;
  * Created by jiangxingqi on 16/1/5.
  */
 @Controller
-@RequestMapping(value = "${adminPath}/app/pingPlusPlus")
+@RequestMapping(value = "${adminPath}/pingPlusPlus")
 public class AppPingPlusPlusController extends BaseController {
     @Autowired
     private PingPlusPlusService pingPlusPlusService;

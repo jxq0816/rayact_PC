@@ -36,6 +36,7 @@
 				${adminPath}/cms/activity/app/view = anon
 				${adminPath}/cms/comment/app/list = anon
 				${adminPath}/cms/attitude/app/num = anon
+				${adminPath}/pingPlusPlus/**=anon
 				/f/ = anon
 				${adminPath}/cms/article/app/getList = anon
 				${adminPath}/cms/link/app/getList = anon
