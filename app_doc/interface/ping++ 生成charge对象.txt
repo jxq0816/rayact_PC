@@ -1,4 +1,4 @@
- http://localhost:8080/app/a/pingPlusPlus/charge?order_no=123&amount=1&body=123&channel=wx&client_ip=127.0.0.1&subject=123
+http://*******:8081/app/a/pingPlusPlus/charge?order_no=1238946515616&amount=1&body=123&channel=wx&client_ip=127.0.0.1&subject=123
 一、请求参数
 order_no:
     required 商户订单号
