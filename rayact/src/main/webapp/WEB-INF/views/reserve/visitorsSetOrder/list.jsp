@@ -12,7 +12,7 @@
 </jsp:include>
 <div class="container-fluid" id="pcont">
     <div class="block-flat">
-        <div class="tab-tit-first">
+        <%--<div class="tab-tit-first">
             <ul>
                 <li <j:if test="${empty projectId}">class="on"</j:if>><a
                         href="${ctx}/reserve/reserveVenueOrder/list">所有</a>
@@ -23,7 +23,7 @@
                     </li>
                 </c:forEach>
             </ul>
-        </div>
+        </div>--%>
         <%-- <div class="cl-mcont">--%>
 
         <div class="row">
